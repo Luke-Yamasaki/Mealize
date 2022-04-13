@@ -1,0 +1,24 @@
+// Useful links:
+// https://aka.ms/devcontainer.json
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.224.3/containers/python-3
+// https://aka.ms/vscode-remote/containers/non-root
+
+{
+	"name": "Python 3",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": "..",
+		"args": {
+			"VARIANT": "3.9",
+			"NODE_VERSION": "16"
+		}
+	},
+	"settings": {
+	},
+	"extensions": [
+	],
+	"forwardPorts": [5000, 5432, 3000],
+	"postCreateCommand": "pipenv install --dev && cd reactApp && npm install",
+	"postStartCommand": "sudo service postgresql start",
+	"remoteUser": "vscode"
+}

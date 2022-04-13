@@ -1,0 +1,58 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  BuildAndDeploy:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+    with:
+      node-version: '16'
+      cache: 'npm'
+      cache-dependency-path: reactApp/package-lock.json
+
+    - name: Build React App
+      working-directory: reactApp
+      run: npm install && npm run build
+    - uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+    - run: pip install pipenv
+
+    - name: Update necessities.txt for container install
+      run: pipenv lock -r > necessities.txt
+
+    - name: Login to Heroku Container
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:login
+
+    - name: Build and push container
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web
+
+    - name: Release container
+      env:
+        HEROKU_APU_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:release -a ${{ secrets.HEROKU_API_KEY }} web
+
+    - name: Run the database migration
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku run -a ${{ secrets.HEROKU_APP_NAME }} flask db upgrade
+
+    - name: Erase all seed data
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku run -a ${{ secrets/.HEROKU_APP_NAME }} flask seed undo
+      
+    - name: Seed your new data
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku run -a ${{ secrets.HEROKU_APP_NAME }} flask seed all

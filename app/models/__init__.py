@@ -7,3 +7,4 @@ from .message import Message
 from .delivery import Delivery
 from .calendar import Calendar
 from .event import Event
+from .favorite import Favorite

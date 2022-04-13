@@ -14,3 +14,4 @@ sudo -u postgres psql -c "CREATE DATABASE vscode WITH OWNER vscode" && \
 sudo -u postgres psql -c "CREATE DATABASE mealize WITH OWNER mealizedev"
 
 ENV DATABASE_URL=postgresql://mealizedev:6498fed5-8d49-4a85-82ee-03230c500fc6@localhost/mealize
+

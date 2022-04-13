@@ -6,3 +6,4 @@ from .category import Category
 from .message import Message
 from .delivery import Delivery
 from .calendar import Calendar
+from .event import Event

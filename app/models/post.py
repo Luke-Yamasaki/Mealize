@@ -20,8 +20,22 @@ class Post(db.Model):
 
     organization = db.relationship('Organization', back_populates='posts')
     uploader = db.relationship('User', back_populates='posts')
+    category = db.relationship('Category', back_populates='post')
 
     def to_dict(self):
         return {
-            
+            'id': self.id,
+            'isItem': self.isItem,
+            'organizationId': self.organizationId,
+            'userId': self.userId,
+            'title': self.title,
+            'description': self.description,
+            'quantity': self.quantity,
+            'categoryId': self.categoryId,
+            'imageUrl': self.imageUrl,
+            'expirationDate': self.expirationDate,
+            'endDate': self.endDate,
+            'status': self.status,
+            'createdAt': self.createdAt,
+            'updatedAt': self.updatedAt
         }

@@ -6,7 +6,7 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    organizationId = db.Column(db.Integer, nullable=False)
+    organizationId = db.Column(db.Integer, db.ForeignKey('organizations.id'), nullable=False)
     isNonprofit = db.Column(db.Boolean, nullable=False)
     isManager = db.Column(db.Boolean, nullable=False)
     private = db.Column(db.Boolean, nullable=False)
@@ -26,8 +26,9 @@ class User(db.Model, UserMixin):
 
     organization = db.relationship('Organization', back_populates='employees', cascade='all, delete-orphan')
     posts = db.relationship('Post', back_populates='uploader')
+    delivery = db.relationship('Delivery', back_populates='volunteer')
     favorites = db.relationship('Favorite', back_populates='user')
-    messages = db.relationship('Message', back_populates='messenger')
+    messages = db.relationship('Message', back_populates='user')
     events = db.relationshio('Event', back_populates='manager')
 
     @property
@@ -77,5 +78,3 @@ class User(db.Model, UserMixin):
             'jobDescription': self.jobDescription,
             'createdAt': self.createdAt
         }
-
-    def message_dict(self):

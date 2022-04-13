@@ -1,4 +1,4 @@
-reactApp/node_modules
+react_app/node_modules
 .venv
 Pipfile
 Pipfile.lock

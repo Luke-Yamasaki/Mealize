@@ -9,7 +9,7 @@ WORKDIR /var/www
 
 COPY . .
 
-COPY /reactApp/build/* app/static
+COPY /react_app/build/* app/static
 
 RUN pip install -r requirements.txt
 RUN pip install psycopg2

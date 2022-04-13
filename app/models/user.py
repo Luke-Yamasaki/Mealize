@@ -6,7 +6,7 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    organizationId = db.Column(db.Integer, nullable=False)
+    organizationId = db.Column(db.Integer, db.ForeignKey('organizations.id'), nullable=False)
     isNonprofit = db.Column(db.Boolean, nullable=False)
     isManager = db.Column(db.Boolean, nullable=False)
     private = db.Column(db.Boolean, nullable=False)
@@ -77,5 +77,3 @@ class User(db.Model, UserMixin):
             'jobDescription': self.jobDescription,
             'createdAt': self.createdAt
         }
-
-    def message_dict(self):

@@ -26,9 +26,9 @@ class User(db.Model, UserMixin):
 
     organization = db.relationship('Organization', back_populates='employees', cascade='all, delete-orphan')
     posts = db.relationship('Post', back_populates='uploader')
+    delivery = db.relationship('Delivery', back_populates='volunteer')
     favorites = db.relationship('Favorite', back_populates='user')
-    sentMessages = db.relationship('Message', back_populates='sender')
-    receivedMessages = db.relationship('Message', back_populates='receiver')
+    messages = db.relationship('Message', back_populates='user')
     events = db.relationshio('Event', back_populates='manager')
 
     @property

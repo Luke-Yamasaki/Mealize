@@ -24,8 +24,8 @@ jobs:
         cache: 'pip'
     - run: pip install pipenv
 
-    - name: Update necessities.txt for container install
-      run: pipenv lock -r > necessities.txt
+    - name: Update requirements.txt for container install
+      run: pipenv lock -r > requirements.txt
 
     - name: Login to Heroku Container
       env:
@@ -51,7 +51,7 @@ jobs:
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: heroku run -a ${{ secrets/.HEROKU_APP_NAME }} flask seed undo
-      
+
     - name: Seed your new data
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}

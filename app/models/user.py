@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
     jobDescription = db.Column(db.String(255), nullable=False)
     hashedPassword = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.DateTime, default=db.func.now())
-    updatedAt = db.Column(db.DateTime, default=db.func.now())
+    updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
     organization = db.relationship('Organization', back_populates='employees', cascade='all, delete-orphan')
     posts = db.relationship('Post', back_populates='uploader')

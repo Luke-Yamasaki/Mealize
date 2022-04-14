@@ -4,7 +4,7 @@ from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired, ValidationError, Email
 from app.models import User
 
-def existing_user(form, field):
+def existing_user(field):
     email = field.data
     user = User.query.filter(User.email == email).first()
     if not user:

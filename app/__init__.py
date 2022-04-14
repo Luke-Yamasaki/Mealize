@@ -7,6 +7,8 @@ from flask_login import LoginManager
 
 from app.models import db, User
 
+from .seeds import seed_group
+
 from .config import Config
 
 app = Flask(__name__)
@@ -18,6 +20,12 @@ login.login_view = 'auth.unauthorized'
 def load_user(id):
     return User.query.get(int(id))
 
+app.cli.add_command(seed_group)
+
+app.config.from_object(Config)
+
+db.init_app(app)
+Migrate(app, db)
 
 CORS(app)
 

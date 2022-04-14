@@ -1,3 +1,1 @@
-from stdnum.us.ein import *
-
-print(validate('91-1144442'))
+print(len('I am the manager of a restaurant.'))

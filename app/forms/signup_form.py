@@ -3,9 +3,7 @@ from wtforms import StringField, PasswordField, IntegerField, BooleanField
 from wtforms.validators import InputRequired, Length, Email, ValidationError, EqualTo, NumberRange
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms_alchemy import PhoneNumberField
-import re
-from stdnum.exceptions import *
-from stdnum.util import clean
+from app.stdnum.us.ein import *
 from app.models import User
 
 def existing_user(field):
@@ -27,6 +25,6 @@ class SignupForm(FlaskForm):
     isNonprofit = BooleanField("Nonprofit", validators=[InputRequired()])
     isManager = BooleanField("Manager", validators=[InputRequired()])
     email = StringField("Email",  validators=[InputRequired("Please provide your email address."), Email("Please provide a valid email address."), existing_user])
-    phone = PhoneNumberField(country_code='US', display_format='national')
+    phone = PhoneNumberField(country_code='US', display_format='national', validators=[InputRequired()])
     password = PasswordField("Password", validators=[InputRequired("Please provide your password."), EqualTo('confirm', message="The passwords you provided do not match.")])
     confirm = PasswordField("Confirm password", validators=[InputRequired()])

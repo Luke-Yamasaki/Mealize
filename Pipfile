@@ -36,4 +36,3 @@ psycopg2-binary = "==2.8.6"
 
 [requires]
 python_version = "3.9"
-

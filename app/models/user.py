@@ -29,7 +29,7 @@ class User(db.Model, UserMixin):
     delivery = db.relationship('Delivery', back_populates='volunteer')
     favorites = db.relationship('Favorite', back_populates='user')
     messages = db.relationship('Message', back_populates='user')
-    events = db.relationshio('Event', back_populates='manager')
+    events = db.relationship('Event', back_populates='manager')
 
     @property
     def password(self):

@@ -2,8 +2,6 @@ import styles from './Settings.module.css';
 
 export const Settings = () => {
     return (
-        <div>Settings</div>
+        <div className={styles.hi}>Settings</div>
     )
 };
-
-

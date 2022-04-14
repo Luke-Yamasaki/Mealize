@@ -38,7 +38,7 @@ jobs:
 
     - name: Release container
       env:
-        HEROKU_APU_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: heroku container:release -a ${{ secrets.HEROKU_API_KEY }} web
 
     - name: Run the database migration

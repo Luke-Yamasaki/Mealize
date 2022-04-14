@@ -3,3 +3,5 @@ heroku logs --tail
 git remote add heroku https://git.heroku.com/mealize.git
 
 got to Heroku settings and configure things
+
+...?

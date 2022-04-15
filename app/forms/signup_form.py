@@ -6,7 +6,7 @@ from wtforms_alchemy import PhoneNumberField
 from app.stdnum.us.ein import *
 from app.models import User
 
-def existing_user(field):
+def existing_user(form, field):
     email = field.data
     user = User.query.filter(User.email == email).first()
     if user:

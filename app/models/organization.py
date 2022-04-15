@@ -8,13 +8,15 @@ class Organization(db.Model):
     isNonprofit = db.Column(db.Boolean, nullable=False)
     logoUrl = db.Column(db.String(2048), nullable=False)
     imageUrl = db.Column(db.String(2048), nullable=False)
-    name = db.Column(db.String(100), nullable=False)
+    open = db.Column(db.Time, nullable=False)
+    close = db.Column(db.Time, nullable=False)
+    name = db.Column(db.String(30), nullable=False)
     description = db.Column(db.String(255), nullable=False)
-    street = db.Column(db.String(100), nullable=False)
-    unit = db.Column(db.String(50), nullable=False)
+    street = db.Column(db.String(45), nullable=False)
+    unit = db.Column(db.String(15), nullable=True)
     zip = db.Column(db.Integer, nullable=False)
-    city = db.Column(db.String(35), nullable=False)
-    state = db.Column(db.String(20), nullable=False)
+    city = db.Column(db.String(17), nullable=False)
+    state = db.Column(db.String(12), nullable=False)
     phone = db.Column(db.Integer, nullable=False)
     email = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.DateTime, default=db.func.now())
@@ -24,12 +26,15 @@ class Organization(db.Model):
     posts = db.relationship('Post', back_populates='organization')
     calendar = db.relationship('Calendar', back_populates='organization')
     events = db.relationship('Event', back_populates='organization')
+    delivery = db.relationship('Delivery', back_populates='location')
 
     def to_dict(self):
         return {
             'isNonprofit': self.isNonprofit,
             'logoUrl': self.logoUrl,
             'imageUrl': self.imageUrl,
+            'open': self.open,
+            'close': self.close,
             'name': self.name,
             'description': self.description,
             'street': self.street,

@@ -1,0 +1,7 @@
+file = request.files["file]
+print("---file---")
+
+if "image" not in request.files:
+    return {'errors': 'image required'}, 400
+
+

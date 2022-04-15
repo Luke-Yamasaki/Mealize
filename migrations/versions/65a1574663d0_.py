@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: dc982c66de01
+Revision ID: 65a1574663d0
 Revises: 
-Create Date: 2022-04-14 08:59:49.283230
+Create Date: 2022-04-15 00:56:47.318685
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dc982c66de01'
+revision = '65a1574663d0'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,13 +31,15 @@ def upgrade():
     sa.Column('isNonprofit', sa.Boolean(), nullable=False),
     sa.Column('logoUrl', sa.String(length=2048), nullable=False),
     sa.Column('imageUrl', sa.String(length=2048), nullable=False),
-    sa.Column('name', sa.String(length=100), nullable=False),
+    sa.Column('open', sa.Time(), nullable=False),
+    sa.Column('close', sa.Time(), nullable=False),
+    sa.Column('name', sa.String(length=30), nullable=False),
     sa.Column('description', sa.String(length=255), nullable=False),
-    sa.Column('street', sa.String(length=100), nullable=False),
-    sa.Column('unit', sa.String(length=50), nullable=False),
+    sa.Column('street', sa.String(length=45), nullable=False),
+    sa.Column('unit', sa.String(length=15), nullable=True),
     sa.Column('zip', sa.Integer(), nullable=False),
-    sa.Column('city', sa.String(length=35), nullable=False),
-    sa.Column('state', sa.String(length=20), nullable=False),
+    sa.Column('city', sa.String(length=17), nullable=False),
+    sa.Column('state', sa.String(length=12), nullable=False),
     sa.Column('phone', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=False),
     sa.Column('createdAt', sa.DateTime(), nullable=True),
@@ -112,11 +114,10 @@ def upgrade():
     sa.Column('userId', sa.Integer(), nullable=False),
     sa.Column('title', sa.String(length=35), nullable=False),
     sa.Column('description', sa.String(length=255), nullable=False),
-    sa.Column('quantity', sa.Integer(), nullable=False),
+    sa.Column('quantity', sa.String(length=12), nullable=False),
     sa.Column('categoryId', sa.Integer(), nullable=False),
     sa.Column('imageUrl', sa.String(length=2048), nullable=False),
     sa.Column('expirationDate', sa.DateTime(), nullable=False),
-    sa.Column('endDate', sa.DateTime(), nullable=False),
     sa.Column('status', sa.Integer(), nullable=False),
     sa.Column('createdAt', sa.DateTime(), nullable=True),
     sa.Column('updatedAt', sa.DateTime(), nullable=True),
@@ -130,13 +131,14 @@ def upgrade():
     sa.Column('isDropoff', sa.Boolean(), nullable=False),
     sa.Column('postId', sa.Integer(), nullable=False),
     sa.Column('userId', sa.Integer(), nullable=False),
-    sa.Column('address', sa.String(length=255), nullable=False),
+    sa.Column('organizationId', sa.Integer(), nullable=False),
     sa.Column('start', sa.DateTime(), nullable=False),
     sa.Column('end', sa.DateTime(), nullable=False),
     sa.Column('completed', sa.Integer(), nullable=False),
     sa.Column('cancellationReason', sa.String(length=255), nullable=True),
     sa.Column('createdAt', sa.DateTime(), nullable=True),
     sa.Column('updatedAt', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['organizationId'], ['organizations.id'], ),
     sa.ForeignKeyConstraint(['postId'], ['posts.id'], ),
     sa.ForeignKeyConstraint(['userId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a5a6423d89bb598e1530456f48b734405d6416dce2255a2c105986b7213d0b2f"
+            "sha256": "f03ed24cc55c509d51e367892ce2ddb7fda004bcae08070b9b76f434a1fddbb9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -37,7 +37,7 @@
                 "sha256:637996211036b6385ef91435e4fae22989472f9d571faba8927ba8253acbc330",
                 "sha256:b8c3f85900b9dc423225913c5aace94729fe1fa9763b38939a95226f02d37186"
             ],
-            "markers": "python_version >= '3.5'",
+            "index": "pypi",
             "version": "==5.1.1"
         },
         "dnspython": {
@@ -183,6 +183,21 @@
             "index": "pypi",
             "version": "==3.3"
         },
+        "infinity": {
+            "hashes": [
+                "sha256:8daa7c15ce2100fdccfde212337e0cd5cf085869f54dc2634b6c30d61461ecda"
+            ],
+            "index": "pypi",
+            "version": "==1.5"
+        },
+        "intervals": {
+            "hashes": [
+                "sha256:7c963abf7b4be2be40322b84e036af5d4ebec0945b5d29df7da1a638b3fea768",
+                "sha256:c7ee568c583ca857c0d91af6d90ee5e0e8adef3f5646d0076bfb87305ae43090"
+            ],
+            "index": "pypi",
+            "version": "==0.9.2"
+        },
         "itsdangerous": {
             "hashes": [
                 "sha256:5174094b9637652bdb841a3029700391451bd092ba3db90600dea710ba28e97c",
@@ -309,6 +324,14 @@
             "index": "pypi",
             "version": "==1.0.4"
         },
+        "python-stdnum": {
+            "hashes": [
+                "sha256:374e2b5e13912ccdbf50b0b23fca2c3e0531174805c32d74e145f37756328340",
+                "sha256:a46e6cf9652807314d369b654b255c86a59f93d18be2834f3d567ed1a346c547"
+            ],
+            "index": "pypi",
+            "version": "==1.17"
+        },
         "setuptools": {
             "hashes": [
                 "sha256:26ead7d1f93efc0f8c804d9fafafbe4a44b179580a7105754b245155f9af05a8",
@@ -361,6 +384,14 @@
             "index": "pypi",
             "version": "==1.4.19"
         },
+        "sqlalchemy-utils": {
+            "hashes": [
+                "sha256:622235b1598f97300e4d08820ab024f5219c9a6309937a8b908093f487b4ba54",
+                "sha256:9e01d6d3fb52d3926fcd4ea4a13f3540701b751aced0316bff78264402c2ceb4"
+            ],
+            "index": "pypi",
+            "version": "==0.38.2"
+        },
         "validators": {
             "hashes": [
                 "sha256:0143dcca8a386498edaf5780cbd5960da1a4c85e0719f3ee5c9b41249c4fefbd",
@@ -384,6 +415,21 @@
             ],
             "index": "pypi",
             "version": "==2.3.3"
+        },
+        "wtforms-alchemy": {
+            "hashes": [
+                "sha256:7748494056bdd96a7566186b8f422180465c337b2e892ad8e82a063cd6c76ca7",
+                "sha256:c14cec7f76e27351a5777182ff39fcba64b7c46a561401835426605e6c83f216"
+            ],
+            "index": "pypi",
+            "version": "==0.18.0"
+        },
+        "wtforms-components": {
+            "hashes": [
+                "sha256:7d0d83dec6d5352c661e522be628f49c2de3aa78cd79c9caf0c1cc3bff4e3872"
+            ],
+            "index": "pypi",
+            "version": "==0.10.5"
         }
     },
     "develop": {

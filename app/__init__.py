@@ -4,8 +4,10 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import generate_csrf
 from flask_login import LoginManager
+from .stdnum import *
 
-from app.models import db, User
+from .models import db, User
+from .api.users import user_routes
 
 from .seeds import seed_group
 
@@ -23,7 +25,7 @@ def load_user(id):
 app.cli.add_command(seed_group)
 
 app.config.from_object(Config)
-
+app.register_blueprint(user_routes, url_prefix='/api/users')
 db.init_app(app)
 Migrate(app, db)
 

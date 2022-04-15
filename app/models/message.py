@@ -12,6 +12,7 @@ class Message(db.Model):
     createdAt = db.Column(db.DateTime, default=db.func.now())
 
     user = db.relationship('User', back_populates='messages')
+    # recipient and sender 
 
     def to_dict(self):
         return {

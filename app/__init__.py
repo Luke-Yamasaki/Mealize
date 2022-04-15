@@ -11,7 +11,8 @@ from .api.authentication import auth_routes
 from .api.organizations import organization_routes
 from .api.categories import category_routes
 from .api.posts import post_routes
-from .api.messages import message, message_routes
+from .api.messages import message_routes
+from .api.deliveries import delivery_routes
 
 from .seeds import seed_group
 
@@ -35,6 +36,7 @@ app.register_blueprint(organization_routes, url_prefix='/api/organizations')
 app.register_blueprint(category_routes, url_prefix='/api/categories')
 app.register_blueprint(post_routes, url_prefix='/api/posts')
 app.register_blueprint(message_routes, url_prefix='/api/messages')
+app.register_blueprint(delivery_routes, url_prefix='/api/deliveries')
 db.init_app(app)
 Migrate(app, db)
 

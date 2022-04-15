@@ -5,4 +5,5 @@ from .request_form import RequestForm
 from .item_form import ItemForm
 from .delivery_form import DeliveryForm
 from .message_form import MessageForm
+from .calendar_form import CalendarForm
 from .event_form import EventForm

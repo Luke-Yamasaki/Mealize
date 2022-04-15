@@ -12,9 +12,6 @@ import { Users } from './Pages/Users';
 import { Settings } from './Pages/Settings';
 import { Inbox } from './Pages/Inbox';
 
-import logo from './logo.svg';
-import styles from './Styles/App.module.css'
-
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();

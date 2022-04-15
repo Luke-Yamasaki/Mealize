@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     deaf = db.Column(db.Boolean, nullable=False)
     autism = db.Column(db.Boolean, nullable=False)
     learningDisabled = db.Column(db.Boolean, nullable=False)
+    lgbtq = db.Column(db.Boolean, nullable=False)
     profileImageUrl = db.Column(db.String(2048), nullable=False)
     jobDescription = db.Column(db.String(255), nullable=False)
     hashedPassword = db.Column(db.String(255), nullable=False)

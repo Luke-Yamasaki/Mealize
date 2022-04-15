@@ -30,6 +30,7 @@ class Organization(db.Model):
 
     def to_dict(self):
         return {
+            'id': self.id,
             'isNonprofit': self.isNonprofit,
             'logoUrl': self.logoUrl,
             'imageUrl': self.imageUrl,
@@ -45,4 +46,32 @@ class Organization(db.Model):
             'phone': self.phone,
             'email': self.email,
             'createdAt': self.createdAt
+        }
+
+    def updated_info(self):
+        return {
+            'id': self.id,
+            'isNonprofit': self.isNonprofit,
+            'logoUrl': self.logoUrl,
+            'imageUrl': self.imageUrl,
+            'open': self.open,
+            'close': self.close,
+            'name': self.name,
+            'description': self.description,
+            'street': self.street,
+            'unit': self.unit,
+            'zip': self.zip,
+            'city': self.city,
+            'state': self.state,
+            'phone': self.phone,
+            'email': self.email,
+            'createdAt': self.createdAt,
+            'updatedAt': self.updatedAt
+        }
+
+
+    def deleted_info(self):
+        return {
+            "id": self.id,
+            "name": self.name
         }

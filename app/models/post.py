@@ -38,3 +38,9 @@ class Post(db.Model):
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt
         }
+
+    def deleted_info(self):
+        return {
+            'id': self.id,
+            'title': self.title
+        }

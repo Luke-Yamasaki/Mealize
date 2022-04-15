@@ -4,10 +4,16 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import generate_csrf
 from flask_login import LoginManager
-from .stdnum import *
 
 from .models import db, User
 from .api.users import user_routes
+from .api.authentication import auth_routes
+from .api.organizations import organization_routes
+from .api.categories import category_routes
+from .api.posts import post_routes
+from .api.messages import message_routes
+from .api.deliveries import delivery_routes
+from .api.events import event_routes
 
 from .seeds import seed_group
 
@@ -26,6 +32,14 @@ app.cli.add_command(seed_group)
 
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
+app.register_blueprint(auth_routes, url_prefix='/api/auth')
+app.register_blueprint(organization_routes, url_prefix='/api/organizations')
+app.register_blueprint(category_routes, url_prefix='/api/categories')
+app.register_blueprint(post_routes, url_prefix='/api/posts')
+app.register_blueprint(message_routes, url_prefix='/api/messages')
+app.register_blueprint(delivery_routes, url_prefix='/api/deliveries')
+app.register_blueprint(event_routes, url_prefix='/api/events')
+
 db.init_app(app)
 Migrate(app, db)
 

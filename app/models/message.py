@@ -1,4 +1,5 @@
 from .db import db
+from datetime import datetime
 
 class Message(db.Model):
     __tablename__ = 'messages'
@@ -9,9 +10,9 @@ class Message(db.Model):
     content = db.Column(db.String(255), nullable=False)
     imageUrl = db.Column(db.String(255), nullable=True)
     createdAt = db.Column(db.DateTime, default=db.func.now())
-    updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
     user = db.relationship('User', back_populates='messages')
+    # recipient and sender 
 
     def to_dict(self):
         return {
@@ -21,5 +22,10 @@ class Message(db.Model):
             'content': self.content,
             'imageUrl': self.imageUrl,
             'createdAt': self.createdAt,
-            'updatedAt': self.updatedAt,
+        }
+
+    def deleted_info(self):
+        return {
+            'id': self.id,
+            'deletedAt': datetime.now()
         }

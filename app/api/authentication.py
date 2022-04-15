@@ -3,8 +3,6 @@ from app.models import User, db
 from app.forms import LoginForm, SignupForm
 from flask_login import current_user, login_user, logout_user
 
-from os import environ
-
 auth_routes = Blueprint('auth', __name__)
 
 def errors_to_list(validation_errors):

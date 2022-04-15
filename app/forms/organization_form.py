@@ -23,7 +23,7 @@ class OrganizationForm(FlaskForm):
     name = StringField("Name", validators=[InputRequired(), Length(min=1, max=30, message="Organization names must be shorter than 30 characters.")])
     street = StringField("Street", validators=[InputRequired(), Length(min=5, max=45, message="Street names must be shorter than 45 characters.")])
     unit = StringField("Unit", validators=[Length(min=1, max=15, message='Unit information must be between 1 and 15 characters long.')])
-    zipcode = StringField("Zipcode", validators=[InputRequired(), NumberRange(min=5, max=9)])
+    zip = StringField("Zip code", validators=[InputRequired(), NumberRange(min=5, max=9)])
     city = StringField("City", validators=[InputRequired(), Length(min=3, max=17, message="City names cannot be shorter than three characters or longer than 17 characters.")])
     state = StringField("State", validators=[InputRequired(), Length(min=4, max=12)])
     description = StringField("Description", validators=[InputRequired(), Length(min=30, max=255, message="Please provide a description of your organization between 30 and 255 characters.")])

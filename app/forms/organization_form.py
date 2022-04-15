@@ -1,6 +1,6 @@
 from tkinter.tix import InputOnly
 from flask_wtf import FlaskForm
-from wtforms import IntegerField, StringField, BooleanField
+from wtforms import IntegerField, StringField, BooleanField, TimeField
 from wtforms.fields.html5 import URLField
 from wtforms_alchemy import PhoneNumberField
 from wtforms.validators import InputRequired, ValidationError, Email, Length, NumberRange
@@ -30,5 +30,7 @@ class OrganizationForm(FlaskForm):
     phone = PhoneNumberField("Phone number", country_code='US', display_format='national', validators=[InputRequired()])
     email = StringField("Email", validators=[InputRequired(), Email("Please provide a valid email address."), existing_organization])
     website = StringField("Website", validators=[InputRequired(), Length(min=4, max=70, message='Website URLs must be between 4 and 70 characters long.')])
+    open = TimeField("Open", validators=[InputRequired()])
+    close = TimeField("Close", validators=[InputRequired()])
     logoUrl = URLField("Logo", validators=[InputRequired(), Length(min=4, max=2048, message="Please provide an image URL that is between 4 and 2048 characters long."), image_validation])
     imageUrl = URLField("Banner image", validators=[InputRequired(), Length(min=4, max=2048, message="Please provide an image URL that is between 4 and 2048 characters long."), image_validation])

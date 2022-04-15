@@ -8,6 +8,8 @@ class Organization(db.Model):
     isNonprofit = db.Column(db.Boolean, nullable=False)
     logoUrl = db.Column(db.String(2048), nullable=False)
     imageUrl = db.Column(db.String(2048), nullable=False)
+    open = db.Column(db.Time, nullable=False)
+    close = db.Column(db.Time, nullable=False)
     name = db.Column(db.String(30), nullable=False)
     description = db.Column(db.String(255), nullable=False)
     street = db.Column(db.String(45), nullable=False)
@@ -31,6 +33,8 @@ class Organization(db.Model):
             'isNonprofit': self.isNonprofit,
             'logoUrl': self.logoUrl,
             'imageUrl': self.imageUrl,
+            'open': self.open,
+            'close': self.close,
             'name': self.name,
             'description': self.description,
             'street': self.street,

@@ -10,7 +10,7 @@ def existing_user(field):
     email = field.data
     user = User.query.filter(User.email == email).first()
     if user:
-        raise ValidationError('The email address you provided is already in use.')
+        raise ValidationError('The email address you provided is already in use by another user.')
 
 class SignupForm(FlaskForm):
     firstName = StringField('First Name', validators=[InputRequired(), Length(min=1, max=50, message='Sorry, we cannot store first names longer than 50 characters.')])
@@ -25,6 +25,6 @@ class SignupForm(FlaskForm):
     isNonprofit = BooleanField("Nonprofit", validators=[InputRequired()])
     isManager = BooleanField("Manager", validators=[InputRequired()])
     email = StringField("Email",  validators=[InputRequired("Please provide your email address."), Email("Please provide a valid email address."), existing_user])
-    phone = PhoneNumberField(country_code='US', display_format='national', validators=[InputRequired()])
+    phone = PhoneNumberField("Phone number", country_code='US', display_format='national', validators=[InputRequired()])
     password = PasswordField("Password", validators=[InputRequired("Please provide your password."), EqualTo('confirm', message="The passwords you provided do not match.")])
     confirm = PasswordField("Confirm password", validators=[InputRequired()])

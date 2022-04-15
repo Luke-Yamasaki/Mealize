@@ -11,7 +11,7 @@ class Organization(db.Model):
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(255), nullable=False)
     street = db.Column(db.String(100), nullable=False)
-    unit = db.Column(db.String(50), nullable=False)
+    unit = db.Column(db.String(50), nullable=True)
     zip = db.Column(db.Integer, nullable=False)
     city = db.Column(db.String(35), nullable=False)
     state = db.Column(db.String(20), nullable=False)

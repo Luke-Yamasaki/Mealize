@@ -21,6 +21,7 @@ class SignupForm(FlaskForm):
     deaf = BooleanField("Deaf", validators=[InputRequired()])
     autism = BooleanField("Deaf", validators=[InputRequired()])
     learningDisabled = BooleanField("Deaf", validators=[InputRequired()])
+    lgbtq = BooleanField("LGBTQ", validators=[InputRequired()])
     organizationId = IntegerField("Organization Id", validators=[InputRequired()])
     isNonprofit = BooleanField("Nonprofit", validators=[InputRequired()])
     isManager = BooleanField("Manager", validators=[InputRequired()])

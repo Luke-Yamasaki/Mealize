@@ -2,15 +2,9 @@ from flask import Blueprint, request
 from flask_login import current_user
 from app.models import db, Organization
 from app.forms import OrganizationForm
+from app.utils import errors_to_list
 
 organization_routes = Blueprint('organizations', __name__)
-
-def errors_to_list(validation_errors):
-    errors = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errors.append(f'{field} : {error}')
-    return errors
 
 @organization_routes.route('/')
 def all_organizations():
@@ -22,7 +16,9 @@ def all_organizations():
 def new_organization():
     form = OrganizationForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-
+    isManager = current_user.isManager
+    if isManager == False:
+        return {'error': 'You are not authorized for this action.'}
     if form.validate_on_submit():
         organization = Organization(
             federalId = form.data['federalId'],

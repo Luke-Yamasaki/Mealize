@@ -2,15 +2,9 @@ from flask import Blueprint, request
 from app.models import User, db
 from app.forms import LoginForm, SignupForm
 from flask_login import current_user, login_user, logout_user
+from app.utils import errors_to_list
 
 auth_routes = Blueprint('auth', __name__)
-
-def errors_to_list(validation_errors):
-    errors = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errors.append(f'{field} : {error} ')
-    return errors
 
 @auth_routes.route('/')
 def authenticate():

@@ -7,7 +7,7 @@ class Delivery(db.Model):
     isDropoff = db.Column(db.Boolean, nullable=False)
     postId = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
     userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    address = db.Column(db.String(255), nullable=False)
+    organizationId = db.Column(db.Integer, db.ForeignKey('organizations.id'), nullable=False)
     start = db.Column(db.DateTime, nullable=False)
     end = db.Column(db.DateTime, nullable=False)
     completed = db.Column(db.Integer, nullable=False)
@@ -17,6 +17,7 @@ class Delivery(db.Model):
 
     post = db.relationship('Post', back_populates='delivery')
     volunteer = db.relationship('User', back_populates='delivery')
+    location = db.relationship('Organization', back_populates='delivery')
 
     def to_dict(self):
         return {
@@ -24,7 +25,7 @@ class Delivery(db.Model):
             'isDropoff': self.isDropoff,
             'postId': self.postId,
             'userId': self.userId,
-            'address': self.address,
+            'location': self.location.to_dict(),
             'start': self.start,
             'end': self.end,
             'completed': self.completed,

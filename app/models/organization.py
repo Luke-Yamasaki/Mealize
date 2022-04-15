@@ -24,6 +24,7 @@ class Organization(db.Model):
     posts = db.relationship('Post', back_populates='organization')
     calendar = db.relationship('Calendar', back_populates='organization')
     events = db.relationship('Event', back_populates='organization')
+    delivery = db.relationship('Delivery', back_populates='location')
 
     def to_dict(self):
         return {

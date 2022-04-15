@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from flask_login import current_user
+from flask_login import current_user, login_required
 from app.models import db, Organization
 from app.forms import OrganizationForm
 from app.utils import errors_to_list
@@ -13,6 +13,7 @@ def all_organizations():
     return {'nonprofits': {nonprofit.id:nonprofit.to_dict() for nonprofit in nonprofits_list}, 'businesses': {business.id:business.to_dict() for business in businesses_list}}
 
 @organization_routes.route('/', methods=['POST'])
+@login_required
 def new_organization():
     form = OrganizationForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -44,6 +45,7 @@ def new_organization():
     return {'errors': errors_to_list(form.errors)}
 
 @organization_routes.route('/<int:id>', methods=['PUT'])
+@login_required
 def update_organization(id):
     form = OrganizationForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -71,6 +73,7 @@ def update_organization(id):
     return {'errors': errors_to_list(form.errors)}
 
 @organization_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
 def delete_organization(id):
     deleted_data ={}
     organization = Organization.query.get(id)

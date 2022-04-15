@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from flask_login import current_user
+from flask_login import current_user, login_required
 from app.models import db, Post
 from app.forms.item_form import ItemForm
 from app.forms.request_form import RequestForm
@@ -10,7 +10,7 @@ post_routes = Blueprint('posts', __name__)
 @post_routes.route('/')
 def posts():
     all_posts = Post.query.all()
-    return {'users': [post.to_dict() for post in all_posts]}
+    return {'posts': [post.to_dict() for post in all_posts]}
 
 @post_routes.routes('/<int:id>')
 def post(id):
@@ -18,6 +18,7 @@ def post(id):
     return post.to_dict()
 
 @post_routes.route('/', methods=['POST'])
+@login_required
 def new_post():
     isManager = current_user.isManager
     if isManager == False:
@@ -64,6 +65,7 @@ def new_post():
     return {'errors': errors_to_list(form.errors)}
 
 @post_routes.route('/<int:id>', methods=['PUT'])
+@login_required
 def update_post(id):
     isManager = current_user.isManager
     if isManager == False:
@@ -108,7 +110,11 @@ def update_post(id):
     return {'errors': errors_to_list(form.errors)}
 
 @post_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
 def delete_post(id):
+    isManager = current_user.isManager
+    if isManager == False:
+        return {'error': 'You are not authorized for this action.'}
     deleted_data = {}
     post = Post.query.get(id)
     deleted_data['post'] = post.deleted_info()

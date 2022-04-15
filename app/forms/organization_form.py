@@ -1,4 +1,3 @@
-from tkinter.tix import InputOnly
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, BooleanField, TimeField
 from wtforms.fields.html5 import URLField

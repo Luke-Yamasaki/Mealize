@@ -15,7 +15,7 @@ def messages():
     received_messages = Message.query.filter(Message.receiverId == userId)
     return {'sent': {message.id:message.to_dict() for message in sent_messages}, 'received': {message.id:message.to_dict() for message in received_messages}}
 
-@message_routes.routes('/<int:id>')
+@message_routes.route('/<int:id>')
 @login_required
 def message(id):
     userId = current_user.id

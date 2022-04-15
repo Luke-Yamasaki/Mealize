@@ -17,8 +17,7 @@ def all_organizations():
 def new_organization():
     form = OrganizationForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    isManager = current_user.isManager
-    if isManager == False:
+    if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
     if form.validate_on_submit():
         organization = Organization(

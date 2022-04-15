@@ -11,7 +11,7 @@ def all_events():
     all_events = Event.query.all()
     return {'events': {event.id:event.to_dict() for event in all_events}}
 
-@event_routes.routes('/<int:id>')
+@event_routes.route('/<int:id>')
 def event(id):
     event = Event.query.get(id)
     return event.to_dict()
@@ -19,8 +19,7 @@ def event(id):
 @event_routes.route('/', methods=['POST'])
 @login_required
 def new_event():
-    isManager = current_user.isManager
-    if isManager == False:
+    if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
     form = EventForm()
     form['csrf_token'].data = request.cookies['csrf_token']

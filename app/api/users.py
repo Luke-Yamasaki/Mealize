@@ -8,7 +8,7 @@ def users():
     all_users = User.query.all()
     return {'users': [user.home_dict() for user in all_users]}
 
-@user_routes.routes('/<int:id>')
+@user_routes.route('/<int:id>')
 def user(id):
     user = User.query.get(id)
     return user.profile_dict()

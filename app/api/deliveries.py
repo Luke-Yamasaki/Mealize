@@ -13,7 +13,7 @@ def all_deliveries():
     all_deliveries = Delivery.query.filter(Delivery.organizationId == organizationId)
     return {'deliveries': [delivery.to_dict() for delivery in all_deliveries]}
 
-@delivery_routes.routes('/<int:id>')
+@delivery_routes.route('/<int:id>')
 @login_required
 def delivery(id):
     delivery = Delivery.query.get(id)
@@ -22,8 +22,7 @@ def delivery(id):
 @delivery_routes.route('/', methods=['POST'])
 @login_required
 def new_delivery():
-    isManager = current_user.isManager
-    if isManager == False:
+    if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
     form = DeliveryForm()
     form['csrf_token'].data = request.cookies['csrf_token']
@@ -79,4 +78,3 @@ def update_delivery():
             db.session.commit()
             return delivery.to_dict()
     return {'errors': errors_to_list(form.errors)}
-

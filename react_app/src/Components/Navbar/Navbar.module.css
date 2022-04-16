@@ -1,0 +1,36 @@
+.background {
+    width: 1600px;
+    height: 60px;
+    background: linear-gradient(#76D97E, #28A690);
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    z-index: 100;
+    animation-name: lockin;
+    animation-duration: 10s;
+    animation-iteration-count: 1;
+}
+
+@keyframes lockin {
+    0% {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+    85% {
+        width: 100vw;
+        height: 60px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    100% {
+        width: 1600px;
+    }
+}

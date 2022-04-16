@@ -13,7 +13,7 @@ import { Settings } from './Pages/Settings';
 import { Inbox } from './Pages/Inbox';
 
 import { Background } from './Components/Styled/Background';
-
+import { Navbar } from './Components/Navbar'
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
@@ -21,6 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <Background>
+        <Navbar />
         <Switch>
           <Route exact path='/'>
             <Home />

@@ -221,7 +221,6 @@ const initialState = { user:null };
 
 export default function sessionReducer(state = initialState, action) {
     let newState = { ...state };
-    console.log(newState)
     switch(action.type) {
         case USER_IS_SET:
             return { user: action.payload };

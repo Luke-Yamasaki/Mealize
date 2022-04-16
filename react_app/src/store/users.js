@@ -48,3 +48,15 @@ export const getOneUser = (userId) => async dispatch => {
         dispatch(connectionFailed())
     };
 };
+
+export default function userReducer(state = {}, action) {
+    let newState = { ...state };
+    switch(action.type) {
+        case GOT_BATCHED_USERS:
+            newState.users = action.payload;
+        case GOT_ONE_USER:
+            newState.user = action.payload;
+        case CONNECTION_FAILED:
+            return newState;
+    };
+};

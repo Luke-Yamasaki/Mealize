@@ -229,6 +229,8 @@ export default function sessionReducer(state = initialState, action) {
         case REMOVED_FAVORITE:
             delete newState.user.favorites[action.payload]; // Double check to see that payload is the removed id
             return newState;
+        default:
+            return state;
         // case SENT_MESSAGE:
         //     newState.user.messages[action.payload.id] = action.payload;
         //     return newState;
@@ -237,5 +239,5 @@ export default function sessionReducer(state = initialState, action) {
         //     return newState;
         // case GOT_ONE_MESSAGE:
         //     newState.user.messages[action.payload.id] = action.payload;
-    }
-}
+    };
+};

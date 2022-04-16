@@ -107,5 +107,7 @@ export default function messagesReducer(state = {}, action) {
         case DELETED_MESSAGE:
             delete newState.messages[action.payload.id];
             return newState;
+        default:
+            return state;
     };
 };

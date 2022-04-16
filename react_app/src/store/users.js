@@ -51,5 +51,7 @@ export default function userReducer(state = {}, action) {
             newState.users = action.payload;
         case GOT_ONE_USER:
             newState.user = action.payload;
+        default:
+            return state;
     };
 };

@@ -4,10 +4,10 @@ import styles from './Navbar.module.css';
 
 export const Navbar = () => {
     return (
-        <nav className={styles.background}>
+        <nav className={styles.navbar}>
             <ul>
-                <li><svg></svg></li>
-                <li><svg></svg></li>
+                <li style={{listStyle: 'none'}}><svg></svg></li>
+                <li style={{listStyle: 'none'}}><svg></svg></li>
             </ul>
         </nav>
     )

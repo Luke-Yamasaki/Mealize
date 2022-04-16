@@ -3,10 +3,9 @@ const REMOVED_USER = 'session/REMOVED_USER';
 const REFRESHED_USER = 'session/REFRESHED_USER';
 const ADDED_FAVORITE = 'session/ADDED_FAVORITE';
 const REMOVED_FAVORITE = 'session/REMOVED_FAVORITE';
-const SENT_MESSAGE = 'session/SENT_MESSAGE';
-const GOT_MESSAGES = 'session/GOT_MESSAGES';
-const GOT_ONE_MESSAGE = 'session/GOT_ONE_MESSAGE';
-const CONNECTION_FAILED = 'session/CONNECTION_FAILED';
+// const SENT_MESSAGE = 'session/SENT_MESSAGE';
+// const GOT_MESSAGES = 'session/GOT_MESSAGES';
+// const GOT_ONE_MESSAGE = 'session/GOT_ONE_MESSAGE';
 
 //actions
 const userIsSet = payload => ({
@@ -33,24 +32,20 @@ const removedFavorite = payload => ({
     payload
 });
 
-const sentMessage = payload => ({
-    type: SENT_MESSAGE,
-    payload
-});
+// const sentMessage = payload => ({
+//     type: SENT_MESSAGE,
+//     payload
+// });
 
-const gotMessages = payload => ({
-    type: GOT_MESSAGES,
-    payload
-});
+// const gotMessages = payload => ({
+//     type: GOT_MESSAGES,
+//     payload
+// });
 
-const gotOneMessage = payload => ({
-    type: GOT_ONE_MESSAGE,
-    payload
-});
-
-const connectionFailed = () => ({
-    type: CONNECTION_FAILED
-});
+// const gotOneMessage = payload => ({
+//     type: GOT_ONE_MESSAGE,
+//     payload
+// });
 
 // action creators
 export const login = (email, password) => async (dispatch) => {
@@ -74,7 +69,7 @@ export const login = (email, password) => async (dispatch) => {
             return data.errors;
         };
     } else {
-        dispatch(connectionFailed())
+        return 'Connection failed. Please check your internet connection.'
     }
 };
 
@@ -92,7 +87,7 @@ export const logout = () => async (dispatch) => {
             return data.errors;
         };
     } else {
-        dispatch(connectionFailed())
+        return 'Connection failed. Please check your internet connection.'
     };
 };
 
@@ -114,7 +109,7 @@ export const signup = (data) => async (dispatch) => {
             return data.errors;
         };
     } else {
-        dispatch(connectionFailed())
+        return 'Connection failed. Please check your internet connection.'
     };
 };
 
@@ -130,7 +125,7 @@ export const refreshUser = () => async (dispatch) => {
             return data.errors;
         };
     } else {
-        dispatch(connectionFailed())
+        return 'Connection failed. Please check your internet connection.'
     };
 };
 
@@ -152,7 +147,7 @@ export const addFavorite = (postId) => async (dispatch) => {
             return data.errors;
         };
     } else {
-        dispatch(connectionFailed())
+        return 'Connection failed. Please check your internet connection.'
     };
     // return favorite;
 };
@@ -175,47 +170,47 @@ export const removeFavorite = (postId) => async (dispatch) => {
             return data.errors;
         };
     } else {
-        dispatch(connectionFailed())
+        return 'Connection failed. Please check your internet connection.'
     };
     // return favorite;
 };
 
-export const sendMessage = (message) => async (dispatch) => {
-    const response = await fetch('/api/messages/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(message)
-    });
-    if(response.ok) {
-        const sent = await response.json();
-        dispatch(sentMessage(sent));
-    } else if(response.status < 500) {
-        const data = await response.json();
-        if(data.errors){
-            return data.errors;
-        };
-    } else {
-        dispatch(connectionFailed())
-    };
-};
+// export const sendMessage = (message) => async (dispatch) => {
+//     const response = await fetch('/api/messages/', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(message)
+//     });
+//     if(response.ok) {
+//         const sent = await response.json();
+//         dispatch(sentMessage(sent));
+//     } else if(response.status < 500) {
+//         const data = await response.json();
+//         if(data.errors){
+//             return data.errors;
+//         };
+//     } else {
+//         return 'Connection failed. Please check your internet connection.'
+//     };
+// };
 
-export const getMessages = () => async (dispatch) => {
-    const response = await fetch('/api/messages/');
+// export const getMessages = () => async (dispatch) => {
+//     const response = await fetch('/api/messages/');
 
-    if(response.ok) {
-        const messages = await response.json();
-        dispatch(gotMessages(messages));
-    } else if(response.status < 500) {
-        const data = await response.json();
-        if(data.errors){
-            return data.errors;
-        };
-    } else {
-        dispatch(connectionFailed())
-    };
-};
+//     if(response.ok) {
+//         const messages = await response.json();
+//         dispatch(gotMessages(messages));
+//     } else if(response.status < 500) {
+//         const data = await response.json();
+//         if(data.errors){
+//             return data.errors;
+//         };
+//     } else {
+//         return 'Connection failed. Please check your internet connection.'
+//     };
+// };
 
 const initialState = { user:null };
 
@@ -234,15 +229,13 @@ export default function sessionReducer(state = initialState, action) {
         case REMOVED_FAVORITE:
             delete newState.user.favorites[action.payload]; // Double check to see that payload is the removed id
             return newState;
-        case SENT_MESSAGE:
-            newState.user.messages[action.payload.id] = action.payload;
-            return newState;
-        case GOT_MESSAGES:
-            newState.user.messages = action.payload;
-            return newState;
-        case GOT_ONE_MESSAGE:
-            newState.user.messages[action.payload.id] = action.payload;
-        case CONNECTION_FAILED:
-            return newState;
+        // case SENT_MESSAGE:
+        //     newState.user.messages[action.payload.id] = action.payload;
+        //     return newState;
+        // case GOT_MESSAGES:
+        //     newState.user.messages = action.payload;
+        //     return newState;
+        // case GOT_ONE_MESSAGE:
+        //     newState.user.messages[action.payload.id] = action.payload;
     }
 }

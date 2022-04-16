@@ -5,6 +5,7 @@ const ADDED_FAVORITE = 'session/ADDED_FAVORITE';
 const REMOVED_FAVORITE = 'session/REMOVED_FAVORITE';
 const SENT_MESSAGE = 'session/SENT_MESSAGE';
 const GOT_MESSAGES = 'session/GOT_MESSAGES';
+const GOT_ONE_MESSAGE = 'session/GOT_ONE_MESSAGE';
 const CONNECTION_FAILED = 'session/CONNECTION_FAILED';
 
 //actions
@@ -39,6 +40,11 @@ const sentMessage = payload => ({
 
 const gotMessages = payload => ({
     type: GOT_MESSAGES,
+    payload
+});
+
+const gotOneMessage = payload => ({
+    type: GOT_ONE_MESSAGE,
     payload
 });
 
@@ -209,5 +215,35 @@ export const getMessages = () => async (dispatch) => {
     } else {
         dispatch(connectionFailed())
     };
+};
 
+const initialState = { user:null };
+
+export default function sessionReducer(state = initialState, action) {
+    let newState = { ...state };
+    console.log(newState)
+    switch(action.type) {
+        case USER_IS_SET:
+            return { user: action.payload };
+        case REMOVED_USER:
+            return { user: null };
+        case REFRESHED_USER:
+            return { user: action.payload };
+        case ADDED_FAVORITE:
+            newState.user.favorites[action.payload.postId] = action.payload;
+            return newState;
+        case REMOVED_FAVORITE:
+            delete newState.user.favorites[action.payload]; // Double check to see that payload is the removed id
+            return newState;
+        case SENT_MESSAGE:
+            newState.user.messages[action.payload.id] = action.payload;
+            return newState;
+        case GOT_MESSAGES:
+            newState.user.messages = action.payload;
+            return newState;
+        case GOT_ONE_MESSAGE:
+            newState.user.messages[action.payload.id] = action.payload;
+        case CONNECTION_FAILED:
+            return newState;
+    }
 }

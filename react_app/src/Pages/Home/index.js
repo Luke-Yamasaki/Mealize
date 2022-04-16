@@ -1,7 +1,12 @@
 import styles from './Home.module.css';
+import { SignupForm } from '../../Forms/Signup';
 
 export const Home = () => {
     return (
-        <div className={styles.hi}>Home</div>
+        <>
+            <div>
+                <div>Hello</div>
+            </div>
+        </>
     )
 };

@@ -1,9 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import { Logo } from '../Logo';
 import { MagnifyingGlass } from '../../Assets/Icons/MagnifyingGlass';
-import { AuthButton } from '../AuthButton.js';
 import { useSelector, useDispatch } from "react-redux";
 import { LoginForm } from '../../Forms/Login';
+import { SignupForm } from '../../Forms/Signup';
 import styles from './Navbar.module.css';
 import styled from 'styled-components';
 import { showModal, setCurrentModal } from '../../store/modal';
@@ -80,6 +80,11 @@ export const Navbar = () => {
         dispatch(showModal());
     };
 
+    const showSignupModal = () => {
+        dispatch(setCurrentModal(SignupForm));
+        dispatch(showModal());
+    };
+
     if(!sessionUser) {
         return (
             <Nav>
@@ -94,7 +99,7 @@ export const Navbar = () => {
                     </SearchBar>
                     <AuthBox>
                         <div role='button' className={styles.login} onClick={showLoginModal}>Log in</div>
-                        <div role='button' className={styles.signup} onClick={showLoginModal}>Sign up</div>
+                        <div role='button' className={styles.signup} onClick={showSignupModal}>Sign up</div>
                     </AuthBox>
                 </NavList>
             </Nav>

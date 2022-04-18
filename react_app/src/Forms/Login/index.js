@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../store/session';
 import { setCurrentModal, hideModal } from '../../store/modal';
 import { SignupForm } from '../Signup';
-import { AuthButton } from '../../Components/AuthButton.js';
 import styles from './Login.module.css';
 import styled from 'styled-components';
 
@@ -94,7 +93,7 @@ export const LoginForm = () => {
 
     const nonprofitDemo = async (e) => {
         e.preventDefault();
-        const data = await dispatch(login('nonprofit-demo@testing.com', '062651d0-01fe-49c5-aaa1-0829ba3f4ff3'));
+        const data = await dispatch(login('nonprofit_demo@testing.com', '062651d0-01fe-49c5-aaa1-0829ba3f4ff3'));
         if(data && data.errors) {
             data.errors.forEach(error => error.toLowerCase().includes('email') ? setEmailError(error) : setPasswordError(error));
             return 'Error';
@@ -104,7 +103,7 @@ export const LoginForm = () => {
 
     const businessDemo = async (e) => {
         e.preventDefault();
-        const data = await dispatch(login('business-demo@testing.com', '8f08d594-2275-4c8f-93f3-4cb6dbed4b70'));
+        const data = await dispatch(login('business_demo@testing.com', '8f08d594-2275-4c8f-93f3-4cb6dbed4b70'));
         if(data && data.errors) {
             data.errors.forEach(error => error.toLowerCase().includes('email') ? setEmailError(error) : setPasswordError(error));
             return 'Error';

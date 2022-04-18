@@ -101,6 +101,25 @@ def seed_organizations():
     )
     db.session.add(denver_inner_city_parish)
 
+    for i in range(6, 27):
+        nonprofits = Organization(
+            federalId='84-0525768',
+            isNonprofit=True,
+            logoUrl='https://static.wixstatic.com/media/0198fd_29758a36fd2a4afda85e6abfb73e7a56~mv2.png/v1/fill/w_159,h_145,al_c,usm_0.66_1.00_0.01,enc_auto/DICP_logo_White%20Bird_White%20Logo_edited_p.png',
+            imageUrl='https://static.wixstatic.com/media/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg/v1/fill/w_2543,h_787,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg',
+            open='9:00',
+            close='13:00',
+            name='The Denver Inner City Parish',
+            description="The Denver Inner City Parish loves and supports individuals and families in our community, empowering them to break the cycle of poverty. The word parish means “community” and the DICP is committed to community. We are a human services nonprofit. The Parish elevates community through its community programs.",
+            street='1212 Mariposa Street',
+            unit='',
+            zip='80204',
+            city='Denver',
+            state='Colorado',
+            phone='3036290636',
+            email='communications@dicp.org'
+        )
+
     walmart = Organization(
         federalId='71-0415188',
         isNonprofit=False,
@@ -139,7 +158,7 @@ def seed_organizations():
     )
     db.session.add(walmart)
 
-    walmart = Organization(
+    amazon = Organization(
         federalId='71-0415188',
         isNonprofit=False,
         logoUrl='https://latn.com/wp-content/uploads/2014/12/walmart-logo-vector.png',
@@ -156,45 +175,8 @@ def seed_organizations():
         phone='5012734000',
         email='service@walmartcontacts.com'
     )
-    db.session.add(walmart)
+    db.session.add(amazon)
 
-    walmart = Organization(
-        federalId='71-0415188',
-        isNonprofit=False,
-        logoUrl='https://latn.com/wp-content/uploads/2014/12/walmart-logo-vector.png',
-        imageUrl='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Walmart_Home_Office_sign.jpg/1024px-Walmart_Home_Office_sign.jpg',
-        open='5:00',
-        close='22:30',
-        name='Walmart Inc.',
-        description="Retail-variety Stores",
-        street='702 Southwest 8th St',
-        unit='',
-        zip='72716',
-        city='Bentonville',
-        state='Arkansas',
-        phone='5012734000',
-        email='service@walmartcontacts.com'
-    )
-    db.session.add(walmart)
-
-    walmart = Organization(
-        federalId='71-0415188',
-        isNonprofit=False,
-        logoUrl='https://latn.com/wp-content/uploads/2014/12/walmart-logo-vector.png',
-        imageUrl='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Walmart_Home_Office_sign.jpg/1024px-Walmart_Home_Office_sign.jpg',
-        open='5:00',
-        close='22:30',
-        name='Walmart Inc.',
-        description="Retail-variety Stores",
-        street='702 Southwest 8th St',
-        unit='',
-        zip='72716',
-        city='Bentonville',
-        state='Arkansas',
-        phone='5012734000',
-        email='service@walmartcontacts.com'
-    )
-    db.session.add(walmart)
 
     for i in range(3, 27):
         nonprofit_managers = Organization(

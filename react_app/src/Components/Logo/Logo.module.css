@@ -1,0 +1,23 @@
+/* .parent {
+    z-index: 101;
+    animation: shrink 4s ease-in-out 1 normal forwards;
+} */
+
+/* @keyframes shrink {
+    0% {
+        width: 8357.219px;
+        height: 7133.676px;
+    }
+    25% {
+        width: 592.167px;
+        height: 505.471px;
+    }
+    50%{
+        width: 592.167px;
+        height: 505.471px;
+    }
+    100% {
+        width: 45px;
+        height: 38.412px;
+    }
+} */

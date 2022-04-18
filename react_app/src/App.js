@@ -11,8 +11,9 @@ import { Categories } from './Pages/Categories';
 import { Users } from './Pages/Users';
 import { Settings } from './Pages/Settings';
 import { Inbox } from './Pages/Inbox';
-
 import { Background } from './Components/Styled/Background';
+import { Navbar } from './Components/Navbar'
+import Modal from './Components/Modal';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,6 +22,8 @@ function App() {
   return (
     <BrowserRouter>
       <Background>
+        <Navbar />
+        <Modal />
         <Switch>
           <Route exact path='/'>
             <Home />

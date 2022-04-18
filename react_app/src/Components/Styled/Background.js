@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Background = styled.div`
     width: 100vw;
     height: 100vh;
-    background-color: #6B6B6B;
+    background-color: #005C4D;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

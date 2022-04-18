@@ -5,15 +5,22 @@ import styles from './Styles/index.module.css';
 import App from './App';
 import configureStore from './store';
 
+import { setModalMount } from './store/modal';
+
 const store = configureStore();
 
 const Root = () => {
   const dispatch = useDispatch();
+  const modalMountRef = useRef(null);
+
+  useEffect(() => {
+    dispatch(setModalMount(modalMountRef.current))
+  }, [dispatch])
 
   return (
-    <div>
+    <div className={styles.super}>
       <App />
-      <div />
+      <div ref={modalMountRef} className='modal'/>
     </div>
   )
 }

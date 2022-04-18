@@ -38,6 +38,7 @@ infinity = "==1.5"
 intervals = "==0.9.2"
 SQLAlchemy-Utils = "==0.38.2"
 phonenumbers = "*"
+boto3 = "*"
 
 [dev-packages]
 psycopg2-binary = "==2.8.6"

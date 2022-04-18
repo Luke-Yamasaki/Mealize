@@ -163,11 +163,12 @@ def seed_organizations():
             name=fake.company(),
             description=fake.catch_phrase(),
             street=fake.street_address(),
-            zip='80204',
+            unit='',
+            zip='80218',
             city='Denver',
             state='Colorado',
-            phone='3036290636',
-            email='communications@dicp.org'
+            phone=fake.unique.phone_number(),
+            email=fake.unique.email()
         )
         db.session.add(businesses)
 

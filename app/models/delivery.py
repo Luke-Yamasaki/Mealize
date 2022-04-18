@@ -15,7 +15,7 @@ class Delivery(db.Model):
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-    post = db.relationship('Post', back_populates='delivery')
+    post = db.relationship('Post', foreign_keys=[postId], back_populates='delivery')
     volunteer = db.relationship('User', back_populates='delivery')
     location = db.relationship('Organization', back_populates='delivery')
 

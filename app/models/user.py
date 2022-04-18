@@ -1,4 +1,5 @@
 from .db import db
+from .message import Message
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
@@ -13,7 +14,7 @@ class User(db.Model, UserMixin):
     firstName = db.Column(db.String(50), nullable=False)
     lastName = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
-    phone = db.Column(db.Integer, nullable=False, unique=True)
+    phone = db.Column(db.String(20), nullable=False, unique=True)
     age = db.Column(db.Integer, nullable=False)
     deaf = db.Column(db.Boolean, nullable=False)
     autism = db.Column(db.Boolean, nullable=False)
@@ -25,12 +26,13 @@ class User(db.Model, UserMixin):
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-    organization = db.relationship('Organization', back_populates='employees', cascade='all, delete-orphan')
-    posts = db.relationship('Post', back_populates='uploader')
-    delivery = db.relationship('Delivery', back_populates='volunteer')
-    favorites = db.relationship('Favorite', back_populates='user')
-    messages = db.relationship('Message', back_populates='user')
-    events = db.relationship('Event', back_populates='manager')
+    organization = db.relationship('Organization', back_populates='employees')
+    posts = db.relationship('Post', back_populates='uploader', cascade='all, delete-orphan')
+    delivery = db.relationship('Delivery', back_populates='volunteer', cascade='all, delete-orphan')
+    favorites = db.relationship('Favorite', back_populates='user', cascade='all, delete-orphan')
+    sent_messages = db.relationship('Message', back_populates='sender', foreign_keys=[Message.senderId], cascade='all, delete-orphan')
+    received_messages = db.relationship('Message', back_populates='receiver', foreign_keys=[Message.receiverId], cascade='all, delete-orphan')
+    events = db.relationship('Event', back_populates='manager', cascade='all, delete-orphan')
 
     @property
     def password(self):

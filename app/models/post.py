@@ -19,7 +19,10 @@ class Post(db.Model):
 
     organization = db.relationship('Organization', back_populates='posts')
     uploader = db.relationship('User', back_populates='posts')
-    category = db.relationship('Category', back_populates='posts')
+
+    category = db.relationship('Category', back_populates='post')
+    delivery = db.relationship('Delivery', back_populates='post')
+    favorites = db.relationship('Favorite', back_populates='post')
 
     def to_dict(self):
         return {

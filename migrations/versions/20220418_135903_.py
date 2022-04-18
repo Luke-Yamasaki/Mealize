@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: f161aa8657d5
+Revision ID: 431c531936b1
 Revises: 
-Create Date: 2022-04-18 10:07:37.128456
+Create Date: 2022-04-18 13:59:03.560324
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f161aa8657d5'
+revision = '431c531936b1'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,20 +27,20 @@ def upgrade():
     )
     op.create_table('organizations',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('federalId', sa.Integer(), nullable=False),
+    sa.Column('federalId', sa.String(length=11), nullable=False),
     sa.Column('isNonprofit', sa.Boolean(), nullable=False),
     sa.Column('logoUrl', sa.String(length=2048), nullable=False),
     sa.Column('imageUrl', sa.String(length=2048), nullable=False),
     sa.Column('open', sa.Time(), nullable=False),
     sa.Column('close', sa.Time(), nullable=False),
-    sa.Column('name', sa.String(length=30), nullable=False),
-    sa.Column('description', sa.String(length=255), nullable=False),
-    sa.Column('street', sa.String(length=45), nullable=False),
+    sa.Column('name', sa.String(length=100), nullable=False),
+    sa.Column('description', sa.String(length=1000), nullable=False),
+    sa.Column('street', sa.String(length=100), nullable=False),
     sa.Column('unit', sa.String(length=15), nullable=True),
-    sa.Column('zip', sa.Integer(), nullable=False),
+    sa.Column('zip', sa.String(length=18), nullable=False),
     sa.Column('city', sa.String(length=17), nullable=False),
     sa.Column('state', sa.String(length=12), nullable=False),
-    sa.Column('phone', sa.String(length=15), nullable=False),
+    sa.Column('phone', sa.String(length=20), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=False),
     sa.Column('createdAt', sa.DateTime(), nullable=True),
     sa.Column('updatedAt', sa.DateTime(), nullable=True),
@@ -66,7 +66,7 @@ def upgrade():
     sa.Column('firstName', sa.String(length=50), nullable=False),
     sa.Column('lastName', sa.String(length=50), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=False),
-    sa.Column('phone', sa.String(length=15), nullable=False),
+    sa.Column('phone', sa.String(length=20), nullable=False),
     sa.Column('age', sa.Integer(), nullable=False),
     sa.Column('deaf', sa.Boolean(), nullable=False),
     sa.Column('autism', sa.Boolean(), nullable=False),

@@ -2,7 +2,7 @@ from app.models import db, Organization
 from .zipcodes import zipcodes
 from werkzeug.security import generate_password_hash
 import phonenumbers
-from random import random, randint
+from random import choice, randint
 from faker import Faker
 fake = Faker(locale='en-US')
 
@@ -119,44 +119,44 @@ def seed_organizations():
     db.session.add(walmart)
 
     target = Organization(
-        federalId='71-0415188',
+        federalId='	41-0215170',
         isNonprofit=False,
-        logoUrl='https://latn.com/wp-content/uploads/2014/12/walmart-logo-vector.png',
-        imageUrl='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Walmart_Home_Office_sign.jpg/1024px-Walmart_Home_Office_sign.jpg',
-        open='5:00',
-        close='22:30',
-        name='Walmart Inc.',
-        description="Retail-variety Stores",
-        street='702 Southwest 8th St',
-        zip='72716',
-        city='Bentonville',
-        state='Arkansas',
-        phone='5012734000',
-        email='service@walmartcontacts.com'
+        logoUrl='https://corporate.target.com/_media/TargetCorp/Press/B-roll%20and%20Press%20Materials/Logos/Target_Bullseye-Logo_Red.jpg',
+        imageUrl='https://corporate.target.com/_media/TargetCorp/news/2020/08/reach/ABV_REACH_Header.jpg',
+        open='8:00',
+        close='22:00',
+        name='Target Corp',
+        description="We fulfill the needs and fuel the potential of our guests. That means making Target your preferred shopping destination in all channels by delivering outstanding value, continuous innovation and exceptional experiences—consistently fulfilling our Expect More. Pay Less.® brand promise.",
+        street='1000 Nicollet Mall',
+        zip='55403',
+        city='Minneapolis',
+        state='Minnesota',
+        phone='6123046073',
+        email='guest.relations@target.com'
     )
     db.session.add(target)
 
     amazon = Organization(
         federalId='71-0415188',
         isNonprofit=False,
-        logoUrl='https://latn.com/wp-content/uploads/2014/12/walmart-logo-vector.png',
-        imageUrl='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Walmart_Home_Office_sign.jpg/1024px-Walmart_Home_Office_sign.jpg',
-        open='5:00',
-        close='22:30',
-        name='Walmart Inc.',
-        description="Retail-variety Stores",
-        street='702 Southwest 8th St',
-        zip='72716',
-        city='Bentonville',
-        state='Arkansas',
-        phone='5012734000',
-        email='service@walmartcontacts.com'
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='24:00',
+        close='24:00',
+        name='Amazon Com Inc',
+        description="Amazon is guided by four principles: customer obsession rather than competitor focus, passion for invention, commitment to operational excellence, and long-term thinking. Amazon strives to be Earth's most customer-centric company, Earth's best employer, and Earth's safest place to work. Customer reviews, 1-Click shopping, personalized recommendations, Prime, Fulfillment by Amazon, AWS, Kindle Direct Publishing, Kindle, Career Choice, Fire tablets, Fire TV, Amazon Echo, Alexa, Just Walk Out technology, Amazon Studios, and The Climate Pledge are some of the things pioneered by Amazon",
+        street='410 Terry Avenue North',
+        zip='98109',
+        city='Seattle',
+        state='Washington',
+        phone='2062661000',
+        email='jeff@amazon.com'
     )
     db.session.add(amazon)
 
     for i in range(6, 27):
         nonprofits = Organization(
-            federalId='84-0525768',
+            federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
             isNonprofit=True,
             logoUrl='https://static.wixstatic.com/media/0198fd_29758a36fd2a4afda85e6abfb73e7a56~mv2.png/v1/fill/w_159,h_145,al_c,usm_0.66_1.00_0.01,enc_auto/DICP_logo_White%20Bird_White%20Logo_edited_p.png',
             imageUrl='https://static.wixstatic.com/media/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg/v1/fill/w_2543,h_787,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg',
@@ -166,17 +166,17 @@ def seed_organizations():
             description=fake.catch_phrase(),
             street=fake.street_address(),
             unit='',
-            zip=random.choice(zipcodes),
+            zip=choice(zipcodes),
             city='Denver',
             state='Colorado',
-            phone=fake.unique.phone_number(),
+            phone=choice(('303', '720','719', '970', '983'))+str(randint(100, 999))+str(randint(1000, 9999)),
             email=fake.unique.email()
         )
         db.session.add(nonprofits)
 
     for i in range(28, 100):
         businesses = Organization(
-            federalId='84-0525768',
+            federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
             isNonprofit=False,
             logoUrl='https://static.wixstatic.com/media/0198fd_29758a36fd2a4afda85e6abfb73e7a56~mv2.png/v1/fill/w_159,h_145,al_c,usm_0.66_1.00_0.01,enc_auto/DICP_logo_White%20Bird_White%20Logo_edited_p.png',
             imageUrl='https://static.wixstatic.com/media/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg/v1/fill/w_2543,h_787,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg',
@@ -186,10 +186,10 @@ def seed_organizations():
             description=fake.catch_phrase(),
             street=fake.street_address(),
             unit='',
-            zip=random.choice(zipcodes),
+            zip=choice(zipcodes),
             city='Denver',
             state='Colorado',
-            phone=fake.unique.phone_number(),
+            phone=choice(('303', '720','719', '970', '983'))+str(randint(100, 999))+str(randint(1000, 9999)),
             email=fake.unique.email()
         )
         db.session.add(businesses)

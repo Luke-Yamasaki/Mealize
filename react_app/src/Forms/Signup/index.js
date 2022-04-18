@@ -7,15 +7,15 @@ import styles from './Signup.module.css';
 import styled from 'styled-components';
 
 const Form = styled.form`
-    width: 400px;
-    height: 500px;
+    width: 600px;
+    height: 900px;
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
     border-radius: 5px;
-    font-size: 32px;
+    font-size: 28px;
 `;
 
 const Fieldset = styled.fieldset`
@@ -36,6 +36,13 @@ const Legend = styled.legend`
     font-size: 16px;
     width: 70px;
     height: 15px;
+`;
+
+const Label = styled.label`
+    font-size: 12px;
+    width: 1000px;
+    height: 30px;
+
 `;
 
 const Input = styled.input`
@@ -109,7 +116,7 @@ export const SignupForm = () => {
         }
         const response = await dispatch(signup(data));
         if(response && response.errors) {
-            setErrors(data.errors)
+            setErrors(response.errors)
             return 'Errors were found.';
         }
         dispatch(hideModal());
@@ -163,7 +170,7 @@ export const SignupForm = () => {
     return (
         <Form> Welcome to Mealize!
             <Fieldset>
-                <Legend style={{width: '40px'}} htmlFor='firstName'> First name
+                <Legend style={{width: '80px'}}> First name
                     <Input
                         name="firstName"
                         type="text"
@@ -174,7 +181,7 @@ export const SignupForm = () => {
                 </Legend>
             </Fieldset>
             <Fieldset>
-                <Legend style={{width: '40px'}} htmlFor='firstName'> Last name
+                <Legend style={{width: '80px'}}> Last name
                     <Input
                         name="lastName"
                         type="text"
@@ -185,7 +192,7 @@ export const SignupForm = () => {
                 </Legend>
             </Fieldset>
             <Fieldset>
-                <Legend style={{width: '40px'}} htmlFor='profileImageUrl'> Profile picture
+                <Legend style={{width: '100px'}}> Profile picture
                     <Input
                         name="profileImageUrl"
                         type="url"
@@ -195,18 +202,19 @@ export const SignupForm = () => {
                     />
                 </Legend>
             </Fieldset>
-            <Fieldset>
-                <Legend style={{width: '40px'}} htmlFor='jobDescription'> Job description
+            <Fieldset style={{height: '200px'}}>
+                <Legend style={{width: '110px'}}> Job description
                     <textarea
                         name="jobDescription"
                         placeholder="Add your job description (255 character limit)."
                         value={jobDescription}
                         onChange={(e) => setJobDescription(e.target.value)}
+                        style={{width: "300px", height: "100px", resize: 'none', fontSize: '14px'}}
                     />
                 </Legend>
             </Fieldset>
             <Fieldset>
-                <Legend style={{width: '40px'}} htmlFor='age'> Age
+                <Legend style={{width: '40px'}}> Age
                     <Input
                         name="age"
                         type="number"
@@ -218,117 +226,113 @@ export const SignupForm = () => {
                     />
                 </Legend>
             </Fieldset>
-            <Fieldset>
-                <Legend style={{width: '40px'}} htmlFor='deaf'> User details
-                    <label for='deaf'> Are you deaf?
+            <Fieldset style={{height: '200px'}}>
+                <Legend style={{width: '85px'}}> User details
+                    <ButtonBox>
                         <Input
-                            name="deaf"
-                            type="checkbox"
-                            value={deaf}
-                            onChange={() => setDeaf(!deaf)}
-                        />
-                    </label>
-                    <label for='autism'> Do you have autism?
+                                name="deaf"
+                                type="checkbox"
+                                value={deaf}
+                                onChange={() => setDeaf(!deaf)}
+                                style={{width: '50px', height: '50px'}}
+                            />
+                        <Label htmlFor='deaf'> Are you deaf?
+                        </Label>
+                    </ButtonBox>
+                    <ButtonBox>
                         <Input
                             name="autism"
                             type="checkbox"
                             value={autism}
                             onChange={() => setAutism(!autism)}
+                            style={{width: '50px', height: '50px'}}
                         />
-                    </label>
-                    <label for='learningDisabled'> Do you have learning disabilities?
+                        <Label htmlFor='autism'> Do you have autism?</Label>
+                    </ButtonBox>
+                    <ButtonBox>
                         <Input
                             name="learningDisabled"
                             type="checkbox"
                             value={learningDisabled}
                             onChange={() => setLearningDisabled(!learningDisabled)}
+                            style={{width: '50px', height: '50px'}}
                         />
-                    </label>
-                    <label for='lgbtq'> Are you a part of the LGBTQIA+ community?
+                        <Label htmlFor='learningDisabled'> Do you have learning disabilities?</Label>
+                    </ButtonBox>
+                    <ButtonBox>
                         <Input
                             name="lgbtq"
                             type="checkbox"
                             value={lgbtq}
                             onChange={() => setLgbtq(!lgbtq)}
+                            style={{width: '50px', height: '50px'}}
                         />
-                    </label>
+                        <Label htmlFor='lgbtq'> Are you a part of the LGBTQIA+ community?</Label>
+                    </ButtonBox>
                 </Legend>
             </Fieldset>
-            <Fieldset>
-                <Legend style={{width: '40px'}} htmlFor='profileImageUrl'> Profile picture
+            <Fieldset style={{height: '200px'}}>
+                <Legend style={{width: '150px'}}> Your organization
                     <Input
-                        name="profileImageUrl"
-                        type="url"
-                        placeholder="https://example.com/image.jpg"
-                        value={profileImageUrl}
-                        onChange={(e) => setProfileImageUrl(e.target.value)}
+                        name='organizationId'
+                        type='text'
+                        value={organizationId}
+                        onChange={(e) => setOrganizationId(e.target.value)}
+                    />
+                    <ButtonBox>
+                        <Input
+                            name="isNonprofit"
+                            type="checkbox"
+                            value={isNonprofit}
+                            onChange={() => setIsNonprofit(!isNonprofit)}
+                        />
+                        <Label htmlFor='isNonprofit'> Is this a nonprofit?</Label>
+                    </ButtonBox>
+                    <ButtonBox>
+                        <Input
+                            name="isManager"
+                            type="checkbox"
+                            value={isManager}
+                            onChange={() => setIsManager(!isManager)}
+                        />
+                        <Label htmlFor='isManager'> Are you a manager?</Label>
+                    </ButtonBox>
+                </Legend>
+            </Fieldset>
+            <Fieldset style={{height: '80px'}}>
+                <Legend style={{width: '140px'}}> Contact information
+                    <Input
+                        name="email"
+                        type="email"
+                        placeholder="Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <Input
+                        name="phone"
+                        type="tel"
+                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                        placeholder="Phone number"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
                     />
                 </Legend>
             </Fieldset>
-            <Fieldset>
-                <Legend style={{width: '40px'}} htmlFor='profileImageUrl'> Profile picture
+            <Fieldset style={{height: '80px'}}>
+                <Legend style={{width: '100px'}}> Set password
                     <Input
-                        name="profileImageUrl"
-                        type="url"
-                        placeholder="https://example.com/image.jpg"
-                        value={profileImageUrl}
-                        onChange={(e) => setProfileImageUrl(e.target.value)}
-                    />
-                </Legend>
-            </Fieldset>
-            <Fieldset>
-                <Legend style={{width: '40px'}} htmlFor='profileImageUrl'> Profile picture
-                    <Input
-                        name="profileImageUrl"
-                        type="url"
-                        placeholder="https://example.com/image.jpg"
-                        value={profileImageUrl}
-                        onChange={(e) => setProfileImageUrl(e.target.value)}
-                    />
-                </Legend>
-            </Fieldset>
-            <Fieldset>
-                <Legend style={{width: '40px'}} htmlFor='profileImageUrl'> Profile picture
-                    <Input
-                        name="profileImageUrl"
-                        type="url"
-                        placeholder="https://example.com/image.jpg"
-                        value={profileImageUrl}
-                        onChange={(e) => setProfileImageUrl(e.target.value)}
-                    />
-                </Legend>
-            </Fieldset>
-            <Fieldset>
-                <Legend style={{width: '40px'}} htmlFor='profileImageUrl'> Profile picture
-                    <Input
-                        name="profileImageUrl"
-                        type="url"
-                        placeholder="https://example.com/image.jpg"
-                        value={profileImageUrl}
-                        onChange={(e) => setProfileImageUrl(e.target.value)}
-                    />
-                </Legend>
-            </Fieldset>
-            <Fieldset>
-                <Legend style={{width: '40px'}} htmlFor='profileImageUrl'> Profile picture
-                    <Input
-                        name="profileImageUrl"
-                        type="url"
-                        placeholder="https://example.com/image.jpg"
-                        value={profileImageUrl}
-                        onChange={(e) => setProfileImageUrl(e.target.value)}
-                    />
-                </Legend>
-            </Fieldset>
-            <Fieldset>
-                <Legend htmlFor="password">Password
-                    <Input
-                        name='password'
-                        type='password'
+                        name="password"
+                        type="password"
                         placeholder="Password"
-                        autoComplete="none"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <Input
+                        name="password"
+                        type="password"
+                        placeholder="Confirm password"
+                        value={confirm}
+                        onChange={(e) => setConfirm(e.target.value)}
                     />
                 </Legend>
             </Fieldset>

@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from app.models import db, Message
 from app.forms.message_form import MessageForm
 from app.utils import errors_to_list
-
+from app.utils.s3 import accepted_file, generate_unique_file, upload_to_s3_bucket
 message_routes = Blueprint('messages', __name__)
 
 @message_routes.route('/')
@@ -29,19 +29,38 @@ def message(id):
 def new_message():
     form = MessageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-
-    if form.validate_on_submit():
+    if "image" in request.files and not accepted_file(image.filename):
+        return {"errors": "Sorry, we only accept .png, .jpg or .jpeg image files."}, 400
+    elif "image" in request.files and form.validate_on_submit():
+        image = request.files["image"]
+        image.filename = generate_unique_file(image.filename)
+        upload = upload_to_s3_bucket(image)
+        if "url" not in upload:
+            return upload, 400
+        image_url = upload["url"]
         message = Message(
             senderId = current_user.id,
             reveiverId = request.json['receiverId'],
             content = form.data['content'],
-            imageUrl = form.data['imageUrl']
+            imageUrl = image_url
         )
 
         db.session.add(message)
         db.session.commit()
         return message.to_dict()
-    return {'errors': errors_to_list(form.errors)}
+    elif form.validate_on_submit():
+        message = Message(
+            senderId = current_user.id,
+            reveiverId = request.json['receiverId'],
+            content = form.data['content'],
+            imageUrl = ''
+        )
+
+        db.session.add(message)
+        db.session.commit()
+        return message.to_dict()
+    else:
+        return {'errors': errors_to_list(form.errors)}
 
 @message_routes.route('/<int:id>', methods=['DELETE'])
 @login_required

@@ -11,7 +11,7 @@ def seed_posts():
             userId=randint(1, 25),
             title=choice(('Need milk', 'Need blocks of cheese', 'Looking for butter', 'Any yogurt', 'Milk or chocolate milk', 'Cheddar cheese')),
             description=choice(('Our food bank needs milk! We would appreciate it if you have any unopened cartons to spare.', "We're looking for blocks of cheddar cheese. If you kept them properly stored, we would love to pick them up. Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for butter. Any amount would be greatly appreciated!', "Hello! We're looking for yogurt for lunch boxes! Any unopened containers would be much appreciated!", "If you have any unopened dairy or plant based milk, we would love to reserve a pick up time!", 'Looking for blocks of cheese for boxed meals. Thanks!')),
-            quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs'))
+            quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=1,
             imageUrl='',
             expirationDate='06-18-2022 00:00:00',
@@ -24,24 +24,24 @@ def seed_posts():
             isItem=False,
             organizationId=randint(1, 25),
             userId=randint(1, 25),
-            title=choice(('Need milk', 'Need blocks of cheese', 'Looking for butter', 'Any yogurt', 'Milk or chocolate milk', 'Cheddar cheese')),
-            description=choice(('Our food bank needs milk! We would appreciate it if you have any unopened cartons to spare.', "We're looking for blocks of cheddar cheese. If you kept them properly stored, we would love to pick them up. Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for butter. Any amount would be greatly appreciated!', "Hello! We're looking for yogurt for lunch boxes! Any unopened containers would be much appreciated!", "If you have any unopened dairy or plant based milk, we would love to reserve a pick up time!", 'Looking for blocks of cheese for boxed meals. Thanks!')),
-            quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs'))
+            title=choice(('Need carrots', 'Need lettuce and cabbage', 'Looking for potatoes', 'Any greens', 'Cucumbers or squash', 'Leftover salad?')),
+            description=choice(('Our food bank needs carrots! We would appreciate it if you have any to spare.', "We're looking for heads of lettuce and cabbage. If you kept them properly stored, we would love to pick them up. Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for any lefover salad you may have. Any amount would be greatly appreciated!', "Hello! We're looking for cucumbers and squash for lunch boxes! Any amount would be much appreciated!", "If you have any potatoes, we would love to reserve a pick up time!", 'Looking for any fresh greens. Thanks!')),
+            quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=2,
             imageUrl='',
             expirationDate='07-18-2022 00:00:00',
             status = 0
         )
-        db.session.add(vegetables_requests)
+        db.session.add(vegetable_requests)
 
     for k in range(41, 61):
         fruits_requests = Post(
             isItem=False,
             organizationId=randint(1, 25),
             userId=randint(1, 25),
-            title=choice(('Need milk', 'Need blocks of cheese', 'Looking for butter', 'Any yogurt', 'Milk or chocolate milk', 'Cheddar cheese')),
-            description=choice(('Our food bank needs milk! We would appreciate it if you have any unopened cartons to spare.', "We're looking for blocks of cheddar cheese. If you kept them properly stored, we would love to pick them up. Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for butter. Any amount would be greatly appreciated!', "Hello! We're looking for yogurt for lunch boxes! Any unopened containers would be much appreciated!", "If you have any unopened dairy or plant based milk, we would love to reserve a pick up time!", 'Looking for blocks of cheese for boxed meals. Thanks!')),
-            quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs'))
+            title=choice(('Need bananas', 'Need berries', 'Looking for apples', 'Any citrus fruit', 'Oranges', 'Fresh grapes', 'Pears or peaches')),
+            description=choice(('Our food bank needs bananas! We would appreciate it if you have any fresh ones to spare.', "We're looking for packaged berries. Even if they are chopped and sotred in containers, we are interested! Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for apples. Any amount would be greatly appreciated!', "Hello! We're looking for lemons or limes! Either fruit would be much appreciated!", "If you have any unopened canned peaches or pears, we would love to reserve a pick up time!", 'Looking for oranges for boxed meals. Sliced or whole, we do not mind at all! Thanks!', 'Looking for fresh grapes! We need fruit for our after school programs. Thank you!')),
+            quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=3,
             imageUrl='',
             expirationDate='08-18-2022 00:00:00',
@@ -54,9 +54,9 @@ def seed_posts():
             isItem=False,
             organizationId=randint(1, 25),
             userId=randint(1, 25),
-            title=choice(('Need milk', 'Need blocks of cheese', 'Looking for butter', 'Any yogurt', 'Milk or chocolate milk', 'Cheddar cheese')),
-            description=choice(('Our food bank needs milk! We would appreciate it if you have any unopened cartons to spare.', "We're looking for blocks of cheddar cheese. If you kept them properly stored, we would love to pick them up. Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for butter. Any amount would be greatly appreciated!', "Hello! We're looking for yogurt for lunch boxes! Any unopened containers would be much appreciated!", "If you have any unopened dairy or plant based milk, we would love to reserve a pick up time!", 'Looking for blocks of cheese for boxed meals. Thanks!')),
-            quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs'))
+            title=choice(('Need dry pasta noodles', 'Need boxes of macaroni', 'Looking for bags of rice', 'Any bread', 'Sandwhich bread, tortillas or wraps', 'Looking for oatmeal')),
+            description=choice(('Our food bank needs dry pasta noodles! We would appreciate it if you have any boxes to spare.', "We're looking for boxes of macaroni. We would love to pick them up. Thanks!", 'We are looking to make rice balls for the homeless shelter and we need bags of rice. Any amount would be greatly appreciated!', "Hello! We're looking for yogurt for lunch boxes! Any unopened containers would be much appreciated!", "If you have any bread, we would love to reserve a pick up time!", 'Looking for sandwhich bread, tortillas or wraps. Thanks!', 'Looking for oatmeal!')),
+            quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=4,
             imageUrl='',
             expirationDate='09-18-2022 00:00:00',
@@ -65,19 +65,19 @@ def seed_posts():
         db.session.add(grains_requests)
 
     for m in range(81, 101):
-        grains_requests = Post(
+        protein_requests = Post(
             isItem=False,
             organizationId=randint(1, 25),
             userId=randint(1, 25),
             title=choice(('Need milk', 'Need blocks of cheese', 'Looking for butter', 'Any yogurt', 'Milk or chocolate milk', 'Cheddar cheese')),
             description=choice(('Our food bank needs milk! We would appreciate it if you have any unopened cartons to spare.', "We're looking for blocks of cheddar cheese. If you kept them properly stored, we would love to pick them up. Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for butter. Any amount would be greatly appreciated!', "Hello! We're looking for yogurt for lunch boxes! Any unopened containers would be much appreciated!", "If you have any unopened dairy or plant based milk, we would love to reserve a pick up time!", 'Looking for blocks of cheese for boxed meals. Thanks!')),
-            quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs'))
+            quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=5,
             imageUrl='',
             expirationDate='10-18-2022 00:00:00',
             status = 0
         )
-        db.session.add(grains_requests)
+        db.session.add(protein_requests)
 
 def undo_posts():
     db.session.execute('TRUNCATE posts RESTART IDENTITY CASCADE;')

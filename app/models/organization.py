@@ -4,7 +4,7 @@ class Organization(db.Model):
     __tablename__ = 'organizations'
 
     id = db.Column(db.Integer, primary_key=True)
-    federalId = db.Column(db.Integer, nullable=False)
+    federalId = db.Column(db.String(10), nullable=False)
     isNonprofit = db.Column(db.Boolean, nullable=False)
     logoUrl = db.Column(db.String(2048), nullable=False)
     imageUrl = db.Column(db.String(2048), nullable=False)
@@ -14,7 +14,7 @@ class Organization(db.Model):
     description = db.Column(db.String(255), nullable=False)
     street = db.Column(db.String(45), nullable=False)
     unit = db.Column(db.String(15), nullable=True)
-    zip = db.Column(db.Integer, nullable=False)
+    zip = db.Column(db.String(18), nullable=False)
     city = db.Column(db.String(17), nullable=False)
     state = db.Column(db.String(12), nullable=False)
     phone = db.Column(db.String(20), nullable=False, unique=True)

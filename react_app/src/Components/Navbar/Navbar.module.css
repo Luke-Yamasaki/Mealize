@@ -51,6 +51,10 @@
     color: white;
 }
 
+.login:hover {
+    cursor: pointer;
+}
+
 .signup {
     width: 80px;
     height: 30px;
@@ -64,13 +68,25 @@
     color: white;
 }
 
+.signup:hover {
+    cursor: pointer;
+}
+
 .submit {
     width: 80px;
     height: 30px;
     border: 1px solid #76D97E;
     background-color: #005C4D;
     border-radius: 5px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.submit:hover {
+    cursor: pointer;
 }
 
 .cancel {
@@ -79,7 +95,15 @@
     border: 1px solid #76D97E;
     background-color: #005C4D;
     border-radius: 5px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.cancel:hover {
+    cursor: pointer;
 }
 
 .nonprofit {
@@ -88,7 +112,15 @@
     border: 1px solid #76D97E;
     background-color: #005C4D;
     border-radius: 5px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.nonprofit:hover {
+    cursor: pointer;
 }
 
 .business {
@@ -97,5 +129,13 @@
     border: 1px solid #76D97E;
     background-color: #005C4D;
     border-radius: 5px;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.business:hover {
+    cursor: pointer;
 }

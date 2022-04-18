@@ -8,29 +8,46 @@ import styles from './Login.module.css';
 import styled from 'styled-components';
 
 const Form = styled.form`
-    width: 500px;
-    height: 600px;
+    width: 400px;
+    height: 500px;
     background-color: white;
     display: flex;
     flex-direction: column;
-    align-items: space-around;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 5px;
+    font-size: 32px;
 `;
 
 const Fieldset = styled.fieldset`
     width: 300px;
     height: 35px;
-    border: none;
+    border: 1px solid #28A690;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    margin: 0px;
+    padding-left: 5px;
 `;
 
 const Legend = styled.legend`
     color: #28A690;
+    font-size: 16px;
+    width: 70px;
+    height: 15px;
 `;
 
 const Input = styled.input`
-    width: 300px;
+    width: 308px;
     height: 30px;
+    font-size: 16px;
     border: none;
+    margin-left: -6px;
+    margin-top: 1px;
+    padding-left: 5px;
+    border-radius: none;
 `;
 
 const Error = styled.p`
@@ -38,6 +55,7 @@ const Error = styled.p`
     font-size: 14px;
     padding: 0px;
     margin: 0px;
+    font-size: 16px;
 `;
 
 const ButtonBox = styled.div`
@@ -45,7 +63,7 @@ const ButtonBox = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 400px;
+    width: 170px;
     height: 30px;
 `;
 
@@ -99,14 +117,14 @@ export const LoginForm = () => {
 	};
 
     return (
-        <Form>
-            {emailError.length && (
+        <Form> Welcome back!
+            {emailError.length > 0 && (
                 emailError.map((error, i) => (
                     <Error key={i}>{error}</Error>
                 ))
             )}
             <Fieldset>
-                <Legend>Email
+                <Legend style={{width: '40px'}} htmlFor='email'> Email
                     <Input
                         name="email"
                         type="text"
@@ -116,17 +134,16 @@ export const LoginForm = () => {
                     />
                 </Legend>
             </Fieldset>
-            {passwordError.length && (
+            {passwordError.length > 0 && (
                 passwordError.map((error, i) => (
                     <Error key={i}>{error}</Error>
                 ))
             )}
             <Fieldset>
-                <Legend>Password
+                <Legend htmlFor="password">Password
                     <Input
                         name='password'
                         type='password'
-                        htmlFor="password"
                         placeholder="Password"
                         autoComplete="none"
                         value={password}
@@ -135,12 +152,12 @@ export const LoginForm = () => {
                 </Legend>
             </Fieldset>
             <ButtonBox>
-                <AuthButton action={'submit'} onClick={handleSubmit}>Submit</AuthButton>
-                <AuthButton action={'cancel'} onClick={cancel}>Cancel</AuthButton>
+                <div role='button' className={styles.cancel} onClick={cancel}>Cancel</div>
+                <div role='button' className={styles.submit} onClick={handleSubmit}>Submit</div>
             </ButtonBox>
-            <AuthButton action={'Nonprofit demo'} onClick={nonprofitDemo} />
-            <AuthButton action={'Business demo'} onClick={businessDemo} />
-            <div>Don't have an account?<div onClick={showSignupForm}>Sign up</div></div>
+            <div role='button' className={styles.nonprofit} onClick={nonprofitDemo}>Nonprofit demo</div>
+            <div role='button' className={styles.business} onClick={businessDemo}>Business demo</div>
+            <div className={styles.question}>Don't have an account?<div className={styles.modalOption} onClick={showSignupForm}>Sign up</div></div>
         </Form>
     )
 }

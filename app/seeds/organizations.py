@@ -1,9 +1,11 @@
 from app.models import db, Organization
+from .zipcodes import zipcodes
 from werkzeug.security import generate_password_hash
 import phonenumbers
 from random import random, randint
 from faker import Faker
 fake = Faker(locale='en-US')
+
 
 def seed_organizations():
     mealize = Organization(
@@ -153,6 +155,26 @@ def seed_organizations():
     db.session.add(amazon)
 
     for i in range(6, 27):
+        nonprofits = Organization(
+            federalId='84-0525768',
+            isNonprofit=True,
+            logoUrl='https://static.wixstatic.com/media/0198fd_29758a36fd2a4afda85e6abfb73e7a56~mv2.png/v1/fill/w_159,h_145,al_c,usm_0.66_1.00_0.01,enc_auto/DICP_logo_White%20Bird_White%20Logo_edited_p.png',
+            imageUrl='https://static.wixstatic.com/media/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg/v1/fill/w_2543,h_787,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg',
+            open='10:00',
+            close='22:00',
+            name=fake.company(),
+            description=fake.catch_phrase(),
+            street=fake.street_address(),
+            unit='',
+            zip=random.choice(zipcodes),
+            city='Denver',
+            state='Colorado',
+            phone=fake.unique.phone_number(),
+            email=fake.unique.email()
+        )
+        db.session.add(nonprofits)
+
+    for i in range(28, 100):
         businesses = Organization(
             federalId='84-0525768',
             isNonprofit=False,
@@ -164,7 +186,7 @@ def seed_organizations():
             description=fake.catch_phrase(),
             street=fake.street_address(),
             unit='',
-            zip='80218',
+            zip=random.choice(zipcodes),
             city='Denver',
             state='Colorado',
             phone=fake.unique.phone_number(),
@@ -174,6 +196,6 @@ def seed_organizations():
 
     db.session.commit()
 
-def undo_Organizations():
+def undo_organizations():
     db.session.execute('TRUNCATE Organizations RESTART IDENTITY CASCADE;')
     db.session.commit()

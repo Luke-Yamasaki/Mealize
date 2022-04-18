@@ -22,10 +22,10 @@ class Organization(db.Model):
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-    employees = db.relationship('User', back_populates='organization')
-    posts = db.relationship('Post', back_populates='organization')
-    calendar = db.relationship('Calendar', back_populates='organization')
-    events = db.relationship('Event', back_populates='organization')
+    employees = db.relationship('User', back_populates='organization', cascade='all, delete-orphan')
+    posts = db.relationship('Post', back_populates='organization', cascade='all, delete-orphan')
+    calendar = db.relationship('Calendar', back_populates='organization', cascade='all, delete-orphan')
+    events = db.relationship('Event', back_populates='organization', cascade='all, delete-orphan')
     delivery = db.relationship('Delivery', back_populates='location')
 
     def to_dict(self):

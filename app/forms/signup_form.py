@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, IntegerField, BooleanField
 from wtforms.validators import InputRequired, Length, Email, ValidationError, EqualTo, NumberRange
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms_alchemy import PhoneNumberField
-from app.stdnum.us.ein import *
+# from app.stdnum.us.ein import *
 from app.models import User
 
 def existing_user(form, field):

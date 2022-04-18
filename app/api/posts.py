@@ -12,7 +12,7 @@ def posts():
     all_posts = Post.query.all()
     return {'posts': [post.to_dict() for post in all_posts]}
 
-@post_routes.routes('/<int:id>')
+@post_routes.route('/<int:id>')
 def post(id):
     post = Post.query.get(id)
     return post.to_dict()

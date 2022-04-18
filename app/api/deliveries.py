@@ -13,7 +13,7 @@ def all_deliveries():
     all_deliveries = Delivery.query.filter(Delivery.organizationId == organizationId)
     return {'deliveries': [delivery.to_dict() for delivery in all_deliveries]}
 
-@delivery_routes.routes('/<int:id>')
+@delivery_routes.route('/<int:id>')
 @login_required
 def delivery(id):
     delivery = Delivery.query.get(id)
@@ -79,4 +79,3 @@ def update_delivery():
             db.session.commit()
             return delivery.to_dict()
     return {'errors': errors_to_list(form.errors)}
-

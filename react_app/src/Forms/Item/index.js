@@ -1,20 +1,37 @@
 import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
-
+import { useSelector } from 'react-redux';
+import {UploadPicture}
 
 const ItemForm = () => {
+    const sessionUser = useSelector(state => state.session.user);
     const history = useHistory();
-    const [profileImage, setProfileImage] = useState(null);
+    const [title, setTitle] = useState('');
+    const [description, setDesctiption] = useState('');
+    const [quantity, setQuanityt] = useState('');
+    const [categoryId, setCategoryId] = useState(1);
+    const [imageFile, setImageFile] = useState(null);
+    const [expDate, setExpDate] = useState(new Date());
     const [imageUploading, setImageUploading] = useState(false);
+    const [errors, setErrors] = useState([]);
 
-
+    const organizationId = sessionUser.organizationId;
+    const userId = sessionUser.id
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("image", image);
+        const formData = {
+            isItem:True,
+            organizationId,
+            userId,
+            title,
+            description,
+            quantity,
+            categoryId,
+            imageFile,
+            expDate,
+            status:0
+        }
 
-        // aws uploads can be a bit slow—displaying
-        // some sort of loading message is a good idea
         setImageUploading(true);
 
         const res = await fetch('/api/posts/', {
@@ -28,9 +45,7 @@ const ItemForm = () => {
         }
         else {
             setImageUploading(false);
-            // a real app would probably use more advanced
-            // error handling
-            console.log("error");
+            setErrors(res.errors)
         }
     }
 

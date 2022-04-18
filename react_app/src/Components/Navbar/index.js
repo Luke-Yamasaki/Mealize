@@ -1,8 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import { Logo } from '../Logo';
 import { MagnifyingGlass } from '../../Assets/Icons/MagnifyingGlass';
+import { AuthButton } from '../AuthButton.js';
+import { useSelector, useDispatch } from "react-redux";
+import { LoginForm } from '../../Forms/Login';
 import styles from './Navbar.module.css';
 import styled from 'styled-components';
+import { showModal, setCurrentModal } from '../../store/modal';
 
 const Nav = styled.nav`
     width: 80vw;
@@ -44,21 +48,47 @@ const SearchInput = styled.input`
     border: none;
 `;
 
-
-
 export const Navbar = () => {
-    return (
-        <Nav>
-            <NavList>
-                <Logo dimension={"medium"} />
-                <NavLink to="/" className={styles.link}>Mealize</NavLink>
-                <SearchBar>
-                    <MagnifyingGlass />
-                    <SearchInput placeholder='Search...'></SearchInput>
-                </SearchBar>
-                <NavLink to='/login'>Log in</NavLink>
-                <NavLink to='/signup'>Sign up</NavLink>
-            </NavList>
-        </Nav>
-    )
+    const sessionUser = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
+
+    const showLoginModal = () => {
+        dispatch(setCurrentModal(LoginForm));
+        dispatch(showModal());
+    };
+
+    if(!sessionUser) {
+        return (
+            <Nav>
+                <NavList>
+                    <Logo dimension={"medium"} />
+                    <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
+                    <SearchBar>
+                        <MagnifyingGlass />
+                        <SearchInput placeholder='Search...'></SearchInput>
+                    </SearchBar>
+                    <AuthButton action={'Log in'} onClick={showLoginModal} />
+                    <AuthButton action={'Sign up'} onClick={showLoginModal} />
+                </NavList>
+            </Nav>
+        )
+    } else {
+       return (
+            <Nav>
+                <NavList>
+                    <Logo dimension={"medium"} />
+                    <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
+                    <SearchBar>
+                        <MagnifyingGlass />
+                        <SearchInput placeholder='Search...'></SearchInput>
+                    </SearchBar>
+                    <div>Profile</div>
+                    <div>Inbox</div>
+                    <div>Norifications</div>
+                    <div>Post</div>
+                </NavList>
+            </Nav>
+        )
+    }
+
 }

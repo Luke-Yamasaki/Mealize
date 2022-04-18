@@ -2,12 +2,56 @@
     width: 80px;
     height: 30px;
     border: 1px solid #76D97E;
-    background-color: #327647;
+    background-color: transparent;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.signup {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #76D97E;
+    background-color: transparent;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.submit {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #76D97E;
+    background-color: #005C4D;
     border-radius: 5px;
     text-align: center;
 }
 
-.signup {
+.cancel {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #76D97E;
+    background-color: #005C4D;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.nonprofit {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #76D97E;
+    background-color: #005C4D;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.business {
     width: 80px;
     height: 30px;
     border: 1px solid #76D97E;

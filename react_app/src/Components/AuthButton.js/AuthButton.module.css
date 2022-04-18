@@ -1,0 +1,17 @@
+.login {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #76D97E;
+    background-color: #327647;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.signup {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #76D97E;
+    background-color: #005C4D;
+    border-radius: 5px;
+    text-align: center;
+}

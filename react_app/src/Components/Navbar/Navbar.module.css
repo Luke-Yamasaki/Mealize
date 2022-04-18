@@ -1,17 +1,15 @@
-.navbar {
-    width: 100vw;
-    height: 100vh;
+/* .navbar {
+    width: 80vw;
+    height: 60px;
     background: linear-gradient(#76D97E, #28A690);
     display:flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    position: absolute;
-    z-index: 100;
-    animation: lockin 4s bounce 1 normal forwards;
-}
+    animation: lockin 4s ease-in-out 1 normal forwards;
+} */
 
-@keyframes lockin {
+/* @keyframes lockin {
     25% {
         width: 100vw;
         height: 100vh;
@@ -28,4 +26,14 @@
         width: 1600px;
         height: 60px;
     }
+} */
+
+.link {
+    color: white;
+    text-decoration: none;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 0.5rem;
+    margin-left: 5px;
 }

@@ -21,8 +21,7 @@ def post(id):
 @post_routes.route('/', methods=['POST'])
 @login_required
 def new_post():
-    isManager = current_user.isManager
-    if isManager == False:
+    if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
     elif request.json['isItem'] == True:
         form = ItemForm()
@@ -80,8 +79,7 @@ def new_post():
 @post_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_post(id):
-    isManager = current_user.isManager
-    if isManager == False:
+    if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
     elif request.json['isItem'] == True:
         form = ItemForm()
@@ -125,8 +123,7 @@ def update_post(id):
 @post_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_post(id):
-    isManager = current_user.isManager
-    if isManager == False:
+    if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
     deleted_data = {}
     post = Post.query.get(id)

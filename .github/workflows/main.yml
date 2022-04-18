@@ -10,14 +10,13 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
-    with:
-      node-version: '16'
-      cache: 'npm'
-      cache-dependency-path: react_app/package-lock.json
-
+      with:
+        node-version: '16'
+        cache: 'npm'
+        cache-dependency-path: react_app/package-lock.json
     - name: Build React App
       working-directory: react_app
-      run: npm install && npm run build
+      run: npm install && CI=false npm run build
     - uses: actions/setup-python@v3
       with:
         python-version: '3.9'
@@ -39,8 +38,8 @@ jobs:
 
     - name: Release container
       env:
-        HEROKU_APU_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:release -a ${{ secrets.HEROKU_API_KEY }} web
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web
 
     - name: Run the database migration
       env:
@@ -50,7 +49,7 @@ jobs:
     - name: Erase all seed data
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku run -a ${{ secrets/.HEROKU_APP_NAME }} flask seed undo
+      run: heroku run -a ${{ secrets.HEROKU_APP_NAME }} flask seed undo
 
     - name: Seed your new data
       env:

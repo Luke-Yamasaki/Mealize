@@ -22,8 +22,7 @@ def delivery(id):
 @delivery_routes.route('/', methods=['POST'])
 @login_required
 def new_delivery():
-    isManager = current_user.isManager
-    if isManager == False:
+    if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
     form = DeliveryForm()
     form['csrf_token'].data = request.cookies['csrf_token']

@@ -8,10 +8,11 @@ class Category(db.Model):
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-    post = db.relationship('Post', back_populates='category')
+    posts = db.relationship('Post', back_populates='category')
 
     def to_dict(self):
         return {
             'id': self.id,
-            'category': self.category
+            'category': self.category,
+            'posts': {post.id:post.to_dict() for post in self.posts}
         }

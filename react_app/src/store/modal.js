@@ -1,23 +1,23 @@
-const SHOW_MODAL = 'SHOW_MODAL';
-const HIDE_MODAL = 'HIDE_MODAL';
-const SET_CURRENT_MODAL = 'SET_CURRENT_MODAL';
-const SET_MODAL_MOUNT = 'SET_MODAL_MOUNT';
+const MODAL_SHOWN = 'MODAL_SHOWN';
+const MODAL_HIDDEN = 'MODAL_HIDDEN';
+const CURRENT_MODAL_SET = 'CURRENT_MODAL_SET';
+const MODAL_MOUNT_SET = 'MODAL_MOUNT_SET';
 
 export const showModal = () => ({
-    type: SHOW_MODAL
+    type: MODAL_SHOWN
 })
 
 export const hideModal = () => ({
-    type: HIDE_MODAL
+    type: MODAL_HIDDEN
 })
 
 export const setCurrentModal = (jsxComponent) => ({
-    type: SET_CURRENT_MODAL,
+    type: CURRENT_MODAL_SET,
     payload: jsxComponent
 })
 
 export const setModalMount = (mount) => ({
-    type: SET_MODAL_MOUNT,
+    type: MODAL_MOUNT_SET,
     payload: mount
 })
 
@@ -29,25 +29,25 @@ const initialState = {
 
 export default function modals (state = initialState, action) {
     switch(action.type) {
-        case SHOW_MODAL: {
+        case MODAL_SHOWN: {
             return {
                 ...state,
                 display: true
             }
         }
-        case HIDE_MODAL: {
+        case MODAL_HIDDEN: {
             return {
                 ...state,
                 display: false
             }
         }
-        case SET_CURRENT_MODAL: {
+        case CURRENT_MODAL_SET: {
             return {
                 ...state,
                 currentModal: action.payload
             }
         }
-        case SET_MODAL_MOUNT: {
+        case MODAL_MOUNT_SET: {
             return {
                 ...state,
                 modalMount: action.payload

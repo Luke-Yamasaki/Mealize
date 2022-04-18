@@ -26,27 +26,7 @@ def seed_users():
     )
     db.session.add(nonprofit_demo)
 
-    business_demo = User(
-        organizationId=2,
-        isNonprofit=False,
-        isManager=True,
-        private=False,
-        firstName='Business',
-        lastName='Demo',
-        email='business_demo@testing.com',
-        phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
-        age=45,
-        deaf=False,
-        autism=False,
-        learningDisabled=False,
-        lgbtq=False,
-        profileImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-        jobDescription="Hello, my name is Business Demo! My account will give you a glance into all the features Mealize provides! Thank you and I hope you enjoy Mealize!",
-        hashedPassword=generate_password_hash('8f08d594-2275-4c8f-93f3-4cb6dbed4b70')
-    )
-    db.session.add(business_demo)
-
-    for i in range(3, 27):
+    for i in range(2, 26):
         nonprofit_managers = User(
             organizationId=i,
             isNonprofit=True,
@@ -67,7 +47,27 @@ def seed_users():
         )
         db.session.add(nonprofit_managers)
 
-    for j in range(27, 100):
+    business_demo = User(
+        organizationId=26,
+        isNonprofit=False,
+        isManager=True,
+        private=False,
+        firstName='Business',
+        lastName='Demo',
+        email='business_demo@testing.com',
+        phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
+        age=45,
+        deaf=False,
+        autism=False,
+        learningDisabled=False,
+        lgbtq=False,
+        profileImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+        jobDescription="Hello, my name is Business Demo! My account will give you a glance into all the features Mealize provides! Thank you and I hope you enjoy Mealize!",
+        hashedPassword=generate_password_hash('8f08d594-2275-4c8f-93f3-4cb6dbed4b70')
+    )
+    db.session.add(business_demo)
+
+    for j in range(27, 101):
         business_managers = User(
             organizationId=j,
             isNonprofit=False,
@@ -88,9 +88,9 @@ def seed_users():
         )
         db.session.add(business_managers)
 
-    for k in range(100, 200):
+    for k in range(101, 201):
         volunteers = User(
-            organizationId=randint(3, 27),
+            organizationId=randint(1, 25),
             isNonprofit=True,
             isManager=False,
             private=random() > 0.5,

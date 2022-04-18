@@ -18,7 +18,6 @@ def seed_organizations():
         name='Mealize',
         description="A nonporfit organization that aims to connect food businesses to nonprofits like food banks!",
         street='1225 17th St',
-        unit='406',
         zip='80202',
         city='Denver',
         state='Colorado',
@@ -45,14 +44,14 @@ def seed_organizations():
     )
     db.session.add(food_bank_of_the_rockies)
 
-    bienvdenidos_food_bank = Organization(
+    bienvenidos_food_bank = Organization(
         federalId='84-0772672',
         isNonprofit=True,
         logoUrl='http://www.bienvenidosfoodbank.org/wp-content/uploads/2017/12/LogoBienvenidos.png',
         imageUrl='https://media.9news.com/assets/KUSA/images/dc308017-8594-40d0-93c8-e2808c9b9ed5/dc308017-8594-40d0-93c8-e2808c9b9ed5_1140x641.jpg',
         open='11:00',
         close='17:30',
-        name='Food Bank of the Rockies',
+        name='Bienvenidos Food Bank',
         description="For more than 40 years, the Bienvenidos Food Bank has offered emergency food assistance to people in need. If a family is in crisis and needs food we are available no matter where they come from.",
         street='3810 N Pecos St',
         zip='80211',
@@ -61,7 +60,7 @@ def seed_organizations():
         phone='3034336328',
         email='director@bienvenidosfoodbank.org'
     )
-    db.session.add(bienvdenidos_food_bank)
+    db.session.add(bienvenidos_food_bank)
 
     denver_inner_city_parish = Organization(
         federalId='84-0525768',
@@ -81,6 +80,25 @@ def seed_organizations():
     )
     db.session.add(denver_inner_city_parish)
 
+    for i in range(5, 26):
+        nonprofits = Organization(
+            federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
+            isNonprofit=True,
+            logoUrl='https://static.wixstatic.com/media/0198fd_29758a36fd2a4afda85e6abfb73e7a56~mv2.png/v1/fill/w_159,h_145,al_c,usm_0.66_1.00_0.01,enc_auto/DICP_logo_White%20Bird_White%20Logo_edited_p.png',
+            imageUrl='https://static.wixstatic.com/media/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg/v1/fill/w_2543,h_787,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg',
+            open='10:00',
+            close='22:00',
+            name=fake.company(),
+            description=fake.catch_phrase(),
+            street=fake.street_address(),
+            zip=choice(zipcodes),
+            city='Denver',
+            state='Colorado',
+            phone=choice(('303', '720','719', '970', '983'))+str(randint(100, 999))+str(randint(1000, 9999)),
+            email=fake.unique.email()
+        )
+        db.session.add(nonprofits)
+
     mealize_market = Organization(
         federalId='88-8888888',
         isNonprofit=False,
@@ -91,7 +109,6 @@ def seed_organizations():
         name='Mealize Market',
         description="Your friendly neighborhood market that aims to cut down on food waste by sharing as much as we can by volunteering and donating surplus food to local nonprofits!",
         street='1225 17th St',
-        unit='100',
         zip='80202',
         city='Denver',
         state='Colorado',
@@ -154,27 +171,7 @@ def seed_organizations():
     )
     db.session.add(amazon)
 
-    for i in range(6, 27):
-        nonprofits = Organization(
-            federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
-            isNonprofit=True,
-            logoUrl='https://static.wixstatic.com/media/0198fd_29758a36fd2a4afda85e6abfb73e7a56~mv2.png/v1/fill/w_159,h_145,al_c,usm_0.66_1.00_0.01,enc_auto/DICP_logo_White%20Bird_White%20Logo_edited_p.png',
-            imageUrl='https://static.wixstatic.com/media/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg/v1/fill/w_2543,h_787,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg',
-            open='10:00',
-            close='22:00',
-            name=fake.company(),
-            description=fake.catch_phrase(),
-            street=fake.street_address(),
-            unit='',
-            zip=choice(zipcodes),
-            city='Denver',
-            state='Colorado',
-            phone=choice(('303', '720','719', '970', '983'))+str(randint(100, 999))+str(randint(1000, 9999)),
-            email=fake.unique.email()
-        )
-        db.session.add(nonprofits)
-
-    for i in range(28, 100):
+    for i in range(30, 101):
         businesses = Organization(
             federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
             isNonprofit=False,
@@ -185,7 +182,6 @@ def seed_organizations():
             name=fake.company(),
             description=fake.catch_phrase(),
             street=fake.street_address(),
-            unit='',
             zip=choice(zipcodes),
             city='Denver',
             state='Colorado',

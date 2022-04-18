@@ -20,6 +20,8 @@ const Nav = styled.nav`
 
 
 const NavList = styled.ul`
+    width: 80vw;
+    height: 60px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -29,23 +31,44 @@ const NavList = styled.ul`
 const SearchBar = styled.form`
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
-    width: 580px;
+    width: 30vw;
     height: 30px;
     background-color: white;
     border-radius: 50px;
-    padding: 0px;
+    padding-left: 0.15rem;
+    gap: 0.1rem;
 `;
 
 const SearchInput = styled.input`
-    width: 525px;
+    width: 70%;
     height: 25px;
     font-family: motiva-sans,sans-serif;
     font-weight: 700;
     font-style: normal;
     font-size: 12px;
     border: none;
+    padding: 0px;
+    margin: 0px;
+`;
+
+const LogoBox = styled.div`
+    width: 165px;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+const AuthBox = styled.div`
+    width: 175px;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 `;
 
 export const Navbar = () => {
@@ -61,14 +84,18 @@ export const Navbar = () => {
         return (
             <Nav>
                 <NavList>
-                    <Logo dimension={"medium"} />
-                    <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
+                    <LogoBox>
+                        <Logo dimension={"medium"} />
+                        <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
+                    </LogoBox>
                     <SearchBar>
                         <MagnifyingGlass />
                         <SearchInput placeholder='Search...'></SearchInput>
                     </SearchBar>
-                    <AuthButton action={'Log in'} onClick={showLoginModal} />
-                    <AuthButton action={'Sign up'} onClick={showLoginModal} />
+                    <AuthBox>
+                        <div role='button' className={styles.login} onClick={showLoginModal}>Log in</div>
+                        <div role='button' className={styles.signup} onClick={showLoginModal}>Sign up</div>
+                    </AuthBox>
                 </NavList>
             </Nav>
         )

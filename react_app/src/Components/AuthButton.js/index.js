@@ -1,9 +1,19 @@
+import { useDispatch } from 'react-redux';
 import styles from './AuthButton.module.css';
+import { LoginForm } from '../../Forms/Login';
+import { showModal, setCurrentModal } from '../../store/modal';
 
 export const AuthButton = ({ action }) => {
+    const dispatch = useDispatch();
+
+    const showLoginModal = () => {
+        dispatch(setCurrentModal(LoginForm));
+        dispatch(showModal());
+    };
+
     if(action === 'Log in') {
         return (
-            <div role='button' className={styles.login}>{action}</div>
+            <div role='button' className={styles.login} onClick={showLoginModal}>{action}</div>
         )
     } else if(action === 'Sign up') {
         return (

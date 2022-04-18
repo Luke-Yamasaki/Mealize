@@ -11,10 +11,6 @@
     color: white;
 }
 
-.login:hover {
-    cursor: pointer;
-}
-
 .signup {
     width: 80px;
     height: 30px;
@@ -28,25 +24,13 @@
     color: white;
 }
 
-.signup:hover {
-    cursor: pointer;
-}
-
 .submit {
     width: 80px;
     height: 30px;
     border: 1px solid #76D97E;
     background-color: #005C4D;
     border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    color: white;
-}
-
-.submit:hover {
-    cursor: pointer;
+    text-align: center;
 }
 
 .cancel {
@@ -55,63 +39,23 @@
     border: 1px solid #76D97E;
     background-color: #005C4D;
     border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    color: white;
-}
-
-.cancel:hover {
-    cursor: pointer;
+    text-align: center;
 }
 
 .nonprofit {
-    width: 168px;
+    width: 80px;
     height: 30px;
     border: 1px solid #76D97E;
     background-color: #005C4D;
     border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    color: white;
-}
-
-.nonprofit:hover {
-    cursor: pointer;
+    text-align: center;
 }
 
 .business {
-    width: 168px;
+    width: 80px;
     height: 30px;
     border: 1px solid #76D97E;
     background-color: #005C4D;
     border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 14px;
-    color: white;
-}
-
-.business:hover {
-    cursor: pointer;
-}
-
-.question {
-    font-size: 16px;
-    display: flex;
-    flex-direction: row;
-    gap: 0.25rem;
-}
-
-.modalOption {
-    font-size: 16px;
-    text-decoration: underline;
-}
-
-.modalOption:hover {
-    cursor: pointer;
+    text-align: center;
 }

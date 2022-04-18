@@ -11,6 +11,9 @@ import { Categories } from './Pages/Categories';
 import { Users } from './Pages/Users';
 import { Settings } from './Pages/Settings';
 import { Inbox } from './Pages/Inbox';
+import { Background } from './Components/Styled/Background';
+import { Navbar } from './Components/Navbar'
+import Modal from './Components/Modal';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -18,35 +21,39 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Switch>
-        <Route exact path='/'>
-          <Home />
-        </Route>
-        <Route exact path='/about'>
-          <About />
-        </Route>
-        <Route exact path='/questions'>
-          <Questions />
-        </Route>
-        <Route exact path='/nonprofits'>
-          <Nonprofits />
-        </Route>
-        <Route exact path='/businesses'>
-          <Businesses />
-        </Route>
-        <Route exact path='/categories'>
-          <Categories />
-        </Route>
-        <Route exact path='/users'>
-          <Users />
-        </Route>
-        <Route exact path='/settings'>
-          <Settings />
-        </Route>
-        <Route exact path='/inbox'>
-          <Inbox />
-        </Route>
-      </Switch>
+      <Background>
+        <Navbar />
+        <Modal />
+        <Switch>
+          <Route exact path='/'>
+            <Home />
+          </Route>
+          <Route exact path='/about'>
+            <About />
+          </Route>
+          <Route exact path='/questions'>
+            <Questions />
+          </Route>
+          <Route exact path='/nonprofits'>
+            <Nonprofits />
+          </Route>
+          <Route exact path='/businesses'>
+            <Businesses />
+          </Route>
+          <Route exact path='/categories'>
+            <Categories />
+          </Route>
+          <Route exact path='/users'>
+            <Users />
+          </Route>
+          <Route exact path='/settings'>
+            <Settings />
+          </Route>
+          <Route exact path='/inbox'>
+            <Inbox />
+          </Route>
+        </Switch>
+      </Background>
     </BrowserRouter>
   );
 }

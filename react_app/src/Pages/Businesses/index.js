@@ -2,6 +2,6 @@ import styles from './Businesses.module.css';
 
 export const Businesses = () => {
     return (
-        <div>Businesses</div>
+        <div className={styles.hi}>Businesses</div>
     )
 };

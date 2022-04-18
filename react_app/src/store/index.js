@@ -1,8 +1,15 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import sessionReducer from './session';
+import userReducer from './users';
+import messagesReducer from './messages';
+import modals from './modal';
 
 const rootReducer = combineReducers({
-
+    session: sessionReducer,
+    user: userReducer,
+    messages: messagesReducer,
+    modals
 });
 
 let enhancer;

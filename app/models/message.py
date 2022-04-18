@@ -1,6 +1,18 @@
 from .db import db
 from datetime import datetime
 
+message_sender = db.Table(
+    "message_sender",
+    db.Column("messageId", db.ForeignKey("messages.id"), primary_key=True),
+    db.Column("senderId", db.ForeignKey("users.id"), primary_key=True)
+)
+
+message_receiver = db.Table(
+    "message_receiver",
+    db.Column("messageId", db.ForeignKey("messages.id"), primary_key=True),
+    db.Column("receiverId", db.ForeignKey("users.id"), primary_key=True)
+)
+
 class Message(db.Model):
     __tablename__ = 'messages'
 
@@ -11,8 +23,9 @@ class Message(db.Model):
     imageUrl = db.Column(db.String(255), nullable=True)
     createdAt = db.Column(db.DateTime, default=db.func.now())
 
-    user = db.relationship('User', back_populates='messages')
-    # recipient and sender 
+    sender = db.relationship('User', foreign_keys=[senderId], back_populates='sent_messages')
+    receiver = db.relationship('User', foreign_keys=[receiverId], back_populates='received_messages')
+    # recipient and sender
 
     def to_dict(self):
         return {

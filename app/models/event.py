@@ -5,7 +5,7 @@ class Event(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     organizationId = db.Column(db.Integer, db.ForeignKey('organizations.id'), nullable=False)
-    userId = db.Column(db.Integer, db.ForeignKey('organizations.id'), nullable=False)
+    userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     isClosed = db.Column(db.DateTime, nullable=False)
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.String(255), nullable=False)
@@ -14,7 +14,8 @@ class Event(db.Model):
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-    organization = db.relationship('Organization', back_populates='event')
+    organization = db.relationship('Organization', back_populates='events')
+    manager = db.relationship('User', back_populates='events')
 
     def to_dict(self):
         return {

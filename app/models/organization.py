@@ -17,7 +17,7 @@ class Organization(db.Model):
     zip = db.Column(db.Integer, nullable=False)
     city = db.Column(db.String(17), nullable=False)
     state = db.Column(db.String(12), nullable=False)
-    phone = db.Column(db.Integer, nullable=False)
+    phone = db.Column(db.String(20), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())

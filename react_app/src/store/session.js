@@ -59,7 +59,7 @@ export const authenticate = () => async (dispatch) => {
 		if (user.errors) {
 			return;
 		}
-		dispatch(setUser(user));
+		dispatch(userIsSet(user));
 	}
 };
 

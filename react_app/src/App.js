@@ -18,7 +18,9 @@ import { Settings } from './Pages/Settings';
 import { Inbox } from './Pages/Inbox';
 import { Background } from './Components/Styled/Background';
 import { Navbar } from './Components/Navbar'
+import { SessionNavbar } from './Components/SessionNavbar';
 import Modal from './Components/Modal';
+import { Nav } from './Components/Styled/Navbar';
 
 function App() {
   const sessionUser = useSelector(state => state.session.user);
@@ -42,7 +44,7 @@ function App() {
   return (
     <BrowserRouter>
       <Background>
-        <Navbar />
+        {sessionUser ? <SessionNavbar sessionUser={sessionUser} /> : <Navbar />}
         <Modal />
         <Switch>
           <Route exact path='/'>

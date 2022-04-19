@@ -1,0 +1,111 @@
+.link {
+    color: white;
+    text-decoration: none;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 0.5rem;
+    margin-top: 7px;
+}
+
+.login {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #76D97E;
+    background-color: transparent;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.login:hover {
+    cursor: pointer;
+}
+
+.signup {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #76D97E;
+    background-color: transparent;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.signup:hover {
+    cursor: pointer;
+}
+
+.submit {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #76D97E;
+    background-color: #005C4D;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.submit:hover {
+    cursor: pointer;
+}
+
+.cancel {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #76D97E;
+    background-color: #005C4D;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.cancel:hover {
+    cursor: pointer;
+}
+
+.nonprofit {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #76D97E;
+    background-color: #005C4D;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.nonprofit:hover {
+    cursor: pointer;
+}
+
+.business {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #76D97E;
+    background-color: #005C4D;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: white;
+}
+
+.business:hover {
+    cursor: pointer;
+}

@@ -79,7 +79,11 @@ def seed_posts():
             status = 0
         )
         db.session.add(protein_requests)
-
+'https://mealize.s3.amazonaws.com/dairy_request.png'
+'https://mealize.s3.amazonaws.com/vegetables_request.png'
+'https://mealize.s3.amazonaws.com/fruits_request.png'
+'https://mealize.s3.amazonaws.com/grains_request.png'
+'https://mealize.s3.amazonaws.com/protein_request.png'
     # for items
     for i in range(101, 121):
         dairy_items = Post(

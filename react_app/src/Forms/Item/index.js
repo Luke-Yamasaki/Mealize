@@ -11,7 +11,7 @@ const ItemForm = () => {
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState('');
     const [categoryId, setCategoryId] = useState(1);
-    const [imageUrl, setImageUrl] = useState('https://cdn.iconscout.com/icon/free/png-256/picture-138-444905.png');
+    const [imageFile, setImageFile] = useState(null);
     const [expDate, setExpDate] = useState(new Date());
     const [imageUploading, setImageUploading] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -22,7 +22,10 @@ const ItemForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const formData = {
+        const formData = new FormData();
+        formData.append('imageFile', imageFile)
+
+        const itemData = {
             isItem: 'True',
             organizationId,
             userId,
@@ -30,7 +33,6 @@ const ItemForm = () => {
             description,
             quantity,
             categoryId,
-            imageUrl,
             expDate,
             status:0
         }
@@ -38,6 +40,7 @@ const ItemForm = () => {
         setImageUploading(true);
 
         const res = dispatch(postItem(formData));
+
         if (res.ok) {
             const newPost = await res.json();
             setImageUploading(false);
@@ -49,15 +52,15 @@ const ItemForm = () => {
         }
     }
 
-    // const updateImage = (e) => {
-    //     const file = e.target.files[0];
-    //     console.log(file)
-    //     console.log(file.name)
-    //     console.log(file.size)
-    //     console.log(file.type)
-    //     setImage(file)
+    const updateImage = (e) => {
+        const file = e.target.files[0];
+        console.log(file)
+        console.log(file.name)
+        console.log(file.size < 4096)
+        console.log(file.type)
+        setImageFile(file)
 
-    // }
+    }
 
     return (
         <form style={{width: '600px', height: '1000px', display: 'flex', flexDirection: 'column'}} onSubmit={handleSubmit}>
@@ -75,12 +78,9 @@ const ItemForm = () => {
                 </optgroup>
             </select>
             <input
-            //   type="file"
-            //   accept="image/*"
-            //   onChange={updateImage}
-            type='url'
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
+              type="file"
+              accept="image/*"
+              onChange={updateImage}
             />
             <input type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />
             <div style={{border: '1px solid black'}} role="button" onClick={handleSubmit}>Submit</div>

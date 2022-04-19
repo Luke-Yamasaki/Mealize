@@ -30,9 +30,11 @@ const removedPost = payload => ({
     payload
 });
 
+// split actions in two parts, validate form and then dispatch the image to AWS
+
 // action creators
 export const postItem = (formData) => async (dispatch) => {
-    console.log(formData)
+    console.log(formData['expDate']) // 2022-04-30
     const response = await fetch('/api/posts/items', {
         method: 'POST',
         headers: {

@@ -12,7 +12,7 @@ class Post(db.Model):
     quantity = db.Column(db.String(12), nullable=False)
     categoryId = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     imageUrl = db.Column(db.String(2048), nullable=False)
-    expirationDate = db.Column(db.DateTime, nullable=False)
+    expDate = db.Column(db.DateTime, nullable=False)
     status = db.Column(db.Integer, nullable=False)
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
@@ -35,8 +35,7 @@ class Post(db.Model):
             'quantity': self.quantity,
             'categoryId': self.categoryId,
             'imageUrl': self.imageUrl,
-            'expirationDate': self.expirationDate,
-            'endDate': self.endDate,
+            'expDate': self.expDate,
             'status': self.status,
             'organization': self.organization.to_dict(),
             'createdAt': self.createdAt,

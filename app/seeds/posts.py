@@ -15,7 +15,7 @@ def seed_posts():
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=1,
             imageUrl='https://mealize.s3.amazonaws.com/dairy_request.png',
-            expirationDate='06-18-2022 00:00:00',
+            expDate='2022-06-18',
             status = 0
         )
         db.session.add(dairy_requests)
@@ -30,7 +30,7 @@ def seed_posts():
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=2,
             imageUrl='https://mealize.s3.amazonaws.com/vegetables_request.png',
-            expirationDate='07-18-2022 00:00:00',
+            expDate='2022-07-18',
             status = 0
         )
         db.session.add(vegetable_requests)
@@ -45,7 +45,7 @@ def seed_posts():
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=3,
             imageUrl='https://mealize.s3.amazonaws.com/fruits_request.png',
-            expirationDate='08-18-2022 00:00:00',
+            expDate='2022-08-18',
             status = 0
         )
         db.session.add(fruits_requests)
@@ -60,7 +60,7 @@ def seed_posts():
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=4,
             imageUrl='https://mealize.s3.amazonaws.com/grains_request.png',
-            expirationDate='09-18-2022 00:00:00',
+            expDate='2022-09-18',
             status = 0
         )
         db.session.add(grains_requests)
@@ -75,7 +75,7 @@ def seed_posts():
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=5,
             imageUrl='https://mealize.s3.amazonaws.com/protein_request.png',
-            expirationDate='10-18-2022 00:00:00',
+            expDate='2022-10-18',
             status = 0
         )
         db.session.add(protein_requests)
@@ -91,7 +91,7 @@ def seed_posts():
             quantity=str(randint(1, 20))+' '+choice(('pounds', 'lbs.', 'kg', 'kgs')),
             categoryId=1,
             imageUrl='',
-            expirationDate='05-18-2022 00:00:00',
+            expDate='2022-05-18',
             status = 0
         )
         db.session.add(dairy_items)
@@ -106,7 +106,7 @@ def seed_posts():
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=2,
             imageUrl='',
-            expirationDate='07-18-2022 00:00:00',
+            expDate='2022-07-18',
             status = 0
         )
         db.session.add(vegetable_requests)
@@ -121,7 +121,7 @@ def seed_posts():
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=3,
             imageUrl='',
-            expirationDate='08-18-2022 00:00:00',
+            expDate='2022-08-18',
             status = 0
         )
         db.session.add(fruits_requests)
@@ -136,7 +136,7 @@ def seed_posts():
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=4,
             imageUrl='',
-            expirationDate='09-18-2022 00:00:00',
+            expDate='2022-09-18',
             status = 0
         )
         db.session.add(grains_requests)
@@ -151,7 +151,7 @@ def seed_posts():
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=5,
             imageUrl='',
-            expirationDate='10-18-2022 00:00:00',
+            expDate='2022-10-18',
             status = 0
         )
         db.session.add(protein_requests)

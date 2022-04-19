@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { postItem } from '../../store/posts';
-import { validateForm } from '../../Helpers/FormValidations/items';
+import { validateForm, uploadImage } from '../../Helpers/FormValidations/items';
 
 const ItemForm = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -24,7 +24,6 @@ const ItemForm = () => {
         e.preventDefault();
 
         const itemData = {
-            isItem: 'True',
             organizationId,
             userId,
             title,
@@ -35,31 +34,26 @@ const ItemForm = () => {
             status:0
         };
 
-        const response = await validateForm(itemData)
-        if(!response.data) {
-            
-        }
+        const stagedPost = await validateForm(itemData)
+        if(!stagedPost.errors) {
+            const formData = new FormData();
+            formData.append('imageFile', imageFile)
 
+            setImageUploading(true);
 
-    }
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('imageFile', imageFile)
-
-        setImageUploading(true);
-
-        const res = dispatch(postItem(formData));
-
-        if (res.ok) {
-            const newPost = await res.json();
-            setImageUploading(false);
-            history.push(`/posts/${newPost.id}`);
-        }
-        else {
-            setImageUploading(false);
-            setErrors(res.errors)
+            const response = await uploadImage(formData)
+            if (response.ok) {
+                const imageUrl = await response.json();
+                const itemPost = {...stagedPost, ...imageUrl};
+                const newPost = await dispatch(postItem(itemPost))
+                if(!newPost.error || !newPost.errors) {
+                    setImageUploading(false);
+                    history.push(`/posts/${newPost.id}`)
+                } else {
+                    setImageUploading(false);
+                    setErrors(newPost.errors)
+                }
+            }
         }
     }
 

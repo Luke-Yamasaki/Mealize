@@ -18,3 +18,11 @@ export const validateForm = async (itemData) => {
         return 'Connection failed. Please check your internet connection.'
     };
 };
+
+export const uploadImage = async (formData) => {
+    const response = await fetch('/api/posts/images', {
+        method: "POST",
+        body: formData,
+    });
+    return response;
+}

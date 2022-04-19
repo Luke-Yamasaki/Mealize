@@ -39,7 +39,7 @@ def image_validation():
 
     imageUrl = upload["url"]
 
-    return {"url": imageUrl}
+    return {"imageUrl": imageUrl}
 
 
 @post_routes.route('/items', methods=['POST'])

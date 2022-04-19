@@ -31,14 +31,40 @@ const removedPost = payload => ({
 });
 
 // action creators
-export const post = (formData) => async (dispatch) => {
-    const response = await fetch('/api/posts/', {
+export const postItem = (formData) => async (dispatch) => {
+    console.log(formData)
+    const response = await fetch('/api/posts/items', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
     });
+    console.log(response)
+    if(response.ok) {
+        const newPost = await response.json();
+        dispatch(createdPost(newPost));
+        return newPost;
+    } else if(response.status < 500) {
+        const data = await response.json();
+        if(data.errors){
+            return data.errors;
+        };
+    } else {
+        return 'Connection failed. Please check your internet connection.'
+    }
+};
+
+export const postrequest = (formData) => async (dispatch) => {
+    console.log(formData)
+    const response = await fetch('/api/posts/requests', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    });
+    console.log(response)
     if(response.ok) {
         const newPost = await response.json();
         dispatch(createdPost(newPost));
@@ -85,8 +111,30 @@ export const getBatchedPosts = () => async (dispatch) => {
     };
 };
 
-export const updatePost = (formData) => async (dispatch) => {
-    const response = await fetch(`/api/posts/${formData.postId}`, {
+export const updateItem = (formData) => async (dispatch) => {
+    const response = await fetch(`/api/posts/items/${formData.postId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    });
+
+    if(response.ok) {
+        const data = await response.json();
+        dispatch(updatedPost(data));
+    } else if(response.status < 500) {
+        const data = await response.json();
+        if(data.errors){
+            return data.errors;
+        };
+    } else {
+        return 'Connection failed. Please check your internet connection.'
+    };
+};
+
+export const updateRequest = (formData) => async (dispatch) => {
+    const response = await fetch(`/api/posts/requests/${formData.postId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

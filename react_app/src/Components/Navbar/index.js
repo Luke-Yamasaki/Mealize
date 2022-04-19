@@ -4,9 +4,11 @@ import { MagnifyingGlass } from '../../Assets/Icons/MagnifyingGlass';
 import { useSelector, useDispatch } from "react-redux";
 import { LoginForm } from '../../Forms/Login';
 import { SignupForm } from '../../Forms/Signup';
+import ItemForm from '../../Forms/Item';
 import styles from './Navbar.module.css';
 import styled from 'styled-components';
 import { showModal, setCurrentModal } from '../../store/modal';
+import { logout } from '../../store/session';
 
 const Nav = styled.nav`
     width: 80vw;
@@ -85,6 +87,15 @@ export const Navbar = () => {
         dispatch(showModal());
     };
 
+    const showItemForm = () => {
+        dispatch(setCurrentModal(ItemForm));
+        dispatch(showModal());
+    };
+
+    const logOut = () => {
+        dispatch(logout())
+    }
+
     if(!sessionUser) {
         return (
             <Nav>
@@ -114,10 +125,11 @@ export const Navbar = () => {
                         <MagnifyingGlass />
                         <SearchInput placeholder='Search...'></SearchInput>
                     </SearchBar>
-                    <div>Profile</div>
-                    <div>Inbox</div>
-                    <div>Norifications</div>
-                    <div>Post</div>
+                    <div role='button' className={styles.signup}>User</div>
+                    <div role='button' className={styles.signup}>Inbox</div>
+                    <div role='button' className={styles.signup}>Notifications</div>
+                    <div role='button' className={styles.signup} onClick={showItemForm}>Post</div>
+                    <div role='button' className={styles.signup} onClick={logOut}>Log out</div>
                 </NavList>
             </Nav>
         )

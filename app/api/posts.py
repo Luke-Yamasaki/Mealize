@@ -18,106 +18,112 @@ def post(id):
     post = Post.query.get(id)
     return post.to_dict()
 
-@post_routes.route('/', methods=['POST'])
+@post_routes.route('/items', methods=['POST'])
 @login_required
-def new_post():
+def new_item():
     if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
-    elif request.json['isItem'] == True:
-        form = ItemForm()
-        form['csrf_token'].data = request.cookies['csrf_token']
-        if "image" not in request.files:
-            return {"errors": "image required"}, 400
-        image = request.files["image"]
-        if not accepted_file(image.filename):
-            return {"errors": "file type not permitted"}, 400
-        if form.validate_on_submit():
-            image.filename = generate_unique_file(image.filename)
-            upload = upload_to_s3_bucket(image)
-            if "url" not in upload:
-                return upload, 400
-            imageUrl = upload["url"]
-            post = Post(
-                isItem = True,
-                organizationId = current_user.organizationId,
-                userId = current_user.id,
-                title = form.data['title'],
-                description = form.data['description'],
-                quantity = form.data['quantity'],
-                categoryId = form.data['categoryId'],
-                imageUrl = imageUrl,
-                expirationDate = form.data['expirationDate'],
-                status = 0 # 0=posted, 1=reserved, 2=completed
-            )
-            db.session.add(post)
-            db.session.commit()
-            return post.to_dict()
-    else:
-        form = RequestForm()
-        form['csrf_token'].data = request.cookies['csrf_token']
-        if not form.data['imageUrl'] in ('https://mealize.s3.amazonaws.com/dairy_request.png', 'https://mealize.s3.amazonaws.com/vegetables_request.png', 'https://mealize.s3.amazonaws.com/fruits_request.png', 'https://mealize.s3.amazonaws.com/grains_request.png', 'https://mealize.s3.amazonaws.com/protein_request.png'):
-            return {'error': 'Image not allowed.'}
-        if form.validate_on_submit():
-            post = Post(
-                isItem = False,
-                organizationId = current_user.organizationId,
-                userId = current_user.id,
-                title = form.data['title'],
-                description = form.data['description'],
-                quantity = form.data['quantity'],
-                categoryId = form.data['categoryId'],
-                imageUrl = form.data['imageUrl'],
-                expirationDate = form.data['expirationDate'],
-                status = 0 # 0=posted, 1=reserved, 2=completed
-            )
-            db.session.add(post)
-            db.session.commit()
-            return post.to_dict()
-
+    form = ItemForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    # if "image" not in request.files:
+    #     return {"errors": "image required"}, 400
+    # image = request.files["image"]
+    # if not accepted_file(image.filename):
+    #     return {"errors": "file type not permitted"}, 400
+    if form.validate_on_submit():
+        # image.filename = generate_unique_file(image.filename)
+        # upload = upload_to_s3_bucket(image)
+        # if "url" not in upload:
+        #     return upload, 400
+        # imageUrl = upload["url"]
+        post = Post(
+            isItem = True,
+            organizationId = current_user.organizationId,
+            userId = current_user.id,
+            title = form.data['title'],
+            description = form.data['description'],
+            quantity = form.data['quantity'],
+            categoryId = form.data['categoryId'],
+            imageUrl = form.data['imageUrl'],
+            expirationDate = form.data['expirationDate'],
+            status = 0 # 0=posted, 1=reserved, 2=completed
+        )
+        db.session.add(post)
+        db.session.commit()
+        return post.to_dict()
     return {'errors': errors_to_list(form.errors)}
 
-@post_routes.route('/<int:id>', methods=['PUT'])
+@post_routes.route('/items/<int:id>', methods=['PUT'])
 @login_required
-def update_post(id):
+def update_item(id):
     if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
-    elif request.json['isItem'] == True:
-        form = ItemForm()
-        form['csrf_token'].data = request.cookies['csrf_token']
-        if form.validate_on_submit():
-            post = Post.query.get(id)
-            post.isItem = True,
-            post.organizationId = current_user.organizationId,
-            post.userId = current_user.id,
-            post.title = form.data['title'],
-            post.description = form.data['description'],
-            post.quantity = form.data['quantity'],
-            post.categoryId = form.data['categoryId'],
-            post.imageUrl = form.data['imageUrl'],
-            post.expirationDate = form.data['expirationDate'],
-            post.status = request.json['status'] # 0=posted, 1=reserved, 2=completed
+    form = ItemForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        post = Post.query.get(id)
+        post.isItem = True,
+        post.organizationId = current_user.organizationId,
+        post.userId = current_user.id,
+        post.title = form.data['title'],
+        post.description = form.data['description'],
+        post.quantity = form.data['quantity'],
+        post.categoryId = form.data['categoryId'],
+        post.imageUrl = form.data['imageUrl'],
+        post.expirationDate = form.data['expirationDate'],
+        post.status = request.json['status'] # 0=posted, 1=reserved, 2=completed
 
-            db.session.commit()
-            return post.to_dict()
-    else:
-        form = RequestForm()
-        form['csrf_token'].data = request.cookies['csrf_token']
-        if form.validate_on_submit():
-            post = Post.query.get(id)
-            post.isItem = True,
-            post.organizationId = current_user.organizationId,
-            post.userId = current_user.id,
-            post.title = form.data['title'],
-            post.description = form.data['description'],
-            post.quantity = form.data['quantity'],
-            post.categoryId = form.data['categoryId'],
-            post.imageUrl = form.data['imageUrl'],
-            post.expirationDate = form.data['expirationDate'],
-            post.status = request.json['status'] # 0=posted, 1=reserved, 2=completed
+        db.session.commit()
+        return post.to_dict()
+    return {'errors': errors_to_list(form.errors)}
 
-            db.session.commit()
-            return post.to_dict()
+@post_routes.route('/requests', methods=['POST'])
+@login_required
+def new_request():
+    if current_user.isManager == False:
+        return {'error': 'You are not authorized for this action.'}
+    form = RequestForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        post = Post(
+            isItem = False,
+            organizationId = current_user.organizationId,
+            userId = current_user.id,
+            title = form.data['title'],
+            description = form.data['description'],
+            quantity = form.data['quantity'],
+            categoryId = form.data['categoryId'],
+            imageUrl = form.data['imageUrl'],
+            expirationDate = form.data['expirationDate'],
+            status = 0 # 0=posted, 1=reserved, 2=completed
+        )
+        db.session.add(post)
+        db.session.commit()
+        return post.to_dict()
+    return {'errors': errors_to_list(form.errors)}
 
+@post_routes.route('/requests/<int:id>', methods=['PUT'])
+@login_required
+def update_request(id):
+    if current_user.isManager == False:
+        return {'error': 'You are not authorized for this action.'}
+    form = RequestForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        post = Post.query.get(id)
+        post.isItem = True,
+        post.organizationId = current_user.organizationId,
+        post.userId = current_user.id,
+        post.title = form.data['title'],
+        post.description = form.data['description'],
+        post.quantity = form.data['quantity'],
+        post.categoryId = form.data['categoryId'],
+        post.imageUrl = form.data['imageUrl'],
+        post.expirationDate = form.data['expirationDate'],
+        post.status = request.json['status'] # 0=posted, 1=reserved, 2=completed
+
+        db.session.commit()
+        return post.to_dict()
     return {'errors': errors_to_list(form.errors)}
 
 @post_routes.route('/<int:id>', methods=['DELETE'])

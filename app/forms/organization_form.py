@@ -26,7 +26,7 @@ class OrganizationForm(FlaskForm):
     city = StringField("City", validators=[InputRequired(), Length(min=3, max=17, message="City names cannot be shorter than three characters or longer than 17 characters.")])
     state = StringField("State", validators=[InputRequired(), Length(min=4, max=12)])
     description = StringField("Description", validators=[InputRequired(), Length(min=30, max=255, message="Please provide a description of your organization between 30 and 255 characters.")])
-    phone = PhoneNumberField("Phone number", country_code='US', display_format='national', validators=[InputRequired()])
+    phone = PhoneNumberField("Phone number", region='US', display_format='national', validators=[InputRequired()])
     email = StringField("Email", validators=[InputRequired(), Email("Please provide a valid email address."), existing_organization])
     website = StringField("Website", validators=[InputRequired(), Length(min=4, max=70, message='Website URLs must be between 4 and 70 characters long.')])
     open = TimeField("Open", validators=[InputRequired()])

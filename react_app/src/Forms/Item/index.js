@@ -12,7 +12,7 @@ const ItemForm = () => {
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState('');
     const [categoryId, setCategoryId] = useState(1);
-    const [imageFile, setImageFile] = useState(null);
+    const [image, setImage] = useState(null);
     const [expDate, setExpDate] = useState(new Date());
     const [imageUploading, setImageUploading] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -22,6 +22,9 @@ const ItemForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append("image", image);
+        console.log(formData)
 
         const itemData = {
             organizationId,
@@ -35,17 +38,20 @@ const ItemForm = () => {
         };
 
         const stagedPost = await validateForm(itemData)
+        console.log(stagedPost)
         if(!stagedPost.errors) {
-            const formData = new FormData();
-            formData.append('imageFile', imageFile)
+            console.log(image)
+            console.log(formData)
 
             setImageUploading(true);
 
             const response = await uploadImage(formData)
+            console.log(response)
             if (response.ok) {
                 const imageUrl = await response.json();
                 const itemPost = {...stagedPost, ...imageUrl};
                 const newPost = await dispatch(postItem(itemPost))
+                console.log()
                 if(!newPost.error || !newPost.errors) {
                     setImageUploading(false);
                     history.push(`/posts/${newPost.id}`)
@@ -61,14 +67,13 @@ const ItemForm = () => {
         const file = e.target.files[0];
         console.log(file)
         console.log(file.name)
-        console.log(file.size < 4096)
+        console.log(file.size)
         console.log(file.type)
-        setImageFile(file)
-
+        setImage(file)
     }
 
     return (
-        <form style={{width: '600px', height: '1000px', display: 'flex', flexDirection: 'column'}} onSubmit={handleSubmit}>
+        <form style={{width: '600px', height: '1000px', display: 'flex', flexDirection: 'column'}} encType="multipart/form-data" onSubmit={handleSubmit}>
             <input placeholder='Title' type='text' value={title} onChange={e => setTitle(e.target.value)} />
             <textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
             <input placeholder='Quantity' type='text' value={quantity} onChange={e => setQuantity(e.target.value)} />
@@ -84,7 +89,7 @@ const ItemForm = () => {
             </select>
             <input
               type="file"
-              accept="image/*"
+              accept="image/png, image/jpeg, image/jpg"
               onChange={updateImage}
             />
             <input type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />

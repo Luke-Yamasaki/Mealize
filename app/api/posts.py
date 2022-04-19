@@ -1,4 +1,3 @@
-import re
 from flask import Blueprint, request
 from flask_login import current_user, login_required
 from app.models import db, Post
@@ -21,7 +20,6 @@ def post(id):
 @post_routes.route('/images', methods=['POST'])
 @login_required
 def image_validation():
-
     if "image" not in request.files:
         return {"errors": "image required"}, 400
 
@@ -33,13 +31,27 @@ def image_validation():
     image.filename = generate_unique_file(image.filename)
 
     upload = upload_to_s3_bucket(image)
-
+    print('testing upload', upload)
     if "url" not in upload:
+        print('testing upload', upload)
         return upload, 400
 
     imageUrl = upload["url"]
 
     return {"imageUrl": imageUrl}
+
+@post_routes.route('/validate', methods=['POST'])
+@login_required
+def form_validation():
+    if current_user.isManager == False:
+        return {'error': 'You are not authorized for this action.'}
+    form = PostForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        return form.data
+    else:
+        return {'errors': errors_to_list(form.errors)}
+
 
 
 @post_routes.route('/items', methods=['POST'])

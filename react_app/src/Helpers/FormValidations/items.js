@@ -20,6 +20,7 @@ export const validateForm = async (itemData) => {
 };
 
 export const uploadImage = async (formData) => {
+    console.log(formData)
     const response = await fetch('/api/posts/images', {
         method: "POST",
         body: formData,

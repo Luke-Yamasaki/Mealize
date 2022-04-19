@@ -48,6 +48,21 @@ const removedFavorite = payload => ({
 // });
 
 // action creators
+export const authenticate = () => async (dispatch) => {
+	const response = await fetch("/api/auth/", {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+	if (response.ok) {
+		const user = await response.json();
+		if (user.errors) {
+			return;
+		}
+		dispatch(setUser(user));
+	}
+};
+
 export const login = (email, password) => async (dispatch) => {
     const response = await fetch('/api/auth/login', {
         method: 'POST',

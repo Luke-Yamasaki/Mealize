@@ -57,7 +57,7 @@ export const postItem = (formData) => async (dispatch) => {
     }
 };
 
-export const postrequest = (formData) => async (dispatch) => {
+export const postRequest = (formData) => async (dispatch) => {
     console.log(formData)
     const response = await fetch('/api/posts/requests', {
         method: 'POST',

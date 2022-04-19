@@ -87,52 +87,22 @@ export const Navbar = () => {
         dispatch(showModal());
     };
 
-    const showItemForm = () => {
-        dispatch(setCurrentModal(ItemForm));
-        dispatch(showModal());
-    };
-
-    const logOut = () => {
-        dispatch(logout())
-    }
-
-    if(!sessionUser) {
-        return (
-            <Nav>
-                <NavList>
-                    <LogoBox>
-                        <Logo dimension={"medium"} />
-                        <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
-                    </LogoBox>
-                    <SearchBar>
-                        <MagnifyingGlass />
-                        <SearchInput placeholder='Search...'></SearchInput>
-                    </SearchBar>
-                    <AuthBox>
-                        <div role='button' className={styles.login} onClick={showLoginModal}>Log in</div>
-                        <div role='button' className={styles.signup} onClick={showSignupModal}>Sign up</div>
-                    </AuthBox>
-                </NavList>
-            </Nav>
-        )
-    } else {
-       return (
-            <Nav>
-                <NavList>
+    return (
+        <Nav>
+            <NavList>
+                <LogoBox>
                     <Logo dimension={"medium"} />
                     <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
-                    <SearchBar>
-                        <MagnifyingGlass />
-                        <SearchInput placeholder='Search...'></SearchInput>
-                    </SearchBar>
-                    <div role='button' className={styles.signup}>User</div>
-                    <div role='button' className={styles.signup}>Inbox</div>
-                    <div role='button' className={styles.signup}>Notifications</div>
-                    <div role='button' className={styles.signup} onClick={showItemForm}>Post</div>
-                    <div role='button' className={styles.signup} onClick={logOut}>Log out</div>
-                </NavList>
-            </Nav>
-        )
-    }
-
+                </LogoBox>
+                <SearchBar>
+                    <MagnifyingGlass />
+                    <SearchInput placeholder='Search...'></SearchInput>
+                </SearchBar>
+                <AuthBox>
+                    <div role='button' className={styles.login} onClick={showLoginModal}>Log in</div>
+                    <div role='button' className={styles.signup} onClick={showSignupModal}>Sign up</div>
+                </AuthBox>
+            </NavList>
+        </Nav>
+    )
 }

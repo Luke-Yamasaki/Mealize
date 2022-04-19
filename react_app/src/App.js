@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
+// actions
+import { authenticate } from './store/session';
+import { getCategories } from './store/categories';
+import { getAllPosts } from './store/posts';
+import { getBatchedUsers } from './store/users'
+// Components
 import { Home } from './Pages/Home';
 import { About } from './Pages/About';
 import { Questions } from './Pages/Questions';
@@ -16,8 +21,23 @@ import { Navbar } from './Components/Navbar'
 import Modal from './Components/Modal';
 
 function App() {
+  const sessionUser = useSelector(state => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    (async () => {
+      await dispatch(authenticate());
+      await dispatch(getCategories());
+      await dispatch(getAllPosts());
+      await dispatch(getBatchedUsers());
+      setIsLoaded(true);
+    })();
+  },[dispatch]);
+
+  if(!isLoaded) {
+    return null;
+  }
 
   return (
     <BrowserRouter>

@@ -49,8 +49,10 @@ export default function usersReducer(state = {}, action) {
     switch(action.type) {
         case GOT_BATCHED_USERS:
             newState.users = action.payload;
+            return newState;
         case GOT_ONE_USER:
             newState.user = action.payload;
+            return newState;
         default:
             return state;
     };

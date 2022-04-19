@@ -20,7 +20,6 @@ import { Background } from './Components/Styled/Background';
 import { Navbar } from './Components/Navbar'
 import { SessionNavbar } from './Components/SessionNavbar';
 import Modal from './Components/Modal';
-import { Nav } from './Components/Styled/Navbar';
 
 function App() {
   const sessionUser = useSelector(state => state.session.user);
@@ -70,6 +69,9 @@ function App() {
           </Route>
           <Route exact path='/settings'>
             <Settings />
+          </Route>
+          <Route exact path='/search/:searchword'>
+            <h1>Search results</h1>
           </Route>
           <Route exact path='/inbox'>
             <Inbox />

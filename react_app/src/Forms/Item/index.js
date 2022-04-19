@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { postItem } from '../../store/posts';
+import { validateForm } from '../../Helpers/FormValidations/items';
 
 const ItemForm = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -22,9 +23,6 @@ const ItemForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append('imageFile', imageFile)
-
         const itemData = {
             isItem: 'True',
             organizationId,
@@ -35,7 +33,20 @@ const ItemForm = () => {
             categoryId,
             expDate,
             status:0
+        };
+
+        const response = await validateForm(itemData)
+        if(!response.data) {
+            
         }
+
+
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('imageFile', imageFile)
 
         setImageUploading(true);
 

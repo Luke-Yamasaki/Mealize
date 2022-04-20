@@ -3,9 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removePost, updateItem } from '../../store/posts';
 import styles from './ItemCard.module.css';
 
-export const ItemCard = ({ post, className }) => {
+export const ItemCard = ({ post }) => {
     const dispatch = useDispatch();
-    const sessionUser = useSelector(state.session.user);
 
     const handleDelete = async (e) => {
         e.preventDefault();
@@ -13,7 +12,7 @@ export const ItemCard = ({ post, className }) => {
 
     }
     return (
-        <div className={`styles.${className}`}>
+        <div className={styles.card}>
             <img src={post.imageUrl} className={styles.image} alt='Item image' />
             <div>
                 <div>

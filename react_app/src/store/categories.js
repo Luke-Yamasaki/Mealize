@@ -6,7 +6,7 @@ const gotCategories = payload => ({
 });
 
 export const getCategories = () => async (dispatch) => {
-    const response = await fetch('/api/categories');
+    const response = await fetch('/api/categories/');
     if(response.ok) {
         const data = await response.json();
         dispatch(gotCategories(data));

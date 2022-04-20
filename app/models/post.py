@@ -12,7 +12,7 @@ class Post(db.Model):
     quantity = db.Column(db.String(15), nullable=False)
     categoryId = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     imageUrl = db.Column(db.String(2048), nullable=False)
-    expDate = db.Column(db.DateTime, nullable=False)
+    expDate = db.Column(db.Date, nullable=False)
     status = db.Column(db.Integer, nullable=False)
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())

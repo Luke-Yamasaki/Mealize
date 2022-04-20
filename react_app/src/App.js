@@ -25,7 +25,8 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  
+  const posts = useSelector(state => state.posts);
+
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());
@@ -47,7 +48,7 @@ function App() {
         <Modal />
         <Switch>
           <Route exact path='/'>
-            <Home />
+            <Home posts={posts}/>
           </Route>
           <Route exact path='/about'>
             <About />

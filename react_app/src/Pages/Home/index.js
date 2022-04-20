@@ -62,8 +62,33 @@ const Posts = styled.div`
 
 export const Home = ({posts}) => {
     const sessionUser = useSelector(state => state.session.user);
-    const [isItem, setIsItem] = useState(sessionUser.isNonprofit ? true : false);
-    const postsArr = Array.from(posts)
+    const [isItem, setIsItem] = useState(sessionUser && sessionUser.isNonprofit ? true : false);
+    const postsArr = Object.entries(posts)
+    console.log(postsArr)
+    if(!sessionUser) {
+        return(
+            <Wrapper>
+                <SideBarContainer>
+                    Filter
+                <SideBar />
+                <SideBar />
+                <SideBar />
+                </SideBarContainer>
+                <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
+                    <FeedContainer>
+                        {postsArr?.forEach(post => (post.isItem ? <ItemCard key={post.id} post={post} /> : <RequestCard key={post.id} post={post} /> ))}
+                    </FeedContainer>
+                </div>
+
+                <SideBarContainer>
+                    Map
+                <SideBar />
+                </SideBarContainer>
+        </Wrapper>
+
+        )
+    }
+
     return (
         <Wrapper>
             <SideBarContainer>
@@ -82,7 +107,6 @@ export const Home = ({posts}) => {
                 Map
               <SideBar />
             </SideBarContainer>
-
         </Wrapper>
     )
 };

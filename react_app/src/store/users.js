@@ -44,13 +44,15 @@ export const getOneUser = (userId) => async dispatch => {
     };
 };
 
-export default function userReducer(state = {}, action) {
+export default function usersReducer(state = {}, action) {
     let newState = { ...state };
     switch(action.type) {
         case GOT_BATCHED_USERS:
             newState.users = action.payload;
+            return newState;
         case GOT_ONE_USER:
             newState.user = action.payload;
+            return newState;
         default:
             return state;
     };

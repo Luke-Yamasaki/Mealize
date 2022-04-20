@@ -3,6 +3,7 @@ from app.models import User, db
 from app.forms import LoginForm, SignupForm
 from flask_login import current_user, login_user, logout_user
 from app.utils import errors_to_list
+from app.utils.s3 import accepted_file, generate_unique_file, upload_to_s3_bucket
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -10,6 +11,7 @@ auth_routes = Blueprint('auth', __name__)
 def authenticate():
     if current_user.is_authenticated:
         return current_user.profile_dict()
+    return {'errors': ['Unauthorized']}
 
 @auth_routes.route('/login', methods=['POST'])
 def login():
@@ -21,7 +23,7 @@ def login():
         return user.profile_dict()
     return {'errors': errors_to_list(form.errors)}, 401
 
-@auth_routes.route('logout')
+@auth_routes.route('/logout')
 def logout():
     logout_user()
     return {'message': 'The user has logged out.'}
@@ -30,8 +32,17 @@ def logout():
 def sign_up():
     form = SignupForm()
     form['cesrf_token'].data = request.cookies['cerf_token']
+    if "image" not in request.files:
+        return {"errors": "An image is required to post."}, 400
+    image = request.files["image"]
+    if not accepted_file(image.filename):
+        return {"errors": "Sorry, we only accept .png, .jpg or .jpeg image files."}, 400
     if form.validate_on_submit():
-        # Add AWS S3 function to send profileImageUrl to bucket and retrieve new url string
+        image.filename = generate_unique_file(image.filename)
+        upload = upload_to_s3_bucket(image)
+        if "url" not in upload:
+            return upload, 400
+        image_url = upload["url"]
         user = User(
             organizationId = request.json['organizationId'],
             isNonprofit = request.json['isNonprofit'],
@@ -46,7 +57,7 @@ def sign_up():
             autism = form.data['autism'],
             learningDisabled = form.data['learningDisabled'],
             lgbtq = form.data['lgbtq'],
-            profileImageUrl = form.data['profileImageUrl'],
+            profileImageUrl = image_url,
             jobDescription = form.data['jobDescription'],
             password = form.data['password']
         )

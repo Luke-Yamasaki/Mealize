@@ -1,8 +1,19 @@
+import React, {useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { removePost, updateItem } from '../../store/posts';
+import styles from './ItemCard.module.css';
 
 export const ItemCard = ({ post }) => {
+    const dispatch = useDispatch();
+
+    const handleDelete = async (e) => {
+        e.preventDefault();
+
+
+    }
     return (
-        <div>
-            <img></img>
+        <div className={styles.card}>
+            <img src={post.imageUrl} className={styles.image} alt='Item image' />
             <div>
                 <div>
                     <div>
@@ -14,7 +25,7 @@ export const ItemCard = ({ post }) => {
                 </div>
                 <div>
                     <div>
-                        
+
                     </div>
                 </div>
             </div>

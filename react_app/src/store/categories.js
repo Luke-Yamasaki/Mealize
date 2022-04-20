@@ -6,7 +6,7 @@ const gotCategories = payload => ({
 });
 
 export const getCategories = () => async (dispatch) => {
-    const response = await fetch('/api/categories');
+    const response = await fetch('/api/categories/');
     if(response.ok) {
         const data = await response.json();
         dispatch(gotCategories(data));
@@ -24,6 +24,9 @@ export default function categoriesReducer(state={}, action) {
     let newState = {...state};
     switch(action.type) {
         case GOT_CATEGORIES:
-
-    }
-}
+            newState.categories = action.payload;
+            return newState
+        default:
+            return state;
+    };
+};

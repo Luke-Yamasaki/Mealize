@@ -3,13 +3,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addFavorite, removeFavorite } from '../../../store/session';
 
 
-export const FavoritesIcon = ({ postId }) => {
+export const FavoritesIcon = ({ post }) => {
     const dispatch = useDispatch();
     const favorites = useSelector(state => state.session.user.favorites);
-    const [favorite, setFavorite] = useState(favorites[postId] ? true : false);
-
+    const [favorite, setFavorite] = useState(favorites[post.id] ? true : false);
+    
     useEffect(() => {
-        favorite === true ? dispatch(addFavorite(postId)) : dispatch(removeFavorite(postId));
+        favorite === true ? dispatch(addFavorite(post.id)) : dispatch(removeFavorite(post.id));
     }, [favorite])
 
     const handleLike = (e) => {

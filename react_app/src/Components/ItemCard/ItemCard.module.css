@@ -1,17 +1,36 @@
+* {
+    font-family: motiva-sans,sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 10px;
+}
+
 .card {
     width: 240px;
     height: 340px;
     border: 5px solid black;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: space-around;
+    justify-content: center;
 }
 
 .image {
-    background-size: contain;
-    background-repeat: no-repeat;
+    width: 220px;
+    height: 190px;
+    object-fit: cover;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     display: flex;
     flex-direction: row;
     align-items: top;
     justify-content: space-between;
+}
+
+.profile {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 100%;
 }

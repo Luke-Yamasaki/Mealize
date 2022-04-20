@@ -81,7 +81,7 @@ export const postRequest = (formData) => async (dispatch) => {
 };
 
 export const getAllPosts = () => async (dispatch) => {
-    const response = await fetch('/api/posts');
+    const response = await fetch('/api/posts/');
     if(response.ok) {
         const posts = await response.json();
         dispatch(gotAllPosts(posts));

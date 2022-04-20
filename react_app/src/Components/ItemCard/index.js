@@ -14,8 +14,6 @@ import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
 import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 
-
-
 const UserTitle = styled.div`
     width: 220px;
     height: 65px;
@@ -104,26 +102,27 @@ export const ItemCard = ({ post, sessionUser }) => {
     const dispatch = useDispatch();
     const users = useSelector(state => state.users);
     const user = users[post.userId];
+    console.log(user)
     const category = post.category.category;
-    console.log(category)
+    const url = post.imageUrl;
+    console.log(typeof url)
     const handleDelete = async (e) => {
         e.preventDefault();
     };
 
     return (
         <div className={styles.card}>
-            <div style={{backgroundImage: `url(${post.imageUrl})`}} className={styles.image}>
-                <FavoritesIcon postId={post.id} />
-                {post.userId === sessionUser.id ? <><div>Delete</div><div>Edit</div></> : <Triangle status={post.status} />}
-            </div>
+            <img src={url}  />
+                {sessionUser ? <FavoritesIcon post={post} /> : null}
+                {sessionUser && post.userId === sessionUser.id ? <><div>Delete</div><div>Edit</div></> : <Triangle status={post.status} />}
             <UserTitle>
                 <UserImage>
-                    <div style={{backgroundImage: `url(${user.profileImageUrl})`}} className={styles.profile} />
+                    <img src={user.profileImageUrl} className={styles.profile} />
                     <p><strong>{user.firstName}</strong></p>
                 </UserImage>
                 <TitleBox>
                     <h3>{ post.title }</h3>
-                    <p>{ user.organization.name }</p>
+                    <p>{ user.firstName }</p>
                 </TitleBox>
                 <CategoryBox>
                     { category === 'Dairy'

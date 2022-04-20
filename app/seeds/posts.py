@@ -96,7 +96,7 @@ def seed_posts():
         )
         db.session.add(dairy_items)
 
-    for j in range(121, 181):
+    for j in range(121, 201):
         vegetable_items = Post(
             isItem=True,
             organizationId=randint(26, 100),
@@ -111,7 +111,7 @@ def seed_posts():
         )
         db.session.add(vegetable_items)
 
-    for k in range(181, 201):
+    for k in range(201, 221):
         fruits_items = Post(
             isItem=True,
             organizationId=randint(26, 100),
@@ -124,37 +124,37 @@ def seed_posts():
             expDate='2022-08-18',
             status = 0
         )
-        db.session.add(fruits_requests)
+        db.session.add(fruits_items)
 
-    for l in range(61, 81):
-        grains_requests = Post(
-            isItem=False,
-            organizationId=randint(1, 25),
-            userId=randint(1, 25),
+    for l in range(221, 301):
+        grains_items = Post(
+            isItem=True,
+            organizationId=randint(26, 100),
+            userId=randint(26, 100),
             title=choice(('Need dry pasta noodles', 'Need boxes of macaroni', 'Looking for bags of rice', 'Any bread', 'Sandwhich bread, tortillas or wraps', 'Looking for oatmeal')),
             description=choice(('Our food bank needs dry pasta noodles! We would appreciate it if you have any boxes to spare.', "We're looking for boxes of macaroni. We would love to pick them up. Thanks!", 'We are looking to make rice balls for the homeless shelter and we need bags of rice. Any amount would be greatly appreciated!', "Hello! We're looking for yogurt for lunch boxes! Any unopened containers would be much appreciated!", "If you have any bread, we would love to reserve a pick up time!", 'Looking for sandwhich bread, tortillas or wraps. Thanks!', 'Looking for oatmeal!')),
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=4,
-            imageUrl='',
+            imageUrl='https://mealize.s3.amazonaws.com/'+'Grains-'+str(randint(1, 13))+'.jpg',
             expDate='2022-09-18',
             status = 0
         )
-        db.session.add(grains_requests)
+        db.session.add(grains_items)
 
-    for m in range(81, 101):
-        protein_requests = Post(
-            isItem=False,
-            organizationId=randint(1, 25),
-            userId=randint(1, 25),
+    for m in range(301, 351):
+        protein_items = Post(
+            isItem=True,
+            organizationId=randint(26, 100),
+            userId=randint(26, 100),
             title=choice(('Need chicken breast', 'Need fish', 'Looking for canned tuna', 'Any eggs', 'Tofu or beans', 'Pork chops', 'Burger patties', 'Canned almonds')),
             description=choice(('Our food bank needs chicken breast! We would appreciate it if you have any amount to spare.', "We're looking for fish, we aren't picky. If you kept them properly stored, we would love to pick them up. Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for canned tuna. Any amount would be greatly appreciated!', "Hello! We're looking for eggs for lunch boxes! Any amount would be much appreciated!", "If you have any unopened canned almonds, we would love to reserve a pick up time!", 'Looking for pork, ideally pork chops for boxed meals. Thanks!', 'Looking for burger patties. If you have beef or vegan patties, we would love to pick them up. Thanks!', 'We need tofu and black beans. If you have any we would love to pick them up!')),
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=5,
-            imageUrl='',
+            imageUrl='https://mealize.s3.amazonaws.com/'+'Fruits-'+str(randint(1, 10))+'.jpg',
             expDate='2022-10-18',
             status = 0
         )
-        db.session.add(protein_requests)
+        db.session.add(protein_items)
 
     db.session.commit()
 

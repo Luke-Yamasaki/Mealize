@@ -52,7 +52,6 @@ export const authenticate = () => async (dispatch) => {
 	const response = await fetch("/api/auth/");
 	if (response.ok) {
 		const user = await response.json();
-        console.log(user)
 		if (user.errors) {
 			return;
 		}

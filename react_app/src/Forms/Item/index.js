@@ -13,6 +13,7 @@ const ItemForm = () => {
     const [quantity, setQuantity] = useState('');
     const [categoryId, setCategoryId] = useState(1);
     const [image, setImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState('');
     const [expDate, setExpDate] = useState(new Date());
     const [imageUploading, setImageUploading] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -39,17 +40,16 @@ const ItemForm = () => {
         const stagedPost = await validateForm(itemData)
         console.log(stagedPost)
         if(!stagedPost.errors) {
-            console.log(image)
-            console.log(formData)
 
             setImageUploading(true);
 
             const response = await uploadImage(formData)
-            console.log(response)
+
             if (response.ok) {
-                const imageUrl = await response.json();
-                console.log(imageUrl['imageUrl'])
-                const postData = {
+                const data = await response.json();
+                setImageUrl(data['imageUrl']);
+                
+                const itemData = {
                     organizationId,
                     userId,
                     title,
@@ -59,10 +59,11 @@ const ItemForm = () => {
                     imageUrl,
                     expDate,
                 };
-                const itemPost = {...stagedPost, ...imageUrl};
-                console.log(itemPost)
-                const newPost = await dispatch(postItem(itemPost))
-                console.log(newPost.errors)
+
+                const newPost = await dispatch(postItem(itemData))
+
+                console.log(newPost)
+
                 if(!newPost.error || !newPost.errors) {
                     setImageUploading(false);
                     history.push(`/posts/${newPost.id}`)

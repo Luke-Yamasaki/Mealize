@@ -28,5 +28,5 @@ export default function categoriesReducer(state={}, action) {
             return newState
         default:
             return state;
-    }
-}
+    };
+};

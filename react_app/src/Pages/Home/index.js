@@ -1,5 +1,12 @@
+import React,{ useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import { ItemCard } from '../../Components/ItemCard';
+import { RequestCard } from '../../Components/RequestCard';
+
 import styles from './Home.module.css';
 import styled from 'styled-components';
+
 
 const Wrapper = styled.div`
     width: 80vw;
@@ -53,9 +60,10 @@ const Posts = styled.div`
     background-color: white;
 `;
 
-
-
-export const Home = () => {
+export const Home = ({posts}) => {
+    const sessionUser = useSelector(state => state.session.user);
+    const [isItem, setIsItem] = useState(sessionUser.isNonprofit ? true : false);
+    console.log(posts)
     return (
         <Wrapper>
             <SideBarContainer>
@@ -66,22 +74,7 @@ export const Home = () => {
             </SideBarContainer>
             <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                 <FeedContainer>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
+                    {posts.forEach(post => (post.isItem ? <ItemCard key={post.id} post={post} /> : <RequestCard key={post.id} post={post} /> ))}
                 </FeedContainer>
             </div>
 

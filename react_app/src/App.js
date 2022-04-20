@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
+// actions
+import { authenticate } from './store/session';
+import { getCategories } from './store/categories';
+import { getAllPosts } from './store/posts';
+import { getBatchedUsers } from './store/users'
+// Components
 import { Home } from './Pages/Home';
 import { About } from './Pages/About';
 import { Questions } from './Pages/Questions';
@@ -13,20 +18,37 @@ import { Settings } from './Pages/Settings';
 import { Inbox } from './Pages/Inbox';
 import { Background } from './Components/Styled/Background';
 import { Navbar } from './Components/Navbar'
+import { SessionNavbar } from './Components/SessionNavbar';
 import Modal from './Components/Modal';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
+  const posts = useSelector(state => state.posts);
+
+  useEffect(() => {
+    (async () => {
+      await dispatch(authenticate());
+      await dispatch(getCategories());
+      await dispatch(getAllPosts());
+      await dispatch(getBatchedUsers());
+      setIsLoaded(true);
+    })();
+  },[dispatch]);
+
+  if(!isLoaded) {
+    return null;
+  }
 
   return (
     <BrowserRouter>
       <Background>
-        <Navbar />
+        {sessionUser ? <SessionNavbar sessionUser={sessionUser} /> : <Navbar />}
         <Modal />
         <Switch>
           <Route exact path='/'>
-            <Home />
+            <Home posts={posts}/>
           </Route>
           <Route exact path='/about'>
             <About />
@@ -48,6 +70,9 @@ function App() {
           </Route>
           <Route exact path='/settings'>
             <Settings />
+          </Route>
+          <Route exact path='/search/:searchword'>
+            <h1>Search results</h1>
           </Route>
           <Route exact path='/inbox'>
             <Inbox />

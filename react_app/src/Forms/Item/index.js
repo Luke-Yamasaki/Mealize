@@ -13,7 +13,6 @@ const ItemForm = () => {
     const [quantity, setQuantity] = useState('');
     const [categoryId, setCategoryId] = useState(1);
     const [image, setImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState('');
     const [expDate, setExpDate] = useState(new Date());
     const [imageUploading, setImageUploading] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -25,7 +24,6 @@ const ItemForm = () => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("image", image);
-        console.log(formData)
 
         const itemData = {
             organizationId,
@@ -38,8 +36,8 @@ const ItemForm = () => {
         };
 
         const stagedPost = await validateForm(itemData)
-        console.log(stagedPost)
-        if(!stagedPost.errors) {
+
+        if(stagedPost.message === 'success') {
 
             setImageUploading(true);
 
@@ -47,8 +45,8 @@ const ItemForm = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                setImageUrl(data['imageUrl']);
-                
+                const imageUrl = await data.imageUrl
+
                 const itemData = {
                     organizationId,
                     userId,
@@ -61,8 +59,6 @@ const ItemForm = () => {
                 };
 
                 const newPost = await dispatch(postItem(itemData))
-
-                console.log(newPost)
 
                 if(!newPost.error || !newPost.errors) {
                     setImageUploading(false);
@@ -77,8 +73,6 @@ const ItemForm = () => {
 
     const updateImage = (e) => {
         const file = e.target.files[0];
-        console.log(file)
-        console.log(file.name)
         console.log(file.size)
         console.log(file.type)
         setImage(file)

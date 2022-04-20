@@ -62,8 +62,36 @@ const Posts = styled.div`
 
 export const Home = ({posts}) => {
     const sessionUser = useSelector(state => state.session.user);
-    const [isItem, setIsItem] = useState(sessionUser.isNonprofit ? true : false);
-    console.log(posts)
+    const [isItem, setIsItem] = useState(sessionUser && sessionUser.isNonprofit ? true : false);
+    const postsArr = Object.entries(posts)
+    const items = postsArr.filter(post => post[1].isItem === true);
+    console.log(items)
+    const requests = postsArr.filter(post => post[1].isItem === false);
+    console.log(requests)
+    if(!sessionUser) {
+        return(
+            <Wrapper>
+                <SideBarContainer>
+                    Filter
+                <SideBar />
+                <SideBar />
+                <SideBar />
+                </SideBarContainer>
+                <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
+                    <FeedContainer>
+                        {postsArr?.forEach(post => (post.isItem ? <ItemCard key={post.id} post={post} /> : <RequestCard key={post.id} post={post} /> ))}
+                    </FeedContainer>
+                </div>
+
+                <SideBarContainer>
+                    Map
+                <SideBar />
+                </SideBarContainer>
+        </Wrapper>
+
+        )
+    }
+
     return (
         <Wrapper>
             <SideBarContainer>
@@ -74,7 +102,7 @@ export const Home = ({posts}) => {
             </SideBarContainer>
             <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                 <FeedContainer>
-                    {posts.forEach(post => (post.isItem ? <ItemCard key={post.id} post={post} /> : <RequestCard key={post.id} post={post} /> ))}
+                    {postsArr?.forEach(post => (post.isItem ? <ItemCard key={post.id} post={post} /> : <RequestCard key={post.id} post={post} /> ))}
                 </FeedContainer>
             </div>
 
@@ -82,7 +110,6 @@ export const Home = ({posts}) => {
                 Map
               <SideBar />
             </SideBarContainer>
-
         </Wrapper>
     )
 };

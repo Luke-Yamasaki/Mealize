@@ -41,7 +41,7 @@ def seed_posts():
             organizationId=randint(1, 25),
             userId=randint(1, 25),
             title=choice(('Need bananas', 'Need berries', 'Looking for apples', 'Any citrus fruit', 'Oranges', 'Fresh grapes', 'Pears or peaches')),
-            description=choice(('Our food bank needs bananas! We would appreciate it if you have any fresh ones to spare.', "We're looking for packaged berries. Even if they are chopped and sotred in containers, we are interested! Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for apples. Any amount would be greatly appreciated!', "Hello! We're looking for lemons or limes! Either fruit would be much appreciated!", "If you have any unopened canned peaches or pears, we would love to reserve a pick up time!", 'Looking for oranges for boxed meals. Sliced or whole, we do not mind at all! Thanks!', 'Looking for fresh grapes! We need fruit for our after school programs. Thank you!')),
+            description=choice(('Our food bank needs bananas! We would appreciate it if you have any fresh ones to spare.', "We're looking for packaged berries. Even if they are chopped and stored in containers, we are interested! Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for apples. Any amount would be greatly appreciated!', "Hello! We're looking for lemons or limes! Either fruit would be much appreciated!", "If you have any unopened canned peaches or pears, we would love to reserve a pick up time!", 'Looking for oranges for boxed meals. Sliced or whole, we do not mind at all! Thanks!', 'Looking for fresh grapes! We need fruit for our after school programs. Thank you!')),
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=3,
             imageUrl='https://mealize.s3.amazonaws.com/fruits_request.png',
@@ -79,11 +79,7 @@ def seed_posts():
             status = 0
         )
         db.session.add(protein_requests)
-'https://mealize.s3.amazonaws.com/dairy_request.png'
-'https://mealize.s3.amazonaws.com/vegetables_request.png'
-'https://mealize.s3.amazonaws.com/fruits_request.png'
-'https://mealize.s3.amazonaws.com/grains_request.png'
-'https://mealize.s3.amazonaws.com/protein_request.png'
+
     # for items
     for i in range(101, 121):
         dairy_items = Post(
@@ -91,40 +87,40 @@ def seed_posts():
             organizationId=randint(26, 100),
             userId=randint(26, 100),
             title=choice(('Fresh milk', 'Blocks of cheese', 'Unsalted butter', 'Plain yogurt', 'Cartons of chocolate milk', 'Shredded cheddar cheese')),
-            description=choice(('Unopened 2% and whole milk.', '5 pounds of cheddar cheese blocks. Unopened.', '10 boxes of unsalted butter.', '3 pints of plain non-fat yogurt.', '6 cartons of chocholate milk.', '10 pounds of shredded cheddar cheese.')),
+            description=choice(('Unopened low fat and whole milk.', '5 pounds of cheddar cheese blocks. Unopened.', '10 boxes of unsalted butter.', '3 pints of plain non-fat yogurt.', '6 cartons of chocholate milk.', '10 pounds of shredded cheddar cheese.')),
             quantity=str(randint(1, 20))+' '+choice(('pounds', 'lbs.', 'kg', 'kgs')),
             categoryId=1,
-            imageUrl='',
-            expDate='2022-05-18',
+            imageUrl='https://mealize.s3.amazonaws.com/'+'Dairy-'+str(randint(1, 6))+'.jpg',
+            expDate='2022-06-18',
             status = 0
         )
         db.session.add(dairy_items)
 
-    for j in range(21, 41):
-        vegetable_requests = Post(
-            isItem=False,
-            organizationId=randint(1, 25),
-            userId=randint(1, 25),
-            title=choice(('Need carrots', 'Need lettuce and cabbage', 'Looking for potatoes', 'Any greens', 'Cucumbers or squash', 'Leftover salad?')),
-            description=choice(('Our food bank needs carrots! We would appreciate it if you have any to spare.', "We're looking for heads of lettuce and cabbage. If you kept them properly stored, we would love to pick them up. Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for any lefover salad you may have. Any amount would be greatly appreciated!', "Hello! We're looking for cucumbers and squash for lunch boxes! Any amount would be much appreciated!", "If you have any potatoes, we would love to reserve a pick up time!", 'Looking for any fresh greens. Thanks!')),
+    for j in range(121, 181):
+        vegetable_items = Post(
+            isItem=True,
+            organizationId=randint(26, 100),
+            userId=randint(26, 100),
+            title=choice(('Got carrots', 'Got lettuce and cabbage', 'Tomatoes', 'Some greens', 'Cucumbers and squash', 'Leftover salad')),
+            description=choice(('My restaurant has carrots!', "We'be got heads of lettuce and cabbage.", 'Our cafe has lefover salad.', "Hello! We've got cucumbers and squash!", "We've got frest tomatoes, they have about a week left!", 'Got three pounds of fresh greens.')),
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=2,
-            imageUrl='',
+            imageUrl='https://mealize.s3.amazonaws.com/'+'Vegetables-'+str(randint(1, 13))+'.jpg',
             expDate='2022-07-18',
             status = 0
         )
-        db.session.add(vegetable_requests)
+        db.session.add(vegetable_items)
 
-    for k in range(41, 61):
-        fruits_requests = Post(
-            isItem=False,
-            organizationId=randint(1, 25),
-            userId=randint(1, 25),
-            title=choice(('Need bananas', 'Need berries', 'Looking for apples', 'Any citrus fruit', 'Oranges', 'Fresh grapes', 'Pears or peaches')),
-            description=choice(('Our food bank needs bananas! We would appreciate it if you have any fresh ones to spare.', "We're looking for packaged berries. Even if they are chopped and sotred in containers, we are interested! Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for apples. Any amount would be greatly appreciated!', "Hello! We're looking for lemons or limes! Either fruit would be much appreciated!", "If you have any unopened canned peaches or pears, we would love to reserve a pick up time!", 'Looking for oranges for boxed meals. Sliced or whole, we do not mind at all! Thanks!', 'Looking for fresh grapes! We need fruit for our after school programs. Thank you!')),
+    for k in range(181, 201):
+        fruits_items = Post(
+            isItem=True,
+            organizationId=randint(26, 100),
+            userId=randint(26, 100),
+            title=choice(('Got bananas', 'Got berries', 'We have apples', 'Plenty of citrus fruit', 'Oranges', 'Fresh grapes', 'Pears and peaches')),
+            description=choice(('We have leftover bananas!', "We've got packaged berries.They were chopped and stored in containers!", 'We have a lot of apples!', "Hello! We've got lemonsand limes!", "We have unopened canned peaches and pears!", 'We have twenty whole oranges and about ten worth of sliced ones.', 'Got about five pounds of fresh grapes!')),
             quantity=choice(('Anything above 5 pounds!', 'Any', '5kg minimum.', 'Ideally 10 pounds', '~2 kgs')),
             categoryId=3,
-            imageUrl='',
+            imageUrl='https://mealize.s3.amazonaws.com/'+'Fruits-'+str(randint(1, 5))+'.jpg',
             expDate='2022-08-18',
             status = 0
         )

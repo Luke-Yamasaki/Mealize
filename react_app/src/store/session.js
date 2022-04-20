@@ -49,7 +49,7 @@ const removedFavorite = payload => ({
 
 // action creators
 export const authenticate = () => async (dispatch) => {
-	const response = await fetch("/api/auth/");
+	const response = await fetch("/api/auth");
 	if (response.ok) {
 		const user = await response.json();
 		if (user.errors) {

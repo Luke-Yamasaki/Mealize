@@ -1,4 +1,4 @@
-export const VegatablesIcon = () => {
+export const VegetablesIcon = () => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
             <g id="Group_846" dataname="Group 846" transform="translate(1440 12692)">

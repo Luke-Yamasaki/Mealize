@@ -100,12 +100,12 @@ align-items: center;
 `;
 
 
-export const ItemCard = ({ post }) => {
+export const ItemCard = ({ post, sessionUser }) => {
     const dispatch = useDispatch();
     const users = useSelector(state => state.users);
     const user = users[post.userId];
     const category = post.category.category;
-
+    console.log(category)
     const handleDelete = async (e) => {
         e.preventDefault();
     };
@@ -114,7 +114,7 @@ export const ItemCard = ({ post }) => {
         <div className={styles.card}>
             <div style={{backgroundImage: `url(${post.imageUrl})`}} className={styles.image}>
                 <FavoritesIcon postId={post.id} />
-                <Triangle status={post.status} />
+                {post.userId === sessionUser.id ? <><div>Delete</div><div>Edit</div></> : <Triangle status={post.status} />}
             </div>
             <UserTitle>
                 <UserImage>

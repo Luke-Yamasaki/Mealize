@@ -81,10 +81,10 @@ export const postRequest = (formData) => async (dispatch) => {
 };
 
 export const getAllPosts = () => async (dispatch) => {
-    const response = await fetch('/api/posts/');
+    const response = await fetch('/api/posts');
     if(response.ok) {
         const posts = await response.json();
-        dispatch(gotAllPosts(Object.values(posts)[0]));
+        dispatch(gotAllPosts(posts));
         return posts;
     } else if(response.status < 500) {
         const data = await response.json();
@@ -187,10 +187,10 @@ export default function postsReducer(state = initialState, action) {
             newState[action.payload?.id] = action.payload;
             return newState
         case GOT_ALL_POSTS:
-            action.payload.forEach(post => newState[post.id] = post);
+            newState['posts'] = action.payload;
             return newState
         case GOT_BATCHED_POSTS:
-            action.payload.forEach(post => newState[post.id] = post);
+            newState['posts'] = action.payload;
             return newState;
         case UPDATED_POST:
             newState[action.payload?.id] = action.payload;

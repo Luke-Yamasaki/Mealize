@@ -37,7 +37,7 @@ class Post(db.Model):
             'imageUrl': self.imageUrl,
             'expDate': self.expDate,
             'status': self.status,
-            'organization': self.organization.to_dict(),
+            'organization': self.organizationId,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt
         }

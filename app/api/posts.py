@@ -10,7 +10,7 @@ post_routes = Blueprint('posts', __name__)
 @post_routes.route('/')
 def posts():
     all_posts = Post.query.all()
-    return {'posts': [post.to_dict() for post in all_posts]}
+    return {'posts': {post.id:post.to_dict() for post in all_posts}}
 
 @post_routes.route('/<int:id>')
 def post(id):
@@ -50,9 +50,8 @@ def form_validation():
     form = PostForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        return form.data
-    else:
-        return {'errors': errors_to_list(form.errors)}
+        return {'message': 'success'}
+    return {'errors': errors_to_list(form.errors)}
 
 
 

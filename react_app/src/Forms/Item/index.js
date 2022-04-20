@@ -39,7 +39,8 @@ const ItemForm = () => {
 
         const stagedPost = await validateForm(itemData)
         console.log(stagedPost)
-        if(!stagedPost.errors) {
+        console.log(stagedPost['message'])
+        if(stagedPost.message === 'success') {
 
             setImageUploading(true);
 
@@ -49,7 +50,9 @@ const ItemForm = () => {
                 const data = await response.json();
                 setImageUrl(data['imageUrl']);
 
-                const itemData = {
+                console.log(data)
+
+                const formData = {
                     organizationId,
                     userId,
                     title,
@@ -60,7 +63,9 @@ const ItemForm = () => {
                     expDate,
                 };
 
-                const newPost = await dispatch(postItem(itemData))
+                console.log(formData)
+
+                const newPost = await dispatch(postItem(formData))
 
                 console.log(newPost)
 

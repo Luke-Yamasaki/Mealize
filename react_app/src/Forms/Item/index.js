@@ -13,7 +13,6 @@ const ItemForm = () => {
     const [quantity, setQuantity] = useState('');
     const [categoryId, setCategoryId] = useState(1);
     const [image, setImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState('');
     const [expDate, setExpDate] = useState(new Date());
     const [imageUploading, setImageUploading] = useState(false);
     const [errors, setErrors] = useState([]);
@@ -25,7 +24,6 @@ const ItemForm = () => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("image", image);
-
 
         const itemData = {
             organizationId,
@@ -47,9 +45,9 @@ const ItemForm = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                setImageUrl(data['imageUrl']);
+                const imageUrl = await data.imageUrl
 
-                const formData = {
+                const itemData = {
                     organizationId,
                     userId,
                     title,
@@ -60,7 +58,7 @@ const ItemForm = () => {
                     expDate,
                 };
 
-                const newPost = await dispatch(postItem(formData))
+                const newPost = await dispatch(postItem(itemData))
 
                 if(!newPost.error || !newPost.errors) {
                     setImageUploading(false);

@@ -31,9 +31,7 @@ def image_validation():
     image.filename = generate_unique_file(image.filename)
 
     upload = upload_to_s3_bucket(image)
-    print('testing upload', upload)
     if "url" not in upload:
-        print('testing upload', upload)
         return upload, 400
 
     imageUrl = upload["url"]

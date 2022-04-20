@@ -64,7 +64,10 @@ export const Home = ({posts}) => {
     const sessionUser = useSelector(state => state.session.user);
     const [isItem, setIsItem] = useState(sessionUser && sessionUser.isNonprofit ? true : false);
     const postsArr = Object.entries(posts)
-    console.log(postsArr)
+    const items = postsArr.filter(post => post[1].isItem === true);
+    console.log(items)
+    const requests = postsArr.filter(post => post[1].isItem === false);
+    console.log(requests)
     if(!sessionUser) {
         return(
             <Wrapper>

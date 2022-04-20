@@ -25,7 +25,7 @@ const ItemForm = () => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("image", image);
-        console.log(formData)
+        console.log(expDate)
 
         const itemData = {
             organizationId,
@@ -48,7 +48,7 @@ const ItemForm = () => {
             if (response.ok) {
                 const data = await response.json();
                 setImageUrl(data['imageUrl']);
-                
+
                 const itemData = {
                     organizationId,
                     userId,

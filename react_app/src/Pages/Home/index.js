@@ -63,7 +63,7 @@ const Posts = styled.div`
 export const Home = ({posts}) => {
     const sessionUser = useSelector(state => state.session.user);
     const [isItem, setIsItem] = useState(sessionUser.isNonprofit ? true : false);
-    console.log(posts)
+    const postsArr = Array.from(posts)
     return (
         <Wrapper>
             <SideBarContainer>
@@ -74,7 +74,7 @@ export const Home = ({posts}) => {
             </SideBarContainer>
             <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                 <FeedContainer>
-                    {posts.forEach(post => (post.isItem ? <ItemCard key={post.id} post={post} /> : <RequestCard key={post.id} post={post} /> ))}
+                    {postsArr?.forEach(post => (post.isItem ? <ItemCard key={post.id} post={post} /> : <RequestCard key={post.id} post={post} /> ))}
                 </FeedContainer>
             </div>
 

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField, SelectField
-from wtforms.validators import InputRequired, Length, ValidationError
+from wtforms.validators import InputRequired, Length
 
 
 class PostForm(FlaskForm):

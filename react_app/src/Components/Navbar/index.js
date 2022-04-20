@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Logo } from '../Logo';
+import { Logo } from '../../Assets/Logo';
 import { MagnifyingGlass } from '../../Assets/Icons/MagnifyingGlass';
 import { useSelector, useDispatch } from "react-redux";
 import { LoginForm } from '../../Forms/Login';

@@ -8,7 +8,7 @@ import { logout } from '../../store/session';
 import { setCurrentModal, showModal } from '../../store/modal';
 // Components
 import { Nav, NavList } from '../Styled/Navbar';
-import { Logo } from '../Logo';
+import { Logo } from '../../Assets/Logo';
 import { Searchbar } from '../Searchbar';
 import ItemForm from '../../Forms/Item';
 import { RequestForm } from '../../Forms/Request';

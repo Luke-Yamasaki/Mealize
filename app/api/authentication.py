@@ -10,7 +10,7 @@ auth_routes = Blueprint('auth', __name__)
 @auth_routes.route('/')
 def authenticate():
     if current_user.is_authenticated:
-        return current_user.to_dict()
+        return current_user.profile_dict()
     return {'errors': ['Unauthorized']}
 
 @auth_routes.route('/login', methods=['POST'])
@@ -23,7 +23,7 @@ def login():
         return user.profile_dict()
     return {'errors': errors_to_list(form.errors)}, 401
 
-@auth_routes.route('logout')
+@auth_routes.route('/logout')
 def logout():
     logout_user()
     return {'message': 'The user has logged out.'}

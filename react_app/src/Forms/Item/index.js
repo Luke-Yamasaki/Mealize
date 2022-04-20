@@ -34,7 +34,6 @@ const ItemForm = () => {
             quantity,
             categoryId,
             expDate,
-            status:0
         };
 
         const stagedPost = await validateForm(itemData)
@@ -49,9 +48,21 @@ const ItemForm = () => {
             console.log(response)
             if (response.ok) {
                 const imageUrl = await response.json();
+                console.log(imageUrl['imageUrl'])
+                const postData = {
+                    organizationId,
+                    userId,
+                    title,
+                    description,
+                    quantity,
+                    categoryId,
+                    imageUrl,
+                    expDate,
+                };
                 const itemPost = {...stagedPost, ...imageUrl};
+                console.log(itemPost)
                 const newPost = await dispatch(postItem(itemPost))
-                console.log()
+                console.log(newPost.errors)
                 if(!newPost.error || !newPost.errors) {
                     setImageUploading(false);
                     history.push(`/posts/${newPost.id}`)

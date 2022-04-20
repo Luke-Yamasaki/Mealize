@@ -40,6 +40,8 @@ def image_validation():
 
     return {"imageUrl": imageUrl}
 
+
+
 @post_routes.route('/validate', methods=['POST'])
 @login_required
 def form_validation():
@@ -61,18 +63,7 @@ def new_item():
         return {'error': 'You are not authorized for this action.'}
     form = PostForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    # if "image" not in request.files:
-    #     return {"errors": "image required"}, 400
-    # image = request.files["image"]
-    # if not accepted_file(image.filename):
-    #     return {"errors": "file type not permitted"}, 400
-    print('sssssssssssssssssssssssss', form.data['expDate'])
     if form.validate_on_submit():
-        # image.filename = generate_unique_file(image.filename)
-        # upload = upload_to_s3_bucket(image)
-        # if "url" not in upload:
-        #     return upload, 400
-        # imageUrl = upload["url"]
         post = Post(
             isItem = True,
             organizationId = current_user.organizationId,
@@ -81,7 +72,7 @@ def new_item():
             description = form.data['description'],
             quantity = form.data['quantity'],
             categoryId = form.data['categoryId'],
-            imageUrl = form.data['imageUrl'],
+            imageUrl = request.json['imageUrl'],
             expDate = form.data['expDate'],
             status = 0 # 0=posted, 1=reserved, 2=completed
         )

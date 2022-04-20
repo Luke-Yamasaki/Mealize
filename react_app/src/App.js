@@ -22,10 +22,10 @@ import { SessionNavbar } from './Components/SessionNavbar';
 import Modal from './Components/Modal';
 
 function App() {
-  const sessionUser = useSelector(state => state.session.user);
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
-
+  const sessionUser = useSelector(state => state.session.user);
+  
   useEffect(() => {
     (async () => {
       await dispatch(authenticate());

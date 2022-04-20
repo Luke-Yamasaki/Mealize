@@ -4,11 +4,13 @@ import sessionReducer from './session';
 import usersReducer from './users';
 import postsReducer from './posts';
 import messagesReducer from './messages';
+import categoriesReducer from './categories';
 
 import modals from './modal';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
+    categories: categoriesReducer,
     users: usersReducer,
     posts: postsReducer,
     messages: messagesReducer,

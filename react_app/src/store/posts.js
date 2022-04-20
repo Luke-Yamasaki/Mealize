@@ -34,7 +34,6 @@ const removedPost = payload => ({
 
 // action creators
 export const postItem = (formData) => async (dispatch) => {
-    console.log(formData['expDate']) // 2022-04-30
     const response = await fetch('/api/posts/items', {
         method: 'POST',
         headers: {

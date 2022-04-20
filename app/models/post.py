@@ -9,7 +9,7 @@ class Post(db.Model):
     userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     title = db.Column(db.String(35), nullable=False)
     description = db.Column(db.String(255), nullable=False)
-    quantity = db.Column(db.String(12), nullable=False)
+    quantity = db.Column(db.String(15), nullable=False)
     categoryId = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     imageUrl = db.Column(db.String(2048), nullable=False)
     expDate = db.Column(db.DateTime, nullable=False)

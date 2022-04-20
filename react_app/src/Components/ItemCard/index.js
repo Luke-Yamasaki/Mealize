@@ -1,8 +1,11 @@
 import React, {useState, useTransition} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import styles from './ItemCard.module.css';
+import styled from 'styled-components';
+//actions
 import { removePost, updateItem } from '../../store/posts';
-
 //components
+import { XSLogo } from '../../Assets/Logo';
 import { Triangle } from '../../Assets/Icons/Triangle';
 import { FavoritesIcon } from '../../Assets/Logo/FavoritesIcon/index';
 import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
@@ -11,8 +14,7 @@ import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
 import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 
-import styles from './ItemCard.module.css';
-import styled from 'styled-components';
+
 
 const UserTitle = styled.div`
     width: 220px;
@@ -49,6 +51,54 @@ const CategoryBox = styled.div`
     height: 65px;
     width: 125px;
 `;
+
+const InfoBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 220px;
+    height: 60px;
+`;
+
+const DescriptionBox = styled.div`
+    height: 60px;
+    width: 135px;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    justify-content: left;
+`;
+
+const SubInfoBox = styled.div`
+    height: 60px;
+    width: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    justify-content: center;
+`;
+
+const SubInfoText = styled.div`
+    width: 75px;
+    height: 27px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+`;
+
+const IdBox = styled.div`
+width: 220px;
+height: 15px;
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: center;
+`;
+
 
 export const ItemCard = ({ post }) => {
     const dispatch = useDispatch();
@@ -88,17 +138,19 @@ export const ItemCard = ({ post }) => {
                     }
                 </CategoryBox>
             </UserTitle>
-                <div>
-                    <img></img>
-                    <p></p>
-                </div>
-                <h3></h3>
-                <img></img>
-                </div>
-            </UserTitle>
-                <div>
-                </div>
-            </div>
+            <InfoBox>
+                <DescriptionBox>
+                    <h4>Description:<h5>{post.description}</h5></h4>
+                </DescriptionBox>
+                <SubInfoBox>
+                    <SubInfoText>Quantity:<p>{post.quantity}</p></SubInfoText>
+                    <SubInfoText>Expires:<p>{post.expDate}</p></SubInfoText>
+                </SubInfoBox>
+            </InfoBox>
+            <IdBox>
+                <p>Id:{post.id}</p>
+                <div>Mealize LLC <XSLogo /></div>
+            </IdBox>
         </div>
     )
 }

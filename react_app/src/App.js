@@ -25,7 +25,9 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const categories = useSelector(state => state.categories)
   const posts = useSelector(state => state.posts);
+  const users = useSelector(state => state.users)
 
   useEffect(() => {
     (async () => {
@@ -48,7 +50,7 @@ function App() {
         <Modal />
         <Switch>
           <Route exact path='/'>
-            <Home posts={posts}/>
+            <Home posts={posts.posts}/>
           </Route>
           <Route exact path='/about'>
             <About />

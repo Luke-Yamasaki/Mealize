@@ -1,3 +1,5 @@
+import React,{ useState } from 'react';
+import { useSelector } from 'react-redux';
 import styles from './Home.module.css';
 import styled from 'styled-components';
 
@@ -53,9 +55,13 @@ const Posts = styled.div`
     background-color: white;
 `;
 
-
-
 export const Home = () => {
+    const sessionUser = useSelector(state => state.session.user);
+    const allPosts = useSelector(state => state.posts);
+    const [isItem, setIsItem] = useState(sessionUser.isNonprofit ? true : false);
+
+
+
     return (
         <Wrapper>
             <SideBarContainer>
@@ -66,22 +72,7 @@ export const Home = () => {
             </SideBarContainer>
             <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                 <FeedContainer>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
+                    {allPosts.map(post => (post.isItem ? <ItemCard key={post.id} post={post} /> : <RequestCard key={post.id} post={post} /> ))}
                 </FeedContainer>
             </div>
 

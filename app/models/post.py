@@ -9,10 +9,10 @@ class Post(db.Model):
     userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     title = db.Column(db.String(35), nullable=False)
     description = db.Column(db.String(255), nullable=False)
-    quantity = db.Column(db.String(12), nullable=False)
+    quantity = db.Column(db.String(15), nullable=False)
     categoryId = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     imageUrl = db.Column(db.String(2048), nullable=False)
-    expirationDate = db.Column(db.DateTime, nullable=False)
+    expDate = db.Column(db.Date, nullable=False)
     status = db.Column(db.Integer, nullable=False)
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
@@ -20,7 +20,7 @@ class Post(db.Model):
     organization = db.relationship('Organization', back_populates='posts')
     uploader = db.relationship('User', back_populates='posts')
 
-    category = db.relationship('Category', back_populates='post')
+    category = db.relationship('Category', back_populates='posts')
     delivery = db.relationship('Delivery', back_populates='post')
     favorites = db.relationship('Favorite', back_populates='post')
 
@@ -35,10 +35,9 @@ class Post(db.Model):
             'quantity': self.quantity,
             'categoryId': self.categoryId,
             'imageUrl': self.imageUrl,
-            'expirationDate': self.expirationDate,
-            'endDate': self.endDate,
+            'expDate': self.expDate,
             'status': self.status,
-            'organization': self.organization.to_dict(),
+            'organization': self.organizationId,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt
         }

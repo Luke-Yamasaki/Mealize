@@ -13,7 +13,7 @@ def seed_users():
         private=False,
         firstName='Nonprofit',
         lastName='Demo',
-        email=fake.unique.email(),
+        email='nonprofit_demo@testing.com', 
         phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
         age=35,
         deaf=False,

@@ -4,7 +4,7 @@ import os
 import uuid
 
 BUCKET_NAME = os.environ.get("S3_BUCKET")
-S3_LOCATION = f"https://mealize.s3.amazonaws.com/"
+S3_LOCATION = f"https://{BUCKET_NAME}.s3.amazonaws.com/"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
 
 s3 = boto3.client(
@@ -25,11 +25,12 @@ def generate_unique_file(file):
 
 
 def upload_to_s3_bucket(file, acl="public-read"):
+    print(file)
     try:
         s3.upload_fileobj(
             file,
             BUCKET_NAME,
-            file.file,
+            file.filename,
             ExtraArgs={
                 "ACL": acl,
                 "ContentType": file.content_type
@@ -38,4 +39,4 @@ def upload_to_s3_bucket(file, acl="public-read"):
     except Exception as e:
         return {"errors": str(e)}
 
-    return {"url": f"{S3_LOCATION}{file.file}"}
+    return {"url": f"{S3_LOCATION}{file.filename}"}

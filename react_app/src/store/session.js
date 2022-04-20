@@ -1,11 +1,11 @@
-const USER_IS_SET = 'session/USER_IS_SET';
-const REMOVED_USER = 'session/REMOVED_USER';
-const REFRESHED_USER = 'session/REFRESHED_USER';
-const ADDED_FAVORITE = 'session/ADDED_FAVORITE';
-const REMOVED_FAVORITE = 'session/REMOVED_FAVORITE';
-// const SENT_MESSAGE = 'session/SENT_MESSAGE';
-// const GOT_MESSAGES = 'session/GOT_MESSAGES';
-// const GOT_ONE_MESSAGE = 'session/GOT_ONE_MESSAGE';
+const USER_IS_SET = '/session/USER_IS_SET';
+const REMOVED_USER = '/session/REMOVED_USER';
+const REFRESHED_USER = '/session/REFRESHED_USER';
+const ADDED_FAVORITE = '/session/ADDED_FAVORITE';
+const REMOVED_FAVORITE = '/session/REMOVED_FAVORITE';
+// const SENT_MESSAGE = '/session/SENT_MESSAGE';
+// const GOT_MESSAGES = '/session/GOT_MESSAGES';
+// const GOT_ONE_MESSAGE = '/session/GOT_ONE_MESSAGE';
 
 //actions
 const userIsSet = payload => ({
@@ -48,6 +48,17 @@ const removedFavorite = payload => ({
 // });
 
 // action creators
+export const authenticate = () => async (dispatch) => {
+	const response = await fetch("/api/auth/");
+	if (response.ok) {
+		const user = await response.json();
+		if (user.errors) {
+			return;
+		}
+		dispatch(userIsSet(user));
+	}
+};
+
 export const login = (email, password) => async (dispatch) => {
     const response = await fetch('/api/auth/login', {
         method: 'POST',

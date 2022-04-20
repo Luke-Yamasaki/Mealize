@@ -1,5 +1,12 @@
+import React,{ useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import { ItemCard } from '../../Components/ItemCard';
+import { RequestCard } from '../../Components/RequestCard';
+
 import styles from './Home.module.css';
 import styled from 'styled-components';
+
 
 const Wrapper = styled.div`
     width: 80vw;
@@ -53,9 +60,38 @@ const Posts = styled.div`
     background-color: white;
 `;
 
+export const Home = ({posts}) => {
+    const sessionUser = useSelector(state => state.session.user);
+    const [isItem, setIsItem] = useState(sessionUser && sessionUser.isNonprofit ? true : false);
+    const postsArr = Object.entries(posts)
+    const items = postsArr.filter(post => post[1].isItem === true);
+    console.log(items)
+    const requests = postsArr.filter(post => post[1].isItem === false);
+    console.log(requests)
+    if(!sessionUser) {
+        return(
+            <Wrapper>
+                <SideBarContainer>
+                    Filter
+                <SideBar />
+                <SideBar />
+                <SideBar />
+                </SideBarContainer>
+                <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
+                    <FeedContainer>
+                        {postsArr?.forEach(post => (post.isItem ? <ItemCard key={post.id} post={post} /> : <RequestCard key={post.id} post={post} /> ))}
+                    </FeedContainer>
+                </div>
 
+                <SideBarContainer>
+                    Map
+                <SideBar />
+                </SideBarContainer>
+        </Wrapper>
 
-export const Home = () => {
+        )
+    }
+
     return (
         <Wrapper>
             <SideBarContainer>
@@ -66,22 +102,7 @@ export const Home = () => {
             </SideBarContainer>
             <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                 <FeedContainer>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
-                    <Posts></Posts>
+                    {postsArr?.forEach(post => (post.isItem ? <ItemCard key={post.id} post={post} /> : <RequestCard key={post.id} post={post} /> ))}
                 </FeedContainer>
             </div>
 
@@ -89,7 +110,6 @@ export const Home = () => {
                 Map
               <SideBar />
             </SideBarContainer>
-
         </Wrapper>
     )
 };

@@ -13,6 +13,5 @@ class Category(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'category': self.category,
-            'posts': {post.id:post.to_dict() for post in self.posts}
+            'category': self.category
         }

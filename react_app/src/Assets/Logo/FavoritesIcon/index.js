@@ -3,21 +3,26 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addFavorite, removeFavorite } from '../../../store/session';
 
 
-export const FavoritesIcon = ({ post, sessionUser }) => {
+export const FavoritesIcon = ({ post }) => {
     const dispatch = useDispatch();
-    const favorites = sessionUser.favorites
-    const [favorite, setFavorite] = useState(favorites && favorites[post.id] ? true : false);
-
-    useEffect(() => {
-        favorite === true ? dispatch(addFavorite(post.id)) : dispatch(removeFavorite(post.id));
-    }, [favorite])
-
-    const handleLike = (e) => {
+    const sessionUser = useSelector(state => state.session.user);
+    const [favoriteStatus, setFavoriteStatus] = useState(sessionUser && sessionUser.favorites[post.id] ? true : false);
+    console.log (favoriteStatus)
+    const handleLike = async (e) => {
         e.preventDefault();
-        setFavorite(!favorite);
+        setFavoriteStatus(true)
+        dispatch(addFavorite(post.id))
     };
 
-    if(favorite === false) {
+    const handleDelete = async (e) => {
+        e.preventDefault();
+        setFavoriteStatus(false)
+        const favoriteId = sessionUser.favorites[post.id].id
+        console.log(favoriteId)
+        dispatch(removeFavorite(favoriteId));
+    };
+
+    if(favoriteStatus === false) {
         return (
             <svg id="Unselected" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" onClick={handleLike}>
                 <defs>
@@ -33,7 +38,7 @@ export const FavoritesIcon = ({ post, sessionUser }) => {
         )
     } else {
         return (
-            <svg id="Selected" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
+            <svg id="Selected" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" onClick={handleDelete}>
                 <defs>
                     <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
                         <stop offset="0" stopColor="#76d97e"/>

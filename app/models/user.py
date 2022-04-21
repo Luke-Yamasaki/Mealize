@@ -54,6 +54,7 @@ class User(db.Model, UserMixin):
             'lastName': self.lastName,
         }
 
+
     def profile_dict(self):
         if self.private == True:
             return {
@@ -66,6 +67,7 @@ class User(db.Model, UserMixin):
                 'lastName': self.lastName,
                 'jobDescription': self.jobDescription,
                 'organization': self.organization.to_dict(),
+                'favorites': {favorite.postId:favorite.to_dict() for favorite in self.favorites},
                 'createdAt': self.createdAt
             }
         else:
@@ -80,5 +82,6 @@ class User(db.Model, UserMixin):
             'phone': self.phone,
             'profileImageUrl': self.profileImageUrl,
             'jobDescription': self.jobDescription,
+            'favorites': {favorite.postId:favorite.to_dict() for favorite in self.favorites},
             'createdAt': self.createdAt
         }

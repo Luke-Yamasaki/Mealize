@@ -8,8 +8,8 @@ organization_routes = Blueprint('organizations', __name__)
 
 @organization_routes.route('/')
 def all_organizations():
-    nonprofits_list = Organization.query.filter(Organization.isNonprofit == True)
-    businesses_list = Organization.query.filter(Organization.isNonprofit == False)
+    nonprofits_list = Organization.query.filter(Organization.isNonprofit == True).limit(25)
+    businesses_list = Organization.query.filter(Organization.isNonprofit == False).limit(25)
     return {'nonprofits': {nonprofit.id:nonprofit.to_dict() for nonprofit in nonprofits_list}, 'businesses': {business.id:business.to_dict() for business in businesses_list}}
 
 @organization_routes.route('/', methods=['POST'])

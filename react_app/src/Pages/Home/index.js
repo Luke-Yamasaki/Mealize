@@ -60,15 +60,13 @@ const Posts = styled.div`
     background-color: white;
 `;
 
-export const Home = ({posts}) => {
-    const sessionUser = useSelector(state => state.session.user);
-    const [isItem, setIsItem] = useState(sessionUser && sessionUser.isNonprofit ? true : false);
+export const Home = ({posts, sessionUser}) => {
+    const [nonprofit, setNonprofit] = useState(sessionUser && sessionUser.isNonprofit ? true : false);
     const postsArr = Object.entries(posts)
     const items = postsArr.filter(post => post[1].isItem === true);
-    console.log(items)
     const requests = postsArr.filter(post => post[1].isItem === false);
-    console.log(requests)
-    if(!sessionUser) {
+
+    if(sessionUser && sessionUser.isNonprofit) {
         return(
             <Wrapper>
                 <SideBarContainer>
@@ -79,10 +77,9 @@ export const Home = ({posts}) => {
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                     <FeedContainer>
-                        {postsArr?.forEach(post => (post.isItem ? <ItemCard key={post.id} post={post} /> : <RequestCard key={post.id} post={post} /> ))}
+                        {items.map(item => <ItemCard key={item[1].id} post={item[1]} sessionUser={sessionUser} />)}
                     </FeedContainer>
                 </div>
-
                 <SideBarContainer>
                     Map
                 <SideBar />
@@ -90,26 +87,26 @@ export const Home = ({posts}) => {
         </Wrapper>
 
         )
-    }
-
-    return (
-        <Wrapper>
-            <SideBarContainer>
-                Filter
-               <SideBar />
-               <SideBar />
-               <SideBar />
-            </SideBarContainer>
-            <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
-                <FeedContainer>
-                    {postsArr?.forEach(post => (post.isItem ? <ItemCard key={post.id} post={post} /> : <RequestCard key={post.id} post={post} /> ))}
-                </FeedContainer>
-            </div>
-
-            <SideBarContainer>
-                Map
-              <SideBar />
-            </SideBarContainer>
-        </Wrapper>
-    )
+    } else {
+        return (
+            <Wrapper>
+                <SideBarContainer>
+                    Filter
+                <SideBar />
+                <SideBar />
+                <SideBar />
+                </SideBarContainer>
+                <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
+                    <FeedContainer>
+                        {items.map(item => <ItemCard key={item[1].id} post={item[1]} sessionUser={sessionUser} />)}
+                        {requests.map(request => <ItemCard key={request[1].id} post={request[1]} sessionUser={sessionUser}/>)}
+                    </FeedContainer>
+                </div>
+                <SideBarContainer>
+                    Map
+                <SideBar />
+                </SideBarContainer>
+            </Wrapper>
+        )
+    };
 };

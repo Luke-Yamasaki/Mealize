@@ -1,0 +1,83 @@
+.card {
+    width: 240px;
+    height: 340px;
+    border:5px solid;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0px;
+    margin: 0px;
+}
+
+.dairy-active {
+    border-color:#15BAFA;
+    background-color: #89DCFC;
+}
+
+.dairy-reserved {
+    border-color:#26385C;
+    background-color: #26385C;
+}
+
+.vegetables-active {
+    border-color:#4CB849;
+    background-color: #A4DBA3;
+}
+
+.vegetables-reserved {
+    border-color: #327647;
+    background-color: #327647;
+}
+
+.fruits-active {
+    border-color:#FD67D2;
+    background-color: #FDB2E8;
+}
+
+.fruits-reserved {
+    border-color:#8F3676;
+    background-color: #8F3676;
+}
+
+.grains-active {
+    border-color:#D69C33;
+    background-color: #E9C990;
+}
+
+.grains-reserved {
+    border-color:#5F4E32;
+    background-color: #5F4E32;
+}
+
+.protein-active  {
+    border-color:#C2462A;
+    background-color: #E0A193;
+}
+
+.protein-reserved  {
+    border-color:#90311D;
+    background-color: #90311D;
+}
+
+.image {
+    width: 250px;
+    height: 190px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+    justify-content: space-between;
+}
+
+.profile {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 100%;
+}

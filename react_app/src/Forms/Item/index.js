@@ -80,6 +80,7 @@ const ItemForm = () => {
 
     return (
         <form style={{width: '600px', height: '1000px', display: 'flex', flexDirection: 'column'}} encType="multipart/form-data" onSubmit={handleSubmit}>
+            {errors}
             <input placeholder='Title' type='text' value={title} onChange={e => setTitle(e.target.value)} />
             <textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
             <input placeholder='Quantity' type='text' value={quantity} onChange={e => setQuantity(e.target.value)} />

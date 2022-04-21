@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './SessionNavbar.module.css';
 
 // Actions
@@ -11,9 +10,9 @@ import { Nav, NavList } from '../Styled/Navbar';
 import { Logo } from '../../Assets/Logo';
 import { Searchbar } from '../Searchbar';
 import ItemForm from '../../Forms/Item';
-import { RequestForm } from '../../Forms/Request';
 
-export const SessionNavbar = ({ sessionUser }) => {
+export const SessionNavbar = () => {
+    const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
 
     const showItemForm = () => {

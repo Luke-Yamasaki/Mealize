@@ -1,10 +1,14 @@
-import React,{ useState } from 'react';
+import React,{ useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
+//components
 import { ItemCard } from '../../Components/ItemCard';
-import { RequestCard } from '../../Components/RequestCard';
-
-import styles from './Home.module.css';
+import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
+import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
+import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
+import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
+import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
+// import styles from './Home.module.css';
 import styled from 'styled-components';
 
 
@@ -22,10 +26,11 @@ const Wrapper = styled.div`
 const SideBarContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 15%;
-    height: 1600px;
-    position: sticky;
-    gap: 5px;
+    align-items: left;
+    justify-content: flex-start;
+    width: 200px;
+    height: 1000px;
+    gap: 15px;
 `;
 
 const SideBar = styled.aside`
@@ -42,6 +47,25 @@ const SideBar = styled.aside`
     color: black;
 `;
 
+const SideBarInfoBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 175px;
+    height: 50px;
+`;
+
+const SideBarInfoText = styled.div`
+    font-size: 12px;
+    color: black;
+    font-weight: bold;
+`;
+
+const SidebarInfoImage = styled.div`
+    overflow: hidden;
+`;
+
 const FeedContainer = styled.div`
     width: 800px;
     height: auto;
@@ -52,32 +76,73 @@ const FeedContainer = styled.div`
     gap: 15px;
 `;
 
-const Posts = styled.div`
-    width: 240px;
-    height: 336px;
-    border-radius: 5px;
-    background-color: white;
-`;
-
 export const Home = () => {
     const sessionUser = useSelector(state => state.session.user);
-    const organizations = useSelector(state => state.organizations)
-    const posts = Object.entries(useSelector(state => state.posts.posts));
-    // let items = posts.filter(post => post[1].isItem === true);
-    // let requests = posts.filter(post => post[1].isItem === false);
+    const categoriesObj = useSelector(state => state.categories)
+    const organizationsObj = useSelector(state => state.organizations)
+    const postsObj = useSelector(state => state.posts.posts)
+    // const [categories, setCategories] = useState(Object.values(categoriesObj));
+    // const [businesses, setBusinesses] = useState(Object.values(organizationsObj.businesses));
+    // const [nonprofits, setNonprofits] = useState(Object.values(organizationsObj.nonprofits));
+    const categories = Object.values(categoriesObj);
+    const businesses = Object.values(organizationsObj.businesses);
+    const fiveBusinesses = businesses.slice(0, 6);
+    const nonprofits = Object.values(organizationsObj.nonprofits);
+    const fiveNonprofits = nonprofits.slice(0, 6);
 
-    if(sessionUser && sessionUser.isNonprofit) {
+    const posts = Object.values(postsObj);
+
+    useEffect(() => {
+    },[posts])
+
+    // if(sessionUser && sessionUser.isNonprofit) {
         return(
             <Wrapper>
                 <SideBarContainer>
                     Filter
-                    <SideBar>Categories</SideBar>
-                    <SideBar>Categories</SideBar>
-                    <SideBar>Categories</SideBar>
+                    <SideBar>Categories
+                        {categories.map((category, idx) => (
+                            <SideBarInfoBox key={category.id}>
+                                <SidebarInfoImage key={category.id}>
+                                    {category.category === 'Dairy' ?
+                                    <DairyIcon dimension={'small'}/>
+                                    : category.category === 'Vegetables' ?
+                                    <VegetablesIcon dimension={'small'}/>
+                                    : category.category === 'Fruits' ?
+                                    <FruitsIcon dimension={'small'}/>
+                                    : category.category === 'Grains' ?
+                                    <GrainsIcon />
+                                    : <ProteinIcon dimension={'small'}/>
+                                    }
+                                </SidebarInfoImage>
+                                <SideBarInfoText key={category.id}>[{category.category}]</SideBarInfoText>
+                            </SideBarInfoBox>
+                        ))}
+                    </SideBar>
+                    <SideBar>Nonprofits
+                    {fiveNonprofits.map((nonprofit, idx) => (
+                        <SideBarInfoBox key={nonprofit.id}>
+                            <SidebarInfoImage key={nonprofit.id}>
+                                <img key={nonprofit.id} src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
+                            </SidebarInfoImage>
+                            <SideBarInfoText key={nonprofit.id}>[{nonprofit.name}]</SideBarInfoText>
+                        </SideBarInfoBox>
+                        ))}
+                    </SideBar>
+                    <SideBar>Businesses
+                    {fiveBusinesses.map((business, idx) => (
+                        <SideBarInfoBox key={business.id}>
+                            <SidebarInfoImage key={business.id}>
+                                <img key={business.id} src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
+                            </SidebarInfoImage>
+                            <SideBarInfoText key={business.id}>[{business.name}]</SideBarInfoText>
+                        </SideBarInfoBox>
+                    ))}
+                    </SideBar>
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                     <FeedContainer>
-                        {posts.reverse().map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
+                        {posts && Object.entries(posts).reverse().map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
                     </FeedContainer>
                 </div>
                 <SideBarContainer>
@@ -85,27 +150,26 @@ export const Home = () => {
                 <SideBar />
                 </SideBarContainer>
         </Wrapper>
-
         )
-    } else {
-        return (
-            <Wrapper>
-                <SideBarContainer>
-                    Filter
-                <SideBar />
-                <SideBar />
-                <SideBar />
-                </SideBarContainer>
-                <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
-                    <FeedContainer>
-                    {posts.map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
-                    </FeedContainer>
-                </div>
-                <SideBarContainer>
-                    Map
-                <SideBar />
-                </SideBarContainer>
-            </Wrapper>
-        )
-    };
+    // } else {
+    //     return (
+    //         <Wrapper>
+    //             <SideBarContainer>
+    //                 Filter
+    //             <SideBar />
+    //             <SideBar />
+    //             <SideBar />
+    //             </SideBarContainer>
+    //             <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
+    //                 <FeedContainer>
+    //                 {posts && Object.entries(posts).map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
+    //                 </FeedContainer>
+    //             </div>
+    //             <SideBarContainer>
+    //                 Map
+    //             <SideBar />
+    //             </SideBarContainer>
+    //         </Wrapper>
+    //     )
+    // };
 };

@@ -1,19 +1,16 @@
+import styles from './Navbar.module.css';
+import { showModal, setCurrentModal } from '../../store/modal';
+//components
 import { NavLink } from 'react-router-dom';
 import { Logo } from '../../Assets/Logo';
-import { MagnifyingGlass } from '../../Assets/Icons/MagnifyingGlass';
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { LoginForm } from '../../Forms/Login';
 import { SignupForm } from '../../Forms/Signup';
 import { Searchbar } from '../Searchbar';
-import ItemForm from '../../Forms/Item';
-import styles from './Navbar.module.css';
-import styled from 'styled-components';
-import { showModal, setCurrentModal } from '../../store/modal';
-import { logout } from '../../store/session';
 import { Nav, NavList, LogoBox, AuthBox } from '../Styled/Navbar';
 
+
 export const Navbar = () => {
-    const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
 
     const showLoginModal = () => {

@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 // actions
 import { authenticate } from './store/session';
 import { getCategories } from './store/categories';
+import { getBatchedOrganizations } from './store/organizations';
+import { getBatchedUsers } from './store/users';
 import { getAllPosts } from './store/posts';
-import { getBatchedUsers } from './store/users'
 // Components
 import { Home } from './Pages/Home';
 import { About } from './Pages/About';
@@ -25,16 +26,14 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  const categories = useSelector(state => state.categories)
-  const posts = useSelector(state => state.posts);
-  const users = useSelector(state => state.users)
 
   useEffect(() => {
     (async () => {
-      await dispatch(authenticate());
-      await dispatch(getCategories());
-      await dispatch(getAllPosts());
-      await dispatch(getBatchedUsers());
+      await dispatch(authenticate())
+      await dispatch(getCategories())
+      await dispatch(getBatchedOrganizations())
+      await dispatch(getAllPosts())
+      await dispatch(getBatchedUsers())
       setIsLoaded(true);
     })();
   },[dispatch]);
@@ -50,7 +49,7 @@ function App() {
         <Modal />
         <Switch>
           <Route exact path='/'>
-            <Home posts={posts.posts} sessionUser={sessionUser} />
+            <Home />
           </Route>
           <Route exact path='/about'>
             <About />

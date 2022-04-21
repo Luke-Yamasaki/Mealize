@@ -10,7 +10,7 @@ post_routes = Blueprint('posts', __name__)
 @post_routes.route('/')
 def posts():
     # all_posts = Post.query.all()
-    posts = Post.query.offset(100).limit(100).all()
+    posts = Post.query.all()
     return {post.id:post.to_dict() for post in posts}
 
 @post_routes.route('/<int:id>')
@@ -158,11 +158,10 @@ def update_request(id):
 def delete_post(id):
     if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
-    deleted_data = {}
+    deletedId = id
     post = Post.query.get(id)
-    deleted_data['post'] = post.deleted_info()
 
     db.session.delete(post)
     db.session.commit()
 
-    return deleted_data
+    return str(deletedId)

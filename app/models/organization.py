@@ -33,8 +33,6 @@ class Organization(db.Model):
             'isNonprofit': self.isNonprofit,
             'logoUrl': self.logoUrl,
             'imageUrl': self.imageUrl,
-            'open': self.open,
-            'close': self.close,
             'name': self.name,
             'description': self.description,
             'street': self.street,
@@ -57,6 +55,7 @@ class Organization(db.Model):
             'name': self.name,
             'description': self.description,
             'street': self.street,
+
             'zip': self.zip,
             'city': self.city,
             'state': self.state,

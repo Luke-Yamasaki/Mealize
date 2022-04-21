@@ -171,7 +171,7 @@ def seed_organizations():
     )
     db.session.add(amazon)
 
-    for i in range(30, 101):
+    for i in range(30, 51):
         businesses = Organization(
             federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
             isNonprofit=False,

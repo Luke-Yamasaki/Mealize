@@ -184,7 +184,10 @@ export default function postsReducer(state = initialState, action) {
     const newState = { ...state };
     switch(action.type) {
         case CREATED_POST:
-            newState[action.payload?.id] = action.payload;
+            console.log(newState)
+            console.log(action.payload)
+            newState.posts[action.payload?.id] = action.payload;
+            console.log(newState)
             return newState
         case GOT_ALL_POSTS:
             newState['posts'] = action.payload;
@@ -196,7 +199,9 @@ export default function postsReducer(state = initialState, action) {
             newState[action.payload?.id] = action.payload;
 			return newState;
         case REMOVED_POST:
-            delete newState[action.payload]; //double check what's getting returned from flask
+            console.log(action.payload)
+            delete newState.posts[action.payload];
+            console.log(newState) //double check what's getting returned from flask
 			return newState;
         default:
             return state;

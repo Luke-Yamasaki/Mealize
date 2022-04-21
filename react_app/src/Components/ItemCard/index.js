@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './ItemCard.module.css';
 import styled from 'styled-components';
 //actions
-import { removePost, updateItem } from '../../store/posts';
-//components
+import { getAllPosts, removePost, updateItem } from '../../store/posts';
+
 import { XSLogo } from '../../Assets/Logo';
 import { Triangle } from '../../Assets/Icons/Triangle';
 import { FavoritesIcon } from '../../Assets/Logo/FavoritesIcon/index';
@@ -92,7 +92,8 @@ const InfoBox = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 220px;
-    height: 60px;
+    height: 90px;
+    margin-top: -30px;
 `;
 
 const DescriptionBox = styled.div`
@@ -103,7 +104,6 @@ const DescriptionBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: space-around;
-    gap: 5px;
     justify-content: left;
 `;
 
@@ -114,6 +114,12 @@ const DescriptionLabel = styled.div`
     font-size: 12px;
     height: 12px;
     width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start;
+    gap: 5px;
+    margin-top: 5px;
 `;
 
 const DescriptionText = styled.div`
@@ -150,19 +156,20 @@ height: 10px;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
-align-items: center;
+align-items: baseline;
 `;
 
 const MealizeText = styled.div`
-    padding: 0px;
-    margin: 0px;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-end;
     font-family: motiva-sans, sans-serif;
     font-weight: 900;
     font-style: normal;
     font-size: 10px;
-    height: 15px;
+    height: 10px;
     width: 125px;
-    text-align: right;
 `;
 
 const IdText = styled.div`
@@ -172,8 +179,22 @@ const IdText = styled.div`
     font-weight: 900;
     font-style: normal;
     font-size: 10px;
-    height: 15px;
+    height: 10px;
     width: 125px;
+`;
+
+const ActionButtons = styled.div`
+    width: 50px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 10px;
+    color: white;
 `;
 
 export const ItemCard = ({ post, sessionUser }) => {
@@ -186,13 +207,19 @@ export const ItemCard = ({ post, sessionUser }) => {
 
     const handleDelete = async (e) => {
         e.preventDefault();
+        dispatch(removePost(post.id));
+    };
+
+    const handleEdit = async (e) => {
+        e.preventDefault();
+        dispatch(updateItem(post.id));
     };
 
     return (
         <div className={[styles.card, styles[`${className}`]].join(' ')}>
             <div style={{backgroundImage: `url(${post.imageUrl})`}} className={styles.image}>
                 {sessionUser ? <FavoritesIcon post={post} sessionUser={sessionUser} /> : <div/>}
-                {sessionUser && post.userId === sessionUser.id ? <div><div>Delete</div><div>Edit</div></div> : <Triangle status={post.status} />}
+                {sessionUser && post.userId === sessionUser.id ? <div><ActionButtons onClick={handleDelete}>Delete</ActionButtons><ActionButtons>Edit</ActionButtons></div> : <Triangle status={post.status} />}
             </div>
             <UserTitle>
                 <UserImage>

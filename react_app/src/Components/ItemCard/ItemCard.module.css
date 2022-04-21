@@ -65,14 +65,14 @@
 .image {
     width: 250px;
     height: 190px;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
     display: flex;
     flex-direction: row;
     align-items: top;
     justify-content: space-between;
+    /* border-top-left-radius: 5px;
+    border-top-right-radius: 5px; */
 }
 
 .profile {

@@ -13,7 +13,7 @@ def seed_users():
         private=False,
         firstName='Nonprofit',
         lastName='Demo',
-        email='nonprofit_demo@testing.com', 
+        email='nonprofit_demo@testing.com',
         phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
         age=35,
         deaf=False,
@@ -67,7 +67,7 @@ def seed_users():
     )
     db.session.add(business_demo)
 
-    for j in range(27, 101):
+    for j in range(27, 51):
         business_managers = User(
             organizationId=j,
             isNonprofit=False,
@@ -88,7 +88,7 @@ def seed_users():
         )
         db.session.add(business_managers)
 
-    for k in range(101, 201):
+    for k in range(51, 76):
         volunteers = User(
             organizationId=randint(1, 25),
             isNonprofit=True,

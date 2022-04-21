@@ -131,10 +131,14 @@ const ItemForm = () => {
                     <preview.DescriptionBox>
                         <preview.DescriptionLabel>[Description] <preview.DescriptionText>{description}</preview.DescriptionText></preview.DescriptionLabel>
                     </preview.DescriptionBox>
-                    <preview.SubInfoBox>
-                        <preview.SubInfoText>Quantity:{quantity}</preview.SubInfoText>
-                        <preview.SubInfoText>Expires:{console.log(expDate)}</preview.SubInfoText>
-                    </preview.SubInfoBox>
+                    <preview.SubInfoContainer>
+                        <preview.SubInfoBox>Quantity:
+                            <preview.SubInfoText>{quantity}</preview.SubInfoText>
+                        </preview.SubInfoBox>
+                        <preview.SubInfoBox>Expires:
+                            <preview.SubInfoText>{`${expDate.toString().slice(5,7)}/${expDate.toString().slice(8, 10)}/${expDate.toString().slice(0, 4)}`}</preview.SubInfoText>
+                        </preview.SubInfoBox>
+                    </preview.SubInfoContainer>
                 </preview.InfoBox>
                 <preview.IdBox>
                     <preview.IdText>Id:{sessionUser.id}</preview.IdText>

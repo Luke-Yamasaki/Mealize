@@ -81,7 +81,7 @@ export const InfoBox = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 220px;
+    width: 237px;
     height: 90px;
     margin-top: -30px;
     color: black;
@@ -89,7 +89,7 @@ export const InfoBox = styled.div`
 
 export const DescriptionBox = styled.div`
     height: 70px;
-    width: 157px;
+    width: 150px;
     background-color: white;
     border-radius: 5px;
     display: flex;
@@ -97,6 +97,7 @@ export const DescriptionBox = styled.div`
     align-items: space-around;
     justify-content: left;
     color: black;
+    margin-left: 4px;
 `;
 
 export const DescriptionLabel = styled.div`
@@ -126,8 +127,8 @@ export const DescriptionText = styled.div`
     color: black;
 `;
 
-export const SubInfoBox = styled.div`
-    width: 40px;
+export const SubInfoContainer = styled.div`
+    width: 80px;
     height: 70px;
     display: flex;
     flex-direction: column;
@@ -135,23 +136,38 @@ export const SubInfoBox = styled.div`
     justify-content: space-between;
 `;
 
-export const SubInfoText = styled.div`
-    width: 80px;
-    height: 34px;
+export const SubInfoBox = styled.div`
+    width: 75px;
+    height: 33px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
     background-color: white;
     font-size: 12px;
+    font-weight: 700;
+    text-align: left;
+    padding-left: 5px;
+    gap: 2px;
+`;
+
+export const SubInfoText = styled.p`
+    margin: 0px;
+    padding: 0px;
+    font-size: 10px;
+    font-weight: 700;
+    width: 100px;
 `;
 
 export const IdBox = styled.div`
-    width: 240px;
-    height: 10px;
+    width: 230px;
+    height: 11px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
+    padding-left: 5px;
 `;
 
 export const MealizeText = styled.div`
@@ -164,7 +180,7 @@ export const MealizeText = styled.div`
     font-style: normal;
     font-size: 10px;
     height: 10px;
-    width: 125px;
+    width: 120px;
 `;
 
 export const IdText = styled.div`
@@ -175,7 +191,7 @@ export const IdText = styled.div`
     font-style: normal;
     font-size: 10px;
     height: 10px;
-    width: 125px;
+    width: 120px;
 `;
 
 export const ActionButtons = styled.div`
@@ -250,10 +266,14 @@ export const ItemCard = ({ post, sessionUser }) => {
                 <DescriptionBox>
                     <DescriptionLabel>[Description] <DescriptionText>{post.description}</DescriptionText></DescriptionLabel>
                 </DescriptionBox>
-                <SubInfoBox>
-                    <SubInfoText>Quantity:{post.quantity}</SubInfoText>
-                    <SubInfoText>Expires:{post.expDate.slice(0, 16)}</SubInfoText>
-                </SubInfoBox>
+                <SubInfoContainer>
+                    <SubInfoBox>Quantity:
+                        <SubInfoText>{post.quantity}</SubInfoText>
+                    </SubInfoBox>
+                    <SubInfoBox>Expires:
+                        <SubInfoText>{`${post.expDate.slice(7, 11)}/${post.expDate.slice(5, 7)}/${post.expDate.slice(12, 16)}`}</SubInfoText>
+                    </SubInfoBox>
+                </SubInfoContainer>
             </InfoBox>
             <IdBox>
                 <IdText>Id:{post.id}</IdText>

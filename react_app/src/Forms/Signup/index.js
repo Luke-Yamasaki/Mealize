@@ -56,14 +56,6 @@ const Input = styled.input`
     border-radius: none;
 `;
 
-// const Error = styled.p`
-//     color: #90311D;
-//     font-size: 14px;
-//     padding: 0px;
-//     margin: 0px;
-//     font-size: 16px;
-// `;
-
 const ButtonBox = styled.div`
     display: flex;
     flex-direction: row;

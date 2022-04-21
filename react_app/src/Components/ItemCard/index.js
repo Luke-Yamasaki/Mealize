@@ -16,7 +16,7 @@ import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 
 const UserTitle = styled.div`
     width: 230px;
-    height: 100px;
+    height: 124px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -96,14 +96,14 @@ const InfoBox = styled.div`
 `;
 
 const DescriptionBox = styled.div`
-    height: 80px;
+    height: 70px;
     width: 157px;
     background-color: white;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+    align-items: space-around;
+    gap: 5px;
     justify-content: left;
 `;
 
@@ -112,7 +112,7 @@ const DescriptionLabel = styled.div`
     font-weight: 900;
     font-style: normal;
     font-size: 12px;
-    height: 15px;
+    height: 12px;
     width: 100px;
 `;
 
@@ -121,13 +121,13 @@ const DescriptionText = styled.div`
     font-weight: 700;
     font-style: normal;
     font-size: 10px;
-    height: 60px;
-    width: 150px;
+    height: 40px;
+    width: 155px;
 `;
 
 const SubInfoBox = styled.div`
     width: 40px;
-    height: 80px;
+    height: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -136,7 +136,7 @@ const SubInfoBox = styled.div`
 
 const SubInfoText = styled.div`
     width: 80px;
-    height: 38px;
+    height: 34px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;

@@ -110,13 +110,30 @@ export const Home = () => {
                                     : <ProteinIcon dimension={'small'}/>
                                     }
                                 </SidebarInfoImage>
-
                                 <SideBarInfoText key={category.id}>[{category.category}]</SideBarInfoText>
                             </SideBarInfoBox>
                         ))}
                     </SideBar>
-                    <SideBar>Categories</SideBar>
-                    <SideBar>Categories</SideBar>
+                    <SideBar>Nonprofits
+                    {nonprofits.map(nonprofit => (
+                        <SideBarInfoBox key={nonprofit.id}>
+                            <SidebarInfoImage key={nonprofit.id}>
+
+                            </SidebarInfoImage>
+                            <SideBarInfoText key={nonprofit.id}>[{nonprofit.name}]</SideBarInfoText>
+                        </SideBarInfoBox>
+                        ))}
+                    </SideBar>
+                    <SideBar>Businesses
+                    {businesses.map(business => (
+                        <SideBarInfoBox key={business.id}>
+                            <SidebarInfoImage key={business.id}>
+
+                            </SidebarInfoImage>
+                            <SideBarInfoText key={business.id}>[{business.name}]</SideBarInfoText>
+                        </SideBarInfoBox>
+                    ))}
+                    </SideBar>
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                     <FeedContainer>

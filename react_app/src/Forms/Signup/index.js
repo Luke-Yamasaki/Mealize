@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login, signup } from '../../store/session';
 import { setCurrentModal, hideModal } from '../../store/modal';
 import { LoginForm } from '../Login';
@@ -56,13 +56,13 @@ const Input = styled.input`
     border-radius: none;
 `;
 
-const Error = styled.p`
-    color: #90311D;
-    font-size: 14px;
-    padding: 0px;
-    margin: 0px;
-    font-size: 16px;
-`;
+// const Error = styled.p`
+//     color: #90311D;
+//     font-size: 14px;
+//     padding: 0px;
+//     margin: 0px;
+//     font-size: 16px;
+// `;
 
 const ButtonBox = styled.div`
     display: flex;
@@ -76,7 +76,7 @@ const ButtonBox = styled.div`
 
 export const SignupForm = () => {
     const dispatch = useDispatch();
-    const organizations = useSelector(state => state.organizations);
+    // const organizations = useSelector(state => state.organizations);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [profileImageUrl, setProfileImageUrl] = useState(''); // Add a default placeholder image in src
@@ -169,6 +169,7 @@ export const SignupForm = () => {
 
     return (
         <Form> Welcome to Mealize!
+            {errors}
             <Fieldset>
                 <Legend style={{width: '80px'}}> First name
                     <Input

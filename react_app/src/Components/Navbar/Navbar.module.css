@@ -1,15 +1,15 @@
-/* .navbar {
-    width: 80vw;
-    height: 60px;
+.navbar {
+    width: 100vw;
+    height: 100vh;
     background: linear-gradient(#76D97E, #28A690);
     display:flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     animation: lockin 4s ease-in-out 1 normal forwards;
-} */
+}
 
-/* @keyframes lockin {
+@keyframes lockin {
     25% {
         width: 100vw;
         height: 100vh;
@@ -26,7 +26,7 @@
         width: 1600px;
         height: 60px;
     }
-} */
+}
 
 .link {
     color: white;

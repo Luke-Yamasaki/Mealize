@@ -40,7 +40,7 @@ export const DairyIcon = ({dimension}) => {
         );
     } else {
         return (
-            <svg id="Color" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 30 30">
+            <svg id="Color" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 30 30">
                 <defs>
                     <clipPath id="clip-path">
                         <rect id="Rectangle_621" dataname="Rectangle 621" width="30" height="30" fill="none"/>

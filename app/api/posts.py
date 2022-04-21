@@ -9,8 +9,9 @@ post_routes = Blueprint('posts', __name__)
 
 @post_routes.route('/')
 def posts():
-    all_posts = Post.query.all()
-    return {post.id:post.to_dict() for post in all_posts}
+    # all_posts = Post.query.all()
+    posts = Post.query.offset(100).limit(100).all()
+    return {post.id:post.to_dict() for post in posts}
 
 @post_routes.route('/<int:id>')
 def post(id):
@@ -83,7 +84,7 @@ def new_item():
 def update_item(id):
     if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
-    form = ItemForm()
+    form = PostForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         post = Post.query.get(id)
@@ -133,7 +134,7 @@ def new_request():
 def update_request(id):
     if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
-    form = RequestForm()
+    form = PostForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         post = Post.query.get(id)

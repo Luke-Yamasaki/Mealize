@@ -70,6 +70,7 @@ export const login = (email, password) => async (dispatch) => {
             password
         })
     });
+
     if(response.ok) {
         const data = await response.json();
         dispatch(userIsSet(data));
@@ -163,13 +164,13 @@ export const addFavorite = (postId) => async (dispatch) => {
     // return favorite;
 };
 
-export const removeFavorite = (postId) => async (dispatch) => {
-    const response = await fetch('/api/favorites/', {
+export const removeFavorite = (favoriteId) => async (dispatch) => {
+    const response = await fetch(`/api/favorites/${favoriteId}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(postId)
+        body: JSON.stringify(favoriteId)
     });
 
     if(response.ok) {

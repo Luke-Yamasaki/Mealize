@@ -8,19 +8,21 @@ favorites_routes = Blueprint('favorites', __name__)
 @login_required
 def add_to_favorites():
     postId = request.json
-    favorite = Favorite()
-    favorite.user_id = current_user.id
-    favorite.post_id = postId
+    favorite = Favorite(
+        postId = postId,
+        userId = current_user.id
+    )
     db.session.add(favorite)
     db.session.commit()
     return favorite.to_dict()
 
 
-@favorites_routes.route('/', methods=['DELETE'])
+@favorites_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
-def removeFavorite():
-    postId = request.json
-    favorite = Favorite.query.get(int(postId))
+def removeFavorite(id):
+    favorite = Favorite.query.get(id)
+    print('Before', current_user.favorites)
     current_user.favorites.remove(favorite)
+    print('After', current_user.favorites)
     db.session.commit()
     return favorite.to_dict()

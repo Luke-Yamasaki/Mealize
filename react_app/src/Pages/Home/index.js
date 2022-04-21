@@ -81,14 +81,19 @@ export const Home = () => {
     const categoriesObj = useSelector(state => state.categories)
     const organizationsObj = useSelector(state => state.organizations)
     const postsObj = useSelector(state => state.posts.posts)
-    const [categories, setCategories] = useState(Object.values(categoriesObj));
-    const [businesses, setBusinesses] = useState(Object.values(organizationsObj.businesses));
-    const [nonprofits, setNonprofits] = useState(Object.values(organizationsObj.nonprofits));
-    const [posts, setPosts] = useState(Object.values(postsObj));
-    console.log(categories)
+    // const [categories, setCategories] = useState(Object.values(categoriesObj));
+    // const [businesses, setBusinesses] = useState(Object.values(organizationsObj.businesses));
+    // const [nonprofits, setNonprofits] = useState(Object.values(organizationsObj.nonprofits));
+    const categories = Object.values(categoriesObj);
+    const businesses = Object.values(organizationsObj.businesses);
+    const fiveBusinesses = businesses.slice(0, 6);
+    const nonprofits = Object.values(organizationsObj.nonprofits);
+    const fiveNonprofits = nonprofits.slice(0, 6);
+
+    const posts = Object.values(postsObj);
+
     useEffect(() => {
-        console.log('hello')
-    },[posts, businesses, nonprofits])
+    },[posts])
 
     // if(sessionUser && sessionUser.isNonprofit) {
         return(
@@ -97,8 +102,8 @@ export const Home = () => {
                     Filter
                     <SideBar>Categories
                         {categories.map(category => (
-                            <SideBarInfoBox key={category.id}>
-                                <SidebarInfoImage key={category.id}>
+                            <SideBarInfoBox key={category.category}>
+                                <SidebarInfoImage key={category.category}>
                                     {category.category === 'Dairy' ?
                                     <DairyIcon dimension={'small'}/>
                                     : category.category === 'Vegetables' ?
@@ -110,27 +115,27 @@ export const Home = () => {
                                     : <ProteinIcon dimension={'small'}/>
                                     }
                                 </SidebarInfoImage>
-                                <SideBarInfoText key={category.id}>[{category.category}]</SideBarInfoText>
+                                <SideBarInfoText key={category.category}>[{category.category}]</SideBarInfoText>
                             </SideBarInfoBox>
                         ))}
                     </SideBar>
                     <SideBar>Nonprofits
-                    {nonprofits.map(nonprofit => (
+                    {fiveNonprofits.map(nonprofit => (
                         <SideBarInfoBox key={nonprofit.id}>
                             <SidebarInfoImage key={nonprofit.id}>
-
+                                <img src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
                             </SidebarInfoImage>
                             <SideBarInfoText key={nonprofit.id}>[{nonprofit.name}]</SideBarInfoText>
                         </SideBarInfoBox>
                         ))}
                     </SideBar>
                     <SideBar>Businesses
-                    {businesses.map(business => (
-                        <SideBarInfoBox key={business.id}>
-                            <SidebarInfoImage key={business.id}>
-
+                    {fiveBusinesses.map(business => (
+                        <SideBarInfoBox key={business.name}>
+                            <SidebarInfoImage key={business.name}>
+                                <img src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
                             </SidebarInfoImage>
-                            <SideBarInfoText key={business.id}>[{business.name}]</SideBarInfoText>
+                            <SideBarInfoText key={business.name}>[{business.name}]</SideBarInfoText>
                         </SideBarInfoBox>
                     ))}
                     </SideBar>
@@ -145,7 +150,6 @@ export const Home = () => {
                 <SideBar />
                 </SideBarContainer>
         </Wrapper>
-
         )
     // } else {
     //     return (

@@ -22,7 +22,7 @@ const ImageBox = styled.div`
 `;
 
 const UserTitle = styled.div`
-    width: 220px;
+    width: 240px;
     height: 65px;
     display: flex;
     flex-direction: row;
@@ -39,13 +39,45 @@ const UserImage = styled.div`
     width: 45px;
 `;
 
+const NameText = styled.p`
+    padding: 0px;
+    margin: 0px;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 14px;
+    height: 15px;
+    width: 45px;
+`;
+
 const TitleBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: space-between;
     justify-content: center;
     height: 65px;
-    width: 150px;
+    width: 125px;
+`;
+
+const Title = styled.div`
+    font-family: motiva-sans, sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 18px;
+    height: 50px;
+    width: 125px;
+    text-align: center;
+`;
+
+const Text = styled.p`
+    padding: 0px;
+    margin: 0px;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 14px;
+    height: 15px;
+    width: 125px;
 `;
 
 const CategoryBox = styled.div`
@@ -104,7 +136,6 @@ justify-content: space-between;
 align-items: center;
 `;
 
-
 export const ItemCard = ({ post, sessionUser }) => {
     const dispatch = useDispatch();
     const users = useSelector(state => state.users);
@@ -120,17 +151,17 @@ export const ItemCard = ({ post, sessionUser }) => {
     return (
         <div className={[styles.card, styles[`${className}`]].join(' ')}>
             <div style={{backgroundImage: `url(${post.imageUrl})`}} className={styles.image}>
-                {sessionUser ? <FavoritesIcon post={post} /> : null}
-                {sessionUser && post.userId === sessionUser.id ? <><div>Delete</div><div>Edit</div></> : <Triangle status={post.status} />}
+                {sessionUser ? <FavoritesIcon post={post} sessionUser={sessionUser} /> : <div>Failed</div>}
+                {sessionUser && post.userId === sessionUser.id ? <div><div>Delete</div><div>Edit</div></div> : <Triangle status={post.status} />}
             </div>
             <UserTitle>
                 <UserImage>
                     <img src={user.profileImageUrl} className={styles.profile} />
-                    <p><strong>{user.firstName}</strong></p>
+                    <NameText>{ `${user.firstName} ${user.lastName[0]}.` }</NameText>
                 </UserImage>
                 <TitleBox>
-                    <h3>{ post.title }</h3>
-                    <p>{ user.firstName }</p>
+                    <Title>{ post.title }</Title>
+                    <Text>{ `${user.firstName} ${user.lastName[0]}.` }</Text>
                 </TitleBox>
                 <CategoryBox>
                     { category === 'Dairy'

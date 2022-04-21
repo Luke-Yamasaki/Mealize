@@ -50,7 +50,7 @@ function App() {
         <Modal />
         <Switch>
           <Route exact path='/'>
-            <Home posts={posts.posts}/>
+            <Home posts={posts.posts} sessionUser={sessionUser} />
           </Route>
           <Route exact path='/about'>
             <About />

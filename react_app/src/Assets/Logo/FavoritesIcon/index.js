@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addFavorite, removeFavorite } from '../../../store/session';
 
 
-export const FavoritesIcon = ({ post }) => {
+export const FavoritesIcon = ({ post, sessionUser }) => {
     const dispatch = useDispatch();
-    const favorites = useSelector(state => state.session.user.favorites);
-    const [favorite, setFavorite] = useState(favorites[post.id] ? true : false);
-    
+    const favorites = sessionUser.favorites
+    const [favorite, setFavorite] = useState(favorites && favorites[post.id] ? true : false);
+
     useEffect(() => {
         favorite === true ? dispatch(addFavorite(post.id)) : dispatch(removeFavorite(post.id));
     }, [favorite])
@@ -17,7 +17,7 @@ export const FavoritesIcon = ({ post }) => {
         setFavorite(!favorite);
     };
 
-    if(favorite === true) {
+    if(favorite === false) {
         return (
             <svg id="Unselected" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" onClick={handleLike}>
                 <defs>

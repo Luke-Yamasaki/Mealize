@@ -1,10 +1,3 @@
-* {
-    font-family: motiva-sans,sans-serif;
-    font-weight: 700;
-    font-style: normal;
-    font-size: 10px;
-}
-
 .card {
     width: 240px;
     height: 340px;
@@ -15,6 +8,8 @@
     align-items: space-between;
     justify-content: center;
     overflow: hidden;
+    padding: 0px;
+    margin: 0px;
 }
 
 .dairy-active {
@@ -24,7 +19,7 @@
 
 .dairy-reserved {
     border-color:#26385C;
-    background-color: ##26385C;
+    background-color: #26385C;
 }
 
 .vegetables-active {

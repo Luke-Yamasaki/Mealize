@@ -80,6 +80,5 @@ class User(db.Model, UserMixin):
             'phone': self.phone,
             'profileImageUrl': self.profileImageUrl,
             'jobDescription': self.jobDescription,
-            'organization': self.organization.to_dict(),
             'createdAt': self.createdAt
         }

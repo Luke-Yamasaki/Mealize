@@ -14,6 +14,13 @@ import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
 import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 
+const ImageBox = styled.div`
+    width: 250px;
+    height: 190px;
+    display: flex;
+    flex-direction:
+`;
+
 const UserTitle = styled.div`
     width: 220px;
     height: 65px;
@@ -103,18 +110,18 @@ export const ItemCard = ({ post, sessionUser }) => {
     const users = useSelector(state => state.users);
     const user = users[post.userId];
     console.log(user)
+    console.log(post.imageUrl)
     const category = post.category.category;
-    const url = post.imageUrl;
-    console.log(typeof url)
     const handleDelete = async (e) => {
         e.preventDefault();
     };
 
     return (
         <div className={styles.card}>
-            <img src={url}  />
+            <div style={{backgroundImage: `url(${post.imageUrl})`}} className={styles.image}>
                 {sessionUser ? <FavoritesIcon post={post} /> : null}
                 {sessionUser && post.userId === sessionUser.id ? <><div>Delete</div><div>Edit</div></> : <Triangle status={post.status} />}
+            </div>
             <UserTitle>
                 <UserImage>
                     <img src={user.profileImageUrl} className={styles.profile} />
@@ -139,7 +146,7 @@ export const ItemCard = ({ post, sessionUser }) => {
             </UserTitle>
             <InfoBox>
                 <DescriptionBox>
-                    <h4>Description:<h5>{post.description}</h5></h4>
+                    <h4>Description:<p>{post.description}</p></h4>
                 </DescriptionBox>
                 <SubInfoBox>
                     <SubInfoText>Quantity:<p>{post.quantity}</p></SubInfoText>

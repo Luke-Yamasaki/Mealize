@@ -17,7 +17,7 @@ import { EditItemForm } from '../../Forms/Item/EditItem';
 
 export const UserTitle = styled.div`
     width: 230px;
-    height: 124px;
+    height: 85px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -27,11 +27,10 @@ export const UserTitle = styled.div`
 export const UserImage = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     height: 65px;
     width: 50px;
-    gap: 5px;
 `;
 
 export const NameText = styled.p`
@@ -51,17 +50,18 @@ export const TitleBox = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 65px;
+    height: 50px;
     width: 120px;
-    text-align: center;
 `;
 
-export const Title = styled.div`
+export const Title = styled.p`
+    margin: 0px;
+    padding: 0px;
     font-family: motiva-sans, sans-serif;
     font-weight: 900;
     font-style: normal;
     font-size: 16px;
-    height: 65px;
+    height: 85px;
     width: 120px;
     text-align: center;
 `;
@@ -69,10 +69,11 @@ export const Title = styled.div`
 export const CategoryBox = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: space-between;
+    align-items: center;
     justify-content: center;
-    height: 45px;
-    width: 45px;
+    margin-top: -25px;
+    height: 85px;
+    width: 50px;
 `;
 
 export const InfoBox = styled.div`
@@ -83,6 +84,7 @@ export const InfoBox = styled.div`
     width: 220px;
     height: 90px;
     margin-top: -30px;
+    color: black;
 `;
 
 export const DescriptionBox = styled.div`
@@ -94,6 +96,7 @@ export const DescriptionBox = styled.div`
     flex-direction: column;
     align-items: space-around;
     justify-content: left;
+    color: black;
 `;
 
 export const DescriptionLabel = styled.div`
@@ -107,8 +110,10 @@ export const DescriptionLabel = styled.div`
     flex-direction: column;
     justify-content: left;
     align-items: flex-start;
-    gap: 5px;
-    margin-top: 5px;
+    gap: 6px;
+    margin-top: 7px;
+    color: black;
+    padding-left: 5px;
 `;
 
 export const DescriptionText = styled.div`
@@ -117,7 +122,8 @@ export const DescriptionText = styled.div`
     font-style: normal;
     font-size: 10px;
     height: 40px;
-    width: 155px;
+    width: 152px;
+    color: black;
 `;
 
 export const SubInfoBox = styled.div`
@@ -229,7 +235,7 @@ export const ItemCard = ({ post, sessionUser }) => {
                 </TitleBox>
                 <CategoryBox>
                     { category === 'Dairy'
-                    ? <DairyIcon dimension={'large'}/>
+                    ? <DairyIcon />
                     : category === 'Vegetables'
                     ? <VegetablesIcon />
                     : category === 'Fruits'

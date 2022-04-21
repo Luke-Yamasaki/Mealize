@@ -1,4 +1,4 @@
-import React, {useState, useTransition} from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './ItemCard.module.css';
 import styled from 'styled-components';
@@ -109,15 +109,16 @@ export const ItemCard = ({ post, sessionUser }) => {
     const dispatch = useDispatch();
     const users = useSelector(state => state.users);
     const user = users[post.userId];
-    console.log(user)
-    console.log(post.imageUrl)
     const category = post.category.category;
+    const status = post.status === 0 ? 'active' : 'reserved' ;
+    const className = `${category.toLowerCase()}-${status}`;
+
     const handleDelete = async (e) => {
         e.preventDefault();
     };
 
     return (
-        <div className={styles.card}>
+        <div className={[styles.card, styles[`${className}`]].join(' ')}>
             <div style={{backgroundImage: `url(${post.imageUrl})`}} className={styles.image}>
                 {sessionUser ? <FavoritesIcon post={post} /> : null}
                 {sessionUser && post.userId === sessionUser.id ? <><div>Delete</div><div>Edit</div></> : <Triangle status={post.status} />}

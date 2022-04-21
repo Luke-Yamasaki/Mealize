@@ -24,7 +24,7 @@ export default function categoriesReducer(state={}, action) {
     let newState = {...state};
     switch(action.type) {
         case GOT_CATEGORIES:
-            newState.categories = action.payload;
+            newState = action.payload;
             return newState
         default:
             return state;

@@ -1,13 +1,8 @@
-import { useState } from 'react';
 import styles from './Logo.module.css';
 
 export const Logo = ({ dimension }) => {
-    const [xLarge, setXLarge] = useState(dimension === 'xLarge')
-    const [large, setLarge] = useState(dimension === 'large');
-    const [medium, setMedium] = useState(dimension === 'medium');
-    const [small, setSmall] = useState(dimension === 'small')
-
-    if(xLarge === true) {
+  
+    if(dimension === 'xLarge') {
        return (
             <svg xmlns="http://www.w3.org/2000/svg" width="8357.219" height="7133.676" viewBox="0 0 8357.219 7133.676" className={styles.parent}>
                 <defs>
@@ -22,7 +17,7 @@ export const Logo = ({ dimension }) => {
                 </g>
             </svg>
         )
-    } else if(large === true) {
+    } else if(dimension === 'large') {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" width="592.167" height="505.471" viewBox="0 0 592.167 505.471">
                 <defs>
@@ -37,7 +32,7 @@ export const Logo = ({ dimension }) => {
                 </g>
             </svg>
         )
-    } else if(medium === true) {
+    } else if(dimension === 'medium') {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" width="45" height="38.412" viewBox="0 0 45 38.412">
                 <defs>

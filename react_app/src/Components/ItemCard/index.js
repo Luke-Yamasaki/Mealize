@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './ItemCard.module.css';
 import styled from 'styled-components';
@@ -74,18 +73,6 @@ const CategoryBox = styled.div`
     width: 45px;
 `;
 
-const CategoryText = styled.p`
-    padding: 0px;
-    margin: 0px;
-    font-family: motiva-sans, sans-serif;
-    font-weight: 900;
-    font-style: normal;
-    font-size: 10px;
-    height: 15px;
-    width: 40px;
-    text-align: center;
-`;
-
 const InfoBox = styled.div`
     display: flex;
     flex-direction: row;
@@ -151,12 +138,12 @@ const SubInfoText = styled.div`
 `;
 
 const IdBox = styled.div`
-width: 240px;
-height: 10px;
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-align-items: baseline;
+    width: 240px;
+    height: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
 `;
 
 const MealizeText = styled.div`
@@ -208,22 +195,30 @@ export const ItemCard = ({ post, sessionUser }) => {
     const handleDelete = async (e) => {
         e.preventDefault();
         dispatch(removePost(post.id));
+        dispatch(getAllPosts())
     };
 
     const handleEdit = async (e) => {
         e.preventDefault();
         dispatch(updateItem(post.id));
+        dispatch(getAllPosts())
     };
 
     return (
         <div className={[styles.card, styles[`${className}`]].join(' ')}>
             <div style={{backgroundImage: `url(${post.imageUrl})`}} className={styles.image}>
                 {sessionUser ? <FavoritesIcon post={post} sessionUser={sessionUser} /> : <div/>}
-                {sessionUser && post.userId === sessionUser.id ? <div><ActionButtons onClick={handleDelete}>Delete</ActionButtons><ActionButtons>Edit</ActionButtons></div> : <Triangle status={post.status} />}
+                {sessionUser && post.userId === sessionUser.id ?
+                <div>
+                    <ActionButtons onClick={handleDelete}>Delete</ActionButtons>
+                    <ActionButtons onClick={handleEdit}>Edit</ActionButtons>
+                </div>
+                : <Triangle status={post.status} />
+                }
             </div>
             <UserTitle>
                 <UserImage>
-                    <img src={user.profileImageUrl} className={styles.profile} />
+                    <img src={user.profileImageUrl} className={styles.profile} alt="User profile."/>
                     <NameText>{ `${user.firstName} ${user.lastName[0]}.` }</NameText>
                 </UserImage>
                 <TitleBox>

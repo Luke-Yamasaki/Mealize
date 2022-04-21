@@ -1,4 +1,4 @@
-import React,{ useEffect, useState } from 'react';
+import React,{ useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 //components
@@ -101,9 +101,9 @@ export const Home = () => {
                 <SideBarContainer>
                     Filter
                     <SideBar>Categories
-                        {categories.map(category => (
-                            <SideBarInfoBox key={category.category}>
-                                <SidebarInfoImage key={category.category}>
+                        {categories.map((category, idx) => (
+                            <SideBarInfoBox key={category.id}>
+                                <SidebarInfoImage key={category.id}>
                                     {category.category === 'Dairy' ?
                                     <DairyIcon dimension={'small'}/>
                                     : category.category === 'Vegetables' ?
@@ -115,27 +115,27 @@ export const Home = () => {
                                     : <ProteinIcon dimension={'small'}/>
                                     }
                                 </SidebarInfoImage>
-                                <SideBarInfoText key={category.category}>[{category.category}]</SideBarInfoText>
+                                <SideBarInfoText key={category.id}>[{category.category}]</SideBarInfoText>
                             </SideBarInfoBox>
                         ))}
                     </SideBar>
                     <SideBar>Nonprofits
-                    {fiveNonprofits.map(nonprofit => (
+                    {fiveNonprofits.map((nonprofit, idx) => (
                         <SideBarInfoBox key={nonprofit.id}>
                             <SidebarInfoImage key={nonprofit.id}>
-                                <img src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
+                                <img key={nonprofit.id} src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
                             </SidebarInfoImage>
                             <SideBarInfoText key={nonprofit.id}>[{nonprofit.name}]</SideBarInfoText>
                         </SideBarInfoBox>
                         ))}
                     </SideBar>
                     <SideBar>Businesses
-                    {fiveBusinesses.map(business => (
-                        <SideBarInfoBox key={business.name}>
-                            <SidebarInfoImage key={business.name}>
-                                <img src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
+                    {fiveBusinesses.map((business, idx) => (
+                        <SideBarInfoBox key={business.id}>
+                            <SidebarInfoImage key={business.id}>
+                                <img key={business.id} src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
                             </SidebarInfoImage>
-                            <SideBarInfoText key={business.name}>[{business.name}]</SideBarInfoText>
+                            <SideBarInfoText key={business.id}>[{business.name}]</SideBarInfoText>
                         </SideBarInfoBox>
                     ))}
                     </SideBar>

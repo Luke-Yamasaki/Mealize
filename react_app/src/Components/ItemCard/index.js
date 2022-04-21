@@ -191,7 +191,7 @@ export const ItemCard = ({ post, sessionUser }) => {
     return (
         <div className={[styles.card, styles[`${className}`]].join(' ')}>
             <div style={{backgroundImage: `url(${post.imageUrl})`}} className={styles.image}>
-                {sessionUser ? <FavoritesIcon post={post} sessionUser={sessionUser} /> : <div>Failed</div>}
+                {sessionUser ? <FavoritesIcon post={post} sessionUser={sessionUser} /> : <div/>}
                 {sessionUser && post.userId === sessionUser.id ? <div><div>Delete</div><div>Edit</div></div> : <Triangle status={post.status} />}
             </div>
             <UserTitle>

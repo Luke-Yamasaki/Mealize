@@ -98,6 +98,7 @@ export const Home = ({posts, sessionUser}) => {
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                     <FeedContainer>
+                        {items.map(item => <ItemCard key={item[1].id} post={item[1]} sessionUser={sessionUser} />)}
                         {requests.map(request => <ItemCard key={request[1].id} post={request[1]} sessionUser={sessionUser}/>)}
                     </FeedContainer>
                 </div>

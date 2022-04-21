@@ -5,7 +5,7 @@ user_routes = Blueprint('users', __name__)
 
 @user_routes.route('/')
 def users():
-    all_users = User.query.limit(50)
+    all_users = User.query.limit(200)
     return {user.id:user.home_dict() for user in all_users}
 
 @user_routes.route('/<int:id>')

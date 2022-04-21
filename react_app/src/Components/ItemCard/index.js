@@ -3,6 +3,7 @@ import styles from './ItemCard.module.css';
 import styled from 'styled-components';
 //actions
 import { getAllPosts, removePost, updateItem } from '../../store/posts';
+import { setCurrentModal, showModal } from '../../store/modal';
 
 import { XSLogo } from '../../Assets/Logo';
 import { Triangle } from '../../Assets/Icons/Triangle';
@@ -12,6 +13,7 @@ import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
 import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
 import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
+import ItemForm from '../../Forms/Item';
 
 const UserTitle = styled.div`
     width: 230px;
@@ -173,6 +175,7 @@ const IdText = styled.div`
 const ActionButtons = styled.div`
     width: 50px;
     height: 25px;
+    border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -182,6 +185,7 @@ const ActionButtons = styled.div`
     font-style: normal;
     font-size: 10px;
     color: white;
+    curosr: pointer;
 `;
 
 export const ItemCard = ({ post, sessionUser }) => {
@@ -198,10 +202,9 @@ export const ItemCard = ({ post, sessionUser }) => {
         dispatch(getAllPosts())
     };
 
-    const handleEdit = async (e) => {
-        e.preventDefault();
-        dispatch(updateItem(post.id));
-        dispatch(getAllPosts())
+    const showEditItemForm = () => {
+            dispatch(setCurrentModal(ItemForm));
+            dispatch(showModal());
     };
 
     return (
@@ -210,8 +213,8 @@ export const ItemCard = ({ post, sessionUser }) => {
                 {sessionUser ? <FavoritesIcon post={post} sessionUser={sessionUser} /> : <div/>}
                 {sessionUser && post.userId === sessionUser.id ?
                 <div>
-                    <ActionButtons onClick={handleDelete}>Delete</ActionButtons>
-                    <ActionButtons onClick={handleEdit}>Edit</ActionButtons>
+                    <ActionButtons role='button' onClick={handleDelete}>Delete</ActionButtons>
+                    <ActionButtons role='button' onClick={showEditItemForm}>Edit</ActionButtons>
                 </div>
                 : <Triangle status={post.status} />
                 }

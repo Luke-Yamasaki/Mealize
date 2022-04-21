@@ -60,11 +60,12 @@ const Posts = styled.div`
     background-color: white;
 `;
 
-export const Home = ({posts, sessionUser}) => {
-    const [nonprofit, setNonprofit] = useState(sessionUser && sessionUser.isNonprofit ? true : false);
-    const postsArr = Object.entries(posts)
-    const items = postsArr.filter(post => post[1].isItem === true);
-    const requests = postsArr.filter(post => post[1].isItem === false);
+export const Home = () => {
+    const sessionUser = useSelector(state => state.session.user);
+    const organizations = useSelector(state => state.organizations)
+    const posts = Object.entries(useSelector(state => state.posts.posts));
+    // let items = posts.filter(post => post[1].isItem === true);
+    // let requests = posts.filter(post => post[1].isItem === false);
 
     if(sessionUser && sessionUser.isNonprofit) {
         return(
@@ -77,7 +78,7 @@ export const Home = ({posts, sessionUser}) => {
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                     <FeedContainer>
-                        {items.map(item => <ItemCard key={item[1].id} post={item[1]} sessionUser={sessionUser} />)}
+                        {posts.reverse().map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
                     </FeedContainer>
                 </div>
                 <SideBarContainer>
@@ -98,8 +99,7 @@ export const Home = ({posts, sessionUser}) => {
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                     <FeedContainer>
-                        {items.map(item => <ItemCard key={item[1].id} post={item[1]} sessionUser={sessionUser} />)}
-                        {requests.map(request => <ItemCard key={request[1].id} post={request[1]} sessionUser={sessionUser}/>)}
+                    {posts.map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
                     </FeedContainer>
                 </div>
                 <SideBarContainer>

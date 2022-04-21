@@ -1,0 +1,58 @@
+.card {
+    width: 240px;
+    height: 340px;
+    border:5px solid;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0px;
+    margin: 0px;
+}
+
+.dairy {
+    border-color:#15BAFA;
+    background-color: #89DCFC;
+}
+
+.vegetables {
+    border-color:#4CB849;
+    background-color: #A4DBA3;
+}
+
+.fruits {
+    border-color:#FD67D2;
+    background-color: #FDB2E8;
+}
+
+.grains {
+    border-color:#D69C33;
+    background-color: #E9C990;
+}
+
+.protein  {
+    border-color:#C2462A;
+    background-color: #E0A193;
+}
+
+.image {
+    width: 250px;
+    height: 190px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: row;
+    align-items: top;
+    justify-content: space-between;
+    /* border-top-left-radius: 5px;
+    border-top-right-radius: 5px; */
+}
+
+.profile {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border-radius: 100%;
+}

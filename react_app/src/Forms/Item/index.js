@@ -3,9 +3,20 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { postItem } from '../../store/posts';
 import { validateForm, uploadImage } from '../../Helpers/FormValidations/items';
+import { hideModal } from '../../store/modal';
+import { XSLogo } from '../../Assets/Logo';
+import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
+import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
+import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
+import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
+import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
+
+import styles from './Item.module.css';
+import * as preview from '../../Components/ItemCard';
 
 const ItemForm = () => {
     const sessionUser = useSelector(state => state.session.user);
+    const categories = useSelector(state => state.categories)
     const dispatch = useDispatch();
     const history = useHistory();
     const [title, setTitle] = useState('');
@@ -62,10 +73,12 @@ const ItemForm = () => {
 
                 if(!newPost.error || !newPost.errors) {
                     setImageUploading(false);
-                    history.push(`/posts/${newPost.id}`)
+                    history.push(`/`)
+                    dispatch(hideModal());
                 } else {
                     setImageUploading(false);
-                    setErrors(newPost.errors)
+                    setErrors(newPost.errors);
+                    dispatch(hideModal());
                 }
             }
         }
@@ -79,31 +92,73 @@ const ItemForm = () => {
     }
 
     return (
-        <form style={{width: '600px', height: '1000px', display: 'flex', flexDirection: 'column'}} encType="multipart/form-data" onSubmit={handleSubmit}>
-            {errors}
-            <input placeholder='Title' type='text' value={title} onChange={e => setTitle(e.target.value)} />
-            <textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
-            <input placeholder='Quantity' type='text' value={quantity} onChange={e => setQuantity(e.target.value)} />
-            <label htmlFor='food-group'>Choose a food category</label>
-            <select id='food-group' onChange={e => setCategoryId(e.target.value)}>
-                <optgroup label="Food category">
-                    <option value={1}>Dairy</option>
-                    <option value={2}>Vegetables</option>
-                    <option value={3}>Fruits</option>
-                    <option value={4}>Grains</option>
-                    <option value={5}>Protein</option>
-                </optgroup>
-            </select>
-            <input
-              type="file"
-              accept="image/png, image/jpeg, image/jpg"
-              onChange={updateImage}
-            />
-            <input type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />
-            <div style={{border: '1px solid black'}} role="button" onClick={handleSubmit}>Submit</div>
-            {(imageUploading)&& <p>Loading...</p>}
-        </form>
-    )
-}
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '900px', height: '600px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
+            <section>
+                <div className={[styles.card, styles[`${categories[categoryId].category}`]].join(' ')}>
+                <img src={ image ? URL.createObjectURL(image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} className={styles.image} alt='Item post'/>
+                <preview.UserTitle>
+                    <preview.UserImage>
+                        <img src={sessionUser.profileImageUrl} className={styles.profile} alt="User profile."/>
+                        <preview.NameText>{ `${sessionUser.firstName} ${sessionUser.lastName[0]}.` }</preview.NameText>
+                    </preview.UserImage>
+                    <preview.TitleBox>
+                        <preview.Title>{ title }</preview.Title>
+                    </preview.TitleBox>
+                    <preview.CategoryBox>
+                        { categoryId === 1
+                        ? <DairyIcon />
+                        : categoryId === 2
+                        ? <VegetablesIcon />
+                        : categoryId === 3
+                        ? <FruitsIcon />
+                        : categoryId === 4
+                        ? <GrainsIcon />
+                        : <ProteinIcon />
+                        }
+                    </preview.CategoryBox>
+                </preview.UserTitle>
+                <preview.InfoBox>
+                    <preview.DescriptionBox>
+                        <preview.DescriptionLabel>[Description] <preview.DescriptionText>{description}</preview.DescriptionText></preview.DescriptionLabel>
+                    </preview.DescriptionBox>
+                    <preview.SubInfoBox>
+                        <preview.SubInfoText>Quantity:{quantity}</preview.SubInfoText>
+                        <preview.SubInfoText>Expires:{console.log(expDate)}</preview.SubInfoText>
+                    </preview.SubInfoBox>
+                </preview.InfoBox>
+                <preview.IdBox>
+                    <preview.IdText>Id:{sessionUser.id}</preview.IdText>
+                    <preview.MealizeText>Mealize LLC <XSLogo /></preview.MealizeText>
+                </preview.IdBox>
+            </div>
+            {(imageUploading)&& <p>Hello</p>}
+            </section>
+            <form style={{backgroundColor: 'white', width: '400px', height: '600px', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
+                {errors}
+                <input placeholder='Title' type='text' value={title} onChange={e => setTitle(e.target.value)} />
+                <textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
+                <input placeholder='Quantity' type='text' value={quantity} onChange={e => setQuantity(e.target.value)} />
+                <label htmlFor='food-group'>Choose a food category</label>
+                <select id='food-group' onChange={e => setCategoryId(e.target.value)}>
+                    <optgroup label="Food category">
+                        <option value=''>--- Select an option ---</option>
+                        <option value={1}>Dairy</option>
+                        <option value={2}>Vegetables</option>
+                        <option value={3}>Fruits</option>
+                        <option value={4}>Grains</option>
+                        <option value={5}>Protein</option>
+                    </optgroup>
+                </select>
+                <input
+                type="file"
+                accept="image/png, image/jpeg, image/jpg"
+                onChange={updateImage}
+                />
+                <input type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />
+                <div style={{border: '1px solid black'}} role="button" onClick={handleSubmit}>Submit</div>
+            </form>
+        </div>
+    );
+};
 
 export default ItemForm;

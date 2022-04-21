@@ -13,9 +13,9 @@ import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
 import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
 import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
-import ItemForm from '../../Forms/Item';
+import { EditItemForm } from '../../Forms/Item/EditItem';
 
-const UserTitle = styled.div`
+export const UserTitle = styled.div`
     width: 230px;
     height: 124px;
     display: flex;
@@ -24,7 +24,7 @@ const UserTitle = styled.div`
     align-items: center;
 `;
 
-const UserImage = styled.div`
+export const UserImage = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -34,7 +34,7 @@ const UserImage = styled.div`
     gap: 5px;
 `;
 
-const NameText = styled.p`
+export const NameText = styled.p`
     padding: 0px;
     margin: 0px;
     font-family: motiva-sans, sans-serif;
@@ -46,7 +46,7 @@ const NameText = styled.p`
     text-align: center;
 `;
 
-const TitleBox = styled.div`
+export const TitleBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,7 +56,7 @@ const TitleBox = styled.div`
     text-align: center;
 `;
 
-const Title = styled.div`
+export const Title = styled.div`
     font-family: motiva-sans, sans-serif;
     font-weight: 900;
     font-style: normal;
@@ -66,7 +66,7 @@ const Title = styled.div`
     text-align: center;
 `;
 
-const CategoryBox = styled.div`
+export const CategoryBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: space-between;
@@ -75,7 +75,7 @@ const CategoryBox = styled.div`
     width: 45px;
 `;
 
-const InfoBox = styled.div`
+export const InfoBox = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -85,7 +85,7 @@ const InfoBox = styled.div`
     margin-top: -30px;
 `;
 
-const DescriptionBox = styled.div`
+export const DescriptionBox = styled.div`
     height: 70px;
     width: 157px;
     background-color: white;
@@ -96,7 +96,7 @@ const DescriptionBox = styled.div`
     justify-content: left;
 `;
 
-const DescriptionLabel = styled.div`
+export const DescriptionLabel = styled.div`
     font-family: motiva-sans, sans-serif;
     font-weight: 900;
     font-style: normal;
@@ -111,7 +111,7 @@ const DescriptionLabel = styled.div`
     margin-top: 5px;
 `;
 
-const DescriptionText = styled.div`
+export const DescriptionText = styled.div`
     font-family: motiva-sans, sans-serif;
     font-weight: 700;
     font-style: normal;
@@ -120,7 +120,7 @@ const DescriptionText = styled.div`
     width: 155px;
 `;
 
-const SubInfoBox = styled.div`
+export const SubInfoBox = styled.div`
     width: 40px;
     height: 70px;
     display: flex;
@@ -129,7 +129,7 @@ const SubInfoBox = styled.div`
     justify-content: space-between;
 `;
 
-const SubInfoText = styled.div`
+export const SubInfoText = styled.div`
     width: 80px;
     height: 34px;
     border-radius: 5px;
@@ -139,7 +139,7 @@ const SubInfoText = styled.div`
     font-size: 12px;
 `;
 
-const IdBox = styled.div`
+export const IdBox = styled.div`
     width: 240px;
     height: 10px;
     display: flex;
@@ -148,7 +148,7 @@ const IdBox = styled.div`
     align-items: baseline;
 `;
 
-const MealizeText = styled.div`
+export const MealizeText = styled.div`
     display: flex;
     flex-direction: row;
     align-items: baseline;
@@ -161,7 +161,7 @@ const MealizeText = styled.div`
     width: 125px;
 `;
 
-const IdText = styled.div`
+export const IdText = styled.div`
     padding: 0px;
     margin: 0px;
     font-family: motiva-sans, sans-serif;
@@ -172,7 +172,7 @@ const IdText = styled.div`
     width: 125px;
 `;
 
-const ActionButtons = styled.div`
+export const ActionButtons = styled.div`
     width: 50px;
     height: 25px;
     border-radius: 5px;
@@ -203,7 +203,7 @@ export const ItemCard = ({ post, sessionUser }) => {
     };
 
     const showEditItemForm = () => {
-            dispatch(setCurrentModal(ItemForm));
+            dispatch(setCurrentModal(EditItemForm(post={post})));
             dispatch(showModal());
     };
 

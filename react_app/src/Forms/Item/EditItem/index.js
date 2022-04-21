@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { updateItem } from '../../store/posts';
-import { validateForm, uploadImage } from '../../Helpers/FormValidations/items';
+import { updateItem } from '../../../store/posts';
+import { validateForm, uploadImage } from '../../../Helpers/FormValidations/items';
+import { hideModal } from "../../../store/modal";
 
-const EditItemForm = ({post}) => {
+export const EditItemForm = ({post}) => {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -62,10 +63,12 @@ const EditItemForm = ({post}) => {
 
                 if(!newPost.error || !newPost.errors) {
                     setImageUploading(false);
-                    history.push(`/posts/${newPost.id}`)
+                    history.push(`/`)
+                    dispatch(hideModal());
                 } else {
                     setImageUploading(false);
-                    setErrors(newPost.errors)
+                    setErrors(newPost.errors);
+                    dispatch(hideModal());
                 }
             }
         }
@@ -103,6 +106,4 @@ const EditItemForm = ({post}) => {
             {(imageUploading)&& <p>Loading...</p>}
         </form>
     )
-}
-
-export default EditItemForm;
+};

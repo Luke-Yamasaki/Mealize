@@ -26,7 +26,10 @@ const ItemForm = () => {
     const [image, setImage] = useState(null);
     const [expDate, setExpDate] = useState(new Date());
     const [imageUploading, setImageUploading] = useState(false);
+    const [className, setClassName] = useState('dairy')
     const [errors, setErrors] = useState([]);
+
+    let SelectedIcon = `${categories[categoryId].category}Icon`;
 
     const organizationId = sessionUser.organizationId;
     const userId = sessionUser.id;
@@ -84,6 +87,8 @@ const ItemForm = () => {
         }
     }
 
+    const word = 'DairyIcon';
+
     const updateImage = (e) => {
         const file = e.target.files[0];
         console.log(file.size)
@@ -91,29 +96,34 @@ const ItemForm = () => {
         setImage(file)
     }
 
+    const handleCategory = async (e) => {
+        setCategoryId(e.target.value);
+        setClassName(categories[e.target.value].category.toLowerCase())
+    }
+
     return (
-        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '900px', height: '600px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
-            <section>
-                <div className={[styles.card, styles[`${categories[categoryId].category}`]].join(' ')}>
+        <div style={{overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '900px', height: '600px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
+            <section style={{width: '500px', height: '600px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+                <div className={[styles.card, styles[`${className}`]].join(' ')}>
                 <img src={ image ? URL.createObjectURL(image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} className={styles.image} alt='Item post'/>
                 <preview.UserTitle>
                     <preview.UserImage>
                         <img src={sessionUser.profileImageUrl} className={styles.profile} alt="User profile."/>
-                        <preview.NameText>{ `${sessionUser.firstName} ${sessionUser.lastName[0]}.` }</preview.NameText>
+                        <preview.NameText>{ `${sessionUser.firstName}` }</preview.NameText>
                     </preview.UserImage>
                     <preview.TitleBox>
                         <preview.Title>{ title }</preview.Title>
                     </preview.TitleBox>
                     <preview.CategoryBox>
-                        { categoryId === 1
-                        ? <DairyIcon />
-                        : categoryId === 2
+                        { categoryId === '2'
                         ? <VegetablesIcon />
-                        : categoryId === 3
+                        : categoryId === '3'
                         ? <FruitsIcon />
-                        : categoryId === 4
+                        : categoryId === '4'
                         ? <GrainsIcon />
-                        : <ProteinIcon />
+                        : categoryId === '5'
+                        ? <ProteinIcon />
+                        : <DairyIcon />
                         }
                     </preview.CategoryBox>
                 </preview.UserTitle>
@@ -134,12 +144,12 @@ const ItemForm = () => {
             {(imageUploading)&& <p>Hello</p>}
             </section>
             <form style={{backgroundColor: 'white', width: '400px', height: '600px', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
-                {errors}
+                {errors}<p>Hello</p>
                 <input placeholder='Title' type='text' value={title} onChange={e => setTitle(e.target.value)} />
                 <textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
                 <input placeholder='Quantity' type='text' value={quantity} onChange={e => setQuantity(e.target.value)} />
                 <label htmlFor='food-group'>Choose a food category</label>
-                <select id='food-group' onChange={e => setCategoryId(e.target.value)}>
+                <select id='food-group' onChange={handleCategory}>
                     <optgroup label="Food category">
                         <option value=''>--- Select an option ---</option>
                         <option value={1}>Dairy</option>

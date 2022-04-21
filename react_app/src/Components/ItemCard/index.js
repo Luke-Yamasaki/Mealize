@@ -222,7 +222,7 @@ export const ItemCard = ({ post, sessionUser }) => {
             <UserTitle>
                 <UserImage>
                     <img src={user.profileImageUrl} className={styles.profile} alt="User profile."/>
-                    <NameText>{ `${user.firstName} ${user.lastName[0]}.` }</NameText>
+                    <NameText>{ `${user.firstName}` }</NameText>
                 </UserImage>
                 <TitleBox>
                     <Title>{ post.title }</Title>

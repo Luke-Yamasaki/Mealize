@@ -15,7 +15,7 @@ const Wrapper = styled.div`
     flex-direction: row;
     justify-content: space-evenly;
     align-items: top;
-    background-color: #327647;
+    background-color: #F5F5F5;
     padding-top: 50px;
 `;
 
@@ -43,14 +43,13 @@ const SideBar = styled.aside`
 `;
 
 const FeedContainer = styled.div`
-    width: 100%;
+    width: 800px;
     height: auto;
     min-height: 95vh;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    background-color: blue;
-    gap: 7px;
+    gap: 15px;
 `;
 
 const Posts = styled.div`

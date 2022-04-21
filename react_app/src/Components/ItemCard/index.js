@@ -14,16 +14,9 @@ import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
 import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 
-const ImageBox = styled.div`
-    width: 250px;
-    height: 190px;
-    display: flex;
-    flex-direction:
-`;
-
 const UserTitle = styled.div`
-    width: 240px;
-    height: 65px;
+    width: 230px;
+    height: 100px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -33,10 +26,11 @@ const UserTitle = styled.div`
 const UserImage = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: space-between;
+    justify-content: space-between;
+    align-items: center;
     height: 65px;
-    width: 45px;
+    width: 50px;
+    gap: 5px;
 `;
 
 const NameText = styled.p`
@@ -45,39 +39,30 @@ const NameText = styled.p`
     font-family: motiva-sans, sans-serif;
     font-weight: 900;
     font-style: normal;
-    font-size: 14px;
-    height: 15px;
-    width: 45px;
+    font-size: 10px;
+    height: 30px;
+    width: 50px;
+    text-align: center;
 `;
 
 const TitleBox = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: space-between;
+    align-items: center;
     justify-content: center;
     height: 65px;
-    width: 125px;
+    width: 120px;
+    text-align: center;
 `;
 
 const Title = styled.div`
     font-family: motiva-sans, sans-serif;
     font-weight: 900;
     font-style: normal;
-    font-size: 18px;
-    height: 50px;
-    width: 125px;
+    font-size: 16px;
+    height: 65px;
+    width: 120px;
     text-align: center;
-`;
-
-const Text = styled.p`
-    padding: 0px;
-    margin: 0px;
-    font-family: motiva-sans, sans-serif;
-    font-weight: 900;
-    font-style: normal;
-    font-size: 14px;
-    height: 15px;
-    width: 125px;
 `;
 
 const CategoryBox = styled.div`
@@ -85,8 +70,20 @@ const CategoryBox = styled.div`
     flex-direction: column;
     align-items: space-between;
     justify-content: center;
-    height: 65px;
-    width: 125px;
+    height: 45px;
+    width: 45px;
+`;
+
+const CategoryText = styled.p`
+    padding: 0px;
+    margin: 0px;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 10px;
+    height: 15px;
+    width: 40px;
+    text-align: center;
 `;
 
 const InfoBox = styled.div`
@@ -99,8 +96,8 @@ const InfoBox = styled.div`
 `;
 
 const DescriptionBox = styled.div`
-    height: 60px;
-    width: 135px;
+    height: 80px;
+    width: 157px;
     background-color: white;
     border-radius: 5px;
     display: flex;
@@ -110,30 +107,73 @@ const DescriptionBox = styled.div`
     justify-content: left;
 `;
 
-const SubInfoBox = styled.div`
+const DescriptionLabel = styled.div`
+    font-family: motiva-sans, sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 12px;
+    height: 15px;
+    width: 100px;
+`;
+
+const DescriptionText = styled.div`
+    font-family: motiva-sans, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 10px;
     height: 60px;
-    width: 75px;
+    width: 150px;
+`;
+
+const SubInfoBox = styled.div`
+    width: 40px;
+    height: 80px;
     display: flex;
     flex-direction: column;
-    align-items: space-between;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
 `;
 
 const SubInfoText = styled.div`
-    width: 75px;
-    height: 27px;
+    width: 80px;
+    height: 38px;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
+    background-color: white;
+    font-size: 12px;
 `;
 
 const IdBox = styled.div`
-width: 220px;
-height: 15px;
+width: 240px;
+height: 10px;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
+`;
+
+const MealizeText = styled.div`
+    padding: 0px;
+    margin: 0px;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 10px;
+    height: 15px;
+    width: 125px;
+    text-align: right;
+`;
+
+const IdText = styled.div`
+    padding: 0px;
+    margin: 0px;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 10px;
+    height: 15px;
+    width: 125px;
 `;
 
 export const ItemCard = ({ post, sessionUser }) => {
@@ -161,33 +201,32 @@ export const ItemCard = ({ post, sessionUser }) => {
                 </UserImage>
                 <TitleBox>
                     <Title>{ post.title }</Title>
-                    <Text>{ `${user.firstName} ${user.lastName[0]}.` }</Text>
                 </TitleBox>
                 <CategoryBox>
                     { category === 'Dairy'
-                    ? <><DairyIcon /><p>{category}</p></>
+                    ? <DairyIcon dimension={'large'}/>
                     : category === 'Vegetables'
-                    ? <><VegetablesIcon /><p>{category}</p></>
+                    ? <VegetablesIcon />
                     : category === 'Fruits'
-                    ? <><FruitsIcon /><p>{category}</p></>
+                    ? <FruitsIcon />
                     : category === 'Grains'
-                    ? <><GrainsIcon /><p>{category}</p></>
-                    : <><ProteinIcon /><p>{category}</p></>
+                    ? <GrainsIcon />
+                    : <ProteinIcon />
                     }
                 </CategoryBox>
             </UserTitle>
             <InfoBox>
                 <DescriptionBox>
-                    <h4>Description:<p>{post.description}</p></h4>
+                    <DescriptionLabel>[Description] <DescriptionText>{post.description}</DescriptionText></DescriptionLabel>
                 </DescriptionBox>
                 <SubInfoBox>
-                    <SubInfoText>Quantity:<p>{post.quantity}</p></SubInfoText>
-                    <SubInfoText>Expires:<p>{post.expDate}</p></SubInfoText>
+                    <SubInfoText>Quantity:{post.quantity}</SubInfoText>
+                    <SubInfoText>Expires:{post.expDate.slice(0, 16)}</SubInfoText>
                 </SubInfoBox>
             </InfoBox>
             <IdBox>
-                <p>Id:{post.id}</p>
-                <div>Mealize LLC <XSLogo /></div>
+                <IdText>Id:{post.id}</IdText>
+                <MealizeText>Mealize LLC <XSLogo /></MealizeText>
             </IdBox>
         </div>
     )

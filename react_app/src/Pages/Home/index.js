@@ -9,13 +9,13 @@ import styled from 'styled-components';
 
 
 const Wrapper = styled.div`
-    width: 80vw;
+    width: 1600px;
     height: auto;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: top;
-    background-color: #327647;
+    background-color: #F5F5F5;
     padding-top: 50px;
 `;
 
@@ -29,8 +29,8 @@ const SideBarContainer = styled.div`
 `;
 
 const SideBar = styled.aside`
-    width: 250px;
-    height: 400px;
+    width: 200px;
+    height: 300px;
     border-radius: 5px;
     border: 1px solid #B2B2B2;
     background-color: #E8E8E8;
@@ -43,14 +43,13 @@ const SideBar = styled.aside`
 `;
 
 const FeedContainer = styled.div`
-    width: 100%;
+    width: 800px;
     height: auto;
     min-height: 95vh;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    background-color: blue;
-    gap: 7px;
+    gap: 15px;
 `;
 
 const Posts = styled.div`
@@ -60,24 +59,25 @@ const Posts = styled.div`
     background-color: white;
 `;
 
-export const Home = ({posts, sessionUser}) => {
-    const [nonprofit, setNonprofit] = useState(sessionUser && sessionUser.isNonprofit ? true : false);
-    const postsArr = Object.entries(posts)
-    const items = postsArr.filter(post => post[1].isItem === true);
-    const requests = postsArr.filter(post => post[1].isItem === false);
+export const Home = () => {
+    const sessionUser = useSelector(state => state.session.user);
+    const organizations = useSelector(state => state.organizations)
+    const posts = Object.entries(useSelector(state => state.posts.posts));
+    // let items = posts.filter(post => post[1].isItem === true);
+    // let requests = posts.filter(post => post[1].isItem === false);
 
     if(sessionUser && sessionUser.isNonprofit) {
         return(
             <Wrapper>
                 <SideBarContainer>
                     Filter
-                <SideBar />
-                <SideBar />
-                <SideBar />
+                    <SideBar>Categories</SideBar>
+                    <SideBar>Categories</SideBar>
+                    <SideBar>Categories</SideBar>
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                     <FeedContainer>
-                        {items.map(item => <ItemCard key={item[1].id} post={item[1]} sessionUser={sessionUser} />)}
+                        {posts.reverse().map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
                     </FeedContainer>
                 </div>
                 <SideBarContainer>
@@ -98,8 +98,7 @@ export const Home = ({posts, sessionUser}) => {
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                     <FeedContainer>
-                        {items.map(item => <ItemCard key={item[1].id} post={item[1]} sessionUser={sessionUser} />)}
-                        {requests.map(request => <ItemCard key={request[1].id} post={request[1]} sessionUser={sessionUser}/>)}
+                    {posts.map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
                     </FeedContainer>
                 </div>
                 <SideBarContainer>

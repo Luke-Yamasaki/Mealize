@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import pattern from '../../Assets/Images/Pattern.png';
 
 export const Background = styled.div`
     width: 100vw;

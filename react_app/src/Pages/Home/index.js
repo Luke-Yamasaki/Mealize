@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 
 const Wrapper = styled.div`
-    width: 80vw;
+    width: 1600px;
     height: auto;
     display: flex;
     flex-direction: row;
@@ -29,8 +29,8 @@ const SideBarContainer = styled.div`
 `;
 
 const SideBar = styled.aside`
-    width: 250px;
-    height: 400px;
+    width: 200px;
+    height: 300px;
     border-radius: 5px;
     border: 1px solid #B2B2B2;
     background-color: #E8E8E8;
@@ -72,9 +72,9 @@ export const Home = () => {
             <Wrapper>
                 <SideBarContainer>
                     Filter
-                <SideBar />
-                <SideBar />
-                <SideBar />
+                    <SideBar>Categories</SideBar>
+                    <SideBar>Categories</SideBar>
+                    <SideBar>Categories</SideBar>
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
                     <FeedContainer>

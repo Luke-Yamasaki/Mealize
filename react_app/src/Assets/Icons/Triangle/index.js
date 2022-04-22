@@ -1,10 +1,19 @@
 import React from 'react';
+import { getAllPosts, removePost, updateItem } from '../../../store/posts';
+import { setCurrentModal, showModal } from '../../../store/modal';
+
 
 export const Triangle = ({ status }) => {
     const color = status === 0 ? "url(#linear-gradient)" : "url(#linear-gradient-black)"
 
+    const handleClick = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+    }
+
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="104.669" height="110.969" viewBox="0 0 104.669 110.969">
+        <svg xmlns="http://www.w3.org/2000/svg" width="104.669" height="110.969" viewBox="0 0 104.669 110.969" onClick={handleClick}>
             <defs>
                 <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
                     <stop offset="0" stopColor="#76d97e" />

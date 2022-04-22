@@ -133,6 +133,8 @@ const ItemForm = () => {
         const formData = new FormData();
         formData.append("image", image);
 
+        setTitle(title.slice(0, 1).toUpperCase().concat(title.slice(1, title.length)))
+
         const itemData = {
             organizationId,
             userId,
@@ -268,7 +270,7 @@ const ItemForm = () => {
                     <preview.TitleBox>
                         <preview.Title>
                             <TitleDiv>
-                                { !title ? 'Your post title' : title.length < 12 ? title : <strong style={{color: 'red'}}>Please add line breaks like this!</strong> }
+                                { !title ? 'Your post title' : (title.length > 0 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? title.slice(0, 1).toUpperCase().concat(title.slice(1, title.length)) : <strong style={{color: 'red'}}>Please add line breaks like this!</strong> }
                             </TitleDiv>
                         </preview.Title>
                     </preview.TitleBox>
@@ -287,7 +289,7 @@ const ItemForm = () => {
                 </preview.UserTitle>
                 <preview.InfoBox>
                     <preview.DescriptionBox>
-                        <preview.DescriptionLabel>[Description] <preview.DescriptionText>{description ? description : 'Your description goes here...'}</preview.DescriptionText></preview.DescriptionLabel>
+                        <preview.DescriptionLabel>[Description] <preview.DescriptionText>{description ? description.slice(0, 1).toUpperCase().concat(description.slice(1, description.length)) : 'Your description goes here...'}</preview.DescriptionText></preview.DescriptionLabel>
                     </preview.DescriptionBox>
                     <preview.SubInfoContainer>
                         <preview.SubInfoBox>Quantity:
@@ -323,11 +325,11 @@ const ItemForm = () => {
                         )}
                         <Fieldset>
                         <legend className={(title.length >= 3 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
-                                <TitleTextArea placeholder='Title' type='text' minLength='4' maxLength='25' cols='13' rows='2' required value={title} onChange={e => setTitle(e.target.value)} />
+                                <TitleTextArea placeholder='Title' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={e => setTitle(e.target.value)} />
                         </Fieldset>
                         <TextareaFieldset>
-                        <legend className={description.length >= 3 ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
-                                <Textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
+                        <legend className={(description.length >= 3 && description.length <= 17) || (description.length > 17 && description.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
+                            <Textarea placeholder='Description' type='text' minLength='3' maxLength='100' value={description} onChange={e => setDescription(e.target.value)} />
                         </TextareaFieldset>
                         <Fieldset>
                         <legend className={quantity? styles.completed : styles.incomplete}>Item quantity</legend>

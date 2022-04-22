@@ -83,7 +83,8 @@ export const getAllPosts = () => async (dispatch) => {
     const response = await fetch('/api/posts/');
     if(response.ok) {
         const posts = await response.json();
-        dispatch(gotAllPosts(posts));
+        console.log(Object.values(posts))
+        dispatch(gotAllPosts(Object.values(posts)));
         return posts;
     } else if(response.status < 500) {
         const data = await response.json();
@@ -99,7 +100,8 @@ export const getBatchedPosts = () => async (dispatch) => {
     const response = await fetch('/api/posts/');
     if(response.ok) {
         const data = await response.json();
-        dispatch(gotBatchedPosts(data));
+        console.log(data)
+        dispatch(gotBatchedPosts(Object.values(data)));
         return null;
     } else if(response.status < 500) {
         const data = await response.json();
@@ -178,25 +180,25 @@ export const removePost = (postId) => async (dispatch) => {
     };
 };
 
-const initialState = { posts:null };
+const initialState = { posts: null };
 
 export default function postsReducer(state = initialState, action) {
     const newState = { ...state };
     switch(action.type) {
         case CREATED_POST:
-            newState.posts[action.payload?.id] = action.payload;
+            newState[action.payload.id] = action.payload;
             return newState
         case GOT_ALL_POSTS:
-            newState['posts'] = action.payload;
+            action.payload.forEach((post) => newState[post.id] = post)
             return newState
         case GOT_BATCHED_POSTS:
-            newState['posts'] = action.payload;
-            return newState;
+            action.payload.forEach((post) => newState[post.id] = post)
+            return newState
         case UPDATED_POST:
-            newState[action.payload?.id] = action.payload;
+            newState[action.payload.id] = action.payload;
 			return newState;
         case REMOVED_POST:
-            delete newState.posts[action.payload];
+            delete newState[action.payload.id];
 			return newState;
         default:
             return state;

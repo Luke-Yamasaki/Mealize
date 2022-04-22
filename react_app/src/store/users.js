@@ -17,7 +17,8 @@ export const getBatchedUsers = () => async dispatch => {
 
     if(response.ok) {
         const users = await response.json();
-        dispatch(gotBatchedUsers(users));
+        dispatch(gotBatchedUsers(Object.values(users)));
+        return users
     } else if(response.status < 500) {
         const data = await response.json();
         if(data.errors){
@@ -34,6 +35,7 @@ export const getOneUser = (userId) => async dispatch => {
     if(response.ok) {
         const user = await response.json();
         dispatch(gotOneUser(user));
+        return user
     } else if(response.status < 500) {
         const data = await response.json();
         if(data.errors){
@@ -48,10 +50,10 @@ export default function usersReducer(state = {}, action) {
     let newState = { ...state };
     switch(action.type) {
         case GOT_BATCHED_USERS:
-            newState = {...action.payload};
+            action.payload.forEach(user => newState[user.id] = user)
             return newState;
         case GOT_ONE_USER:
-            newState.user = action.payload;
+            newState[action.payload.id] = action.payload;
             return newState;
         default:
             return state;

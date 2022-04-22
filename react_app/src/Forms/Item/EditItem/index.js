@@ -16,7 +16,7 @@ import styles from './EditItem.module.css';
 import styled from 'styled-components';
 import * as preview from '../../../Components/ItemCard';
 
-export const PreviewSection = styled.section`
+const PreviewSection = styled.section`
     display: flex;
     width: 500px;
     height: 700px;
@@ -26,7 +26,7 @@ export const PreviewSection = styled.section`
     justify-content: center;
 `;
 
-export const FormSection = styled.section`
+const FormSection = styled.section`
     display: flex;
     width: 500px;
     height: 700px;
@@ -37,7 +37,7 @@ export const FormSection = styled.section`
     background-color: #E8E8E8;
 `;
 
-export const Fieldset = styled.fieldset`
+const Fieldset = styled.fieldset`
     background-color: #E8E8E8;
     border-radius: 5px;
     border: none;
@@ -45,7 +45,7 @@ export const Fieldset = styled.fieldset`
     height: 40px;
 `;
 
-export const TextareaFieldset = styled.fieldset`
+const TextareaFieldset = styled.fieldset`
     background-color: #E8E8E8;
     border-radius: 5px;
     border: none;
@@ -53,16 +53,16 @@ export const TextareaFieldset = styled.fieldset`
     height: 100px;
 `;
 
-export const Legend = styled.legend`
-    background-color: #9AF2C0;
-    border: 1px solid rgba(40, 166, 144, 0.5);
-    border-radius: 2px;
-    color: black;
-    width: 125px;
-    height: 15px;
-`;
+// const legend = styled.legend`
+//     background-color: #9AF2C0;
+//     border: 1px solid rgba(40, 166, 144, 0.5);
+//     border-radius: 2px;
+//     color: black;
+//     width: 125px;
+//     height: 15px;
+// `;
 
-export const Textarea = styled.textarea`
+const Textarea = styled.textarea`
     resize: none;
     width: 290px;
     height: 80px;
@@ -70,7 +70,7 @@ export const Textarea = styled.textarea`
     border-radius: 5px;
 `;
 
-export const TextInput = styled.input`
+const TextInput = styled.input`
     border: none;
     border-radius: 3px;
     width: 290px;
@@ -79,7 +79,7 @@ export const TextInput = styled.input`
     color: black;
 `;
 
-export const FormContent = styled.div`
+const FormContent = styled.div`
     width: 475px;
     height: 475px;
     display: flex;
@@ -103,7 +103,6 @@ export const EditItemForm = ({ post }) => {
     const [imageUploading, setImageUploading] = useState(false);
     const [className, setClassName] = useState(categories[post.categoryId].category.toLowerCase())
     const [errors, setErrors] = useState([]);
-    console.log(post.categoryId)
 
     const organizationId = sessionUser.organizationId;
     const userId = sessionUser.id;
@@ -243,23 +242,23 @@ export const EditItemForm = ({ post }) => {
                     </div>
                     <FormContent>
                         <Fieldset>
-                            <Legend>Image upload</Legend>
-                                <input style={{borderRadius: '3px', color: '#005C4D'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
+                            <legend>Image upload</legend>
+                                <input style={{width: '290px', height: '20px', borderRadius: '3px', color: '#005C4D'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                         </Fieldset>
                         <Fieldset>
-                        <Legend>Post title</Legend>
+                        <legend>Post title</legend>
                                 <TextInput placeholder='Title' type='text' value={title} onChange={e => setTitle(e.target.value)} />
                         </Fieldset>
                         <TextareaFieldset>
-                        <Legend>Item description</Legend>
+                        <legend>Item description</legend>
                                 <Textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
                         </TextareaFieldset>
                         <Fieldset>
-                        <Legend>Item quantity</Legend>
+                        <legend>Item quantity</legend>
                                 <TextInput placeholder='Quantity' type='text' value={quantity} onChange={e => setQuantity(e.target.value)} />
                         </Fieldset>
                         <Fieldset>
-                            <Legend>Food category</Legend>
+                            <legend>Food category</legend>
                                 <select style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} id='food-group' onChange={handleCategory}>
                                     <optgroup label="Food category">
                                         <option value={1}>Dairy</option>
@@ -271,7 +270,7 @@ export const EditItemForm = ({ post }) => {
                                 </select>
                         </Fieldset>
                         <Fieldset>
-                            <Legend>Expiration date</Legend>
+                            <legend>Expiration date</legend>
                             <input style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />
                         </Fieldset>
                     </FormContent>

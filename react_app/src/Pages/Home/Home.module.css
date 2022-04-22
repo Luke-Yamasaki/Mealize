@@ -1,5 +1,7 @@
-* {
-    font-family: sans-serif;
-    font-size: 60px;
-    color: black;
+.gmap {
+    cursor: pointer;
+    width: 500px;
+    height: 600px;
+    object-fit: contain;
+    object-position: 0% 70%;
 }

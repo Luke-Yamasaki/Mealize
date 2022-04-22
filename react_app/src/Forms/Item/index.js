@@ -185,6 +185,9 @@ const ItemForm = () => {
         !sessionUser.isNonprofit && !image ?
         alert("Please select a .jpg, .jpeg or .png image file to upload.")
         :
+        title.length > 11 && !title.includes(' ') ?
+        alert("Please add a line break to your title.")
+        :
         !title ?
         alert("Please enter a title in 25 characters or less.")
         :
@@ -224,7 +227,7 @@ const ItemForm = () => {
         setDescription('');
         setQuantity('');
         setExpDate('');
-        setCategoryId(1);
+        setCategoryId('');
         setClassName('dairy')
     };
 
@@ -319,11 +322,11 @@ const ItemForm = () => {
                         </Fieldset>
                         )}
                         <Fieldset>
-                        <legend className={title ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
+                        <legend className={(title.length >= 3 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
                                 <TitleTextArea placeholder='Title' type='text' minLength='4' maxLength='25' cols='13' rows='2' required value={title} onChange={e => setTitle(e.target.value)} />
                         </Fieldset>
                         <TextareaFieldset>
-                        <legend className={description? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
+                        <legend className={description.length >= 3 ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
                                 <Textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
                         </TextareaFieldset>
                         <Fieldset>
@@ -350,7 +353,7 @@ const ItemForm = () => {
                     </FormContent>
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
                         <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
-                        <div className={styles.submit} onClick={!image || !title || !description || !quantity || !categoryId || !expDate ? handleEmpty : handleSubmit}>Submit</div>
+                        <div className={styles.submit} onClick={!sessionUser.isNonprofit && !image || !title || title.length > 11 && !title.includes(' ') || !description || !quantity || !categoryId || !expDate ? handleEmpty : handleSubmit}>Submit</div>
                     </div>
                 </form>
             </FormSection>

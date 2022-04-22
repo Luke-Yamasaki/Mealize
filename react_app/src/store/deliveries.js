@@ -83,15 +83,19 @@ const deliveriesReducer = (state = {}, action) => {
 
     switch(action.type) {
         case CREATED_DELIVERY: {
+          newState[action.payload.id] = action.payload
             return newState
         }
         case GOT_ALL_DELIVERIES: {
-            return newState
+          action.payload.forEach((delivery) => newState[delivery.id] = delivery)
+          return newState;
         }
         case UPDATED_DELIVERY: {
+          newState[action.payload.id] = action.payload
             return newState
         }
         case DELETED_DELIVERY: {
+          delete newState[action.payload.id]
             return newState
         }
         default:

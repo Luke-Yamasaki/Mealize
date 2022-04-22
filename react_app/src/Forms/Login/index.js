@@ -9,10 +9,10 @@ import banner from '../../Assets/Images/Mealize-banner.png'
 
 const FormContainer = styled.fieldset`
     width: 450px;
-    height: 600px;
+    height: 650px;
     background: linear-gradient(#76D97E, #28A690);
     border-radius: 10px;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,7 +26,7 @@ const FormLegend = styled.legend`
     background-size: cover;
     background-position: center;
     border-radius: 5px;
-    border: 1px solid white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     margin: 0px;
     padding: 0px;
 `;
@@ -66,6 +66,7 @@ const Legend = styled.legend`
     font-size: 16px;
     width: 70px;
     height: 15px;
+    font-weight: 600;
 `;
 
 const Input = styled.input`
@@ -94,6 +95,57 @@ const ButtonBox = styled.div`
     align-items: center;
     width: 170px;
     height: 30px;
+`;
+
+const DemoBox = styled.div`
+    width: 400px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+`;
+
+const VolunteerDemoButton = styled.div`
+    width: 115px;
+    height: 40px;
+    background-color: #9AF2C0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 12px;
+    font-weight: 800;
+    font-family: motiva-sans, sans-serif;
+    text-align: center;
+`;
+
+const NonprofitDemoButton = styled.div`
+    width: 115px;
+    height: 40px;
+    background-color: #04B1D9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 12px;
+    font-weight: 800;
+    font-family: motiva-sans, sans-serif;
+    text-align: center;
+`;
+
+const BusinessDemoButton = styled.div`
+    width: 115px;
+    height: 40px;
+    background-color: #024A59;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: motiva-sans, sans-serif;
+    text-align: center;
 `;
 
 
@@ -184,9 +236,11 @@ export const LoginForm = () => {
                     <div role='button' className={styles.cancel} onClick={cancel}>Cancel</div>
                     <div role='button' className={styles.submit} onClick={handleSubmit}>Submit</div>
                 </ButtonBox>
-                <div role='button' className={styles.nonprofit} onClick={nonprofitDemo}>Nonprofit demo</div>
-                <div role='button' className={styles.business} onClick={businessDemo}>Business demo</div>
-                <div role='button' className={styles.business} onClick={businessDemo}>Nonprofit demo</div>
+                <DemoBox>
+                  <VolunteerDemoButton onClick={nonprofitDemo}>Volunteer demo</VolunteerDemoButton>
+                    <NonprofitDemoButton onClick={businessDemo}>Nonprofit demo</NonprofitDemoButton>
+                    <BusinessDemoButton onClick={businessDemo}>Business demo</BusinessDemoButton>
+                </DemoBox>
                 <div className={styles.question}>Don't have an account?<div className={styles.modalOption} onClick={showSignupForm}>Sign up</div></div>
             </Form>
         </FormContainer>

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { postItem } from '../../store/posts';
@@ -59,6 +59,16 @@ const Textarea = styled.textarea`
     height: 80px;
     border: none;
     border-radius: 5px;
+    hyphens: auto;
+`;
+
+const TitleTextArea = styled.textarea`
+    resize: none;
+    width: 290px;
+    height: 20px;
+    border: none;
+    border-radius: 5px;
+    hyphens: auto;
 `;
 
 const TextInput = styled.input`
@@ -68,6 +78,7 @@ const TextInput = styled.input`
     height: 20px;
     background-color: white;
     color: black;
+    hyphens: auto;
 `;
 
 const FormContent = styled.div`
@@ -77,6 +88,20 @@ const FormContent = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+`;
+
+const TitleDiv = styled.div`
+    font-family: motiva-sans, sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 16px;
+    height: 45px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
 `;
 
 
@@ -98,6 +123,10 @@ const ItemForm = () => {
 
     const organizationId = sessionUser.organizationId;
     const userId = sessionUser.id;
+
+    useEffect(() => {
+
+    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -150,6 +179,30 @@ const ItemForm = () => {
                 }
             }
         }
+    };
+
+    const handleEmpty = () => {
+        !sessionUser.isNonprofit && !image ?
+        alert("Please select a .jpg, .jpeg or .png image file to upload.")
+        :
+        !title ?
+        alert("Please enter a title in 25 characters or less.")
+        :
+        !description ?
+        alert("Please enter a description in 120 characters or less.")
+        :
+        !sessionUser.isNonprofit && !quantity ?
+        alert("Please select a quantity for your post.")
+        : !quantity ?
+        alert('Please select a desired quantity for your request.')
+        :
+        !categoryId ?
+        alert("Please select a food category.")
+        :
+        sessionUser.isNonprofit && !expDate ?
+        alert('Please select an end date for your request.')
+        :
+        alert('Please select an expiration date for your item.')
     }
 
     const updateImage = (e) => {
@@ -171,7 +224,7 @@ const ItemForm = () => {
         setDescription('');
         setQuantity('');
         setExpDate('');
-        setCategoryId('');
+        setCategoryId(1);
         setClassName('dairy')
     };
 
@@ -179,14 +232,42 @@ const ItemForm = () => {
         <div style={{overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
             <PreviewSection>
                 <div className={[styles.card, styles[`${className}`]].join(' ')}>
-                <img src={ image ? URL.createObjectURL(image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} className={styles.image} alt='Item post'/>
+                {!sessionUser.isNonprofit ?
+                    (
+                        <img src={ image ? URL.createObjectURL(image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} className={styles.image} alt='Item post'/>
+                    )
+                    : categoryId === '' || categoryId === '1' ?
+                    (
+                        <img src={'https://mealize.s3.amazonaws.com/dairy_request.png'} className={styles.image} alt='Item post' />
+                    )
+                    : categoryId === '2' ?
+                    (
+                        <img src={'https://mealize.s3.amazonaws.com/vegetables_request.png'} className={styles.image} alt='Item post' />
+                    )
+                    : categoryId === '3' ?
+                    (
+                        <img src={'https://mealize.s3.amazonaws.com/fruits_request.png'} className={styles.image} alt='Item post' />
+                    )
+                    : categoryId === '4' ?
+                    (
+                        <img src={'https://mealize.s3.amazonaws.com/grains_request.png'} className={styles.image} alt='Item post' />
+                    )
+                    :
+                    (
+                        <img src={'https://mealize.s3.amazonaws.com/protein_request.png'} className={styles.image} alt='Item post' />
+                    )
+                }
                 <preview.UserTitle>
                     <preview.UserImage>
                         <img src={sessionUser.profileImageUrl} className={styles.profile} alt="User profile."/>
                         <preview.NameText>{ `${sessionUser.firstName}` }</preview.NameText>
                     </preview.UserImage>
                     <preview.TitleBox>
-                        <preview.Title>{ title ? title : 'Your post title' }</preview.Title>
+                        <preview.Title>
+                            <TitleDiv>
+                                { !title ? 'Your post title' : title.length < 12 ? title : <strong style={{color: 'red'}}>Please add line breaks like this!</strong> }
+                            </TitleDiv>
+                        </preview.Title>
                     </preview.TitleBox>
                     <preview.CategoryBox>
                         { categoryId === '2'
@@ -227,20 +308,22 @@ const ItemForm = () => {
                         <div style={{height: '100px', width: '35px'}}>
                             <Nonprofit color={'black'} />
                         </div>
-                        <div className={styles.formTitle}>New item form</div>
+                        <div className={styles.formTitle}>{sessionUser.isNonprofit ? 'New request form' : 'New item form'}</div>
                     </div>
                     <div style={{color: '#90311D', marginLeft: '-130px', marginBottom: '20px', marginTop: '-10px'}}> * All fields are required</div>
                     <FormContent>
-                        <Fieldset>
+                        {!sessionUser.isNonprofit && (
+                          <Fieldset>
                             <legend className={image ? styles.completed : styles.incomplete }>Image upload</legend>
-                                <input style={{borderRadius: '3px', color: '#005C4D'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
+                                <input style={{borderRadius: '3px', color: '#005C4D'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
                         </Fieldset>
+                        )}
                         <Fieldset>
-                        <legend className={title ? styles.completed : styles.incomplete}>Post title</legend>
-                                <TextInput placeholder='Title' type='text' value={title} onChange={e => setTitle(e.target.value)} />
+                        <legend className={title ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
+                                <TitleTextArea placeholder='Title' type='text' minLength='4' maxLength='25' cols='13' rows='2' required value={title} onChange={e => setTitle(e.target.value)} />
                         </Fieldset>
                         <TextareaFieldset>
-                        <legend className={description? styles.completed : styles.incomplete}>Item description</legend>
+                        <legend className={description? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
                                 <Textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
                         </TextareaFieldset>
                         <Fieldset>
@@ -266,8 +349,8 @@ const ItemForm = () => {
                         </Fieldset>
                     </FormContent>
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
-                        <div className={styles.reset} role="button" onClick={handleReset} ><div>Reset</div></div>
-                        <button type='submit' className={styles.submit} disabled={!image || !title || !description || !quantity || !categoryId || !expDate ? true : false} onClick={handleSubmit}>Submit</button>
+                        <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
+                        <div className={styles.submit} onClick={!image || !title || !description || !quantity || !categoryId || !expDate ? handleEmpty : handleSubmit}>Submit</div>
                     </div>
                 </form>
             </FormSection>

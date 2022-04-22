@@ -1,12 +1,12 @@
 .card {
-    width: 240px;
-    height: 340px;
+    width: 260px;
+    height: 350px;
     border:5px solid;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
-    align-items: space-between;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
     overflow: hidden;
     padding: 0px;
     margin: 0px;
@@ -108,8 +108,8 @@
 }
 
 .image {
-    width: 250px;
-    height: 190px;
+    width: 260px;
+    height: 200px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -122,8 +122,8 @@
 }
 
 .profile {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     object-fit: cover;
     border-radius: 100%;
 }

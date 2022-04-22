@@ -8,18 +8,17 @@ import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
 import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
 import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
+import { Business } from '../../Assets/Icons/Business';
+import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 // import styles from './Home.module.css';
 import styled from 'styled-components';
-import styles from './Home.module.css';
-import gmapImage from '../../Assets/Images/Foodbanks-Denver.png'
-
 
 const Wrapper = styled.div`
     width: 1600px;
     height: auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: top;
     background-color: #F5F5F5;
     padding-top: 50px;
@@ -30,13 +29,53 @@ const SideBarContainer = styled.div`
     flex-direction: column;
     align-items: left;
     justify-content: flex-start;
-    width: 300px;
+    width: 200px;
     height: 1000px;
     gap: 15px;
 `;
 
-const SideBar = styled.aside`
-    width: 200px;
+const PostField = styled.fieldset`
+    width: 150px;
+    height: 100px;
+    border-radius: 5px;
+    border: 1px solid #B2B2B2;
+    background-color: #E8E8E8;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: space-around;
+    font-size: 16px;
+`;
+
+const CategoryField = styled.fieldset`
+    width: 150px;
+    height: 285px;
+    border-radius: 5px;
+    border: 1px solid #B2B2B2;
+    background-color: #E8E8E8;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-end;
+    font-size: 16px;
+    gap: 5px;
+`;
+
+const OrganizationField = styled.fieldset`
+    width: 150px;
+    height: 200px;
+    border-radius: 5px;
+    border: 1px solid #B2B2B2;
+    background-color: #E8E8E8;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: space-around;
+    font-size: 16px;
+`;
+
+const EventField = styled.fieldset`
+    width: 150px;
     height: 400px;
     border-radius: 5px;
     border: 1px solid #B2B2B2;
@@ -46,9 +85,22 @@ const SideBar = styled.aside`
     align-items: left;
     justify-content: space-around;
     font-size: 16px;
-    color: black;
-    padding-left: 5px;
 `;
+
+const SideLegend = styled.legend`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 20px;
+    font-size: 14px;
+    background-color: lime;
+    border: 1px solid green;
+    border-radius: 3px;
+    color: black;
+    margin-left: 5px;
+
+`
 
 const SideBarInfoBox = styled.div`
     display: flex;
@@ -56,7 +108,7 @@ const SideBarInfoBox = styled.div`
     justify-content: flex-start;
     gap: 10px;
     align-items: center;
-    width: 200px;
+    width: 100px;
     height: 50px;
 `;
 
@@ -76,8 +128,9 @@ const FeedContainer = styled.div`
     min-height: 95vh;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 25px;
 `;
 
 export const Home = () => {
@@ -104,10 +157,17 @@ export const Home = () => {
             <Wrapper>
                 <SideBarContainer>
                     Filter
-                    <SideBar>
-                        Organization type
-                    </SideBar>
-                    <SideBar>Categories
+                    <PostField>
+                        <SideLegend>Post type</SideLegend>
+                        <SideBarInfoBox>
+                          <Business /> <div>Requests</div>
+                        </SideBarInfoBox>
+                        <SideBarInfoBox>
+                           <Nonprofit /> <div>Items</div>
+                        </SideBarInfoBox>
+                    </PostField>
+                    <CategoryField>
+                        <SideLegend>Categories</SideLegend>
                         {categories.map((category, idx) => (
                             <SideBarInfoBox key={category.id}>
                                 <SidebarInfoImage key={category.id}>
@@ -125,8 +185,9 @@ export const Home = () => {
                                 <SideBarInfoText key={category.id}>{category.category}</SideBarInfoText>
                             </SideBarInfoBox>
                         ))}
-                    </SideBar>
-                    <SideBar>Nonprofits
+                    </CategoryField>
+                    <OrganizationField>
+                        <SideLegend>Nonprofits</SideLegend>
                     {threeNonprofits.map((nonprofit, idx) => (
                         <SideBarInfoBox key={nonprofit.id}>
                             <SidebarInfoImage key={nonprofit.id}>
@@ -135,8 +196,9 @@ export const Home = () => {
                             <SideBarInfoText key={nonprofit.id}>{nonprofit.name}</SideBarInfoText>
                         </SideBarInfoBox>
                         ))}
-                    </SideBar>
-                    <SideBar>Businesses
+                    </OrganizationField>
+                    <OrganizationField>
+                        <SideLegend>Businesses</SideLegend>
                     {threeBusinesses.map((business, idx) => (
                         <SideBarInfoBox key={business.id}>
                             <SidebarInfoImage key={business.id}>
@@ -145,17 +207,17 @@ export const Home = () => {
                             <SideBarInfoText key={business.id}>{business.name}</SideBarInfoText>
                         </SideBarInfoBox>
                     ))}
-                    </SideBar>
+                    </OrganizationField>
                 </SideBarContainer>
-                <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
+                <div style={{display: 'flex', flexDirection: 'column', width: '800px', height: 'auto'}}> Posts
                     <FeedContainer>
                         {posts && Object.entries(posts).reverse().map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
                     </FeedContainer>
                 </div>
                 <SideBarContainer>
-                    Events
-                <SideBar>
-                </SideBar>
+                    <SideLegend>Events</SideLegend>
+                <EventField>
+                </EventField>
                 </SideBarContainer>
         </Wrapper>
         )

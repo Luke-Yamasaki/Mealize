@@ -10,6 +10,8 @@ import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 // import styles from './Home.module.css';
 import styled from 'styled-components';
+import styles from './Home.module.css';
+import gmapImage from '../../Assets/Images/Foodbanks-Denver.png'
 
 
 const Wrapper = styled.div`
@@ -28,14 +30,14 @@ const SideBarContainer = styled.div`
     flex-direction: column;
     align-items: left;
     justify-content: flex-start;
-    width: 200px;
+    width: 300px;
     height: 1000px;
     gap: 15px;
 `;
 
 const SideBar = styled.aside`
     width: 200px;
-    height: 300px;
+    height: 400px;
     border-radius: 5px;
     border: 1px solid #B2B2B2;
     background-color: #E8E8E8;
@@ -45,14 +47,16 @@ const SideBar = styled.aside`
     justify-content: space-around;
     font-size: 16px;
     color: black;
+    padding-left: 5px;
 `;
 
 const SideBarInfoBox = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 10px;
     align-items: center;
-    width: 175px;
+    width: 200px;
     height: 50px;
 `;
 
@@ -86,9 +90,9 @@ export const Home = () => {
     // const [nonprofits, setNonprofits] = useState(Object.values(organizationsObj.nonprofits));
     const categories = Object.values(categoriesObj);
     const businesses = Object.values(organizationsObj.businesses);
-    const fiveBusinesses = businesses.slice(0, 6);
+    const threeBusinesses = businesses.slice(0, 3);
     const nonprofits = Object.values(organizationsObj.nonprofits);
-    const fiveNonprofits = nonprofits.slice(0, 6);
+    const threeNonprofits = nonprofits.slice(0, 3);
 
     const posts = Object.values(postsObj);
 
@@ -100,6 +104,9 @@ export const Home = () => {
             <Wrapper>
                 <SideBarContainer>
                     Filter
+                    <SideBar>
+                        Organization type
+                    </SideBar>
                     <SideBar>Categories
                         {categories.map((category, idx) => (
                             <SideBarInfoBox key={category.id}>
@@ -115,27 +122,27 @@ export const Home = () => {
                                     : <ProteinIcon dimension={'small'}/>
                                     }
                                 </SidebarInfoImage>
-                                <SideBarInfoText key={category.id}>[{category.category}]</SideBarInfoText>
+                                <SideBarInfoText key={category.id}>{category.category}</SideBarInfoText>
                             </SideBarInfoBox>
                         ))}
                     </SideBar>
                     <SideBar>Nonprofits
-                    {fiveNonprofits.map((nonprofit, idx) => (
+                    {threeNonprofits.map((nonprofit, idx) => (
                         <SideBarInfoBox key={nonprofit.id}>
                             <SidebarInfoImage key={nonprofit.id}>
                                 <img key={nonprofit.id} src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
                             </SidebarInfoImage>
-                            <SideBarInfoText key={nonprofit.id}>[{nonprofit.name}]</SideBarInfoText>
+                            <SideBarInfoText key={nonprofit.id}>{nonprofit.name}</SideBarInfoText>
                         </SideBarInfoBox>
                         ))}
                     </SideBar>
                     <SideBar>Businesses
-                    {fiveBusinesses.map((business, idx) => (
+                    {threeBusinesses.map((business, idx) => (
                         <SideBarInfoBox key={business.id}>
                             <SidebarInfoImage key={business.id}>
                                 <img key={business.id} src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
                             </SidebarInfoImage>
-                            <SideBarInfoText key={business.id}>[{business.name}]</SideBarInfoText>
+                            <SideBarInfoText key={business.id}>{business.name}</SideBarInfoText>
                         </SideBarInfoBox>
                     ))}
                     </SideBar>
@@ -146,8 +153,9 @@ export const Home = () => {
                     </FeedContainer>
                 </div>
                 <SideBarContainer>
-                    Map
-                <SideBar />
+                    Events
+                <SideBar>
+                </SideBar>
                 </SideBarContainer>
         </Wrapper>
         )

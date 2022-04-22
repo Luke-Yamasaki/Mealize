@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 from app.models import db, Delivery
 from app.forms.delivery_form import DeliveryForm
 from app.utils import errors_to_list
+from time import strftime
 
 delivery_routes = Blueprint('deliveries', __name__)
 
@@ -26,15 +27,35 @@ def new_delivery():
         return {'error': 'You are not authorized for this action.'}
     form = DeliveryForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
+    year = strftime("%Y")
+    month = strftime("%m")
+    day = strftime("%d")
+    # tuples are immutable
+    times = ('9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13', '13.5', '14', '14.5', '15', '15.5', '16', '16.5')
+
+    # For some reason, form.data['date'] does not work.
+    form_date = request.json['date']
+    form_year = form_date[0:4]
+    form_month = form_date[5:7]
+    form_day = form_date[8:10]
+
+    # Check date and time for past
+    if form_year < year:
+        return {'error': 'Invalid year.', 'message': 'Please do not try to break my app. I worked countless hours.'}
+    elif form_year == year and form_month < month:
+        return {'error': 'Invalid month.', 'message': 'Please do not try to break my app. I worked countless hours.'}
+    elif form_year == year and form_month == month and form_day < day:
+        return {'error': 'Invalid day.', 'message': 'Please do not try to break my app. I worked countless hours.'}
+    elif not form.data['time'] in times:
+        return {'error': 'Invalid timeslot.', 'message': 'Please do not try to break my app. I worked countless hours.'}
+    elif form.data['time'] in times and form.validate_on_submit():
         delivery = Delivery(
-            isDropoff = request.json['isDropoff'],
+            isDropoff = False,
             postId = request.json['postId'],
             userId = current_user.id,
             organizationId = request.json['organizationId'],
-            start = form.data['start'],
-            end = form.data['end'],
-            cancellationReason = form.data['cancellationReason'],
+            date = request.json['date'],
+            time = form.data['time'],
             completed = 0 # 0=accepted 1=in progress 2=picked up/droped off
         )
         db.session.add(delivery)

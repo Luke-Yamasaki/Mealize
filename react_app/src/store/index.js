@@ -4,7 +4,7 @@ import sessionReducer from './session';
 import usersReducer from './users';
 import organizationsReducer from './organizations';
 import postsReducer from './posts';
-import deliveriesReducer from './deliveries'
+import deliveriesReducer from './deliveries';
 import messagesReducer from './messages';
 import categoriesReducer from './categories';
 

@@ -45,17 +45,15 @@ async dispatch => {
 
 export const getAllDeliveries = () =>
 async dispatch => {
-  const res = await fetch('/api/deliveries/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  })
-  const newDelivery = await res.json()
-  dispatch(createdDelivery(newDelivery))
-  return newDelivery
+  const res = await fetch('/api/deliveries/')
+  if(res.ok) {
+    const deliveries = await res.json();
+    dispatch(gotAllDeliveries(deliveries));
+    return deliveries
+  }
 }
 
-export const updateDELIVERY = data =>
+export const updateDelivery = data =>
 async dispatch => {
   const res = await fetch(`/api/deliveries/${data.id}`, {
     method: 'PUT',
@@ -75,7 +73,6 @@ async dispatch => {
   })
 
   const deleted = await res.json();
-  // console.log(deleted)
   dispatch(deletedDelivery(deleted))
   return deleted
 }

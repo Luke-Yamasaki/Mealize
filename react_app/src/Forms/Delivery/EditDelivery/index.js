@@ -1,16 +1,12 @@
 import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { createDelivery } from '../../store/deliveries';
-import { getOneUser } from '../../store/users';
-import { useHistory } from 'react-router-dom';
+import { updateDelivery } from '../../../store/deliveries';
+import { getOneUser } from '../../../store/users';
 
-export const DeliveryForm = ({ post }) => {
+export const EditDeliveryForm = ({ delivery }) => {
     const sessionUser = useSelector(state => state.session.user);
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const [date, setDate] = useState("");
-	const [time, setTime] = useState("");
-    const [errors, setErrors] = useState([])
+    const [date, setDate] = useState(delivery.date);
+	const [time, setTime] = useState(delivery.time);
 
     const timeObj = new Date();
 	// convert local time zone offset from minutes to milliseconds
@@ -109,4 +105,4 @@ export const DeliveryForm = ({ post }) => {
             </div>
         </form>
     )
-}
+};

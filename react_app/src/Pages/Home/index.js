@@ -18,7 +18,7 @@ const Wrapper = styled.div`
     height: auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: top;
     background-color: #F5F5F5;
     padding-top: 50px;
@@ -75,7 +75,7 @@ const OrganizationField = styled.fieldset`
 `;
 
 const EventField = styled.fieldset`
-    width: 150px;
+    width: 200px;
     height: 400px;
     border-radius: 5px;
     border: 1px solid #B2B2B2;
@@ -85,6 +85,22 @@ const EventField = styled.fieldset`
     align-items: left;
     justify-content: space-around;
     font-size: 16px;
+    padding: 0px;
+    margin: 0px;
+`;
+
+const EventLegend = styled.legend`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 20px;
+    font-size: 14px;
+    background-color: lime;
+    border: 1px solid green;
+    border-radius: 3px;
+    color: black;
+    margin-left: 5px;
 `;
 
 const SideLegend = styled.legend`
@@ -99,8 +115,7 @@ const SideLegend = styled.legend`
     border-radius: 3px;
     color: black;
     margin-left: 5px;
-
-`
+`;
 
 const SideBarInfoBox = styled.div`
     display: flex;
@@ -123,7 +138,7 @@ const SidebarInfoImage = styled.div`
 `;
 
 const FeedContainer = styled.div`
-    width: 800px;
+    width: 870px;
     height: auto;
     min-height: 95vh;
     display: flex;
@@ -209,16 +224,17 @@ export const Home = () => {
                     ))}
                     </OrganizationField>
                 </SideBarContainer>
-                <div style={{display: 'flex', flexDirection: 'column', width: '800px', height: 'auto'}}> Posts
+                <div style={{display: 'flex', flexDirection: 'column', width: '895px', height: 'auto', gap: '25px'}}> Posts
                     <FeedContainer>
                         {posts && Object.entries(posts).reverse().map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
                     </FeedContainer>
                 </div>
-                <SideBarContainer>
-                    <SideLegend>Events</SideLegend>
+                {/* <SideBarContainer> */}
+                    {/* <SideLegend>Events</SideLegend> */}
                 <EventField>
+                    <EventLegend>Events</EventLegend>
                 </EventField>
-                </SideBarContainer>
+                {/* </SideBarContainer> */}
         </Wrapper>
         )
     // } else {

@@ -71,15 +71,15 @@ const TitleTextArea = styled.textarea`
     hyphens: auto;
 `;
 
-const TextInput = styled.input`
-    border: none;
-    border-radius: 3px;
-    width: 290px;
-    height: 20px;
-    background-color: white;
-    color: black;
-    hyphens: auto;
-`;
+// const TextInput = styled.input`
+//     border: none;
+//     border-radius: 3px;
+//     width: 290px;
+//     height: 20px;
+//     background-color: white;
+//     color: black;
+//     hyphens: auto;
+// `;
 
 const FormContent = styled.div`
     width: 475px;
@@ -113,7 +113,8 @@ const ItemForm = () => {
     const history = useHistory();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [quantity, setQuantity] = useState('');
+    const [number, setNumber] = useState('');
+    const [unit, setUnit] = useState('lbs.');
     const [categoryId, setCategoryId] = useState('');
     const [image, setImage] = useState(null);
     const [expDate, setExpDate] = useState('');
@@ -133,13 +134,15 @@ const ItemForm = () => {
         const formData = new FormData();
         formData.append("image", image);
 
-        setTitle(title.slice(0, 1).toUpperCase().concat(title.slice(1, title.length)))
+        const titleCap = title.slice(0, 1).toUpperCase().concat(title.slice(1, title.length));
+        const descriptionCap = description.slice(0, 1).toUpperCase().concat(description.slice(1, description.length));
+        const quantity = number.toString().concat(unit);
 
         const itemData = {
             organizationId,
             userId,
-            title,
-            description,
+            title: titleCap,
+            description: descriptionCap,
             quantity,
             categoryId,
             expDate,
@@ -157,18 +160,18 @@ const ItemForm = () => {
                 const data = await response.json();
                 const imageUrl = await data.imageUrl
 
-                const itemData = {
+                const postData = {
                     organizationId,
                     userId,
-                    title,
-                    description,
+                    title: titleCap,
+                    description: descriptionCap,
                     quantity,
                     categoryId,
                     imageUrl,
                     expDate,
                 };
 
-                const newPost = await dispatch(postItem(itemData))
+                const newPost = await dispatch(postItem(postData))
 
                 if(!newPost.error || !newPost.errors) {
                     setImageUploading(false);
@@ -196,9 +199,9 @@ const ItemForm = () => {
         !description ?
         alert("Please enter a description in 120 characters or less.")
         :
-        !sessionUser.isNonprofit && !quantity ?
+        !sessionUser.isNonprofit && !number ?
         alert("Please select a quantity for your post.")
-        : !quantity ?
+        : !number ?
         alert('Please select a desired quantity for your request.')
         :
         !categoryId ?
@@ -222,12 +225,23 @@ const ItemForm = () => {
         setClassName(categories[e.target.value].category.toLowerCase())
     };
 
+    const handleNumber = (e) => {
+        e.preventDefault();
+        if(e.target.value.length > 3 && e.target.value > 1000) {
+            setNumber('');
+            e.target.value = '';
+            alert('Please select a number between 1 and 1,000.')
+        };
+        setNumber(e.target.value)
+    }
+
     const handleReset = (e) => {
         e.preventDefault();
         setImage(null);
         setTitle('');
         setDescription('');
-        setQuantity('');
+        setNumber('');
+        setUnit('lbs.');
         setExpDate('');
         setCategoryId('');
         setClassName('dairy')
@@ -293,7 +307,7 @@ const ItemForm = () => {
                     </preview.DescriptionBox>
                     <preview.SubInfoContainer>
                         <preview.SubInfoBox>Quantity:
-                            <preview.SubInfoText>{quantity}</preview.SubInfoText>
+                            <preview.SubInfoText>{`${number} ${unit}`}</preview.SubInfoText>
                         </preview.SubInfoBox>
                         <preview.SubInfoBox>Expires:
                             <preview.SubInfoText>{`${expDate.toString().slice(5,7)}/${expDate.toString().slice(8, 10)}/${expDate.toString().slice(0, 4)}`}</preview.SubInfoText>
@@ -332,14 +346,31 @@ const ItemForm = () => {
                             <Textarea placeholder='Description' type='text' minLength='3' maxLength='100' value={description} onChange={e => setDescription(e.target.value)} />
                         </TextareaFieldset>
                         <Fieldset>
-                        <legend className={quantity? styles.completed : styles.incomplete}>Item quantity</legend>
-                                <TextInput placeholder='Quantity' type='text' value={quantity} onChange={e => setQuantity(e.target.value)} />
+                        <legend className={number && unit ? styles.completed : styles.incomplete}>Item quantity</legend>
+                            <input style={{width: '175px', height: '20px', border: 'none', borderRadius: '5px', paddingLeft: '5px'}} id='amount' placeholder='Enter a number: (1-1000)' type='number' value={number} onChange={handleNumber} />
+                            <select value={unit} onChange={(e) => setUnit(e.target.value)}>
+                                <optgroup label='General'>
+                                    <option>count</option>
+                                </optgroup>
+                                <optgroup label="Metric">
+                                    <option>g</option>
+                                    <option>kg</option>
+                                    <option>mL</option>
+                                    <option>L</option>
+                                </optgroup>
+                                <optgroup label="Imperial">
+                                    <option>oz</option>
+                                    <option>cup</option>
+                                    <option>pint</option>
+                                    <option>lbs.</option>
+                                    <option>qt</option>
+                                </optgroup>
+                            </select>
                         </Fieldset>
                         <Fieldset>
                             <legend className={categoryId ? styles.completed : styles.incomplete}>Food category</legend>
                                 <select style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} id='food-group' onChange={handleCategory}>
                                     <optgroup label="Food category">
-                                        <option value=''>--- Select an option ---</option>
                                         <option value={1}>Dairy</option>
                                         <option value={2}>Vegetables</option>
                                         <option value={3}>Fruits</option>
@@ -355,7 +386,7 @@ const ItemForm = () => {
                     </FormContent>
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
                         <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
-                        <div className={styles.submit} onClick={!sessionUser.isNonprofit && !image || !title || title.length > 11 && !title.includes(' ') || !description || !quantity || !categoryId || !expDate ? handleEmpty : handleSubmit}>Submit</div>
+                        <div className={styles.submit} onClick={!sessionUser.isNonprofit && !image || !title || title.length > 11 && !title.includes(' ') || !description || !number || !unit || !categoryId || !expDate ? handleEmpty : handleSubmit}>Submit</div>
                     </div>
                 </form>
             </FormSection>

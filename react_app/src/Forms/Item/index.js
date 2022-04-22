@@ -13,7 +13,82 @@ import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 
 import styles from './Item.module.css';
+import styled from 'styled-components';
 import * as preview from '../../Components/ItemCard';
+
+export const PreviewSection = styled.section`
+    display: flex;
+    width: 500px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const FormSection = styled.section`
+    display: flex;
+    width: 500px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #E8E8E8;
+`;
+
+export const Fieldset = styled.fieldset`
+    background-color: #E8E8E8;
+    border-radius: 5px;
+    border: none;
+    width: 300px;
+    height: 40px;
+`;
+
+export const TextareaFieldset = styled.fieldset`
+    background-color: #E8E8E8;
+    border-radius: 5px;
+    border: none;
+    width: 300px;
+    height: 100px;
+`;
+
+export const Legend = styled.legend`
+    background-color: #9AF2C0;
+    border: 1px solid rgba(40, 166, 144, 0.5);
+    border-radius: 2px;
+    color: black;
+    width: 125px;
+    height: 15px;
+`;
+
+export const Textarea = styled.textarea`
+    resize: none;
+    width: 290px;
+    height: 80px;
+    border: none;
+    border-radius: 5px;
+`;
+
+export const TextInput = styled.input`
+    border: none;
+    border-radius: 3px;
+    width: 290px;
+    height: 20px;
+    background-color: white;
+    color: black;
+`;
+
+export const FormContent = styled.div`
+    width: 475px;
+    height: 475px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+
 
 const ItemForm = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -101,8 +176,8 @@ const ItemForm = () => {
     }
 
     return (
-        <div style={{overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '900px', height: '600px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
-            <section style={{width: '500px', height: '600px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
+            <PreviewSection>
                 <div className={[styles.card, styles[`${className}`]].join(' ')}>
                 <img src={ image ? URL.createObjectURL(image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} className={styles.image} alt='Item post'/>
                 <preview.UserTitle>
@@ -145,53 +220,55 @@ const ItemForm = () => {
                 </preview.IdBox>
             </div>
             {(imageUploading)&& <strong><p>Uploading image...</p></strong>}
-            </section>
-            <section style={{backgroundColor: 'white', width: '400px', height: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                <form style={{borderRadius: '5px', backgroundColor: '#E1D2B9', width: '375px', height: '575px', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
-                    {errors}
-                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '400px', height: '200px', gap: '25px'}}>
-                        <div style={{marginTop: '-65px', marginLeft: '25px'}}>
-                            <Nonprofit color={'gradient'} />
+            </PreviewSection>
+            <FormSection>
+                <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '675px', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '25px', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
+                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '400px', height: '40px', gap: '5px'}}>
+                        <div style={{height: '100px', width: '35px'}}>
+                            <Nonprofit color={'black'} />
                         </div>
                         <div className={styles.formTitle}>New item form</div>
                     </div>
-                    <fieldset>
-                        <legend />
-                            <input type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
-                    </fieldset>
-                    <fieldset>
-                        <legend />
-                            <input placeholder='Title' type='text' value={title} onChange={e => setTitle(e.target.value)} />
-                    </fieldset>
-                    <fieldset>
-                        <legend/ >
-                            <textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
-                    </fieldset>
-                    <fieldset>
-                        <legend />
-                            <input placeholder='Quantity' type='text' value={quantity} onChange={e => setQuantity(e.target.value)} />
-                    </fieldset>
-                    <fieldset>
-                        <legend />
-                            <label htmlFor='food-group'>Choose a food category</label>
-                            <select id='food-group' onChange={handleCategory}>
-                                <optgroup label="Food category">
-                                    <option value={1}>Dairy</option>
-                                    <option value={2}>Vegetables</option>
-                                    <option value={3}>Fruits</option>
-                                    <option value={4}>Grains</option>
-                                    <option value={5}>Protein</option>
-                                </optgroup>
-                            </select>
-                    </fieldset>
-                    <fieldset>
-                        <legend />
-                         <input type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />
-                    </fieldset>
-                    <div style={{textAlign: 'center', width: '65px', border: '1px solid black'}} role="button" onClick={handleSubmit}>Submit</div>
-                    <div style={{textAlign: 'center', width: '65px', border: '1px solid black'}} role="button" onClick={handleSubmit}>Reset</div>
+                    <FormContent>
+                        <Fieldset>
+                            <Legend>Image upload</Legend>
+                                <input type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
+                        </Fieldset>
+                        <Fieldset>
+                        <Legend>Post title</Legend>
+                                <TextInput placeholder='Title' type='text' value={title} onChange={e => setTitle(e.target.value)} />
+                        </Fieldset>
+                        <TextareaFieldset>
+                        <Legend>Item description</Legend>
+                                <Textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
+                        </TextareaFieldset>
+                        <Fieldset>
+                        <Legend>Item quantity</Legend>
+                                <TextInput placeholder='Quantity' type='text' value={quantity} onChange={e => setQuantity(e.target.value)} />
+                        </Fieldset>
+                        <Fieldset>
+                            <Legend>Food category</Legend>
+                                <select style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} id='food-group' onChange={handleCategory}>
+                                    <optgroup label="Food category">
+                                        <option value={1}>Dairy</option>
+                                        <option value={2}>Vegetables</option>
+                                        <option value={3}>Fruits</option>
+                                        <option value={4}>Grains</option>
+                                        <option value={5}>Protein</option>
+                                    </optgroup>
+                                </select>
+                        </Fieldset>
+                        <Fieldset>
+                            <Legend>Expiration date</Legend>
+                            <input style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />
+                        </Fieldset>
+                    </FormContent>
+                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}} role="button" onClick={handleSubmit}>
+                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '65px', height: '25px', borderRadius: '5px', color: 'black', backgroundColor: '#D49524', cursor: 'pointer', opacity: '50%'}} role="button" onClick={handleSubmit} onHover={(e) => e.target.attributes.opacity = '100%'} ><div>Reset</div></div>
+                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '65px', height: '25px', borderRadius: '5px', color: 'white', backgroundColor: '#46A843', cursor: 'pointer', }} role="button" onClick={handleSubmit}><div>Submit</div></div>
+                    </div>
                 </form>
-            </section>
+            </FormSection>
         </div>
     );
 };

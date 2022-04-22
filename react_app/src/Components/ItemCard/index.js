@@ -17,8 +17,8 @@ import { EditItemForm } from '../../Forms/Item/EditItem';
 import { DeliveryForm } from '../../Forms/Delivery';
 
 export const UserTitle = styled.div`
-    width: 230px;
-    height: 85px;
+    width: 260px;
+    height: 45px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -30,8 +30,9 @@ export const UserImage = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 65px;
+    height: 45px;
     width: 50px;
+    gap: 5px;
 `;
 
 export const NameText = styled.p`
@@ -51,29 +52,34 @@ export const TitleBox = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 50px;
+    height: 45px;
     width: 120px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 `;
 
-export const Title = styled.p`
-    margin: 0px;
-    padding: 0px;
+export const Title = styled.div`
     font-family: motiva-sans, sans-serif;
     font-weight: 900;
     font-style: normal;
     font-size: 16px;
-    height: 85px;
+    height: 45px;
     width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
 `;
 
 export const CategoryBox = styled.div`
+    margin: 0px;
+    padding: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: -25px;
-    height: 85px;
+    height: 45px;
     width: 50px;
 `;
 
@@ -82,15 +88,14 @@ export const InfoBox = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 237px;
-    height: 90px;
-    margin-top: -30px;
+    width: 260px;
+    height: 70px;
     color: black;
 `;
 
 export const DescriptionBox = styled.div`
     height: 70px;
-    width: 150px;
+    width: 166px;
     background-color: white;
     border-radius: 5px;
     display: flex;
@@ -98,7 +103,7 @@ export const DescriptionBox = styled.div`
     align-items: space-around;
     justify-content: left;
     color: black;
-    margin-left: 4px;
+    margin-left: 5px;
 `;
 
 export const DescriptionLabel = styled.div`
@@ -118,16 +123,17 @@ export const DescriptionLabel = styled.div`
     padding-left: 5px;
 `;
 
-export const DescriptionText = styled.p`
-    margin: 0px;
-    padding: 0px;
+export const DescriptionText = styled.div`
     font-family: motiva-sans, sans-serif;
     font-weight: 700;
     font-style: normal;
     font-size: 10px;
     height: 58px;
-    width: 140px;
+    width: 160px;
     color: black;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 `;
 
 export const SubInfoContainer = styled.div`
@@ -137,6 +143,7 @@ export const SubInfoContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    margin-right: 5px;
 `;
 
 export const SubInfoBox = styled.div`
@@ -151,7 +158,7 @@ export const SubInfoBox = styled.div`
     font-size: 12px;
     font-weight: 700;
     text-align: left;
-    padding-left: 5px;
+    padding-left: 6px;
     gap: 2px;
 `;
 
@@ -164,13 +171,14 @@ export const SubInfoText = styled.p`
 `;
 
 export const IdBox = styled.div`
-    width: 230px;
+    width: 260px;
     height: 11px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     padding-left: 5px;
+    margin-bottom: 1px;
 `;
 
 export const MealizeText = styled.div`
@@ -184,6 +192,7 @@ export const MealizeText = styled.div`
     font-size: 10px;
     height: 10px;
     width: 120px;
+    gap: 5px;
 `;
 
 export const IdText = styled.div`
@@ -195,6 +204,7 @@ export const IdText = styled.div`
     font-size: 10px;
     height: 10px;
     width: 120px;
+    margin-left: -7px;
 `;
 
 export const ActionButtons = styled.div`

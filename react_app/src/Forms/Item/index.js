@@ -53,15 +53,6 @@ export const TextareaFieldset = styled.fieldset`
     height: 100px;
 `;
 
-export const Legend = styled.legend`
-    background-color: #9AF2C0;
-    border: 1px solid rgba(40, 166, 144, 0.5);
-    border-radius: 2px;
-    color: black;
-    width: 125px;
-    height: 15px;
-`;
-
 export const Textarea = styled.textarea`
     resize: none;
     width: 290px;
@@ -98,14 +89,12 @@ const ItemForm = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [quantity, setQuantity] = useState('');
-    const [categoryId, setCategoryId] = useState(1);
+    const [categoryId, setCategoryId] = useState('');
     const [image, setImage] = useState(null);
-    const [expDate, setExpDate] = useState(new Date());
+    const [expDate, setExpDate] = useState('');
     const [imageUploading, setImageUploading] = useState(false);
     const [className, setClassName] = useState('dairy')
     const [errors, setErrors] = useState([]);
-
-    let SelectedIcon = `${categories[categoryId].category}Icon`;
 
     const organizationId = sessionUser.organizationId;
     const userId = sessionUser.id;
@@ -173,7 +162,18 @@ const ItemForm = () => {
     const handleCategory = async (e) => {
         setCategoryId(e.target.value);
         setClassName(categories[e.target.value].category.toLowerCase())
-    }
+    };
+
+    const handleReset = (e) => {
+        e.preventDefault();
+        setImage(null);
+        setTitle('');
+        setDescription('');
+        setQuantity('');
+        setExpDate('');
+        setCategoryId('');
+        setClassName('dairy')
+    };
 
     return (
         <div style={{overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
@@ -222,34 +222,36 @@ const ItemForm = () => {
             {(imageUploading)&& <strong><p>Uploading image...</p></strong>}
             </PreviewSection>
             <FormSection>
-                <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '675px', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '25px', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
+                <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '650px', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '25px', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '400px', height: '40px', gap: '5px'}}>
                         <div style={{height: '100px', width: '35px'}}>
                             <Nonprofit color={'black'} />
                         </div>
                         <div className={styles.formTitle}>New item form</div>
                     </div>
+                    <div style={{color: '#90311D', marginLeft: '-130px', marginBottom: '20px', marginTop: '-10px'}}> * All fields are required</div>
                     <FormContent>
                         <Fieldset>
-                            <Legend>Image upload</Legend>
-                                <input type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
+                            <legend className={image ? styles.completed : styles.incomplete }>Image upload</legend>
+                                <input style={{borderRadius: '3px', color: '#005C4D'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                         </Fieldset>
                         <Fieldset>
-                        <Legend>Post title</Legend>
+                        <legend className={title ? styles.completed : styles.incomplete}>Post title</legend>
                                 <TextInput placeholder='Title' type='text' value={title} onChange={e => setTitle(e.target.value)} />
                         </Fieldset>
                         <TextareaFieldset>
-                        <Legend>Item description</Legend>
+                        <legend className={description? styles.completed : styles.incomplete}>Item description</legend>
                                 <Textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
                         </TextareaFieldset>
                         <Fieldset>
-                        <Legend>Item quantity</Legend>
+                        <legend className={quantity? styles.completed : styles.incomplete}>Item quantity</legend>
                                 <TextInput placeholder='Quantity' type='text' value={quantity} onChange={e => setQuantity(e.target.value)} />
                         </Fieldset>
                         <Fieldset>
-                            <Legend>Food category</Legend>
+                            <legend className={categoryId ? styles.completed : styles.incomplete}>Food category</legend>
                                 <select style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} id='food-group' onChange={handleCategory}>
                                     <optgroup label="Food category">
+                                        <option value=''>--- Select an option ---</option>
                                         <option value={1}>Dairy</option>
                                         <option value={2}>Vegetables</option>
                                         <option value={3}>Fruits</option>
@@ -259,13 +261,13 @@ const ItemForm = () => {
                                 </select>
                         </Fieldset>
                         <Fieldset>
-                            <Legend>Expiration date</Legend>
+                            <legend className={expDate ? styles.completed : styles.incomplete}>Expiration date</legend>
                             <input style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />
                         </Fieldset>
                     </FormContent>
-                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}} role="button" onClick={handleSubmit}>
-                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '65px', height: '25px', borderRadius: '5px', color: 'black', backgroundColor: '#D49524', cursor: 'pointer', opacity: '50%'}} role="button" onClick={handleSubmit} onHover={(e) => e.target.attributes.opacity = '100%'} ><div>Reset</div></div>
-                        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '65px', height: '25px', borderRadius: '5px', color: 'white', backgroundColor: '#46A843', cursor: 'pointer', }} role="button" onClick={handleSubmit}><div>Submit</div></div>
+                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
+                        <div className={styles.reset} role="button" onClick={handleReset} ><div>Reset</div></div>
+                        <button className={styles.submit} disabled={!image || !title || !description || !quantity || !categoryId || !expDate ? true : false} >Submit</button>
                     </div>
                 </form>
             </FormSection>

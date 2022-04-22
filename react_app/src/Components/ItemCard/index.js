@@ -227,7 +227,7 @@ export const ItemCard = ({ post, sessionUser }) => {
     };
 
     const showEditItemForm = () => {
-            dispatch(setCurrentModal(EditItemForm(post={post})));
+            dispatch(setCurrentModal(() => (<EditItemForm post={post} />)));
             dispatch(showModal());
     };
 

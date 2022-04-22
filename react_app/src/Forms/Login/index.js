@@ -24,11 +24,12 @@ const FormLegend = styled.legend`
     height: 80px;
     background-image: url(${banner});
     background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
     border-radius: 5px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     margin: 0px;
-    padding: 0px;
+    padding-top: 0px;
 `;
 
 const Form = styled.form`
@@ -70,7 +71,7 @@ const Legend = styled.legend`
 `;
 
 const Input = styled.input`
-    width: 90%;
+    width: 95%;
     height: 30px;
     font-size: 16px;
     border: none;
@@ -91,10 +92,12 @@ const Error = styled.p`
 const ButtonBox = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
+    gap: 10px;
     align-items: center;
-    width: 170px;
+    width: 400px;
     height: 30px;
+    margin-right: 20px;
 `;
 
 const DemoBox = styled.div`
@@ -108,7 +111,7 @@ const DemoBox = styled.div`
 
 const VolunteerDemoButton = styled.div`
     width: 115px;
-    height: 40px;
+    height: 35px;
     background-color: #9AF2C0;
     display: flex;
     align-items: center;
@@ -118,11 +121,12 @@ const VolunteerDemoButton = styled.div`
     font-weight: 800;
     font-family: motiva-sans, sans-serif;
     text-align: center;
+    border-radius: 5px;
 `;
 
 const NonprofitDemoButton = styled.div`
     width: 115px;
-    height: 40px;
+    height: 35px;
     background-color: #04B1D9;
     display: flex;
     align-items: center;
@@ -132,11 +136,12 @@ const NonprofitDemoButton = styled.div`
     font-weight: 800;
     font-family: motiva-sans, sans-serif;
     text-align: center;
+    border-radius: 5px;
 `;
 
 const BusinessDemoButton = styled.div`
     width: 115px;
-    height: 40px;
+    height: 35px;
     background-color: #024A59;
     display: flex;
     align-items: center;
@@ -146,6 +151,7 @@ const BusinessDemoButton = styled.div`
     font-weight: 500;
     font-family: motiva-sans, sans-serif;
     text-align: center;
+    border-radius: 5px;
 `;
 
 
@@ -237,7 +243,7 @@ export const LoginForm = () => {
                     <div role='button' className={styles.submit} onClick={handleSubmit}>Submit</div>
                 </ButtonBox>
                 <DemoBox>
-                  <VolunteerDemoButton onClick={nonprofitDemo}>Volunteer demo</VolunteerDemoButton>
+                    <VolunteerDemoButton onClick={nonprofitDemo}>Volunteer demo</VolunteerDemoButton>
                     <NonprofitDemoButton onClick={businessDemo}>Nonprofit demo</NonprofitDemoButton>
                     <BusinessDemoButton onClick={businessDemo}>Business demo</BusinessDemoButton>
                 </DemoBox>

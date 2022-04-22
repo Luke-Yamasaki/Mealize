@@ -177,6 +177,7 @@ export const Home = () => {
     const threeNonprofits = nonprofits.slice(0, 3);
 
     const posts = Object.values(postsObj);
+    console.log(posts)
 
     useEffect(() => {
     },[posts])
@@ -198,8 +199,8 @@ export const Home = () => {
                     <CategoryField>
                         <SideLegend>Categories</SideLegend>
                         {categories.map((category, idx) => (
-                            <SideBarInfoBox key={category.id}>
-                                <SidebarInfoImage key={category.id}>
+                            <SideBarInfoBox key={idx}>
+                                <SidebarInfoImage >
                                     {category.category === 'Dairy' ?
                                     <DairyIcon dimension={'small'}/>
                                     : category.category === 'Vegetables' ?
@@ -211,36 +212,36 @@ export const Home = () => {
                                     : <ProteinIcon dimension={'small'}/>
                                     }
                                 </SidebarInfoImage>
-                                <SideBarInfoText key={category.id}>{category.category}</SideBarInfoText>
+                                <SideBarInfoText>{category.category}</SideBarInfoText>
                             </SideBarInfoBox>
                         ))}
                     </CategoryField>
                     <OrganizationField>
                         <OrganizationLegend>Nonprofits</OrganizationLegend>
                     {threeNonprofits.map((nonprofit, idx) => (
-                        <SideBarInfoBox key={nonprofit.id}>
-                            <SidebarInfoImage key={nonprofit.id}>
-                                <img key={nonprofit.id} src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
+                        <SideBarInfoBox key={idx}>
+                            <SidebarInfoImage >
+                                <img src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
                             </SidebarInfoImage>
-                            <SideBarInfoText key={nonprofit.id}>{nonprofit.name}</SideBarInfoText>
+                            <SideBarInfoText >{nonprofit.name}</SideBarInfoText>
                         </SideBarInfoBox>
                         ))}
                     </OrganizationField>
                     <OrganizationField>
                         <OrganizationLegend>Businesses</OrganizationLegend>
                     {threeBusinesses.map((business, idx) => (
-                        <SideBarInfoBox key={business.id}>
-                            <SidebarInfoImage key={business.id}>
-                                <img key={business.id} src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
+                        <SideBarInfoBox key={idx}>
+                            <SidebarInfoImage >
+                                <img src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
                             </SidebarInfoImage>
-                            <SideBarInfoText key={business.id}>{business.name}</SideBarInfoText>
+                            <SideBarInfoText>{business.name}</SideBarInfoText>
                         </SideBarInfoBox>
                     ))}
                     </OrganizationField>
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '895px', height: 'auto', gap: '25px'}}> Posts
                     <FeedContainer>
-                        {posts && Object.entries(posts).reverse().map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
+                        {posts && Object.values(posts).reverse().map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser} />)}
                     </FeedContainer>
                 </div>
                 {/* <SideBarContainer> */}

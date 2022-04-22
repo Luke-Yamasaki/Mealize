@@ -60,53 +60,57 @@ export const DeliveryForm = ({ post }) => {
     }
 
     return (
-        <form style={{width: '400px', height: '500px'}} onSubmit={handleSubmit}>
-            Delivery form
-            <div>
-                <fieldset>
-                    <legend>Select a date</legend>
-                    <input
-                        type="date"
-                        name="date"
-                        min={today}
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                    />
-                </fieldset>
-                <fieldset>
-                    <legend>Select a time</legend>
-                    <select value={time} onChange={(e) => setTime(e.target.value)}>
-					<option value="">--Select a time--</option>
-					<optgroup label="Morning">
-						<option value={"9"}> 9:00 AM </option>
-						<option value={"9.5"}> 9:30 AM</option>
-						<option value={"10"}>10:00 AM</option>
-						<option value={"10.5"}>10:30 AM</option>
-					</optgroup>
-					<optgroup label="Noon">
-						<option value={"11"}>11:00 AM</option>
-						<option value={"11.5"}>11:30 AM</option>
-						<option value={"12"}>12:00 PM</option>
-						<option value={"12.5"}>12:30 PM</option>
-                    </optgroup>
-					<optgroup label="Early afternoon">
-                        <option value={"13"}>1:00 PM</option>
-                        <option value={"13.5"}>1:30 PM</option>
-                        <option value={"14"}>2:00 PM</option>
-                    </optgroup>
-                    <optgroup label="Late afternoon">
-                        <option value={"14.5"}>2:30 PM</option>
-                        <option value={"15"}>3:00 PM</option>
-						<option value={"15.5"}>3:30 PM</option>
-						<option value={"16"}>4:00 PM</option>
-                    </optgroup>
-				</select>
-                </fieldset>
+        <div style={{width: '800px', height: '600px', diplay: 'flex', flexDirection: 'row'}}>
+             <form style={{width: '400px', height: '600px'}} onSubmit={handleSubmit}>
+                Delivery form
                 <div>
-                    <div>Cancel</div>
-                    <button onSubmit={handleSubmit}>Submit</button>
+                    <fieldset>
+                        <legend>Select a date</legend>
+                        <input
+                            type="date"
+                            name="date"
+                            min={today}
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                        />
+                    </fieldset>
+                    <fieldset>
+                        <legend>Select a time</legend>
+                        <select value={time} onChange={(e) => setTime(e.target.value)}>
+                        <option value="">--Select a time--</option>
+                        <optgroup label="Morning">
+                            <option value={"9"}> 9:00 AM </option>
+                            <option value={"9.5"}> 9:30 AM</option>
+                            <option value={"10"}>10:00 AM</option>
+                            <option value={"10.5"}>10:30 AM</option>
+                        </optgroup>
+                        <optgroup label="Noon">
+                            <option value={"11"}>11:00 AM</option>
+                            <option value={"11.5"}>11:30 AM</option>
+                            <option value={"12"}>12:00 PM</option>
+                            <option value={"12.5"}>12:30 PM</option>
+                        </optgroup>
+                        <optgroup label="Early afternoon">
+                            <option value={"13"}>1:00 PM</option>
+                            <option value={"13.5"}>1:30 PM</option>
+                            <option value={"14"}>2:00 PM</option>
+                        </optgroup>
+                        <optgroup label="Late afternoon">
+                            <option value={"14.5"}>2:30 PM</option>
+                            <option value={"15"}>3:00 PM</option>
+                            <option value={"15.5"}>3:30 PM</option>
+                            <option value={"16"}>4:00 PM</option>
+                        </optgroup>
+                    </select>
+                    </fieldset>
+                    <div>
+                        <div>Cancel</div>
+                        <button onSubmit={handleSubmit}>Submit</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+
+        </div>
+
     )
 }

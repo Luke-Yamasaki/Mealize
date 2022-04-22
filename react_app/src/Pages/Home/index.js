@@ -28,15 +28,15 @@ const SideBarContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: left;
-    justify-content: flex-start;
+    justify-content: space-around;
     width: 200px;
-    height: 1000px;
+    height: 925px;
     gap: 15px;
 `;
 
 const PostField = styled.fieldset`
     width: 150px;
-    height: 100px;
+    height: 125px;
     border-radius: 5px;
     border: 1px solid #B2B2B2;
     background-color: #E8E8E8;
@@ -63,15 +63,16 @@ const CategoryField = styled.fieldset`
 
 const OrganizationField = styled.fieldset`
     width: 150px;
-    height: 200px;
+    height: 155px;
     border-radius: 5px;
     border: 1px solid #B2B2B2;
     background-color: #E8E8E8;
     display: flex;
     flex-direction: column;
-    align-items: left;
-    justify-content: space-around;
+    align-items: flex-end;
+    justify-content: flex-start;
     font-size: 16px;
+    padding-bottom: 25px;
 `;
 
 const EventField = styled.fieldset`
@@ -114,7 +115,20 @@ const SideLegend = styled.legend`
     border: 1px solid green;
     border-radius: 3px;
     color: black;
-    margin-left: 5px;
+`;
+
+const OrganizationLegend = styled.legend`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 20px;
+    font-size: 14px;
+    background-color: lime;
+    border: 1px solid green;
+    border-radius: 3px;
+    color: black;
+    margin-bottom: 5px
 `;
 
 const SideBarInfoBox = styled.div`
@@ -123,7 +137,7 @@ const SideBarInfoBox = styled.div`
     justify-content: flex-start;
     gap: 10px;
     align-items: center;
-    width: 100px;
+    width: 200px;
     height: 50px;
 `;
 
@@ -202,18 +216,18 @@ export const Home = () => {
                         ))}
                     </CategoryField>
                     <OrganizationField>
-                        <SideLegend>Nonprofits</SideLegend>
+                        <OrganizationLegend>Nonprofits</OrganizationLegend>
                     {threeNonprofits.map((nonprofit, idx) => (
                         <SideBarInfoBox key={nonprofit.id}>
                             <SidebarInfoImage key={nonprofit.id}>
-                                <img key={nonprofit.id} src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
+                                <img key={nonprofit.id} src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
                             </SidebarInfoImage>
                             <SideBarInfoText key={nonprofit.id}>{nonprofit.name}</SideBarInfoText>
                         </SideBarInfoBox>
                         ))}
                     </OrganizationField>
                     <OrganizationField>
-                        <SideLegend>Businesses</SideLegend>
+                        <OrganizationLegend>Businesses</OrganizationLegend>
                     {threeBusinesses.map((business, idx) => (
                         <SideBarInfoBox key={business.id}>
                             <SidebarInfoImage key={business.id}>

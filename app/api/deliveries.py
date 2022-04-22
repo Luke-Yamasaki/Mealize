@@ -28,13 +28,12 @@ def new_delivery():
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         delivery = Delivery(
-            isDropoff = request.json['isDropoff'],
+            isDropoff = False,
             postId = request.json['postId'],
             userId = current_user.id,
             organizationId = request.json['organizationId'],
-            start = form.data['start'],
-            end = form.data['end'],
-            cancellationReason = form.data['cancellationReason'],
+            date = form.data['date'],
+            time = form.data['time'],
             completed = 0 # 0=accepted 1=in progress 2=picked up/droped off
         )
         db.session.add(delivery)

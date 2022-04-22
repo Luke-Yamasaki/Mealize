@@ -60,8 +60,8 @@ export const DeliveryForm = ({ post }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            Reservation form
+        <form style={{width: '400px', height: '500px'}} onSubmit={handleSubmit}>
+            Delivery form
             <div>
                 <fieldset>
                     <legend>Select a date</legend>

@@ -8,8 +8,8 @@ class Delivery(db.Model):
     postId = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
     userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     organizationId = db.Column(db.Integer, db.ForeignKey('organizations.id'), nullable=False)
-    date = db.Column(db.DateTime, nullable=False)
-    time = db.Column(db.DateTime, nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    time = db.Column(db.String, nullable=False)
     completed = db.Column(db.Integer, nullable=False)
     cancellationReason = db.Column(db.String(255), nullable=True)
     createdAt = db.Column(db.DateTime, default=db.func.now())
@@ -26,8 +26,8 @@ class Delivery(db.Model):
             'postId': self.postId,
             'userId': self.userId,
             'location': self.location.to_dict(),
-            'start': self.start,
-            'end': self.end,
+            'date': self.date,
+            'time': self.time,
             'completed': self.completed,
             'cancellationReason': self.cancellationReason,
             'createdAt': self.createdAt,

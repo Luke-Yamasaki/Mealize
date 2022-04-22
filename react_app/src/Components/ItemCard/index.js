@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './ItemCard.module.css';
 import styled from 'styled-components';
 //actions
-import { getAllPosts, removePost, updateItem } from '../../store/posts';
+import { getAllPosts, removePost } from '../../store/posts';
 import { setCurrentModal, showModal } from '../../store/modal';
 
 import { XSLogo } from '../../Assets/Logo';
@@ -14,6 +14,7 @@ import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
 import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 import { EditItemForm } from '../../Forms/Item/EditItem';
+import { DeliveryForm } from '../../Forms/Delivery';
 
 export const UserTitle = styled.div`
     width: 230px;
@@ -240,7 +241,7 @@ export const ItemCard = ({ post, sessionUser }) => {
                     <ActionButtons role='button' onClick={handleDelete}>Delete</ActionButtons>
                     <ActionButtons role='button' onClick={showEditItemForm}>Edit</ActionButtons>
                 </div>
-                : <Triangle status={post.status} />
+                : <Triangle post={post} />
                 }
             </div>
             <UserTitle>

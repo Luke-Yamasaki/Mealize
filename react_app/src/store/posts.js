@@ -41,7 +41,6 @@ export const postItem = (formData) => async (dispatch) => {
         },
         body: JSON.stringify(formData)
     });
-    console.log(response)
     if(response.ok) {
         const newPost = await response.json();
         dispatch(createdPost(newPost));
@@ -120,10 +119,10 @@ export const updateItem = (formData) => async (dispatch) => {
         },
         body: JSON.stringify(formData)
     });
-
     if(response.ok) {
         const data = await response.json();
         dispatch(updatedPost(data));
+        return data
     } else if(response.status < 500) {
         const data = await response.json();
         if(data.errors){
@@ -168,6 +167,7 @@ export const removePost = (postId) => async (dispatch) => {
     if(response.ok) {
         const postId = await response.json();
         dispatch(removedPost(postId));
+        return postId;
     } else if(response.status < 500) {
         const data = await response.json();
         if(data.errors){
@@ -184,10 +184,7 @@ export default function postsReducer(state = initialState, action) {
     const newState = { ...state };
     switch(action.type) {
         case CREATED_POST:
-            console.log(newState)
-            console.log(action.payload)
             newState.posts[action.payload?.id] = action.payload;
-            console.log(newState)
             return newState
         case GOT_ALL_POSTS:
             newState['posts'] = action.payload;
@@ -199,9 +196,7 @@ export default function postsReducer(state = initialState, action) {
             newState[action.payload?.id] = action.payload;
 			return newState;
         case REMOVED_POST:
-            console.log(action.payload)
             delete newState.posts[action.payload];
-            console.log(newState) //double check what's getting returned from flask
 			return newState;
         default:
             return state;

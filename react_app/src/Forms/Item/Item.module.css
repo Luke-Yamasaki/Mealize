@@ -42,6 +42,7 @@
     height: 190px;
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     display: flex;
     flex-direction: row;
     align-items: top;
@@ -55,4 +56,14 @@
     height: 30px;
     object-fit: cover;
     border-radius: 100%;
+}
+
+.formTitle {
+    font-family: motiva-sans, sans-serif;
+    font-style: normal;
+    font-size: 36px;
+    font-weight: 900;
+    color: black;
+    width: 260px;
+    height: 100px;
 }

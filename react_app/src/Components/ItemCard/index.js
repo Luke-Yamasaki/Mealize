@@ -117,13 +117,15 @@ export const DescriptionLabel = styled.div`
     padding-left: 5px;
 `;
 
-export const DescriptionText = styled.div`
+export const DescriptionText = styled.p`
+    margin: 0px;
+    padding: 0px;
     font-family: motiva-sans, sans-serif;
     font-weight: 700;
     font-style: normal;
     font-size: 10px;
-    height: 40px;
-    width: 152px;
+    height: 58px;
+    width: 140px;
     color: black;
 `;
 

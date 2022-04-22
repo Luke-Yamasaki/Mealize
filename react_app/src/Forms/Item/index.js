@@ -5,6 +5,7 @@ import { postItem } from '../../store/posts';
 import { validateForm, uploadImage } from '../../Helpers/FormValidations/items';
 import { hideModal } from '../../store/modal';
 import { XSLogo } from '../../Assets/Logo';
+import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
 import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
 import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
@@ -87,8 +88,6 @@ const ItemForm = () => {
         }
     }
 
-    const word = 'DairyIcon';
-
     const updateImage = (e) => {
         const file = e.target.files[0];
         console.log(file.size)
@@ -112,7 +111,7 @@ const ItemForm = () => {
                         <preview.NameText>{ `${sessionUser.firstName}` }</preview.NameText>
                     </preview.UserImage>
                     <preview.TitleBox>
-                        <preview.Title>{ title }</preview.Title>
+                        <preview.Title>{ title ? title : 'Your post title' }</preview.Title>
                     </preview.TitleBox>
                     <preview.CategoryBox>
                         { categoryId === '2'
@@ -129,7 +128,7 @@ const ItemForm = () => {
                 </preview.UserTitle>
                 <preview.InfoBox>
                     <preview.DescriptionBox>
-                        <preview.DescriptionLabel>[Description] <preview.DescriptionText>{description}</preview.DescriptionText></preview.DescriptionLabel>
+                        <preview.DescriptionLabel>[Description] <preview.DescriptionText>{description ? description : 'Your description goes here...'}</preview.DescriptionText></preview.DescriptionLabel>
                     </preview.DescriptionBox>
                     <preview.SubInfoContainer>
                         <preview.SubInfoBox>Quantity:
@@ -145,32 +144,54 @@ const ItemForm = () => {
                     <preview.MealizeText>Mealize LLC <XSLogo /></preview.MealizeText>
                 </preview.IdBox>
             </div>
-            {(imageUploading)&& <p>Hello</p>}
+            {(imageUploading)&& <strong><p>Uploading image...</p></strong>}
             </section>
-            <form style={{backgroundColor: 'white', width: '400px', height: '600px', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
-                {errors}<p>Hello</p>
-                <input placeholder='Title' type='text' value={title} onChange={e => setTitle(e.target.value)} />
-                <textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
-                <input placeholder='Quantity' type='text' value={quantity} onChange={e => setQuantity(e.target.value)} />
-                <label htmlFor='food-group'>Choose a food category</label>
-                <select id='food-group' onChange={handleCategory}>
-                    <optgroup label="Food category">
-                        <option value=''>--- Select an option ---</option>
-                        <option value={1}>Dairy</option>
-                        <option value={2}>Vegetables</option>
-                        <option value={3}>Fruits</option>
-                        <option value={4}>Grains</option>
-                        <option value={5}>Protein</option>
-                    </optgroup>
-                </select>
-                <input
-                type="file"
-                accept="image/png, image/jpeg, image/jpg"
-                onChange={updateImage}
-                />
-                <input type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />
-                <div style={{border: '1px solid black'}} role="button" onClick={handleSubmit}>Submit</div>
-            </form>
+            <section style={{backgroundColor: 'white', width: '400px', height: '600px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <form style={{borderRadius: '5px', backgroundColor: '#E1D2B9', width: '375px', height: '575px', display: 'flex', flexDirection: 'column', justifyContent: 'space-around', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
+                    {errors}
+                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', width: '400px', height: '200px', gap: '25px'}}>
+                        <div style={{marginTop: '-65px', marginLeft: '25px'}}>
+                            <Nonprofit color={'gradient'} />
+                        </div>
+                        <div className={styles.formTitle}>New item form</div>
+                    </div>
+                    <fieldset>
+                        <legend />
+                            <input type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
+                    </fieldset>
+                    <fieldset>
+                        <legend />
+                            <input placeholder='Title' type='text' value={title} onChange={e => setTitle(e.target.value)} />
+                    </fieldset>
+                    <fieldset>
+                        <legend/ >
+                            <textarea placeholder='Description' type='text' value={description} onChange={e => setDescription(e.target.value)} />
+                    </fieldset>
+                    <fieldset>
+                        <legend />
+                            <input placeholder='Quantity' type='text' value={quantity} onChange={e => setQuantity(e.target.value)} />
+                    </fieldset>
+                    <fieldset>
+                        <legend />
+                            <label htmlFor='food-group'>Choose a food category</label>
+                            <select id='food-group' onChange={handleCategory}>
+                                <optgroup label="Food category">
+                                    <option value={1}>Dairy</option>
+                                    <option value={2}>Vegetables</option>
+                                    <option value={3}>Fruits</option>
+                                    <option value={4}>Grains</option>
+                                    <option value={5}>Protein</option>
+                                </optgroup>
+                            </select>
+                    </fieldset>
+                    <fieldset>
+                        <legend />
+                         <input type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />
+                    </fieldset>
+                    <div style={{textAlign: 'center', width: '65px', border: '1px solid black'}} role="button" onClick={handleSubmit}>Submit</div>
+                    <div style={{textAlign: 'center', width: '65px', border: '1px solid black'}} role="button" onClick={handleSubmit}>Reset</div>
+                </form>
+            </section>
         </div>
     );
 };

@@ -16,6 +16,22 @@ import styles from './Item.module.css';
 import styled from 'styled-components';
 import * as preview from '../../Components/ItemCard';
 
+const monthNames = {
+    '01': 'Jan',
+    '02': 'Feb',
+    '03': 'Mar',
+    '04': 'Apr',
+    '05': 'May',
+    '06': 'Jun',
+    '07': 'Jul',
+    '08': 'Aug',
+    '09': 'Sep',
+    '10': 'Oct',
+    '11': 'Nov',
+    '12': 'Dec',
+}
+
+
 const PreviewSection = styled.section`
     display: flex;
     width: 500px;
@@ -248,6 +264,12 @@ const ItemForm = () => {
         setExpDateErrors(expErrorsArr);
 
         if(!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length) {
+            setImageErrors([]);
+            setTitleErrors([]);
+            setDescriptionErrors([]);
+            setNumberErrors([]);
+            setCategoryIdErrors([]);
+            setExpDateErrors([]);
             handleSubmit(e)
         }
     }
@@ -261,14 +283,17 @@ const ItemForm = () => {
             setImageErrors(['The file size is too large. Images must be under 2MB.'])
         }
         else {
+            e.target.style.color = '#608F41'
+            setImageErrors([])
             setImage(file)
         }
     }
 
     const handleCategory = async (e) => {
-        if(e.target.value)
+        e.preventDefault()
         setCategoryId(e.target.value);
         setClassName(categories[e.target.value].category.toLowerCase())
+        setCategoryIdErrors([])
     };
 
     const handleNumber = (e) => {
@@ -282,12 +307,27 @@ const ItemForm = () => {
             e.target.value='';
             setNumberErrors(['Please select a number greater than zero.'])
         } else {
+            setNumberErrors([])
             setNumber(e.target.value)
         }
     }
 
+    const handleExp = (e) => {
+        e.preventDefault();
+        setExpDate(e.target.value);
+        setExpDateErrors([]);
+    }
+
+    const handleNull = (e) => {
+        e.preventDefault();
+        return null;
+    }
+
     const handleReset = (e) => {
         e.preventDefault();
+        const imageInput = document.getElementById('imageUpload');
+        imageInput.value = '';
+        imageInput.style.color = '#C2462A';
         setImageErrors([]);
         setTitleErrors([]);
         setCategoryIdErrors([]);
@@ -368,7 +408,7 @@ const ItemForm = () => {
                             <preview.SubInfoText>{`${number} ${unit}`}</preview.SubInfoText>
                         </preview.SubInfoBox>
                         <preview.SubInfoBox>Expires:
-                            <preview.SubInfoText>{`${expDate.toString().slice(5,7)}/${expDate.toString().slice(8, 10)}/${expDate.toString().slice(0, 4)}`}</preview.SubInfoText>
+                            <preview.SubInfoText>{expDate ? `${monthNames[expDate.toString().slice(5,7)]}/${expDate.toString().slice(8, 10)}/${expDate.toString().slice(0, 4)}` : 'mm/dd/yyyy'}</preview.SubInfoText>
                         </preview.SubInfoBox>
                     </preview.SubInfoContainer>
                 </preview.InfoBox>
@@ -377,7 +417,11 @@ const ItemForm = () => {
                     <preview.MealizeText>Mealize LLC <XSLogo /></preview.MealizeText>
                 </preview.IdBox>
             </div>
-            {(imageUploading)&& <strong><p style={{fontColor: 'white'}}>Uploading image...</p></strong>}
+            {imageUploading && (
+                <div style={{display: 'flex', alginItems: 'center', justifyContent: 'center',  width: '300px', height: '30px'}}>
+                    <p style={{fontFamily: 'motiva-sans, sans-serif', fontWeight: '900', color: 'white', fontSize: '24px', padding: 'none', margin: 'none'}}>Uploading image...</p>
+                </div>
+            )}
             </PreviewSection>
             <FormSection>
                 <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '675px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
@@ -394,8 +438,9 @@ const ItemForm = () => {
                         )}
                         <Fieldset>
                             <legend className={categoryId ? styles.completed : styles.incomplete}>Food category</legend>
-                                <select style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} id='food-group' onChange={handleCategory}>
+                                <select style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} id='food-group' value={categoryId} onChange={handleCategory}>
                                     <optgroup label="Food category">
+                            <option value='' disabled>Select a category</option>
                                         <option value={1}>Dairy</option>
                                         <option value={2}>Vegetables</option>
                                         <option value={3}>Fruits</option>
@@ -411,7 +456,7 @@ const ItemForm = () => {
                                 )}
                                 <Fieldset>
                                     <legend className={image ? styles.completed : styles.incomplete }>Image upload</legend>
-                                    <input style={{borderRadius: '3px', color: '#005C4D'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
+                                    <input id='imageUpload' style={{borderRadius: '3px', color: '#C2462A'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
                                 </Fieldset>
                             </>
                         )}
@@ -459,13 +504,12 @@ const ItemForm = () => {
                         )}
                         <Fieldset>
                             <legend className={expDate ? styles.completed : styles.incomplete}>Expiration date</legend>
-                            <input style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />
+                            <input style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} type='date' min={new Date().toISOString().split('T')[0]} value={expDate} onChange={handleExp} />
                         </Fieldset>
                     </FormContent>
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
                         <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
-                        <div className={styles.submit} onClick={handleErrors}>Submit</div>
-                        {/* <div className={styles.submit} onClick={(!sessionUser.isNonprofit && !image) || !title || (title.length > 11 && !title.includes(' ')) || !description || !number || !unit || !categoryId || !expDate ? handleErrors : handleSubmit}>Submit</div> */}
+                        <div className={(image && !imageErrors.length) && (title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length) ? styles.submit : styles.hold} onClick={(e) => e.target.calssName === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
                     </div>
                 </form>
             </FormSection>

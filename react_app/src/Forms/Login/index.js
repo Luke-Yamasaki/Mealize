@@ -49,7 +49,7 @@ const Form = styled.form`
 `;
 
 const Fieldset = styled.fieldset`
-    width: 300px;
+    width: 340px;
     height: 35px;
     border: 1px solid #28A690;
     border-radius: 3px;
@@ -71,7 +71,7 @@ const Legend = styled.legend`
 `;
 
 const Input = styled.input`
-    width: 95%;
+    width: 348px;
     height: 30px;
     font-size: 16px;
     border: none;
@@ -79,6 +79,7 @@ const Input = styled.input`
     margin-top: 1px;
     padding-left: 5px;
     border-radius: none;
+    cursor: pointer;
 `;
 
 const Error = styled.p`
@@ -122,6 +123,7 @@ const VolunteerDemoButton = styled.div`
     font-family: motiva-sans, sans-serif;
     text-align: center;
     border-radius: 5px;
+    cursor: pointer;
 `;
 
 const NonprofitDemoButton = styled.div`
@@ -137,6 +139,7 @@ const NonprofitDemoButton = styled.div`
     font-family: motiva-sans, sans-serif;
     text-align: center;
     border-radius: 5px;
+    cursor: pointer;
 `;
 
 const BusinessDemoButton = styled.div`
@@ -152,6 +155,7 @@ const BusinessDemoButton = styled.div`
     font-family: motiva-sans, sans-serif;
     text-align: center;
     border-radius: 5px;
+    cursor: pointer;
 `;
 
 
@@ -208,8 +212,8 @@ export const LoginForm = () => {
             <FormLegend/>
             <Form> Welcome back!
                 {emailError.length > 0 && (
-                    emailError.map((error, i) => (
-                        <Error key={i}>{error}</Error>
+                    emailError.map((error, idx) => (
+                        <Error key={idx}>{error}</Error>
                     ))
                 )}
                 <Fieldset>
@@ -223,8 +227,8 @@ export const LoginForm = () => {
                     </Legend>
                 </Fieldset>
                 {passwordError.length > 0 && (
-                    passwordError.map((error, i) => (
-                        <Error key={i}>{error}</Error>
+                    passwordError.map((error, idx) => (
+                        <Error key={idx}>{error}</Error>
                     ))
                 )}
                 <Fieldset>

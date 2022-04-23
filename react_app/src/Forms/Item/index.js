@@ -122,12 +122,20 @@ const ItemForm = () => {
     const [className, setClassName] = useState('dairy')
     const [errors, setErrors] = useState([]);
 
+    // errors
+    const [titleErrors, setTitleErrors] = useState([]);
+    const [descriptionErrors, setDescriptionErrors] = useState([]);
+    const [numberErrors, setNumberErrors] = useState([]);
+    const [unitErrors, setUnitErrors] = useState([]);
+    const [categoryIdErrors, setCategoryIdErrors] = useState([]);
+    const [imageErrors, setImageErrors] = useState(null);
+    const [expDateErrors, setExpDateErrors] = useState([]);
+
     const organizationId = sessionUser.organizationId;
     const userId = sessionUser.id;
 
-    useEffect(() => {
-
-    },[])
+    //variables
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -186,41 +194,54 @@ const ItemForm = () => {
         }
     };
 
-    const handleEmpty = () => {
+    const handleErrors = (e) => {
+        e.preventDefault();
+
+        const imageErrorsArr = [];
+        const titleErrorsArr = [];
+        const descriptionErrorsArr = [];
+        const numberErrorsArr = [];
+        const categoryIdErrorsArr = []
+        const expErrorsArr = [];
+
+
         !sessionUser.isNonprofit && !image ?
-        alert("Please select a .jpg, .jpeg or .png image file to upload.")
+        imageErrorsArr.push("Please select a .jpg, .jpeg or .png image file to upload.")
         :
         title.length > 11 && !title.includes(' ') ?
-        alert("Please add a line break to your title.")
+        titleErrorsArr.push("Please add a line break to your title.")
         :
         !title ?
-        alert("Please enter a title in 25 characters or less.")
+        titleErrorsArr.push("Please enter a title in 25 characters or less.")
         :
         !description ?
-        alert("Please enter a description in 120 characters or less.")
+        descriptionErrorsArr.push("Please enter a description in 120 characters or less.")
         :
         !sessionUser.isNonprofit && !number ?
-        alert("Please select a quantity for your post.")
+        numberErrorsArr.push("Please select a quantity for your post.")
         : !number ?
-        alert('Please select a desired quantity for your request.')
+        numberErrorsArr.push('Please select a desired quantity for your request.')
         :
         !categoryId ?
-        alert("Please select a food category.")
+        categoryIdErrorsArr.push("Please select a food category.")
         :
         sessionUser.isNonprofit && !expDate ?
-        alert('Please select an end date for your request.')
+        expErrorsArr.push('Please select an end date for your request.')
         :
-        alert('Please select an expiration date for your item.')
+        !expDate ?
+        expErrorsArr.push('Please select an expiration date for your item.')
+        :
+        handleSubmit(e)
     }
 
     const updateImage = (e) => {
         const file = e.target.files[0];
-        console.log(file.size)
-        console.log(file.type)
-        setImage(file)
+        const fileSize = file.size / 1024 / 1024; //convert to megabytes
+        fileSize > 2 ? setImageErrors(['The image file size is too large. Images must be under 2 mega bytes.']) : setImage(file)
     }
 
     const handleCategory = async (e) => {
+        if(e.target.value)
         setCategoryId(e.target.value);
         setClassName(categories[e.target.value].category.toLowerCase())
     };
@@ -230,9 +251,14 @@ const ItemForm = () => {
         if(e.target.value.length > 3 && e.target.value > 1000) {
             setNumber('');
             e.target.value = '';
-            alert('Please select a number between 1 and 1,000.')
-        };
-        setNumber(e.target.value)
+            setNumberErrors(['Please select a number between 1 and 1,000.'])
+        } else if (e.target.value <= 0) {
+            setNumber('');
+            e.target.value='';
+            setNumberErrors[['Please select a number greater than zero.']]
+        } else {
+            setNumber(e.target.value)
+        }
     }
 
     const handleReset = (e) => {
@@ -386,7 +412,7 @@ const ItemForm = () => {
                     </FormContent>
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
                         <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
-                        <div className={styles.submit} onClick={!sessionUser.isNonprofit && !image || !title || title.length > 11 && !title.includes(' ') || !description || !number || !unit || !categoryId || !expDate ? handleEmpty : handleSubmit}>Submit</div>
+                        <div className={styles.submit} onClick={(!sessionUser.isNonprofit && !image) || !title || (title.length > 11 && !title.includes(' ')) || !description || !number || !unit || !categoryId || !expDate ? handleEmpty : handleSubmit}>Submit</div>
                     </div>
                 </form>
             </FormSection>

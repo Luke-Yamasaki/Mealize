@@ -1,0 +1,55 @@
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(#76D97E, #28A690);
+    margin: 0px;
+    padding: 0px;
+    width: 500px;
+    height: 600px;
+    border-radius: 5px;
+}
+
+.legend {
+    display: flex;
+    justify-content: ecnter;
+    align-items: center;
+    width: 100px;
+    height: 25px;
+    color: black;
+    border-radius: 5px;
+}
+
+.button {
+    height: 30px;
+    width: 75px;
+    border-radius: 5px;
+    color: black;
+    font-size: 12px;
+    font-family: motiva-sans, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.submit {
+    background-color: #76D97E;
+
+}
+
+.cancel{
+    background-color: #28A690;
+}
+
+.error {
+    border: 1px solid rgba(144, 49, 29, 0.5);
+    background-color: #F2AF9A;
+}
+
+.confirmed {
+    background-color: #9AF2C0;
+    border: 1px solid rgba(40, 166, 144, 0.5);
+}

@@ -223,7 +223,6 @@ const ItemForm = () => {
             imageErrorsArr.push("Please select a .jpg or .png image file to upload.")
         }
 
-
         if(title.length > 11 && !title.includes(' ')) {
             titleErrorsArr.push("Please add a line break to your title.")
         }
@@ -263,8 +262,18 @@ const ItemForm = () => {
         setCategoryIdErrors(categoryIdErrorsArr);
         setExpDateErrors(expErrorsArr);
 
-        if(!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length) {
+
+        if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
             setImageErrors([]);
+            setTitleErrors([]);
+            setDescriptionErrors([]);
+            setNumberErrors([]);
+            setCategoryIdErrors([]);
+            setExpDateErrors([]);
+            handleSubmit(e)
+        }
+
+        if(sessionUser.isNonprofit && (!titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
             setTitleErrors([]);
             setDescriptionErrors([]);
             setNumberErrors([]);
@@ -321,6 +330,23 @@ const ItemForm = () => {
     const handleNull = (e) => {
         e.preventDefault();
         return null;
+    }
+
+    const handleTitle = (e) => {
+        e.preventDefault();
+        const titleInput = e.target.value
+        setTitleErrors([])
+        const titleErrorsArr = [];
+
+        if(titleInput.length > 11 && !titleInput.includes(' ')) {
+            titleErrorsArr.push("Please add a line break to your title.")
+        }
+
+        if(titleInput.length >= 0 && !titleErrorsArr.length) {
+            setTitle(titleInput)
+        } else {
+            setTitleErrors(titleErrorsArr)
+        }
     }
 
     const handleReset = (e) => {
@@ -465,7 +491,7 @@ const ItemForm = () => {
                         )}
                         <Fieldset>
                         <legend className={(title.length >= 3 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
-                                <TitleTextArea placeholder='Title' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={e => setTitle(e.target.value)} />
+                                <TitleTextArea placeholder='Title' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={handleTitle} />
                         </Fieldset>
                         {descriptionErrors && (
                             <ErrorMessage>{descriptionErrors[0]}</ErrorMessage>
@@ -509,7 +535,12 @@ const ItemForm = () => {
                     </FormContent>
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
                         <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
-                        <div className={(image && !imageErrors.length) && (title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length) ? styles.submit : styles.hold} onClick={(e) => e.target.calssName === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
+                        {!sessionUser.isNonprofit && (
+                            <div className={(image && !imageErrors.length) && (title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length) ? styles.submit : styles.hold} onClick={(e) => e.target.calssName === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
+                        )}
+                        {sessionUser.isNonprofit && (
+                            <div className={(title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length) ? styles.submit : styles.hold} onClick={(e) => e.target.calssName === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
+                        )}
                     </div>
                 </form>
             </FormSection>

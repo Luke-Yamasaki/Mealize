@@ -126,7 +126,6 @@ const ItemForm = () => {
     const [titleErrors, setTitleErrors] = useState([]);
     const [descriptionErrors, setDescriptionErrors] = useState([]);
     const [numberErrors, setNumberErrors] = useState([]);
-    const [unitErrors, setUnitErrors] = useState([]);
     const [categoryIdErrors, setCategoryIdErrors] = useState([]);
     const [imageErrors, setImageErrors] = useState(null);
     const [expDateErrors, setExpDateErrors] = useState([]);
@@ -207,7 +206,7 @@ const ItemForm = () => {
 
 
         if(!sessionUser.isNonprofit && !image) {
-            imageErrorsArr.push("Please select a .jpg, .jpeg or .png image file to upload.")
+            imageErrorsArr.push("Please select a .jpg or .png image file to upload.")
         }
 
 
@@ -284,6 +283,13 @@ const ItemForm = () => {
 
     const handleReset = (e) => {
         e.preventDefault();
+        setImageErrors([]);
+        setTitleErrors([]);
+        setCategoryIdErrors([]);
+        setDescriptionErrors([]);
+        setExpDateErrors([]);
+        setNumberErrors([]);
+
         setImage(null);
         setTitle('');
         setDescription('');
@@ -418,6 +424,9 @@ const ItemForm = () => {
                         <legend className={(description.length >= 3 && description.length <= 17) || (description.length > 17 && description.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
                             <Textarea placeholder='Description' type='text' minLength='3' maxLength='100' value={description} onChange={e => setDescription(e.target.value)} />
                         </TextareaFieldset>
+                        {numberErrors && (
+                            <div>{numberErrors[0]}</div>
+                        )}
                         <Fieldset>
                         <legend className={number && unit ? styles.completed : styles.incomplete}>Item quantity</legend>
                             <input style={{width: '175px', height: '20px', border: 'none', borderRadius: '5px', paddingLeft: '5px'}} id='amount' placeholder='Enter a number: (1-1000)' type='number' value={number} onChange={handleNumber} />
@@ -441,6 +450,9 @@ const ItemForm = () => {
                             </select>
                         </Fieldset>
                         <Fieldset>
+                        {expDateErrors && (
+                            <div>{expDateErrors[0]}</div>
+                        )}
                             <legend className={expDate ? styles.completed : styles.incomplete}>Expiration date</legend>
                             <input style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />
                         </Fieldset>

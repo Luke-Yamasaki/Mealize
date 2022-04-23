@@ -97,8 +97,8 @@ const EventLegend = styled.legend`
     width: 100px;
     height: 20px;
     font-size: 14px;
-    background-color: lime;
-    border: 1px solid green;
+    background-color: #9AF2C0;
+    border: 1px solid rgba(40, 166, 144, 0.5);
     border-radius: 3px;
     color: black;
     margin-left: 5px;
@@ -111,8 +111,8 @@ const SideLegend = styled.legend`
     width: 100px;
     height: 20px;
     font-size: 14px;
-    background-color: lime;
-    border: 1px solid green;
+    background-color: #9AF2C0;
+    border: 1px solid rgba(40, 166, 144, 0.5);
     border-radius: 3px;
     color: black;
 `;
@@ -124,8 +124,8 @@ const OrganizationLegend = styled.legend`
     width: 100px;
     height: 20px;
     font-size: 14px;
-    background-color: lime;
-    border: 1px solid green;
+    background-color: #9AF2C0;
+    border: 1px solid rgba(40, 166, 144, 0.5);
     border-radius: 3px;
     color: black;
     margin-bottom: 5px

@@ -104,6 +104,7 @@ export const DescriptionBox = styled.div`
     justify-content: left;
     color: black;
     margin-left: 5px;
+    border: 1px solid red;
 `;
 
 export const DescriptionLabel = styled.div`

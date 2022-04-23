@@ -102,10 +102,9 @@ export const EditItemForm = ({post}) => {
     const history = useHistory();
     const [title, setTitle] = useState(post.title);
     const [description, setDescription] = useState(post.description);
-    const [quantity, setQuantity] = useState(post.quantity);
     const [categoryId, setCategoryId] = useState(post.categoryId);
     const [image, setImage] = useState(post.imageUrl);
-    const [expDate, setExpDate] = useState(new Date());
+    const [expDate, setExpDate] = useState(post.expDate);
     const [imageUploading, setImageUploading] = useState(false);
     const [className, setClassName] = useState(categories[post.categoryId].category.toLowerCase())
     const [number, setNumber] = useState(post.quantity.split(' ', 2)[0]);
@@ -116,7 +115,6 @@ export const EditItemForm = ({post}) => {
     const [titleErrors, setTitleErrors] = useState([]);
     const [descriptionErrors, setDescriptionErrors] = useState([]);
     const [numberErrors, setNumberErrors] = useState([]);
-    const [unitErrors, setUnitErrors] = useState([]);
     const [categoryIdErrors, setCategoryIdErrors] = useState([]);
     const [imageErrors, setImageErrors] = useState(null);
     const [expDateErrors, setExpDateErrors] = useState([]);
@@ -133,13 +131,15 @@ export const EditItemForm = ({post}) => {
             formData.append("image", image);
         }
 
+        const titleCap = title.slice(0, 1).toUpperCase().concat(title.slice(1, title.length));
+        const descriptionCap = description.slice(0, 1).toUpperCase().concat(description.slice(1, description.length));
         const quantity = number.toString() + ' ' + unit;
 
         const editItemData = {
             organizationId,
             userId,
-            title,
-            description,
+            title: titleCap,
+            description: descriptionCap,
             quantity,
             categoryId,
             expDate,
@@ -155,8 +155,8 @@ export const EditItemForm = ({post}) => {
                 const itemData = {
                     organizationId,
                     userId,
-                    title,
-                    description,
+                    title: titleCap,
+                    description: descriptionCap,
                     quantity,
                     categoryId,
                     imageUrl,
@@ -172,7 +172,6 @@ export const EditItemForm = ({post}) => {
                 } else {
                     setImageUploading(false);
                     setErrors(newPost.errors);
-                    dispatch(hideModal());
                 }
             }
 
@@ -187,8 +186,8 @@ export const EditItemForm = ({post}) => {
                 const itemData = {
                     organizationId,
                     userId,
-                    title,
-                    description,
+                    title: titleCap,
+                    description: descriptionCap,
                     quantity,
                     categoryId,
                     imageUrl,
@@ -299,14 +298,21 @@ export const EditItemForm = ({post}) => {
 
     const handleReset = (e) => {
         e.preventDefault();
+        setImageErrors([]);
+        setTitleErrors([]);
+        setCategoryIdErrors([]);
+        setDescriptionErrors([]);
+        setExpDateErrors([]);
+        setNumberErrors([]);
+
         setImage(null);
-        setTitle('');
-        setDescription('');
-        setNumber('');
-        setUnit('lbs.');
-        setExpDate('');
-        setCategoryId('');
-        setClassName('dairy')
+        setTitle(post.title);
+        setDescription(post.description);
+        setNumber(post.quantity.split(' ', 2)[0]);
+        setUnit(post.quantity.split(' ', 2)[1]);
+        setExpDate(post.expDate);
+        setCategoryId(post.categoryId);
+        setClassName(categories[post.categoryId].category.toLowerCase())
     };
 
     return (
@@ -393,20 +399,49 @@ export const EditItemForm = ({post}) => {
                     </div>
                     <div style={{color: '#90311D', marginLeft: '-130px', marginBottom: '20px', marginTop: '-10px'}}> * All fields are required</div>
                     <FormContent>
-                        {!sessionUser.isNonprofit && (
-                          <Fieldset>
-                            <legend className={image ? styles.completed : styles.incomplete }>Image upload</legend>
-                                <input style={{borderRadius: '3px', color: '#005C4D'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} value={image} required/>
+                        {categoryIdErrors && (
+                            <div>{categoryIdErrors[0]}</div>
+                        )}
+                        <Fieldset>
+                            <legend className={categoryId ? styles.completed : styles.incomplete}>Food category</legend>
+                                <select style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} id='food-group' onChange={handleCategory}>
+                                    <optgroup label="Food category">
+                                        <option value={1}>Dairy</option>
+                                        <option value={2}>Vegetables</option>
+                                        <option value={3}>Fruits</option>
+                                        <option value={4}>Grains</option>
+                                        <option value={5}>Protein</option>
+                                    </optgroup>
+                                </select>
                         </Fieldset>
+                        {!sessionUser.isNonprofit && (
+                            <>
+                                {imageErrors && (
+                                    <div>{imageErrors[0]}</div>
+                                )}
+                                <Fieldset>
+                                    <legend className={image ? styles.completed : styles.incomplete }>Image upload</legend>
+                                        <input style={{borderRadius: '3px', color: '#005C4D'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} value={image} required/>
+                                </Fieldset>
+                            </>
+                        )}
+                        {titleErrors && (
+                            <div>{titleErrors[0]}</div>
                         )}
                         <Fieldset>
                         <legend className={(title.length >= 3 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
                                 <TitleTextArea placeholder='Title' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={e => setTitle(e.target.value)} />
                         </Fieldset>
+                        {descriptionErrors && (
+                            <div>{descriptionErrors[0]}</div>
+                        )}
                         <TextareaFieldset>
                         <legend className={(description.length >= 3 && description.length <= 17) || (description.length > 17 && description.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
                             <Textarea placeholder='Description' type='text' minLength='3' maxLength='100' value={description} onChange={e => setDescription(e.target.value)} />
                         </TextareaFieldset>
+                        {numberErrors && (
+                            <div>{numberErrors[0]}</div>
+                        )}
                         <Fieldset>
                         <legend className={number && unit ? styles.completed : styles.incomplete}>Item quantity</legend>
                             <input style={{width: '175px', height: '20px', border: 'none', borderRadius: '5px', paddingLeft: '5px'}} id='amount' placeholder='Enter a number: (1-1000)' type='number' value={number} onChange={handleNumber} />
@@ -429,18 +464,9 @@ export const EditItemForm = ({post}) => {
                                 </optgroup>
                             </select>
                         </Fieldset>
-                        <Fieldset>
-                            <legend className={categoryId ? styles.completed : styles.incomplete}>Food category</legend>
-                                <select style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} id='food-group' onChange={handleCategory}>
-                                    <optgroup label="Food category">
-                                        <option value={1}>Dairy</option>
-                                        <option value={2}>Vegetables</option>
-                                        <option value={3}>Fruits</option>
-                                        <option value={4}>Grains</option>
-                                        <option value={5}>Protein</option>
-                                    </optgroup>
-                                </select>
-                        </Fieldset>
+                        {expDateErrors && (
+                            <div>{expDateErrors[0]}</div>
+                        )}
                         <Fieldset>
                             <legend className={expDate ? styles.completed : styles.incomplete}>Expiration date</legend>
                             <input style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />

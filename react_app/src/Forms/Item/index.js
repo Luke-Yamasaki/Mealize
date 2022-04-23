@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { postItem } from '../../store/posts';
@@ -71,22 +71,12 @@ const TitleTextArea = styled.textarea`
     hyphens: auto;
 `;
 
-// const TextInput = styled.input`
-//     border: none;
-//     border-radius: 3px;
-//     width: 290px;
-//     height: 20px;
-//     background-color: white;
-//     color: black;
-//     hyphens: auto;
-// `;
-
 const FormContent = styled.div`
     width: 475px;
-    height: 475px;
+    height: 600px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
 `;
 
@@ -103,6 +93,15 @@ const TitleDiv = styled.div`
     text-align: center;
     overflow: hidden;
 `;
+
+const ErrorMessage = styled.div`
+    color: #C2462A;
+    font-size: 10px;
+    text-justify: center;
+    width: 300px;
+    height: 10px;
+`;
+
 
 
 
@@ -188,7 +187,6 @@ const ItemForm = () => {
                 } else {
                     setImageUploading(false);
                     setErrors(newPost.errors);
-                    dispatch(hideModal());
                 }
             }
         }
@@ -257,7 +255,14 @@ const ItemForm = () => {
     const updateImage = (e) => {
         const file = e.target.files[0];
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
-        fileSize > 2 ? setImageErrors(['The image file size is too large. Images must be under 2 mega bytes.']) : setImage(file)
+        if(fileSize > 2 ) {
+            e.target.value = '';
+            setImage('');
+            setImageErrors(['The file size is too large. Images must be under 2MB.'])
+        }
+        else {
+            setImage(file)
+        }
     }
 
     const handleCategory = async (e) => {
@@ -372,20 +377,20 @@ const ItemForm = () => {
                     <preview.MealizeText>Mealize LLC <XSLogo /></preview.MealizeText>
                 </preview.IdBox>
             </div>
-            {(imageUploading)&& <strong><p>Uploading image...</p></strong>}
+            {(imageUploading)&& <strong><p style={{fontColor: 'white'}}>Uploading image...</p></strong>}
             </PreviewSection>
             <FormSection>
-                <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '650px', display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: '25px', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
-                    <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '400px', height: '40px', gap: '5px'}}>
-                        <div style={{height: '100px', width: '35px'}}>
-                            <Nonprofit color={'black'} />
-                        </div>
-                        <div className={styles.formTitle}>{sessionUser.isNonprofit ? 'New request form' : 'New item form'}</div>
-                    </div>
-                    <div style={{color: '#90311D', marginLeft: '-130px', marginBottom: '20px', marginTop: '-10px'}}> * All fields are required</div>
+                <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '675px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
                     <FormContent>
+                        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '300px', height: '40px', gap: '5px'}}>
+                            <div style={{height: '30px', width: '35px'}}>
+                                <Nonprofit color={'black'} />
+                            </div>
+                            <div className={styles.formTitle}>{sessionUser.isNonprofit ? 'New request form' : 'New item form'}</div>
+                        </div>
+                        <div style={{ width: '200px', height: '10px', color: '#90311D'}}> * All fields are required</div>
                         {categoryIdErrors && (
-                            <div>{categoryIdErrors[0]}</div>
+                            <ErrorMessage>{categoryIdErrors[0]}</ErrorMessage>
                         )}
                         <Fieldset>
                             <legend className={categoryId ? styles.completed : styles.incomplete}>Food category</legend>
@@ -402,7 +407,7 @@ const ItemForm = () => {
                         {!sessionUser.isNonprofit && (
                             <>
                                 {imageErrors && (
-                                <div>{imageErrors[0]}</div>
+                                <ErrorMessage>{imageErrors[0]}</ErrorMessage>
                                 )}
                                 <Fieldset>
                                     <legend className={image ? styles.completed : styles.incomplete }>Image upload</legend>
@@ -411,21 +416,21 @@ const ItemForm = () => {
                             </>
                         )}
                         {titleErrors && (
-                            <div>{titleErrors[0]}</div>
+                            <ErrorMessage>{titleErrors[0]}</ErrorMessage>
                         )}
                         <Fieldset>
                         <legend className={(title.length >= 3 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
                                 <TitleTextArea placeholder='Title' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={e => setTitle(e.target.value)} />
                         </Fieldset>
                         {descriptionErrors && (
-                            <div>{descriptionErrors[0]}</div>
+                            <ErrorMessage>{descriptionErrors[0]}</ErrorMessage>
                         )}
                         <TextareaFieldset>
                         <legend className={(description.length >= 3 && description.length <= 17) || (description.length > 17 && description.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
                             <Textarea placeholder='Description' type='text' minLength='3' maxLength='100' value={description} onChange={e => setDescription(e.target.value)} />
                         </TextareaFieldset>
                         {numberErrors && (
-                            <div>{numberErrors[0]}</div>
+                            <ErrorMessage>{numberErrors[0]}</ErrorMessage>
                         )}
                         <Fieldset>
                         <legend className={number && unit ? styles.completed : styles.incomplete}>Item quantity</legend>
@@ -449,10 +454,10 @@ const ItemForm = () => {
                                 </optgroup>
                             </select>
                         </Fieldset>
-                        <Fieldset>
                         {expDateErrors && (
-                            <div>{expDateErrors[0]}</div>
+                            <ErrorMessage>{expDateErrors[0]}</ErrorMessage>
                         )}
+                        <Fieldset>
                             <legend className={expDate ? styles.completed : styles.incomplete}>Expiration date</legend>
                             <input style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} type='date' min={new Date()} value={expDate} onChange={e => setExpDate(e.target.value)} />
                         </Fieldset>

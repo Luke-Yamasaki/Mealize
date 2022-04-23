@@ -207,20 +207,50 @@ export const IdText = styled.div`
     margin-left: -7px;
 `;
 
-export const ActionButtons = styled.div`
-    width: 50px;
-    height: 25px;
+export const EditButton = styled.div`
+    width: 60px;
+    height: 30px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: red;
+    background-color: #D49524;
     font-family: motiva-sans, sans-serif;
     font-weight: 700;
     font-style: normal;
     font-size: 10px;
     color: white;
     curosr: pointer;
+`;
+
+const EditDeleteBox = styled.div`
+    width: 135px;
+    height: 40px;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgba(0, 0, 0, 0.125);
+    backdrop-filter: blur(2px);
+`;
+
+
+const DeleteButton = styled.div`
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D49524;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 10px;
+    color: white;
+    curosr: pointer;
+    background-color: #C2462A;
 `;
 
 export const ItemCard = ({ post, sessionUser }) => {
@@ -247,10 +277,10 @@ export const ItemCard = ({ post, sessionUser }) => {
             <div style={{backgroundImage: `url(${post.imageUrl})`}} className={styles.image}>
                 {sessionUser ? <FavoritesIcon post={post} sessionUser={sessionUser} /> : <div/>}
                 {sessionUser && post.userId === sessionUser.id ?
-                <div>
-                    <ActionButtons role='button' onClick={handleDelete}>Delete</ActionButtons>
-                    <ActionButtons role='button' onClick={showEditItemForm}>Edit</ActionButtons>
-                </div>
+                <EditDeleteBox>
+                    <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
+                    <EditButton onClick={showEditItemForm}>Edit</EditButton>
+                </EditDeleteBox>
                 : <Triangle post={post} />
                 }
             </div>

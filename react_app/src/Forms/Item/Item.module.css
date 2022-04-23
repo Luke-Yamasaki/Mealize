@@ -40,7 +40,7 @@
 .image {
     width: 260px;
     height: 200px;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     display: flex;
@@ -65,7 +65,7 @@
     font-weight: 900;
     color: black;
     width: 315px;
-    height: 100px;
+    height: 30px;
 }
 
 .incomplete {

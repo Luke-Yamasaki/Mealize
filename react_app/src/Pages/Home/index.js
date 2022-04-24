@@ -167,6 +167,7 @@ export const Home = () => {
     const categoriesObj = useSelector(state => state.categories)
     const organizationsObj = useSelector(state => state.organizations)
     const postsObj = useSelector(state => state.posts.posts)
+    console.log(postsObj)
     // const [categories, setCategories] = useState(Object.values(categoriesObj));
     // const [businesses, setBusinesses] = useState(Object.values(organizationsObj.businesses));
     // const [nonprofits, setNonprofits] = useState(Object.values(organizationsObj.nonprofits));
@@ -176,11 +177,7 @@ export const Home = () => {
     const nonprofits = Object.values(organizationsObj.nonprofits);
     const threeNonprofits = nonprofits.slice(0, 3);
 
-    const posts = Object.values(postsObj);
-    console.log(posts)
-
-    useEffect(() => {
-    },[posts])
+    const posts = Object.values(postsObj)
 
     // if(sessionUser && sessionUser.isNonprofit) {
         return(
@@ -241,7 +238,7 @@ export const Home = () => {
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '895px', height: 'auto', gap: '25px'}}> Posts
                     <FeedContainer>
-                        {posts && Object.values(posts).reverse().map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser} />)}
+                        {posts && posts.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser} />)}
                     </FeedContainer>
                 </div>
                 {/* <SideBarContainer> */}

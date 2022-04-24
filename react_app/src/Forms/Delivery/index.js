@@ -108,6 +108,7 @@ const DateTimeBox = styled.div`
 export const DeliveryForm = ({ post }) => {
     const sessionUser = useSelector(state => state.session.user);
     const business = useSelector(state => state.organizations.businesses[post.organizationId])
+    console.log(business)
     const dispatch = useDispatch();
     const history = useHistory();
     const [date, setDate] = useState("");

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { updateItem } from '../../../store/posts';
+import { getOneUser } from "../../../store/users";
 import { validateForm, uploadImage } from '../../../Helpers/FormValidations/items';
 import { hideModal } from '../../../store/modal';
 import { XSLogo } from '../../../Assets/Logo';
@@ -128,7 +129,7 @@ export const EditItemForm = ({post}) => {
     const [number, setNumber] = useState(post.quantity.split(' ', 2)[0]);
     const [unit, setUnit] = useState(post.quantity.split(' ', 2)[1]);
     const [categoryId, setCategoryId] = useState(post.categoryId.toString());
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState('');
     const [expDate, setExpDate] = useState(`${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`);
     const [imageUploading, setImageUploading] = useState(false);
     const [className, setClassName] = useState(categories[post.categoryId].category.toLowerCase())
@@ -217,6 +218,7 @@ export const EditItemForm = ({post}) => {
                     const newPost = await dispatch(updateItem(postData))
 
                     if(!newPost.error || !newPost.errors) {
+                        dispatch(getOneUser(sessionUser.id))
                         setImageUploading(false);
                         history.push(`/`)
                         dispatch(hideModal());
@@ -310,7 +312,6 @@ export const EditItemForm = ({post}) => {
         const file = e.target.files[0];
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
         if(fileSize > 2 ) {
-            e.target.value = '';
             setImage('');
             setImageErrors(['The file size is too large. Images must be under 2MB.'])
         }
@@ -332,7 +333,7 @@ export const EditItemForm = ({post}) => {
         e.preventDefault();
         if(e.target.value.length > 3 && e.target.value > 1000) {
             setNumber('');
-            e.target.value = '';
+
             setNumberErrors(['Please select a number between 1 and 1,000.'])
         } else if (e.target.value <= 0) {
             setNumber('');
@@ -385,13 +386,13 @@ export const EditItemForm = ({post}) => {
         setNumberErrors([]);
 
         setImage(null);
-        setTitle('');
-        setDescription('');
-        setNumber('');
-        setUnit('lbs.');
-        setExpDate('');
-        setCategoryId('');
-        setClassName('dairy')
+        setTitle(post.title);
+        setDescription(post.description);
+        setNumber(post.quantity.split(' ', 2)[0]);
+        setUnit(post.quantity.split(' ', 2)[1]);
+        setExpDate(`${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`);
+        setCategoryId(post.categoryId.toString());
+        setClassName(categories[post.categoryId].category.toLowerCase())
     };
 
     return (
@@ -508,7 +509,7 @@ export const EditItemForm = ({post}) => {
                                 )}
                                 <Fieldset>
                                     <legend className={image || post.imageUrl ? styles.completed : styles.incomplete }>Image upload</legend>
-                                    <input id='imageUpload' style={{borderRadius: '3px', color: 'rgb(40, 166, 144)'}} type="file" accept="image/png, image/jpeg, image/jpg" value={image ? image : ''} onChange={updateImage} />
+                                    <input id='imageUpload' style={{borderRadius: '3px', color: 'rgb(40, 166, 144)'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} />
                                 </Fieldset>
                             </>
                         )}

@@ -22,8 +22,9 @@ const Logo = styled.img`
     object-fit: contain;
     padding: 1px
     object-position: 50% 50%;
-    border-radius: 5px;
-    border: 1px solid grey;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-right: 1px solid grey;
     overflow: hidden;
     background-color: black;
 `;

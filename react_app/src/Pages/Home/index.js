@@ -167,7 +167,6 @@ export const Home = () => {
     const categoriesObj = useSelector(state => state.categories)
     const organizationsObj = useSelector(state => state.organizations)
     const postsObj = useSelector(state => state.posts.posts)
-    console.log(postsObj)
     // const [categories, setCategories] = useState(Object.values(categoriesObj));
     // const [businesses, setBusinesses] = useState(Object.values(organizationsObj.businesses));
     // const [nonprofits, setNonprofits] = useState(Object.values(organizationsObj.nonprofits));

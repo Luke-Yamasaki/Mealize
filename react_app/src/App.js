@@ -26,7 +26,6 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  const posts = useSelector(state => state.posts)
 
   useEffect(() => {
     (async () => {

@@ -272,8 +272,6 @@ export const ItemCard = ({ post, sessionUser }) => {
             dispatch(showModal());
     };
 
-    console.log(post)
-
     return (
         <div className={[styles.card, styles[`${className}`]].join(' ')}>
             <div style={{backgroundImage: `url(${post.imageUrl})`}} className={styles.image}>

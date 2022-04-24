@@ -9,14 +9,14 @@ import { getBatchedUsers } from './store/users';
 import { getAllPosts } from './store/posts';
 // Components
 import { Home } from './Pages/Home';
-import { About } from './Pages/About';
-import { Questions } from './Pages/Questions';
+// import { About } from './Pages/About';
+// import { Questions } from './Pages/Questions';
 import { Nonprofits } from './Pages/Nonprofits';
 import { Businesses } from './Pages/Businesses';
 import { Categories } from './Pages/Categories';
-import { Users } from './Pages/Users';
-import { Settings } from './Pages/Settings';
-import { Inbox } from './Pages/Inbox';
+// import { Users } from './Pages/Users';
+// import { Settings } from './Pages/Settings';
+import { Messages } from './Pages/Messages';
 import { Background } from './Components/Styled/Background';
 import { Navbar } from './Components/Navbar'
 import { SessionNavbar } from './Components/SessionNavbar';
@@ -75,8 +75,8 @@ function App() {
           <Route exact path='/search/:searchword'>
             <h1>Search results</h1>
           </Route>
-          <Route exact path='/inbox'>
-            <Inbox />
+          <Route exact path='/messages'>
+            <Messages />
           </Route>
           <Route>
             <div>404 Error</div>

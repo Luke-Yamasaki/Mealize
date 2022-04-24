@@ -1,5 +1,10 @@
 // packages
-import styled from 'styled-compoenets';
+import styled from 'styled-components';
+
+import { useDispatch, useSelector} from 'react-redux';
+
+import { getMessages } from '../../store/messages';
+import { getAllDeliveries } from '../../store/deliveries';
 
 const Wrapper = styled.div`
     width: 1550px;
@@ -36,14 +41,58 @@ const MessageContent = styled.section`
     gap: 10px;
 `;
 
+const PageLabel = styled.div`
+    width: 300px;
+    height: 50px;
+    font-family: motiva-sans, sans-serif;
+    font-size: 24px;
+    color: black;
+    display: flex;
+    flex-direction: center;
+    align-items: center;
+`
+
 export const Messages = () => {
+    const dispatch = useDispatch();
+    const sessionUser = useSelector(state => state.session.user)
+    const messages = useSelector(state => state.messages)
+    const deliveries = useSelector(state => state.deliveries)
+    const users = useSelector(state => state.users)
+
     return (
         <Wrapper>
             <Header>
-
+                <PageLabel>Messages</PageLabel>
+                {messages.map((message, idx) => message.senderId !== sessionUser.id ?
+                    <div key={idx}>
+                        <div>
+                            <img src={users[messages.receiverId].profileImageUrl} alt='User profile.' />
+                            <p>{users[messages.receiverId].firstName}</p>
+                        </div>
+                        <div>
+                            <p>{message.title}</p>
+                            <p>{message.content}</p>
+                        </div>
+                    </div>
+                    :
+                    <div key={idx}>
+                        <div>
+                            <img src={sessionUser.profileImageUrl} alt='Your profile.' />
+                            <p>{sessionUser.firstName}</p>
+                        </div>
+                        <div>
+                            <p>{message.title}</p>
+                            <p>{message.content}</p>
+                        </div>
+                    </div>
+                )}
             </Header>
             <MessageContent>
-
+                <div>
+                    <div>
+                        Hello
+                    </div>
+                </div>
             </MessageContent>
         </Wrapper>
     )

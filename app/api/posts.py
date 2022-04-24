@@ -54,16 +54,16 @@ def form_validation():
 
 
 
-@post_routes.route('/items', methods=['POST'])
+@post_routes.route('/', methods=['POST'])
 @login_required
-def new_item():
+def new_post():
     if current_user.isManager == False:
         return {'error': 'You are not authorized for this action.'}
     form = PostForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         post = Post(
-            isItem = True,
+            isItem = current_user.isNonprofit == False,
             organizationId = current_user.organizationId,
             userId = current_user.id,
             title = form.data['title'],
@@ -79,7 +79,7 @@ def new_item():
         return post.to_dict()
     return {'errors': errors_to_list(form.errors)}
 
-@post_routes.route('/items/<int:id>', methods=['PUT'])
+@post_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def update_item(id):
     if current_user.isManager == False:
@@ -88,70 +88,20 @@ def update_item(id):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         post = Post.query.get(id)
-        post.isItem = True,
-        post.organizationId = current_user.organizationId,
-        post.userId = current_user.id,
-        post.title = form.data['title'],
-        post.description = form.data['description'],
-        post.quantity = form.data['quantity'],
-        post.categoryId = form.data['categoryId'],
-        post.imageUrl = form.data['imageUrl'],
-        post.expirationDate = form.data['expirationDate'],
-        post.status = request.json['status'] # 0=posted, 1=reserved, 2=completed
+        if current_user.id != post.userId:
+            return {'error': "Unauthorized"}
+        else:
+            post.title = form.data['title'],
+            post.description = form.data['description'],
+            post.quantity = form.data['quantity'],
+            post.categoryId = form.data['categoryId'],
+            post.imageUrl = request.json['imageUrl'],
+            post.expDate = form.data['expDate'],
 
-        db.session.commit()
-        return post.to_dict()
+            db.session.commit()
+            return post.to_dict()
     return {'errors': errors_to_list(form.errors)}
 
-@post_routes.route('/', methods=['POST'])
-@login_required
-def new_request():
-    if current_user.isManager == False:
-        return {'error': 'You are not authorized for this action.'}
-    form = PostForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    isItem = request.json['isItem']
-    if form.validate_on_submit():
-        post = Post(
-            isItem = isItem,
-            organizationId = current_user.organizationId,
-            userId = current_user.id,
-            title = form.data['title'],
-            description = form.data['description'],
-            quantity = form.data['quantity'],
-            categoryId = form.data['categoryId'],
-            imageUrl = form.data['imageUrl'],
-            expirationDate = form.data['expirationDate'],
-            status = 0 # 0=posted, 1=reserved, 2=completed
-        )
-        db.session.add(post)
-        db.session.commit()
-        return post.to_dict()
-    return {'errors': errors_to_list(form.errors)}
-
-@post_routes.route('/requests/<int:id>', methods=['PUT'])
-@login_required
-def update_request(id):
-    if current_user.isManager == False:
-        return {'error': 'You are not authorized for this action.'}
-    form = PostForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        post = Post.query.get(id)
-        post.isItem = True,
-        post.organizationId = current_user.organizationId,
-        post.userId = current_user.id,
-        post.title = form.data['title'],
-        post.description = form.data['description'],
-        post.quantity = form.data['quantity'],
-        post.categoryId = form.data['categoryId'],
-        post.imageUrl = form.data['imageUrl'],
-        post.expirationDate = form.data['expirationDate'],
-        post.status = request.json['status'] # 0=posted, 1=reserved, 2=completed
-
-        db.session.commit()
-        return post.to_dict()
-    return {'errors': errors_to_list(form.errors)}
 
 @post_routes.route('/<int:id>', methods=['DELETE'])
 @login_required

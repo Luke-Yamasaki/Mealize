@@ -1,0 +1,82 @@
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(#76D97E, #28A690);
+    margin: 0px;
+    padding: 0px;
+    width: 500px;
+    height: 600px;
+    border-radius: 5px;
+}
+
+.legends {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 110px;
+    height: 20px;
+    color: black;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.fieldsets {
+    height: 60px;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid rgb(213, 213, 213);
+    overflow: hideen;
+};
+
+
+.date {
+    margin: 0px;
+    padding: 0px;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.time {
+    margin: 0px;
+    padding: 0px;
+    width: 100px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.button {
+    height: 30px;
+    width: 75px;
+    border-radius: 5px;
+    color: black;
+    font-size: 12px;
+    font-family: motiva-sans, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.submit {
+    background-color: #76D97E;
+
+}
+
+.cancel{
+    background-color: #28A690;
+}
+
+.error {
+     background-color: #F2AF9A;
+     border: 1px solid rgba(144, 49, 29, 0.5);
+}
+
+.confirmed {
+    background-color: #9AF2C0;
+    border: 1px solid rgba(40, 166, 144, 0.5);
+}

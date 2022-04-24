@@ -32,8 +32,8 @@ export const Navbar = () => {
                 </LogoBox>
                 <Searchbar />
                 <AuthBox>
-                    <div role='button' className={styles.login} onClick={showLoginModal}>Log in</div>
-                    <div role='button' className={styles.signup} onClick={showSignupModal}>Sign up</div>
+                     <div role='button' className={styles.signup} onClick={showSignupModal}>Sign up</div>
+                     <div role='button' className={styles.login} onClick={showLoginModal}>Log in</div>
                 </AuthBox>
             </NavList>
         </Nav>

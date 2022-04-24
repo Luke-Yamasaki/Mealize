@@ -207,20 +207,50 @@ export const IdText = styled.div`
     margin-left: -7px;
 `;
 
-export const ActionButtons = styled.div`
-    width: 50px;
-    height: 25px;
+export const EditButton = styled.div`
+    width: 60px;
+    height: 30px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: red;
+    background-color: #D49524;
     font-family: motiva-sans, sans-serif;
     font-weight: 700;
     font-style: normal;
     font-size: 10px;
     color: white;
     curosr: pointer;
+`;
+
+const EditDeleteBox = styled.div`
+    width: 135px;
+    height: 40px;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgba(0, 0, 0, 0.125);
+    backdrop-filter: blur(2px);
+`;
+
+
+const DeleteButton = styled.div`
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D49524;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 10px;
+    color: white;
+    curosr: pointer;
+    background-color: #C2462A;
 `;
 
 export const ItemCard = ({ post, sessionUser }) => {
@@ -242,17 +272,33 @@ export const ItemCard = ({ post, sessionUser }) => {
             dispatch(showModal());
     };
 
+    console.log(post)
+
     return (
         <div className={[styles.card, styles[`${className}`]].join(' ')}>
             <div style={{backgroundImage: `url(${post.imageUrl})`}} className={styles.image}>
-                {sessionUser ? <FavoritesIcon post={post} sessionUser={sessionUser} /> : <div/>}
-                {sessionUser && post.userId === sessionUser.id ?
-                <div>
-                    <ActionButtons role='button' onClick={handleDelete}>Delete</ActionButtons>
-                    <ActionButtons role='button' onClick={showEditItemForm}>Edit</ActionButtons>
-                </div>
-                : <Triangle post={post} />
-                }
+                {!sessionUser && (
+                    <>
+                    <div />
+                    <Triangle post={post} />
+                    </>
+
+                )}
+                {(sessionUser && !(post.userId === sessionUser.id)) && (
+                    <>
+                        <FavoritesIcon post={post} sessionUser={sessionUser} />
+                        <Triangle post={post} />
+                    </>
+                )}
+                {(sessionUser && (post.userId === sessionUser.id)) && (
+                    <>
+                    <div />
+                    <EditDeleteBox>
+                        <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
+                        <EditButton onClick={showEditItemForm}>Edit</EditButton>
+                    </EditDeleteBox>
+                    </>
+                )}
             </div>
             <UserTitle>
                 <UserImage>
@@ -290,7 +336,7 @@ export const ItemCard = ({ post, sessionUser }) => {
             </InfoBox>
             <IdBox>
                 <IdText>Id:{post.id}</IdText>
-                <MealizeText>Mealize LLC <XSLogo /></MealizeText>
+                <MealizeText>Mealize LLC <XSLogo id='logo' color={post.status === 0 ? 'black' : 'white'} /></MealizeText>
             </IdBox>
         </div>
     )

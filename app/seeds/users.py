@@ -20,7 +20,7 @@ def seed_users():
         autism=False,
         learningDisabled=False,
         lgbtq=False,
-        profileImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+        profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
         jobDescription="Hello, my name is Nonprofit Demo! My account will give you a glance into all the features Mealize provides! Thank you and I hope you enjoy Mealize!",
         hashedPassword=generate_password_hash('062651d0-01fe-49c5-aaa1-0829ba3f4ff3')
     )
@@ -41,7 +41,7 @@ def seed_users():
             autism=random() > 0.9,
             learningDisabled=random() > 0.9,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
             jobDescription=fake.text(max_nb_chars=255),
             hashedPassword=generate_password_hash(fake.password())
         )
@@ -61,7 +61,7 @@ def seed_users():
         autism=False,
         learningDisabled=False,
         lgbtq=False,
-        profileImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+        profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
         jobDescription="Hello, my name is Business Demo! My account will give you a glance into all the features Mealize provides! Thank you and I hope you enjoy Mealize!",
         hashedPassword=generate_password_hash('8f08d594-2275-4c8f-93f3-4cb6dbed4b70')
     )
@@ -82,7 +82,7 @@ def seed_users():
             autism=random() > 0.9,
             learningDisabled=random() > 0.9,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
             jobDescription=fake.text(max_nb_chars=255),
             hashedPassword=generate_password_hash(fake.password())
         )
@@ -103,7 +103,7 @@ def seed_users():
             autism=random() > 0.5,
             learningDisabled=random() > 0.5,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
             jobDescription=fake.text(max_nb_chars=255),
             hashedPassword=generate_password_hash(fake.password())
         )

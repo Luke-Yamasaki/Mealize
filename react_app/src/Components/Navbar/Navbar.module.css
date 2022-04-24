@@ -34,21 +34,23 @@
     font-family: motiva-sans, sans-serif;
     font-weight: 900;
     font-style: normal;
-    font-size: 0.5rem;
+    font-size: 28px;
     margin-top: 7px;
 }
 
 .login {
     width: 80px;
     height: 30px;
-    border: 1px solid #76D97E;
-    background-color: transparent;
+    border: 1px solid #E2CBA2;
+    background-color: #E3A83D;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 14px;
-    color: white;
+    color: black;
+    font-weight: 500;
+    font-family: motiva-sans, sans-serif;
 }
 
 .login:hover {
@@ -58,14 +60,15 @@
 .signup {
     width: 80px;
     height: 30px;
-    border: 1px solid #76D97E;
-    background-color: transparent;
+    border: 1px solid #608F41;
+    background-color: #327647;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 14px;
     color: white;
+
 }
 
 .signup:hover {

@@ -29,6 +29,7 @@
 .dairy-reserved {
     border-color:#26385C;
     background-color: #26385C;
+    color: white;
 }
 
 .vegetables-active {
@@ -48,6 +49,7 @@
 .vegetables-reserved {
     border-color: #327647;
     background-color: #327647;
+    color: white;
 }
 
 .fruits-active {
@@ -67,6 +69,7 @@
 .fruits-reserved {
     border-color:#8F3676;
     background-color: #8F3676;
+    color: white;
 }
 
 .grains-active {
@@ -86,6 +89,7 @@
 .grains-reserved {
     border-color:#5F4E32;
     background-color: #5F4E32;
+    color: white;
 }
 
 .protein-active  {
@@ -105,6 +109,7 @@
 .protein-reserved  {
     border-color:#90311D;
     background-color: #90311D;
+    color: white;
 }
 
 .image {

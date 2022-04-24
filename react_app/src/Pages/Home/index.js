@@ -97,8 +97,8 @@ const EventLegend = styled.legend`
     width: 100px;
     height: 20px;
     font-size: 14px;
-    background-color: lime;
-    border: 1px solid green;
+    background-color: #9AF2C0;
+    border: 1px solid rgba(40, 166, 144, 0.5);
     border-radius: 3px;
     color: black;
     margin-left: 5px;
@@ -111,8 +111,8 @@ const SideLegend = styled.legend`
     width: 100px;
     height: 20px;
     font-size: 14px;
-    background-color: lime;
-    border: 1px solid green;
+    background-color: #9AF2C0;
+    border: 1px solid rgba(40, 166, 144, 0.5);
     border-radius: 3px;
     color: black;
 `;
@@ -124,8 +124,8 @@ const OrganizationLegend = styled.legend`
     width: 100px;
     height: 20px;
     font-size: 14px;
-    background-color: lime;
-    border: 1px solid green;
+    background-color: #9AF2C0;
+    border: 1px solid rgba(40, 166, 144, 0.5);
     border-radius: 3px;
     color: black;
     margin-bottom: 5px
@@ -167,6 +167,7 @@ export const Home = () => {
     const categoriesObj = useSelector(state => state.categories)
     const organizationsObj = useSelector(state => state.organizations)
     const postsObj = useSelector(state => state.posts.posts)
+    console.log(postsObj)
     // const [categories, setCategories] = useState(Object.values(categoriesObj));
     // const [businesses, setBusinesses] = useState(Object.values(organizationsObj.businesses));
     // const [nonprofits, setNonprofits] = useState(Object.values(organizationsObj.nonprofits));
@@ -176,10 +177,7 @@ export const Home = () => {
     const nonprofits = Object.values(organizationsObj.nonprofits);
     const threeNonprofits = nonprofits.slice(0, 3);
 
-    const posts = Object.values(postsObj);
-
-    useEffect(() => {
-    },[posts])
+    const posts = Object.values(postsObj)
 
     // if(sessionUser && sessionUser.isNonprofit) {
         return(
@@ -198,8 +196,8 @@ export const Home = () => {
                     <CategoryField>
                         <SideLegend>Categories</SideLegend>
                         {categories.map((category, idx) => (
-                            <SideBarInfoBox key={category.id}>
-                                <SidebarInfoImage key={category.id}>
+                            <SideBarInfoBox key={idx}>
+                                <SidebarInfoImage >
                                     {category.category === 'Dairy' ?
                                     <DairyIcon dimension={'small'}/>
                                     : category.category === 'Vegetables' ?
@@ -211,36 +209,36 @@ export const Home = () => {
                                     : <ProteinIcon dimension={'small'}/>
                                     }
                                 </SidebarInfoImage>
-                                <SideBarInfoText key={category.id}>{category.category}</SideBarInfoText>
+                                <SideBarInfoText>{category.category}</SideBarInfoText>
                             </SideBarInfoBox>
                         ))}
                     </CategoryField>
                     <OrganizationField>
                         <OrganizationLegend>Nonprofits</OrganizationLegend>
                     {threeNonprofits.map((nonprofit, idx) => (
-                        <SideBarInfoBox key={nonprofit.id}>
-                            <SidebarInfoImage key={nonprofit.id}>
-                                <img key={nonprofit.id} src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
+                        <SideBarInfoBox key={idx}>
+                            <SidebarInfoImage >
+                                <img src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
                             </SidebarInfoImage>
-                            <SideBarInfoText key={nonprofit.id}>{nonprofit.name}</SideBarInfoText>
+                            <SideBarInfoText >{nonprofit.name}</SideBarInfoText>
                         </SideBarInfoBox>
                         ))}
                     </OrganizationField>
                     <OrganizationField>
                         <OrganizationLegend>Businesses</OrganizationLegend>
                     {threeBusinesses.map((business, idx) => (
-                        <SideBarInfoBox key={business.id}>
-                            <SidebarInfoImage key={business.id}>
-                                <img key={business.id} src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
+                        <SideBarInfoBox key={idx}>
+                            <SidebarInfoImage >
+                                <img src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
                             </SidebarInfoImage>
-                            <SideBarInfoText key={business.id}>{business.name}</SideBarInfoText>
+                            <SideBarInfoText>{business.name}</SideBarInfoText>
                         </SideBarInfoBox>
                     ))}
                     </OrganizationField>
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '895px', height: 'auto', gap: '25px'}}> Posts
                     <FeedContainer>
-                        {posts && Object.entries(posts).reverse().map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
+                        {posts && posts.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser} />)}
                     </FeedContainer>
                 </div>
                 {/* <SideBarContainer> */}

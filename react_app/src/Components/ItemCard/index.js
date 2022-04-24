@@ -272,16 +272,25 @@ export const ItemCard = ({ post, sessionUser }) => {
             dispatch(showModal());
     };
 
+    console.log(post)
+
     return (
         <div className={[styles.card, styles[`${className}`]].join(' ')}>
             <div style={{backgroundImage: `url(${post.imageUrl})`}} className={styles.image}>
-                {!(post.userId === sessionUser.id) && (
+                {!sessionUser && (
+                    <>
+                    <div />
+                    <Triangle post={post} />
+                    </>
+
+                )}
+                {(sessionUser && !(post.userId === sessionUser.id)) && (
                     <>
                         <FavoritesIcon post={post} sessionUser={sessionUser} />
                         <Triangle post={post} />
                     </>
                 )}
-                {(post.userId === sessionUser.id) && (
+                {(sessionUser && (post.userId === sessionUser.id)) && (
                     <>
                     <div />
                     <EditDeleteBox>
@@ -327,7 +336,7 @@ export const ItemCard = ({ post, sessionUser }) => {
             </InfoBox>
             <IdBox>
                 <IdText>Id:{post.id}</IdText>
-                <MealizeText>Mealize LLC <XSLogo /></MealizeText>
+                <MealizeText>Mealize LLC <XSLogo id='logo' color={post.status === 0 ? 'black' : 'white'} /></MealizeText>
             </IdBox>
         </div>
     )

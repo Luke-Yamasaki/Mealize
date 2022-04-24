@@ -51,12 +51,12 @@ function App() {
           <Route exact path='/'>
             <Home />
           </Route>
-          <Route exact path='/about'>
+          {/* <Route exact path='/about'>
             <About />
           </Route>
           <Route exact path='/questions'>
             <Questions />
-          </Route>
+          </Route> */}
           <Route exact path='/nonprofits'>
             <Nonprofits />
           </Route>
@@ -66,17 +66,20 @@ function App() {
           <Route exact path='/categories'>
             <Categories />
           </Route>
-          <Route exact path='/users'>
+          {/* <Route exact path='/users'>
             <Users />
           </Route>
           <Route exact path='/settings'>
             <Settings />
-          </Route>
+          </Route> */}
           <Route exact path='/search/:searchword'>
             <h1>Search results</h1>
           </Route>
           <Route exact path='/inbox'>
             <Inbox />
+          </Route>
+          <Route>
+            <div>404 Error</div>
           </Route>
         </Switch>
       </Background>

@@ -1,4 +1,3 @@
-import React,{ useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 //components
@@ -77,34 +76,34 @@ const OrganizationField = styled.fieldset`
     padding-bottom: 25px;
 `;
 
-const EventField = styled.fieldset`
-    width: 200px;
-    height: 400px;
-    border-radius: 5px;
-    border: 1px solid #B2B2B2;
-    background-color: #E8E8E8;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: space-around;
-    font-size: 16px;
-    padding: 0px;
-    margin: 0px;
-`;
+// const EventField = styled.fieldset`
+//     width: 200px;
+//     height: 400px;
+//     border-radius: 5px;
+//     border: 1px solid #B2B2B2;
+//     background-color: #E8E8E8;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: left;
+//     justify-content: space-around;
+//     font-size: 16px;
+//     padding: 0px;
+//     margin: 0px;
+// `;
 
-const EventLegend = styled.legend`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 20px;
-    font-size: 14px;
-    background-color: #9AF2C0;
-    border: 1px solid rgba(40, 166, 144, 0.5);
-    border-radius: 3px;
-    color: black;
-    margin-left: 5px;
-`;
+// const EventLegend = styled.legend`
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     width: 100px;
+//     height: 20px;
+//     font-size: 14px;
+//     background-color: #9AF2C0;
+//     border: 1px solid rgba(40, 166, 144, 0.5);
+//     border-radius: 3px;
+//     color: black;
+//     margin-left: 5px;
+// `;
 
 const SideLegend = styled.legend`
     display: flex;
@@ -169,6 +168,7 @@ export const Home = () => {
     const categoriesObj = useSelector(state => state.categories)
     const organizationsObj = useSelector(state => state.organizations)
     const postsObj = useSelector(state => state.posts.posts)
+    const messages = useSelector(state => state.posts.messages)
     // const [categories, setCategories] = useState(Object.values(categoriesObj));
     // const [businesses, setBusinesses] = useState(Object.values(organizationsObj.businesses));
     // const [nonprofits, setNonprofits] = useState(Object.values(organizationsObj.nonprofits));

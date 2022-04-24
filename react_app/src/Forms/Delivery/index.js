@@ -148,8 +148,9 @@ export const DeliveryForm = ({ post }) => {
 
             const deliveryData = {
                 postId: post.id,
+                postImageUrl: post.imageUrl,
                 organizationId: post.organizationId,
-                userId: sessionUser.id,
+                userId: post.userId,
                 date: date,
                 time: time,
             };
@@ -169,8 +170,8 @@ export const DeliveryForm = ({ post }) => {
                     }
                 })
             } else {
-                history.push(`/${newDelivery.id}`);
                 dispatch(hideModal())
+                history.push(`/inbox/${newDelivery.message.id}`);
             }
         }
 
@@ -212,29 +213,34 @@ export const DeliveryForm = ({ post }) => {
                                 <legend className={time && !timeErrors.length ? `${styles.legends} ${styles.confirmed}` : `${styles.legends} ${styles.error}`}>Select a time</legend>
                                 <select required value={time} style={{width: '170px', height: '20px', padding: '0px'}} className={styles.time} onChange={(e) => setTime(e.target.value)}>
                                     <option value="">--Select a time--</option>
-                                    <optgroup label="Morning">
-                                        <option value={"9"}> 9:00 AM </option>
-                                        <option value={"9.5"}> 9:30 AM</option>
-                                        <option value={"10"}>10:00 AM</option>
-                                        <option value={"10.5"}>10:30 AM</option>
-                                    </optgroup>
-                                    <optgroup label="Noon">
-                                        <option value={"11"}>11:00 AM</option>
-                                        <option value={"11.5"}>11:30 AM</option>
-                                        <option value={"12"}>12:00 PM</option>
-                                        <option value={"12.5"}>12:30 PM</option>
-                                    </optgroup>
-                                    <optgroup label="Early afternoon">
-                                        <option value={"13"}>1:00 PM</option>
-                                        <option value={"13.5"}>1:30 PM</option>
-                                        <option value={"14"}>2:00 PM</option>
-                                    </optgroup>
-                                    <optgroup label="Late afternoon">
-                                        <option value={"14.5"}>2:30 PM</option>
-                                        <option value={"15"}>3:00 PM</option>
-                                        <option value={"15.5"}>3:30 PM</option>
-                                        <option value={"16"}>4:00 PM</option>
-                                    </optgroup>
+                                    {business.timeslot === 'Morning' ?
+                                        <optgroup label="Morning">
+                                            <option value={"9"}> 9:00 AM </option>
+                                            <option value={"9.5"}> 9:30 AM</option>
+                                            <option value={"10"}>10:00 AM</option>
+                                            <option value={"10.5"}>10:30 AM</option>
+                                        </optgroup>
+                                    :business.timeslot === 'Noon' ?
+                                        <optgroup label="Noon">
+                                            <option value={"11"}>11:00 AM</option>
+                                            <option value={"11.5"}>11:30 AM</option>
+                                            <option value={"12"}>12:00 PM</option>
+                                            <option value={"12.5"}>12:30 PM</option>
+                                        </optgroup>
+                                    :business.timeslot === 'Early afternoon' ?
+                                        <optgroup label="Early afternoon">
+                                            <option value={"13"}>1:00 PM</option>
+                                            <option value={"13.5"}>1:30 PM</option>
+                                            <option value={"14"}>2:00 PM</option>
+                                        </optgroup>
+                                    :
+                                        <optgroup label="Late afternoon">
+                                            <option value={"14.5"}>2:30 PM</option>
+                                            <option value={"15"}>3:00 PM</option>
+                                            <option value={"15.5"}>3:30 PM</option>
+                                            <option value={"16"}>4:00 PM</option>
+                                        </optgroup>
+                                    }
                                 </select>
                             </fieldset>
                         </DateTimeBox>

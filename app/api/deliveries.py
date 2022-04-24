@@ -68,9 +68,9 @@ def new_delivery():
         )
 
         db.session.add(request_message)
-        
+
         db.session.commit()
-        return delivery.to_dict()
+        return {'delivery': delivery.to_dict(), 'message': request_message.to_dict()}
     return {'errors': errors_to_list(form.errors)}
 
 @delivery_routes.route('/<int:id>', methods=['PUT'])

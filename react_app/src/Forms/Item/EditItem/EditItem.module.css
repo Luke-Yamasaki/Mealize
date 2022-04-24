@@ -61,11 +61,11 @@
 .formTitle {
     font-family: motiva-sans, sans-serif;
     font-style: normal;
-    font-size: 36px;
+    font-size: 24px;
     font-weight: 900;
     color: black;
-    width: 315px;
-    height: 100px;
+    width: 375px;
+    height: 30px;
 }
 
 .incomplete {
@@ -96,23 +96,41 @@
     color: black;
     background-color: #D49524;
     cursor: pointer;
-    opacity: 50%;
+    font-size: 12px;
+    font-weight: 700;
 }
-
+/*
 .reset:hover {
     opacity: 100%;
     color: white;
-}
+} */
 
 .submit {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 6rem;
-    height: 1.5rem;
-    border-radius: 0.25rem;
+    width: 65px;
+    height: 25px;
+    border-radius: 5px;
     color: white;
     background-color: #46A843;
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 100%;
     cursor: pointer;
+}
+
+.hold {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 25px;
+    border-radius: 5px;
+    color: white;
+    background-color: #46A843;
+    cursor: not-allowed;
+    font-size: 12px;
+    font-weight: 400;
     opacity: 50%;
 }

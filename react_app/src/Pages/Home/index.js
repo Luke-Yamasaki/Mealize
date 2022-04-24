@@ -14,14 +14,16 @@ import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-    width: 1600px;
+    width: 1500px;
     height: auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: top;
     background-color: #F5F5F5;
     padding-top: 50px;
+    padding-left: 100px;
+    gap: 100px;
 `;
 
 const SideBarContainer = styled.div`
@@ -242,9 +244,9 @@ export const Home = () => {
                 </div>
                 {/* <SideBarContainer> */}
                     {/* <SideLegend>Events</SideLegend> */}
-                <EventField>
+                {/* <EventField>
                     <EventLegend>Events</EventLegend>
-                </EventField>
+                </EventField> */}
                 {/* </SideBarContainer> */}
         </Wrapper>
         )

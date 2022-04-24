@@ -5,6 +5,7 @@ import { useDispatch, useSelector} from 'react-redux';
 
 import { getMessages } from '../../store/messages';
 import { getAllDeliveries } from '../../store/deliveries';
+import { useEffect } from 'react';
 
 const Wrapper = styled.div`
     width: 1550px;
@@ -52,18 +53,23 @@ const PageLabel = styled.div`
     align-items: center;
 `
 
-export const Messages = () => {
-    const dispatch = useDispatch();
-    const sessionUser = useSelector(state => state.session.user)
+export const Messages = ({sessionUser}) => {
+    const dispatch = useDispatch()
     const messages = useSelector(state => state.messages)
+    console.log(messages)
     const deliveries = useSelector(state => state.deliveries)
     const users = useSelector(state => state.users)
+
+    useEffect(() => {
+        dispatch(getAllDeliveries(sessionUser.organizationId))
+        dispatch(getMessages(sessionUser.id))
+    },[])
 
     return (
         <Wrapper>
             <Header>
                 <PageLabel>Messages</PageLabel>
-                {messages.map((message, idx) => message.senderId !== sessionUser.id ?
+                {messages.length && Object.values(messages).map((message, idx) => message.senderId !== sessionUser.id ?
                     <div key={idx}>
                         <div>
                             <img src={users[messages.receiverId].profileImageUrl} alt='User profile.' />

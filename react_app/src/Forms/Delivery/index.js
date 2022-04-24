@@ -170,8 +170,9 @@ export const DeliveryForm = ({ post }) => {
                     }
                 })
             } else {
+                console.log(newDelivery)
                 dispatch(hideModal())
-                history.push(`/inbox/${newDelivery.message.id}`);
+                history.push(`/messages`);
             }
         }
 

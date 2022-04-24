@@ -49,6 +49,7 @@ export const getMessages = () => async (dispatch) => {
 
     if(response.ok) {
         const messages = await response.json();
+        console.log(messages)
         dispatch(gotMessages(messages));
     } else if(response.status < 500) {
         const data = await response.json();
@@ -99,8 +100,7 @@ export default function messagesReducer(state = {}, action) {
             newState[action.payload.id] = action.payload;
             return newState;
         case GOT_MESSAGES:
-            action.payload.forEach((message) => newState[message.id] = message)
-            newState = action.payload;
+            newState.messages = action.payload;
             return newState;
         case GOT_ONE_MESSAGE:
             newState[action.payload.id] = action.payload;

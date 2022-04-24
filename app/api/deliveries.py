@@ -7,11 +7,10 @@ from time import strftime
 
 delivery_routes = Blueprint('deliveries', __name__)
 
-@delivery_routes.route('/')
+@delivery_routes.route('/<int:id>')
 @login_required
-def all_deliveries():
-    organizationId = request.json['organizationId']
-    all_deliveries = Delivery.query.filter(Delivery.organizationId == organizationId)
+def all_deliveries(id):
+    all_deliveries = Delivery.query.filter(Delivery.organizationId == id)
     return {'deliveries': [delivery.to_dict() for delivery in all_deliveries]}
 
 @delivery_routes.route('/<int:id>')
@@ -53,7 +52,7 @@ def new_delivery():
             isDropoff = False,
             postId = request.json['postId'],
             userId = current_user.id,
-            organizationId = request.json['organizationId'],
+            organizationId = current_user.organizationId,
             date = request.json['date'],
             time = form.data['time'],
             completed = 0 # 0=not apprevoded yet 1=accepted 2=in progress 3=picked up/droped off 4=cancelled
@@ -70,7 +69,7 @@ def new_delivery():
         db.session.add(request_message)
 
         db.session.commit()
-        return {'delivery': delivery.to_dict(), 'messages': {request_message.id:request_message.to_dict()}}
+        return {'delivery': delivery.to_dict(), 'message': {request_message.id:request_message.to_dict()}}
     return {'errors': errors_to_list(form.errors)}
 
 @delivery_routes.route('/<int:id>', methods=['PUT'])

@@ -76,7 +76,7 @@ function App() {
             <h1>Search results</h1>
           </Route>
           <Route exact path='/messages'>
-            <Messages />
+            <Messages sessionUser={sessionUser}/>
           </Route>
           <Route>
             <div>404 Error</div>

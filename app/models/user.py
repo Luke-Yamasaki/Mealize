@@ -17,7 +17,7 @@ class User(db.Model, UserMixin):
     phone = db.Column(db.String(20), nullable=False, unique=True)
     age = db.Column(db.Integer, nullable=False)
     deaf = db.Column(db.Boolean, nullable=False)
-    autism = db.Column(db.Boolean, nullable=False)
+    wheelchair = db.Column(db.Boolean, nullable=False)
     learningDisabled = db.Column(db.Boolean, nullable=False)
     lgbtq = db.Column(db.Boolean, nullable=False)
     profileImageUrl = db.Column(db.String(2048), nullable=False)

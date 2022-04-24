@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 // css
-import styles from './UserId.module.css';
+import styles from './UserIdCard.module.css';
 
 // icons
 import { Business } from '../../Assets/Icons/Business';

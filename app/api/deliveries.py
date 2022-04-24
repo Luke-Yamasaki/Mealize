@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import current_user, login_required
-from app.models import db, Delivery
+from app.models import db, Delivery, Message
 from app.forms.delivery_form import DeliveryForm
 from app.utils import errors_to_list
 from time import strftime
@@ -56,30 +56,39 @@ def new_delivery():
             organizationId = request.json['organizationId'],
             date = request.json['date'],
             time = form.data['time'],
-            completed = 0 # 0=accepted 1=in progress 2=picked up/droped off
+            completed = 0 # 0=not apprevoded yet 1=accepted 2=in progress 3=picked up/droped off 4=cancelled
         )
         db.session.add(delivery)
+
+        request_message = Message(
+            senderId = current_user.id,
+            receiverId = request.json['userId'],
+            content = "New pickup request!",
+            imageUrl = request.json['postImageUrl']
+        )
+
+        db.session.add(request_message)
+        
         db.session.commit()
         return delivery.to_dict()
     return {'errors': errors_to_list(form.errors)}
 
-@delivery_routes.route('/', methods=['PUT'])
+@delivery_routes.route('/<int:id>', methods=['PUT'])
 @login_required
-def update_delivery():
+def update_delivery(id):
     form = DeliveryForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         if len(form.data['cancellationReason']) > 1:
-            cancelled = 3
             delivery = Delivery(
                 isDropoff = request.json['isDropoff'],
                 postId = request.json['postId'],
                 userId = current_user.id,
                 organizationId = request.json['organizationId'],
-                start = form.data['start'],
-                end = form.data['end'],
+                date = form.data['date'],
+                time = form.data['time'],
                 cancellationReason = form.data['cancellationReason'],
-                completed = cancelled # 0=accepted 1=in progress 2=picked up/droped off 3=cancelled
+                completed = 4 #  0=not apprevoded yet 1=accepted 2=in progress 3=picked up/droped off 4=cancelled
             )
             db.session.add(delivery)
             db.session.commit()
@@ -93,7 +102,7 @@ def update_delivery():
                 start = form.data['start'],
                 end = form.data['end'],
                 cancellationReason = form.data['cancellationReason'],
-                completed = 1 # 0=accepted 1=in progress 2=picked up/droped off 3=cancelled
+                completed = 0 #  0=not apprevoded yet 1=accepted 2=in progress 3=picked up/droped off 4=cancelled
             )
             db.session.add(delivery)
             db.session.commit()

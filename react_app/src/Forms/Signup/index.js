@@ -512,17 +512,6 @@ export const SignupForm = () => {
                         />
                         Yes
                         </label>
-                        <label style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                        <Input
-                            name="isManager"
-                            type="checkbox"
-                            value={isManager}
-                            checked
-                            style={{width: '20px', height: '20px'}}
-                            onChange={() => setIsManager(!isManager)}
-                        />
-                        No
-                        </label>
                     </ButtonBox>
                     </Legend>
                 </Fieldset>
@@ -589,7 +578,7 @@ export const SignupForm = () => {
                     </Legend>
                 </Fieldset>
                 <Fieldset style={{height: '100px', margin: 'none', padding: 'none'}}>
-                    <Legend style={{width: '105px'}}> User details
+                    <Legend style={{width: '150px'}}> Optional details
                     <div style={{display: 'flex', flexDirection: 'row', width: '500px', height: '40px'}}>
                         <ButtonBox>
                             <Input
@@ -664,7 +653,7 @@ export const SignupForm = () => {
                 </div>
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Fieldset style={{height: '80px'}}>
-                    <Legend style={{width: '100px'}}> Set password
+                    <Legend style={{width: '100px'}}> Password
                         <Input
                             name="password"
                             type="password"
@@ -675,7 +664,7 @@ export const SignupForm = () => {
                     </Legend>
                 </Fieldset>
                 <Fieldset style={{height: '80px'}}>
-                    <Legend style={{width: '100px'}}> Set password
+                    <Legend style={{width: '150px'}}> Confirm password
                         <Input
                             name="confirm"
                             type="password"

@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
+from flask_wtf.html5 import URLField
 from wtforms import StringField, PasswordField, IntegerField, BooleanField
-from wtforms.validators import InputRequired, Length, Email, ValidationError, EqualTo, NumberRange
-from flask_wtf.file import FileField, FileRequired, FileAllowed
+from wtforms.validators import InputRequired, Length, Email, ValidationError, EqualTo, NumberRange, url
 from wtforms_alchemy import PhoneNumberField
 
 # from app.stdnum.us.ein import *
@@ -17,13 +17,13 @@ def existing_user(form, field):
 class SignupForm(FlaskForm):
     firstName = StringField('First Name', validators=[InputRequired(), Length(min=1, max=50, message='Sorry, we cannot store first names longer than 50 characters.')])
     lastName = StringField('Last Name', validators=[InputRequired(), Length(min=1, max=50, message='Sorry, we cannot store last names longer than 50 characters.')])
-    profileImageUrl = FileField('Profile image', validators=[FileRequired(), FileAllowed(['jpg', 'jpeg', 'png'], 'We can only accept images in .jpg or .png format.')])
+    profileImageUrl = URLField('Profile image', validators=[InputRequired(), url(), Length(max=2048, message='Sorry, the URL is too long.')])
     jobDescription = StringField('Job description', validators=[InputRequired(), Length(max=255, message='Sorry, job descriptions must be less than 255 characters.')])
-    age = IntegerField("Age", validators=[InputRequired(), NumberRange(min=18, max=100)])
-    deaf = BooleanField("Deaf", validators=[InputRequired()])
-    autism = BooleanField("Deaf", validators=[InputRequired()])
-    learningDisabled = BooleanField("Deaf", validators=[InputRequired()])
-    lgbtq = BooleanField("LGBTQ", validators=[InputRequired()])
+    dob = IntegerField("DOB", validators=[InputRequired(), NumberRange(min=18, max=100)])
+    deaf = BooleanField("Deaf")
+    autism = BooleanField("Deaf")
+    learningDisabled = BooleanField("Deaf")
+    lgbtq = BooleanField("LGBTQ")
     organizationId = IntegerField("Organization Id", validators=[InputRequired()])
     isNonprofit = BooleanField("Nonprofit", validators=[InputRequired()])
     isManager = BooleanField("Manager", validators=[InputRequired()])

@@ -178,6 +178,18 @@
     gap: 5px;
 }
 
+.descriptionText {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    height: 200px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0px;
+    padding: 0px;
+    gap: 5px;
+}
+
 .labels {
     font-family: motiva-sans, sans-serif;
     font-style: normal;
@@ -280,7 +292,7 @@
     align-items: flex-start;
     justify-content: left;
     gap: 5px;
-    width: 130px;
+    width: 170px;
     height: 141px;
 }
 

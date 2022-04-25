@@ -200,9 +200,9 @@ export const SignupForm = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const organizations = useSelector(state => state.organizations);
+    const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
 
     // states
-    const [isPrivate, setIsPrivate] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [image, setImage] = useState(null);
@@ -235,6 +235,16 @@ export const SignupForm = () => {
     const [confirmError, setConfirmError] = useState([]);
     const [responseErrors, setResponseErrors] = useState([]);
     const [formErrors, setFormErrors] = useState([]);
+
+    //dates
+    const year = new Date().getFullYear()
+    const month = new Date().getMonth()
+    const date = new Date().getDate()
+
+    const formattedMonth = month <= 9 ? '0' + (month+1).toString() : (month+1).toString()
+    const formattedDate = date <= 9 ? `0${date}` : date.toString();
+    const today = year.toString() + '-' + formattedDate + '-' + formattedMonth
+    const tooOld = (year - 90).toString() + '-' + formattedMonth + '-' + formattedDate;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -305,11 +315,10 @@ export const SignupForm = () => {
         setOrganizationId('');
         setIsNonprofit(false);
         setIsManager(false);
-        setEmail(false);
-        setPhone(false);
+        setEmail('');
+        setPhone('');
         setPassword('');
         setConfirm('');
-        setIsPrivate(false);
 
         setFirstNameError([]);
         setLastNameError([]);
@@ -387,6 +396,36 @@ export const SignupForm = () => {
         }
     }
 
+    const handleFName = (e) => {
+        e.preventDefault()
+    }
+
+    const handleLName = (e) => {
+        e.preventDefault()
+    }
+
+    const handleDescription = (e) => {
+        e.preventDefault();
+    }
+
+    const handleEmail = (e) => {
+        e.preventDefault();
+
+    }
+
+    const handlePhone = (e) => {
+        e.preventDefault();
+    }
+
+    const handlePassword = (e) => {
+        e.preventDefault();
+
+    }
+
+    const handleConfirm = (e) => {
+        e.preventDefault();
+    }
+    
     return (
         <Wrapper>
             <PreviewBox>
@@ -420,60 +459,29 @@ export const SignupForm = () => {
                                 <div className={styles.labels}>DOB:</div>
                                 <div className={styles.subText}>{dob}</div>
                             </div>
-                            <div className={styles.labelText}>
+                            <div className={styles.descriptionText}>
                                 <div className={styles.labels}>Job description:</div>
-                                <div className={styles.subText}>{jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length))}</div>
+                                <div className={styles.subText}>{ jobDescription.length >= 25 && !jobDescription.includes(' ') ? jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length)) : 'Please add a line break.'}</div>
                             </div>
-                        {!isPrivate && (
-                            <>
-                                {deaf && (
-                                    <div className={styles.labelText}>
-                                        <div className={styles.labels}></div>Deaf:
-                                        <div className={styles.subText}>This member is deaf.</div>
-                                    </div>
-                                )
-                                }
-                                {wheelchair && (
-                                    <div className={styles.labelText}>
-                                        <div className={styles.labels}></div>Wheelchair:
-                                        <div className={styles.subText}>This member uses a wheelchair.</div>
-                                    </div>
-                                )
-                                }
-                                {learningDisabled && (
-                                    <div className={styles.labelText}>
-                                        <div className={styles.labels}>Learning disabled:</div>
-                                        <div className={styles.subText}>This member has learning disabilities.</div>
-                                    </div>
-                                )
-                                }
-                                {lgbtq && (
-                                    <div className={styles.labelText}>
-                                        <div className={styles.labels}>LGBTQIA+:</div>
-                                        <div className={styles.subText}>This member belongs to the LGBTQIA+ community.</div>
-                                    </div>
-                                )
-                                }
-                            </>
-                        )}
                     </div>
                     <div className={styles.jobInfoBox}>
                         <div className={styles.labels}>Organization info</div>
                         <div className={styles.labelText}>
-                            <div className={styles.labels}>Name:</div>
-                            <div className={styles.subText}>{organizationId ? organizations[organizationId].name : "Company details."}</div>
+                            <div style={{fontSize: '10px'}} className={styles.labels}>Name:</div>
+                            <div style={{fontSize: '8px'}} className={styles.subText}>{organizationId ? allOrganizations[organizationId].name : "Company details."}</div>
                         </div>
                         <div className={styles.labelText}>
                             <div className={styles.labels}>Email:</div>
-                            <div className={styles.subText}>{organizationId ? organizations[organizationId].email : "Company details."}</div>
+                            <div style={{fontSize: '8px'}} className={styles.subText}>{organizationId ? allOrganizations[organizationId].email : "Company details."}</div>
                         </div>
                         <div className={styles.labelText}>
                             <div className={styles.labels}>Phone:</div>
-                            <div className={styles.subText}>{organizationId ? `(${organizations[organizationId].phone.slice(0, 3)}) - ${organizations[organizationId].phone.slice(3, 6)}-${organizations[organizationId].phone.slice(6, 10)}` : "Company details."} </div>
+                            <div style={{fontSize: '8px'}} className={styles.subText}>{organizationId ? `(${allOrganizations[organizationId].phone.slice(0, 3)}) - ${allOrganizations[organizationId].phone.slice(3, 6)}-${allOrganizations[organizationId].phone.slice(6, 10)}` : "Company details."} </div>
                         </div>
-                        <div className={styles.labelText}>
+                        <div className={styles.descriptionText}>
                             <div className={styles.labels}>Address:</div>
-                            <div className={styles.subText}>{organizationId ? `${organizations[organizationId].street}, ${organizations[organizationId].city}, ${organizations[organizationId].state[0].toUpperCase()+organizations[organizationId].state[1].toUpperCase()} ${organizations[organizationId].zip}` : "Company details."}</div>
+                            <div className={styles.subText}>{organizationId ? `${allOrganizations[organizationId].street}` : "Company details."}</div>
+                            <div style={{marginTop: '-10px'}} className={styles.subText}>{organizationId ? `${allOrganizations[organizationId].city}, ${allOrganizations[organizationId].state[0].toUpperCase()+allOrganizations[organizationId].state[1].toUpperCase()} ${allOrganizations[organizationId].zip}`  : "Company details."}</div>
                         </div>
                     </div>
                 </section>
@@ -558,8 +566,8 @@ export const SignupForm = () => {
                             <Input
                                 name="age"
                                 type="date"
-                                min='2004/04/24'
-                                max='1932/04/24'
+                                min={tooOld}
+                                max={(year - 18).toString + '-' + formattedMonth + '-' + formattedDate}
                                 placeholder="Your DOB (must be 18 or older)."
                                 value={dob}
                                 onChange={(e) => setDob(e.target.value)}
@@ -573,6 +581,8 @@ export const SignupForm = () => {
                             name="jobDescription"
                             placeholder="Add your job description (255 character limit)."
                             value={jobDescription}
+                            minLength='1'
+                            maxLength='100'
                             onChange={(e) => setJobDescription(e.target.value)}
                             style={{width: "475px", height: "75px", resize: 'none', fontSize: '14px', marginTop: '7px'}}
                         />

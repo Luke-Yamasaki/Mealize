@@ -30,15 +30,15 @@ export const SessionNavbar = () => {
                 <Logo dimension={"medium"} />
                 <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
                 <Searchbar />
-                <div role='button' className={styles.signup}>User</div>
-                <div role='button' className={styles.signup}>Inbox</div>
-                <div role='button' className={styles.signup}>Notifications</div>
+                <div className={styles.signup}>User</div>
+                <div className={styles.signup}>Inbox</div>
+                <div className={styles.signup}>Notifications</div>
                 {sessionUser.isNonprofit ?
-                <div role='button' className={styles.signup} onClick={showItemForm}>New request</div>
+                <div className={styles.signup} onClick={showItemForm}>New request</div>
                 :
-                <div role='button' className={styles.signup} onClick={showItemForm}>Post item</div>
+                <div className={styles.signup} onClick={showItemForm}>Post item</div>
                 }
-                <div role='button' className={styles.signup} onClick={logOut}>Log out</div>
+                <div className={styles.signup} onClick={logOut}>Log out</div>
             </NavList>
         </Nav>
     )

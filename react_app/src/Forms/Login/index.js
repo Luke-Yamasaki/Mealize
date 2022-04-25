@@ -87,7 +87,10 @@ const Error = styled.p`
     font-size: 14px;
     padding: 0px;
     margin: 0px;
-    font-size: 16px;
+    width: 300px;
+    height: 50px;
+    text-justify: center;
+    text-align: center;
 `;
 
 const ButtonBox = styled.div`
@@ -166,41 +169,103 @@ export const LoginForm = () => {
     const [emailError, setEmailError] = useState([]);
     const [passwordError, setPasswordError] = useState([]);
 
+    const handleEmail = (e) => {
+        e.preventDefault();
+        setEmailError([])
+        setEmail(e.target.value)
+    }
+
+    const handlePassword = (e) => {
+        e.preventDefault();
+        if (e.target.value.length > 6) {
+            setPasswordError([]);
+            setPassword(e.target.value)
+        } else {
+            setPassword(e.target.value)
+        }
+    }
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        return emailRegex.test(email)
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = await dispatch(login(email, password));
-        if(data && data.errors) {
-            data.errors.forEach(error => error.toLowerCase().includes('email') ? setEmailError(error) : setPasswordError(error));
-            return 'Error';
-        }
-        dispatch(hideModal());
-    };
+        const emailErrArr = [];
+        const passwordErrArr = [];
 
-    const cancel = (e) => {
+        if(!email.length) {
+            emailErrArr.push('Please enter your email.');
+        } else if(!password.length) {
+            passwordErrArr.push('Please enter you password.')
+        } else if(password.length < 6 ) {
+            passwordErrArr.push('Passwords must be at least 6 characters long.')
+        } else if (validateEmail(email) === false) {
+            emailErrArr.push('Please enter a valid email address.')
+        } else if(emailError.length > 0) {
+            emailErrArr.push('Please resolve the following: ');
+        } else if (passwordError.length > 0) {
+            passwordErrArr.push('Please resolve the following: ')
+        } else {
+            const data = await dispatch(login(email, password));
+            if(data && data.errors) {
+                data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+            } else {
+                dispatch(hideModal())
+            }
+        }
+
+        setEmailError(emailErrArr);
+        setPasswordError(passwordErrArr);
+    }
+
+    const reset = (e) => {
         e.preventDefault();
+        setEmailError([]);
+        setPasswordError([]);
         setEmail('');
         setPassword('');
-        dispatch(hideModal());
     };
+
+    const volunteerDemo = async (e) => {
+        e.preventDefault();
+        const emailErrArr =[]
+        const passwordErrArr =[];
+
+        const data = await dispatch(login('volunteer_demo@testing.com', '064324651d0-72fe-49c5-aa1-0ba223f4fcmv3'));
+        if(data.errors) {
+            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+            setEmailError(emailErrArr);
+            setPasswordError(passwordErrArr)
+        }
+        dispatch(hideModal())
+    }
 
     const nonprofitDemo = async (e) => {
         e.preventDefault();
+        const emailErrArr =[]
+        const passwordErrArr =[];
         const data = await dispatch(login('nonprofit_demo@testing.com', '062651d0-01fe-49c5-aaa1-0829ba3f4ff3'));
-        if(data && data.errors) {
-            data.errors.forEach(error => error.toLowerCase().includes('email') ? setEmailError(error) : setPasswordError(error));
-            return 'Error';
+        if(data.errors) {
+            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+            setEmailError(emailErrArr);
+            setPasswordError(passwordErrArr)
         }
-        dispatch(hideModal());
+        dispatch(hideModal())
     };
 
     const businessDemo = async (e) => {
         e.preventDefault();
+        const emailErrArr =[]
+        const passwordErrArr =[];
         const data = await dispatch(login('business_demo@testing.com', '8f08d594-2275-4c8f-93f3-4cb6dbed4b70'));
-        if(data && data.errors) {
-            data.errors.forEach(error => error.toLowerCase().includes('email') ? setEmailError(error) : setPasswordError(error));
-            return 'Error';
+        if(data.errors) {
+            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+            setEmailError(emailErrArr);
+            setPasswordError(passwordErrArr)
         }
-        dispatch(hideModal());
+        dispatch(hideModal())
     };
 
     const showSignupForm = () => {
@@ -213,7 +278,10 @@ export const LoginForm = () => {
             <Form> Welcome back!
                 {emailError.length > 0 && (
                     emailError.map((error, idx) => (
-                        <Error key={idx}>{error}</Error>
+                        <div key={idx} style={{width: '300px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '14px'}}>
+                            <Error>{error}</Error>
+                        </div>
+
                     ))
                 )}
                 <Fieldset>
@@ -222,7 +290,7 @@ export const LoginForm = () => {
                             name="email"
                             type="text"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={handleEmail}
                         />
                     </Legend>
                 </Fieldset>
@@ -238,17 +306,17 @@ export const LoginForm = () => {
                             type='password'
                             autoComplete="none"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={handlePassword}
                         />
                     </Legend>
                 </Fieldset>
                 <ButtonBox>
-                    <div role='button' className={styles.cancel} onClick={cancel}>Cancel</div>
-                    <div role='button' className={styles.submit} onClick={handleSubmit}>Submit</div>
+                    <div className={styles.cancel} onClick={reset}>Reset</div>
+                    <div className={styles.submit} onClick={handleSubmit}>Submit</div>
                 </ButtonBox>
                 <DemoBox>
-                    <VolunteerDemoButton onClick={nonprofitDemo}>Volunteer demo</VolunteerDemoButton>
-                    <NonprofitDemoButton onClick={businessDemo}>Nonprofit demo</NonprofitDemoButton>
+                    <VolunteerDemoButton onClick={volunteerDemo}>Volunteer demo</VolunteerDemoButton>
+                    <NonprofitDemoButton onClick={nonprofitDemo}>Nonprofit demo</NonprofitDemoButton>
                     <BusinessDemoButton onClick={businessDemo}>Business demo</BusinessDemoButton>
                 </DemoBox>
                 <div className={styles.question}>Don't have an account?<div className={styles.modalOption} onClick={showSignupForm}>Sign up</div></div>

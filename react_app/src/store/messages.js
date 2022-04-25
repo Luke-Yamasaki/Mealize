@@ -96,16 +96,16 @@ export default function messagesReducer(state = {}, action) {
     let newState = {...state};
     switch(action.type) {
         case SENT_MESSAGE:
-            newState.messages[action.payload.id] = action.payload;
+            newState[action.payload.id] = action.payload;
             return newState;
         case GOT_MESSAGES:
             newState.messages = action.payload;
             return newState;
         case GOT_ONE_MESSAGE:
-            newState.messages[action.payload.id] = action.payload;
+            newState[action.payload.id] = action.payload;
             return newState;
         case DELETED_MESSAGE:
-            delete newState.messages[action.payload.id];
+            delete newState[action.payload.id];
             return newState;
         default:
             return state;

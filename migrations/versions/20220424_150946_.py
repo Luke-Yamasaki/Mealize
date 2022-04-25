@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 780ccf4f5e27
+Revision ID: 947a52657a73
 Revises: 
-Create Date: 2022-04-24 00:03:42.769341
+Create Date: 2022-04-24 15:09:46.197919
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '780ccf4f5e27'
+revision = '947a52657a73'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,8 +31,9 @@ def upgrade():
     sa.Column('isNonprofit', sa.Boolean(), nullable=False),
     sa.Column('logoUrl', sa.String(length=2048), nullable=False),
     sa.Column('imageUrl', sa.String(length=2048), nullable=False),
-    sa.Column('open', sa.Time(), nullable=False),
-    sa.Column('close', sa.Time(), nullable=False),
+    sa.Column('open', sa.String(length=20), nullable=False),
+    sa.Column('close', sa.String(length=20), nullable=False),
+    sa.Column('timeslot', sa.String(length=35), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.Column('description', sa.String(length=1000), nullable=False),
     sa.Column('street', sa.String(length=100), nullable=False),
@@ -68,7 +69,7 @@ def upgrade():
     sa.Column('phone', sa.String(length=20), nullable=False),
     sa.Column('age', sa.Integer(), nullable=False),
     sa.Column('deaf', sa.Boolean(), nullable=False),
-    sa.Column('autism', sa.Boolean(), nullable=False),
+    sa.Column('wheelchair', sa.Boolean(), nullable=False),
     sa.Column('learningDisabled', sa.Boolean(), nullable=False),
     sa.Column('lgbtq', sa.Boolean(), nullable=False),
     sa.Column('profileImageUrl', sa.String(length=2048), nullable=False),

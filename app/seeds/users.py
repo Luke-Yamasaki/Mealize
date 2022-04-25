@@ -17,7 +17,7 @@ def seed_users():
         phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
         age=35,
         deaf=False,
-        autism=False,
+        wheelchair=False,
         learningDisabled=False,
         lgbtq=False,
         profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
@@ -38,7 +38,7 @@ def seed_users():
             phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
             age=randint(18, 91),
             deaf=random() > 0.9,
-            autism=random() > 0.9,
+            wheelchair=random() > 0.9,
             learningDisabled=random() > 0.9,
             lgbtq=random() > 0.5,
             profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
@@ -58,7 +58,7 @@ def seed_users():
         phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
         age=45,
         deaf=False,
-        autism=False,
+        wheelchair=False,
         learningDisabled=False,
         lgbtq=False,
         profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
@@ -79,7 +79,7 @@ def seed_users():
             phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
             age=randint(18, 91),
             deaf=random() > 0.9,
-            autism=random() > 0.9,
+            wheelchair=random() > 0.9,
             learningDisabled=random() > 0.9,
             lgbtq=random() > 0.5,
             profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
@@ -88,7 +88,27 @@ def seed_users():
         )
         db.session.add(business_managers)
 
-    for k in range(51, 76):
+    volunteer_demo = User(
+        organizationId=1,
+        isNonprofit=True,
+        isManager=False,
+        private=False,
+        firstName='Volunteer',
+        lastName='Demo',
+        email='volunteer_demo@testing.com',
+        phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
+        age=50,
+        deaf=False,
+        wheelchair=False,
+        learningDisabled=False,
+        lgbtq=False,
+        profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+        jobDescription="Hello, my name is Volunteer Demo! My account will give you a glance into all the features Mealize provides! Thank you and I hope you enjoy Mealize!",
+        hashedPassword=generate_password_hash('064324651d0-72fe-49c5-aa1-0ba223f4fcmv3')
+    )
+    db.session.add(volunteer_demo)
+
+    for k in range(52, 76):
         volunteers = User(
             organizationId=randint(1, 25),
             isNonprofit=True,
@@ -100,7 +120,7 @@ def seed_users():
             phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
             age=randint(18, 91),
             deaf=random() > 0.5,
-            autism=random() > 0.5,
+            wheelchair=random() > 0.5,
             learningDisabled=random() > 0.5,
             lgbtq=random() > 0.5,
             profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',

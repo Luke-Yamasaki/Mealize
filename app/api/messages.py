@@ -11,9 +11,9 @@ message_routes = Blueprint('messages', __name__)
 @login_required
 def messages():
     userId = current_user.id
-    sent_messages = Message.query.filter(Message.senderId == userId)
-    received_messages = Message.query.filter(Message.receiverId == userId)
-    return {'sent': {message.id:message.to_dict() for message in sent_messages}, 'received': {message.id:message.to_dict() for message in received_messages}}
+    all_messages = Message.query.filter(Message.senderId == userId or Message.receiverId == userId)
+    print('sssssssssssssssssssssssss', all_messages)
+    return {message.id:message.to_dict() for message in all_messages}
 
 @message_routes.route('/<int:id>')
 @login_required

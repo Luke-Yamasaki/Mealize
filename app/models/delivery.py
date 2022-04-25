@@ -23,6 +23,7 @@ class Delivery(db.Model):
         return {
             'id': self.id,
             'isDropoff': self.isDropoff,
+            'organizationId': self.organizationId,
             'postId': self.postId,
             'userId': self.userId,
             'location': self.location.to_dict(),

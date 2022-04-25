@@ -1,4 +1,3 @@
-import React,{ useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 //components
@@ -14,14 +13,16 @@ import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-    width: 1600px;
+    width: 1500px;
     height: auto;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: top;
     background-color: #F5F5F5;
     padding-top: 50px;
+    padding-left: 100px;
+    gap: 100px;
 `;
 
 const SideBarContainer = styled.div`
@@ -30,7 +31,7 @@ const SideBarContainer = styled.div`
     align-items: left;
     justify-content: space-around;
     width: 200px;
-    height: 925px;
+    height: 500px;
     gap: 15px;
 `;
 
@@ -61,48 +62,48 @@ const CategoryField = styled.fieldset`
     gap: 5px;
 `;
 
-const OrganizationField = styled.fieldset`
-    width: 150px;
-    height: 155px;
-    border-radius: 5px;
-    border: 1px solid #B2B2B2;
-    background-color: #E8E8E8;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-start;
-    font-size: 16px;
-    padding-bottom: 25px;
-`;
+// const OrganizationField = styled.fieldset`
+//     width: 150px;
+//     height: 155px;
+//     border-radius: 5px;
+//     border: 1px solid #B2B2B2;
+//     background-color: #E8E8E8;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: flex-end;
+//     justify-content: flex-start;
+//     font-size: 16px;
+//     padding-bottom: 25px;
+// `;
 
-const EventField = styled.fieldset`
-    width: 200px;
-    height: 400px;
-    border-radius: 5px;
-    border: 1px solid #B2B2B2;
-    background-color: #E8E8E8;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: space-around;
-    font-size: 16px;
-    padding: 0px;
-    margin: 0px;
-`;
+// const EventField = styled.fieldset`
+//     width: 200px;
+//     height: 400px;
+//     border-radius: 5px;
+//     border: 1px solid #B2B2B2;
+//     background-color: #E8E8E8;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: left;
+//     justify-content: space-around;
+//     font-size: 16px;
+//     padding: 0px;
+//     margin: 0px;
+// `;
 
-const EventLegend = styled.legend`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 20px;
-    font-size: 14px;
-    background-color: #9AF2C0;
-    border: 1px solid rgba(40, 166, 144, 0.5);
-    border-radius: 3px;
-    color: black;
-    margin-left: 5px;
-`;
+// const EventLegend = styled.legend`
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     width: 100px;
+//     height: 20px;
+//     font-size: 14px;
+//     background-color: #9AF2C0;
+//     border: 1px solid rgba(40, 166, 144, 0.5);
+//     border-radius: 3px;
+//     color: black;
+//     margin-left: 5px;
+// `;
 
 const SideLegend = styled.legend`
     display: flex;
@@ -117,19 +118,19 @@ const SideLegend = styled.legend`
     color: black;
 `;
 
-const OrganizationLegend = styled.legend`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 20px;
-    font-size: 14px;
-    background-color: #9AF2C0;
-    border: 1px solid rgba(40, 166, 144, 0.5);
-    border-radius: 3px;
-    color: black;
-    margin-bottom: 5px
-`;
+// const OrganizationLegend = styled.legend`
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     width: 100px;
+//     height: 20px;
+//     font-size: 14px;
+//     background-color: #9AF2C0;
+//     border: 1px solid rgba(40, 166, 144, 0.5);
+//     border-radius: 3px;
+//     color: black;
+//     margin-bottom: 5px
+// `;
 
 const SideBarInfoBox = styled.div`
     display: flex;
@@ -167,7 +168,7 @@ export const Home = () => {
     const categoriesObj = useSelector(state => state.categories)
     const organizationsObj = useSelector(state => state.organizations)
     const postsObj = useSelector(state => state.posts.posts)
-    console.log(postsObj)
+    const messages = useSelector(state => state.posts.messages)
     // const [categories, setCategories] = useState(Object.values(categoriesObj));
     // const [businesses, setBusinesses] = useState(Object.values(organizationsObj.businesses));
     // const [nonprofits, setNonprofits] = useState(Object.values(organizationsObj.nonprofits));
@@ -213,7 +214,7 @@ export const Home = () => {
                             </SideBarInfoBox>
                         ))}
                     </CategoryField>
-                    <OrganizationField>
+                    {/* <OrganizationField>
                         <OrganizationLegend>Nonprofits</OrganizationLegend>
                     {threeNonprofits.map((nonprofit, idx) => (
                         <SideBarInfoBox key={idx}>
@@ -234,7 +235,7 @@ export const Home = () => {
                             <SideBarInfoText>{business.name}</SideBarInfoText>
                         </SideBarInfoBox>
                     ))}
-                    </OrganizationField>
+                    </OrganizationField> */}
                 </SideBarContainer>
                 <div style={{display: 'flex', flexDirection: 'column', width: '895px', height: 'auto', gap: '25px'}}> Posts
                     <FeedContainer>
@@ -243,9 +244,9 @@ export const Home = () => {
                 </div>
                 {/* <SideBarContainer> */}
                     {/* <SideLegend>Events</SideLegend> */}
-                <EventField>
+                {/* <EventField>
                     <EventLegend>Events</EventLegend>
-                </EventField>
+                </EventField> */}
                 {/* </SideBarContainer> */}
         </Wrapper>
         )

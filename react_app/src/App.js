@@ -9,14 +9,14 @@ import { getBatchedUsers } from './store/users';
 import { getAllPosts } from './store/posts';
 // Components
 import { Home } from './Pages/Home';
-import { About } from './Pages/About';
-import { Questions } from './Pages/Questions';
+// import { About } from './Pages/About';
+// import { Questions } from './Pages/Questions';
 import { Nonprofits } from './Pages/Nonprofits';
 import { Businesses } from './Pages/Businesses';
 import { Categories } from './Pages/Categories';
-import { Users } from './Pages/Users';
-import { Settings } from './Pages/Settings';
-import { Inbox } from './Pages/Inbox';
+// import { Users } from './Pages/Users';
+// import { Settings } from './Pages/Settings';
+import { Messages } from './Pages/Messages';
 import { Background } from './Components/Styled/Background';
 import { Navbar } from './Components/Navbar'
 import { SessionNavbar } from './Components/SessionNavbar';
@@ -26,7 +26,6 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  const posts = useSelector(state => state.posts)
 
   useEffect(() => {
     (async () => {
@@ -52,12 +51,12 @@ function App() {
           <Route exact path='/'>
             <Home />
           </Route>
-          <Route exact path='/about'>
+          {/* <Route exact path='/about'>
             <About />
           </Route>
           <Route exact path='/questions'>
             <Questions />
-          </Route>
+          </Route> */}
           <Route exact path='/nonprofits'>
             <Nonprofits />
           </Route>
@@ -67,17 +66,20 @@ function App() {
           <Route exact path='/categories'>
             <Categories />
           </Route>
-          <Route exact path='/users'>
+          {/* <Route exact path='/users'>
             <Users />
           </Route>
           <Route exact path='/settings'>
             <Settings />
-          </Route>
+          </Route> */}
           <Route exact path='/search/:searchword'>
             <h1>Search results</h1>
           </Route>
-          <Route exact path='/inbox'>
-            <Inbox />
+          <Route exact path='/messages'>
+            <Messages sessionUser={sessionUser}/>
+          </Route>
+          <Route>
+            <div>404 Error</div>
           </Route>
         </Switch>
       </Background>

@@ -7,7 +7,6 @@ export const FavoritesIcon = ({ post }) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const [favoriteStatus, setFavoriteStatus] = useState(sessionUser && sessionUser.favorites[post.id] ? true : false);
-    console.log (favoriteStatus)
     const handleLike = async (e) => {
         e.preventDefault();
         setFavoriteStatus(true)
@@ -18,7 +17,6 @@ export const FavoritesIcon = ({ post }) => {
         e.preventDefault();
         setFavoriteStatus(false)
         const favoriteId = sessionUser.favorites[post.id].id
-        console.log(favoriteId)
         dispatch(removeFavorite(favoriteId));
     };
 

@@ -77,7 +77,7 @@ const Form = styled.form`
 `;
 
 const Fieldset = styled.fieldset`
-    width: 300px;
+    width: 500px;
     height: 40px;
     border: 1px solid #28A690;
     font-size: 16px;
@@ -106,7 +106,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-    width: 350px;
+    width: 200px;
     height: 30px;
     font-size: 16px;
     border: none;
@@ -416,38 +416,59 @@ export const SignupForm = () => {
             </PreviewBox>
             <FormBox>
                 <Form> Welcome to Mealize!
-                    <Fieldset>
-                        <Legend> Organization:
-                            <select>
-                                <optgroup>
-                                    
-                                </optgroup>
-                            </select>
-
+                <Fieldset style={{height: '40px'}}>
+                    <Legend style={{width: '100px'}}> Organization
+                    <div style={{display: 'flex', flexDirection: 'row', width: '300px', height: '30px', justifyContent: 'flex-start', alignItems: 'center', gap: '15px'}}>
+                        <label style={{fontSize: '12px'}}>Select your organization</label>
+                        <select style={{width: '100px', height: '25px'}} value={organizationId} onChange={(e) => setOrganizationId(e.target.value)}>
+                            <optgroup label='Nonprofits'>
+                                {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
+                            </optgroup>
+                            <optgroup label='Businesses'>
+                                {Object.values(organizations.businesses).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
+                            </optgroup>
+                        </select>
+                    </div>
+                    </Legend>
+                </Fieldset>
+                <Fieldset>
+                    <Legend> Role
+                    <ButtonBox style={{width: '300px', height: '50px', display: 'flex', flexDirection: 'row', paddingLeft: '5px', gap: '10px', alignItems: 'center', justifyContent: 'flex-start'}}>
+                        <Input
+                            name="isManager"
+                            type="checkbox"
+                            value={isManager}
+                            style={{width: '75px', height: '75px'}}
+                            onChange={() => setIsManager(!isManager)}
+                        />
+                        <Label htmlFor='isManager' style={{display: 'flex', justifyContent: 'left', alignItems: 'center'}}> Are you a manager?</Label>
+                    </ButtonBox>
+                    </Legend>
+                </Fieldset>
+                <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Fieldset style={{width: '235px'}}>
+                        <Legend style={{width: '80px'}}> First name
+                            <Input
+                                name="firstName"
+                                type="text"
+                                placeholder="First name"
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                            />
                         </Legend>
                     </Fieldset>
-                <Fieldset>
-                    <Legend style={{width: '80px'}}> First name
-                        <Input
-                            name="firstName"
-                            type="text"
-                            placeholder="First name"
-                            value={firstName}
-                            onChange={(e) => setFirstName(e.target.value)}
-                        />
-                    </Legend>
-                </Fieldset>
-                <Fieldset>
-                    <Legend style={{width: '80px'}}> Last name
-                        <Input
-                            name="lastName"
-                            type="text"
-                            placeholder="Last name"
-                            value={lastName}
-                            onChange={(e) => setLastName(e.target.value)}
-                        />
-                    </Legend>
-                </Fieldset>
+                    <Fieldset style={{width: '235px'}}>
+                        <Legend style={{width: '80px'}}> Last name
+                            <Input
+                                name="lastName"
+                                type="text"
+                                placeholder="Last name"
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                            />
+                        </Legend>
+                    </Fieldset>
+                </div>
                 <Fieldset>
                     <Legend style={{width: '100px'}}> Profile image
                         <input
@@ -458,19 +479,19 @@ export const SignupForm = () => {
                         />
                     </Legend>
                 </Fieldset>
-                <Fieldset style={{height: '200px'}}>
-                    <Legend style={{width: '110px'}}> Job description
+                <Fieldset style={{height: '100px'}}>
+                    <Legend style={{width: '150px'}}> Job description
                         <textarea
                             name="jobDescription"
                             placeholder="Add your job description (255 character limit)."
                             value={jobDescription}
                             onChange={(e) => setJobDescription(e.target.value)}
-                            style={{width: "300px", height: "100px", resize: 'none', fontSize: '14px'}}
+                            style={{width: "500px", height: "75px", resize: 'none', fontSize: '14px'}}
                         />
                     </Legend>
                 </Fieldset>
                 <Fieldset>
-                    <Legend style={{width: '40px'}}> Age
+                    <Legend style={{width: '100px'}}> Date of birth
                         <Input
                             name="age"
                             type="date"
@@ -482,15 +503,16 @@ export const SignupForm = () => {
                         />
                     </Legend>
                 </Fieldset>
-                <Fieldset style={{height: '200px'}}>
-                    <Legend style={{width: '85px'}}> User details
+                <Fieldset style={{height: '100px', margin: 'none', padding: 'none'}}>
+                    <Legend style={{width: '105px'}}> User details
+                    <div style={{display: 'flex', flexDirection: 'row', width: '500px', height: '40px'}}>
                         <ButtonBox>
                             <Input
                                     name="deaf"
                                     type="checkbox"
                                     value={deaf}
                                     onChange={() => setDeaf(!deaf)}
-                                    style={{width: '50px', height: '50px'}}
+                                    style={{width: '100px', height: '100px'}}
                                 />
                             <Label htmlFor='deaf'> Are you deaf?
                             </Label>
@@ -501,58 +523,33 @@ export const SignupForm = () => {
                                 type="checkbox"
                                 value={wheelchair}
                                 onChange={() => setWheelchair(!wheelchair)}
-                                style={{width: '50px', height: '50px'}}
+                                style={{width: '100px', height: '100px'}}
                             />
                             <Label htmlFor='wheelchair'> Do you use a wheelchair?</Label>
                         </ButtonBox>
+                    </div>
+                    <div style={{display: 'flex', flexDirection: 'row'}}>
                         <ButtonBox>
-                            <Input
-                                name="learningDisabled"
-                                type="checkbox"
-                                value={learningDisabled}
-                                onChange={() => setLearningDisabled(!learningDisabled)}
-                                style={{width: '50px', height: '50px'}}
-                            />
-                            <Label htmlFor='learningDisabled'> Do you have learning disabilities?</Label>
+                                <Input
+                                    name="learningDisabled"
+                                    type="checkbox"
+                                    value={learningDisabled}
+                                    onChange={() => setLearningDisabled(!learningDisabled)}
+                                    style={{width: '100px', height: '100px'}}
+                                />
+                                <Label htmlFor='learningDisabled'> Do you have learning disabilities?</Label>
+                            </ButtonBox>
+                            <ButtonBox>
+                                <Input
+                                    name="lgbtq"
+                                    type="checkbox"
+                                    value={lgbtq}
+                                    onChange={() => setLgbtq(!lgbtq)}
+                                    style={{width: '100px', height: '100px'}}
+                                />
+                                <Label htmlFor='lgbtq'> Are you a part of the LGBTQIA+ community?</Label>
                         </ButtonBox>
-                        <ButtonBox>
-                            <Input
-                                name="lgbtq"
-                                type="checkbox"
-                                value={lgbtq}
-                                onChange={() => setLgbtq(!lgbtq)}
-                                style={{width: '50px', height: '50px'}}
-                            />
-                            <Label htmlFor='lgbtq'> Are you a part of the LGBTQIA+ community?</Label>
-                        </ButtonBox>
-                    </Legend>
-                </Fieldset>
-                <Fieldset style={{height: '200px'}}>
-                    <Legend style={{width: '150px'}}> Your organization
-                        <Input
-                            name='organizationId'
-                            type='text'
-                            value={organizationId}
-                            onChange={(e) => setOrganizationId(e.target.value)}
-                        />
-                        <ButtonBox>
-                            <Input
-                                name="isNonprofit"
-                                type="checkbox"
-                                value={isNonprofit}
-                                onChange={() => setIsNonprofit(!isNonprofit)}
-                            />
-                            <Label htmlFor='isNonprofit'> Is this a nonprofit?</Label>
-                        </ButtonBox>
-                        <ButtonBox>
-                            <Input
-                                name="isManager"
-                                type="checkbox"
-                                value={isManager}
-                                onChange={() => setIsManager(!isManager)}
-                            />
-                            <Label htmlFor='isManager'> Are you a manager?</Label>
-                        </ButtonBox>
+                    </div>
                     </Legend>
                 </Fieldset>
                 <Fieldset style={{height: '80px'}}>

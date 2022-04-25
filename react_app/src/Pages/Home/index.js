@@ -181,12 +181,23 @@ export const Home = () => {
     const posts = Object.values(postsObj)
     const requestsArr = []
     const itemsArr = []
+    const available = []
+    const unavailable = []
     const availableItems = []
     const unavailableItems = []
     const availableRequests = []
     const unavailableRequests = []
     const separateItems = posts.map(post => post.isItem === true  ? itemsArr.push(post) : requestsArr.push(post))
     const findAvailable = posts.map(post => post.isItem && post.status > 0 ? unavailableItems.push(post) : post.isItem && post.status === 0 ? availableItems.push(post) : post.isItem === false && post.status > 0 ? unavailableRequests.push(post) : availableRequests.push(post))
+    const allAvailable = posts.map(post => post.status === 0 ? available.push(post) : unavailable.push(post))
+
+    const dairyArr = []
+    const vegetablesArr = []
+    const fruitsArr = []
+    const grainsArr = []
+    const proteinArr = []
+
+    const categoriesSplit = posts.map(post => parseInt(post.categoryId) === 1 ? dairyArr.push(post) : parseInt(post.categoryId) === 2 ? vegetablesArr.push(post) : parseInt(post.categoryId) === 3 ? fruitsArr.push(post) : parseInt(post.categoryId) === 4 ? grainsArr.push(post) : proteinArr.push(post))
 
     // if(sessionUser && sessionUser.isNonprofit) {
         return(
@@ -206,18 +217,16 @@ export const Home = () => {
                         <SideLegend>Categories</SideLegend>
                         {categories.map((category, idx) => (
                             <SideBarInfoBox key={idx}>
-                                <SidebarInfoImage >
-                                    {category.category === 'Dairy' ?
-                                    <DairyIcon dimension={'small'} onClick={() => setMode('dairy')}/>
-                                    : category.category === 'Vegetables' ?
-                                    <VegetablesIcon dimension={'small'} onClick={() => setMode('vegetables')}/>
-                                    : category.category === 'Fruits' ?
-                                    <FruitsIcon dimension={'small'} onClick={() => setMode('fruits')}/>
-                                    : category.category === 'Grains' ?
-                                    <GrainsIcon onClick={() => setMode('grains')}/>
-                                    : <ProteinIcon dimension={'small'} onClick={() => setMode('protein')}/>
-                                    }
-                                </SidebarInfoImage>
+                                {category.category === 'Dairy' ?
+                                <SidebarInfoImage onClick={() => setMode('dairy')}><DairyIcon dimension={'small'}/></SidebarInfoImage>
+                                : category.category === 'Vegetables' ?
+                                <SidebarInfoImage onClick={() => setMode('vegetables')}><VegetablesIcon dimension={'small'}/></SidebarInfoImage>
+                                : category.category === 'Fruits' ?
+                                <SidebarInfoImage onClick={() => setMode('fruits')}><FruitsIcon dimension={'small'} onClick={() => setMode('fruits')}/></SidebarInfoImage>
+                                : category.category === 'Grains' ?
+                                <SidebarInfoImage onClick={() => setMode('grains')}><GrainsIcon onClick={() => setMode('grains')}/></SidebarInfoImage>
+                                : <SidebarInfoImage onClick={() => setMode('protein')}><ProteinIcon dimension={'small'} onClick={() => setMode('protein')}/></SidebarInfoImage>
+                                }
                                 <SideBarInfoText>{category.category}</SideBarInfoText>
                             </SideBarInfoBox>
                         ))}
@@ -248,14 +257,15 @@ export const Home = () => {
                 <div style={{display: 'flex', flexDirection: 'column', width: '895px', height: 'auto', gap: '25px'}}>
                     <h2 style={{marginTop: '0px'}}>Posts</h2>
                     <FeedContainer>
-                        {mode === 'available' && availableItems.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'request' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'available' && available.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'unavailable' && unavailable.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                         {mode === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'available' && availableItems.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'request' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'available' && availableItems.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'request' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'requests' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'dairy' && dairyArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'vegetables' && vegetablesArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'fruits' && fruitsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'grains' && grainsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                     </FeedContainer>
                 </div>
         </Wrapper>

@@ -31,7 +31,7 @@ const SideBarContainer = styled.div`
     align-items: left;
     justify-content: space-around;
     width: 200px;
-    height: 500px;
+    height: 750px;
     gap: 15px;
 `;
 
@@ -198,12 +198,41 @@ export const Home = () => {
     const proteinArr = []
 
     const categoriesSplit = posts.map(post => parseInt(post.categoryId) === 1 ? dairyArr.push(post) : parseInt(post.categoryId) === 2 ? vegetablesArr.push(post) : parseInt(post.categoryId) === 3 ? fruitsArr.push(post) : parseInt(post.categoryId) === 4 ? grainsArr.push(post) : proteinArr.push(post))
+    let favorites;
+    let favoritesArr;
+    if(sessionUser) {
+        favorites = Object.values(sessionUser.favorites)
+        favoritesArr = [];
+        favorites.map(fav => favoritesArr.push(posts[fav.postId]));
+    }
 
     // if(sessionUser && sessionUser.isNonprofit) {
         return(
             <Wrapper>
                 <SideBarContainer>
-                    <h2>Filter</h2>
+                    {!sessionUser && (
+                        <h2 style={{marginTop: '-10px', marginBottom: '-5px'}}>Filter</h2>
+                    )}
+                    {sessionUser && (
+                        <>
+                            <h2>Filter</h2>
+                            <PostField>
+                                <SideLegend>Favorites</SideLegend>
+                                <SideBarInfoBox onClick={() => setMode('favorites')}>
+                                    <div style={{textDecoration: 'underline'}}>My favorites</div>
+                                </SideBarInfoBox>
+                            </PostField>
+                        </>
+                    )}
+                    <PostField>
+                        <SideLegend>Availability</SideLegend>
+                        <SideBarInfoBox onClick={() => setMode('available')}>
+                            <div style={{textDecoration: 'underline'}}>All available</div>
+                        </SideBarInfoBox>
+                        <SideBarInfoBox onClick={() => setMode('unavailable')}>
+                           <div style={{textDecoration: 'underline'}}>All completed</div>
+                        </SideBarInfoBox>
+                    </PostField>
                     <PostField>
                         <SideLegend>Post type</SideLegend>
                         <SideBarInfoBox onClick={() => setMode('requests')}>
@@ -218,9 +247,9 @@ export const Home = () => {
                         {categories.map((category, idx) => (
                             <SideBarInfoBox key={idx}>
                                 {category.category === 'Dairy' ?
-                                <SidebarInfoImage onClick={() => setMode('dairy')}><DairyIcon dimension={'small'}/></SidebarInfoImage>
+                                <SidebarInfoImage style={mode==='dairy' ? {backgroundColor: 'red'} : {backgroundColor: 'none'}} onClick={() => setMode('dairy')}><DairyIcon dimension={'small'}/></SidebarInfoImage>
                                 : category.category === 'Vegetables' ?
-                                <SidebarInfoImage onClick={() => setMode('vegetables')}><VegetablesIcon dimension={'small'}/></SidebarInfoImage>
+                                <SidebarInfoImage style={mode==='vegetables' ? {backgroundColor: '#F5F5F5'} : {backgroundColor: 'none'}} onClick={() => setMode('vegetables')}><VegetablesIcon dimension={'small'}/></SidebarInfoImage>
                                 : category.category === 'Fruits' ?
                                 <SidebarInfoImage onClick={() => setMode('fruits')}><FruitsIcon dimension={'small'} onClick={() => setMode('fruits')}/></SidebarInfoImage>
                                 : category.category === 'Grains' ?
@@ -257,6 +286,7 @@ export const Home = () => {
                 <div style={{display: 'flex', flexDirection: 'column', width: '895px', height: 'auto', gap: '25px'}}>
                     <h2 style={{marginTop: '0px'}}>Posts</h2>
                     <FeedContainer>
+                        {!sessionUser && posts.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                         {mode === 'available' && available.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                         {mode === 'unavailable' && unavailable.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                         {mode === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
@@ -266,6 +296,7 @@ export const Home = () => {
                         {mode === 'fruits' && fruitsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                         {mode === 'grains' && grainsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                         {mode === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                     </FeedContainer>
                 </div>
         </Wrapper>

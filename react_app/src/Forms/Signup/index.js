@@ -195,6 +195,18 @@ const BusinessDemoButton = styled.div`
     cursor: pointer;
 `;
 
+const ErrorMessage = styled.div`
+    width: 450px;
+    height: 20px;
+    font-size: 10px;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 500;
+`;
+
 
 export const SignupForm = () => {
     const dispatch = useDispatch();
@@ -234,7 +246,6 @@ export const SignupForm = () => {
     const [passwordError, setPasswordError] = useState([]);
     const [confirmError, setConfirmError] = useState([]);
     const [responseErrors, setResponseErrors] = useState([]);
-    const [formErrors, setFormErrors] = useState([]);
 
     //dates
     const year = new Date().getFullYear()
@@ -255,7 +266,7 @@ export const SignupForm = () => {
         formData.append("image", image);
 
         const descriptionCap = jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length));
-
+        const nonprofitStatus = allOrganizations[organizationId].isNonprofit ? true : false;
         const inputData = {
             organizationId,
             firstName,
@@ -266,17 +277,14 @@ export const SignupForm = () => {
             wheelchair,
             learningDisabled,
             lgbtq,
-            isNonprofit,
+            isNonprofit: nonprofitStatus,
             isManager,
             email,
             phone,
             confirm
         }
-        const stagedPost = await validateSignup(inputData);
 
-        if(stagedPost.errors) {
-            setFormErrors(stagedPost.errors)
-        }
+        const stagedPost = await validateSignup(inputData);
 
         if(stagedPost.message === 'success') {
             setImageUploading(true);
@@ -290,7 +298,7 @@ export const SignupForm = () => {
 
                 if(!newUser.errors || !newUser.error) {
                     setImageUploading(false);
-                    history.pushState('/')
+                    history.push('/')
                     dispatch(hideModal())
                 } else {
                     const responseErrArr = []
@@ -300,8 +308,27 @@ export const SignupForm = () => {
                 }
                 dispatch(hideModal());
             }
+        } else {
+            setResponseErrors(stagedPost.errors)
         }
     };
+
+    const handleErrors = (e) => {
+        e.preventDefault();
+        if(!firstNameError.length &&
+            !lastNameError.length &&
+            !imageError.length &&
+            !jobDescriptionError.length &&
+            !dobError.length &&
+            !organizationError.length &&
+            !emailError.length &&
+            !phoneError.length &&
+            !passwordError.length &&
+            !confirmError.length
+            ) {
+                handleSubmit(e)
+            }
+    }
 
     const reset = (e) => {
         e.preventDefault();
@@ -566,7 +593,13 @@ export const SignupForm = () => {
             </PreviewBox>
             <FormBox>
                 <Form> Welcome to Mealize!
+                {responseErrors && (
+                        <ErrorMessage>{responseErrors[0]}</ErrorMessage>
+                    )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                {organizationError && (
+                        <ErrorMessage>{organizationError[0]}</ErrorMessage>
+                )}
                 <Fieldset style={{width: '235px'}}>
                     <Legend style={{width: '200px'}}> Select your organization
                     <div style={{display: 'flex', flexDirection: 'row', width: '200px', height: '30px', justifyContent: 'flex-start', alignItems: 'center'}}>
@@ -598,6 +631,12 @@ export const SignupForm = () => {
                     </Legend>
                 </Fieldset>
                 </div>
+                {firstNameError.length > 0 && (
+                        <ErrorMessage>{firstNameError[0]}</ErrorMessage>
+                    )}
+                {lastNameError.length > 0 && (
+                        <ErrorMessage>{lastNameError[0]}</ErrorMessage>
+                    )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Fieldset style={{width: '235px'}}>
                         <Legend style={{width: '80px'}}> First name
@@ -625,6 +664,12 @@ export const SignupForm = () => {
                     </Fieldset>
                 </div>
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    {imageError.length > 0 && (
+                        <ErrorMessage>{imageError[0]}</ErrorMessage>
+                    )}
+                    {dobError.length > 0 && (
+                        <ErrorMessage>{dobError[0]}</ErrorMessage>
+                    )}
                     <Fieldset style={{width: '235px', height: '40px'}}>
                         <Legend style={{width: '100px'}}> Profile image
                             <input
@@ -635,6 +680,7 @@ export const SignupForm = () => {
                             />
                         </Legend>
                     </Fieldset>
+
                     <Fieldset style={{width: '235px', height: '40px'}}>
                         <Legend style={{width: '100px'}}> Date of birth
                             <Input
@@ -650,6 +696,9 @@ export const SignupForm = () => {
                         </Legend>
                     </Fieldset>
                 </div>
+                {jobDescriptionError.length > 0 && (
+                        <ErrorMessage>{jobDescriptionError[0]}</ErrorMessage>
+                    )}
                 <Fieldset style={{height: '100px'}}>
                     <Legend style={{width: '120px'}}> Job description
                         <textarea
@@ -665,6 +714,12 @@ export const SignupForm = () => {
                     </Legend>
                 </Fieldset>
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                {emailError.length > 0 && (
+                        <ErrorMessage>{emailError[0]}</ErrorMessage>
+                    )}
+                    {phoneError.length > 0 && (
+                        <ErrorMessage>{phoneError[0]}</ErrorMessage>
+                    )}
                     <Fieldset style={{height: '40px', width: '235px'}}>
                         <Legend style={{width: '50px'}}> Email
                             <Input
@@ -691,6 +746,12 @@ export const SignupForm = () => {
                         </Legend>
                     </Fieldset>
                 </div>
+                {passwordError.length > 0 && (
+                        <ErrorMessage>{passwordError[0]}</ErrorMessage>
+                )}
+                {confirmError.length > 0 && (
+                        <ErrorMessage>{confirmError[0]}</ErrorMessage>
+                )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Fieldset style={{height: '40px', width: '235px'}}>
                     <Legend style={{width: '100px'}}> Password

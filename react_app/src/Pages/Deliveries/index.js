@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 const Wrapper = styled.div`
     width: 1550px;
     height: auto;
-    min-height: 2000px;
+    min-height: 900px;
     display: flex;
     flex-direction: row;
     align-items: top;
@@ -18,23 +18,24 @@ const Wrapper = styled.div`
     gap: 50px;
     padding-left: 50px;
     padding-top: 50px;
+    background-color: white;
 `
 
 const Header = styled.section`
     width: 300px;
     height: auto;
-    min-height: 2000px;
+    min-height: 600px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: left;
     gap: 10px;
+    background-color: #F5F5F5;
 `
 
 const MessageContent = styled.section`
     width: 1300px;
     height: auto;
-    min-height: 2000px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -53,10 +54,10 @@ const PageLabel = styled.div`
     align-items: center;
 `
 
-export const Messages = ({sessionUser}) => {
+export const Deliveries = ({sessionUser}) => {
     const dispatch = useDispatch()
-    const messages = useSelector(state => state.messages)
     const deliveries = useSelector(state => state.deliveries)
+    const posts = useSelector(state => state.posts)
     const users = useSelector(state => state.users)
 
     useEffect(() => {
@@ -67,8 +68,8 @@ export const Messages = ({sessionUser}) => {
     return (
         <Wrapper>
             <Header>
-                <PageLabel>Messages</PageLabel>
-                {messages.length && Object.values(messages).map((message, idx) => message.senderId !== sessionUser.id ?
+                <PageLabel>Deliveries</PageLabel>
+                {deliveries.length && Object.values(deliveries).map((delivery, idx) => message.senderId !== sessionUser.id ?
                     <div key={idx}>
                         <div>
                             <img src={users[messages.receiverId].profileImageUrl} alt='User profile.' />

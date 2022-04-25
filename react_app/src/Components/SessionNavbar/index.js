@@ -30,11 +30,10 @@ export const SessionNavbar = () => {
                 <Logo dimension={"medium"} />
                 <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
                 <Searchbar />
-                <div className={styles.signup}>User</div>
-                <div className={styles.signup}>Inbox</div>
-                <div className={styles.signup}>Notifications</div>
+                {/* <div className={styles.signup}>User</div> */}
+                <NavLink style={{textDecoration: 'none'}} to='/deliveries' exact className={styles.signup}>Deliveries</NavLink>
                 {sessionUser.isNonprofit ?
-                <div className={styles.signup} onClick={showItemForm}>New request</div>
+                <div style={{width: '100px'}} className={styles.signup} onClick={showItemForm}>New request</div>
                 :
                 <div className={styles.signup} onClick={showItemForm}>Post item</div>
                 }

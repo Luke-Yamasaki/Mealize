@@ -17,7 +17,6 @@ import { Volunteer } from '../../Assets/Icons/Volunteers';
 
 export const UserIdCard = ({ user }) => {
     const sessionUser = useSelector(state => state.session.user);
-    const [isManager, setIsManager] = useState(false);
     const organizations = useSelector(state => state.organization);
     const organization = sessionUser.isNonprofit ? organizations.nonprofits[sessionUser.organizationId] : organizations.businesses[sessionUser.organizationId];
 

@@ -1,11 +1,56 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { login, signup } from '../../store/session';
 import { validateSignup, uploadProfileImage } from '../../Helpers/FormValidations/signup';
 import { setCurrentModal, hideModal } from '../../store/modal';
 import { LoginForm } from '../Login';
+import { Business } from '../../Assets/Icons/Business';
+import { Nonprofit } from '../../Assets/Icons/Nonprofit';
+import { Volunteer } from '../../Assets/Icons/Volunteers';
+
 import styles from './Signup.module.css';
 import styled from 'styled-components';
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 1200px;
+    height: 900px;
+    background: linear-gradient(#28A690,#76D97E);
+    border-radius: 5px;
+    overflow: hidden;
+`;
+
+const PreviewBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 600px;
+    height: 900px;
+`;
+
+const UploadingBox = styled.div`
+    width: 400px;
+    height: 100px;
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const UploadingMessage = styled.div`
+    font-family: motiva-sans, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 900;
+    color: black;
+`;
 
 const Form = styled.form`
     width: 600px;
@@ -69,16 +114,18 @@ const ButtonBox = styled.div`
 
 export const SignupForm = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const organizations = useSelector(state => state.organizations);
 
     // states
+    const [isPrivate, setIsPrivate] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [image, setImage] = useState(null);
     const [jobDescription, setJobDescription] = useState('');
-    const [age, setAge] = useState(18);
+    const [dob, setDob] = useState(new Date().toISOString());
     const [deaf, setDeaf] = useState(false);
-    const [autism, setAutism] = useState(false);
+    const [wheelchair, setWheelchair] = useState(false);
     const [learningDisabled, setLearningDisabled] = useState(false);
     const [lgbtq, setLgbtq] = useState(false);
     const [organizationId, setOrganizationId] = useState('');
@@ -96,7 +143,7 @@ export const SignupForm = () => {
     const [lastNameError, setLastNameError] = useState([]);
     const [imageError, setImageError] = useState([]);
     const [jobDescriptionError, setJobDescriptionError] = useState([]);
-    const [ageError, setAgeError] = useState([]);
+    const [dobError, setDobError] = useState([]);
     const [organizationError, setOrganizationError] = useState([]);
     const [emailError, setEmailError] = useState([]);
     const [phoneError, setPhoneError] = useState([]);
@@ -111,16 +158,16 @@ export const SignupForm = () => {
         const formData = new FormData();
         formData.append("image", image);
 
-        const descriptionCap = description.slice(0, 1).toUpperCase().concat(description.slice(1, description.length));
+        const descriptionCap = jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length));
 
         const inputData = {
             organizationId,
             firstName,
             lastName,
             jobDescription: descriptionCap,
-            age,
+            dob,
             deaf,
-            autism,
+            wheelchair,
             learningDisabled,
             lgbtq,
             isNonprofit,
@@ -167,9 +214,9 @@ export const SignupForm = () => {
         setLastName('');
         setJobDescription('');
         setImage(null);
-        setAge(18);
+        setDob(new Date().toISOString());
         setDeaf(false);
-        setAutism(false);
+        setWheelchair(false);
         setLearningDisabled(false);
         setLgbtq(false);
         setOrganizationId('');
@@ -179,46 +226,181 @@ export const SignupForm = () => {
         setPhone(false);
         setPassword('');
         setConfirm('');
+        setIsPrivate(false);
 
         setFirstNameError([]);
         setLastNameError([]);
         setJobDescriptionError([]);
-        setAgeError([]);
+        setDobError([]);
         setOrganizationError([]);
         setEmailError([]);
-        setPasswodError([]);
         setPhoneError([]);
         setConfirmError([]);
         setImageError([]);
+
+        const imageInput = document.getElementById('profileImage');
+        imageInput.value = '';
+        imageInput.style.color = '#C2462A';
     };
+
+    const volunteerDemo = async (e) => {
+        e.preventDefault();
+        const emailErrArr =[]
+        const passwordErrArr =[];
+
+        const data = await dispatch(login('volunteer_demo@testing.com', '064324651d0-72fe-49c5-aa1-0ba223f4fcmv3'));
+        if(data.errors) {
+            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+            setEmailError(emailErrArr);
+            setConfirmError(passwordErrArr)
+        }
+        dispatch(hideModal())
+    }
 
     const nonprofitDemo = async (e) => {
         e.preventDefault();
+        const emailErrArr =[]
+        const passwordErrArr =[];
+
         const data = await dispatch(login('nonprofit_demo@testing.com', '062651d0-01fe-49c5-aaa1-0829ba3f4ff3'));
-        if(data && data.errors) {
-            setErrors(data.errors)
-            return 'Errors were found.';
+        if(data.errors) {
+            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+            setEmailError(emailErrArr);
+            setConfirmError(passwordErrArr)
         }
-        dispatch(hideModal());
+        dispatch(hideModal())
     };
 
     const businessDemo = async (e) => {
         e.preventDefault();
+        const emailErrArr =[]
+        const passwordErrArr =[];
+
         const data = await dispatch(login('business_demo@testing.com', '8f08d594-2275-4c8f-93f3-4cb6dbed4b70'));
-        if(data && data.errors) {
-            setErrors(data.errors)
-            return 'Errors were found.';
+        if(data.errors) {
+            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+            setEmailError(emailErrArr);
+            setConfirmError(passwordErrArr)
         }
-        dispatch(hideModal());
+        dispatch(hideModal())
     };
 
     const showLoginForm = () => {
 		dispatch(setCurrentModal(LoginForm));
 	};
 
+    const updateImage = (e) => {
+        const file = e.target.files[0];
+        const fileSize = file.size / 1024 / 1024; //convert to megabytes
+        if(fileSize > 2 ) {
+            e.target.value = '';
+            setImage('');
+            setImageError(['The file size is too large. Images must be under 2MB.'])
+        }
+        else {
+            e.target.style.color = '#608F41'
+            setImageError([])
+            setImage(file)
+        }
+    }
+
     return (
-        <Form> Welcome to Mealize!
-            {errors}
+        <Wrapper>
+            <PreviewBox>
+                <div className={styles.idCard}>
+                    <section className={styles.header}>
+                        <div className={styles.logoBox}>
+                            <p className={styles.logoType}>Mealize</p>
+                            <p className={styles.subText}>{ isManager ? 'Manager Id Card' : 'Volunteer Id Card' }</p>
+                        </div>
+                        <div className={styles.sloganBox}>
+                            <p className={styles.slogan}></p>
+                        </div>
+                        <div className={styles.iconBox}>
+                            <div className={styles.iconBg}>
+                                {isNonprofit ? <Nonprofit /> : <Business />}
+                            </div>
+                        </div>
+                    </section>
+                    <section className={styles.content}>
+                        <div className={styles.imageBox}>
+                            <img src={image ? URL.createObjectURL(image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} className={styles.image} alt='User profile.'/>
+                            <p className={styles.subText}>Id: 12345 </p>
+                            <p className={styles.subText}>Issued: {new Date().toISOString()}</p>
+                        </div>
+                        <div className={styles.userInfoBox}>
+                            <div className={styles.labels}>
+                                Name:
+                                <p className={styles.subText}>{firstName + ' ' + lastName}</p>
+                            </div>
+                            <div className={styles.labels}>
+                                DOB:
+                                <p className={styles.subText}>{dob}</p>
+                            </div>
+                            <div className={styles.labels}>
+                                Job description:
+                                <p className={styles.subText}>{jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length))}</p>
+                            </div>
+                        {!isPrivate && (
+                            <>
+                                {deaf && (
+                                    <div className={styles.labels}>
+                                        Deaf:
+                                        <p className={styles.subText}>This member is deaf.</p>
+                                    </div>
+                                )
+                                }
+                                {wheelchair && (
+                                    <div className={styles.labels}>
+                                        Wheelchair:
+                                        <p className={styles.subText}>This member uses a wheelchair.</p>
+                                    </div>
+                                )
+                                }
+                                {learningDisabled && (
+                                    <div className={styles.labels}>
+                                        Learning disabled:
+                                        <p className={styles.subText}>This member has learning disabilities.</p>
+                                    </div>
+                                )
+                                }
+                                {lgbtq && (
+                                    <div className={styles.labels}>
+                                        <p className={styles.subText}>This member belongs to the LGBTQIA+ community.</p>
+                                    </div>
+                                )
+                                }
+                            </>
+                        )}
+                    </div>
+                    <div className={styles.jobInfoBox}>
+                        <div className={styles.labels}>
+                            Organization name:
+                            <p className={styles.subText}>{organizationId ? organizations[organizationId].name : "Your organization's details."}</p>
+                        </div>
+                        <div className={styles.labels}>
+                            Email:
+                            <p className={styles.subText}>{organizationId ? organizations[organizationId].email : "Your organization's details."}</p>
+                        </div>
+                        <div className={styles.labels}>
+                            Phone:
+                            <p className={styles.subText}>{organizationId ? `(${organizations[organizationId].phone.slice(0, 3)}) - ${organizations[organizationId].phone.slice(3, 6)}-${organizations[organizationId].phone.slice(6, 10)}` : "Your organization's details."} </p>
+                        </div>
+                        <div className={styles.labels}>
+                            Address:
+                            <div className={styles.addressBox}>
+                                <p className={styles.subText}>{organizationId ? organizations[organizationId].street : "Your organization's details."},</p>
+                                <p className={styles.subText}>{organizationId ? `${organizations[organizationId].city}, ${organizations[organizationId].state[0].toUpperCase()+organizations[organizationId].state[1].toUpperCase()} ${organizations[organizationId].zip}` : "Your organization's details."}</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                </div>
+                {imageUploading && (
+                    <UploadingMessage>Uploading your profile image...</UploadingMessage>
+                )}
+            </PreviewBox>
+            <Form> Welcome to Mealize!
             <Fieldset>
                 <Legend style={{width: '80px'}}> First name
                     <Input
@@ -242,13 +424,12 @@ export const SignupForm = () => {
                 </Legend>
             </Fieldset>
             <Fieldset>
-                <Legend style={{width: '100px'}}> Profile picture
-                    <Input
-                        name="profileImageUrl"
-                        type="url"
-                        placeholder="https://example.com/image.jpg"
-                        value={profileImageUrl}
-                        onChange={(e) => setProfileImageUrl(e.target.value)}
+                <Legend style={{width: '100px'}}> Profile image
+                    <input
+                        id="profileImage"
+                        type="file"
+                        accept="image/png, image/jpeg, image/jpg"
+                        onChange={updateImage} required
                     />
                 </Legend>
             </Fieldset>
@@ -267,12 +448,12 @@ export const SignupForm = () => {
                 <Legend style={{width: '40px'}}> Age
                     <Input
                         name="age"
-                        type="number"
-                        min='18'
-                        max='90'
-                        placeholder="Your age (must be 18 or older)."
-                        value={age}
-                        onChange={(e) => setAge(e.target.value)}
+                        type="date"
+                        min='2004/04/24'
+                        max='1932/04/24'
+                        placeholder="Your DOB (must be 18 or older)."
+                        value={dob}
+                        onChange={(e) => setDob(e.target.value)}
                     />
                 </Legend>
             </Fieldset>
@@ -291,13 +472,13 @@ export const SignupForm = () => {
                     </ButtonBox>
                     <ButtonBox>
                         <Input
-                            name="autism"
+                            name="wheelchair"
                             type="checkbox"
-                            value={autism}
-                            onChange={() => setAutism(!autism)}
+                            value={wheelchair}
+                            onChange={() => setWheelchair(!wheelchair)}
                             style={{width: '50px', height: '50px'}}
                         />
-                        <Label htmlFor='autism'> Do you have autism?</Label>
+                        <Label htmlFor='wheelchair'> Do you use a wheelchair?</Label>
                     </ButtonBox>
                     <ButtonBox>
                         <Input
@@ -378,7 +559,7 @@ export const SignupForm = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <Input
-                        name="password"
+                        name="confirm"
                         type="password"
                         placeholder="Confirm password"
                         value={confirm}
@@ -393,6 +574,7 @@ export const SignupForm = () => {
             <div role='button' className={styles.nonprofit} onClick={nonprofitDemo}>Nonprofit demo</div>
             <div role='button' className={styles.business} onClick={businessDemo}>Business demo</div>
             <div className={styles.question}>Already have an account?<div className={styles.modalOption} onClick={showLoginForm}>Log in</div></div>
-        </Form>
+            </Form>
+        </Wrapper>
     )
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login, signup } from '../../store/session';
+import { validateSignup, uploadProfileImage } from '../../Helpers/FormValidations/signup';
 import { setCurrentModal, hideModal } from '../../store/modal';
 import { LoginForm } from '../Login';
 import styles from './Signup.module.css';
@@ -71,7 +72,7 @@ export const SignupForm = () => {
     // const organizations = useSelector(state => state.organizations);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [profileImageUrl, setProfileImageUrl] = useState(''); // Add a default placeholder image in src
+    const [image, setImage] = useState(null);
     const [jobDescription, setJobDescription] = useState('');
     const [age, setAge] = useState(18);
     const [deaf, setDeaf] = useState(false);
@@ -85,16 +86,32 @@ export const SignupForm = () => {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
-    const [errors, setErrors] = useState([])
+
+    // errors
+    const [firstNameError, setFirstNameError] = useState([]);
+    const [lastNameError, setLastNameError] = useState([]);
+    const [imageError, setImageError] = useState([]);
+    const [jobDescriptionError, setJobDescriptionError] = useState([]);
+    const [ageError, setAgeError] = useState([]);
+    const [organizationError, setOrganizationError] = useState([]);
+    const [emailError, setEmailError] = useState([]);
+    const [phoneError, setPhoneError] = useState([]);
+    const [passwordError, setPasswodError] = useState([]);
+    const [confirmError, setConfirmError] = useState([]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = {
+
+        const formData = new FormData();
+        formData.append("image", image);
+
+        const descriptionCap = description.slice(0, 1).toUpperCase().concat(description.slice(1, description.length));
+
+        const inputData = {
             organizationId,
             firstName,
             lastName,
-            profileImageUrl,
-            jobDescription,
+            jobDescription: descriptionCap,
             age,
             deaf,
             autism,
@@ -106,8 +123,8 @@ export const SignupForm = () => {
             phone,
             confirm
         }
-        const response = await dispatch(signup(data));
-        if(response && response.errors) {
+        const stagedPost = await dispatch(validateSignup(inputData));
+        if(!stagedPost.errors) {
             setErrors(response.errors)
             return 'Errors were found.';
         }

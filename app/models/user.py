@@ -21,7 +21,7 @@ class User(db.Model, UserMixin):
     learningDisabled = db.Column(db.Boolean, nullable=False)
     lgbtq = db.Column(db.Boolean, nullable=False)
     profileImageUrl = db.Column(db.String(2048), nullable=False)
-    jobDescription = db.Column(db.String(255), nullable=False)
+    jobDescription = db.Column(db.String(100), nullable=False)
     hashedPassword = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())

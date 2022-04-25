@@ -397,15 +397,48 @@ export const SignupForm = () => {
     }
 
     const handleFName = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        const regex = /\d+/g;
+
+        if(firstName.length >= 50) {
+            setFirstNameError(['First names must be shorter than 50 characters.'])
+        } else if(firstName.match(regex)) {
+            setFirstNameError(['You cannot add an integer to your name.'])
+        } else if (firstName === lastName) {
+            setLastNameError(['Your first and last names should be different.'])
+        } else {
+            setFirstNameError([])
+            setFirstName(e.target.value)
+        }
     }
 
     const handleLName = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        const regex = /\d+/g;
+
+        if(lastName.length >= 50) {
+            setLastNameError(['First names must be shorter than 50 characters.'])
+        } else if(lastName.match(regex)) {
+            setLastNameError(['You cannot add an integer to your name.'])
+        } else if (firstName === lastName) {
+            setLastNameError(['Your first and last names should be different.'])
+        } else {
+            setLastNameError([])
+            setLastName(e.target.value)
+        }
     }
 
     const handleDescription = (e) => {
         e.preventDefault();
+
+        if(jobDescription.length >= 100) {
+            setJobDescriptionError(['Job descriptions must be less than 100 characters.'])
+        } else if (jobDescription.length >= 24 && !jobDescription.includes(' ')) {
+            setJobDescriptionError(['Please add a line break.'])
+        } else {
+            setJobDescriptionError([]);
+            setJobDescription(e.target.value)
+        }
     }
 
     const handleEmail = (e) => {
@@ -425,7 +458,7 @@ export const SignupForm = () => {
     const handleConfirm = (e) => {
         e.preventDefault();
     }
-    
+
     return (
         <Wrapper>
             <PreviewBox>

@@ -72,12 +72,12 @@ export const Deliveries = () => {
         <Wrapper>
             <Header>
                 <PageLabel>Deliveries</PageLabel>
-                {deliveries && deliveries.deliveries.map((delivery, idx) => <div style={{width: '500px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center'}} key={idx} id={delivery.postId} onClick={(e) => setSelected(e.target.id)}><OrganizationCard organization={delivery.location} /></div>)}
+                {deliveries && deliveries.deliveries.map((delivery, idx) => <div style={{width: '500px', height: '200px', display: 'flex', alignItems: 'left', justifyContent: 'left', flexDirection: 'column'}} key={idx} id={delivery.postId} onClick={(e) => setSelected(e.target.id)}>Picking up at: <div>{`${delivery.date}`}</div><OrganizationCard organization={delivery.location} /></div>)}
             </Header>
             <MessageContent>
                 <div>
                     <div>
-                        {selected !== '' &&  <div><ItemCard post={posts.posts[selected]} /></div>}
+                        {selected !== '' &&  <div style={{width: '500px', height: '600px', backgroundColor: 'rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><ItemCard post={posts.posts[selected]} /></div>}
                     </div>
                 </div>
             </MessageContent>

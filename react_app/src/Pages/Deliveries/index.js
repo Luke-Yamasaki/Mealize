@@ -2,10 +2,12 @@
 import styled from 'styled-components';
 
 import { useDispatch, useSelector} from 'react-redux';
-
-import { getMessages } from '../../store/messages';
-import { getAllDeliveries } from '../../store/deliveries';
+import { useState } from 'react';
+import { getAllDeliveries, updateDelivery, deleteDelivery } from '../../store/deliveries';
 import { useEffect } from 'react';
+
+import { ItemCard } from '../../Components/ItemCard';
+import { OrganizationCard } from '../../Components/OrganizationCard';
 
 const Wrapper = styled.div`
     width: 1550px;
@@ -54,52 +56,48 @@ const PageLabel = styled.div`
     align-items: center;
 `
 
-export const Deliveries = ({sessionUser}) => {
+export const Deliveries = ({sessionUser, deliveries}) => {
     const dispatch = useDispatch()
-    const deliveries = useSelector(state => state.deliveries)
-    const posts = useSelector(state => state.posts)
-    const users = useSelector(state => state.users)
-
-    useEffect(() => {
-        dispatch(getAllDeliveries(sessionUser.organizationId))
-        dispatch(getMessages(sessionUser.id))
-    },[])
+    const posts = useSelector(state => state.posts);
+    const users = useSelector(state => state.users);
+    const [selected, setSelected] = useState('');
+    console.log(Object.values(deliveries.deliveries))
 
     return (
         <Wrapper>
             <Header>
                 <PageLabel>Deliveries</PageLabel>
-                {deliveries.length && Object.values(deliveries).map((delivery, idx) => message.senderId !== sessionUser.id ?
-                    <div key={idx}>
-                        <div>
-                            <img src={users[messages.receiverId].profileImageUrl} alt='User profile.' />
-                            <p>{users[messages.receiverId].firstName}</p>
-                        </div>
-                        <div>
-                            <p>{message.title}</p>
-                            <p>{message.content}</p>
-                        </div>
-                    </div>
-                    :
-                    <div key={idx}>
-                        <div>
-                            <img src={sessionUser.profileImageUrl} alt='Your profile.' />
-                            <p>{sessionUser.firstName}</p>
-                        </div>
-                        <div>
-                            <p>{message.title}</p>
-                            <p>{message.content}</p>
-                        </div>
-                    </div>
-                )}
+                {Object.values(deliveries.deliveries).map((delivery, idx) => <OrganizationCard key={idx} organization={delivery.location} />)}
             </Header>
             <MessageContent>
                 <div>
                     <div>
-                        Hello
+                        {/* {deliveries.map((delivery, idx) => <ItemCard key={idx} post={posts[delivery.postId]} /> )} */}
                     </div>
                 </div>
             </MessageContent>
         </Wrapper>
     )
 }
+
+//<div key={idx}>
+{/* <div>
+<img src={users[messages.receiverId].profileImageUrl} alt='User profile.' />
+<p>{users[messages.receiverId].firstName}</p>
+</div>
+<div>
+<p>{message.title}</p>
+<p>{message.content}</p>
+</div>
+</div>
+:
+<div key={idx}>
+<div>
+<img src={sessionUser.profileImageUrl} alt='Your profile.' />
+<p>{sessionUser.firstName}</p>
+</div>
+<div>
+<p>{message.title}</p>
+<p>{message.content}</p>
+</div>
+</div> */}

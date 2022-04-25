@@ -7,6 +7,7 @@ import { getCategories } from './store/categories';
 import { getBatchedOrganizations } from './store/organizations';
 import { getBatchedUsers } from './store/users';
 import { getAllPosts } from './store/posts';
+import { getAllDeliveries } from './store/deliveries';
 // Components
 import { Home } from './Pages/Home';
 // import { About } from './Pages/About';
@@ -27,6 +28,7 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const deliveries = useSelector(state => state.deliveries)
 
   useEffect(() => {
     (async () => {
@@ -35,6 +37,7 @@ function App() {
       await dispatch(getBatchedOrganizations())
       await dispatch(getAllPosts())
       await dispatch(getBatchedUsers())
+      await dispatch(getAllDeliveries())
       setIsLoaded(true);
     })();
   },[dispatch]);
@@ -77,7 +80,7 @@ function App() {
             <h1>Search results</h1>
           </Route>
           <Route exact path='/deliveries'>
-            <Deliveries sessionUser={sessionUser}/>
+            <Deliveries sessionUser={sessionUser} deliveries={deliveries}/>
           </Route>
           <Route>
             <div style={{fontFamily: 'motiva-sans, sans-serif', fontWeight: '900', paddingTop: '20px', fontSize: '48px', width: '1600px', height: '60vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}> 404 Not Found. <img style={{objectFit: 'cover', objectPosition: 'center', width: '600px', height: '700px'}}src='https://live.staticflickr.com/2080/1576740677_c983d27842_b.jpg' alt='404 error' /></div>

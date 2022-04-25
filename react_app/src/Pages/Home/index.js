@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-
+import { useState } from 'react';
 //components
 import { ItemCard } from '../../Components/ItemCard';
 import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
@@ -164,31 +164,41 @@ const FeedContainer = styled.div`
 export const Home = () => {
     const sessionUser = useSelector(state => state.session.user);
     const categoriesObj = useSelector(state => state.categories)
-    const organizationsObj = useSelector(state => state.organizations)
-    const postsObj = useSelector(state => state.posts.posts)
-    const messages = useSelector(state => state.posts.messages)
+    // const organizationsObj = useSelector(state => state.organizations)
+    const categories = Object.values(categoriesObj);
+    const postsObj = useSelector(state => state.posts.posts);
+    const [mode, setMode] = useState('available')
+    // const messages = useSelector(state => state.posts.messages)
     // const [categories, setCategories] = useState(Object.values(categoriesObj));
     // const [businesses, setBusinesses] = useState(Object.values(organizationsObj.businesses));
     // const [nonprofits, setNonprofits] = useState(Object.values(organizationsObj.nonprofits));
-    const categories = Object.values(categoriesObj);
-    const businesses = Object.values(organizationsObj.businesses);
-    const threeBusinesses = businesses.slice(0, 3);
-    const nonprofits = Object.values(organizationsObj.nonprofits);
-    const threeNonprofits = nonprofits.slice(0, 3);
+
+    // const businesses = Object.values(organizationsObj.businesses);
+    // const threeBusinesses = businesses.slice(0, 3);
+    // const nonprofits = Object.values(organizationsObj.nonprofits);
+    // const threeNonprofits = nonprofits.slice(0, 3);
 
     const posts = Object.values(postsObj)
+    const requestsArr = []
+    const itemsArr = []
+    const availableItems = []
+    const unavailableItems = []
+    const availableRequests = []
+    const unavailableRequests = []
+    const separateItems = posts.map(post => post.isItem === true  ? itemsArr.push(post) : requestsArr.push(post))
+    const findAvailable = posts.map(post => post.isItem && post.status > 0 ? unavailableItems.push(post) : post.isItem && post.status === 0 ? availableItems.push(post) : post.isItem === false && post.status > 0 ? unavailableRequests.push(post) : availableRequests.push(post))
 
     // if(sessionUser && sessionUser.isNonprofit) {
         return(
             <Wrapper>
                 <SideBarContainer>
-                    Filter
+                    <h2>Filter</h2>
                     <PostField>
                         <SideLegend>Post type</SideLegend>
-                        <SideBarInfoBox>
+                        <SideBarInfoBox onClick={() => setMode('requests')}>
                           <Business /> <div>Requests</div>
                         </SideBarInfoBox>
-                        <SideBarInfoBox>
+                        <SideBarInfoBox onClick={() => setMode('items')}>
                            <Nonprofit /> <div>Items</div>
                         </SideBarInfoBox>
                     </PostField>
@@ -198,14 +208,14 @@ export const Home = () => {
                             <SideBarInfoBox key={idx}>
                                 <SidebarInfoImage >
                                     {category.category === 'Dairy' ?
-                                    <DairyIcon dimension={'small'}/>
+                                    <DairyIcon dimension={'small'} onClick={() => setMode('dairy')}/>
                                     : category.category === 'Vegetables' ?
-                                    <VegetablesIcon dimension={'small'}/>
+                                    <VegetablesIcon dimension={'small'} onClick={() => setMode('vegetables')}/>
                                     : category.category === 'Fruits' ?
-                                    <FruitsIcon dimension={'small'}/>
+                                    <FruitsIcon dimension={'small'} onClick={() => setMode('fruits')}/>
                                     : category.category === 'Grains' ?
-                                    <GrainsIcon />
-                                    : <ProteinIcon dimension={'small'}/>
+                                    <GrainsIcon onClick={() => setMode('grains')}/>
+                                    : <ProteinIcon dimension={'small'} onClick={() => setMode('protein')}/>
                                     }
                                 </SidebarInfoImage>
                                 <SideBarInfoText>{category.category}</SideBarInfoText>
@@ -235,38 +245,19 @@ export const Home = () => {
                     ))}
                     </OrganizationField> */}
                 </SideBarContainer>
-                <div style={{display: 'flex', flexDirection: 'column', width: '895px', height: 'auto', gap: '25px'}}> Posts
+                <div style={{display: 'flex', flexDirection: 'column', width: '895px', height: 'auto', gap: '25px'}}>
+                    <h2 style={{marginTop: '0px'}}>Posts</h2>
                     <FeedContainer>
-                        {posts && posts.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser} />)}
+                        {mode === 'available' && availableItems.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'request' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'available' && availableItems.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'request' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'available' && availableItems.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                        {mode === 'request' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                     </FeedContainer>
                 </div>
-                {/* <SideBarContainer> */}
-                    {/* <SideLegend>Events</SideLegend> */}
-                {/* <EventField>
-                    <EventLegend>Events</EventLegend>
-                </EventField> */}
-                {/* </SideBarContainer> */}
         </Wrapper>
         )
-    // } else {
-    //     return (
-    //         <Wrapper>
-    //             <SideBarContainer>
-    //                 Filter
-    //             <SideBar />
-    //             <SideBar />
-    //             <SideBar />
-    //             </SideBarContainer>
-    //             <div style={{display: 'flex', flexDirection: 'column', width: '60%', height: 'auto'}}> Posts
-    //                 <FeedContainer>
-    //                 {posts && Object.entries(posts).map(post => <ItemCard key={post[1].id} post={post[1]} sessionUser={sessionUser} />)}
-    //                 </FeedContainer>
-    //             </div>
-    //             <SideBarContainer>
-    //                 Map
-    //             <SideBar />
-    //             </SideBarContainer>
-    //         </Wrapper>
-    //     )
-    // };
 };

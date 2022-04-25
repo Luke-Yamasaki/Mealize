@@ -52,21 +52,33 @@ const UploadingMessage = styled.div`
     color: black;
 `;
 
-const Form = styled.form`
+const FormBox = styled.div`
     width: 600px;
     height: 900px;
+    background-color: #F5F5F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const Form = styled.form`
+    width: 575px;
+    height: 875px;
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
     border-radius: 5px;
-    font-size: 28px;
+    1px solid rgb(213, 213, 213);
+    font-family: motiva-sans, sans-serif;
+    font-weight: 900;
+    font-size: 32px;
 `;
 
 const Fieldset = styled.fieldset`
     width: 300px;
-    height: 35px;
+    height: 40px;
     border: 1px solid #28A690;
     font-size: 16px;
     display: flex;
@@ -75,24 +87,26 @@ const Fieldset = styled.fieldset`
     justify-content: center;
     margin: 0px;
     padding-left: 5px;
+    font-weight: 500;
 `;
 
 const Legend = styled.legend`
     color: #28A690;
     font-size: 16px;
-    width: 70px;
+    width: 300px;
     height: 15px;
+    font-weight: 500;
+    color: black;
 `;
 
 const Label = styled.label`
     font-size: 12px;
     width: 1000px;
     height: 30px;
-
 `;
 
 const Input = styled.input`
-    width: 308px;
+    width: 350px;
     height: 30px;
     font-size: 16px;
     border: none;
@@ -328,44 +342,45 @@ export const SignupForm = () => {
                             <p style={{fontFamily: 'motiva-sans, sans-serif', fontSize: '10px', fontWeight: '700', fontStyle: 'normal', paddingTop: '5px', paddingBottom: '5px', margin: '0px', height: '15px'}}>Issued: {new Date().toISOString().split('T')[0].slice(0,11)}</p>
                         </div>
                         <div className={styles.userInfoBox}>
-                            <div className={styles.labels}>
-                                Name:
-                                <p className={styles.subText}>{firstName + ' ' + lastName}</p>
+                            <div className={styles.labelText}>
+                                <div className={styles.labels}>Name:</div>
+                                <div className={styles.subText}>{firstName + ' ' + lastName}</div>
                             </div>
-                            <div className={styles.labels}>
-                                DOB:
-                                <p className={styles.subText}>{dob}</p>
+                            <div className={styles.labelText}>
+                                <div className={styles.labels}>DOB:</div>
+                                <div className={styles.subText}>{dob}</div>
                             </div>
-                            <div className={styles.labels}>
-                                Job description:
-                                <p className={styles.subText}>{jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length))}</p>
+                            <div className={styles.labelText}>
+                                <div className={styles.labels}>Job description:</div>
+                                <div className={styles.subText}>{jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length))}</div>
                             </div>
                         {!isPrivate && (
                             <>
                                 {deaf && (
-                                    <div className={styles.labels}>
-                                        Deaf:
-                                        <p className={styles.subText}>This member is deaf.</p>
+                                    <div className={styles.labelText}>
+                                        <div className={styles.labels}></div>Deaf:
+                                        <div className={styles.subText}>This member is deaf.</div>
                                     </div>
                                 )
                                 }
                                 {wheelchair && (
-                                    <div className={styles.labels}>
-                                        Wheelchair:
-                                        <p className={styles.subText}>This member uses a wheelchair.</p>
+                                    <div className={styles.labelText}>
+                                        <div className={styles.labels}></div>Wheelchair:
+                                        <div className={styles.subText}>This member uses a wheelchair.</div>
                                     </div>
                                 )
                                 }
                                 {learningDisabled && (
-                                    <div className={styles.labels}>
-                                        Learning disabled:
-                                        <p className={styles.subText}>This member has learning disabilities.</p>
+                                    <div className={styles.labelText}>
+                                        <div className={styles.labels}>Learning disabled:</div>
+                                        <div className={styles.subText}>This member has learning disabilities.</div>
                                     </div>
                                 )
                                 }
                                 {lgbtq && (
-                                    <div className={styles.labels}>
-                                        <p className={styles.subText}>This member belongs to the LGBTQIA+ community.</p>
+                                    <div className={styles.labelText}>
+                                        <div className={styles.labels}>LGBTQIA+:</div>
+                                        <div className={styles.subText}>This member belongs to the LGBTQIA+ community.</div>
                                     </div>
                                 )
                                 }
@@ -373,24 +388,22 @@ export const SignupForm = () => {
                         )}
                     </div>
                     <div className={styles.jobInfoBox}>
-                        <div className={styles.labels}>
-                            Organization name:
-                            <p className={styles.subText}>{organizationId ? organizations[organizationId].name : "Your organization's details."}</p>
+                        <div className={styles.labels}>Organization info</div>
+                        <div className={styles.labelText}>
+                            <div className={styles.labels}>Name:</div>
+                            <div className={styles.subText}>{organizationId ? organizations[organizationId].name : "Company details."}</div>
                         </div>
-                        <div className={styles.labels}>
-                            Email:
-                            <p className={styles.subText}>{organizationId ? organizations[organizationId].email : "Your organization's details."}</p>
+                        <div className={styles.labelText}>
+                            <div className={styles.labels}>Email:</div>
+                            <div className={styles.subText}>{organizationId ? organizations[organizationId].email : "Company details."}</div>
                         </div>
-                        <div className={styles.labels}>
-                            Phone:
-                            <p className={styles.subText}>{organizationId ? `(${organizations[organizationId].phone.slice(0, 3)}) - ${organizations[organizationId].phone.slice(3, 6)}-${organizations[organizationId].phone.slice(6, 10)}` : "Your organization's details."} </p>
+                        <div className={styles.labelText}>
+                            <div className={styles.labels}>Phone:</div>
+                            <div className={styles.subText}>{organizationId ? `(${organizations[organizationId].phone.slice(0, 3)}) - ${organizations[organizationId].phone.slice(3, 6)}-${organizations[organizationId].phone.slice(6, 10)}` : "Company details."} </div>
                         </div>
-                        <div className={styles.labels}>
-                            Address:
-                            <div className={styles.addressBox}>
-                                <p className={styles.subText}>{organizationId ? organizations[organizationId].street : "Your organization's details."},</p>
-                                <p className={styles.subText}>{organizationId ? `${organizations[organizationId].city}, ${organizations[organizationId].state[0].toUpperCase()+organizations[organizationId].state[1].toUpperCase()} ${organizations[organizationId].zip}` : "Your organization's details."}</p>
-                            </div>
+                        <div className={styles.labelText}>
+                            <div className={styles.labels}>Address:</div>
+                            <div className={styles.subText}>{organizationId ? `${organizations[organizationId].street}, ${organizations[organizationId].city}, ${organizations[organizationId].state[0].toUpperCase()+organizations[organizationId].state[1].toUpperCase()} ${organizations[organizationId].zip}` : "Company details."}</div>
                         </div>
                     </div>
                 </section>
@@ -401,181 +414,194 @@ export const SignupForm = () => {
                     </UploadingBox>
                 )}
             </PreviewBox>
-            <Form> Welcome to Mealize!
-            <Fieldset>
-                <Legend style={{width: '80px'}}> First name
-                    <Input
-                        name="firstName"
-                        type="text"
-                        placeholder="First name"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                    />
-                </Legend>
-            </Fieldset>
-            <Fieldset>
-                <Legend style={{width: '80px'}}> Last name
-                    <Input
-                        name="lastName"
-                        type="text"
-                        placeholder="Last name"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                    />
-                </Legend>
-            </Fieldset>
-            <Fieldset>
-                <Legend style={{width: '100px'}}> Profile image
-                    <input
-                        id="profileImage"
-                        type="file"
-                        accept="image/png, image/jpeg, image/jpg"
-                        onChange={updateImage} required
-                    />
-                </Legend>
-            </Fieldset>
-            <Fieldset style={{height: '200px'}}>
-                <Legend style={{width: '110px'}}> Job description
-                    <textarea
-                        name="jobDescription"
-                        placeholder="Add your job description (255 character limit)."
-                        value={jobDescription}
-                        onChange={(e) => setJobDescription(e.target.value)}
-                        style={{width: "300px", height: "100px", resize: 'none', fontSize: '14px'}}
-                    />
-                </Legend>
-            </Fieldset>
-            <Fieldset>
-                <Legend style={{width: '40px'}}> Age
-                    <Input
-                        name="age"
-                        type="date"
-                        min='2004/04/24'
-                        max='1932/04/24'
-                        placeholder="Your DOB (must be 18 or older)."
-                        value={dob}
-                        onChange={(e) => setDob(e.target.value)}
-                    />
-                </Legend>
-            </Fieldset>
-            <Fieldset style={{height: '200px'}}>
-                <Legend style={{width: '85px'}}> User details
-                    <ButtonBox>
+            <FormBox>
+                <Form> Welcome to Mealize!
+                    <Fieldset>
+                        <Legend> Organization:
+                            <select>
+                                <optgroup>
+                                    
+                                </optgroup>
+                            </select>
+
+                        </Legend>
+                    </Fieldset>
+                <Fieldset>
+                    <Legend style={{width: '80px'}}> First name
                         <Input
-                                name="deaf"
+                            name="firstName"
+                            type="text"
+                            placeholder="First name"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                        />
+                    </Legend>
+                </Fieldset>
+                <Fieldset>
+                    <Legend style={{width: '80px'}}> Last name
+                        <Input
+                            name="lastName"
+                            type="text"
+                            placeholder="Last name"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                        />
+                    </Legend>
+                </Fieldset>
+                <Fieldset>
+                    <Legend style={{width: '100px'}}> Profile image
+                        <input
+                            id="profileImage"
+                            type="file"
+                            accept="image/png, image/jpeg, image/jpg"
+                            onChange={updateImage} required
+                        />
+                    </Legend>
+                </Fieldset>
+                <Fieldset style={{height: '200px'}}>
+                    <Legend style={{width: '110px'}}> Job description
+                        <textarea
+                            name="jobDescription"
+                            placeholder="Add your job description (255 character limit)."
+                            value={jobDescription}
+                            onChange={(e) => setJobDescription(e.target.value)}
+                            style={{width: "300px", height: "100px", resize: 'none', fontSize: '14px'}}
+                        />
+                    </Legend>
+                </Fieldset>
+                <Fieldset>
+                    <Legend style={{width: '40px'}}> Age
+                        <Input
+                            name="age"
+                            type="date"
+                            min='2004/04/24'
+                            max='1932/04/24'
+                            placeholder="Your DOB (must be 18 or older)."
+                            value={dob}
+                            onChange={(e) => setDob(e.target.value)}
+                        />
+                    </Legend>
+                </Fieldset>
+                <Fieldset style={{height: '200px'}}>
+                    <Legend style={{width: '85px'}}> User details
+                        <ButtonBox>
+                            <Input
+                                    name="deaf"
+                                    type="checkbox"
+                                    value={deaf}
+                                    onChange={() => setDeaf(!deaf)}
+                                    style={{width: '50px', height: '50px'}}
+                                />
+                            <Label htmlFor='deaf'> Are you deaf?
+                            </Label>
+                        </ButtonBox>
+                        <ButtonBox>
+                            <Input
+                                name="wheelchair"
                                 type="checkbox"
-                                value={deaf}
-                                onChange={() => setDeaf(!deaf)}
+                                value={wheelchair}
+                                onChange={() => setWheelchair(!wheelchair)}
                                 style={{width: '50px', height: '50px'}}
                             />
-                        <Label htmlFor='deaf'> Are you deaf?
-                        </Label>
-                    </ButtonBox>
-                    <ButtonBox>
+                            <Label htmlFor='wheelchair'> Do you use a wheelchair?</Label>
+                        </ButtonBox>
+                        <ButtonBox>
+                            <Input
+                                name="learningDisabled"
+                                type="checkbox"
+                                value={learningDisabled}
+                                onChange={() => setLearningDisabled(!learningDisabled)}
+                                style={{width: '50px', height: '50px'}}
+                            />
+                            <Label htmlFor='learningDisabled'> Do you have learning disabilities?</Label>
+                        </ButtonBox>
+                        <ButtonBox>
+                            <Input
+                                name="lgbtq"
+                                type="checkbox"
+                                value={lgbtq}
+                                onChange={() => setLgbtq(!lgbtq)}
+                                style={{width: '50px', height: '50px'}}
+                            />
+                            <Label htmlFor='lgbtq'> Are you a part of the LGBTQIA+ community?</Label>
+                        </ButtonBox>
+                    </Legend>
+                </Fieldset>
+                <Fieldset style={{height: '200px'}}>
+                    <Legend style={{width: '150px'}}> Your organization
                         <Input
-                            name="wheelchair"
-                            type="checkbox"
-                            value={wheelchair}
-                            onChange={() => setWheelchair(!wheelchair)}
-                            style={{width: '50px', height: '50px'}}
+                            name='organizationId'
+                            type='text'
+                            value={organizationId}
+                            onChange={(e) => setOrganizationId(e.target.value)}
                         />
-                        <Label htmlFor='wheelchair'> Do you use a wheelchair?</Label>
-                    </ButtonBox>
-                    <ButtonBox>
+                        <ButtonBox>
+                            <Input
+                                name="isNonprofit"
+                                type="checkbox"
+                                value={isNonprofit}
+                                onChange={() => setIsNonprofit(!isNonprofit)}
+                            />
+                            <Label htmlFor='isNonprofit'> Is this a nonprofit?</Label>
+                        </ButtonBox>
+                        <ButtonBox>
+                            <Input
+                                name="isManager"
+                                type="checkbox"
+                                value={isManager}
+                                onChange={() => setIsManager(!isManager)}
+                            />
+                            <Label htmlFor='isManager'> Are you a manager?</Label>
+                        </ButtonBox>
+                    </Legend>
+                </Fieldset>
+                <Fieldset style={{height: '80px'}}>
+                    <Legend style={{width: '140px'}}> Contact information
                         <Input
-                            name="learningDisabled"
-                            type="checkbox"
-                            value={learningDisabled}
-                            onChange={() => setLearningDisabled(!learningDisabled)}
-                            style={{width: '50px', height: '50px'}}
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
-                        <Label htmlFor='learningDisabled'> Do you have learning disabilities?</Label>
-                    </ButtonBox>
-                    <ButtonBox>
                         <Input
-                            name="lgbtq"
-                            type="checkbox"
-                            value={lgbtq}
-                            onChange={() => setLgbtq(!lgbtq)}
-                            style={{width: '50px', height: '50px'}}
+                            name="phone"
+                            type="tel"
+                            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                            placeholder="Phone number"
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
                         />
-                        <Label htmlFor='lgbtq'> Are you a part of the LGBTQIA+ community?</Label>
-                    </ButtonBox>
-                </Legend>
-            </Fieldset>
-            <Fieldset style={{height: '200px'}}>
-                <Legend style={{width: '150px'}}> Your organization
-                    <Input
-                        name='organizationId'
-                        type='text'
-                        value={organizationId}
-                        onChange={(e) => setOrganizationId(e.target.value)}
-                    />
-                    <ButtonBox>
+                    </Legend>
+                </Fieldset>
+                <Fieldset style={{height: '80px'}}>
+                    <Legend style={{width: '100px'}}> Set password
                         <Input
-                            name="isNonprofit"
-                            type="checkbox"
-                            value={isNonprofit}
-                            onChange={() => setIsNonprofit(!isNonprofit)}
+                            name="password"
+                            type="password"
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
-                        <Label htmlFor='isNonprofit'> Is this a nonprofit?</Label>
-                    </ButtonBox>
-                    <ButtonBox>
                         <Input
-                            name="isManager"
-                            type="checkbox"
-                            value={isManager}
-                            onChange={() => setIsManager(!isManager)}
+                            name="confirm"
+                            type="password"
+                            placeholder="Confirm password"
+                            value={confirm}
+                            onChange={(e) => setConfirm(e.target.value)}
                         />
-                        <Label htmlFor='isManager'> Are you a manager?</Label>
-                    </ButtonBox>
-                </Legend>
-            </Fieldset>
-            <Fieldset style={{height: '80px'}}>
-                <Legend style={{width: '140px'}}> Contact information
-                    <Input
-                        name="email"
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <Input
-                        name="phone"
-                        type="tel"
-                        pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                        placeholder="Phone number"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                    />
-                </Legend>
-            </Fieldset>
-            <Fieldset style={{height: '80px'}}>
-                <Legend style={{width: '100px'}}> Set password
-                    <Input
-                        name="password"
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <Input
-                        name="confirm"
-                        type="password"
-                        placeholder="Confirm password"
-                        value={confirm}
-                        onChange={(e) => setConfirm(e.target.value)}
-                    />
-                </Legend>
-            </Fieldset>
-            <ButtonBox>
-                <div role='button' className={styles.cancel} onClick={reset}>Reset</div>
-                <div role='button' className={styles.submit} onClick={handleSubmit}>Submit</div>
-            </ButtonBox>
-            <div role='button' className={styles.nonprofit} onClick={nonprofitDemo}>Nonprofit demo</div>
-            <div role='button' className={styles.business} onClick={businessDemo}>Business demo</div>
-            <div className={styles.question}>Already have an account?<div className={styles.modalOption} onClick={showLoginForm}>Log in</div></div>
-            </Form>
+                    </Legend>
+                </Fieldset>
+                <ButtonBox>
+                    <div className={styles.cancel} onClick={reset}>Reset</div>
+                    <div className={styles.submit} onClick={handleSubmit}>Submit</div>
+                </ButtonBox>
+                <div className={styles.business} onClick={volunteerDemo}>Volunteer demo</div>
+                <div className={styles.nonprofit} onClick={nonprofitDemo}>Nonprofit demo</div>
+                <div className={styles.business} onClick={businessDemo}>Business demo</div>
+                <div className={styles.question}>Already have an account?<div className={styles.modalOption} onClick={showLoginForm}>Log in</div></div>
+                </Form>
+            </FormBox>
         </Wrapper>
     )
 }

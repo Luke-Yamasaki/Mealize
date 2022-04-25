@@ -235,42 +235,38 @@ export const LoginForm = () => {
         const passwordErrArr =[];
 
         const data = await dispatch(login('volunteer_demo@testing.com', '064324651d0-72fe-49c5-aa1-0ba223f4fcmv3'));
-        if(data && data.errors.length > 0) {
-            for(let i = 0; i < data.errors.length; i++) {
-                if(data.errors[i].toLowerCase().includes('email')) {
-                    emailErrArr.push(data.errors[i])
-                    i++;
-                } else {
-                    passwordErrArr.push(data.errors[i]);
-                    i++;
-                }
-            }
+        if(data.errors) {
+            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
             setEmailError(emailErrArr);
             setPasswordError(passwordErrArr)
         }
-        if(data && !data.errors.length) {
-          dispatch(hideModal())
-        }
+        dispatch(hideModal())
     }
 
     const nonprofitDemo = async (e) => {
         e.preventDefault();
+        const emailErrArr =[]
+        const passwordErrArr =[];
         const data = await dispatch(login('nonprofit_demo@testing.com', '062651d0-01fe-49c5-aaa1-0829ba3f4ff3'));
-        if(data && data.errors) {
-            data.errors.forEach(error => error.toLowerCase().includes('email') ? setEmailError(error) : setPasswordError(error));
-            return 'Error';
+        if(data.errors) {
+            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+            setEmailError(emailErrArr);
+            setPasswordError(passwordErrArr)
         }
-        dispatch(hideModal());
+        dispatch(hideModal())
     };
 
     const businessDemo = async (e) => {
         e.preventDefault();
+        const emailErrArr =[]
+        const passwordErrArr =[];
         const data = await dispatch(login('business_demo@testing.com', '8f08d594-2275-4c8f-93f3-4cb6dbed4b70'));
-        if(data && data.errors) {
-            data.errors.forEach(error => error.toLowerCase().includes('email') ? setEmailError(error) : setPasswordError(error));
-            return 'Error';
+        if(data.errors) {
+            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+            setEmailError(emailErrArr);
+            setPasswordError(passwordErrArr)
         }
-        dispatch(hideModal());
+        dispatch(hideModal())
     };
 
     const showSignupForm = () => {

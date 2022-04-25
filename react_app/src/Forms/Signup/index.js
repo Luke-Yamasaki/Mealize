@@ -133,13 +133,13 @@ const DemoButtonBox = styled.div`
     justify-content: flex-end;
     gap: 10px;
     align-items: center;
-    width: 400px;
+    width: 500px;
     height: 30px;
     margin-right: 20px;
 `;
 
 const DemoBox = styled.div`
-    width: 400px;
+    width: 500px;
     height: 50px;
     display: flex;
     flex-direction: row;
@@ -231,7 +231,7 @@ export const SignupForm = () => {
     const [organizationError, setOrganizationError] = useState([]);
     const [emailError, setEmailError] = useState([]);
     const [phoneError, setPhoneError] = useState([]);
-    const [passwordError, setPasswodError] = useState([]);
+    const [passwordError, setPasswordError] = useState([]);
     const [confirmError, setConfirmError] = useState([]);
     const [responseErrors, setResponseErrors] = useState([]);
     const [formErrors, setFormErrors] = useState([]);
@@ -243,8 +243,10 @@ export const SignupForm = () => {
 
     const formattedMonth = month <= 9 ? '0' + (month+1).toString() : (month+1).toString()
     const formattedDate = date <= 9 ? `0${date}` : date.toString();
-    const today = year.toString() + '-' + formattedDate + '-' + formattedMonth
+    // const today = year.toString() + '-' + formattedDate + '-' + formattedMonth
     const tooOld = (year - 90).toString() + '-' + formattedMonth + '-' + formattedDate;
+
+    const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-'
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -405,7 +407,9 @@ export const SignupForm = () => {
         } else if(firstName.match(regex)) {
             setFirstNameError(['You cannot add an integer to your name.'])
         } else if (firstName === lastName) {
-            setLastNameError(['Your first and last names should be different.'])
+            setFirstNameError(['Your first and last names should be different.'])
+        } else if(specialCharacters.includes(e.target.value)){
+            setFirstNameError(['Special characters are not allowed.'])
         } else {
             setFirstNameError([])
             setFirstName(e.target.value)
@@ -422,6 +426,8 @@ export const SignupForm = () => {
             setLastNameError(['You cannot add an integer to your name.'])
         } else if (firstName === lastName) {
             setLastNameError(['Your first and last names should be different.'])
+        } else if(specialCharacters.includes(e.target.value)){
+            setLastNameError(['Special characters are not allowed.'])
         } else {
             setLastNameError([])
             setLastName(e.target.value)
@@ -443,20 +449,53 @@ export const SignupForm = () => {
 
     const handleEmail = (e) => {
         e.preventDefault();
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
+        if(e.target.value.length > 3 && !regex.test(e.target.value)) {
+            setEmailError(['Please enter a valid email.'])
+        } else if(email.length >= 255) {
+            setEmailError(['Your email is too long.'])
+        } else {
+            setEmailError([])
+            setEmail(e.target.value)
+        }
     }
 
     const handlePhone = (e) => {
         e.preventDefault();
+        const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+        if(!regex.test(e.target.value)) {
+            setPhoneError(['Invalid phone number.'])
+        } else if(e.target.value >= 15) {
+            setPhoneError(['The phone number is too long.'])
+        } else {
+            setPhoneError([])
+            setPhone(e.target.value)
+        }
     }
 
     const handlePassword = (e) => {
         e.preventDefault();
 
+        if(specialCharacters.includes(e.target.value)) {
+            setPasswordError(['Special characters are not allowed.'])
+        } else if(e.target.value.length < 6) {
+            setPasswordError(['Passwords must be at least 6 characters long.'])
+        } else {
+            setPasswordError([])
+            setPassword(e.target.value)
+        }
+
     }
 
     const handleConfirm = (e) => {
         e.preventDefault();
+        if(!e.target.value.length === password) {
+            setConfirmError(['Passwords do not match.'])
+        } else {
+            setConfirmError([])
+            setConfirm(e.target.value)
+        }
     }
 
     return (
@@ -531,7 +570,7 @@ export const SignupForm = () => {
                 <Fieldset style={{width: '235px'}}>
                     <Legend style={{width: '200px'}}> Select your organization
                     <div style={{display: 'flex', flexDirection: 'row', width: '200px', height: '30px', justifyContent: 'flex-start', alignItems: 'center'}}>
-                        <select style={{width: '200px', height: '25px'}} value={organizationId} onChange={(e) => setOrganizationId(e.target.value)}>
+                        <select style={{width: '200px', height: '25px'}} value={organizationId} onChange={(e) => setOrganizationId(e.target.value)} required>
                             <optgroup label='Nonprofits'>
                                 {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
                             </optgroup>
@@ -567,7 +606,8 @@ export const SignupForm = () => {
                                 type="text"
                                 placeholder="First name"
                                 value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
+                                onChange={handleFName}
+                                required
                             />
                         </Legend>
                     </Fieldset>
@@ -578,7 +618,8 @@ export const SignupForm = () => {
                                 type="text"
                                 placeholder="Last name"
                                 value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
+                                onChange={handleLName}
+                                required
                             />
                         </Legend>
                     </Fieldset>
@@ -604,6 +645,7 @@ export const SignupForm = () => {
                                 placeholder="Your DOB (must be 18 or older)."
                                 value={dob}
                                 onChange={(e) => setDob(e.target.value)}
+                                required
                             />
                         </Legend>
                     </Fieldset>
@@ -612,12 +654,13 @@ export const SignupForm = () => {
                     <Legend style={{width: '120px'}}> Job description
                         <textarea
                             name="jobDescription"
-                            placeholder="Add your job description (255 character limit)."
+                            placeholder="Add your job description (100 character limit)."
                             value={jobDescription}
                             minLength='1'
                             maxLength='100'
-                            onChange={(e) => setJobDescription(e.target.value)}
+                            onChange={handleDescription}
                             style={{width: "475px", height: "75px", resize: 'none', fontSize: '14px', marginTop: '7px'}}
+                            required
                         />
                     </Legend>
                 </Fieldset>
@@ -629,7 +672,8 @@ export const SignupForm = () => {
                                 type="email"
                                 placeholder="Email"
                                 value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={handleEmail}
+                                required
                             />
                         </Legend>
                     </Fieldset>
@@ -641,7 +685,8 @@ export const SignupForm = () => {
                                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                 placeholder="Phone number"
                                 value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
+                                onChange={handlePhone}
+                                required
                             />
                         </Legend>
                     </Fieldset>
@@ -654,7 +699,8 @@ export const SignupForm = () => {
                             type="password"
                             placeholder="Password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={handlePassword}
+                            required
                         />
                     </Legend>
                 </Fieldset>
@@ -665,7 +711,8 @@ export const SignupForm = () => {
                             type="password"
                             placeholder="Confirm password"
                             value={confirm}
-                            onChange={(e) => setConfirm(e.target.value)}
+                            onChange={handleConfirm}
+                            required
                         />
                     </Legend>
                 </Fieldset>
@@ -727,7 +774,7 @@ export const SignupForm = () => {
                 </Fieldset>
                 <DemoButtonBox>
                     <div className={styles.cancel} onClick={reset}>Reset</div>
-                    <div className={styles.submit} onClick={handleSubmit}>Submit</div>
+                    <div className={styles.submit} onClick={handleErrors}>Submit</div>
                 </DemoButtonBox>
                 <DemoBox>
                     <VolunteerDemoButton onClick={volunteerDemo}>Volunteer demo</VolunteerDemoButton>

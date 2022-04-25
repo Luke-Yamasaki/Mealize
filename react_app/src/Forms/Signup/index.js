@@ -125,6 +125,74 @@ const ButtonBox = styled.div`
     height: 30px;
 `;
 
+const DemoButtonBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: center;
+    width: 400px;
+    height: 30px;
+    margin-right: 20px;
+`;
+
+const DemoBox = styled.div`
+    width: 400px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+`;
+
+const VolunteerDemoButton = styled.div`
+    width: 115px;
+    height: 35px;
+    background-color: #9AF2C0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 12px;
+    font-weight: 800;
+    font-family: motiva-sans, sans-serif;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+`;
+
+const NonprofitDemoButton = styled.div`
+    width: 115px;
+    height: 35px;
+    background-color: #04B1D9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 12px;
+    font-weight: 800;
+    font-family: motiva-sans, sans-serif;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+`;
+
+const BusinessDemoButton = styled.div`
+    width: 115px;
+    height: 35px;
+    background-color: #024A59;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: motiva-sans, sans-serif;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+`;
+
 
 export const SignupForm = () => {
     const dispatch = useDispatch();
@@ -416,11 +484,11 @@ export const SignupForm = () => {
             </PreviewBox>
             <FormBox>
                 <Form> Welcome to Mealize!
-                <Fieldset style={{height: '40px'}}>
-                    <Legend style={{width: '100px'}}> Organization
-                    <div style={{display: 'flex', flexDirection: 'row', width: '300px', height: '30px', justifyContent: 'flex-start', alignItems: 'center', gap: '15px'}}>
-                        <label style={{fontSize: '12px'}}>Select your organization</label>
-                        <select style={{width: '100px', height: '25px'}} value={organizationId} onChange={(e) => setOrganizationId(e.target.value)}>
+                <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Fieldset style={{width: '235px'}}>
+                    <Legend style={{width: '200px'}}> Select your organization
+                    <div style={{display: 'flex', flexDirection: 'row', width: '200px', height: '30px', justifyContent: 'flex-start', alignItems: 'center'}}>
+                        <select style={{width: '200px', height: '25px'}} value={organizationId} onChange={(e) => setOrganizationId(e.target.value)}>
                             <optgroup label='Nonprofits'>
                                 {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
                             </optgroup>
@@ -431,20 +499,34 @@ export const SignupForm = () => {
                     </div>
                     </Legend>
                 </Fieldset>
-                <Fieldset>
-                    <Legend> Role
-                    <ButtonBox style={{width: '300px', height: '50px', display: 'flex', flexDirection: 'row', paddingLeft: '5px', gap: '10px', alignItems: 'center', justifyContent: 'flex-start'}}>
+                <Fieldset style={{width: '235px'}}>
+                    <Legend style={{width: '160px'}}> Are you a manager?
+                    <ButtonBox style={{width: '200px', height: '50px', display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', justifyContent: 'flex-start'}}>
+                        <label style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                         <Input
                             name="isManager"
                             type="checkbox"
                             value={isManager}
-                            style={{width: '75px', height: '75px'}}
+                            style={{width: '20px', height: '20px'}}
                             onChange={() => setIsManager(!isManager)}
                         />
-                        <Label htmlFor='isManager' style={{display: 'flex', justifyContent: 'left', alignItems: 'center'}}> Are you a manager?</Label>
+                        Yes
+                        </label>
+                        <label style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <Input
+                            name="isManager"
+                            type="checkbox"
+                            value={isManager}
+                            checked
+                            style={{width: '20px', height: '20px'}}
+                            onChange={() => setIsManager(!isManager)}
+                        />
+                        No
+                        </label>
                     </ButtonBox>
                     </Legend>
                 </Fieldset>
+                </div>
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Fieldset style={{width: '235px'}}>
                         <Legend style={{width: '80px'}}> First name
@@ -469,16 +551,32 @@ export const SignupForm = () => {
                         </Legend>
                     </Fieldset>
                 </div>
-                <Fieldset>
-                    <Legend style={{width: '100px'}}> Profile image
-                        <input
-                            id="profileImage"
-                            type="file"
-                            accept="image/png, image/jpeg, image/jpg"
-                            onChange={updateImage} required
-                        />
-                    </Legend>
-                </Fieldset>
+                <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Fieldset>
+                        <Legend style={{width: '100px'}}> Profile image
+                            <input
+                                id="profileImage"
+                                type="file"
+                                accept="image/png, image/jpeg, image/jpg"
+                                onChange={updateImage} required
+                            />
+                        </Legend>
+                    </Fieldset>
+
+                    <Fieldset>
+                        <Legend style={{width: '100px'}}> Date of birth
+                            <Input
+                                name="age"
+                                type="date"
+                                min='2004/04/24'
+                                max='1932/04/24'
+                                placeholder="Your DOB (must be 18 or older)."
+                                value={dob}
+                                onChange={(e) => setDob(e.target.value)}
+                            />
+                        </Legend>
+                    </Fieldset>
+                </div>
                 <Fieldset style={{height: '100px'}}>
                     <Legend style={{width: '150px'}}> Job description
                         <textarea
@@ -487,19 +585,6 @@ export const SignupForm = () => {
                             value={jobDescription}
                             onChange={(e) => setJobDescription(e.target.value)}
                             style={{width: "500px", height: "75px", resize: 'none', fontSize: '14px'}}
-                        />
-                    </Legend>
-                </Fieldset>
-                <Fieldset>
-                    <Legend style={{width: '100px'}}> Date of birth
-                        <Input
-                            name="age"
-                            type="date"
-                            min='2004/04/24'
-                            max='1932/04/24'
-                            placeholder="Your DOB (must be 18 or older)."
-                            value={dob}
-                            onChange={(e) => setDob(e.target.value)}
                         />
                     </Legend>
                 </Fieldset>
@@ -552,25 +637,32 @@ export const SignupForm = () => {
                     </div>
                     </Legend>
                 </Fieldset>
-                <Fieldset style={{height: '80px'}}>
-                    <Legend style={{width: '140px'}}> Contact information
-                        <Input
-                            name="email"
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <Input
-                            name="phone"
-                            type="tel"
-                            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                            placeholder="Phone number"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                        />
-                    </Legend>
-                </Fieldset>
+                <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Fieldset style={{height: '80px'}}>
+                        <Legend style={{width: '200px'}}> Email
+                            <Input
+                                name="email"
+                                type="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </Legend>
+                    </Fieldset>
+                    <Fieldset style={{height: '80px'}}>
+                        <Legend style={{width: '200px'}}> Phone
+                            <Input
+                                name="phone"
+                                type="tel"
+                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                                placeholder="Phone number"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                            />
+                        </Legend>
+                    </Fieldset>
+                </div>
+                <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Fieldset style={{height: '80px'}}>
                     <Legend style={{width: '100px'}}> Set password
                         <Input
@@ -580,6 +672,10 @@ export const SignupForm = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                    </Legend>
+                </Fieldset>
+                <Fieldset style={{height: '80px'}}>
+                    <Legend style={{width: '100px'}}> Set password
                         <Input
                             name="confirm"
                             type="password"
@@ -589,13 +685,16 @@ export const SignupForm = () => {
                         />
                     </Legend>
                 </Fieldset>
-                <ButtonBox>
+                </div>
+                <DemoButtonBox>
                     <div className={styles.cancel} onClick={reset}>Reset</div>
                     <div className={styles.submit} onClick={handleSubmit}>Submit</div>
-                </ButtonBox>
-                <div className={styles.business} onClick={volunteerDemo}>Volunteer demo</div>
-                <div className={styles.nonprofit} onClick={nonprofitDemo}>Nonprofit demo</div>
-                <div className={styles.business} onClick={businessDemo}>Business demo</div>
+                </DemoButtonBox>
+                <DemoBox>
+                    <VolunteerDemoButton onClick={volunteerDemo}>Volunteer demo</VolunteerDemoButton>
+                    <NonprofitDemoButton onClick={nonprofitDemo}>Nonprofit demo</NonprofitDemoButton>
+                    <BusinessDemoButton onClick={businessDemo}>Business demo</BusinessDemoButton>
+                </DemoBox>
                 <div className={styles.question}>Already have an account?<div className={styles.modalOption} onClick={showLoginForm}>Log in</div></div>
                 </Form>
             </FormBox>

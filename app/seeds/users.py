@@ -88,6 +88,44 @@ def seed_users():
         )
         db.session.add(business_managers)
 
+    volunteer_demo = User(
+        organizationId=1,
+        isNonprofit=True,
+        isManager=False,
+        private=False,
+        firstName='Volunteer',
+        lastName='Demo',
+        email='volunteer_demo@testing.com',
+        phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
+        age=50,
+        deaf=False,
+        wheelchair=False,
+        learningDisabled=False,
+        lgbtq=False,
+        profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+        jobDescription="Hello, my name is Volunteer Demo! My account will give you a glance into all the features Mealize provides! Thank you and I hope you enjoy Mealize!",
+        hashedPassword=generate_password_hash('064324651d0-72fe-49c5-aa1-0ba223f4fcmv3')
+    )
+    nonprofit_demo = User(
+        organizationId=1,
+        isNonprofit=True,
+        isManager=True,
+        private=False,
+        firstName='Nonprofit',
+        lastName='Demo',
+        email='nonprofit_demo@testing.com',
+        phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
+        age=35,
+        deaf=False,
+        wheelchair=False,
+        learningDisabled=False,
+        lgbtq=False,
+        profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+        jobDescription="Hello, my name is Nonprofit Demo! My account will give you a glance into all the features Mealize provides! Thank you and I hope you enjoy Mealize!",
+        hashedPassword=generate_password_hash('062651d0-01fe-49c5-aaa1-0829ba3f4ff3')
+    )
+    db.session.add(nonprofit_demo)
+
     for k in range(51, 76):
         volunteers = User(
             organizationId=randint(1, 25),

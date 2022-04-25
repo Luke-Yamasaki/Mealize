@@ -7,6 +7,7 @@ import { getCategories } from './store/categories';
 import { getBatchedOrganizations } from './store/organizations';
 import { getBatchedUsers } from './store/users';
 import { getAllPosts } from './store/posts';
+import { getAllDeliveries } from './store/deliveries';
 // Components
 import { Home } from './Pages/Home';
 // import { About } from './Pages/About';
@@ -16,10 +17,11 @@ import { Businesses } from './Pages/Businesses';
 import { Categories } from './Pages/Categories';
 // import { Users } from './Pages/Users';
 // import { Settings } from './Pages/Settings';
-import { Messages } from './Pages/Messages';
+import { Deliveries } from './Pages/Deliveries';
 import { Background } from './Components/Styled/Background';
 import { Navbar } from './Components/Navbar'
 import { SessionNavbar } from './Components/SessionNavbar';
+import { Footer } from './Components/Footer';
 import Modal from './Components/Modal';
 
 function App() {
@@ -34,6 +36,7 @@ function App() {
       await dispatch(getBatchedOrganizations())
       await dispatch(getAllPosts())
       await dispatch(getBatchedUsers())
+      await dispatch(getAllDeliveries())
       setIsLoaded(true);
     })();
   },[dispatch]);
@@ -57,7 +60,7 @@ function App() {
           <Route exact path='/questions'>
             <Questions />
           </Route> */}
-          <Route exact path='/nonprofits'>
+          {/* <Route exact path='/nonprofits'>
             <Nonprofits />
           </Route>
           <Route exact path='/businesses'>
@@ -65,23 +68,26 @@ function App() {
           </Route>
           <Route exact path='/categories'>
             <Categories />
-          </Route>
+          </Route> */}
           {/* <Route exact path='/users'>
             <Users />
           </Route>
           <Route exact path='/settings'>
             <Settings />
           </Route> */}
-          <Route exact path='/search/:searchword'>
+          {/* <Route exact path='/search/:searchword'>
             <h1>Search results</h1>
-          </Route>
-          <Route exact path='/messages'>
-            <Messages sessionUser={sessionUser}/>
-          </Route>
+          </Route> */}
+          {sessionUser &&
+            <Route exact path='/deliveries'>
+              <Deliveries />
+            </Route>
+          }
           <Route>
-            <div>404 Error</div>
+            <div style={{fontFamily: 'motiva-sans, sans-serif', fontWeight: '900', paddingTop: '20px', fontSize: '48px', width: '1600px', height: '60vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}> 404 Not Found. <img style={{objectFit: 'cover', objectPosition: 'center', width: '600px', height: '700px'}}src='https://live.staticflickr.com/2080/1576740677_c983d27842_b.jpg' alt='404 error' /></div>
           </Route>
         </Switch>
+        <Footer />
       </Background>
     </BrowserRouter>
   );

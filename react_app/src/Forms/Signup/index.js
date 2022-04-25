@@ -86,7 +86,7 @@ const Fieldset = styled.fieldset`
     align-items: flex-end;
     justify-content: center;
     margin: 0px;
-    padding-left: 5px;
+    padding-left: 10px;
     font-weight: 500;
 `;
 
@@ -103,6 +103,8 @@ const Label = styled.label`
     font-size: 12px;
     width: 1000px;
     height: 30px;
+    display: flex;
+    align-items: center;
 `;
 
 const Input = styled.input`
@@ -131,18 +133,18 @@ const DemoButtonBox = styled.div`
     justify-content: flex-end;
     gap: 10px;
     align-items: center;
-    width: 400px;
+    width: 500px;
     height: 30px;
-    margin-right: 20px;
 `;
 
 const DemoBox = styled.div`
-    width: 400px;
+    width: 500px;
     height: 50px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
+    gap: 10px;
 `;
 
 const VolunteerDemoButton = styled.div`
@@ -193,14 +195,26 @@ const BusinessDemoButton = styled.div`
     cursor: pointer;
 `;
 
+const ErrorMessage = styled.div`
+    width: 450px;
+    height: 20px;
+    font-size: 10px;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 500;
+`;
+
 
 export const SignupForm = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const organizations = useSelector(state => state.organizations);
+    const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
 
     // states
-    const [isPrivate, setIsPrivate] = useState(false);
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [image, setImage] = useState(null);
@@ -229,10 +243,21 @@ export const SignupForm = () => {
     const [organizationError, setOrganizationError] = useState([]);
     const [emailError, setEmailError] = useState([]);
     const [phoneError, setPhoneError] = useState([]);
-    const [passwordError, setPasswodError] = useState([]);
+    const [passwordError, setPasswordError] = useState([]);
     const [confirmError, setConfirmError] = useState([]);
     const [responseErrors, setResponseErrors] = useState([]);
-    const [formErrors, setFormErrors] = useState([]);
+
+    //dates
+    const year = new Date().getFullYear()
+    const month = new Date().getMonth()
+    const date = new Date().getDate()
+
+    const formattedMonth = month <= 9 ? '0' + (month+1).toString() : (month+1).toString()
+    const formattedDate = date <= 9 ? `0${date}` : date.toString();
+    // const today = year.toString() + '-' + formattedDate + '-' + formattedMonth
+    const tooOld = (year - 90).toString() + '-' + formattedMonth + '-' + formattedDate;
+
+    const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-'
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -241,7 +266,7 @@ export const SignupForm = () => {
         formData.append("image", image);
 
         const descriptionCap = jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length));
-
+        const nonprofitStatus = allOrganizations[organizationId].isNonprofit ? true : false;
         const inputData = {
             organizationId,
             firstName,
@@ -252,17 +277,15 @@ export const SignupForm = () => {
             wheelchair,
             learningDisabled,
             lgbtq,
-            isNonprofit,
+            isNonprofit: nonprofitStatus,
             isManager,
             email,
             phone,
+            password,
             confirm
         }
-        const stagedPost = await validateSignup(inputData);
 
-        if(stagedPost.errors) {
-            setFormErrors(stagedPost.errors)
-        }
+        const stagedPost = await validateSignup(inputData);
 
         if(stagedPost.message === 'success') {
             setImageUploading(true);
@@ -271,12 +294,31 @@ export const SignupForm = () => {
             if(response.ok) {
                 const data = await response.json();
                 const profileImageUrl = await data.imageUrl
-                inputData.profileImageUrl = profileImageUrl;
-                const newUser = await dispatch(signup(inputData))
 
-                if(!newUser.errors || !newUser.error) {
+                const userData = {
+                    organizationId,
+                    firstName,
+                    profileImageUrl,
+                    lastName,
+                    jobDescription: descriptionCap,
+                    dob,
+                    deaf,
+                    wheelchair,
+                    learningDisabled,
+                    lgbtq,
+                    isNonprofit: nonprofitStatus,
+                    isManager,
+                    email,
+                    phone,
+                    password,
+                    confirm
+                }
+
+                const newUser = await dispatch(signup(userData))
+
+                if(newUser && !newUser.errors || !newUser.error) {
                     setImageUploading(false);
-                    history.pushState('/')
+                    history.push('/')
                     dispatch(hideModal())
                 } else {
                     const responseErrArr = []
@@ -284,13 +326,48 @@ export const SignupForm = () => {
                     setImageUploading(false);
                     setResponseErrors(responseErrArr);
                 }
-                dispatch(hideModal());
             }
+        } else {
+            setResponseErrors(stagedPost.errors)
         }
     };
 
+    const handleErrors = (e) => {
+        e.preventDefault();
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        const phoneReg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+
+        if((firstName && !firstNameError.length) &&
+            (lastName && !lastNameError.length) &&
+            (image && !imageError.length) &&
+            (jobDescription && !jobDescriptionError.length) &&
+            (dob && !dobError.length )&&
+            (organizationId && !organizationError.length) &&
+            (email && !emailError.length) &&
+            (phone && !phoneError.length) &&
+            (password && !passwordError.length) &&
+            (confirm && !confirmError.length)
+            )
+            {
+                setResponseErrors([]);
+                handleSubmit(e);
+            }
+        else if(!firstName || !lastName || !image || !jobDescription || !dob || !organizationId || !email || !phone || !password || !confirm) {
+            setResponseErrors(['Please fill out all required fields.'])
+        } else if (regex.test(email) === false) {
+            setEmailError(['Not a valid email.'])
+        } else if(regex.test(phone) === false) {
+            setPhoneError(['Invalid phone number.'])
+        } else if(password.length < 6 || confirm.length < 6) {
+            setPasswordError(['Passwords must be at least 6 characters long.'])
+        } else {
+            setResponseErrors(['Please resolve all errors.'])
+        }
+    }
+
     const reset = (e) => {
         e.preventDefault();
+        setResponseErrors([]);
         setFirstName('');
         setLastName('');
         setJobDescription('');
@@ -303,11 +380,10 @@ export const SignupForm = () => {
         setOrganizationId('');
         setIsNonprofit(false);
         setIsManager(false);
-        setEmail(false);
-        setPhone(false);
+        setEmail('');
+        setPhone('');
         setPassword('');
         setConfirm('');
-        setIsPrivate(false);
 
         setFirstNameError([]);
         setLastNameError([]);
@@ -371,6 +447,8 @@ export const SignupForm = () => {
 	};
 
     const updateImage = (e) => {
+        e.preventDefault();
+        setResponseErrors([])
         const file = e.target.files[0];
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
         if(fileSize > 2 ) {
@@ -382,6 +460,101 @@ export const SignupForm = () => {
             e.target.style.color = '#608F41'
             setImageError([])
             setImage(file)
+        }
+    }
+
+    const handleFName = (e) => {
+        e.preventDefault();
+        setResponseErrors([])
+        const regex = /\d+/g;
+
+        if(firstName.length >= 50) {
+            setFirstNameError(['First names must be shorter than 50 characters.'])
+        } else if(firstName.match(regex)) {
+            setFirstNameError(['You cannot add an integer to your name.'])
+        } else if(specialCharacters.includes(e.target.value)){
+            setFirstNameError(['Special characters are not allowed.'])
+        } else {
+            setFirstNameError([])
+            setFirstName(e.target.value)
+        }
+    }
+
+    const handleLName = (e) => {
+        e.preventDefault();
+        setResponseErrors([])
+        const regex = /\d+/g;
+
+        if(lastName.length >= 50) {
+            setLastNameError(['First names must be shorter than 50 characters.'])
+        } else if(lastName.match(regex)) {
+            setLastNameError(['You cannot add an integer to your name.'])
+        } else if(specialCharacters.includes(e.target.value)){
+            setLastNameError(['Special characters are not allowed.'])
+        } else {
+            setLastNameError([])
+            setLastName(e.target.value)
+        }
+    }
+
+    const handleDescription = (e) => {
+        e.preventDefault();
+        setResponseErrors([])
+
+        if(jobDescription.length >= 100) {
+            setJobDescriptionError(['Job descriptions must be less than 100 characters.'])
+        } else if (jobDescription.length >= 24 && !jobDescription.includes(' ')) {
+            setJobDescriptionError(['Please add a line break.'])
+        } else {
+            setJobDescriptionError([]);
+            setJobDescription(e.target.value)
+        }
+    }
+
+    const handleEmail = (e) => {
+        e.preventDefault();
+        setResponseErrors([])
+
+        if(email.length >= 255) {
+            setEmailError(['Your email is too long.'])
+        } else {
+            setEmailError([])
+            setEmail(e.target.value)
+        }
+    }
+
+    const handlePhone = (e) => {
+        e.preventDefault();
+        setResponseErrors([])
+        if(e.target.value.toString().length >= 15) {
+            setPhoneError(['The phone number is too long.'])
+        } else {
+            setPhoneError([])
+            setPhone(e.target.value)
+        }
+    }
+
+    const handlePassword = (e) => {
+        e.preventDefault();
+        setResponseErrors([])
+
+        if(specialCharacters.includes(e.target.value)) {
+            setPasswordError(['Special characters are not allowed.'])
+        } else {
+            setPasswordError([])
+            setPassword(e.target.value)
+        }
+
+    }
+
+    const handleConfirm = (e) => {
+        e.preventDefault();
+        setResponseErrors([])
+        if(!e.target.value.length === password) {
+            setConfirmError(['Passwords do not match.'])
+        } else {
+            setConfirmError([])
+            setConfirm(e.target.value)
         }
     }
 
@@ -418,60 +591,29 @@ export const SignupForm = () => {
                                 <div className={styles.labels}>DOB:</div>
                                 <div className={styles.subText}>{dob}</div>
                             </div>
-                            <div className={styles.labelText}>
+                            <div className={styles.descriptionText}>
                                 <div className={styles.labels}>Job description:</div>
-                                <div className={styles.subText}>{jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length))}</div>
+                                <div className={styles.subText}>{ jobDescription.length >= 25 && !jobDescription.includes(' ') ? 'Please add a line break.' : jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length))}</div>
                             </div>
-                        {!isPrivate && (
-                            <>
-                                {deaf && (
-                                    <div className={styles.labelText}>
-                                        <div className={styles.labels}></div>Deaf:
-                                        <div className={styles.subText}>This member is deaf.</div>
-                                    </div>
-                                )
-                                }
-                                {wheelchair && (
-                                    <div className={styles.labelText}>
-                                        <div className={styles.labels}></div>Wheelchair:
-                                        <div className={styles.subText}>This member uses a wheelchair.</div>
-                                    </div>
-                                )
-                                }
-                                {learningDisabled && (
-                                    <div className={styles.labelText}>
-                                        <div className={styles.labels}>Learning disabled:</div>
-                                        <div className={styles.subText}>This member has learning disabilities.</div>
-                                    </div>
-                                )
-                                }
-                                {lgbtq && (
-                                    <div className={styles.labelText}>
-                                        <div className={styles.labels}>LGBTQIA+:</div>
-                                        <div className={styles.subText}>This member belongs to the LGBTQIA+ community.</div>
-                                    </div>
-                                )
-                                }
-                            </>
-                        )}
                     </div>
                     <div className={styles.jobInfoBox}>
                         <div className={styles.labels}>Organization info</div>
                         <div className={styles.labelText}>
-                            <div className={styles.labels}>Name:</div>
-                            <div className={styles.subText}>{organizationId ? organizations[organizationId].name : "Company details."}</div>
+                            <div style={{fontSize: '10px'}} className={styles.labels}>Name:</div>
+                            <div style={{fontSize: '8px'}} className={styles.subText}>{organizationId ? allOrganizations[organizationId].name : "Company details."}</div>
                         </div>
                         <div className={styles.labelText}>
                             <div className={styles.labels}>Email:</div>
-                            <div className={styles.subText}>{organizationId ? organizations[organizationId].email : "Company details."}</div>
+                            <div style={{fontSize: '8px'}} className={styles.subText}>{organizationId ? allOrganizations[organizationId].email : "Company details."}</div>
                         </div>
                         <div className={styles.labelText}>
                             <div className={styles.labels}>Phone:</div>
-                            <div className={styles.subText}>{organizationId ? `(${organizations[organizationId].phone.slice(0, 3)}) - ${organizations[organizationId].phone.slice(3, 6)}-${organizations[organizationId].phone.slice(6, 10)}` : "Company details."} </div>
+                            <div style={{fontSize: '8px'}} className={styles.subText}>{organizationId ? `(${allOrganizations[organizationId].phone.slice(0, 3)}) - ${allOrganizations[organizationId].phone.slice(3, 6)}-${allOrganizations[organizationId].phone.slice(6, 10)}` : "Company details."} </div>
                         </div>
-                        <div className={styles.labelText}>
+                        <div className={styles.descriptionText}>
                             <div className={styles.labels}>Address:</div>
-                            <div className={styles.subText}>{organizationId ? `${organizations[organizationId].street}, ${organizations[organizationId].city}, ${organizations[organizationId].state[0].toUpperCase()+organizations[organizationId].state[1].toUpperCase()} ${organizations[organizationId].zip}` : "Company details."}</div>
+                            <div className={styles.subText}>{organizationId ? `${allOrganizations[organizationId].street}` : "Company details."}</div>
+                            <div style={{marginTop: '-10px'}} className={styles.subText}>{organizationId ? `${allOrganizations[organizationId].city}, ${allOrganizations[organizationId].state[0].toUpperCase()+allOrganizations[organizationId].state[1].toUpperCase()} ${allOrganizations[organizationId].zip}`  : "Company details."}</div>
                         </div>
                     </div>
                 </section>
@@ -484,11 +626,17 @@ export const SignupForm = () => {
             </PreviewBox>
             <FormBox>
                 <Form> Welcome to Mealize!
+                {responseErrors.length > 0 && (
+                        <ErrorMessage>{responseErrors[0]}</ErrorMessage>
+                    )}
+                    {organizationError.length > 0 && (
+                        <ErrorMessage>{organizationError[0]}</ErrorMessage>
+                )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Fieldset style={{width: '235px'}}>
                     <Legend style={{width: '200px'}}> Select your organization
                     <div style={{display: 'flex', flexDirection: 'row', width: '200px', height: '30px', justifyContent: 'flex-start', alignItems: 'center'}}>
-                        <select style={{width: '200px', height: '25px'}} value={organizationId} onChange={(e) => setOrganizationId(e.target.value)}>
+                        <select style={{width: '200px', height: '25px'}} value={organizationId} onChange={(e) => setOrganizationId(e.target.value)} required>
                             <optgroup label='Nonprofits'>
                                 {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
                             </optgroup>
@@ -516,6 +664,12 @@ export const SignupForm = () => {
                     </Legend>
                 </Fieldset>
                 </div>
+                {firstNameError.length > 0 && (
+                        <ErrorMessage>{firstNameError[0]}</ErrorMessage>
+                    )}
+                {lastNameError.length > 0 && (
+                        <ErrorMessage>{lastNameError[0]}</ErrorMessage>
+                    )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Fieldset style={{width: '235px'}}>
                         <Legend style={{width: '80px'}}> First name
@@ -524,7 +678,8 @@ export const SignupForm = () => {
                                 type="text"
                                 placeholder="First name"
                                 value={firstName}
-                                onChange={(e) => setFirstName(e.target.value)}
+                                onChange={handleFName}
+                                required
                             />
                         </Legend>
                     </Fieldset>
@@ -535,13 +690,20 @@ export const SignupForm = () => {
                                 type="text"
                                 placeholder="Last name"
                                 value={lastName}
-                                onChange={(e) => setLastName(e.target.value)}
+                                onChange={handleLName}
+                                required
                             />
                         </Legend>
                     </Fieldset>
                 </div>
+                {imageError.length > 0 && (
+                        <ErrorMessage>{imageError[0]}</ErrorMessage>
+                    )}
+                    {dobError.length > 0 && (
+                        <ErrorMessage>{dobError[0]}</ErrorMessage>
+                    )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <Fieldset>
+                    <Fieldset style={{width: '235px', height: '40px'}}>
                         <Legend style={{width: '100px'}}> Profile image
                             <input
                                 id="profileImage"
@@ -551,133 +713,161 @@ export const SignupForm = () => {
                             />
                         </Legend>
                     </Fieldset>
-
-                    <Fieldset>
+                    <Fieldset style={{width: '235px', height: '40px'}}>
                         <Legend style={{width: '100px'}}> Date of birth
                             <Input
                                 name="age"
                                 type="date"
-                                min='2004/04/24'
-                                max='1932/04/24'
+                                min={tooOld}
+                                max={(year - 18).toString + '-' + formattedMonth + '-' + formattedDate}
                                 placeholder="Your DOB (must be 18 or older)."
                                 value={dob}
                                 onChange={(e) => setDob(e.target.value)}
+                                required
                             />
                         </Legend>
                     </Fieldset>
                 </div>
+                {jobDescriptionError.length > 0 && (
+                        <ErrorMessage>{jobDescriptionError[0]}</ErrorMessage>
+                    )}
                 <Fieldset style={{height: '100px'}}>
-                    <Legend style={{width: '150px'}}> Job description
+                    <Legend style={{width: '120px'}}> Job description
                         <textarea
                             name="jobDescription"
-                            placeholder="Add your job description (255 character limit)."
+                            placeholder="Add your job description (100 character limit)."
                             value={jobDescription}
-                            onChange={(e) => setJobDescription(e.target.value)}
-                            style={{width: "500px", height: "75px", resize: 'none', fontSize: '14px'}}
+                            minLength='1'
+                            maxLength='100'
+                            onChange={handleDescription}
+                            style={{width: "475px", height: "75px", resize: 'none', fontSize: '14px', marginTop: '7px'}}
+                            required
                         />
                     </Legend>
                 </Fieldset>
-                <Fieldset style={{height: '100px', margin: 'none', padding: 'none'}}>
-                    <Legend style={{width: '150px'}}> Optional details
-                    <div style={{display: 'flex', flexDirection: 'row', width: '500px', height: '40px'}}>
-                        <ButtonBox>
-                            <Input
-                                    name="deaf"
-                                    type="checkbox"
-                                    value={deaf}
-                                    onChange={() => setDeaf(!deaf)}
-                                    style={{width: '100px', height: '100px'}}
-                                />
-                            <Label htmlFor='deaf'> Are you deaf?
-                            </Label>
-                        </ButtonBox>
-                        <ButtonBox>
-                            <Input
-                                name="wheelchair"
-                                type="checkbox"
-                                value={wheelchair}
-                                onChange={() => setWheelchair(!wheelchair)}
-                                style={{width: '100px', height: '100px'}}
-                            />
-                            <Label htmlFor='wheelchair'> Do you use a wheelchair?</Label>
-                        </ButtonBox>
-                    </div>
-                    <div style={{display: 'flex', flexDirection: 'row'}}>
-                        <ButtonBox>
-                                <Input
-                                    name="learningDisabled"
-                                    type="checkbox"
-                                    value={learningDisabled}
-                                    onChange={() => setLearningDisabled(!learningDisabled)}
-                                    style={{width: '100px', height: '100px'}}
-                                />
-                                <Label htmlFor='learningDisabled'> Do you have learning disabilities?</Label>
-                            </ButtonBox>
-                            <ButtonBox>
-                                <Input
-                                    name="lgbtq"
-                                    type="checkbox"
-                                    value={lgbtq}
-                                    onChange={() => setLgbtq(!lgbtq)}
-                                    style={{width: '100px', height: '100px'}}
-                                />
-                                <Label htmlFor='lgbtq'> Are you a part of the LGBTQIA+ community?</Label>
-                        </ButtonBox>
-                    </div>
-                    </Legend>
-                </Fieldset>
+                {emailError.length > 0 && (
+                        <ErrorMessage>{emailError[0]}</ErrorMessage>
+                    )}
+                    {phoneError.length > 0 && (
+                        <ErrorMessage>{phoneError[0]}</ErrorMessage>
+                    )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <Fieldset style={{height: '80px'}}>
-                        <Legend style={{width: '200px'}}> Email
+                    <Fieldset style={{height: '40px', width: '235px'}}>
+                        <Legend style={{width: '50px'}}> Email
                             <Input
                                 name="email"
                                 type="email"
                                 placeholder="Email"
                                 value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={handleEmail}
+                                required
                             />
                         </Legend>
                     </Fieldset>
-                    <Fieldset style={{height: '80px'}}>
-                        <Legend style={{width: '200px'}}> Phone
+                    <Fieldset style={{height: '40px', width: '235px'}}>
+                        <Legend style={{width: '50px'}}> Phone
                             <Input
                                 name="phone"
                                 type="tel"
                                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                                 placeholder="Phone number"
                                 value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
+                                onChange={handlePhone}
+                                required
                             />
                         </Legend>
                     </Fieldset>
                 </div>
+                {passwordError.length > 0 && (
+                        <ErrorMessage>{passwordError[0]}</ErrorMessage>
+                )}
+                {confirmError.length > 0 && (
+                        <ErrorMessage>{confirmError[0]}</ErrorMessage>
+                )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Fieldset style={{height: '80px'}}>
+                <Fieldset style={{height: '40px', width: '235px'}}>
                     <Legend style={{width: '100px'}}> Password
                         <Input
                             name="password"
                             type="password"
                             placeholder="Password"
                             value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={handlePassword}
+                            required
                         />
                     </Legend>
                 </Fieldset>
-                <Fieldset style={{height: '80px'}}>
+                <Fieldset style={{height: '40px', width: '235px'}}>
                     <Legend style={{width: '150px'}}> Confirm password
                         <Input
                             name="confirm"
                             type="password"
                             placeholder="Confirm password"
                             value={confirm}
-                            onChange={(e) => setConfirm(e.target.value)}
+                            onChange={handleConfirm}
+                            required
                         />
                     </Legend>
                 </Fieldset>
                 </div>
+                <Fieldset style={{height: '100px', width: '500px', margin: 'none', padding: 'none'}}>
+                    <Legend style={{width: '130px'}}> Optional details
+                    <div style={{width: '400px', height: '60px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
+                            <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                <Label htmlFor='deaf'>
+                                    <Input
+                                            name="deaf"
+                                            type="checkbox"
+                                            value={deaf}
+                                            onChange={() => setDeaf(!deaf)}
+                                            style={{width: '20px', height: '20px'}}
+                                        />
+                                Are you deaf?
+                                </Label>
+                            </ButtonBox>
+                            <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                <Label htmlFor='wheelchair'>
+                                    <Input
+                                        name="wheelchair"
+                                        type="checkbox"
+                                        value={wheelchair}
+                                        onChange={() => setWheelchair(!wheelchair)}
+                                        style={{width: '20px', height: '20px'}}
+                                    />
+                                Do you use a wheelchair?</Label>
+                            </ButtonBox>
+                        </div>
+                    </div>
+                    <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
+                        <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                <Label htmlFor='learningDisabled'>
+                                <Input
+                                    name="learningDisabled"
+                                    type="checkbox"
+                                    value={learningDisabled}
+                                    onChange={() => setLearningDisabled(!learningDisabled)}
+                                    style={{width: '20px', height: '20px'}}
+                                />
+                                Do you have learning disabilities?</Label>
+                            </ButtonBox>
+                            <ButtonBox style={{width: '270px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                <Label htmlFor='lgbtq'>
+                                    <Input
+                                        name="lgbtq"
+                                        type="checkbox"
+                                        value={lgbtq}
+                                        onChange={() => setLgbtq(!lgbtq)}
+                                        style={{width: '20px', height: '20px'}}
+                                    />
+                                Are you a part of the LGBTQIA+ community?</Label>
+                        </ButtonBox>
+                    </div>
+                    </Legend>
+                </Fieldset>
                 <DemoButtonBox>
                     <div className={styles.cancel} onClick={reset}>Reset</div>
-                    <div className={styles.submit} onClick={handleSubmit}>Submit</div>
+                    <div className={styles.submit} onClick={handleErrors}>Submit</div>
                 </DemoButtonBox>
                 <DemoBox>
                     <VolunteerDemoButton onClick={volunteerDemo}>Volunteer demo</VolunteerDemoButton>

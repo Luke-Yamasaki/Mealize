@@ -43,9 +43,9 @@ async dispatch => {
   return newDelivery
 }
 
-export const getAllDeliveries = (organizationId) =>
+export const getAllDeliveries = () =>
 async dispatch => {
-  const res = await fetch(`/api/deliveries/${organizationId}`)
+  const res = await fetch('/api/deliveries/')
   if(res.ok) {
     const deliveries = await res.json();
     dispatch(gotAllDeliveries(deliveries));
@@ -78,7 +78,7 @@ async dispatch => {
 }
 
 
-const deliveriesReducer = (state = { deliveries: {}}, action) => {
+const deliveriesReducer = (state = {}, action) => {
     const newState = {...state};
 
     switch(action.type) {
@@ -87,7 +87,8 @@ const deliveriesReducer = (state = { deliveries: {}}, action) => {
           return newState
         }
         case GOT_ALL_DELIVERIES: {
-          action.payload.deliveries?.forEach((delivery) => newState.deliveries[delivery.id] = delivery)
+          console.log(action.payload.deliveries)
+          newState.deliveries = action.payload.deliveries
           return newState;
         }
         case UPDATED_DELIVERY: {

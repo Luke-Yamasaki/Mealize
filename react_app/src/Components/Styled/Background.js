@@ -4,8 +4,7 @@ import pattern from '../../Assets/Images/Pattern_5.png';
 export const Background = styled.div`
     width: 100vw;
     height: 100vh;
-    background-color: #6B6B6B;
-    background-image: url(${pattern});
+    background: url(${pattern}), linear-gradient(rgba(40, 166, 144, 1), rgba(118, 217, 126, 1));
     background-size: 60%;
     display: flex;
     flex-direction: column;
@@ -13,6 +12,8 @@ export const Background = styled.div`
     align-items: center;
     overflow-x: hidden;
     overflow-y: scroll;
+
 `;
 
 //linear-gradient(rgba(40, 166, 144, 1), rgba(118, 217, 126, 1));
+// background-color: #6B6B6B;

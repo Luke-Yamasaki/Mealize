@@ -7,10 +7,10 @@ from time import strftime
 
 delivery_routes = Blueprint('deliveries', __name__)
 
-@delivery_routes.route('/<int:id>')
+@delivery_routes.route('/')
 @login_required
-def all_deliveries(id):
-    all_deliveries = Delivery.query.filter(Delivery.organizationId == id)
+def all_deliveries():
+    all_deliveries = Delivery.query.filter(Delivery.userId == current_user.id)
     return {'deliveries': [delivery.to_dict() for delivery in all_deliveries]}
 
 @delivery_routes.route('/<int:id>')

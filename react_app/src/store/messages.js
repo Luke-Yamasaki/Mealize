@@ -49,7 +49,6 @@ export const getMessages = () => async (dispatch) => {
 
     if(response.ok) {
         const messages = await response.json();
-        console.log(messages)
         dispatch(gotMessages(messages));
     } else if(response.status < 500) {
         const data = await response.json();

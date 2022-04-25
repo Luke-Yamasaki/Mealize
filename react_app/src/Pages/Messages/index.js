@@ -56,7 +56,6 @@ const PageLabel = styled.div`
 export const Messages = ({sessionUser}) => {
     const dispatch = useDispatch()
     const messages = useSelector(state => state.messages)
-    console.log(messages)
     const deliveries = useSelector(state => state.deliveries)
     const users = useSelector(state => state.users)
 

@@ -123,7 +123,7 @@ export const SignupForm = () => {
     const [lastName, setLastName] = useState('');
     const [image, setImage] = useState(null);
     const [jobDescription, setJobDescription] = useState('');
-    const [dob, setDob] = useState(new Date().toISOString());
+    const [dob, setDob] = useState((new Date().toISOString().split('T')[0].slice(0,4)-18).toString() + new Date().toISOString().split('T')[0].slice(4,11));
     const [deaf, setDeaf] = useState(false);
     const [wheelchair, setWheelchair] = useState(false);
     const [learningDisabled, setLearningDisabled] = useState(false);
@@ -199,7 +199,6 @@ export const SignupForm = () => {
                 } else {
                     const responseErrArr = []
                     responseErrArr.push(newUser)
-                    console.log(newUser)
                     setImageUploading(false);
                     setResponseErrors(responseErrArr);
                 }
@@ -214,7 +213,7 @@ export const SignupForm = () => {
         setLastName('');
         setJobDescription('');
         setImage(null);
-        setDob(new Date().toISOString());
+        setDob((new Date().toISOString().split('T')[0].slice(0,4)-18).toString() + new Date().toISOString().split('T')[0].slice(4,11))
         setDeaf(false);
         setWheelchair(false);
         setLearningDisabled(false);
@@ -311,10 +310,9 @@ export const SignupForm = () => {
                     <section className={styles.header}>
                         <div className={styles.logoBox}>
                             <p className={styles.logoType}>Mealize</p>
-                            <p className={styles.subText}>{ isManager ? 'Manager Id Card' : 'Volunteer Id Card' }</p>
                         </div>
                         <div className={styles.sloganBox}>
-                            <p className={styles.slogan}></p>
+                            <p className={styles.slogan}>- Share from your heart -</p>
                         </div>
                         <div className={styles.iconBox}>
                             <div className={styles.iconBg}>
@@ -322,11 +320,12 @@ export const SignupForm = () => {
                             </div>
                         </div>
                     </section>
+                    <p style={{width: '415px', padding: '0px', margin: '-10px 0px 0px 10px', fontFamily: 'motiva-sans, sans-serif', fontSize: '12px', fontWeight: '700'}}>{ isManager ? 'Manager Id Card' : 'Volunteer Id Card' }</p>
                     <section className={styles.content}>
                         <div className={styles.imageBox}>
                             <img src={image ? URL.createObjectURL(image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} className={styles.image} alt='User profile.'/>
-                            <p className={styles.subText}>Id: 12345 </p>
-                            <p className={styles.subText}>Issued: {new Date().toISOString()}</p>
+                            <p style={{fontFamily: 'motiva-sans, sans-serif', fontSize: '10px', fontWeight: '700', fontStyle: 'normal', paddingTop: '10px', margin: '0px', height: '15px'}}>Id: 12345 </p>
+                            <p style={{fontFamily: 'motiva-sans, sans-serif', fontSize: '10px', fontWeight: '700', fontStyle: 'normal', paddingTop: '5px', paddingBottom: '5px', margin: '0px', height: '15px'}}>Issued: {new Date().toISOString().split('T')[0].slice(0,11)}</p>
                         </div>
                         <div className={styles.userInfoBox}>
                             <div className={styles.labels}>
@@ -397,7 +396,9 @@ export const SignupForm = () => {
                 </section>
                 </div>
                 {imageUploading && (
-                    <UploadingMessage>Uploading your profile image...</UploadingMessage>
+                    <UploadingBox>
+                       <UploadingMessage>Uploading your profile image...</UploadingMessage>
+                    </UploadingBox>
                 )}
             </PreviewBox>
             <Form> Welcome to Mealize!

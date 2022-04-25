@@ -210,7 +210,6 @@ export const LoginForm = () => {
         } else {
             const data = await dispatch(login(email, password));
             if(data && data.errors) {
-                console.log(data)
                 data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
             } else {
                 dispatch(hideModal())

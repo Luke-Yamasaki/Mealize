@@ -119,37 +119,41 @@
 .idCard {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    width: 336px;
-    height: 192px;
+    gap: 10px;
+    width: 456px;
+    height: 260px;
     border: none;
     overflow: hidden;
     border-radius: 5px;
-    background: linear-gradient(#76D97E, #28A690),
-                url('../../Assets//Images//Pattern_5.png');
+    background-image: linear-gradient(#76D97E, #28A690),
+        url('../../Assets/Images/Pattern_10.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 }
 
 .header {
-    width: 336px;
+    width: 456px;
     height: 51px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
+    margin: 0px;
+    padding: 0px;
 }
 
 .logoBox {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: left;
-    gap: 5px;
+    justify-content: center;
     width: 100px;
     height: 51px;
+    margin: 0px;
+    padding: 0px;
 }
 
 .logoType {
@@ -158,6 +162,8 @@
     font-weight: 900;
     font-style: normal;
     color: black;
+    margin: 0px;
+    padding: 0px;
 }
 
 .labels {
@@ -177,7 +183,7 @@
 }
 
 .sloganBox {
-    width: 185px;
+    width: 270px;
     height: 51px;
     display: flex;
     justify-content: center;
@@ -186,7 +192,7 @@
 
 .slogan {
     font-family: motiva-sans, sans-serif;
-    font-size: 21px;
+    font-size: 18px;
     font-weight: 900;
     font-style: normal;
     color: black;
@@ -196,8 +202,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 51px;
+    width: 45px;
     height: 51px;
+    margin: 0px;
+    padding: 0px;
 }
 
 .iconBg {
@@ -215,26 +223,25 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: top;
-    width: 336px;
-    height: 141px;
+    width: 456px;
+    height: 175px;
 }
 
 .imageBox {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    justify-content: left;
-    gap: 5px;
-    width: 76px;
-    height: 141px;
+    justify-content: center;
+    width: 100px;
+    height: 175px;
 }
 
 .image {
-    width: 70px;
-    height: 100px;
+    width: 100px;
+    height: 150px;
     border-radius: 5px;
     border: 1px solid white;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
     filter: drop-shadow(0 3 6px rgba(0, 0, 0, 0.15));
 }

@@ -69,7 +69,9 @@ const ButtonBox = styled.div`
 
 export const SignupForm = () => {
     const dispatch = useDispatch();
-    // const organizations = useSelector(state => state.organizations);
+    const organizations = useSelector(state => state.organizations);
+
+    // states
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [image, setImage] = useState(null);
@@ -86,6 +88,8 @@ export const SignupForm = () => {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
+    const [imageUploading, setImageUploading] = useState(false);
+
 
     // errors
     const [firstNameError, setFirstNameError] = useState([]);
@@ -98,6 +102,8 @@ export const SignupForm = () => {
     const [phoneError, setPhoneError] = useState([]);
     const [passwordError, setPasswodError] = useState([]);
     const [confirmError, setConfirmError] = useState([]);
+    const [responseErrors, setResponseErrors] = useState([]);
+    const [formErrors, setFormErrors] = useState([]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -123,20 +129,44 @@ export const SignupForm = () => {
             phone,
             confirm
         }
-        const stagedPost = await dispatch(validateSignup(inputData));
-        if(!stagedPost.errors) {
-            setErrors(response.errors)
-            return 'Errors were found.';
+        const stagedPost = await validateSignup(inputData);
+
+        if(stagedPost.errors) {
+            setFormErrors(stagedPost.errors)
         }
-        dispatch(hideModal());
+
+        if(stagedPost.message === 'success') {
+            setImageUploading(true);
+            const response = await uploadProfileImage(formData);
+
+            if(response.ok) {
+                const data = await response.json();
+                const profileImageUrl = await data.imageUrl
+                inputData.profileImageUrl = profileImageUrl;
+                const newUser = await dispatch(signup(inputData))
+
+                if(!newUser.errors || !newUser.error) {
+                    setImageUploading(false);
+                    history.pushState('/')
+                    dispatch(hideModal())
+                } else {
+                    const responseErrArr = []
+                    responseErrArr.push(newUser)
+                    console.log(newUser)
+                    setImageUploading(false);
+                    setResponseErrors(responseErrArr);
+                }
+                dispatch(hideModal());
+            }
+        }
     };
 
-    const cancel = (e) => {
+    const reset = (e) => {
         e.preventDefault();
         setFirstName('');
         setLastName('');
-        setProfileImageUrl('');
         setJobDescription('');
+        setImage(null);
         setAge(18);
         setDeaf(false);
         setAutism(false);
@@ -149,7 +179,17 @@ export const SignupForm = () => {
         setPhone(false);
         setPassword('');
         setConfirm('');
-        dispatch(hideModal());
+
+        setFirstNameError([]);
+        setLastNameError([]);
+        setJobDescriptionError([]);
+        setAgeError([]);
+        setOrganizationError([]);
+        setEmailError([]);
+        setPasswodError([]);
+        setPhoneError([]);
+        setConfirmError([]);
+        setImageError([]);
     };
 
     const nonprofitDemo = async (e) => {
@@ -347,7 +387,7 @@ export const SignupForm = () => {
                 </Legend>
             </Fieldset>
             <ButtonBox>
-                <div role='button' className={styles.cancel} onClick={cancel}>Cancel</div>
+                <div role='button' className={styles.cancel} onClick={reset}>Reset</div>
                 <div role='button' className={styles.submit} onClick={handleSubmit}>Submit</div>
             </ButtonBox>
             <div role='button' className={styles.nonprofit} onClick={nonprofitDemo}>Nonprofit demo</div>

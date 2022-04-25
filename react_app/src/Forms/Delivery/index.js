@@ -159,7 +159,7 @@ export const DeliveryForm = ({ post }) => {
                 createDelivery(deliveryData)
             )
 
-            // await dispatch(getOneUser(sessionUser.id))
+            await dispatch(getOneUser(sessionUser.id))
 
             if (newDelivery.error) {
                 newDelivery.error.map(err => {
@@ -171,7 +171,8 @@ export const DeliveryForm = ({ post }) => {
                 })
             } else {
                 dispatch(hideModal())
-                history.push(`/messages`);
+                history.push(`/`);
+                return newDelivery
             }
         }
 

@@ -2,11 +2,13 @@
 import styled from 'styled-components';
 
 import { useDispatch, useSelector} from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { getAllDeliveries, updateDelivery, deleteDelivery } from '../../store/deliveries';
 import { useEffect } from 'react';
-
+import { setCurrentModal } from '../../store/modal';
 import { ItemCard } from '../../Components/ItemCard';
+import { DeliveryForm } from '../../Forms/Delivery';
 import { OrganizationCard } from '../../Components/OrganizationCard';
 
 const Wrapper = styled.div`
@@ -24,9 +26,11 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.section`
-    width: 300px;
+    width: 700px;
     height: auto;
     min-height: 600px;
+    max-height: 900px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -56,23 +60,24 @@ const PageLabel = styled.div`
     align-items: center;
 `
 
-export const Deliveries = ({sessionUser, deliveries}) => {
+export const Deliveries = () => {
     const dispatch = useDispatch()
+    const history = useHistory();
+    const deliveries = useSelector(state => state.deliveries)
+    const sessionUser = useSelector(state => state.session.user)
     const posts = useSelector(state => state.posts);
-    const users = useSelector(state => state.users);
-    const [selected, setSelected] = useState('');
-    console.log(Object.values(deliveries.deliveries))
+    const [selected, setSelected] = useState('')
 
     return (
         <Wrapper>
             <Header>
                 <PageLabel>Deliveries</PageLabel>
-                {Object.values(deliveries.deliveries).map((delivery, idx) => <OrganizationCard key={idx} organization={delivery.location} />)}
+                {deliveries && deliveries.deliveries.map((delivery, idx) => <div style={{width: '500px', height: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center'}} key={idx} id={delivery.postId} onClick={(e) => setSelected(e.target.id)}><OrganizationCard organization={delivery.location} /></div>)}
             </Header>
             <MessageContent>
                 <div>
                     <div>
-                        {/* {deliveries.map((delivery, idx) => <ItemCard key={idx} post={posts[delivery.postId]} /> )} */}
+                        {selected !== '' &&  <div><ItemCard post={posts.posts[selected]} /></div>}
                     </div>
                 </div>
             </MessageContent>

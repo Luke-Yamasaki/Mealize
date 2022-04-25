@@ -30,7 +30,8 @@ export const Navbar = () => {
                     <Logo dimension={"medium"} />
                     <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
                 </LogoBox>
-                <Searchbar />
+                {/* <Searchbar /> */}
+                <div style={{width: '600px'}}></div>
                 <AuthBox>
                      <div role='button' className={styles.signup} onClick={showSignupModal}>Sign up</div>
                      <div role='button' className={styles.login} onClick={showLoginModal}>Log in</div>

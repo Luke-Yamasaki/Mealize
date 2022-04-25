@@ -25,7 +25,6 @@ def generate_unique_file(file):
 
 
 def upload_to_s3_bucket(file, acl="public-read"):
-    print(file)
     try:
         s3.upload_fileobj(
             file,

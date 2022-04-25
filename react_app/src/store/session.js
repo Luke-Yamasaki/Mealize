@@ -104,6 +104,7 @@ export const logout = () => async (dispatch) => {
 };
 
 export const signup = (data) => async (dispatch) => {
+    console.log(data)
     const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
@@ -113,13 +114,16 @@ export const signup = (data) => async (dispatch) => {
     });
     if(response.ok) {
         const data = await response.json();
+        console.log(data)
         dispatch(userIsSet(data));
-        return null;
+        return data;
     } else if(response.status < 500) {
         const data = await response.json();
         if(data.errors){
             return data.errors;
         };
+    } else if (response.status === 500) {
+        return {'errors': 'Form did not submit. Check all fields.'}
     } else {
         return 'Connection failed. Please check your internet connection.'
     };

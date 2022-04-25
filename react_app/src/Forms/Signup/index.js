@@ -135,7 +135,6 @@ const DemoButtonBox = styled.div`
     align-items: center;
     width: 500px;
     height: 30px;
-    margin-right: 20px;
 `;
 
 const DemoBox = styled.div`
@@ -143,8 +142,9 @@ const DemoBox = styled.div`
     height: 50px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
+    gap: 10px;
 `;
 
 const VolunteerDemoButton = styled.div`
@@ -281,6 +281,7 @@ export const SignupForm = () => {
             isManager,
             email,
             phone,
+            password,
             confirm
         }
 
@@ -293,10 +294,29 @@ export const SignupForm = () => {
             if(response.ok) {
                 const data = await response.json();
                 const profileImageUrl = await data.imageUrl
-                inputData.profileImageUrl = profileImageUrl;
-                const newUser = await dispatch(signup(inputData))
 
-                if(!newUser.errors || !newUser.error) {
+                const userData = {
+                    organizationId,
+                    firstName,
+                    profileImageUrl,
+                    lastName,
+                    jobDescription: descriptionCap,
+                    dob,
+                    deaf,
+                    wheelchair,
+                    learningDisabled,
+                    lgbtq,
+                    isNonprofit: nonprofitStatus,
+                    isManager,
+                    email,
+                    phone,
+                    password,
+                    confirm
+                }
+
+                const newUser = await dispatch(signup(userData))
+
+                if(newUser && !newUser.errors || !newUser.error) {
                     setImageUploading(false);
                     history.push('/')
                     dispatch(hideModal())
@@ -306,7 +326,6 @@ export const SignupForm = () => {
                     setImageUploading(false);
                     setResponseErrors(responseErrArr);
                 }
-                dispatch(hideModal());
             }
         } else {
             setResponseErrors(stagedPost.errors)
@@ -315,23 +334,40 @@ export const SignupForm = () => {
 
     const handleErrors = (e) => {
         e.preventDefault();
-        if(!firstNameError.length &&
-            !lastNameError.length &&
-            !imageError.length &&
-            !jobDescriptionError.length &&
-            !dobError.length &&
-            !organizationError.length &&
-            !emailError.length &&
-            !phoneError.length &&
-            !passwordError.length &&
-            !confirmError.length
-            ) {
-                handleSubmit(e)
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        const phoneReg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+
+        if((firstName && !firstNameError.length) &&
+            (lastName && !lastNameError.length) &&
+            (image && !imageError.length) &&
+            (jobDescription && !jobDescriptionError.length) &&
+            (dob && !dobError.length )&&
+            (organizationId && !organizationError.length) &&
+            (email && !emailError.length) &&
+            (phone && !phoneError.length) &&
+            (password && !passwordError.length) &&
+            (confirm && !confirmError.length)
+            )
+            {
+                setResponseErrors([]);
+                handleSubmit(e);
             }
+        else if(!firstName || !lastName || !image || !jobDescription || !dob || !organizationId || !email || !phone || !password || !confirm) {
+            setResponseErrors(['Please fill out all required fields.'])
+        } else if (regex.test(email) === false) {
+            setEmailError(['Not a valid email.'])
+        } else if(regex.test(phone) === false) {
+            setPhoneError(['Invalid phone number.'])
+        } else if(password.length < 6 || confirm.length < 6) {
+            setPasswordError(['Passwords must be at least 6 characters long.'])
+        } else {
+            setResponseErrors(['Please resolve all errors.'])
+        }
     }
 
     const reset = (e) => {
         e.preventDefault();
+        setResponseErrors([]);
         setFirstName('');
         setLastName('');
         setJobDescription('');
@@ -411,6 +447,8 @@ export const SignupForm = () => {
 	};
 
     const updateImage = (e) => {
+        e.preventDefault();
+        setResponseErrors([])
         const file = e.target.files[0];
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
         if(fileSize > 2 ) {
@@ -427,14 +465,13 @@ export const SignupForm = () => {
 
     const handleFName = (e) => {
         e.preventDefault();
+        setResponseErrors([])
         const regex = /\d+/g;
 
         if(firstName.length >= 50) {
             setFirstNameError(['First names must be shorter than 50 characters.'])
         } else if(firstName.match(regex)) {
             setFirstNameError(['You cannot add an integer to your name.'])
-        } else if (firstName === lastName) {
-            setFirstNameError(['Your first and last names should be different.'])
         } else if(specialCharacters.includes(e.target.value)){
             setFirstNameError(['Special characters are not allowed.'])
         } else {
@@ -445,14 +482,13 @@ export const SignupForm = () => {
 
     const handleLName = (e) => {
         e.preventDefault();
+        setResponseErrors([])
         const regex = /\d+/g;
 
         if(lastName.length >= 50) {
             setLastNameError(['First names must be shorter than 50 characters.'])
         } else if(lastName.match(regex)) {
             setLastNameError(['You cannot add an integer to your name.'])
-        } else if (firstName === lastName) {
-            setLastNameError(['Your first and last names should be different.'])
         } else if(specialCharacters.includes(e.target.value)){
             setLastNameError(['Special characters are not allowed.'])
         } else {
@@ -463,6 +499,7 @@ export const SignupForm = () => {
 
     const handleDescription = (e) => {
         e.preventDefault();
+        setResponseErrors([])
 
         if(jobDescription.length >= 100) {
             setJobDescriptionError(['Job descriptions must be less than 100 characters.'])
@@ -476,11 +513,9 @@ export const SignupForm = () => {
 
     const handleEmail = (e) => {
         e.preventDefault();
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        setResponseErrors([])
 
-        if(e.target.value.length > 3 && !regex.test(e.target.value)) {
-            setEmailError(['Please enter a valid email.'])
-        } else if(email.length >= 255) {
+        if(email.length >= 255) {
             setEmailError(['Your email is too long.'])
         } else {
             setEmailError([])
@@ -490,10 +525,8 @@ export const SignupForm = () => {
 
     const handlePhone = (e) => {
         e.preventDefault();
-        const regex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
-        if(!regex.test(e.target.value)) {
-            setPhoneError(['Invalid phone number.'])
-        } else if(e.target.value >= 15) {
+        setResponseErrors([])
+        if(e.target.value.toString().length >= 15) {
             setPhoneError(['The phone number is too long.'])
         } else {
             setPhoneError([])
@@ -503,11 +536,10 @@ export const SignupForm = () => {
 
     const handlePassword = (e) => {
         e.preventDefault();
+        setResponseErrors([])
 
         if(specialCharacters.includes(e.target.value)) {
             setPasswordError(['Special characters are not allowed.'])
-        } else if(e.target.value.length < 6) {
-            setPasswordError(['Passwords must be at least 6 characters long.'])
         } else {
             setPasswordError([])
             setPassword(e.target.value)
@@ -517,6 +549,7 @@ export const SignupForm = () => {
 
     const handleConfirm = (e) => {
         e.preventDefault();
+        setResponseErrors([])
         if(!e.target.value.length === password) {
             setConfirmError(['Passwords do not match.'])
         } else {
@@ -560,7 +593,7 @@ export const SignupForm = () => {
                             </div>
                             <div className={styles.descriptionText}>
                                 <div className={styles.labels}>Job description:</div>
-                                <div className={styles.subText}>{ jobDescription.length >= 25 && !jobDescription.includes(' ') ? jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length)) : 'Please add a line break.'}</div>
+                                <div className={styles.subText}>{ jobDescription.length >= 25 && !jobDescription.includes(' ') ? 'Please add a line break.' : jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length))}</div>
                             </div>
                     </div>
                     <div className={styles.jobInfoBox}>
@@ -593,13 +626,13 @@ export const SignupForm = () => {
             </PreviewBox>
             <FormBox>
                 <Form> Welcome to Mealize!
-                {responseErrors && (
+                {responseErrors.length > 0 && (
                         <ErrorMessage>{responseErrors[0]}</ErrorMessage>
                     )}
-                <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                {organizationError && (
+                    {organizationError.length > 0 && (
                         <ErrorMessage>{organizationError[0]}</ErrorMessage>
                 )}
+                <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Fieldset style={{width: '235px'}}>
                     <Legend style={{width: '200px'}}> Select your organization
                     <div style={{display: 'flex', flexDirection: 'row', width: '200px', height: '30px', justifyContent: 'flex-start', alignItems: 'center'}}>
@@ -663,13 +696,13 @@ export const SignupForm = () => {
                         </Legend>
                     </Fieldset>
                 </div>
-                <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                    {imageError.length > 0 && (
+                {imageError.length > 0 && (
                         <ErrorMessage>{imageError[0]}</ErrorMessage>
                     )}
                     {dobError.length > 0 && (
                         <ErrorMessage>{dobError[0]}</ErrorMessage>
                     )}
+                <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Fieldset style={{width: '235px', height: '40px'}}>
                         <Legend style={{width: '100px'}}> Profile image
                             <input
@@ -680,7 +713,6 @@ export const SignupForm = () => {
                             />
                         </Legend>
                     </Fieldset>
-
                     <Fieldset style={{width: '235px', height: '40px'}}>
                         <Legend style={{width: '100px'}}> Date of birth
                             <Input
@@ -713,13 +745,13 @@ export const SignupForm = () => {
                         />
                     </Legend>
                 </Fieldset>
-                <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 {emailError.length > 0 && (
                         <ErrorMessage>{emailError[0]}</ErrorMessage>
                     )}
                     {phoneError.length > 0 && (
                         <ErrorMessage>{phoneError[0]}</ErrorMessage>
                     )}
+                <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Fieldset style={{height: '40px', width: '235px'}}>
                         <Legend style={{width: '50px'}}> Email
                             <Input

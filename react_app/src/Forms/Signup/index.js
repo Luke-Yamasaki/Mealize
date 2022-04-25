@@ -86,7 +86,7 @@ const Fieldset = styled.fieldset`
     align-items: flex-end;
     justify-content: center;
     margin: 0px;
-    padding-left: 5px;
+    padding-left: 10px;
     font-weight: 500;
 `;
 
@@ -103,6 +103,8 @@ const Label = styled.label`
     font-size: 12px;
     width: 1000px;
     height: 30px;
+    display: flex;
+    align-items: center;
 `;
 
 const Input = styled.input`
@@ -541,7 +543,7 @@ export const SignupForm = () => {
                     </Fieldset>
                 </div>
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <Fieldset>
+                    <Fieldset style={{width: '235px', height: '40px'}}>
                         <Legend style={{width: '100px'}}> Profile image
                             <input
                                 id="profileImage"
@@ -551,8 +553,7 @@ export const SignupForm = () => {
                             />
                         </Legend>
                     </Fieldset>
-
-                    <Fieldset>
+                    <Fieldset style={{width: '235px', height: '40px'}}>
                         <Legend style={{width: '100px'}}> Date of birth
                             <Input
                                 name="age"
@@ -567,68 +568,19 @@ export const SignupForm = () => {
                     </Fieldset>
                 </div>
                 <Fieldset style={{height: '100px'}}>
-                    <Legend style={{width: '150px'}}> Job description
+                    <Legend style={{width: '120px'}}> Job description
                         <textarea
                             name="jobDescription"
                             placeholder="Add your job description (255 character limit)."
                             value={jobDescription}
                             onChange={(e) => setJobDescription(e.target.value)}
-                            style={{width: "500px", height: "75px", resize: 'none', fontSize: '14px'}}
+                            style={{width: "475px", height: "75px", resize: 'none', fontSize: '14px', marginTop: '7px'}}
                         />
                     </Legend>
                 </Fieldset>
-                <Fieldset style={{height: '100px', margin: 'none', padding: 'none'}}>
-                    <Legend style={{width: '150px'}}> Optional details
-                    <div style={{display: 'flex', flexDirection: 'row', width: '500px', height: '40px'}}>
-                        <ButtonBox>
-                            <Input
-                                    name="deaf"
-                                    type="checkbox"
-                                    value={deaf}
-                                    onChange={() => setDeaf(!deaf)}
-                                    style={{width: '100px', height: '100px'}}
-                                />
-                            <Label htmlFor='deaf'> Are you deaf?
-                            </Label>
-                        </ButtonBox>
-                        <ButtonBox>
-                            <Input
-                                name="wheelchair"
-                                type="checkbox"
-                                value={wheelchair}
-                                onChange={() => setWheelchair(!wheelchair)}
-                                style={{width: '100px', height: '100px'}}
-                            />
-                            <Label htmlFor='wheelchair'> Do you use a wheelchair?</Label>
-                        </ButtonBox>
-                    </div>
-                    <div style={{display: 'flex', flexDirection: 'row'}}>
-                        <ButtonBox>
-                                <Input
-                                    name="learningDisabled"
-                                    type="checkbox"
-                                    value={learningDisabled}
-                                    onChange={() => setLearningDisabled(!learningDisabled)}
-                                    style={{width: '100px', height: '100px'}}
-                                />
-                                <Label htmlFor='learningDisabled'> Do you have learning disabilities?</Label>
-                            </ButtonBox>
-                            <ButtonBox>
-                                <Input
-                                    name="lgbtq"
-                                    type="checkbox"
-                                    value={lgbtq}
-                                    onChange={() => setLgbtq(!lgbtq)}
-                                    style={{width: '100px', height: '100px'}}
-                                />
-                                <Label htmlFor='lgbtq'> Are you a part of the LGBTQIA+ community?</Label>
-                        </ButtonBox>
-                    </div>
-                    </Legend>
-                </Fieldset>
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <Fieldset style={{height: '80px'}}>
-                        <Legend style={{width: '200px'}}> Email
+                    <Fieldset style={{height: '40px', width: '235px'}}>
+                        <Legend style={{width: '50px'}}> Email
                             <Input
                                 name="email"
                                 type="email"
@@ -638,8 +590,8 @@ export const SignupForm = () => {
                             />
                         </Legend>
                     </Fieldset>
-                    <Fieldset style={{height: '80px'}}>
-                        <Legend style={{width: '200px'}}> Phone
+                    <Fieldset style={{height: '40px', width: '235px'}}>
+                        <Legend style={{width: '50px'}}> Phone
                             <Input
                                 name="phone"
                                 type="tel"
@@ -652,7 +604,7 @@ export const SignupForm = () => {
                     </Fieldset>
                 </div>
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Fieldset style={{height: '80px'}}>
+                <Fieldset style={{height: '40px', width: '235px'}}>
                     <Legend style={{width: '100px'}}> Password
                         <Input
                             name="password"
@@ -663,7 +615,7 @@ export const SignupForm = () => {
                         />
                     </Legend>
                 </Fieldset>
-                <Fieldset style={{height: '80px'}}>
+                <Fieldset style={{height: '40px', width: '235px'}}>
                     <Legend style={{width: '150px'}}> Confirm password
                         <Input
                             name="confirm"
@@ -675,6 +627,61 @@ export const SignupForm = () => {
                     </Legend>
                 </Fieldset>
                 </div>
+                <Fieldset style={{height: '100px', width: '500px', margin: 'none', padding: 'none'}}>
+                    <Legend style={{width: '130px'}}> Optional details
+                    <div style={{width: '400px', height: '60px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                        <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
+                            <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                <Label htmlFor='deaf'>
+                                    <Input
+                                            name="deaf"
+                                            type="checkbox"
+                                            value={deaf}
+                                            onChange={() => setDeaf(!deaf)}
+                                            style={{width: '20px', height: '20px'}}
+                                        />
+                                Are you deaf?
+                                </Label>
+                            </ButtonBox>
+                            <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                <Label htmlFor='wheelchair'>
+                                    <Input
+                                        name="wheelchair"
+                                        type="checkbox"
+                                        value={wheelchair}
+                                        onChange={() => setWheelchair(!wheelchair)}
+                                        style={{width: '20px', height: '20px'}}
+                                    />
+                                Do you use a wheelchair?</Label>
+                            </ButtonBox>
+                        </div>
+                    </div>
+                    <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
+                        <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                <Label htmlFor='learningDisabled'>
+                                <Input
+                                    name="learningDisabled"
+                                    type="checkbox"
+                                    value={learningDisabled}
+                                    onChange={() => setLearningDisabled(!learningDisabled)}
+                                    style={{width: '20px', height: '20px'}}
+                                />
+                                Do you have learning disabilities?</Label>
+                            </ButtonBox>
+                            <ButtonBox style={{width: '270px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                <Label htmlFor='lgbtq'>
+                                    <Input
+                                        name="lgbtq"
+                                        type="checkbox"
+                                        value={lgbtq}
+                                        onChange={() => setLgbtq(!lgbtq)}
+                                        style={{width: '20px', height: '20px'}}
+                                    />
+                                Are you a part of the LGBTQIA+ community?</Label>
+                        </ButtonBox>
+                    </div>
+                    </Legend>
+                </Fieldset>
                 <DemoButtonBox>
                     <div className={styles.cancel} onClick={reset}>Reset</div>
                     <div className={styles.submit} onClick={handleSubmit}>Submit</div>

@@ -1,15 +1,21 @@
 .navbar {
-    width: 100vw;
-    height: 100vh;
+    width: 1600px;
+    height: 60px;
     background: linear-gradient(#76D97E, #28A690);
     display:flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     animation: lockin 4s ease-in-out 1 normal forwards;
+    position: absolute;
+    z-index: 200;
 }
 
 @keyframes lockin {
+    0% {
+        width: 100vw;
+        height: 100vh;
+    }
     25% {
         width: 100vw;
         height: 100vh;

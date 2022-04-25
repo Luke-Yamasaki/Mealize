@@ -154,8 +154,6 @@ const SidebarInfoImage = styled.div`
 
 const FeedContainer = styled.div`
     width: 870px;
-    height: auto;
-    min-height: 95vh;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -20,6 +20,7 @@ import { Messages } from './Pages/Messages';
 import { Background } from './Components/Styled/Background';
 import { Navbar } from './Components/Navbar'
 import { SessionNavbar } from './Components/SessionNavbar';
+import { Footer } from './Components/Footer';
 import Modal from './Components/Modal';
 
 function App() {
@@ -82,6 +83,7 @@ function App() {
             <div>404 Error</div>
           </Route>
         </Switch>
+        <Footer />
       </Background>
     </BrowserRouter>
   );

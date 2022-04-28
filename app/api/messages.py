@@ -62,7 +62,7 @@ def new_message():
     else:
         return {'errors': errors_to_list(form.errors)}
 
-@message_routes.route('/delivery', methods=['POST'])
+@message_routes.route('/request', methods=['POST'])
 @login_required
 def new_message():
     form = MessageForm()

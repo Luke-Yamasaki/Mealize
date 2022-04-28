@@ -155,13 +155,20 @@ export const DeliveryForm = ({ post }) => {
                 time: time,
             };
 
-            const newDelivery = await dispatch(
-                createDelivery(deliveryData)
-            )
-
-            await dispatch(getOneUser(sessionUser.id))
-
-            if (newDelivery.error) {
+            // create delivery, then create message
+            const newDelivery = await dispatch(createDelivery(deliveryData)) 
+            //check errors
+            if (!newDelivery.error) {
+                const requestMessage = {
+                    receiverId: post.userId,
+                    imageUrl: post.imageUrl
+                }
+                const newMessage = await dispatch(createRequest(requestMessage))
+                    
+                dispatch(hideModal())
+                history.push(`/`);
+                return newDelivery
+            } else {
                 newDelivery.error.map(err => {
                     if(err.includes('date')) {
                         dateErrArr.push('Invalid date.')
@@ -169,10 +176,6 @@ export const DeliveryForm = ({ post }) => {
                         timeErrArr.push('Invalid time.')
                     }
                 })
-            } else {
-                dispatch(hideModal())
-                history.push(`/`);
-                return newDelivery
             }
         }
 

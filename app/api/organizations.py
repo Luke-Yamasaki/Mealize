@@ -12,6 +12,11 @@ def all_organizations():
     businesses_list = Organization.query.filter(Organization.isNonprofit == False)
     return {'nonprofits': {nonprofit.id:nonprofit.to_dict() for nonprofit in nonprofits_list}, 'businesses': {business.id:business.to_dict() for business in businesses_list}}
 
+@organization_routes.route('/<int:id>')
+def one_organization(id):
+    organization = Organization.query.get(id)
+    return organization.to_dict()
+
 @organization_routes.route('/', methods=['POST'])
 @login_required
 def new_organization():
@@ -27,6 +32,7 @@ def new_organization():
             imageUrl = form.data['imageUrl'],
             open = form.data['open'],
             close = form.data['close'],
+            timeslot = form.data['timeslot'],
             name = form.data['name'],
             description = form.data['description'],
             street = form.data['street'],
@@ -56,6 +62,7 @@ def update_organization(id):
         organization.imageUrl = form.data['imageUrl'],
         organization.open = form.data['open'],
         organization.close = form.data['close'],
+        organization.timeslot = form.data['timeslot'],
         organization.name = form.data['name'],
         organization.description = form.data['description'],
         organization.street = form.data['street'],

@@ -34,14 +34,13 @@ const removedPost = payload => ({
 
 // action creators
 export const postItem = (formData) => async (dispatch) => {
-    const response = await fetch('/api/posts/items', {
+    const response = await fetch('/api/posts/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
     });
-    console.log(response)
     if(response.ok) {
         const newPost = await response.json();
         dispatch(createdPost(newPost));
@@ -56,32 +55,8 @@ export const postItem = (formData) => async (dispatch) => {
     }
 };
 
-export const postRequest = (formData) => async (dispatch) => {
-    console.log(formData)
-    const response = await fetch('/api/posts/requests', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    });
-    console.log(response)
-    if(response.ok) {
-        const newPost = await response.json();
-        dispatch(createdPost(newPost));
-        return newPost;
-    } else if(response.status < 500) {
-        const data = await response.json();
-        if(data.errors){
-            return data.errors;
-        };
-    } else {
-        return 'Connection failed. Please check your internet connection.'
-    }
-};
-
 export const getAllPosts = () => async (dispatch) => {
-    const response = await fetch('/api/posts');
+    const response = await fetch('/api/posts/');
     if(response.ok) {
         const posts = await response.json();
         dispatch(gotAllPosts(posts));
@@ -113,39 +88,17 @@ export const getBatchedPosts = () => async (dispatch) => {
 };
 
 export const updateItem = (formData) => async (dispatch) => {
-    const response = await fetch(`/api/posts/items/${formData.postId}`, {
+    const response = await fetch(`/api/posts/${formData.postId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
     });
-
     if(response.ok) {
         const data = await response.json();
         dispatch(updatedPost(data));
-    } else if(response.status < 500) {
-        const data = await response.json();
-        if(data.errors){
-            return data.errors;
-        };
-    } else {
-        return 'Connection failed. Please check your internet connection.'
-    };
-};
-
-export const updateRequest = (formData) => async (dispatch) => {
-    const response = await fetch(`/api/posts/requests/${formData.postId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-    });
-
-    if(response.ok) {
-        const data = await response.json();
-        dispatch(updatedPost(data));
+        return data
     } else if(response.status < 500) {
         const data = await response.json();
         if(data.errors){
@@ -168,6 +121,7 @@ export const removePost = (postId) => async (dispatch) => {
     if(response.ok) {
         const postId = await response.json();
         dispatch(removedPost(postId));
+        return postId;
     } else if(response.status < 500) {
         const data = await response.json();
         if(data.errors){
@@ -178,25 +132,25 @@ export const removePost = (postId) => async (dispatch) => {
     };
 };
 
-const initialState = { posts:null };
+const initialState = { posts: null };
 
 export default function postsReducer(state = initialState, action) {
     const newState = { ...state };
     switch(action.type) {
         case CREATED_POST:
-            newState[action.payload?.id] = action.payload;
+            newState.posts[action.payload?.id] = action.payload;
             return newState
         case GOT_ALL_POSTS:
-            newState['posts'] = action.payload;
+            newState.posts = action.payload;
             return newState
         case GOT_BATCHED_POSTS:
-            newState['posts'] = action.payload;
+            newState.posts = action.payload;
             return newState;
         case UPDATED_POST:
-            newState[action.payload?.id] = action.payload;
+            newState.posts[action.payload?.id] = action.payload;
 			return newState;
         case REMOVED_POST:
-            delete newState[action.payload]; //double check what's getting returned from flask
+            delete newState.posts[action.payload];
 			return newState;
         default:
             return state;

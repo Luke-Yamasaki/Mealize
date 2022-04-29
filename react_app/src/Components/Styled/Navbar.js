@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Nav = styled.nav`
-    width: 80vw;
+    width: 1600px;
     height: 60px;
     background: linear-gradient(#76D97E, #28A690);
     display:flex;
@@ -12,7 +12,7 @@ export const Nav = styled.nav`
 
 
 export const NavList = styled.ul`
-    width: 80vw;
+    width: 1600px;
     height: 60px;
     display: flex;
     flex-direction: row;
@@ -25,7 +25,7 @@ export const SearchBar = styled.form`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    width: 30vw;
+    width: 500px;
     height: 30px;
     background-color: white;
     border-radius: 50px;

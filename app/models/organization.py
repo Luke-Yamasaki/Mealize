@@ -8,8 +8,9 @@ class Organization(db.Model):
     isNonprofit = db.Column(db.Boolean, nullable=False)
     logoUrl = db.Column(db.String(2048), nullable=False)
     imageUrl = db.Column(db.String(2048), nullable=False)
-    open = db.Column(db.Time, nullable=False)
-    close = db.Column(db.Time, nullable=False)
+    open = db.Column(db.String(20), nullable=False)
+    close = db.Column(db.String(20), nullable=False)
+    timeslot = db.Column(db.String(35), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(1000), nullable=False)
     street = db.Column(db.String(100), nullable=False)
@@ -33,8 +34,6 @@ class Organization(db.Model):
             'isNonprofit': self.isNonprofit,
             'logoUrl': self.logoUrl,
             'imageUrl': self.imageUrl,
-            'open': self.open,
-            'close': self.close,
             'name': self.name,
             'description': self.description,
             'street': self.street,
@@ -43,6 +42,9 @@ class Organization(db.Model):
             'state': self.state,
             'phone': self.phone,
             'email': self.email,
+            'open': self.open,
+            'close': self.close,
+            'timeslot': self.timeslot,
             'createdAt': self.createdAt
         }
 
@@ -54,6 +56,7 @@ class Organization(db.Model):
             'imageUrl': self.imageUrl,
             'open': self.open,
             'close': self.close,
+            'timeslot': self.timeslot,
             'name': self.name,
             'description': self.description,
             'street': self.street,

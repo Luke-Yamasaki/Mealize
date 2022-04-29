@@ -11,9 +11,9 @@ message_routes = Blueprint('messages', __name__)
 @login_required
 def messages():
     userId = current_user.id
-    sent_messages = Message.query.filter(Message.senderId == userId)
-    received_messages = Message.query.filter(Message.receiverId == userId)
-    return {'sent': {message.id:message.to_dict() for message in sent_messages}, 'received': {message.id:message.to_dict() for message in received_messages}}
+    all_messages = Message.query.filter(Message.senderId == userId or Message.receiverId == userId)
+
+    return {message.id:message.to_dict() for message in all_messages}
 
 @message_routes.route('/<int:id>')
 @login_required
@@ -56,6 +56,24 @@ def new_message():
             imageUrl = ''
         )
 
+        db.session.add(message)
+        db.session.commit()
+        return message.to_dict()
+    else:
+        return {'errors': errors_to_list(form.errors)}
+
+@message_routes.route('/request', methods=['POST'])
+@login_required
+def new_message():
+    form = MessageForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        message = Message(
+            senderId=current_user.id,
+            receiverId=request.json['userId'],
+            content="New pickup request!",
+            imageUrl=request.json['postImageUrl']
+        )
         db.session.add(message)
         db.session.commit()
         return message.to_dict()

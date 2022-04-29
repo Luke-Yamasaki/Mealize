@@ -34,15 +34,15 @@
 
 .submit {
     width: 80px;
-    height: 30px;
-    border: 1px solid #76D97E;
-    background-color: #005C4D;
+    height: 35px;
+    background-color: #76D97E;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
-    color: white;
+    font-size: 12px;
+    color: black;
+    font-weight: 700;
 }
 
 .submit:hover {
@@ -51,15 +51,15 @@
 
 .cancel {
     width: 80px;
-    height: 30px;
-    border: 1px solid #76D97E;
-    background-color: #005C4D;
+    height: 35px;
+    background-color: #28A690;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 14px;
-    color: white;
+    font-size: 12px;
+    color: black;
+    font-weight: 700;
 }
 
 .cancel:hover {
@@ -114,4 +114,191 @@
 
 .modalOption:hover {
     cursor: pointer;
+}
+
+.idCard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    width: 456px;
+    height: 260px;
+    border: none;
+    overflow: hidden;
+    border-radius: 5px;
+    background-image: linear-gradient(#76D97E, #28A690),
+        url('../../Assets/Images/Pattern_10.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.header {
+    width: 456px;
+    height: 51px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+.logoBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100px;
+    height: 51px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.logoType {
+    font-family: motiva-sans, sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    font-style: normal;
+    color: black;
+    margin: 0px;
+    padding: 0px;
+}
+
+.labelText {
+    display: flex;
+    flex-direction: row;
+    width: 150px;
+    height: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0px;
+    padding: 0px;
+    gap: 5px;
+}
+
+.descriptionText {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    height: 200px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 0px;
+    padding: 0px;
+    gap: 5px;
+}
+
+.labels {
+    font-family: motiva-sans, sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    color: black;
+    height: 20px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.subText {
+    font-family: motiva-sans, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    color: black;
+    margin: 0px;
+    padding: 0px;
+    height: 20px;
+}
+
+.sloganBox {
+    width: 270px;
+    height: 51px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slogan {
+    font-family: motiva-sans, sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    font-style: normal;
+    color: black;
+}
+
+.iconBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 51px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.iconBg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    background-color: white;
+    border-radius: 100%;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: top;
+    width: 456px;
+    height: 175px;
+}
+
+.imageBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100px;
+    height: 175px;
+}
+
+.image {
+    width: 100px;
+    height: 150px;
+    border-radius: 5px;
+    border: 1px solid white;
+    object-fit: cover;
+    object-position: center;
+    filter: drop-shadow(0 3 6px rgba(0, 0, 0, 0.15));
+}
+
+.userInfoBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: left;
+    gap: 5px;
+    width: 130px;
+    height: 141px;
+}
+
+.jobInfoBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: left;
+    gap: 5px;
+    width: 170px;
+    height: 141px;
+}
+
+.addressBox {
+    display: flex;
+    flex-direction: column;
+    width: 130px;
+    height: 50px;
 }

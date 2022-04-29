@@ -13,15 +13,15 @@ def seed_users():
         private=False,
         firstName='Nonprofit',
         lastName='Demo',
-        email='nonprofit_demo@testing.com', 
+        email='nonprofit_demo@testing.com',
         phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
-        age=35,
+        dob=fake.date_of_birth(minimum_age=30, maximum_age=60),
         deaf=False,
-        autism=False,
+        wheelchair=False,
         learningDisabled=False,
         lgbtq=False,
-        profileImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-        jobDescription="Hello, my name is Nonprofit Demo! My account will give you a glance into all the features Mealize provides! Thank you and I hope you enjoy Mealize!",
+        profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+        jobDescription="Hello! My account will give you a glance into all the features Mealize provides!",
         hashedPassword=generate_password_hash('062651d0-01fe-49c5-aaa1-0829ba3f4ff3')
     )
     db.session.add(nonprofit_demo)
@@ -36,13 +36,13 @@ def seed_users():
             lastName=fake.last_name(),
             email=fake.unique.email(),
             phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
-            age=randint(18, 91),
+            dob=fake.date_of_birth(minimum_age=18, maximum_age=90),
             deaf=random() > 0.9,
-            autism=random() > 0.9,
+            wheelchair=random() > 0.9,
             learningDisabled=random() > 0.9,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-            jobDescription=fake.text(max_nb_chars=255),
+            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+            jobDescription=fake.text(max_nb_chars=99),
             hashedPassword=generate_password_hash(fake.password())
         )
         db.session.add(nonprofit_managers)
@@ -56,18 +56,18 @@ def seed_users():
         lastName='Demo',
         email='business_demo@testing.com',
         phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
-        age=45,
+        dob=fake.date_of_birth(minimum_age=30, maximum_age=50),
         deaf=False,
-        autism=False,
+        wheelchair=False,
         learningDisabled=False,
         lgbtq=False,
-        profileImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-        jobDescription="Hello, my name is Business Demo! My account will give you a glance into all the features Mealize provides! Thank you and I hope you enjoy Mealize!",
+        profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+        jobDescription="Hello! My account will give you a glance into all the features Mealize provides!",
         hashedPassword=generate_password_hash('8f08d594-2275-4c8f-93f3-4cb6dbed4b70')
     )
     db.session.add(business_demo)
 
-    for j in range(27, 101):
+    for j in range(27, 51):
         business_managers = User(
             organizationId=j,
             isNonprofit=False,
@@ -77,18 +77,38 @@ def seed_users():
             lastName=fake.last_name(),
             email=fake.unique.email(),
             phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
-            age=randint(18, 91),
+            dob=fake.date_of_birth(minimum_age=18, maximum_age=90),
             deaf=random() > 0.9,
-            autism=random() > 0.9,
+            wheelchair=random() > 0.9,
             learningDisabled=random() > 0.9,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-            jobDescription=fake.text(max_nb_chars=255),
+            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+            jobDescription=fake.text(max_nb_chars=99),
             hashedPassword=generate_password_hash(fake.password())
         )
         db.session.add(business_managers)
 
-    for k in range(101, 201):
+    volunteer_demo = User(
+        organizationId=1,
+        isNonprofit=True,
+        isManager=False,
+        private=False,
+        firstName='Volunteer',
+        lastName='Demo',
+        email='volunteer_demo@testing.com',
+        phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
+        dob=fake.date_of_birth(minimum_age=30, maximum_age=65),
+        deaf=False,
+        wheelchair=False,
+        learningDisabled=False,
+        lgbtq=False,
+        profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+        jobDescription="Hello! My account will give you a glance into all the features Mealize provides!",
+        hashedPassword=generate_password_hash('064324651d0-72fe-49c5-aa1-0ba223f4fcmv3')
+    )
+    db.session.add(volunteer_demo)
+
+    for k in range(52, 76):
         volunteers = User(
             organizationId=randint(1, 25),
             isNonprofit=True,
@@ -98,13 +118,13 @@ def seed_users():
             lastName=fake.last_name(),
             email=fake.unique.email(),
             phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
-            age=randint(18, 91),
+            dob=fake.date_of_birth(minimum_age=18, maximum_age=90),
             deaf=random() > 0.5,
-            autism=random() > 0.5,
+            wheelchair=random() > 0.5,
             learningDisabled=random() > 0.5,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-            jobDescription=fake.text(max_nb_chars=255),
+            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+            jobDescription=fake.text(max_nb_chars=99),
             hashedPassword=generate_password_hash(fake.password())
         )
         db.session.add(volunteers)

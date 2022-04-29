@@ -1,19 +1,16 @@
+import styles from './Navbar.module.css';
+import { showModal, setCurrentModal } from '../../store/modal';
+//components
 import { NavLink } from 'react-router-dom';
-import { Logo } from '../Logo';
-import { MagnifyingGlass } from '../../Assets/Icons/MagnifyingGlass';
-import { useSelector, useDispatch } from "react-redux";
+import { Logo } from '../../Assets/Logo';
+import { useDispatch } from "react-redux";
 import { LoginForm } from '../../Forms/Login';
 import { SignupForm } from '../../Forms/Signup';
 import { Searchbar } from '../Searchbar';
-import ItemForm from '../../Forms/Item';
-import styles from './Navbar.module.css';
-import styled from 'styled-components';
-import { showModal, setCurrentModal } from '../../store/modal';
-import { logout } from '../../store/session';
 import { Nav, NavList, LogoBox, AuthBox } from '../Styled/Navbar';
 
+
 export const Navbar = () => {
-    const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
 
     const showLoginModal = () => {
@@ -33,10 +30,11 @@ export const Navbar = () => {
                     <Logo dimension={"medium"} />
                     <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
                 </LogoBox>
-                <Searchbar />
+                {/* <Searchbar /> */}
+                <div style={{width: '600px'}}></div>
                 <AuthBox>
-                    <div role='button' className={styles.login} onClick={showLoginModal}>Log in</div>
-                    <div role='button' className={styles.signup} onClick={showSignupModal}>Sign up</div>
+                     <div role='button' className={styles.signup} onClick={showSignupModal}>Sign up</div>
+                     <div role='button' className={styles.login} onClick={showLoginModal}>Log in</div>
                 </AuthBox>
             </NavList>
         </Nav>

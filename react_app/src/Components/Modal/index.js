@@ -22,7 +22,7 @@ export const Modal = () => {
                 <Current />
             </div>
         </div>
-        , mount)
+    , mount)
 }
 
 export default Modal;

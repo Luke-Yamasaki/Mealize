@@ -7,9 +7,9 @@ class Post(db.Model):
     isItem = db.Column(db.Boolean, nullable=False)
     organizationId = db.Column(db.Integer, db.ForeignKey('organizations.id'), nullable=False)
     userId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    title = db.Column(db.String(35), nullable=False)
-    description = db.Column(db.String(255), nullable=False)
-    quantity = db.Column(db.String(15), nullable=False)
+    title = db.Column(db.String(25), nullable=False)
+    description = db.Column(db.String(120), nullable=False)
+    quantity = db.Column(db.String(12), nullable=False)
     categoryId = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     imageUrl = db.Column(db.String(2048), nullable=False)
     expDate = db.Column(db.Date, nullable=False)
@@ -37,7 +37,7 @@ class Post(db.Model):
             'imageUrl': self.imageUrl,
             'expDate': self.expDate,
             'status': self.status,
-            'organization': self.organizationId,
+            'category': self.category.to_dict(),
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt
         }

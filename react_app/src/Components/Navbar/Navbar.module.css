@@ -1,5 +1,5 @@
-/* .navbar {
-    width: 80vw;
+.navbar {
+    width: 1600px;
     height: 60px;
     background: linear-gradient(#76D97E, #28A690);
     display:flex;
@@ -7,9 +7,15 @@
     justify-content: space-around;
     align-items: center;
     animation: lockin 4s ease-in-out 1 normal forwards;
-} */
+    position: absolute;
+    z-index: 200;
+}
 
-/* @keyframes lockin {
+@keyframes lockin {
+    0% {
+        width: 100vw;
+        height: 100vh;
+    }
     25% {
         width: 100vw;
         height: 100vh;
@@ -26,7 +32,7 @@
         width: 1600px;
         height: 60px;
     }
-} */
+}
 
 .link {
     color: white;
@@ -34,21 +40,23 @@
     font-family: motiva-sans, sans-serif;
     font-weight: 900;
     font-style: normal;
-    font-size: 0.5rem;
+    font-size: 28px;
     margin-top: 7px;
 }
 
 .login {
     width: 80px;
     height: 30px;
-    border: 1px solid #76D97E;
-    background-color: transparent;
+    border: 1px solid #E2CBA2;
+    background-color: #E3A83D;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 14px;
-    color: white;
+    color: black;
+    font-weight: 500;
+    font-family: motiva-sans, sans-serif;
 }
 
 .login:hover {
@@ -58,14 +66,15 @@
 .signup {
     width: 80px;
     height: 30px;
-    border: 1px solid #76D97E;
-    background-color: transparent;
+    border: 1px solid #608F41;
+    background-color: #327647;
     border-radius: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 14px;
     color: white;
+
 }
 
 .signup:hover {

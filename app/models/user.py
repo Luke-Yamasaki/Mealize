@@ -10,18 +10,18 @@ class User(db.Model, UserMixin):
     organizationId = db.Column(db.Integer, db.ForeignKey('organizations.id'), nullable=False)
     isNonprofit = db.Column(db.Boolean, nullable=False)
     isManager = db.Column(db.Boolean, nullable=False)
-    private = db.Column(db.Boolean, nullable=False)
+    private = db.Column(db.Boolean, nullable=True)
     firstName = db.Column(db.String(50), nullable=False)
     lastName = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     phone = db.Column(db.String(20), nullable=False, unique=True)
-    age = db.Column(db.Integer, nullable=False)
-    deaf = db.Column(db.Boolean, nullable=False)
-    autism = db.Column(db.Boolean, nullable=False)
-    learningDisabled = db.Column(db.Boolean, nullable=False)
-    lgbtq = db.Column(db.Boolean, nullable=False)
+    dob = db.Column(db.Date, nullable=False)
+    deaf = db.Column(db.Boolean, nullable=True)
+    wheelchair = db.Column(db.Boolean, nullable=True)
+    learningDisabled = db.Column(db.Boolean, nullable=True)
+    lgbtq = db.Column(db.Boolean, nullable=True)
     profileImageUrl = db.Column(db.String(2048), nullable=False)
-    jobDescription = db.Column(db.String(255), nullable=False)
+    jobDescription = db.Column(db.String(100), nullable=False)
     hashedPassword = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
@@ -54,6 +54,7 @@ class User(db.Model, UserMixin):
             'lastName': self.lastName,
         }
 
+
     def profile_dict(self):
         if self.private == True:
             return {
@@ -65,6 +66,8 @@ class User(db.Model, UserMixin):
                 'firstName': self.firstName,
                 'lastName': self.lastName,
                 'jobDescription': self.jobDescription,
+                'organization': self.organization.to_dict(),
+                'favorites': {favorite.postId:favorite.to_dict() for favorite in self.favorites},
                 'createdAt': self.createdAt
             }
         else:
@@ -79,5 +82,6 @@ class User(db.Model, UserMixin):
             'phone': self.phone,
             'profileImageUrl': self.profileImageUrl,
             'jobDescription': self.jobDescription,
+            'favorites': {favorite.postId:favorite.to_dict() for favorite in self.favorites},
             'createdAt': self.createdAt
         }

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 6088ca202f71
+Revision ID: 5b4f2382fa46
 Revises: 
-Create Date: 2022-04-19 23:28:26.508300
+Create Date: 2022-04-25 03:54:08.714598
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6088ca202f71'
+revision = '5b4f2382fa46'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,8 +31,9 @@ def upgrade():
     sa.Column('isNonprofit', sa.Boolean(), nullable=False),
     sa.Column('logoUrl', sa.String(length=2048), nullable=False),
     sa.Column('imageUrl', sa.String(length=2048), nullable=False),
-    sa.Column('open', sa.Time(), nullable=False),
-    sa.Column('close', sa.Time(), nullable=False),
+    sa.Column('open', sa.String(length=20), nullable=False),
+    sa.Column('close', sa.String(length=20), nullable=False),
+    sa.Column('timeslot', sa.String(length=35), nullable=False),
     sa.Column('name', sa.String(length=100), nullable=False),
     sa.Column('description', sa.String(length=1000), nullable=False),
     sa.Column('street', sa.String(length=100), nullable=False),
@@ -61,18 +62,18 @@ def upgrade():
     sa.Column('organizationId', sa.Integer(), nullable=False),
     sa.Column('isNonprofit', sa.Boolean(), nullable=False),
     sa.Column('isManager', sa.Boolean(), nullable=False),
-    sa.Column('private', sa.Boolean(), nullable=False),
+    sa.Column('private', sa.Boolean(), nullable=True),
     sa.Column('firstName', sa.String(length=50), nullable=False),
     sa.Column('lastName', sa.String(length=50), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=False),
     sa.Column('phone', sa.String(length=20), nullable=False),
-    sa.Column('age', sa.Integer(), nullable=False),
-    sa.Column('deaf', sa.Boolean(), nullable=False),
-    sa.Column('autism', sa.Boolean(), nullable=False),
-    sa.Column('learningDisabled', sa.Boolean(), nullable=False),
-    sa.Column('lgbtq', sa.Boolean(), nullable=False),
+    sa.Column('dob', sa.Date(), nullable=False),
+    sa.Column('deaf', sa.Boolean(), nullable=True),
+    sa.Column('wheelchair', sa.Boolean(), nullable=True),
+    sa.Column('learningDisabled', sa.Boolean(), nullable=True),
+    sa.Column('lgbtq', sa.Boolean(), nullable=True),
     sa.Column('profileImageUrl', sa.String(length=2048), nullable=False),
-    sa.Column('jobDescription', sa.String(length=255), nullable=False),
+    sa.Column('jobDescription', sa.String(length=100), nullable=False),
     sa.Column('hashedPassword', sa.String(length=255), nullable=False),
     sa.Column('createdAt', sa.DateTime(), nullable=True),
     sa.Column('updatedAt', sa.DateTime(), nullable=True),
@@ -112,9 +113,9 @@ def upgrade():
     sa.Column('isItem', sa.Boolean(), nullable=False),
     sa.Column('organizationId', sa.Integer(), nullable=False),
     sa.Column('userId', sa.Integer(), nullable=False),
-    sa.Column('title', sa.String(length=35), nullable=False),
-    sa.Column('description', sa.String(length=255), nullable=False),
-    sa.Column('quantity', sa.String(length=15), nullable=False),
+    sa.Column('title', sa.String(length=25), nullable=False),
+    sa.Column('description', sa.String(length=120), nullable=False),
+    sa.Column('quantity', sa.String(length=12), nullable=False),
     sa.Column('categoryId', sa.Integer(), nullable=False),
     sa.Column('imageUrl', sa.String(length=2048), nullable=False),
     sa.Column('expDate', sa.Date(), nullable=False),
@@ -132,8 +133,8 @@ def upgrade():
     sa.Column('postId', sa.Integer(), nullable=False),
     sa.Column('userId', sa.Integer(), nullable=False),
     sa.Column('organizationId', sa.Integer(), nullable=False),
-    sa.Column('start', sa.DateTime(), nullable=False),
-    sa.Column('end', sa.DateTime(), nullable=False),
+    sa.Column('date', sa.Date(), nullable=False),
+    sa.Column('time', sa.String(), nullable=False),
     sa.Column('completed', sa.Integer(), nullable=False),
     sa.Column('cancellationReason', sa.String(length=255), nullable=True),
     sa.Column('createdAt', sa.DateTime(), nullable=True),

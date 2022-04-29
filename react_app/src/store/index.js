@@ -2,7 +2,9 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import usersReducer from './users';
+import organizationsReducer from './organizations';
 import postsReducer from './posts';
+import deliveriesReducer from './deliveries';
 import messagesReducer from './messages';
 import categoriesReducer from './categories';
 
@@ -11,8 +13,10 @@ import modals from './modal';
 const rootReducer = combineReducers({
     session: sessionReducer,
     categories: categoriesReducer,
+    organizations: organizationsReducer,
     users: usersReducer,
     posts: postsReducer,
+    deliveries: deliveriesReducer,
     messages: messagesReducer,
     modals
 });

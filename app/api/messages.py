@@ -62,6 +62,24 @@ def new_message():
     else:
         return {'errors': errors_to_list(form.errors)}
 
+@message_routes.route('/request', methods=['POST'])
+@login_required
+def new_message():
+    form = MessageForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        message = Message(
+            senderId=current_user.id,
+            receiverId=request.json['userId'],
+            content="New pickup request!",
+            imageUrl=request.json['postImageUrl']
+        )
+        db.session.add(message)
+        db.session.commit()
+        return message.to_dict()
+    else:
+        return {'errors': errors_to_list(form.errors)}
+
 @message_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_message(id):

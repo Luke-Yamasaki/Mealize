@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import current_user, login_required
-from app.models import db, Delivery, Message
+from app.models import db, Delivery
 from app.forms.delivery_form import DeliveryForm
 from app.utils import errors_to_list
 from time import strftime
@@ -10,8 +10,8 @@ delivery_routes = Blueprint('deliveries', __name__)
 @delivery_routes.route('/')
 @login_required
 def all_deliveries():
-    all_deliveries = Delivery.query.filter(Delivery.userId == current_user.id)
-    return {'deliveries': [delivery.to_dict() for delivery in all_deliveries]}
+    deliveries = Delivery.query.filter(Delivery.userId == current_user.id)
+    return {delivery.id:delivery.to_dict() for delivery in deliveries}
 
 @delivery_routes.route('/<int:id>')
 @login_required
@@ -30,7 +30,7 @@ def new_delivery():
     month = strftime("%m")
     day = strftime("%d")
     # tuples are immutable
-    times = ('9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13', '13.5', '14', '14.5', '15', '15.5', '16', '16.5')
+    times = ('9AM', '9:30AM', '10AM', '10.5', '11', '11.5', '12', '12.5', '13', '13.5', '14', '14.5', '15', '15.5', '16', '16.5')
 
     # For some reason, form.data['date'] does not work.
     form_date = request.json['date']
@@ -55,21 +55,11 @@ def new_delivery():
             organizationId = current_user.organizationId,
             date = request.json['date'],
             time = form.data['time'],
-            completed = 0 # 0=not apprevoded yet 1=accepted 2=in progress 3=picked up/droped off 4=cancelled
+            completed = 0 # 0=not approved yet 1=accepted 2=in progress 3=picked up/droped off 4=cancelled
         )
         db.session.add(delivery)
-
-        request_message = Message(
-            senderId = current_user.id,
-            receiverId = request.json['userId'],
-            content = "New pickup request!",
-            imageUrl = request.json['postImageUrl']
-        )
-
-        db.session.add(request_message)
-
         db.session.commit()
-        return {'delivery': delivery.to_dict(), 'message': {request_message.id:request_message.to_dict()}}
+        return delivery.to_dict()
     return {'errors': errors_to_list(form.errors)}
 
 @delivery_routes.route('/<int:id>', methods=['PUT'])

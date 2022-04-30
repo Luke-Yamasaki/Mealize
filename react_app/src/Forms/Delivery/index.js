@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createDelivery } from '../../store/deliveries';
-import { getOneUser } from '../../store/users';
+import { sendMessage } from '../../store/messages';
 import { useHistory } from 'react-router-dom';
-
 import { ItemCard } from '../../Components/ItemCard';
 import { Business } from '../../Assets/Icons/Business';
 import { hideModal } from '../../store/modal';
@@ -156,15 +155,15 @@ export const DeliveryForm = ({ post }) => {
             };
 
             // create delivery, then create message
-            const newDelivery = await dispatch(createDelivery(deliveryData)) 
+            const newDelivery = await dispatch(createDelivery(deliveryData))
             //check errors
             if (!newDelivery.error) {
                 const requestMessage = {
                     receiverId: post.userId,
                     imageUrl: post.imageUrl
                 }
-                const newMessage = await dispatch(createRequest(requestMessage))
-                    
+                const newMessage = await dispatch(sendMessage(requestMessage))
+
                 dispatch(hideModal())
                 history.push(`/`);
                 return newDelivery

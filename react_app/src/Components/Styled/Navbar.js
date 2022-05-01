@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 export const Nav = styled.nav`
-    width: 1600px;
+    min-width: 700px;
+    width: 56.2vw;
+    max-width: 1600px;
     height: 60px;
     background: linear-gradient(#76D97E, #28A690);
     display:flex;
@@ -10,9 +12,9 @@ export const Nav = styled.nav`
     align-items: center;
 `;
 
-
 export const NavList = styled.ul`
-    width: 1600px;
+    width: 56.2vw;
+    max-width: 1700px;
     height: 60px;
     display: flex;
     flex-direction: row;
@@ -25,7 +27,7 @@ export const SearchBar = styled.form`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    width: 500px;
+    width: 400px;
     height: 30px;
     background-color: white;
     border-radius: 50px;

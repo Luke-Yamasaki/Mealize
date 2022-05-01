@@ -5,6 +5,13 @@ import styles from './Styles/index.module.css';
 import App from './App';
 import configureStore from './store';
 
+// Context
+import ThemeProvider from './Context/ThemeContext';
+import ColorProvider from './Context/ColorContext';
+import ContrastProvider from './Context/ContrastContext';
+import SaturationProvider from './Context/SaturationContext';
+import BackGroundProvider from './Context/BackGroundContext';
+
 import { setModalMount } from './store/modal';
 
 const store = configureStore();
@@ -18,10 +25,21 @@ const Root = () => {
   }, [dispatch])
 
   return (
-    <div className={styles.super}>
-      <App />
-      <div ref={modalMountRef} className='modal'/>
-    </div>
+    <ThemeProvider>
+      <ColorProvider>
+        <ContrastProvider>
+          <SaturationProvider>
+            <BackGroundProvider>
+              <div className={styles.super}>
+                <App />
+                <div ref={modalMountRef} className='modal'/>
+              </div>
+            </BackGroundProvider>
+          </SaturationProvider>
+        </ContrastProvider>
+      </ColorProvider>
+    </ThemeProvider>
+
   )
 }
 

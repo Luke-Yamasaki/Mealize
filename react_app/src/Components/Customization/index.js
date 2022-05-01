@@ -20,6 +20,10 @@ const SettingsBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0px;
+    padding: 0px;
+    margin-top: 50vh;
+    margin-left: 80vw;
 `;
 
 const HelperButton = styled.div`
@@ -28,7 +32,8 @@ const HelperButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${props => props.theme === 'light' ? '#327647' : '#76D97E'}
+    border-radius: 5px;
+    background-color: ${props => props.theme === 'light' ? '#327647' : '#76D97E' };
 `;
 
 export const Customization = () => {
@@ -43,7 +48,7 @@ export const Customization = () => {
 
     return (
         <SettingsBox>
-            <HelperButton props={theme} onClick={handleClick}>
+            <HelperButton theme={theme} onClick={handleClick}>
                 <Settings theme={theme} />
             </HelperButton>
         </SettingsBox>

@@ -1,5 +1,5 @@
-const getStreetAddress = (latitude, longitude) => {
-    const coordinates = new google.maps.LatLng(latitude, longitude);
+const getStreetAddress = (lat, lng) => {
+    const coordinates = new google.maps.LatLng(lat, lng);
     const addressArr = [];
     const errorArr = [];
 

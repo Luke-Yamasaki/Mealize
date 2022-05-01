@@ -1,6 +1,12 @@
+//imports
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import styles from './App.module.css'
+
+//Context
+import { useTheme } from './Context/ThemeContext';
+import { useBackGround } from './Context/BackGroundContext';
 
 // actions
 import { authenticate } from './store/session';
@@ -14,13 +20,12 @@ import { getAllDeliveries } from './store/deliveries';
 import { Home } from './Pages/Home';
 // import { About } from './Pages/About';
 // import { Questions } from './Pages/Questions';
-import { Nonprofits } from './Pages/Nonprofits';
-import { Businesses } from './Pages/Businesses';
-import { Categories } from './Pages/Categories';
+// import { Nonprofits } from './Pages/Nonprofits';
+// import { Businesses } from './Pages/Businesses';
+// import { Categories } from './Pages/Categories';
 // import { Users } from './Pages/Users';
 // import { Settings } from './Pages/Settings';
 import { Deliveries } from './Pages/Deliveries';
-import { Background } from './Components/Styled/Background';
 import { Customization } from './Components/Customization';
 import { Navbar } from './Components/Navbar'
 import { SessionNavbar } from './Components/SessionNavbar';
@@ -28,9 +33,12 @@ import { Footer } from './Components/Footer';
 import Modal from './Components/Modal';
 
 function App() {
+  const { theme } = useTheme();
+  const { backGround } = useBackGround();
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const className = backGround === true ? theme + 'Pattern' : theme;
 
   useEffect(() => {
     (async () => {
@@ -50,7 +58,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Background>
+      <div className={[styles.bg, styles[`${className}`]].join(' ')}
+      >
         <Customization />
         {sessionUser ? <SessionNavbar sessionUser={sessionUser} /> : <Navbar />}
         <Modal />
@@ -92,7 +101,7 @@ function App() {
           </Route>
         </Switch>
         <Footer />
-      </Background>
+      </div>
     </BrowserRouter>
   );
 }

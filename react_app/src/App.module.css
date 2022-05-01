@@ -1,0 +1,69 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.bg {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.light {
+  background: linear-gradient(rgba(40, 166, 144, 1), rgba(118, 217, 126, 1));
+}
+
+.dark {
+  background: #191919;
+}
+
+.lightPattern {
+  background: url('./Assets/Images/Pattern_10.png'), linear-gradient(rgba(40, 166, 144, 1), rgba(118, 217, 126, 1));
+  background-size: contain;
+  background-repeat: repeat;
+}
+
+.darkPattern {
+  background: url('./Assets/Images/Pattern_10.png'), #191919;
+  background-size: contain;
+  background-repeat: repeat;
+}

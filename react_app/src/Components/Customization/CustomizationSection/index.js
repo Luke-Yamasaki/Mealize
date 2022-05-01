@@ -16,7 +16,7 @@ export const CustomizationSection = () => {
                 (
                     <LightCustomizationContainer>
                         <LightContentContainer>
-                            <LightLabel>Customization tools</LightLabel>
+                            <LightLabel style={{marginLeft: '3.4em'}}>Customization tools</LightLabel>
                         </LightContentContainer>
                         <Theme />
                         <Color />
@@ -29,7 +29,7 @@ export const CustomizationSection = () => {
                 (
                     <DarkCustomizationContainer>
                         <DarkContentContainer>
-                            <DarkLabel>Customization tools</DarkLabel>
+                            <DarkLabel style={{marginLeft: '3.4em'}}>Customization tools</DarkLabel>
                         </DarkContentContainer>
                         <Theme />
                         <Color />

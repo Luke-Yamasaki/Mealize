@@ -9,7 +9,7 @@ import { setCurrentModal, showModal } from '../../store/modal';
 import { useTheme } from '../../Context/ThemeContext';
 
 //Components
-import { CustomizationSection } from './CustomizationSection';
+import { CustomizationModal } from './CutomizationModal';
 import { Settings } from '../../Assets/Icons/Settings';
 
 //Styled-componenets
@@ -42,7 +42,7 @@ export const Customization = () => {
 
     const handleClick = (e) => {
         e.preventDefault();
-        dispatch(setCurrentModal(() => (<CustomizationSection theme={theme} />)));
+        dispatch(setCurrentModal(() => (<CustomizationModal />)));
         dispatch(showModal());
     };
 

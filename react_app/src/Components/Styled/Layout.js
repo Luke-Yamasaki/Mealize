@@ -16,11 +16,6 @@ export const Wrapper = styled.div`
     border: '1px solid #E8E8E8';
 `;
 
-export const DarkWrapper = styled(Wrapper)`
-    background-color: '#323232';
-    border: '1px solid #616161';
-`;
-
 export const SideBarContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -44,11 +39,6 @@ export const PostField = styled.fieldset`
     font-size: 1em;
 `;
 
-export const DarkPostField = styled(PostField)`
-    border: 1px solid #616161;
-    background-color: #191919;
-`;
-
 export const CategoryField = styled.fieldset`
     width: 150px;
     height: 285px;
@@ -59,13 +49,8 @@ export const CategoryField = styled.fieldset`
     flex-direction: column;
     align-items: left;
     justify-content: flex-end;
-    font-size: 16px;
+    font-size: 1em;
     gap: 5px;
-`;
-
-export const DarkCategoryField = styled(CategoryField)`
-    border: 1px solid #616161;
-    background-color: #191919;
 `;
 
 export const OrganizationField = styled.fieldset`
@@ -78,13 +63,8 @@ export const OrganizationField = styled.fieldset`
     flex-direction: column;
     align-items: flex-end;
     justify-content: flex-start;
-    font-size: 16px;
+    font-size: 1em;
     padding-bottom: 25px;
-`;
-
-export const DarkOrganizationField = styled(OrganizationField)`
-    border: 1px solid #616161;
-    background-color: #191919;
 `;
 
 export const EventField = styled.fieldset`
@@ -97,12 +77,10 @@ export const EventField = styled.fieldset`
     flex-direction: column;
     align-items: left;
     justify-content: space-around;
-    font-size: 16px;
+    font-size: 1em;
     padding: 0px;
     margin: 0px;
 `;
-
-export const Dark
 
 export const EventLegend = styled.legend`
     display: flex;

@@ -1,7 +1,10 @@
+import { ContentContainer, IconBox, Label } from '../../../Styled/Customization';
+
 export const Contrast = () => {
     return (
-        <div>
-
-        </div>
+        <ContentContainer>
+            <IconBox></IconBox>
+            <Label>Contrast</Label>
+        </ContentContainer>
     )
 }

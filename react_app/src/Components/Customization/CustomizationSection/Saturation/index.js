@@ -1,7 +1,10 @@
+import { ContentContainer, IconBox, Label } from '../../../Styled/Customization';
+
 export const Saturation = () => {
     return (
-        <div>
-
-        </div>
+        <ContentContainer>
+            <IconBox></IconBox>
+            <Label>Saturation</Label>
+        </ContentContainer>
     )
 }

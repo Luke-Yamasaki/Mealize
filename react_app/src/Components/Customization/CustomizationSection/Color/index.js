@@ -1,7 +1,10 @@
+import { ContentContainer, IconBox, Label } from '../../../Styled/Customization';
+
 export const Color = () => {
     return (
-        <div>
-
-        </div>
+        <ContentContainer>
+            <IconBox></IconBox>
+            <Label>Color</Label>
+        </ContentContainer>
     )
 }

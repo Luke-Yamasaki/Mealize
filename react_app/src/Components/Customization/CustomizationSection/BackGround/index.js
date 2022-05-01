@@ -1,7 +1,10 @@
+import { ContentContainer, IconBox, Label } from '../../../Styled/Customization';
+
 export const BackGround = () => {
     return (
-        <div>
-            
-        </div>
+        <ContentContainer>
+            <IconBox></IconBox>
+            <Label>BackGround</Label>
+        </ContentContainer>
     )
 }

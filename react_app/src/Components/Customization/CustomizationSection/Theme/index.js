@@ -1,7 +1,10 @@
+import { ContentContainer, IconBox, Label } from '../../../Styled/Customization';
+
 export const Theme = () => {
     return (
-        <div>
-
-        </div>
+        <ContentContainer>
+            <IconBox></IconBox>
+            <Label>Theme</Label>
+        </ContentContainer>
     )
 }

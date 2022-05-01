@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+
 // actions
 import { authenticate } from './store/session';
 import { getCategories } from './store/categories';
@@ -8,6 +9,7 @@ import { getBatchedOrganizations } from './store/organizations';
 import { getBatchedUsers } from './store/users';
 import { getAllPosts } from './store/posts';
 import { getAllDeliveries } from './store/deliveries';
+
 // Components
 import { Home } from './Pages/Home';
 // import { About } from './Pages/About';
@@ -19,6 +21,7 @@ import { Categories } from './Pages/Categories';
 // import { Settings } from './Pages/Settings';
 import { Deliveries } from './Pages/Deliveries';
 import { Background } from './Components/Styled/Background';
+import { Customization } from './Components/Customization';
 import { Navbar } from './Components/Navbar'
 import { SessionNavbar } from './Components/SessionNavbar';
 import { Footer } from './Components/Footer';
@@ -48,6 +51,7 @@ function App() {
   return (
     <BrowserRouter>
       <Background>
+        <Customization />
         {sessionUser ? <SessionNavbar sessionUser={sessionUser} /> : <Navbar />}
         <Modal />
         <Switch>

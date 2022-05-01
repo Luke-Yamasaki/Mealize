@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 export const Business = ({color}) => {
     if(color === 'white' || color === 'black'){
         return (

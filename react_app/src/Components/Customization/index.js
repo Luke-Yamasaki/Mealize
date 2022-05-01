@@ -42,7 +42,7 @@ export const Customization = () => {
 
     const handleClick = (e) => {
         e.preventDefault();
-        dispatch(setCurrentModal(() => (<CustomizationSection />)));
+        dispatch(setCurrentModal(() => (<CustomizationSection theme={theme} />)));
         dispatch(showModal());
     };
 

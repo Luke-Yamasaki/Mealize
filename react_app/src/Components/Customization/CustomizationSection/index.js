@@ -1,36 +1,57 @@
-//imports
-import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-
 //Components
-import { CustomizationContainer, TitleContainer, ContentContainer, Label } from '../../Styled/Customization';
+import { LightCustomizationContainer, DarkCustomizationContainer, LightContentContainer, DarkContentContainer, LightLabel, DarkLabel} from '../../Styled/Customization';
 import { Theme } from './Theme';
 import { Color } from './Color';
 import { Contrast } from './Contrast';
 import { Saturation } from './Saturation';
 import { BackGround } from './BackGround';
 
-export const CustomizationSection = () => {
-    return (
-    <CustomizationContainer>
-        <TitleContainer>
-            <Label>Customization tools</Label>
-        </TitleContainer>
-        <ContentContainer>
+export const CustomizationSection = ({theme}) => {
+
+    theme === 'light' ?
+    (
+    <LightCustomizationContainer>
+        <LightContentContainer>
+            <LightLabel>Customization tools</LightLabel>
+        </LightContentContainer>
+        <LightContentContainer>
             <Theme />
-        </ContentContainer>
-        <ContentContainer>
+        </LightContentContainer>
+        <LightContentContainer>
             <Color />
-        </ContentContainer>
-        <ContentContainer>
+        </LightContentContainer>
+        <LightContentContainer>
             <Contrast />
-        </ContentContainer>
-        <ContentContainer>
+        </LightContentContainer>
+        <LightContentContainer>
             <Saturation />
-        </ContentContainer>
-        <ContentContainer>
+        </LightContentContainer>
+        <LightContentContainer>
             <BackGround />
-        </ContentContainer>
-    </CustomizationContainer>
+        </LightContentContainer>
+    </LightCustomizationContainer>
+    )
+    :
+    (
+    <DarkCustomizationContainer>
+        <DarkContentContainer>
+            <DarkLabel>Customization tools</DarkLabel>
+        </DarkContentContainer>
+        <DarkContentContainer>
+            <Theme />
+        </DarkContentContainer>
+        <DarkContentContainer>
+            <Color />
+        </DarkContentContainer>
+        <DarkContentContainer>
+            <Contrast />
+        </DarkContentContainer>
+        <DarkContentContainer>
+            <Saturation />
+        </DarkContentContainer>
+        <DarkContentContainer>
+            <BackGround />
+        </DarkContentContainer>
+    </DarkCustomizationContainer>
     )
 }

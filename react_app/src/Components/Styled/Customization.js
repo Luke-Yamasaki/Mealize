@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const LightContainer = styled.div`
+export const LightCustomizationContainer = styled.div`
     width: 300px;
     height: 600px;
     display: flex;
@@ -18,7 +18,7 @@ export const LightContainer = styled.div`
     font-weight: 700;
 `;
 
-export const DarkContainer = styled.div`
+export const DarkCustomizationContainer = styled.div`
     width: 300px;
     height: 600px;
     display: flex;

@@ -1,3 +1,4 @@
+import { useTheme } from '../../../Context/ThemeContext';
 //Components
 import { LightCustomizationContainer, DarkCustomizationContainer, LightContentContainer, DarkContentContainer, LightLabel, DarkLabel} from '../../Styled/Customization';
 import { Theme } from './Theme';
@@ -6,32 +7,38 @@ import { Contrast } from './Contrast';
 import { Saturation } from './Saturation';
 import { BackGround } from './BackGround';
 
-export const CustomizationSection = ({theme}) => {
+export const CustomizationSection = () => {
+    const {theme} = useTheme();
 
-    theme === 'light' ?
-    (
-        <LightCustomizationContainer>
-            <LightContentContainer>
-                <LightLabel>Customization tools</LightLabel>
-            </LightContentContainer>
-            <Theme />
-            <Color />
-            <Contrast />
-            <Saturation />
-            <BackGround />
-        </LightCustomizationContainer>
+    return (
+        <>
+            {theme === 'light' ?
+                (
+                    <LightCustomizationContainer>
+                        <LightContentContainer>
+                            <LightLabel>Customization tools</LightLabel>
+                        </LightContentContainer>
+                        <Theme />
+                        <Color />
+                        <Contrast />
+                        <Saturation />
+                        <BackGround />
+                    </LightCustomizationContainer>
+                )
+                :
+                (
+                    <DarkCustomizationContainer>
+                        <DarkContentContainer>
+                            <DarkLabel>Customization tools</DarkLabel>
+                        </DarkContentContainer>
+                        <Theme />
+                        <Color />
+                        <Contrast />
+                        <Saturation />
+                        <BackGround />
+                    </DarkCustomizationContainer>
+                )
+            }
+        </>
     )
-    :
-    (
-        <DarkCustomizationContainer>
-            <DarkContentContainer>
-                <DarkLabel>Customization tools</DarkLabel>
-            </DarkContentContainer>
-            <Theme />
-            <Color />
-            <Contrast />
-            <Saturation />
-            <BackGround />
-        </DarkCustomizationContainer>
-    )
-}
+};

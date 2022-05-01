@@ -1,7 +1,8 @@
 import { useTheme } from '../../../../Context/ThemeContext';
 import { useSaturation } from '../../../../Context/SaturationContext';
 
-import { LightContentContainer, DarkContentContainer, LightLabel, DarkLabel, IconBox } from '../../../Styled/Customization';
+import { ContentContainer, Label, IconBox } from '../../../Styled/Light/Customization';
+import { DarkContentContainer, DarkLabel } from '../../../Styled/Dark/Customization';
 
 export const Saturation = () => {
     const {saturation, setSaturation} = useSaturation();
@@ -11,10 +12,10 @@ export const Saturation = () => {
         <>
             {theme === 'light' ?
                 (
-                    <LightContentContainer onClick={() => setSaturation(!saturation)}>
+                    <ContentContainer onClick={() => setSaturation(!saturation)}>
                         <IconBox></IconBox>
-                        <LightLabel>Saturation</LightLabel>
-                    </LightContentContainer>
+                        <Label>Saturation</Label>
+                    </ContentContainer>
                 )
                 :
                 (

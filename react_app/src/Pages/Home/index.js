@@ -12,7 +12,9 @@ import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 import { Business } from '../../Assets/Icons/Business';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 //styled-components
-import { Wrapper, DarkWrapper, SideBarContainer, PostField, CategoryField, SideLegend, SideBarInfoBox, SideBarInfoText, SidebarInfoImage, FeedContainer  } from '../../Components/Styled/Layout';
+import { Wrapper, SideBarContainer, PostField, CategoryField, SideLegend, SideBarInfoBox, SideBarInfoText, SidebarInfoImage, FeedContainer  } from '../../Components/Styled/Light/Layout';
+import { DarkWrapper, DarkPostField, DarkCategoryField, DarkSideBarInfoText } from '../../Components/Styled/Dark/Layout';
+
 // import styles from './Home.module.css';
 
 export const Home = () => {

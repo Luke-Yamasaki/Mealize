@@ -6,7 +6,7 @@ import { Logo } from '../../Assets/Logo';
 import { useDispatch } from "react-redux";
 import { LoginForm } from '../../Forms/Login';
 import { SignupForm } from '../../Forms/Signup';
-import { Searchbar } from '../Searchbar';
+import { SearchBar } from '../SearchBar';
 import { Nav, NavList, LogoBox, AuthBox } from '../Styled/Navbar';
 
 
@@ -30,7 +30,7 @@ export const Navbar = () => {
                     <Logo dimension={"medium"} />
                     <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
                 </LogoBox>
-                <Searchbar />
+                <SearchBar />
                 <AuthBox>
                      <div role='button' className={styles.signup} onClick={showSignupModal}>Sign up</div>
                      <div role='button' className={styles.login} onClick={showLoginModal}>Log in</div>

@@ -33,6 +33,7 @@ export const Label = styled.p`
     padding: 0px;
     font-size: 1em;
     color: black;
+    margin-left: 3.4em;
 `;
 
 export const IconBox = styled.div`

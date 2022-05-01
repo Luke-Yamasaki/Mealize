@@ -28,6 +28,6 @@ export const NotificationText = styled.p`
     font-style: normal;
     font-weigth: 700;
     font-size: 1em;
-    color: black;
+    color: white;
     height: 25px;
 `;

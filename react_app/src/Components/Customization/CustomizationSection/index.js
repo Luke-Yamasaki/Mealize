@@ -1,6 +1,8 @@
 import { useTheme } from '../../../Context/ThemeContext';
 //Components
-import { LightCustomizationContainer, DarkCustomizationContainer, LightContentContainer, DarkContentContainer, LightLabel, DarkLabel} from '../../Styled/Customization';
+import { CustomizationContainer, ContentContainer, Label } from '../../Styled/Light/Customization';
+import { DarkCustomizationContainer, DarkContentContainer, DarkLabel} from '../../Styled/Dark/Customization';
+
 import { Theme } from './Theme';
 import { Color } from './Color';
 import { Contrast } from './Contrast';
@@ -14,22 +16,22 @@ export const CustomizationSection = () => {
         <>
             {theme === 'light' ?
                 (
-                    <LightCustomizationContainer>
-                        <LightContentContainer>
-                            <LightLabel style={{marginLeft: '3.4em'}}>Customization tools</LightLabel>
-                        </LightContentContainer>
+                    <CustomizationContainer>
+                        <ContentContainer>
+                            <Label>Customization tools</Label>
+                        </ContentContainer>
                         <Theme />
                         <Color />
                         <Contrast />
                         <Saturation />
                         <BackGround />
-                    </LightCustomizationContainer>
+                    </CustomizationContainer>
                 )
                 :
                 (
                     <DarkCustomizationContainer>
                         <DarkContentContainer>
-                            <DarkLabel style={{marginLeft: '3.4em'}}>Customization tools</DarkLabel>
+                            <DarkLabel>Customization tools</DarkLabel>
                         </DarkContentContainer>
                         <Theme />
                         <Color />

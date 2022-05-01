@@ -1,7 +1,8 @@
 import { useTheme } from '../../../../Context/ThemeContext';
 import { useBackGround } from '../../../../Context/BackGroundContext';
 
-import { LightContentContainer, DarkContentContainer, LightLabel, DarkLabel, IconBox } from '../../../Styled/Customization';
+import { ContentContainer, Label, IconBox } from '../../../Styled/Light/Customization';
+import { DarkContentContainer, DarkLabel } from '../../../Styled/Dark/Customization';
 
 export const BackGround = () => {
     const {backGround, setBackGround} = useBackGround();
@@ -11,10 +12,10 @@ export const BackGround = () => {
         <>
             {theme === 'light' ?
                 (
-                    <LightContentContainer onClick={() => setBackGround(!backGround)}>
+                    <ContentContainer onClick={() => setBackGround(!backGround)}>
                         <IconBox></IconBox>
-                        <LightLabel>BackGround</LightLabel>
-                    </LightContentContainer>
+                        <Label>BackGround</Label>
+                    </ContentContainer>
                 )
                 :
                 (

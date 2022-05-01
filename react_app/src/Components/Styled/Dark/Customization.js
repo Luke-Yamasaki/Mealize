@@ -1,4 +1,4 @@
-import { CustomizationContainer, ContentContainer, Label } from '../Customization';
+import { CustomizationContainer, ContentContainer, Label } from '../Light/Customization';
 import styled from 'styled-components';
 
 export const DarkCustomizationContainer = styled(CustomizationContainer)`

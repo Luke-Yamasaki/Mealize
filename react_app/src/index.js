@@ -11,6 +11,7 @@ import ColorProvider from './Context/ColorContext';
 import ContrastProvider from './Context/ContrastContext';
 import SaturationProvider from './Context/SaturationContext';
 import BackGroundProvider from './Context/BackGroundContext';
+import LocationProvider from './Context/LocationContext';
 
 import { setModalMount } from './store/modal';
 
@@ -30,10 +31,12 @@ const Root = () => {
         <ContrastProvider>
           <SaturationProvider>
             <BackGroundProvider>
-              <div className={styles.super}>
-                <App />
-                <div ref={modalMountRef} className='modal'/>
-              </div>
+              <LocationProvider>
+                <div className={styles.super}>
+                  <App />
+                  <div ref={modalMountRef} className='modal'/>
+                </div>
+              </LocationProvider>
             </BackGroundProvider>
           </SaturationProvider>
         </ContrastProvider>

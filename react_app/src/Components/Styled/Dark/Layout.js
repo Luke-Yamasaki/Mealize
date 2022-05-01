@@ -1,4 +1,4 @@
-import { Wrapper, PostField, CategoryField, OrganizationField, EventField, SideBarInfoText } from '../Light';
+import { Wrapper, PostField, CategoryField, OrganizationField, EventField, SideBarInfoText } from '../Light/Layout';
 import styled from 'styled-components';
 
 export const DarkWrapper = styled(Wrapper)`

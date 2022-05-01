@@ -1,7 +1,8 @@
 import { useTheme } from '../../../../Context/ThemeContext';
 import { useColor } from '../../../../Context/ColorContext';
 
-import { LightContentContainer, DarkContentContainer, LightLabel, DarkLabel, IconBox } from '../../../Styled/Customization';
+import { ContentContainer, Label, IconBox } from '../../../Styled/Light/Customization';
+import { DarkContentContainer, DarkLabel } from '../../../Styled/Dark/Customization';
 
 export const Color = () => {
     const {color, setColor} = useColor();
@@ -11,10 +12,10 @@ export const Color = () => {
         <>
             {theme === 'light' ?
                 (
-                    <LightContentContainer onClick={() => setColor(!color)}>
+                    <ContentContainer onClick={() => setColor(!color)}>
                         <IconBox></IconBox>
-                        <LightLabel>Color</LightLabel>
-                    </LightContentContainer>
+                        <Label>Color</Label>
+                    </ContentContainer>
                 )
                 :
                 (

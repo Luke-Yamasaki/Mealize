@@ -22,21 +22,23 @@ export const NavList = styled.ul`
     align-items: center;
 `;
 
-export const SearchBar = styled.form`
+export const Searchbar = styled.form`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    width: 400px;
+    max-width: 27.5vw;
+    width:  27.5vw;
+    min-width:  30vw;
     height: 30px;
     background-color: white;
     border-radius: 50px;
-    padding-left: 0.15rem;
+    padding-left: 0.5rem;
     gap: 0.1rem;
 `;
 
 export const SearchInput = styled.input`
-    width: 70%;
+    width: 27.5vw;
     height: 25px;
     font-family: motiva-sans,sans-serif;
     font-weight: 700;
@@ -45,6 +47,9 @@ export const SearchInput = styled.input`
     border: none;
     padding: 0px;
     margin: 0px;
+    outline: none;
+    font-size: 14px;
+    text-align: center;
 `;
 
 export const LogoBox = styled.div`

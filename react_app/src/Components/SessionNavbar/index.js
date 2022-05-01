@@ -8,12 +8,11 @@ import { setCurrentModal, showModal } from '../../store/modal';
 import { Nav, NavList } from '../Styled/Navbar';
 import { NotificationBar } from '../NotificationBar';
 import { Logo } from '../../Assets/Logo';
-import { Searchbar } from '../Searchbar';
+import { SearchBar } from '../SearchBar';
 import ItemForm from '../../Forms/Item';
 
 export const SessionNavbar = () => {
     const sessionUser = useSelector(state => state.session.user);
-    const organization = useSelector(state => sessionUser.isNonprofit? state.organizations.nonprofits[sessionUser.organizationId] : state.organizations.businesses[sessionUser.organizationId]);
     const dispatch = useDispatch();
 
     const showItemForm = () => {
@@ -31,7 +30,7 @@ export const SessionNavbar = () => {
                 <NavList>
                     <Logo dimension={"medium"} />
                     <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
-                    <Searchbar />
+                    <SearchBar />
                     <div className={styles.signup}>User</div>
                     <NavLink style={{textDecoration: 'none'}} to='/deliveries' exact className={styles.signup}>Deliveries</NavLink>
                     {sessionUser.isNonprofit && sessionUser.isManager ?

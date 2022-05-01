@@ -1,7 +1,8 @@
 import { useTheme } from '../../../../Context/ThemeContext';
 import { useContrast } from '../../../../Context/ContrastContext';
 
-import { LightContentContainer, DarkContentContainer, LightLabel, DarkLabel, IconBox } from '../../../Styled/Customization';
+import { ContentContainer, Label, IconBox } from '../../../Styled/Light/Customization';
+import { DarkContentContainer, DarkLabel } from '../../../Styled/Dark/Customization';
 
 export const Contrast = () => {
     const {contrast, setContrast} = useContrast();
@@ -11,10 +12,10 @@ export const Contrast = () => {
         <>
             {theme === 'light' ?
                 (
-                    <LightContentContainer onClick={() => setContrast(!contrast)}>
+                    <ContentContainer onClick={() => setContrast(!contrast)}>
                         <IconBox></IconBox>
-                        <LightLabel>Contrast</LightLabel>
-                    </LightContentContainer>
+                        <Label>Contrast</Label>
+                    </ContentContainer>
                 )
                 :
                 (

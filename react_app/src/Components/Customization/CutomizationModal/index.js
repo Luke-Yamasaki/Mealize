@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { hideModal } from '../../../store/modal';
 import { CustomizationSection } from '../CustomizationSection';
-import { TransparentBackGround, ModalField } from '../../Styled/Modal';
+import { BackGround, SettingsModalField } from '../../Styled/Light/Modals';
 export const CustomizationModal = () => {
     const dispatch = useDispatch();
 
@@ -10,10 +10,10 @@ export const CustomizationModal = () => {
     };
 
     return (
-        <TransparentBackGround onClick={closeModal}>
-            <ModalField onClick={e => e.stopPropagation()}>
+        <BackGround onClick={closeModal}>
+            <SettingsModalField onClick={e => e.stopPropagation()}>
                 <CustomizationSection />
-            </ModalField>
-        </TransparentBackGround>
+            </SettingsModalField>
+        </BackGround>
     )
 };

@@ -1,6 +1,7 @@
 import { useTheme } from '../../../../Context/ThemeContext';
 
-import { LightContentContainer, DarkContentContainer, LightLabel, DarkLabel, IconBox } from '../../../Styled/Customization';
+import { ContentContainer, Label, IconBox } from '../../../Styled/Light/Customization';
+import { DarkContentContainer, DarkLabel } from '../../../Styled/Dark/Customization';
 
 export const Theme = () => {
     const {theme, setTheme} = useTheme();
@@ -9,10 +10,10 @@ export const Theme = () => {
         <>
             {theme === 'light' ?
                 (
-                    <LightContentContainer onClick={() => setTheme('dark')}>
+                    <ContentContainer onClick={() => setTheme('dark')}>
                         <IconBox></IconBox>
-                        <LightLabel>Theme</LightLabel>
-                    </LightContentContainer>
+                        <Label>Theme</Label>
+                    </ContentContainer>
                 )
                 :
                 (

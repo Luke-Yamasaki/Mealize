@@ -1,10 +1,22 @@
-import { ContentContainer, IconBox, Label } from '../../../Styled/Customization';
+import { useTheme } from '../../../../Context/ThemeContext';
+
+import { LightContentContainer, DarkContentContainer, LightLabel, DarkLabel, IconBox } from '../../../Styled/Customization';
 
 export const Theme = () => {
-    return (
-        <ContentContainer>
+    const {theme, setTheme} = useTheme();
+
+    theme === 'light' ?
+    (
+        <LightContentContainer onClick={() => setTheme('dark')}>
             <IconBox></IconBox>
-            <Label>Theme</Label>
-        </ContentContainer>
+            <LightLabel>Theme</LightLabel>
+        </LightContentContainer>
+    )
+    :
+    (
+        <DarkContentContainer onClick={() => setTheme('light')}>
+            <IconBox></IconBox>
+            <DarkLabel>Theme</DarkLabel>
+        </DarkContentContainer>
     )
 }

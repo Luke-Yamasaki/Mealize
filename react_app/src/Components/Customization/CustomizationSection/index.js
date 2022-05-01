@@ -10,48 +10,28 @@ export const CustomizationSection = ({theme}) => {
 
     theme === 'light' ?
     (
-    <LightCustomizationContainer>
-        <LightContentContainer>
-            <LightLabel>Customization tools</LightLabel>
-        </LightContentContainer>
-        <LightContentContainer>
+        <LightCustomizationContainer>
+            <LightContentContainer>
+                <LightLabel>Customization tools</LightLabel>
+            </LightContentContainer>
             <Theme />
-        </LightContentContainer>
-        <LightContentContainer>
             <Color />
-        </LightContentContainer>
-        <LightContentContainer>
             <Contrast />
-        </LightContentContainer>
-        <LightContentContainer>
             <Saturation />
-        </LightContentContainer>
-        <LightContentContainer>
             <BackGround />
-        </LightContentContainer>
-    </LightCustomizationContainer>
+        </LightCustomizationContainer>
     )
     :
     (
-    <DarkCustomizationContainer>
-        <DarkContentContainer>
-            <DarkLabel>Customization tools</DarkLabel>
-        </DarkContentContainer>
-        <DarkContentContainer>
+        <DarkCustomizationContainer>
+            <DarkContentContainer>
+                <DarkLabel>Customization tools</DarkLabel>
+            </DarkContentContainer>
             <Theme />
-        </DarkContentContainer>
-        <DarkContentContainer>
             <Color />
-        </DarkContentContainer>
-        <DarkContentContainer>
             <Contrast />
-        </DarkContentContainer>
-        <DarkContentContainer>
             <Saturation />
-        </DarkContentContainer>
-        <DarkContentContainer>
             <BackGround />
-        </DarkContentContainer>
-    </DarkCustomizationContainer>
+        </DarkCustomizationContainer>
     )
 }

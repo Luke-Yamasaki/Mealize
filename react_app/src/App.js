@@ -16,8 +16,9 @@ import { getBatchedUsers } from './store/users';
 import { getAllPosts } from './store/posts';
 import { getAllDeliveries } from './store/deliveries';
 
-// Components
+//Pages
 import { Home } from './Pages/Home';
+import { FourOFour } from './Pages/FourOFour';
 // import { About } from './Pages/About';
 // import { Questions } from './Pages/Questions';
 // import { Nonprofits } from './Pages/Nonprofits';
@@ -26,11 +27,15 @@ import { Home } from './Pages/Home';
 // import { Users } from './Pages/Users';
 // import { Settings } from './Pages/Settings';
 import { Deliveries } from './Pages/Deliveries';
+//components
 import { Customization } from './Components/Customization';
-import { Navbar } from './Components/Navbar'
-import { SessionNavbar } from './Components/SessionNavbar';
-import { Footer } from './Components/Footer';
 import Modal from './Components/Modal';
+import { AppBackGround } from './Components/Styled/Background';
+//layouts
+import { Navbar } from './Layout/Navbar';
+import { SessionNavbar } from './Layout/Navbar/SessionNavbar';
+import { Footer } from './Layout/Footer';
+
 
 function App() {
   const { theme } = useTheme();
@@ -58,8 +63,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className={[styles.bg, styles[`${className}`]].join(' ')}
-      >
+      <AppBackGround theme={theme} background={backGround}>
         <Customization />
         {sessionUser ? <SessionNavbar sessionUser={sessionUser} /> : <Navbar />}
         <Modal />
@@ -97,11 +101,11 @@ function App() {
             </Route>
           }
           <Route>
-            <div style={{fontFamily: 'motiva-sans, sans-serif', fontWeight: '900', paddingTop: '20px', fontSize: '48px', width: '1600px', height: '60vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}> 404 Not Found. <img style={{objectFit: 'cover', objectPosition: 'center', width: '600px', height: '700px'}}src='https://live.staticflickr.com/2080/1576740677_c983d27842_b.jpg' alt='404 error' /></div>
+            <FourOFour />
           </Route>
         </Switch>
         <Footer />
-      </div>
+      </AppBackGround>
     </BrowserRouter>
   );
 }

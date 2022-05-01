@@ -1,6 +1,17 @@
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const Nav = styled.nav`
+export const StyledNavLink = styled(NavLink)`
+    color: white;
+    text-decoration: none;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 28px;
+    margin-top: 7px;
+`;
+
+export const Navigation = styled.nav`
     min-width: 700px;
     width: 56.2vw;
     max-width: 1600px;

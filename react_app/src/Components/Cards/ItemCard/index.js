@@ -2,19 +2,19 @@ import { useSelector, useDispatch } from 'react-redux';
 import styles from './ItemCard.module.css';
 import styled from 'styled-components';
 //actions
-import { getAllPosts, removePost } from '../../store/posts';
-import { setCurrentModal, showModal } from '../../store/modal';
-
-import { XSLogo } from '../../Assets/Logo';
-import { Triangle } from '../../Assets/Icons/Triangle';
-import { FavoritesIcon } from '../../Assets/Logo/FavoritesIcon/index';
-import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
-import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
-import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
-import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
-import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
-import { EditItemForm } from '../../Forms/Item/EditItem';
-import { DeliveryForm } from '../../Forms/Delivery';
+import { getAllPosts, removePost } from '../../../store/posts';
+import { setCurrentModal, showModal } from '../../../store/modal';
+//components
+import { XSLogo } from '../../../Assets/Logo';
+import { Triangle } from '../../../Assets/Icons/Triangle';
+import { FavoritesIcon } from '../../../Assets/Logo/FavoritesIcon/index';
+import { DairyIcon } from '../../../Assets/Icons/FoodGroups/Dairy';
+import { VegetablesIcon } from '../../../Assets/Icons/FoodGroups/Vegetables';
+import { FruitsIcon } from '../../../Assets/Icons/FoodGroups/Fruits';
+import { GrainsIcon } from '../../../Assets/Icons/FoodGroups/Grains';
+import { ProteinIcon } from '../../../Assets/Icons/FoodGroups/Protein';
+import { EditItemForm } from '../../../Forms/Item/EditItem';
+// import { DeliveryForm } from '../../Forms/Delivery';
 
 export const UserTitle = styled.div`
     width: 260px;

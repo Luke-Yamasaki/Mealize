@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { LoginForm } from '../../Forms/Login';
 import { SignupForm } from '../../Forms/Signup';
 import { SearchBar } from '../SearchBar';
-import { Nav, NavList, LogoBox, AuthBox } from '../Styled/Navbar';
+import { Navigation, NavList, LogoBox, AuthBox, StyledNavLink } from '../Styled/Navbar';
 
 
 export const Navbar = () => {
@@ -24,11 +24,11 @@ export const Navbar = () => {
     };
 
     return (
-        <Nav>
+        <Navigation>
             <NavList>
                 <LogoBox>
                     <Logo dimension={"medium"} />
-                    <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
+                    <StyledNavLink to="/" exact={true}>Mealize</StyledNavLink>
                 </LogoBox>
                 <SearchBar />
                 <AuthBox>
@@ -36,6 +36,6 @@ export const Navbar = () => {
                      <div role='button' className={styles.login} onClick={showLoginModal}>Log in</div>
                 </AuthBox>
             </NavList>
-        </Nav>
+        </Navigation>
     )
 }

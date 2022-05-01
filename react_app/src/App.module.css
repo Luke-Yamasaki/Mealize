@@ -36,34 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-.bg {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
-
-.light {
-  background: linear-gradient(rgba(40, 166, 144, 1), rgba(118, 217, 126, 1));
-}
-
-.dark {
-  background: #191919;
-}
-
-.lightPattern {
-  background: url('./Assets/Images/Pattern_10.png'), linear-gradient(rgba(40, 166, 144, 1), rgba(118, 217, 126, 1));
-  background-size: contain;
-  background-repeat: repeat;
-}
-
-.darkPattern {
-  background: url('./Assets/Images/Pattern_10.png'), #191919;
-  background-size: contain;
-  background-repeat: repeat;
-}

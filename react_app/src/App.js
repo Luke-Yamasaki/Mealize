@@ -2,12 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './App.module.css'
-
 //Context
 import { useTheme } from './Context/ThemeContext';
 import { useBackGround } from './Context/BackGroundContext';
-
 // actions
 import { authenticate } from './store/session';
 import { getCategories } from './store/categories';

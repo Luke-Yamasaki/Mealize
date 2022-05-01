@@ -10,7 +10,6 @@ export const LightCustomizationContainer = styled.div`
     border: 1px solid #D5D5D5;
     border-radius: 5px;
     background-color: #FFFFFF;
-    margin-left: 63vw;
     overflow: hidden;
     color: black;
     font-family: motiva-sans, sans-serif;
@@ -28,7 +27,6 @@ export const DarkCustomizationContainer = styled.div`
     border: 1px solid #616161;
     border-radius: 5px;
     background-color: #191919;
-    margin-left: 63vw;
     overflow: hidden;
     color: white;
     font-family: motiva-sans, sans-serif;

@@ -32,7 +32,7 @@ const HelperButton = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 100%;
     background-color: ${props => props.theme === 'light' ? '#327647' : '#76D97E' };
 `;
 

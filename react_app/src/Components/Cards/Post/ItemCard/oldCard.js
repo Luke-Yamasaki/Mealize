@@ -253,7 +253,7 @@ const DeleteButton = styled.div`
     background-color: #C2462A;
 `;
 
-export const ItemCard = ({ post, sessionUser }) => {
+export const OldItemCard = ({ post, sessionUser }) => {
     const dispatch = useDispatch();
     const users = useSelector(state => state.users);
     const user = users[post.userId];

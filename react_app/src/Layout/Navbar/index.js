@@ -1,13 +1,12 @@
-import styles from './Navbar.module.css';
 import { showModal, setCurrentModal } from '../../store/modal';
 //components
-import { NavLink } from 'react-router-dom';
 import { Logo } from '../../Assets/Logo';
 import { useDispatch } from "react-redux";
 import { LoginForm } from '../../Forms/Login';
 import { SignupForm } from '../../Forms/Signup';
 import { SearchBar } from '../SearchBar';
 import { Navigation, NavList, LogoBox, AuthBox, StyledNavLink } from '../Styled/Navbar';
+import { }
 
 
 export const Navbar = () => {

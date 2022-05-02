@@ -59,12 +59,12 @@ const DemoButton = styled.div`
 `;
 
 export const LoginBtn = styled(Button)`
-
-
+    background-color: #005C4D;
 `;
 
 export const SignupBtn = styled(Button)`
-
+    background-color: #D49524;
+    color: black;
 `;
 
 export const SubmitBtn = styled(Button)`
@@ -89,4 +89,21 @@ export const BusinessBtn = styled(DemoButton)`
 
 export const VolunteerBtn = styled(DemoButton)`
     background-color: #9AF2C0;
+`;
+
+const ItemButton = styled.div`
+    width: 100px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+`;
+
+export const QuestionBtn = styled(ItemButton)`
+    background-color: white;
+`;
+
+export const RequestBtn = styled(ItemButton)`
+    background: linear-gradient(#76D97E, #28A690);
 `;

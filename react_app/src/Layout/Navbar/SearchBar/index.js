@@ -1,7 +1,7 @@
 import React,{ useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { MagnifyingGlass } from '../../Assets/Icons/MagnifyingGlass';
-import { Searchbar, SearchInput } from '../Styled/Navbar';
+import { MagnifyingGlass } from '../../../Assets/Icons/MagnifyingGlass';
+import { Searchbar, SearchInput } from '../../Styled/Navbar';
 
 export const SearchBar = () => {
     const [searchword, setSearchword] = useState('');

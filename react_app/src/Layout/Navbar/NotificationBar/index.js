@@ -1,15 +1,15 @@
 //hooks
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useTheme } from '../../Context/ThemeContext';
-import { useUserLocation } from '../../Context/LocationContext';
+import { useTheme } from '../../../Context/ThemeContext';
+import { useUserLocation } from '../../../Context/LocationContext';
 
 //helpers
-import { getGeoLocation } from '../../Helpers/GeoLocation';
+import { getGeoLocation } from '../../../Helpers/GeoLocation';
 
 //styled-components
-import {NotificationSection, NotificationContainer, NotificationText } from '../Styled/Light/NotificationBar';
-import {DarkNotificationSection, DarkNotificationText } from '../Styled/Dark/NotificationBar';
+import {NotificationSection, NotificationContainer, NotificationText } from '../../../Components/Styled/Light/NotificationBar';
+import {DarkNotificationSection, DarkNotificationText } from '../../../Components/Styled/Dark/NotificationBar';
 
 export const NotificationBar = () => {
     const sessionUser = useSelector(state => state.session.user);

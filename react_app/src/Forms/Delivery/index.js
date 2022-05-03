@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createDelivery } from '../../store/deliveries';
 import { sendMessage } from '../../store/messages';
 import { useHistory } from 'react-router-dom';
-import { ItemCard } from '../../Components/ItemCard';
+import { ItemCard } from '../../Components/Cards/Post/ItemCard';
 import { Business } from '../../Assets/Icons/Business';
 import { hideModal } from '../../store/modal';
-import { OrganizationCard } from '../../Components/OrganizationCard'
+import { OrganizationCard } from '../../Components/Cards/OrganizationCard'
 import styles from './Delivery.module.css';
 import styled from 'styled-components';
 
@@ -185,7 +185,7 @@ export const DeliveryForm = ({ post }) => {
     return (
         <DeliveryBox>
             <ItemContainer>
-                <ItemCard post={post}/>
+                <ItemCard props={post}/>
             </ItemContainer>
             <DeliveryFormContainer>
                 <Form onSubmit={handleSubmit} >

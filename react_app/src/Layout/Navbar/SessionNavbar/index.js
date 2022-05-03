@@ -2,14 +2,14 @@ import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './SessionNavbar.module.css';
 // Actions
-import { logout } from '../../store/session';
-import { setCurrentModal, showModal } from '../../store/modal';
+import { logout } from '../../../store/session';
+import { setCurrentModal, showModal } from '../../../store/modal';
 // Components
-import { Nav, NavList } from '../Styled/Navbar';
+import { Navigation, NavList } from '../../Styled/Navbar';
 import { NotificationBar } from '../NotificationBar';
-import { Logo } from '../../Assets/Logo';
+import { Logo } from '../../../Assets/Logo';
 import { SearchBar } from '../SearchBar';
-import ItemForm from '../../Forms/Item';
+import ItemForm from '../../../Forms/Item';
 
 export const SessionNavbar = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -26,7 +26,7 @@ export const SessionNavbar = () => {
 
     return (
         <div>
-            <Nav>
+            <Navigation>
                 <NavList>
                     <Logo dimension={"medium"} />
                     <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
@@ -40,7 +40,7 @@ export const SessionNavbar = () => {
                     }
                     <div className={styles.signup} onClick={logOut}>Log out</div>
                 </NavList>
-            </Nav>
+            </Navigation>
             <NotificationBar />
         </div>
     )

@@ -4,10 +4,9 @@ import { Logo } from '../../Assets/Logo';
 import { useDispatch } from "react-redux";
 import { LoginForm } from '../../Forms/Login';
 import { SignupForm } from '../../Forms/Signup';
-import { SearchBar } from '../SearchBar';
+import { SearchBar } from './SearchBar';
 import { Navigation, NavList, LogoBox, AuthBox, StyledNavLink } from '../Styled/Navbar';
-import { }
-
+import { AuthButton } from '../../Components/Buttons/Authentication';
 
 export const Navbar = () => {
     const dispatch = useDispatch();
@@ -31,8 +30,8 @@ export const Navbar = () => {
                 </LogoBox>
                 <SearchBar />
                 <AuthBox>
-                     <div role='button' className={styles.signup} onClick={showSignupModal}>Sign up</div>
-                     <div role='button' className={styles.login} onClick={showLoginModal}>Log in</div>
+                    <AuthButton action={'Sign up'} onClick={showSignupModal}/>
+                    <AuthButton action={'Log in'} onClick={showLoginModal}/>
                 </AuthBox>
             </NavList>
         </Navigation>

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useTheme } from '../../Context/ThemeContext';
 //components
-import { ItemCard } from '../../Components/Cards/ItemCard';
+import { ItemCard } from '../../Components/Cards/Post/ItemCard';
 //Icons
 import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
 import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';

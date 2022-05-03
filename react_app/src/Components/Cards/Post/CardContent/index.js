@@ -1,8 +1,16 @@
 //Hooks
+import { useDispatch } from 'react-redux';
 import { useTheme } from '../../../../Context/ThemeContext';
 import { useSelector } from 'react-redux';
+
+//Styling
 import { category } from './category.js';
+
+//Actions
+import { setCurrentModal, showModal } from '../../../../store/modal';
+
 //Components
+import { DeliveryForm } from '../../../../Forms/Delivery';
 import { LocationPin } from '../../../../Assets/Icons/Location';
 import { FavoritesIcon } from '../../../../Assets/Logo/FavoritesIcon';
 import { QuestionBtn, RequestBtn } from '../../../Styled/Buttons';
@@ -23,15 +31,25 @@ import {
     DescriptionText,
     ButtonBox,
     ButtonText
-} from "../../Styled/Light/ItemCard";
+} from "../../../Styled/Light/ItemCard";
 
 export const CardContent = ({ props }) => {
+    const dispatch = useDispatch();
     const { theme } = useTheme();
     const organization = useSelector(state => state.organizations[props.organizationId]);
 
     const styleObj = category[theme][props.categoryId];
     const address =  `${organization.street}, ${organization.city}, ${organization.state.slice[0, 2].toUpperCase()} ${organization.zip}`;
 
+    const handleQuestion = () => {
+        dispatch(setCurrentModal(() => <DeliveryForm post={props}/>));
+        dispatch(showModal());
+    };
+
+    const handleRequest = () => {
+        dispatch(setCurrentModal(() => <DeliveryForm post={props}/>));
+        dispatch(showModal());
+    };
 
     return (
         <Card color={styleObj}>
@@ -57,10 +75,10 @@ export const CardContent = ({ props }) => {
                 </DescriptionTextContainer>
             </DescriptionBox>
             <ButtonBox>
-                <QuestionBtn>
+                <QuestionBtn onClick={handleQuestion}>
                     <ButtonText>Ask a question</ButtonText>
                 </QuestionBtn>
-                <RequestBtn>
+                <RequestBtn onClick={handleRequest}>
                     <ButtonText>Send a request</ButtonText>
                 </RequestBtn>
             </ButtonBox>

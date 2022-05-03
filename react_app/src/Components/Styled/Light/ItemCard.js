@@ -128,7 +128,7 @@ export const DescriptionBox = styled.div`
     align-items: center;
 `;
 
-export const DesctiptionTextContainer = styled(DescriptionBox)`
+export const DescriptionTextContainer = styled(DescriptionBox)`
     align-items: flex-start;
     width: 235px;
     overflow: hidden;

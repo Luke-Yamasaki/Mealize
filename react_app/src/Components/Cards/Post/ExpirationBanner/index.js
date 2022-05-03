@@ -2,9 +2,9 @@ import {
     ExpBanner,
     BannerTextContainer,
     BannerText
-} from "../../Styled/Light/ItemCard";
+} from "../../../Styled/Light/ItemCard";
 
-import { Flag } from '../../../Assets/Icons/Flag';
+import { Flag } from '../../../../Assets/Icons/Flag';
 
 
 export const ExpirationBanner = ({ props }) => {

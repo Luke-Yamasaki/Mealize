@@ -15,7 +15,7 @@ import { ProteinIcon } from '../../../Assets/Icons/FoodGroups/Protein';
 
 import styles from './EditItem.module.css';
 import styled from 'styled-components';
-import * as preview from '../../../Components/ItemCard';
+import * as preview from '../../../Components/Cards/ItemCard';
 
 const monthNames = {
     '01': 'Jan',

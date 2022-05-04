@@ -64,7 +64,7 @@ export const TitleTextContainer = styled(BannerTextContainer)`
 export const CompanyLogo = styled.img`
     width: 25px;
     height: 25px;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
     border-radius: 100%;
     border: 1px solid #E8E8E8;
@@ -86,9 +86,10 @@ export const CompanyAddress = styled(Paragraph)`
 export const ItemImage = styled.img`
     width: 254px;
     height: 190px;
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
 `;
+
 
 //Info
 export const InfoBox = styled(ExpBanner)`

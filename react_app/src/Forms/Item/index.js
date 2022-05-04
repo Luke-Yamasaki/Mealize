@@ -9,7 +9,7 @@ import { hideModal } from '../../store/modal';
 
 //Componenets
 import { validateForm, uploadImage } from '../../Helpers/FormValidations/items';
-import { ItemCard } from "../../Components/Cards/Post/ItemCard";
+import { ItemCard } from "../../Components/Cards/ItemCard";
 import { XSLogo } from '../../Assets/Logo';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useTheme } from '../../Context/ThemeContext';
 //components
-import { ItemCard } from '../../Components/Cards/Post/ItemCard';
+import { ItemCard } from '../../Components/Cards/ItemCard';
 //Icons
 import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
 import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
@@ -13,7 +13,7 @@ import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 import { Business } from '../../Assets/Icons/Business';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 //styled-components
-import { Wrapper, SideBarContainer, PostField, CategoryField, SideLegend, SideBarInfoBox, SideBarInfoText, SidebarInfoImage, FeedContainer  } from '../../Components/Styled/Light/Layout';
+import { Wrapper, SideBarContainer, PostField, CategoryField, SideLegend, SideBarInfoBox, SideBarInfoText, SideBarInfoIcon, FeedContainer  } from '../../Components/Styled/Light/Layout';
 import { DarkWrapper, DarkPostField, DarkCategoryField, DarkSideBarInfoText } from '../../Components/Styled/Dark/Layout';
 
 // import styles from './Home.module.css';
@@ -23,7 +23,7 @@ export const Home = () => {
     const categoriesObj = useSelector(state => state.categories)
     // const organizationsObj = useSelector(state => state.organizations)
     const categories = Object.values(categoriesObj);
-    const postsObj = useSelector(state => state.posts.posts);
+    const postsObj = useSelector(state => state.posts.all);
     const [mode, setMode] = useState('available');
     const {theme} = useTheme();
     // const messages = useSelector(state => state.posts.messages)
@@ -105,14 +105,14 @@ export const Home = () => {
                         {categories.map((category, idx) => (
                             <SideBarInfoBox key={idx}>
                                 {category.category === 'Dairy' ?
-                                <SidebarInfoImage style={mode==='dairy' ? {backgroundColor: 'red'} : {backgroundColor: 'none'}} onClick={() => setMode('dairy')}><DairyIcon dimension={'small'}/></SidebarInfoImage>
+                                <SideBarInfoIcon onClick={() => setMode('dairy')}><DairyIcon dimension={'small'}/></SideBarInfoIcon>
                                 : category.category === 'Vegetables' ?
-                                <SidebarInfoImage style={mode==='vegetables' ? {backgroundColor: '#F5F5F5'} : {backgroundColor: 'none'}} onClick={() => setMode('vegetables')}><VegetablesIcon dimension={'small'}/></SidebarInfoImage>
+                                <SideBarInfoIcon onClick={() => setMode('vegetables')}><VegetablesIcon dimension={'small'}/></SideBarInfoIcon>
                                 : category.category === 'Fruits' ?
-                                <SidebarInfoImage onClick={() => setMode('fruits')}><FruitsIcon dimension={'small'} onClick={() => setMode('fruits')}/></SidebarInfoImage>
+                                <SideBarInfoIcon onClick={() => setMode('fruits')}><FruitsIcon dimension={'small'} /></SideBarInfoIcon>
                                 : category.category === 'Grains' ?
-                                <SidebarInfoImage onClick={() => setMode('grains')}><GrainsIcon onClick={() => setMode('grains')}/></SidebarInfoImage>
-                                : <SidebarInfoImage onClick={() => setMode('protein')}><ProteinIcon dimension={'small'} onClick={() => setMode('protein')}/></SidebarInfoImage>
+                                <SideBarInfoIcon onClick={() => setMode('grains')}><GrainsIcon dimension={'small'}/></SideBarInfoIcon>
+                                : <SideBarInfoIcon onClick={() => setMode('protein')}><ProteinIcon dimension={'small'}/></SideBarInfoIcon>
                                 }
                                 <SideBarInfoText>{category.category}</SideBarInfoText>
                             </SideBarInfoBox>
@@ -122,9 +122,9 @@ export const Home = () => {
                         <OrganizationLegend>Nonprofits</OrganizationLegend>
                     {threeNonprofits.map((nonprofit, idx) => (
                         <SideBarInfoBox key={idx}>
-                            <SidebarInfoImage >
+                            <SideBarInfoIcon >
                                 <img src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
-                            </SidebarInfoImage>
+                            </SideBarInfoIcon>
                             <SideBarInfoText >{nonprofit.name}</SideBarInfoText>
                         </SideBarInfoBox>
                         ))}
@@ -133,9 +133,9 @@ export const Home = () => {
                         <OrganizationLegend>Businesses</OrganizationLegend>
                     {threeBusinesses.map((business, idx) => (
                         <SideBarInfoBox key={idx}>
-                            <SidebarInfoImage >
+                            <SideBarInfoIcon >
                                 <img src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
-                            </SidebarInfoImage>
+                            </SideBarInfoIcon>
                             <SideBarInfoText>{business.name}</SideBarInfoText>
                         </SideBarInfoBox>
                     ))}

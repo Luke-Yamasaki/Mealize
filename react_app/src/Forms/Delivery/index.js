@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createDelivery } from '../../store/deliveries';
 import { sendMessage } from '../../store/messages';
 import { useHistory } from 'react-router-dom';
-import { ItemCard } from '../../Components/Cards/Post/ItemCard';
+import { ItemCard } from '../../Components/Cards/ItemCard';
 import { Business } from '../../Assets/Icons/Business';
 import { hideModal } from '../../store/modal';
 import { OrganizationCard } from '../../Components/Cards/OrganizationCard'

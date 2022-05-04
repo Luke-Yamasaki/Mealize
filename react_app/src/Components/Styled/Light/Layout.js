@@ -139,7 +139,7 @@ export const SideBarInfoText = styled.div`
     font-weight: bold;
 `;
 
-export const SidebarInfoImage = styled.div`
+export const SideBarInfoIcon = styled.div`
     overflow: hidden;
 `;
 

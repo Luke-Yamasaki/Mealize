@@ -89,7 +89,7 @@ const CityState = styled.div`
 
 
 export const OrganizationCard = ({organization}) => {
-    const name = organization.name;
+    const name = organization ? organization.name : '';
     const phone = '(' + organization.phone.slice(0, 3) + ') ' + organization.phone.slice(3, 7) + '-' + organization.phone.slice(7, 10) ;
     const address = organization.city + ', ' + organization.state.slice(0, 2).toUpperCase() + ' ' + organization.zip;
 

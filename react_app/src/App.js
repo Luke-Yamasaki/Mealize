@@ -49,7 +49,6 @@ function App() {
       await dispatch(getBatchedOrganizations())
       await dispatch(getAllPosts())
       await dispatch(getBatchedUsers())
-      await dispatch(getAllDeliveries())
       setIsLoaded(true);
     })();
   },[dispatch]);

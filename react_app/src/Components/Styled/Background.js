@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const AppBackGround = styled.img`
+export const AppBackGround = styled.div`
     width: 100vw;
     height: 100vh;
     display: flex;

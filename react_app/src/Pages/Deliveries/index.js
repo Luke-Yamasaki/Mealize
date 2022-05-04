@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { getAllDeliveries, updateDelivery, deleteDelivery } from '../../store/deliveries';
 import { useEffect } from 'react';
 import { setCurrentModal } from '../../store/modal';
-import { ItemCard } from '../../Components/Cards/Post/ItemCard';
+import { ItemCard } from '../../Components/Cards/ItemCard';
 import { DeliveryForm } from '../../Forms/Delivery';
 import { OrganizationCard } from '../../Components/Cards/OrganizationCard';
 

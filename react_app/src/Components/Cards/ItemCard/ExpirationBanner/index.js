@@ -7,9 +7,7 @@ import {
 import { Flag } from '../../../../Assets/Icons/Flag';
 
 
-export const ExpirationBanner = ({ props }) => {
-
-
+export const ExpirationBanner = ({ post }) => {
     const compareDate = (expDate) => {
         const colorArr = [];
         const today = new Date();
@@ -28,10 +26,10 @@ export const ExpirationBanner = ({ props }) => {
 
     return (
         <ExpBanner>
-            <Flag color={compareDate(props.expDate)} />
+            <Flag color={compareDate(post.expDate)} />
             <BannerTextContainer>
                 <BannerText>Expires:</BannerText>
-                <BannerText>{props.expDate}</BannerText>
+                <BannerText>{post.expDate}</BannerText>
             </BannerTextContainer>
         </ExpBanner>
     )

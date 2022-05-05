@@ -1,7 +1,6 @@
 //Hooks
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../../Context/ThemeContext';
-import { useSelector } from 'react-redux';
 
 //Styling
 import { category } from './category.js';
@@ -20,6 +19,7 @@ import {
     TitleTextContainer,
     CompanyLogo,
     CompanyName,
+    PinContainer,
     CompanyAddress,
     ItemImage,
     InfoBox,
@@ -40,7 +40,7 @@ export const CardContent = ({ post }) => {
     const businesses = organizations.businesses;
     const nonprofits = organizations.nonprofits;
     const organization = post.isItem ? businesses[post.organizationId] : nonprofits[post.organizationId];
-    console.log(organization.logoUrl)
+
     const styleObj = category[theme][post.categoryId];
 
     const handleQuestion = () => {
@@ -53,17 +53,24 @@ export const CardContent = ({ post }) => {
         dispatch(showModal());
     };
 
+    const formatAddress = () => {
+        const address = `${organization.street}, ${organization.city}, ${organization.state.slice(0, 2).toUpperCase()} ${organization.zip}`;
+        return address;
+    }
+
     if(organization === undefined) {
         return null
     } else {
         return (
             <Card color={styleObj}>
                 <TitleBox>
-                    <CompanyLogo src={organization.logoUrl} alt='Business logo.' />
+                    <CompanyLogo src={organization.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='black'/>
                     <TitleTextContainer>
                         <CompanyName>{organization.name}</CompanyName>
-                        <LocationPin color={'black'}/>
-                        <CompanyAddress>{`${organization.street}, ${organization.city}, ${organization.state.slice(0, 2).toUpperCase()} ${organization.zip}`}</CompanyAddress>
+                        <PinContainer width='15px' height='15px'>
+                            <LocationPin color='black'/>
+                        </PinContainer>
+                        <CompanyAddress>{formatAddress()}</CompanyAddress>
                     </TitleTextContainer>
                 </TitleBox>
                 <ItemImage src={post.imageUrl} alt='Food available for pick up.' />

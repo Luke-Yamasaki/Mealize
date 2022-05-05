@@ -3,29 +3,28 @@ import { Bold, Medium, Regular, Paragraph } from '../Fonts';
 
 //container
 export const CardContainer = styled.div`
-    width: 255px;
-    height: 390px;
+    width: 390px;
+    height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
 `;
 
 //exp banner
 export const ExpBanner = styled.div`
-    width: 255px;
-    height: 35px;
+    width: 290px;
+    height: 40px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
 `;
 
 export const BannerTextContainer = styled.div`
-    width: 215px;
-    height: 35px;
+    width: 290px;
+    height: 40px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -39,14 +38,13 @@ export const BannerText = styled(Paragraph)`
 
 //card
 export const Card = styled.div`
-    width: 255px;
-    height: 355px;
+    width: 290px;
+    height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: space-around;
     border-radius: 5px;
-    overflow: hidden;
     cursor: pointer;
     background: ${props => props.color['background']};
     border: ${props => props.color['border']};
@@ -58,34 +56,51 @@ export const TitleBox = styled(ExpBanner)`
 `;
 
 export const TitleTextContainer = styled(BannerTextContainer)`
+    justify-content: space-between;
+    align-items: top;
     height: 40px;
+    width: 250px;
 `;
 
 export const CompanyLogo = styled.img`
-    width: 25px;
-    height: 25px;
+    width: ${props => props.width};
+    height: ${props => props.height};
+    background-color: ${props => props.backgroundColor};
     object-fit: cover;
     object-position: center;
     border-radius: 100%;
     border: 1px solid #E8E8E8;
 `;
 
-export const CompanyName = styled(Medium)`
+export const CompanyName = styled(Bold)`
     color: black;
-    width: 107.5px;
-    height: 35px;
+    width: 110px;
+    height: 40px;
+    font-size: 1em;
+    text-align: center;
+`;
+
+// You can wrap functional component icons in a div and scale their size accordingly
+export const PinContainer = styled.div`
+    width: ${props => props.width};
+    height: ${props => props.height};
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 `;
 
 export const CompanyAddress = styled(Paragraph)`
     color: black;
-    width: 107.5px;
+    width: 110px;
     height: 35px;
+    font-size: 0.7em;
 `;
 
 //image
 export const ItemImage = styled.img`
-    width: 254px;
-    height: 190px;
+    width: 290px;
+    height: 200px;
     object-fit: cover;
     object-position: center;
 `;
@@ -98,6 +113,7 @@ export const InfoBox = styled(ExpBanner)`
     padding-left: 10px;
     padding-right: 10px;
     justify-content: space-between;
+    gap: 5px;
 `;
 
 export const InfoContainer = styled(BannerTextContainer)`
@@ -132,7 +148,6 @@ export const DescriptionBox = styled.div`
 export const DescriptionTextContainer = styled(DescriptionBox)`
     align-items: flex-start;
     width: 235px;
-    overflow: hidden;
 `;
 
 export const DescriptionText = styled(Regular)`
@@ -145,7 +160,6 @@ export const DescriptionText = styled(Regular)`
     -moz-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
-    overflow: hidden;
 `;
 
 export const ButtonBox = styled(ExpBanner)`

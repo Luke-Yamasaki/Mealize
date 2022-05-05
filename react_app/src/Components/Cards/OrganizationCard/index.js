@@ -25,7 +25,6 @@ const Logo = styled.img`
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border-right: 1px solid grey;
-    overflow: hidden;
     background-color: black;
 `;
 

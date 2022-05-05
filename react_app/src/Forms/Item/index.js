@@ -6,9 +6,10 @@ import { useSelector, useDispatch } from 'react-redux';
 //Actions
 import { postItem } from '../../store/posts';
 import { hideModal } from '../../store/modal';
+//Helpers
+import { validateItem, uploadImage } from '../../utils/forms/items';
 
-//Componenets
-import { validateForm, uploadImage } from '../../Helpers/FormValidations/items';
+//Components
 import { ItemCard } from "../../Components/Cards/ItemCard";
 import { XSLogo } from '../../Assets/Logo';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
@@ -21,22 +22,6 @@ import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 import styles from './Item.module.css';
 import styled from 'styled-components';
 // import * as preview from '../../Components/ItemCard';
-
-const monthNames = {
-    '01': 'Jan',
-    '02': 'Feb',
-    '03': 'Mar',
-    '04': 'Apr',
-    '05': 'May',
-    '06': 'Jun',
-    '07': 'Jul',
-    '08': 'Aug',
-    '09': 'Sep',
-    '10': 'Oct',
-    '11': 'Nov',
-    '12': 'Dec',
-}
-
 
 const PreviewSection = styled.section`
     display: flex;
@@ -113,7 +98,6 @@ const TitleDiv = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-    overflow: hidden;
 `;
 
 const ErrorMessage = styled.div`
@@ -123,8 +107,6 @@ const ErrorMessage = styled.div`
     width: 300px;
     height: 10px;
 `;
-
-
 
 
 const ItemForm = () => {
@@ -177,7 +159,7 @@ const ItemForm = () => {
             expDate,
         };
 
-        const stagedPost = await validateForm(itemData)
+        const stagedPost = await validateItem(itemData)
 
         if(stagedPost.message === 'success') {
 
@@ -378,7 +360,7 @@ const ItemForm = () => {
     };
 
     return (
-        <div style={{overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
             <PreviewSection>
                 <ItemCard props={{title, description, number, unit, categoryId, image, expDate}} />
             {imageUploading && (

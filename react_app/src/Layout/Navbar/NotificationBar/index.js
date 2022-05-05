@@ -5,7 +5,7 @@ import { useTheme } from '../../../Context/ThemeContext';
 import { useUserLocation } from '../../../Context/LocationContext';
 
 //helpers
-import { getGeoLocation } from '../../../Helpers/GeoLocation';
+import { getGeoLocation } from '../../../utils/geo_location';
 
 //styled-components
 import {NotificationSection, NotificationContainer, NotificationText } from '../../../Components/Styled/Light/NotificationBar';

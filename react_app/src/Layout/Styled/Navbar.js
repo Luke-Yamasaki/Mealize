@@ -13,14 +13,19 @@ export const StyledNavLink = styled(NavLink)`
 
 export const Navigation = styled.nav`
     min-width: 700px;
-    width: 56.2vw;
     max-width: 1600px;
+    width: 100em;
     height: 60px;
     background: linear-gradient(#76D97E, #28A690);
-    display:flex;
+    display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    will-change: transform;
+    z-index: 200;
 `;
 
 export const NavList = styled.ul`

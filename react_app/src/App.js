@@ -27,7 +27,7 @@ import { Deliveries } from './Pages/Deliveries';
 //components
 import { Customization } from './Components/Customization';
 import Modal from './Components/Modal';
-import { AppBackGround } from './Components/Styled/Background';
+import { AppBackGround, AppContentContainer, BackGroundAside } from './Components/Styled/Light/Layout';
 //layouts
 import { Navbar } from './Layout/Navbar';
 import { SessionNavbar } from './Layout/Navbar/SessionNavbar';
@@ -60,7 +60,8 @@ function App() {
   return (
     <BrowserRouter>
       <AppBackGround theme={theme} background={backGround}>
-        <Customization />
+        <BackGroundAside />
+        <AppContentContainer>
         {sessionUser ? <SessionNavbar sessionUser={sessionUser} /> : <Navbar />}
         <Modal />
         <Switch>
@@ -101,6 +102,10 @@ function App() {
           </Route>
         </Switch>
         <Footer />
+        </AppContentContainer>
+        <BackGroundAside>
+            <Customization />
+        </BackGroundAside>
       </AppBackGround>
     </BrowserRouter>
   );

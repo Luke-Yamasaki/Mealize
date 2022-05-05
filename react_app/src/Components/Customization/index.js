@@ -12,7 +12,7 @@ import { useTheme } from '../../Context/ThemeContext';
 import { CustomizationModal } from './CutomizationModal';
 import { Settings } from '../../Assets/Icons/Settings';
 
-//Styled-componenets
+//Styled-components
 const SettingsBox = styled.div`
     width: 60px;
     height: 60px;
@@ -22,8 +22,6 @@ const SettingsBox = styled.div`
     justify-content: center;
     margin: 0px;
     padding: 0px;
-    margin-top: 50vh;
-    margin-left: 80vw;
 `;
 
 const HelperButton = styled.div`

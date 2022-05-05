@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { login, signup } from '../../store/session';
 import { setCurrentModal, hideModal } from '../../store/modal';
 //Helper
-import { validateSignup, uploadProfileImage } from '../../Helpers/FormValidations/signup';
+import { validateSignup, uploadProfileImage } from '../../utils/forms/signup';
 //Components
 import { LoginForm } from '../Login';
 import { ButtonBox, FormButtonBox, DemoBox, LoginBtn, SignupBtn, CancelBtn, SubmitBtn, NonprofitBtn, BusinessBtn, VolunteerBtn } from '../../Components/Styled/Buttons';
@@ -27,7 +27,6 @@ const Wrapper = styled.div`
     height: 900px;
     background: linear-gradient(#28A690,#76D97E);
     border-radius: 5px;
-    overflow: hidden;
 `;
 
 const PreviewBox = styled.div`

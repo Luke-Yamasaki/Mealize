@@ -1,4 +1,4 @@
-export const validateForm = async (itemData) => {
+export const validateItem = async (itemData) => {
     const response = await fetch('/api/posts/validate', {
         method: 'POST',
         headers: {

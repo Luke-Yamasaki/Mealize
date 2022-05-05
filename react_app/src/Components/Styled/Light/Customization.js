@@ -10,11 +10,14 @@ export const CustomizationContainer = styled.div`
     border: 1px solid #D5D5D5;
     border-radius: 5px;
     background-color: #FFFFFF;
-    overflow: hidden;
     color: black;
     font-family: motiva-sans, sans-serif;
     font-style: normal;
     font-weight: 700;
+    position: -webkit-sticky;
+    position: sticky;
+    will-change: transform;
+    top: 0;
 `;
 
 export const ContentContainer = styled.div`

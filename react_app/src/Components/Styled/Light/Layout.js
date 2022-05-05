@@ -1,19 +1,59 @@
 import styled from 'styled-components';
+import image from '../../../Assets/Images/Pattern_10.png';
 
-export const Wrapper = styled.div`
-    width: 52.5vw;
-    max-width: 1600px;
+export const AppBackGround = styled.div`
+    width: 100vw;
+    min-height: 100vh;
     height: auto;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: top;
-    filter: drop-shadow(0px 1px 5px rgba(0, 0, 0, 0.2));
-    padding-top: 50px;
-    padding-left: 50px;
-    gap: 100px;
-    background-color: '#F5F5F5';
-    border: '1px solid #E8E8E8';
+    background: ${props => props.theme === 'light' ? 'linear-gradient(rgba(40, 166, 144, 1), rgba(118, 217, 126, 1))' : '#191919' };
+    background-image: ${props => props.background === true ? `url(${image})` : 'none'};
+    background-size: contain;
+    background-repeat: repeat;
+`;
+
+export const AppContentContainer = styled.div`
+    width: 57.1w;
+    min-height: 100vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+`;
+
+export const BackGroundAside = styled.aside`
+    width: 21.45vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    will-change: transform;
+    margin-top: - 1000px;
+`;
+
+export const PageBackGround = styled.div`
+  max-width: 1549px;
+  width: 100em;
+  min-height: 80vh;
+  height: auto;
+  background: ${props => props.background};
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: top;
+  filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.35));
+  padding-top: 50px;
+  padding-left: 50px;
+  gap: 100px;
+  border: '1px solid';
+  border-color: ${props => props.bordercolor};
 `;
 
 export const SideBarContainer = styled.div`
@@ -140,7 +180,6 @@ export const SideBarInfoText = styled.div`
 `;
 
 export const SideBarInfoIcon = styled.div`
-    overflow: hidden;
 `;
 
 export const FeedContainer = styled.div`

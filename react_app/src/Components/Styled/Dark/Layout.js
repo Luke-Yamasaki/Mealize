@@ -1,7 +1,7 @@
-import { Wrapper, PostField, CategoryField, OrganizationField, EventField, SideBarInfoText } from '../Light/Layout';
+import { PageBackGround, PostField, CategoryField, OrganizationField, EventField, SideBarInfoText } from '../Light/Layout';
 import styled from 'styled-components';
 
-export const DarkWrapper = styled(Wrapper)`
+export const DarkPageBackGround = styled(PageBackGround)`
     background-color: '#323232';
     border: '1px solid #616161';
 `;

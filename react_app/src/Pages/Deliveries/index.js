@@ -30,7 +30,6 @@ const Header = styled.section`
     height: auto;
     min-height: 600px;
     max-height: 900px;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

@@ -6,7 +6,6 @@
     width: 336px;
     height: 192px;
     border: none;
-    overflow: hidden;
     border-radius: 5px;
     background: linear-gradient(#76D97E, #28A690),
                 url('../../Assets//Images//Pattern_5.png');

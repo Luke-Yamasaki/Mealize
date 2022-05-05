@@ -13,8 +13,8 @@ import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 import { Business } from '../../Assets/Icons/Business';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 //styled-components
-import { Wrapper, SideBarContainer, PostField, CategoryField, SideLegend, SideBarInfoBox, SideBarInfoText, SideBarInfoIcon, FeedContainer  } from '../../Components/Styled/Light/Layout';
-import { DarkWrapper, DarkPostField, DarkCategoryField, DarkSideBarInfoText } from '../../Components/Styled/Dark/Layout';
+import { PageBackGround, SideBarContainer, PostField, CategoryField, SideLegend, SideBarInfoBox, SideBarInfoText, SideBarInfoIcon, FeedContainer  } from '../../Components/Styled/Light/Layout';
+import { DarkPageBackGround, DarkPostField, DarkCategoryField, DarkSideBarInfoText } from '../../Components/Styled/Dark/Layout';
 
 // import styles from './Home.module.css';
 
@@ -66,7 +66,7 @@ export const Home = () => {
 
     // if(sessionUser && sessionUser.isNonprofit) {
         return(
-            <Wrapper theme={theme}>
+            <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#6B6B6B'}>
                 <SideBarContainer>
                     {!sessionUser && (
                         <h2 style={{marginTop: '-10px', marginBottom: '-5px'}}>Filter</h2>
@@ -157,6 +157,6 @@ export const Home = () => {
                         {mode === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                     </FeedContainer>
                 </div>
-        </Wrapper>
+        </PageBackGround>
         )
 };

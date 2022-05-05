@@ -54,7 +54,6 @@ export const TitleBox = styled.div`
     justify-content: center;
     height: 45px;
     width: 120px;
-    overflow-wrap: break-word;
     word-wrap: break-word;
     hyphens: auto;
 `;
@@ -131,7 +130,6 @@ export const DescriptionText = styled.div`
     height: 58px;
     width: 160px;
     color: black;
-    overflow-wrap: break-word;
     word-wrap: break-word;
     hyphens: auto;
 `;

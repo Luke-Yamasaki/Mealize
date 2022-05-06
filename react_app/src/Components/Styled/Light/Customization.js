@@ -1,6 +1,29 @@
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+
+const up = keyframes`
+    0% { opacity: 35%; transform: rotate(0deg);}
+    50% { opcaity: 75%;}
+    100% { opacity: 100%; margin-top: -500px; transform: rotate(360deg);}
+`;
+
+const goUp = () =>
+    css`
+    ${up} 0.5s forwards;
+    `
+
+const down = keyframes`
+    0% { opacity: 35%; margin-top: -500px; transform: rotate(0deg);}
+    50% { opcaity: 75%;}
+    100% { opacity: 100%; margin: 0px; transform: rotate(-360deg);}
+`;
+
+const goDown = () =>
+    css`
+    ${down} 0.5s forwards;
+    `
 
 export const CustomizationContainer = styled.div`
+    margin-left: -25px;
     width: 300px;
     height: 600px;
     display: flex;
@@ -40,9 +63,21 @@ export const Label = styled.p`
 `;
 
 export const IconBox = styled.div`
+    width: 100px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -50px;
+`;
+
+export const SettingsBox = styled.div`
     width: 50px;
     height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 100%;
+    background-color: ${props => props.theme === 'light' ? '#327647' : '#76D97E' };
+    animation: ${props => props.shown === 'goUp' ? goUp : props.shown === 'goDown' ? goDown : 'none'};
 `;

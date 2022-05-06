@@ -10,12 +10,12 @@ export const BackGround = styled.div`
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 10.75vw;
-    z-index: 501;
+    padding-right: 11.75vw;
+    z-index: 201;
 `;
 
 export const SettingsModalField = styled.div`
-    width: 350px;
+    width: 300px;
     height: 650px;
     display: flex;
     justify-content: center;

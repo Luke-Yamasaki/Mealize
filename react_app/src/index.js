@@ -14,6 +14,7 @@ import ContrastProvider from './Context/ContrastContext';
 import SaturationProvider from './Context/SaturationContext';
 import BackGroundProvider from './Context/BackGroundContext';
 import LocationProvider from './Context/LocationContext';
+import ModalProvider from './Context/ModalContext';
 
 //Store
 import configureStore from './store';
@@ -36,10 +37,12 @@ const Root = () => {
           <SaturationProvider>
             <BackGroundProvider>
               <LocationProvider>
-                <RootContainer>
-                  <App />
-                  <ModalContainer ref={modalMountRef} />
-                </RootContainer>
+                <ModalProvider>
+                  <RootContainer>
+                    <App />
+                    <ModalContainer ref={modalMountRef} />
+                  </RootContainer>
+                </ModalProvider>
               </LocationProvider>
             </BackGroundProvider>
           </SaturationProvider>

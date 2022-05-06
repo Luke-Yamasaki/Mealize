@@ -1,54 +1,33 @@
-//Imports
+//Hooks
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import styled from 'styled-components';
-
+import { useTheme } from '../../Context/ThemeContext';
+import { useModal } from '../../Context/ModalContext';
 //store
 import { setCurrentModal, showModal } from '../../store/modal';
-
-//Context
-import { useTheme } from '../../Context/ThemeContext';
 
 //Components
 import { CustomizationModal } from './CutomizationModal';
 import { Settings } from '../../Assets/Icons/Settings';
+import { SettingsBox } from '../Styled/Light/Customization';
 
-//Styled-components
-const SettingsBox = styled.div`
-    width: 60px;
-    height: 60px;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0px;
-    padding: 0px;
-`;
-
-const HelperButton = styled.div`
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 100%;
-    background-color: ${props => props.theme === 'light' ? '#327647' : '#76D97E' };
-`;
 
 export const Customization = () => {
     const dispatch = useDispatch();
+    const [count, setCount] = useState(0);
     const {theme} = useTheme();
+    const {modalName, setModalName} = useModal();
 
-    const handleClick = (e) => {
-        e.preventDefault();
+    const handleClick = () => {
+        setCount(count + 1);
+        setModalName('settings');
         dispatch(setCurrentModal(() => (<CustomizationModal />)));
         dispatch(showModal());
     };
 
     return (
-        <SettingsBox>
-            <HelperButton theme={theme} onClick={handleClick}>
-                <Settings theme={theme} />
-            </HelperButton>
+        <SettingsBox shown={count > 0 && modalName === 'settings' ? 'goUp' :  count > 0 && modalName === '' ? 'goDown' : 'none' } theme={theme} onClick={handleClick}>
+            <Settings theme={theme} />
         </SettingsBox>
     )
 }

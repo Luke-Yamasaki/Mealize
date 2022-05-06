@@ -1,7 +1,6 @@
 import { useTheme } from '../../../Context/ThemeContext';
 //Components
-import { CustomizationContainer, ContentContainer, Label } from '../../Styled/Light/Customization';
-import { DarkCustomizationContainer, DarkContentContainer, DarkLabel} from '../../Styled/Dark/Customization';
+import { CustomizationContainer, ContentContainer, Label } from '../../Styled/Customization';
 
 import { Theme } from './Theme';
 import { Color } from './Color';
@@ -13,34 +12,15 @@ export const CustomizationSection = () => {
     const {theme} = useTheme();
 
     return (
-        <>
-            {theme === 'light' ?
-                (
-                    <CustomizationContainer>
-                        <ContentContainer>
-                            <Label>Customization tools</Label>
-                        </ContentContainer>
-                        <Theme />
-                        <Color />
-                        <Contrast />
-                        <Saturation />
-                        <BackGround />
-                    </CustomizationContainer>
-                )
-                :
-                (
-                    <DarkCustomizationContainer>
-                        <DarkContentContainer>
-                            <DarkLabel>Customization tools</DarkLabel>
-                        </DarkContentContainer>
-                        <Theme />
-                        <Color />
-                        <Contrast />
-                        <Saturation />
-                        <BackGround />
-                    </DarkCustomizationContainer>
-                )
-            }
-        </>
+        <CustomizationContainer borderColor={theme === 'light' ? '#D5D5D5' :  '#616161'} color={theme === 'light' ? 'black' : 'white'} backgroundColor={theme === 'light' ? 'white' : '#191919'}>
+            <ContentContainer borderBottom={theme === 'light' ? '1px solid #D5D5D5' : '1px solid #616161'}>
+                <Label color={theme === 'light' ? 'black' : 'white'}>Customization tools</Label>
+            </ContentContainer>
+            <Theme />
+            <Color />
+            <Contrast />
+            <Saturation />
+            <BackGround />
+        </CustomizationContainer>
     )
 };

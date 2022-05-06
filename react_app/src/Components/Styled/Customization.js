@@ -33,7 +33,7 @@ export const CustomizationContainer = styled.div`
     border: 1px solid;
     border-color: ${props => props.borderColor};
     border-radius: 5px;
-    background-color: ${props => props.backgroundColor};
+    background-color: #FFFFFF;
     color: ${props => props.color};
     font-family: motiva-sans, sans-serif;
     font-style: normal;

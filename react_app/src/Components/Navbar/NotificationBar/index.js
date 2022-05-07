@@ -12,17 +12,35 @@ import { LocationPin } from '../../../Assets/Icons/Location';
 
 //styled-components
 import {NotificationSection, NotificationContainer, NotificationText } from '../../../Components/Styled/NotificationBar';
+import { IconBox } from '../../Styled/Layout';
 
 export const NotificationBar = () => {
     const sessionUser = useSelector(state => state.session.user);
-    const organization = useSelector(state => sessionUser.isNonprofit? state.organizations.nonprofits[sessionUser.organizationId] : state.organizations.businesses[sessionUser.organizationId]);
+    const businesses = useSelector(state => state.businesses);
+    const nonProfits = useSelector(state => state.nonprofits);
+    const organization = !sessionUser ? '' : sessionUser.isNonprofit ? nonProfits[sessionUser.organizationId] : businesses[sessionUser.organizationId];
     const { userLocation, setUserLocation } = useUserLocation();
     const { theme } = useTheme();
 
-    useEffect(() => {
-        const location = getGeoLocation();
-        console.log(location)
-    },[])
+    // useEffect(() => {
+    //     const location = getGeoLocation();
+    //     console.log(location)
+    // },[])
+
+    if(!sessionUser) {
+        return (
+            <NotificationSection theme={theme}>
+                <NotificationContainer theme={theme}>
+                    <IconBox>
+                        <LocationPin color={theme === 'light' ? 'black' : 'white'} />
+                    </IconBox>
+                    <NotificationText theme={theme}>
+                        Current location: {userLocation}
+                    </NotificationText>
+                </NotificationContainer>
+            </NotificationSection>
+        )
+    }
 
     return (
         <NotificationSection theme={theme}>
@@ -38,7 +56,7 @@ export const NotificationBar = () => {
                     </NotificationText>
                     :
                     <NotificationText theme={theme}>
-                        Current location: {userLocation}
+                        Current location:
                     </NotificationText>
                 }
             </NotificationContainer>

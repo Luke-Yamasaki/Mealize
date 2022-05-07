@@ -30,20 +30,16 @@ import {
 export const Home = () => {
     const sessionUser = useSelector(state => state.session.user);
     const categoriesObj = useSelector(state => state.categories)
-    // const organizationsObj = useSelector(state => state.organizations)
+    const organizationsObj = useSelector(state => state.organizations)
     const categories = Object.values(categoriesObj);
     const postsObj = useSelector(state => state.posts.all);
     const [mode, setMode] = useState('available');
     const {theme} = useTheme();
-    // const messages = useSelector(state => state.posts.messages)
-    // const [categories, setCategories] = useState(Object.values(categoriesObj));
-    // const [businesses, setBusinesses] = useState(Object.values(organizationsObj.businesses));
-    // const [nonprofits, setNonprofits] = useState(Object.values(organizationsObj.nonprofits));
 
-    // const businesses = Object.values(organizationsObj.businesses);
-    // const threeBusinesses = businesses.slice(0, 3);
-    // const nonprofits = Object.values(organizationsObj.nonprofits);
-    // const threeNonprofits = nonprofits.slice(0, 3);
+    const businesses = Object.values(organizationsObj.businesses);
+    const threeBusinesses = businesses.slice(0, 3);
+    const nonprofits = Object.values(organizationsObj.nonprofits);
+    const threeNonprofits = nonprofits.slice(0, 3);
 
     const posts = Object.values(postsObj)
     const requestsArr = []
@@ -73,101 +69,100 @@ export const Home = () => {
         favorites.map(fav => favoritesArr.push(posts[fav.postId]));
     }
 
-    // if(sessionUser && sessionUser.isNonprofit) {
-        return(
-            <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}>
-                <SideBarContainer>
-                    {!sessionUser && (
+    return(
+        <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}>
+            <SideBarContainer>
+                {!sessionUser && (
+                    <FilterTitle theme={theme}>Filter</FilterTitle>
+                )}
+                {sessionUser && (
+                    <>
                         <FilterTitle theme={theme}>Filter</FilterTitle>
-                    )}
-                    {sessionUser && (
-                        <>
-                            <FilterTitle theme={theme}>Filter</FilterTitle>
-                            <SideField theme={theme}>
-                                <SideLegend theme={theme}>Favorites</SideLegend>
-                                <SideBarInfoBox onClick={() => setMode('favorites')}>
-                                    <div style={{textDecoration: 'underline'}}>My favorites</div>
-                                </SideBarInfoBox>
-                            </SideField>
-                        </>
-                    )}
-                    <SideField theme={theme}>
-                        <SideLegend theme={theme}>Availability</SideLegend>
-                        <SideBarInfoBox onClick={() => setMode('available')}>
-                            <SideBarInfoText theme={theme}>Available</SideBarInfoText>
-                        </SideBarInfoBox>
-                        <SideBarInfoBox onClick={() => setMode('available')}>
-                            <SideBarInfoText theme={theme}>Unavailable</SideBarInfoText>
-                        </SideBarInfoBox>
-                    </SideField>
-                    <SideField theme={theme}>
-                        <SideLegend theme={theme}>Post type</SideLegend>
-                        <SideBarInfoBox onClick={() => setMode('requests')}>
-                          <Business />
-                          <SideBarInfoText theme={theme}>Requests</SideBarInfoText>
-                        </SideBarInfoBox>
-                        <SideBarInfoBox onClick={() => setMode('items')}>
-                           <Nonprofit />
-                           <SideBarInfoText theme={theme}>Items</SideBarInfoText>
-                        </SideBarInfoBox>
-                    </SideField>
-                    <SideField theme={theme}>
-                        <SideLegend theme={theme}>Categories</SideLegend>
-                        {categories.map((category, idx) => (
-                            <SideBarInfoBox key={idx}>
-                                {category.category === 'Dairy' ?
-                                <IconBox onClick={() => setMode('dairy')}><DairyIcon dimension={'small'}/></IconBox>
-                                : category.category === 'Vegetables' ?
-                                <IconBox onClick={() => setMode('vegetables')}><VegetablesIcon dimension={'small'}/></IconBox>
-                                : category.category === 'Fruits' ?
-                                <IconBox onClick={() => setMode('fruits')}><FruitsIcon dimension={'small'} /></IconBox>
-                                : category.category === 'Grains' ?
-                                <IconBox onClick={() => setMode('grains')}><GrainsIcon dimension={'small'}/></IconBox>
-                                : <IconBox onClick={() => setMode('protein')}><ProteinIcon dimension={'small'}/></IconBox>
-                                }
-                                <SideBarInfoText theme={theme}>{category.category}</SideBarInfoText>
+                        <SideField theme={theme}>
+                            <SideLegend theme={theme}>Favorites</SideLegend>
+                            <SideBarInfoBox onClick={() => setMode('favorites')}>
+                                <div style={{textDecoration: 'underline'}}>My favorites</div>
                             </SideBarInfoBox>
-                        ))}
-                    </SideField>
-                    {/* <OrganizationField>
-                        <OrganizationLegend>Nonprofits</OrganizationLegend>
-                    {threeNonprofits.map((nonprofit, idx) => (
+                        </SideField>
+                    </>
+                )}
+                <SideField theme={theme}>
+                    <SideLegend theme={theme}>Availability</SideLegend>
+                    <SideBarInfoBox onClick={() => setMode('available')}>
+                        <SideBarInfoText theme={theme}>Available</SideBarInfoText>
+                    </SideBarInfoBox>
+                    <SideBarInfoBox onClick={() => setMode('available')}>
+                        <SideBarInfoText theme={theme}>Unavailable</SideBarInfoText>
+                    </SideBarInfoBox>
+                </SideField>
+                <SideField theme={theme}>
+                    <SideLegend theme={theme}>Post type</SideLegend>
+                    <SideBarInfoBox onClick={() => setMode('requests')}>
+                        <Business />
+                        <SideBarInfoText theme={theme}>Requests</SideBarInfoText>
+                    </SideBarInfoBox>
+                    <SideBarInfoBox onClick={() => setMode('items')}>
+                        <Nonprofit />
+                        <SideBarInfoText theme={theme}>Items</SideBarInfoText>
+                    </SideBarInfoBox>
+                </SideField>
+                <SideField theme={theme}>
+                    <SideLegend theme={theme}>Categories</SideLegend>
+                    {categories.map((category, idx) => (
                         <SideBarInfoBox key={idx}>
-                            <IconBox >
-                                <img src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
-                            </IconBox>
-                            <SideBarInfoText >{nonprofit.name}</SideBarInfoText>
-                        </SideBarInfoBox>
-                        ))}
-                    </OrganizationField>
-                    <OrganizationField>
-                        <OrganizationLegend>Businesses</OrganizationLegend>
-                    {threeBusinesses.map((business, idx) => (
-                        <SideBarInfoBox key={idx}>
-                            <IconBox >
-                                <img src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
-                            </IconBox>
-                            <SideBarInfoText>{business.name}</SideBarInfoText>
+                            {category.category === 'Dairy' ?
+                            <IconBox onClick={() => setMode('dairy')}><DairyIcon dimension={'small'}/></IconBox>
+                            : category.category === 'Vegetables' ?
+                            <IconBox onClick={() => setMode('vegetables')}><VegetablesIcon dimension={'small'}/></IconBox>
+                            : category.category === 'Fruits' ?
+                            <IconBox onClick={() => setMode('fruits')}><FruitsIcon dimension={'small'} /></IconBox>
+                            : category.category === 'Grains' ?
+                            <IconBox onClick={() => setMode('grains')}><GrainsIcon dimension={'small'}/></IconBox>
+                            : <IconBox onClick={() => setMode('protein')}><ProteinIcon dimension={'small'}/></IconBox>
+                            }
+                            <SideBarInfoText theme={theme}>{category.category}</SideBarInfoText>
                         </SideBarInfoBox>
                     ))}
-                    </OrganizationField> */}
-                </SideBarContainer>
-                <PostsSection>
-                    <PostsTitle theme={theme}>Posts</PostsTitle>
-                    <FeedContainer>
-                        {!sessionUser && posts.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'available' && available.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'unavailable' && unavailable.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'requests' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'dairy' && dairyArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'vegetables' && vegetablesArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'fruits' && fruitsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'grains' && grainsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                        {mode === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                    </FeedContainer>
-                </PostsSection>
+                </SideField>
+                <SideField>
+                    <SideLegend>Nonprofits</SideLegend>
+                {threeNonprofits.map((nonprofit, idx) => (
+                    <SideBarInfoBox key={idx}>
+                        <IconBox >
+                            <img src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
+                        </IconBox>
+                        <SideBarInfoText >{nonprofit.name}</SideBarInfoText>
+                    </SideBarInfoBox>
+                    ))}
+                </SideField>
+                <SideField>
+                    <SideLegend>Businesses</SideLegend>
+                {threeBusinesses.map((business, idx) => (
+                    <SideBarInfoBox key={idx}>
+                        <IconBox >
+                            <img src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
+                        </IconBox>
+                        <SideBarInfoText>{business.name}</SideBarInfoText>
+                    </SideBarInfoBox>
+                ))}
+                </SideField>
+            </SideBarContainer>
+            <PostsSection>
+                <PostsTitle theme={theme}>Posts</PostsTitle>
+                <FeedContainer>
+                    {!sessionUser && posts.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                    {mode === 'available' && available.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                    {mode === 'unavailable' && unavailable.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                    {mode === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                    {mode === 'requests' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                    {mode === 'dairy' && dairyArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                    {mode === 'vegetables' && vegetablesArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                    {mode === 'fruits' && fruitsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                    {mode === 'grains' && grainsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                    {mode === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                    {mode === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                </FeedContainer>
+            </PostsSection>
         </PageBackGround>
-        )
+    )
 };

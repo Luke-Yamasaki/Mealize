@@ -2,6 +2,15 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { IconBox } from '../../Components/Styled/Layout';
 
+export const NavBar = styled.div`
+    max-width: 1600px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
 export const StyledNavLink = styled(NavLink)`
     color: white;
     text-decoration: none;

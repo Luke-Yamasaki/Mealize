@@ -26,7 +26,7 @@ import {
     FilterTitle,
     PostsTitle,
     PostsSection
-} from '../../Components/Styled/Light/Layout';
+} from '../../Components/Styled/Layout';
 
 export const Home = () => {
     const sessionUser = useSelector(state => state.session.user);

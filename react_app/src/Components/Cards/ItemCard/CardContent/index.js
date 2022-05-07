@@ -31,7 +31,7 @@ import {
     DescriptionText,
     ButtonBox,
     ButtonText
-} from "../../../Styled/Light/ItemCard";
+} from "../../../Styled/ItemCard";
 
 export const CardContent = ({ post }) => {
     const dispatch = useDispatch();

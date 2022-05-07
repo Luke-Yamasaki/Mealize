@@ -8,8 +8,7 @@ import { useUserLocation } from '../../../Context/LocationContext';
 import { getGeoLocation } from '../../../utils/geo_location';
 
 //styled-components
-import {NotificationSection, NotificationContainer, NotificationText } from '../../../Components/Styled/Light/NotificationBar';
-import {DarkNotificationSection, DarkNotificationText } from '../../../Components/Styled/Dark/NotificationBar';
+import {NotificationSection, NotificationContainer, NotificationText } from '../../../Components/Styled/NotificationBar';
 
 export const NotificationBar = () => {
     const sessionUser = useSelector(state => state.session.user);

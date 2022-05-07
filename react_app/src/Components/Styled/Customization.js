@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
-import { IconBox } from './Light/Layout';
+import { IconBox } from './Layout';
 
 const up = keyframes`
     0% { opacity: 35%; transform: rotate(0deg);}

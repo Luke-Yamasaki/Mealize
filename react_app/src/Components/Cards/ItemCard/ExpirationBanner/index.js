@@ -5,7 +5,7 @@ import {
     ExpBanner,
     BannerTextContainer,
     BannerText
-} from "../../../Styled/Light/ItemCard";
+} from "../../../Styled/ItemCard";
 
 import { Flag } from '../../../../Assets/Icons/Flag';
 

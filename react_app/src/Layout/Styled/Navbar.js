@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { IconBox } from '../../Components/Styled/Light/Layout';
+import { IconBox } from '../../Components/Styled/Layout';
 
 export const StyledNavLink = styled(NavLink)`
     color: white;

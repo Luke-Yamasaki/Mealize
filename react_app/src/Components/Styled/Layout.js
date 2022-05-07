@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import image from '../../../Assets/Images/Pattern_10.png';
-import { ExtraBold, Bold, Medium, Regular } from '../Fonts';
+import image from '../../Assets/Images/Pattern_10.png';
+import { ExtraBold, Bold, Medium, Regular } from './Fonts';
 
 export const AppBackGround = styled.div`
     width: 100vw;

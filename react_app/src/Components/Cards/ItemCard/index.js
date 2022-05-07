@@ -2,7 +2,7 @@
 import { useHistory } from "react-router-dom";
 
 //Components
-import { CardContainer } from '../../Styled/Light/ItemCard';
+import { CardContainer } from '../../Styled/ItemCard';
 import { ExpirationBanner } from './ExpirationBanner';
 import { CardContent } from "./CardContent";
 

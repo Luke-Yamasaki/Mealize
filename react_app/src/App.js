@@ -27,7 +27,7 @@ import { Deliveries } from './Pages/Deliveries';
 //components
 import { Customization } from './Components/Customization';
 import Modal from './Components/Modal';
-import { AppBackGround, AppContentContainer, BackGroundAside } from './Components/Styled/Light/Layout';
+import { AppBackGround, AppContentContainer, BackGroundAside } from './Components/Styled/Layout';
 //layouts
 import { Navbar } from './Layout/Navbar';
 import { SessionNavbar } from './Layout/Navbar/SessionNavbar';

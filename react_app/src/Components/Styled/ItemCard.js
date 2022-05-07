@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Bold, Medium, Regular, Paragraph } from '../Fonts';
+import { Bold, Medium, Regular, Paragraph } from './Fonts';
 
 //container
 export const CardContainer = styled.div`

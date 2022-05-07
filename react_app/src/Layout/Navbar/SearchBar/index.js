@@ -38,8 +38,6 @@ export const SearchBar = () => {
         setIsText(!isText);
     }
 
-    //test
-    
     return (
         <>
             {!browserSupportsSpeechRecognition ?

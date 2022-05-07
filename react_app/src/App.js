@@ -29,9 +29,9 @@ import { Customization } from './Components/Customization';
 import Modal from './Components/Modal';
 import { AppBackGround, AppContentContainer, BackGroundAside } from './Components/Styled/Layout';
 //layouts
-import { Navbar } from './Layout/Navbar';
-import { SessionNavbar } from './Layout/Navbar/SessionNavbar';
-import { Footer } from './Layout/Footer';
+import { Navbar } from './Components/Navbar';
+import { SessionNavbar } from './Components/Navbar/SessionNavbar';
+import { Footer } from './Components/Footer';
 
 
 function App() {
@@ -40,7 +40,6 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  const className = backGround === true ? theme + 'Pattern' : theme;
 
   useEffect(() => {
     (async () => {

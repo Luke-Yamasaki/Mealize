@@ -1,0 +1,1 @@
+heroku pg:push databasename DATABASE_URL --app appname

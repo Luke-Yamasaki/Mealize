@@ -1,30 +1,16 @@
 import { useTheme } from '../../../../Context/ThemeContext';
 import { useBackGround } from '../../../../Context/BackGroundContext';
 
-import { ContentContainer, Label, IconBox } from '../../../Styled/Light/Customization';
-import { DarkContentContainer, DarkLabel } from '../../../Styled/Dark/Customization';
+import { ContentContainer, Label, IconContainer } from '../../../Styled/Customization';
 
 export const BackGround = () => {
     const {backGround, setBackGround} = useBackGround();
     const {theme} = useTheme();
 
     return (
-        <>
-            {theme === 'light' ?
-                (
-                    <ContentContainer onClick={() => setBackGround(!backGround)}>
-                        <IconBox></IconBox>
-                        <Label>BackGround</Label>
-                    </ContentContainer>
-                )
-                :
-                (
-                    <DarkContentContainer onClick={() => setBackGround(!backGround)}>
-                        <IconBox></IconBox>
-                        <DarkLabel>BackGround</DarkLabel>
-                    </DarkContentContainer>
-                )
-            }
-        </>
+        <ContentContainer  theme={theme} onClick={() => setBackGround(!backGround)}>
+            <IconContainer></IconContainer>
+            <Label theme={theme}>Background image</Label>
+        </ContentContainer>
     )
 };

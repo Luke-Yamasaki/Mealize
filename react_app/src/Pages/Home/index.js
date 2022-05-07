@@ -13,10 +13,20 @@ import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 import { Business } from '../../Assets/Icons/Business';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 //styled-components
-import { PageBackGround, SideBarContainer, PostField, CategoryField, SideLegend, SideBarInfoBox, SideBarInfoText, SideBarInfoIcon, FeedContainer  } from '../../Components/Styled/Light/Layout';
-import { DarkPageBackGround, DarkPostField, DarkCategoryField, DarkSideBarInfoText } from '../../Components/Styled/Dark/Layout';
-
-// import styles from './Home.module.css';
+import {
+    PageBackGround,
+    SideBarContainer,
+    PostField,
+    CategoryField,
+    SideLegend,
+    SideBarInfoBox,
+    SideBarInfoText,
+    SideBarInfoIcon,
+    FeedContainer,
+    FilterTitle,
+    PostsTitle,
+    PostsSection
+} from '../../Components/Styled/Light/Layout';
 
 export const Home = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -69,11 +79,11 @@ export const Home = () => {
             <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#6B6B6B'}>
                 <SideBarContainer>
                     {!sessionUser && (
-                        <h2 style={{marginTop: '-10px', marginBottom: '-5px'}}>Filter</h2>
+                        <FilterTitle theme={theme}>Filter</FilterTitle>
                     )}
                     {sessionUser && (
                         <>
-                            <h2>Filter</h2>
+                            <FilterTitle theme={theme}>Filter</FilterTitle>
                             <PostField>
                                 <SideLegend>Favorites</SideLegend>
                                 <SideBarInfoBox onClick={() => setMode('favorites')}>
@@ -141,8 +151,8 @@ export const Home = () => {
                     ))}
                     </OrganizationField> */}
                 </SideBarContainer>
-                <div style={{display: 'flex', flexDirection: 'column', width: '895px', height: 'auto', gap: '25px'}}>
-                    <h2 style={{marginTop: '0px'}}>Posts</h2>
+                <PostsSection>
+                    <PostsTitle theme={theme}>Posts</PostsTitle>
                     <FeedContainer>
                         {!sessionUser && posts.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                         {mode === 'available' && available.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
@@ -156,7 +166,7 @@ export const Home = () => {
                         {mode === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                         {mode === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                     </FeedContainer>
-                </div>
+                </PostsSection>
         </PageBackGround>
         )
 };

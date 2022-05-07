@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
+import { IconBox } from './Light/Layout';
 
 const up = keyframes`
     0% { opacity: 35%; transform: rotate(0deg);}
@@ -31,10 +32,9 @@ export const CustomizationContainer = styled.div`
     align-items: space-around;
     justify-content: center;
     border: 1px solid;
-    border-color: ${props => props.borderColor};
+    border-color: ${props => props.theme === 'light' ? '#D5D5D5' :  '#616161'};
     border-radius: 5px;
-    background-color: #FFFFFF;
-    color: ${props => props.color};
+    background-color: ${props => props.theme === 'light' ? '#FFFFFF' : '#191919'};
     font-family: motiva-sans, sans-serif;
     font-style: normal;
     font-weight: 700;
@@ -42,6 +42,7 @@ export const CustomizationContainer = styled.div`
     position: sticky;
     will-change: transform;
     top: 0;
+    color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
 `;
 
 export const ContentContainer = styled.div`
@@ -52,23 +53,20 @@ export const ContentContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
     gap: 5px;
-    border-bottom: ${props => props.borderBottom};
+    border-bottom: ${props => props.theme === 'light' ? '1px solid #D5D5D5' : '1px solid #616161'};
 `;
 
 export const Label = styled.p`
     margin: 0px;
     padding: 0px;
     font-size: 1em;
-    color: ${props => props.color};
+    color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
     margin-left: 3.4em;
 `;
 
-export const IconBox = styled.div`
+export const IconContainer = styled(IconBox)`
     width: 100px;
     height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-left: -50px;
 `;
 

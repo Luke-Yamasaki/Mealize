@@ -9,7 +9,7 @@ import { setCurrentModal, showModal } from '../../store/modal';
 //Components
 import { CustomizationModal } from './CutomizationModal';
 import { Settings } from '../../Assets/Icons/Settings';
-import { SettingsBox } from '../Styled/Light/Customization';
+import { SettingsBox } from '../Styled/Customization';
 
 
 export const Customization = () => {

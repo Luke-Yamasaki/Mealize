@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import image from '../../../Assets/Images/Pattern_10.png';
+import { ExtraBold, Bold, Medium, Regular } from '../Fonts';
 
 export const AppBackGround = styled.div`
     width: 100vw;
@@ -25,19 +26,6 @@ export const AppContentContainer = styled.div`
     align-items: center;
 `;
 
-export const BackGroundAside = styled.aside`
-    width: 21.45vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    will-change: transform;
-    margin-top: - 1000px;
-`;
-
 export const PageBackGround = styled.div`
   max-width: 1549px;
   width: 100em;
@@ -52,8 +40,26 @@ export const PageBackGround = styled.div`
   padding-top: 50px;
   padding-left: 50px;
   gap: 100px;
-  border: '1px solid';
+  border: 1px solid;
   border-color: ${props => props.bordercolor};
+`;
+
+export const BackGroundAside = styled.aside`
+    width: 21.45vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    will-change: transform;
+    margin-top: - 1000px;
+`;
+
+export const FilterTitle = styled(ExtraBold)`
+    margin-bottom: -5px;
+    color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
 `;
 
 export const SideBarContainer = styled.div`
@@ -189,4 +195,26 @@ export const FeedContainer = styled.div`
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 25px;
+`;
+
+export const PostsTitle = styled(ExtraBold)`
+    margin-top: 10px;
+    margin-left: 50px;
+    color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
+`;
+
+export const PostsSection = styled.section`
+    max-width: 895px;
+    width: 40vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+`;
+
+export const IconBox = styled.div`
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

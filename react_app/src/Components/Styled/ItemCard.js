@@ -3,8 +3,8 @@ import { Bold, Medium, Regular, Paragraph } from './Fonts';
 
 //container
 export const CardContainer = styled.div`
-    width: 390px;
-    height: 500px;
+    width: 300px;
+    height: 450px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -17,13 +17,13 @@ export const ExpBanner = styled.div`
     height: 40px;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     gap: 10px;
 `;
 
 export const BannerTextContainer = styled.div`
-    width: 290px;
+    width: 260px;
     height: 40px;
     display: flex;
     flex-direction: row;
@@ -33,6 +33,8 @@ export const BannerTextContainer = styled.div`
 
 export const BannerText = styled(Paragraph)`
     color: ${props => props.color};
+    font-size: 0.9em;
+    font-weight: 700;
 `;
 
 
@@ -43,7 +45,7 @@ export const Card = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: space-around;
+    align-items: center;
     border-radius: 5px;
     cursor: pointer;
     background: ${props => props.color['background']};
@@ -52,14 +54,15 @@ export const Card = styled.div`
 
 //title
 export const TitleBox = styled(ExpBanner)`
-    height: 40px;
+    justify-content: space-around;
+    height: 30px;
 `;
 
 export const TitleTextContainer = styled(BannerTextContainer)`
-    justify-content: space-between;
-    align-items: top;
-    height: 40px;
-    width: 250px;
+    justify-content: flex-start;
+    align-items: center;
+    height: 30px;
+    width: 200px;
 `;
 
 export const CompanyLogo = styled.img`
@@ -74,10 +77,12 @@ export const CompanyLogo = styled.img`
 
 export const CompanyName = styled(Bold)`
     color: black;
-    width: 110px;
-    height: 40px;
-    font-size: 1em;
-    text-align: center;
+    width: 250px;
+    height: 30px;
+    font-size: 0.9em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 `;
 
 // You can wrap functional component icons in a div and scale their size accordingly
@@ -99,8 +104,8 @@ export const CompanyAddress = styled(Paragraph)`
 
 //image
 export const ItemImage = styled.img`
-    width: 290px;
-    height: 200px;
+    width: 288px;
+    height: 230px;
     object-fit: cover;
     object-position: center;
 `;
@@ -137,25 +142,21 @@ export const ItemQuantity = styled(Medium)`
 `;
 
 export const DescriptionBox = styled.div`
-    width: 255px;
+    width: 260px;
     height: 45px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    line-height: 1em;
 `;
 
-export const DescriptionTextContainer = styled(DescriptionBox)`
-    align-items: flex-start;
-    width: 235px;
-`;
-
-export const DescriptionText = styled(Regular)`
+export const DescriptionText = styled(Medium)`
     color: ${props => props.color};
-    font-size: 0.5em;
+    font-size: 0.65em;
     height: auto;
     max-height: 45px;
-    width: 235px;
+    width: 240px;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
     -ms-hyphens: auto;
@@ -163,7 +164,7 @@ export const DescriptionText = styled(Regular)`
 `;
 
 export const ButtonBox = styled(ExpBanner)`
-    width: 235px;
+    width: 260px;
     height: 35px;
     padding-left: 10px;
     padding-right: 10px;
@@ -173,6 +174,6 @@ export const ButtonBox = styled(ExpBanner)`
 export const ButtonText = styled(Medium)`
     font-size: 0.75em;
     color: black;
-    max-width: 75px;
+    max-width: 100px;
     max-height: 25px;
 `;

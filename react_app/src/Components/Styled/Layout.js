@@ -27,7 +27,7 @@ export const AppContentContainer = styled.div`
 `;
 
 export const PageBackGround = styled.div`
-  max-width: 1549px;
+  max-width: 1548px;
   width: 100em;
   min-height: 80vh;
   height: auto;
@@ -72,45 +72,34 @@ export const SideBarContainer = styled.div`
     gap: 15px;
 `;
 
-export const PostField = styled.fieldset`
+export const SideField = styled.fieldset`
     width: 150px;
-    height: 125px;
+    height: auto;
     border-radius: 5px;
-    border: 1px solid #B2B2B2;
-    background-color: #E8E8E8;
+    border: 1px solid #616161;
+    background-color: ${props => props.theme === 'light' ? '#E8E8E8' : '#191919'};
     display: flex;
     flex-direction: column;
     align-items: left;
     justify-content: space-around;
     font-size: 1em;
+    padding: 10px 0px 10px 10px;
 `;
 
-export const CategoryField = styled.fieldset`
-    width: 150px;
-    height: 285px;
-    border-radius: 5px;
-    border: 1px solid #B2B2B2;
-    background-color: #E8E8E8;
+export const SideLegend = styled.legend`
     display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: flex-end;
-    font-size: 1em;
-    gap: 5px;
-`;
-
-export const OrganizationField = styled.fieldset`
-    width: 150px;
-    height: 155px;
-    border-radius: 5px;
-    border: 1px solid #B2B2B2;
-    background-color: #E8E8E8;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-start;
-    font-size: 1em;
-    padding-bottom: 25px;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 20px;
+    font-size: 14px;
+    background-color: ${props => props.theme === 'light' ? '#9AF2C0' : '#327647'};
+    border: 1px solid;
+    border-color: rgba(40, 166, 144, 0.5);
+    border-radius: 3px;
+    color: ${props => props.theme === 'light' ? 'black' : 'white'};
+    font-weight: ${props => props.theme === 'light' ? '500' : '300'};
+    letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
 `;
 
 export const EventField = styled.fieldset`
@@ -142,18 +131,6 @@ export const EventLegend = styled.legend`
     margin-left: 5px;
 `;
 
-export const SideLegend = styled.legend`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 20px;
-    font-size: 14px;
-    background-color: #9AF2C0;
-    border: 1px solid rgba(40, 166, 144, 0.5);
-    border-radius: 3px;
-    color: black;
-`;
 
 export const OrganizationLegend = styled.legend`
     display: flex;
@@ -175,26 +152,22 @@ export const SideBarInfoBox = styled.div`
     justify-content: flex-start;
     gap: 10px;
     align-items: center;
-    width: 200px;
+    width: 150px;
     height: 50px;
 `;
 
 export const SideBarInfoText = styled.div`
     font-size: 12px;
-    color: black;
+    color: ${props => props.theme === 'light' ? 'black' : 'white'};
     font-weight: bold;
 `;
 
-export const SideBarInfoIcon = styled.div`
-`;
-
 export const FeedContainer = styled.div`
-    width: 870px;
+    width: 1100px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 25px;
 `;
 
 export const PostsTitle = styled(ExtraBold)`
@@ -204,7 +177,7 @@ export const PostsTitle = styled(ExtraBold)`
 `;
 
 export const PostsSection = styled.section`
-    max-width: 895px;
+    max-width: 1100px;
     width: 40vw;
     height: auto;
     display: flex;

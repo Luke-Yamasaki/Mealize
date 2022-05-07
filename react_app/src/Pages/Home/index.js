@@ -16,12 +16,11 @@ import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 import {
     PageBackGround,
     SideBarContainer,
-    PostField,
-    CategoryField,
+    SideField,
     SideLegend,
     SideBarInfoBox,
     SideBarInfoText,
-    SideBarInfoIcon,
+    IconBox,
     FeedContainer,
     FilterTitle,
     PostsTitle,
@@ -76,7 +75,7 @@ export const Home = () => {
 
     // if(sessionUser && sessionUser.isNonprofit) {
         return(
-            <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#6B6B6B'}>
+            <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}>
                 <SideBarContainer>
                     {!sessionUser && (
                         <FilterTitle theme={theme}>Filter</FilterTitle>
@@ -84,57 +83,59 @@ export const Home = () => {
                     {sessionUser && (
                         <>
                             <FilterTitle theme={theme}>Filter</FilterTitle>
-                            <PostField>
-                                <SideLegend>Favorites</SideLegend>
+                            <SideField theme={theme}>
+                                <SideLegend theme={theme}>Favorites</SideLegend>
                                 <SideBarInfoBox onClick={() => setMode('favorites')}>
                                     <div style={{textDecoration: 'underline'}}>My favorites</div>
                                 </SideBarInfoBox>
-                            </PostField>
+                            </SideField>
                         </>
                     )}
-                    <PostField>
-                        <SideLegend>Availability</SideLegend>
+                    <SideField theme={theme}>
+                        <SideLegend theme={theme}>Availability</SideLegend>
                         <SideBarInfoBox onClick={() => setMode('available')}>
-                            <div style={{textDecoration: 'underline'}}>All available</div>
+                            <SideBarInfoText theme={theme}>Available</SideBarInfoText>
                         </SideBarInfoBox>
-                        <SideBarInfoBox onClick={() => setMode('unavailable')}>
-                           <div style={{textDecoration: 'underline'}}>All completed</div>
+                        <SideBarInfoBox onClick={() => setMode('available')}>
+                            <SideBarInfoText theme={theme}>Unavailable</SideBarInfoText>
                         </SideBarInfoBox>
-                    </PostField>
-                    <PostField>
-                        <SideLegend>Post type</SideLegend>
+                    </SideField>
+                    <SideField theme={theme}>
+                        <SideLegend theme={theme}>Post type</SideLegend>
                         <SideBarInfoBox onClick={() => setMode('requests')}>
-                          <Business /> <div>Requests</div>
+                          <Business />
+                          <SideBarInfoText theme={theme}>Requests</SideBarInfoText>
                         </SideBarInfoBox>
                         <SideBarInfoBox onClick={() => setMode('items')}>
-                           <Nonprofit /> <div>Items</div>
+                           <Nonprofit />
+                           <SideBarInfoText theme={theme}>Items</SideBarInfoText>
                         </SideBarInfoBox>
-                    </PostField>
-                    <CategoryField>
-                        <SideLegend>Categories</SideLegend>
+                    </SideField>
+                    <SideField theme={theme}>
+                        <SideLegend theme={theme}>Categories</SideLegend>
                         {categories.map((category, idx) => (
                             <SideBarInfoBox key={idx}>
                                 {category.category === 'Dairy' ?
-                                <SideBarInfoIcon onClick={() => setMode('dairy')}><DairyIcon dimension={'small'}/></SideBarInfoIcon>
+                                <IconBox onClick={() => setMode('dairy')}><DairyIcon dimension={'small'}/></IconBox>
                                 : category.category === 'Vegetables' ?
-                                <SideBarInfoIcon onClick={() => setMode('vegetables')}><VegetablesIcon dimension={'small'}/></SideBarInfoIcon>
+                                <IconBox onClick={() => setMode('vegetables')}><VegetablesIcon dimension={'small'}/></IconBox>
                                 : category.category === 'Fruits' ?
-                                <SideBarInfoIcon onClick={() => setMode('fruits')}><FruitsIcon dimension={'small'} /></SideBarInfoIcon>
+                                <IconBox onClick={() => setMode('fruits')}><FruitsIcon dimension={'small'} /></IconBox>
                                 : category.category === 'Grains' ?
-                                <SideBarInfoIcon onClick={() => setMode('grains')}><GrainsIcon dimension={'small'}/></SideBarInfoIcon>
-                                : <SideBarInfoIcon onClick={() => setMode('protein')}><ProteinIcon dimension={'small'}/></SideBarInfoIcon>
+                                <IconBox onClick={() => setMode('grains')}><GrainsIcon dimension={'small'}/></IconBox>
+                                : <IconBox onClick={() => setMode('protein')}><ProteinIcon dimension={'small'}/></IconBox>
                                 }
-                                <SideBarInfoText>{category.category}</SideBarInfoText>
+                                <SideBarInfoText theme={theme}>{category.category}</SideBarInfoText>
                             </SideBarInfoBox>
                         ))}
-                    </CategoryField>
+                    </SideField>
                     {/* <OrganizationField>
                         <OrganizationLegend>Nonprofits</OrganizationLegend>
                     {threeNonprofits.map((nonprofit, idx) => (
                         <SideBarInfoBox key={idx}>
-                            <SideBarInfoIcon >
+                            <IconBox >
                                 <img src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
-                            </SideBarInfoIcon>
+                            </IconBox>
                             <SideBarInfoText >{nonprofit.name}</SideBarInfoText>
                         </SideBarInfoBox>
                         ))}
@@ -143,9 +144,9 @@ export const Home = () => {
                         <OrganizationLegend>Businesses</OrganizationLegend>
                     {threeBusinesses.map((business, idx) => (
                         <SideBarInfoBox key={idx}>
-                            <SideBarInfoIcon >
+                            <IconBox >
                                 <img src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
-                            </SideBarInfoIcon>
+                            </IconBox>
                             <SideBarInfoText>{business.name}</SideBarInfoText>
                         </SideBarInfoBox>
                     ))}

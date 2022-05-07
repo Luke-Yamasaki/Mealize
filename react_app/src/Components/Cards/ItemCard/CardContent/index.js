@@ -13,6 +13,7 @@ import { DeliveryForm } from '../../../../Forms/Delivery';
 import { LocationPin } from '../../../../Assets/Icons/Location';
 import { FavoritesIcon } from '../../../../Assets/Logo/FavoritesIcon';
 import { QuestionBtn, RequestBtn } from '../../../Styled/Buttons';
+import { IconBox } from '../../../Styled/Layout';
 import {
     Card,
     TitleBox,
@@ -27,7 +28,6 @@ import {
     ItemTitle,
     ItemQuantity,
     DescriptionBox,
-    DescriptionTextContainer,
     DescriptionText,
     ButtonBox,
     ButtonText
@@ -64,7 +64,9 @@ export const CardContent = ({ post }) => {
         return (
             <Card color={styleObj}>
                 <TitleBox>
-                    <CompanyLogo src={organization.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='black'/>
+                    <IconBox>
+                        <CompanyLogo src={organization.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='black'/>
+                    </IconBox>
                     <TitleTextContainer>
                         <CompanyName>{organization.name}</CompanyName>
                         <PinContainer width='15px' height='15px'>
@@ -82,9 +84,7 @@ export const CardContent = ({ post }) => {
                     <FavoritesIcon post={post} />
                 </InfoBox>
                 <DescriptionBox>
-                    <DescriptionTextContainer>
-                        <DescriptionText>{post.description}</DescriptionText>
-                    </DescriptionTextContainer>
+                    <DescriptionText>{post.description}</DescriptionText>
                 </DescriptionBox>
                 <ButtonBox>
                     <QuestionBtn onClick={handleQuestion}>

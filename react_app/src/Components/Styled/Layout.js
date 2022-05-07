@@ -77,7 +77,7 @@ export const SideField = styled.fieldset`
     height: auto;
     border-radius: 5px;
     border: 1px solid #616161;
-    background-color: ${props => props.theme === 'light' ? '#E8E8E8' : '#191919'};
+    background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -190,4 +190,11 @@ export const IconBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    & :hover {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 `;

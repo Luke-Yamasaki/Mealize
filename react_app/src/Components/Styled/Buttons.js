@@ -92,7 +92,7 @@ export const VolunteerBtn = styled(DemoButton)`
 `;
 
 const ItemButton = styled.div`
-    width: 110px;
+    width: 120px;
     height: 30px;
     display: flex;
     justify-content: center;

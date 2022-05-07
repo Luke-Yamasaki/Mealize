@@ -1,10 +1,12 @@
 //Hooks
 import { useState, useEffect } from "react";
 import { useTheme } from "../../../../Context/ThemeContext";
+import { IconBox } from "../../../Styled/Layout";
 import {
     ExpBanner,
     BannerTextContainer,
-    BannerText
+    BannerText,
+    ExpText
 } from "../../../Styled/ItemCard";
 
 import { Flag } from '../../../../Assets/Icons/Flag';
@@ -48,7 +50,7 @@ export const ExpirationBanner = ({ post }) => {
             <Flag color={flagColor} />
             <BannerTextContainer>
                 <BannerText theme={theme}>Expires:</BannerText>
-                <BannerText theme={theme}>{date}</BannerText>
+                <ExpText theme={theme}>{date}</ExpText>
             </BannerTextContainer>
         </ExpBanner>
     )

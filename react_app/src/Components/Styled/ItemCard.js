@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 //container
 export const CardContainer = styled.div`
     width: 285px;
-    height: 450px;
+    height: ${props => props.height};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -58,7 +58,7 @@ export const ExpText = styled(Paragraph)`
 //card
 export const Card = styled.div`
     width: 280px;
-    height: 390px;
+    height: ${props => props.height};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -71,25 +71,21 @@ export const Card = styled.div`
 
 //title
 export const TitleBox = styled(Link)`
-    width: 270px;
+    width: 280px;
     height: 30px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     margin-left: 10px;
-    gap: 10px;
     text-decoration: none;
-    & :hover {
-        text-decoration: underline;
-    }
 `;
 
 export const TitleTextContainer = styled(BannerTextContainer)`
     justify-content: flex-start;
     align-items: center;
     height: 30px;
-    width: 240px;
+    width: 220px;
 `;
 
 export const CompanyLogo = styled.img`
@@ -105,12 +101,16 @@ export const CompanyLogo = styled.img`
 
 export const CompanyName = styled(Bold)`
     color: black;
-    width: 250px;
+    width: 220px;
     height: 30px;
     font-size: 0.9em;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-left: 10px;
+    &:hover {
+        text-decoration: underline;
+    }
 `;
 
 // You can wrap functional component icons in a div and scale their size accordingly
@@ -128,6 +128,13 @@ export const CompanyAddress = styled(Paragraph)`
     width: 110px;
     height: 35px;
     font-size: 0.7em;
+`;
+
+export const ItemDateText = styled(Medium)`
+    color: black;
+    font-size: 0.65em;
+    max-width: 60px;
+    margin-left: 5px;
 `;
 
 //image

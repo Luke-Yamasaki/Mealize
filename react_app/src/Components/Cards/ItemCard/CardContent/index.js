@@ -22,6 +22,7 @@ import {
     CompanyName,
     PinContainer,
     CompanyAddress,
+    ItemDateText,
     ItemImage,
     InfoBox,
     InfoContainer,
@@ -38,6 +39,7 @@ export const CardContent = ({ post }) => {
     const dispatch = useDispatch();
     const { theme } = useTheme();
     const history = useHistory();
+    const sessionUser = useSelector(state => state.session.user);
     const organizations = useSelector(state => state.organizations);
     const businesses = organizations.businesses;
     const nonprofits = organizations.nonprofits;
@@ -60,6 +62,22 @@ export const CardContent = ({ post }) => {
         return address;
     };
 
+
+    const daysAgo = () => {
+        const today = new Date();
+        const postDate = new Date(post.updatedAt);
+        const milliseconds = today - postDate;
+        const daysPassed = Math.floor(milliseconds / 1000 / 60 / 60 / 24);
+        const hoursPassed = Math.floor(milliseconds / 1000 / 60 / 60);
+        if(daysPassed >= 1) {
+            return daysPassed.toString() + 'd';
+        } else if(daysPassed < 1 && hoursPassed >= 1) {
+            return hoursPassed.toString + 'h';
+        } else {
+            return 'now';
+        }
+    }
+
     const handleClick = () => {
         return history.push(`/items/${post.id}`)
     };
@@ -68,7 +86,7 @@ export const CardContent = ({ post }) => {
         return null
     } else {
         return (
-            <Card color={styleObj}>
+            <Card color={styleObj} height={sessionUser ? '390px' : '350px'}>
                 <TitleBox to={`/organizations/${organization.id}`}>
                     <IconBox >
                         <CompanyLogo src={organization.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='black'/>
@@ -80,6 +98,7 @@ export const CardContent = ({ post }) => {
                         </PinContainer>
                         <CompanyAddress>{formatAddress()}</CompanyAddress> */}
                     </TitleTextContainer>
+                    <ItemDateText theme={theme}>{daysAgo()}</ItemDateText>
                 </TitleBox>
                 <ItemImage src={post.imageUrl} alt='Food available for pick up.' onClick={handleClick}/>
                 <InfoBox>
@@ -88,20 +107,24 @@ export const CardContent = ({ post }) => {
                         <ItemQuantity theme={theme}>({post?.quantity})</ItemQuantity>
                     </InfoContainer>
                     <IconBox>
-                        <FavoritesIcon post={post} />
+                        {sessionUser && (
+                            <FavoritesIcon post={post} />
+                        )}
                     </IconBox>
                 </InfoBox>
                 <DescriptionBox>
                     <DescriptionText theme={theme}>{post.description}</DescriptionText>
                 </DescriptionBox>
-                <ButtonBox>
-                    <QuestionBtn theme={theme} onClick={handleQuestion}>
-                        <QuestionText theme={theme}>Ask a question</QuestionText>
-                    </QuestionBtn>
-                    <RequestBtn onClick={handleRequest}>
-                        <ButtonText>Send a request</ButtonText>
-                    </RequestBtn>
-                </ButtonBox>
+                {sessionUser && (
+                    <ButtonBox>
+                        <QuestionBtn theme={theme} onClick={handleQuestion}>
+                            <QuestionText theme={theme}>Ask a question</QuestionText>
+                        </QuestionBtn>
+                        <RequestBtn onClick={handleRequest}>
+                            <ButtonText>Send a request</ButtonText>
+                        </RequestBtn>
+                    </ButtonBox>
+                )}
             </Card>
         )
     }

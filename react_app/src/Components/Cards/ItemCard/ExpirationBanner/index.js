@@ -47,8 +47,8 @@ export const ExpirationBanner = ({ post }) => {
         <ExpBanner>
             <Flag color={flagColor} />
             <BannerTextContainer>
-                <BannerText color={theme === 'light' ?  'black' : 'white'}>Expires:</BannerText>
-                <BannerText color={theme === 'light' ?  'black' : 'white'}>{date}</BannerText>
+                <BannerText theme={theme}>Expires:</BannerText>
+                <BannerText theme={theme}>{date}</BannerText>
             </BannerTextContainer>
         </ExpBanner>
     )

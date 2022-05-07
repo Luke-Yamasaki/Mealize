@@ -30,7 +30,8 @@ import {
     DescriptionBox,
     DescriptionText,
     ButtonBox,
-    ButtonText
+    ButtonText,
+    QuestionText
 } from "../../../Styled/ItemCard";
 
 export const CardContent = ({ post }) => {
@@ -78,17 +79,17 @@ export const CardContent = ({ post }) => {
                 <ItemImage src={post.imageUrl} alt='Food available for pick up.' />
                 <InfoBox>
                     <InfoContainer>
-                        <ItemTitle color={theme === 'light' ? 'black' : 'white'}>{post?.title}</ItemTitle>
-                        <ItemQuantity color={theme === 'light' ? 'black' : 'white'}>{post?.quantity}</ItemQuantity>
+                        <ItemTitle theme={theme}>{post?.title}</ItemTitle>
+                        <ItemQuantity theme={theme}>({post?.quantity})</ItemQuantity>
                     </InfoContainer>
                     <FavoritesIcon post={post} />
                 </InfoBox>
                 <DescriptionBox>
-                    <DescriptionText>{post.description}</DescriptionText>
+                    <DescriptionText theme={theme}>{post.description}</DescriptionText>
                 </DescriptionBox>
                 <ButtonBox>
-                    <QuestionBtn onClick={handleQuestion}>
-                        <ButtonText>Ask a question</ButtonText>
+                    <QuestionBtn theme={theme} onClick={handleQuestion}>
+                        <QuestionText theme={theme}>Ask a question</QuestionText>
                     </QuestionBtn>
                     <RequestBtn onClick={handleRequest}>
                         <ButtonText>Send a request</ButtonText>

@@ -92,7 +92,7 @@ export const VolunteerBtn = styled(DemoButton)`
 `;
 
 const ItemButton = styled.div`
-    width: 100px;
+    width: 110px;
     height: 30px;
     display: flex;
     justify-content: center;
@@ -101,7 +101,8 @@ const ItemButton = styled.div`
 `;
 
 export const QuestionBtn = styled(ItemButton)`
-    background-color: white;
+    background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+    filter: drop-shadow(${props => props.theme === 'light' ? '0px 0px 1px rgba(0, 0, 0, 0.75)' : '0px 0px 1px rgba(255, 255, 255, 0.75)'});
 `;
 
 export const RequestBtn = styled(ItemButton)`

@@ -3,7 +3,7 @@ import { Bold, Medium, Regular, Paragraph } from './Fonts';
 
 //container
 export const CardContainer = styled.div`
-    width: 300px;
+    width: 285px;
     height: 450px;
     display: flex;
     flex-direction: column;
@@ -13,7 +13,7 @@ export const CardContainer = styled.div`
 
 //exp banner
 export const ExpBanner = styled.div`
-    width: 290px;
+    width: 280px;
     height: 40px;
     display: flex;
     flex-direction: row;
@@ -23,7 +23,7 @@ export const ExpBanner = styled.div`
 `;
 
 export const BannerTextContainer = styled.div`
-    width: 260px;
+    width: 250px;
     height: 40px;
     display: flex;
     flex-direction: row;
@@ -32,15 +32,16 @@ export const BannerTextContainer = styled.div`
 `;
 
 export const BannerText = styled(Paragraph)`
-    color: ${props => props.color};
+    color: ${props => props.theme === 'light' ? 'black' : 'white'};
     font-size: 0.9em;
-    font-weight: 700;
+    font-weight: ${props => props.theme === 'light' ? '700' : '400'};
+    letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
 `;
 
 
 //card
 export const Card = styled.div`
-    width: 290px;
+    width: 280px;
     height: 400px;
     display: flex;
     flex-direction: column;
@@ -104,8 +105,8 @@ export const CompanyAddress = styled(Paragraph)`
 
 //image
 export const ItemImage = styled.img`
-    width: 288px;
-    height: 230px;
+    width: 278px;
+    height: 210px;
     object-fit: cover;
     object-position: center;
 `;
@@ -113,7 +114,7 @@ export const ItemImage = styled.img`
 
 //Info
 export const InfoBox = styled(ExpBanner)`
-    width: 235px;
+    width: 260px;
     height: 40px;
     padding-left: 10px;
     padding-right: 10px;
@@ -133,30 +134,34 @@ export const InfoContainer = styled(BannerTextContainer)`
 
 export const ItemTitle = styled(Bold)`
     font-size: 0.875em;
-    color: ${props => props.color};
+    color: ${props => props.theme === 'light' ? 'black' : 'white'};
+    letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
+    font-weight: ${props => props.theme === 'light' ? '700' : '500'};
 `;
 
 export const ItemQuantity = styled(Medium)`
-    font-size: 0.5em;
-    color: ${props => props.color};
+    font-size: 0.75em;
+    color: ${props => props.theme === 'light' : };
 `;
 
 export const DescriptionBox = styled.div`
     width: 260px;
-    height: 45px;
+    height: 55px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     line-height: 1em;
 `;
 
 export const DescriptionText = styled(Medium)`
-    color: ${props => props.color};
+    color: ${props => props.theme === 'light' ? 'black' : 'white'};
     font-size: 0.65em;
+    font-weight: ${props => props.theme === 'light' ? '700' : '300'};
+    letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
     height: auto;
     max-height: 45px;
-    width: 240px;
+    width: 260px;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
     -ms-hyphens: auto;
@@ -176,4 +181,9 @@ export const ButtonText = styled(Medium)`
     color: black;
     max-width: 100px;
     max-height: 25px;
+`;
+
+export const QuestionText = styled(ButtonText)`
+    color: ${props => props.theme === 'light' ? 'black' : 'white'};
+    font-weight: ${props => props.theme === 'light' ? '700' : '300'};
 `;

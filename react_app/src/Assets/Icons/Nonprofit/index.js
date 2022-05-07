@@ -1,5 +1,3 @@
-import React, { useState } from 'react';
-
 export const Nonprofit = ({ color }) => {
     if(color === 'black' || color === 'white') {
         return (

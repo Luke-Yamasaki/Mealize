@@ -1,0 +1,112 @@
+Geocoding Requests
+
+{
+ address: string,
+ location: LatLng,
+ placeId: string,
+ bounds: LatLngBounds,
+ componentRestrictions: GeocoderComponentRestrictions,
+ region: string
+}
+
+Geocoding Results
+
+results[]: {
+ types[]: string,
+ formatted_address: string,
+ address_components[]: {
+   short_name: string,
+   long_name: string,
+   postcode_localities[]: string,
+   types[]: string
+ },
+ partial_match: boolean,
+ place_id: string,
+ postcode_localities[]: string,
+ geometry: {
+   location: LatLng,
+   location_type: GeocoderLocationType
+   viewport: LatLngBounds,
+   bounds: LatLngBounds
+ }
+}
+
+  var geocoder;
+  var map;
+  function initialize() {
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(-34.397, 150.644);
+    var mapOptions = {
+      zoom: 8,
+      center: latlng
+    }
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  }
+
+  function codeAddress() {
+    var address = document.getElementById('address').value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+      if (status == 'OK') {
+        map.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location
+        });
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+  }
+
+<body onload="initialize()">
+ <div id="map" style="width: 320px; height: 480px;"></div>
+  <div>
+    <input id="address" type="textbox" value="Sydney, NSW">
+    <input type="button" value="Encode" onclick="codeAddress()">
+  </div>
+</body>
+
+Reverse geocoding
+
+function initMap() {
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 8,
+    center: { lat: 40.731, lng: -73.997 },
+  });
+  const geocoder = new google.maps.Geocoder();
+  const infowindow = new google.maps.InfoWindow();
+
+  document.getElementById("submit").addEventListener("click", () => {
+    geocodeLatLng(geocoder, map, infowindow);
+  });
+}
+
+function geocodeLatLng(geocoder, map, infowindow) {
+  const input = document.getElementById("latlng").value;
+  const latlngStr = input.split(",", 2);
+  const latlng = {
+    lat: parseFloat(latlngStr[0]),
+    lng: parseFloat(latlngStr[1]),
+  };
+
+  geocoder
+    .geocode({ location: latlng })
+    .then((response) => {
+      if (response.results[0]) {
+        map.setZoom(11);
+
+        const marker = new google.maps.Marker({
+          position: latlng,
+          map: map,
+        });
+
+        infowindow.setContent(response.results[0].formatted_address);
+        infowindow.open(map, marker);
+      } else {
+        window.alert("No results found");
+      }
+    })
+    .catch((e) => window.alert("Geocoder failed due to: " + e));
+}
+
+window.initMap = initMap;

@@ -1,10 +1,16 @@
+//React
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+//Store
 import { login, signup } from '../../store/session';
-import { validateSignup, uploadProfileImage } from '../../Helpers/FormValidations/signup';
 import { setCurrentModal, hideModal } from '../../store/modal';
+//Helper
+import { validateSignup, uploadProfileImage } from '../../utils/forms/signup';
+//Components
 import { LoginForm } from '../Login';
+import { ButtonBox, FormButtonBox, DemoBox, LoginBtn, SignupBtn, CancelBtn, SubmitBtn, NonprofitBtn, BusinessBtn, VolunteerBtn } from '../../Components/Styled/Buttons';
+//Icons
 import { Business } from '../../Assets/Icons/Business';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 import { Volunteer } from '../../Assets/Icons/Volunteers';
@@ -21,7 +27,6 @@ const Wrapper = styled.div`
     height: 900px;
     background: linear-gradient(#28A690,#76D97E);
     border-radius: 5px;
-    overflow: hidden;
 `;
 
 const PreviewBox = styled.div`
@@ -118,82 +123,6 @@ const Input = styled.input`
     border-radius: none;
 `;
 
-const ButtonBox = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 170px;
-    height: 30px;
-`;
-
-const DemoButtonBox = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: 10px;
-    align-items: center;
-    width: 500px;
-    height: 30px;
-`;
-
-const DemoBox = styled.div`
-    width: 500px;
-    height: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-`;
-
-const VolunteerDemoButton = styled.div`
-    width: 115px;
-    height: 35px;
-    background-color: #9AF2C0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-size: 12px;
-    font-weight: 800;
-    font-family: motiva-sans, sans-serif;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-`;
-
-const NonprofitDemoButton = styled.div`
-    width: 115px;
-    height: 35px;
-    background-color: #04B1D9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-size: 12px;
-    font-weight: 800;
-    font-family: motiva-sans, sans-serif;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-`;
-
-const BusinessDemoButton = styled.div`
-    width: 115px;
-    height: 35px;
-    background-color: #024A59;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 12px;
-    font-weight: 500;
-    font-family: motiva-sans, sans-serif;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-`;
 
 const ErrorMessage = styled.div`
     width: 450px;
@@ -865,14 +794,14 @@ export const SignupForm = () => {
                     </div>
                     </Legend>
                 </Fieldset>
-                <DemoButtonBox>
-                    <div className={styles.cancel} onClick={reset}>Reset</div>
-                    <div className={styles.submit} onClick={handleErrors}>Submit</div>
-                </DemoButtonBox>
+                <FormButtonBox>
+                    <CancelBtn onClick={reset}>Reset</CancelBtn>
+                    <SubmitBtn onClick={handleErrors}>Submit</SubmitBtn>
+                </FormButtonBox>
                 <DemoBox>
-                    <VolunteerDemoButton onClick={volunteerDemo}>Volunteer demo</VolunteerDemoButton>
-                    <NonprofitDemoButton onClick={nonprofitDemo}>Nonprofit demo</NonprofitDemoButton>
-                    <BusinessDemoButton onClick={businessDemo}>Business demo</BusinessDemoButton>
+                    <VolunteerBtn onClick={volunteerDemo}>Volunteer demo</VolunteerBtn>
+                    <NonprofitBtn onClick={nonprofitDemo}>Nonprofit demo</NonprofitBtn>
+                    <BusinessBtn onClick={businessDemo}>Business demo</BusinessBtn>
                 </DemoBox>
                 <div className={styles.question}>Already have an account?<div className={styles.modalOption} onClick={showLoginForm}>Log in</div></div>
                 </Form>

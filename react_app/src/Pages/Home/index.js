@@ -1,7 +1,10 @@
+//react hooks
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useTheme } from '../../Context/ThemeContext';
 //components
-import { ItemCard } from '../../Components/ItemCard';
+import { ItemCard } from '../../Components/Cards/ItemCard';
+//Icons
 import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
 import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
 import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
@@ -9,165 +12,30 @@ import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 import { Business } from '../../Assets/Icons/Business';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
-// import styles from './Home.module.css';
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-    width: 1500px;
-    height: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: top;
-    background-color: #F5F5F5;
-    padding-top: 50px;
-    padding-left: 100px;
-    gap: 100px;
-`;
-
-const SideBarContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: space-around;
-    width: 200px;
-    height: 750px;
-    gap: 15px;
-`;
-
-const PostField = styled.fieldset`
-    width: 150px;
-    height: 125px;
-    border-radius: 5px;
-    border: 1px solid #B2B2B2;
-    background-color: #E8E8E8;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: space-around;
-    font-size: 16px;
-`;
-
-const CategoryField = styled.fieldset`
-    width: 150px;
-    height: 285px;
-    border-radius: 5px;
-    border: 1px solid #B2B2B2;
-    background-color: #E8E8E8;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: flex-end;
-    font-size: 16px;
-    gap: 5px;
-`;
-
-// const OrganizationField = styled.fieldset`
-//     width: 150px;
-//     height: 155px;
-//     border-radius: 5px;
-//     border: 1px solid #B2B2B2;
-//     background-color: #E8E8E8;
-//     display: flex;
-//     flex-direction: column;
-//     align-items: flex-end;
-//     justify-content: flex-start;
-//     font-size: 16px;
-//     padding-bottom: 25px;
-// `;
-
-// const EventField = styled.fieldset`
-//     width: 200px;
-//     height: 400px;
-//     border-radius: 5px;
-//     border: 1px solid #B2B2B2;
-//     background-color: #E8E8E8;
-//     display: flex;
-//     flex-direction: column;
-//     align-items: left;
-//     justify-content: space-around;
-//     font-size: 16px;
-//     padding: 0px;
-//     margin: 0px;
-// `;
-
-// const EventLegend = styled.legend`
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     width: 100px;
-//     height: 20px;
-//     font-size: 14px;
-//     background-color: #9AF2C0;
-//     border: 1px solid rgba(40, 166, 144, 0.5);
-//     border-radius: 3px;
-//     color: black;
-//     margin-left: 5px;
-// `;
-
-const SideLegend = styled.legend`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 20px;
-    font-size: 14px;
-    background-color: #9AF2C0;
-    border: 1px solid rgba(40, 166, 144, 0.5);
-    border-radius: 3px;
-    color: black;
-`;
-
-// const OrganizationLegend = styled.legend`
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     width: 100px;
-//     height: 20px;
-//     font-size: 14px;
-//     background-color: #9AF2C0;
-//     border: 1px solid rgba(40, 166, 144, 0.5);
-//     border-radius: 3px;
-//     color: black;
-//     margin-bottom: 5px
-// `;
-
-const SideBarInfoBox = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    gap: 10px;
-    align-items: center;
-    width: 200px;
-    height: 50px;
-`;
-
-const SideBarInfoText = styled.div`
-    font-size: 12px;
-    color: black;
-    font-weight: bold;
-`;
-
-const SidebarInfoImage = styled.div`
-    overflow: hidden;
-`;
-
-const FeedContainer = styled.div`
-    width: 870px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 25px;
-`;
+//styled-components
+import {
+    PageBackGround,
+    SideBarContainer,
+    PostField,
+    CategoryField,
+    SideLegend,
+    SideBarInfoBox,
+    SideBarInfoText,
+    SideBarInfoIcon,
+    FeedContainer,
+    FilterTitle,
+    PostsTitle,
+    PostsSection
+} from '../../Components/Styled/Light/Layout';
 
 export const Home = () => {
     const sessionUser = useSelector(state => state.session.user);
     const categoriesObj = useSelector(state => state.categories)
     // const organizationsObj = useSelector(state => state.organizations)
     const categories = Object.values(categoriesObj);
-    const postsObj = useSelector(state => state.posts.posts);
-    const [mode, setMode] = useState('available')
+    const postsObj = useSelector(state => state.posts.all);
+    const [mode, setMode] = useState('available');
+    const {theme} = useTheme();
     // const messages = useSelector(state => state.posts.messages)
     // const [categories, setCategories] = useState(Object.values(categoriesObj));
     // const [businesses, setBusinesses] = useState(Object.values(organizationsObj.businesses));
@@ -208,14 +76,14 @@ export const Home = () => {
 
     // if(sessionUser && sessionUser.isNonprofit) {
         return(
-            <Wrapper>
+            <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#6B6B6B'}>
                 <SideBarContainer>
                     {!sessionUser && (
-                        <h2 style={{marginTop: '-10px', marginBottom: '-5px'}}>Filter</h2>
+                        <FilterTitle theme={theme}>Filter</FilterTitle>
                     )}
                     {sessionUser && (
                         <>
-                            <h2>Filter</h2>
+                            <FilterTitle theme={theme}>Filter</FilterTitle>
                             <PostField>
                                 <SideLegend>Favorites</SideLegend>
                                 <SideBarInfoBox onClick={() => setMode('favorites')}>
@@ -247,14 +115,14 @@ export const Home = () => {
                         {categories.map((category, idx) => (
                             <SideBarInfoBox key={idx}>
                                 {category.category === 'Dairy' ?
-                                <SidebarInfoImage style={mode==='dairy' ? {backgroundColor: 'red'} : {backgroundColor: 'none'}} onClick={() => setMode('dairy')}><DairyIcon dimension={'small'}/></SidebarInfoImage>
+                                <SideBarInfoIcon onClick={() => setMode('dairy')}><DairyIcon dimension={'small'}/></SideBarInfoIcon>
                                 : category.category === 'Vegetables' ?
-                                <SidebarInfoImage style={mode==='vegetables' ? {backgroundColor: '#F5F5F5'} : {backgroundColor: 'none'}} onClick={() => setMode('vegetables')}><VegetablesIcon dimension={'small'}/></SidebarInfoImage>
+                                <SideBarInfoIcon onClick={() => setMode('vegetables')}><VegetablesIcon dimension={'small'}/></SideBarInfoIcon>
                                 : category.category === 'Fruits' ?
-                                <SidebarInfoImage onClick={() => setMode('fruits')}><FruitsIcon dimension={'small'} onClick={() => setMode('fruits')}/></SidebarInfoImage>
+                                <SideBarInfoIcon onClick={() => setMode('fruits')}><FruitsIcon dimension={'small'} /></SideBarInfoIcon>
                                 : category.category === 'Grains' ?
-                                <SidebarInfoImage onClick={() => setMode('grains')}><GrainsIcon onClick={() => setMode('grains')}/></SidebarInfoImage>
-                                : <SidebarInfoImage onClick={() => setMode('protein')}><ProteinIcon dimension={'small'} onClick={() => setMode('protein')}/></SidebarInfoImage>
+                                <SideBarInfoIcon onClick={() => setMode('grains')}><GrainsIcon dimension={'small'}/></SideBarInfoIcon>
+                                : <SideBarInfoIcon onClick={() => setMode('protein')}><ProteinIcon dimension={'small'}/></SideBarInfoIcon>
                                 }
                                 <SideBarInfoText>{category.category}</SideBarInfoText>
                             </SideBarInfoBox>
@@ -264,9 +132,9 @@ export const Home = () => {
                         <OrganizationLegend>Nonprofits</OrganizationLegend>
                     {threeNonprofits.map((nonprofit, idx) => (
                         <SideBarInfoBox key={idx}>
-                            <SidebarInfoImage >
+                            <SideBarInfoIcon >
                                 <img src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
-                            </SidebarInfoImage>
+                            </SideBarInfoIcon>
                             <SideBarInfoText >{nonprofit.name}</SideBarInfoText>
                         </SideBarInfoBox>
                         ))}
@@ -275,16 +143,16 @@ export const Home = () => {
                         <OrganizationLegend>Businesses</OrganizationLegend>
                     {threeBusinesses.map((business, idx) => (
                         <SideBarInfoBox key={idx}>
-                            <SidebarInfoImage >
+                            <SideBarInfoIcon >
                                 <img src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
-                            </SidebarInfoImage>
+                            </SideBarInfoIcon>
                             <SideBarInfoText>{business.name}</SideBarInfoText>
                         </SideBarInfoBox>
                     ))}
                     </OrganizationField> */}
                 </SideBarContainer>
-                <div style={{display: 'flex', flexDirection: 'column', width: '895px', height: 'auto', gap: '25px'}}>
-                    <h2 style={{marginTop: '0px'}}>Posts</h2>
+                <PostsSection>
+                    <PostsTitle theme={theme}>Posts</PostsTitle>
                     <FeedContainer>
                         {!sessionUser && posts.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                         {mode === 'available' && available.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
@@ -298,7 +166,7 @@ export const Home = () => {
                         {mode === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                         {mode === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
                     </FeedContainer>
-                </div>
-        </Wrapper>
+                </PostsSection>
+        </PageBackGround>
         )
 };

@@ -1,13 +1,7 @@
-const SENT_REQUEST = 'session/SETNT_REQUEST';
 const SENT_MESSAGE = 'session/SENT_MESSAGE';
 const GOT_MESSAGES = 'session/GOT_MESSAGES';
 const GOT_ONE_MESSAGE = 'session/GOT_ONE_MESSAGE';
 const DELETED_MESSAGE = 'session/DELETED_MESSAGE';
-
-const sentRequest = payload => ({
-    type: SENT_REQUEST,
-    payload
-});
 
 const sentMessage = payload => ({
     type: SENT_MESSAGE,
@@ -28,20 +22,6 @@ const deletedMessage = payload => ({
     type: DELETED_MESSAGE,
     payload
 });
-
-export const createRequest = (request) => async (dispatch) => {
-    const response = await fetch('/api/messages/request', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application.json'
-        },
-        body: JSON.stringify(request)
-    });
-    if(response.ok) {
-        const message = await response.json();
-        dispatch(sentRequest(message))
-    }
-}
 
 export const sendMessage = (message) => async (dispatch) => {
     const response = await fetch('/api/messages/', {
@@ -115,14 +95,11 @@ export const deleteMessage = (id) => async (dispatch) => {
 export default function messagesReducer(state = {}, action) {
     let newState = {...state};
     switch(action.type) {
-        case SENT_REQUEST:
-            newState[action.payload.]
-
         case SENT_MESSAGE:
             newState[action.payload.id] = action.payload;
             return newState;
         case GOT_MESSAGES:
-            newState.messages = action.payload;
+            newState = action.payload;
             return newState;
         case GOT_ONE_MESSAGE:
             newState[action.payload.id] = action.payload;

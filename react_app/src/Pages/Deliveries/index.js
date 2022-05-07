@@ -7,9 +7,9 @@ import { useState } from 'react';
 import { getAllDeliveries, updateDelivery, deleteDelivery } from '../../store/deliveries';
 import { useEffect } from 'react';
 import { setCurrentModal } from '../../store/modal';
-import { ItemCard } from '../../Components/ItemCard';
+import { ItemCard } from '../../Components/Cards/ItemCard';
 import { DeliveryForm } from '../../Forms/Delivery';
-import { OrganizationCard } from '../../Components/OrganizationCard';
+import { OrganizationCard } from '../../Components/Cards/OrganizationCard';
 
 const Wrapper = styled.div`
     width: 1550px;
@@ -30,7 +30,6 @@ const Header = styled.section`
     height: auto;
     min-height: 600px;
     max-height: 900px;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

@@ -1,10 +1,23 @@
+//React
 import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, useDispatch } from 'react-redux';
-import styles from './Styles/index.module.css';
-import App from './App';
-import configureStore from './store';
 
+//Components
+import App from './App';
+import { RootContainer, ModalContainer } from './Components/Styled/Root';
+
+// Context
+import ThemeProvider from './Context/ThemeContext';
+import ColorProvider from './Context/ColorContext';
+import ContrastProvider from './Context/ContrastContext';
+import SaturationProvider from './Context/SaturationContext';
+import BackGroundProvider from './Context/BackGroundContext';
+import LocationProvider from './Context/LocationContext';
+import ModalProvider from './Context/ModalContext';
+
+//Store
+import configureStore from './store';
 import { setModalMount } from './store/modal';
 
 const store = configureStore();
@@ -18,13 +31,26 @@ const Root = () => {
   }, [dispatch])
 
   return (
-    <div className={styles.super}>
-      <App />
-      <div ref={modalMountRef} className='modal'/>
-    </div>
+    <ThemeProvider>
+      <ColorProvider>
+        <ContrastProvider>
+          <SaturationProvider>
+            <BackGroundProvider>
+              <LocationProvider>
+                <ModalProvider>
+                  <RootContainer>
+                    <App />
+                    <ModalContainer ref={modalMountRef} />
+                  </RootContainer>
+                </ModalProvider>
+              </LocationProvider>
+            </BackGroundProvider>
+          </SaturationProvider>
+        </ContrastProvider>
+      </ColorProvider>
+    </ThemeProvider>
   )
-}
-
+};
 
 ReactDOM.render(
   <React.StrictMode>

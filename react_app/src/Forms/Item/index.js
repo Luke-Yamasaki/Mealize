@@ -1,9 +1,16 @@
+//Hooks
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
+
+//Actions
 import { postItem } from '../../store/posts';
-import { validateForm, uploadImage } from '../../Helpers/FormValidations/items';
 import { hideModal } from '../../store/modal';
+//Helpers
+import { validateItem, uploadImage } from '../../utils/forms/items';
+
+//Components
+import { ItemCard } from "../../Components/Cards/ItemCard";
 import { XSLogo } from '../../Assets/Logo';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
@@ -14,23 +21,7 @@ import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 
 import styles from './Item.module.css';
 import styled from 'styled-components';
-import * as preview from '../../Components/ItemCard';
-
-const monthNames = {
-    '01': 'Jan',
-    '02': 'Feb',
-    '03': 'Mar',
-    '04': 'Apr',
-    '05': 'May',
-    '06': 'Jun',
-    '07': 'Jul',
-    '08': 'Aug',
-    '09': 'Sep',
-    '10': 'Oct',
-    '11': 'Nov',
-    '12': 'Dec',
-}
-
+// import * as preview from '../../Components/ItemCard';
 
 const PreviewSection = styled.section`
     display: flex;
@@ -107,7 +98,6 @@ const TitleDiv = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-    overflow: hidden;
 `;
 
 const ErrorMessage = styled.div`
@@ -117,8 +107,6 @@ const ErrorMessage = styled.div`
     width: 300px;
     height: 10px;
 `;
-
-
 
 
 const ItemForm = () => {
@@ -171,7 +159,7 @@ const ItemForm = () => {
             expDate,
         };
 
-        const stagedPost = await validateForm(itemData)
+        const stagedPost = await validateItem(itemData)
 
         if(stagedPost.message === 'success') {
 
@@ -372,77 +360,9 @@ const ItemForm = () => {
     };
 
     return (
-        <div style={{overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
             <PreviewSection>
-                <div className={[styles.card, styles[`${className}`]].join(' ')}>
-                {!sessionUser.isNonprofit ?
-                    (
-                        <img src={ image ? URL.createObjectURL(image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} className={styles.image} alt='Item post'/>
-                    )
-                    : categoryId === '' || categoryId === '1' ?
-                    (
-                        <img src={'https://mealize.s3.amazonaws.com/dairy_request.png'} className={styles.image} alt='Item post' />
-                    )
-                    : categoryId === '2' ?
-                    (
-                        <img src={'https://mealize.s3.amazonaws.com/vegetables_request.png'} className={styles.image} alt='Item post' />
-                    )
-                    : categoryId === '3' ?
-                    (
-                        <img src={'https://mealize.s3.amazonaws.com/fruits_request.png'} className={styles.image} alt='Item post' />
-                    )
-                    : categoryId === '4' ?
-                    (
-                        <img src={'https://mealize.s3.amazonaws.com/grains_request.png'} className={styles.image} alt='Item post' />
-                    )
-                    :
-                    (
-                        <img src={'https://mealize.s3.amazonaws.com/protein_request.png'} className={styles.image} alt='Item post' />
-                    )
-                }
-                <preview.UserTitle>
-                    <preview.UserImage>
-                        <img src={sessionUser.profileImageUrl} className={styles.profile} alt="User profile."/>
-                        <preview.NameText>{ `${sessionUser.firstName}` }</preview.NameText>
-                    </preview.UserImage>
-                    <preview.TitleBox>
-                        <preview.Title>
-                            <TitleDiv>
-                                { !title ? 'Your post title' : (title.length > 0 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? title.slice(0, 1).toUpperCase().concat(title.slice(1, title.length)) : <strong style={{color: 'red'}}>Please add line breaks like this!</strong> }
-                            </TitleDiv>
-                        </preview.Title>
-                    </preview.TitleBox>
-                    <preview.CategoryBox>
-                        { categoryId === '2'
-                        ? <VegetablesIcon />
-                        : categoryId === '3'
-                        ? <FruitsIcon />
-                        : categoryId === '4'
-                        ? <GrainsIcon />
-                        : categoryId === '5'
-                        ? <ProteinIcon />
-                        : <DairyIcon />
-                        }
-                    </preview.CategoryBox>
-                </preview.UserTitle>
-                <preview.InfoBox>
-                    <preview.DescriptionBox>
-                        <preview.DescriptionLabel>[Description] <preview.DescriptionText>{description ? description.slice(0, 1).toUpperCase().concat(description.slice(1, description.length)) : 'Your description goes here...'}</preview.DescriptionText></preview.DescriptionLabel>
-                    </preview.DescriptionBox>
-                    <preview.SubInfoContainer>
-                        <preview.SubInfoBox>Quantity:
-                            <preview.SubInfoText>{`${number} ${unit}`}</preview.SubInfoText>
-                        </preview.SubInfoBox>
-                        <preview.SubInfoBox>Expires:
-                            <preview.SubInfoText>{expDate ? `${monthNames[expDate.toString().slice(5,7)]}/${expDate.toString().slice(8, 10)}/${expDate.toString().slice(0, 4)}` : 'mm/dd/yyyy'}</preview.SubInfoText>
-                        </preview.SubInfoBox>
-                    </preview.SubInfoContainer>
-                </preview.InfoBox>
-                <preview.IdBox>
-                    <preview.IdText>Id:{sessionUser.id}</preview.IdText>
-                    <preview.MealizeText>Mealize LLC <XSLogo /></preview.MealizeText>
-                </preview.IdBox>
-            </div>
+                <ItemCard props={{title, description, number, unit, categoryId, image, expDate}} />
             {imageUploading && (
                 <div style={{display: 'flex', alginItems: 'center', justifyContent: 'center',  width: '300px', height: '30px'}}>
                     <p style={{fontFamily: 'motiva-sans, sans-serif', fontWeight: '900', color: 'white', fontSize: '24px', padding: 'none', margin: 'none'}}>Uploading image...</p>
@@ -549,3 +469,73 @@ const ItemForm = () => {
 };
 
 export default ItemForm;
+
+//<div className={[styles.card, styles[`${className}`]].join(' ')}>
+// {!sessionUser.isNonprofit ?
+//     (
+//         <img src={ image ? URL.createObjectURL(image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} className={styles.image} alt='Item post'/>
+//     )
+//     : categoryId === '' || categoryId === '1' ?
+//     (
+//         <img src={'https://mealize.s3.amazonaws.com/dairy_request.png'} className={styles.image} alt='Item post' />
+//     )
+//     : categoryId === '2' ?
+//     (
+//         <img src={'https://mealize.s3.amazonaws.com/vegetables_request.png'} className={styles.image} alt='Item post' />
+//     )
+//     : categoryId === '3' ?
+//     (
+//         <img src={'https://mealize.s3.amazonaws.com/fruits_request.png'} className={styles.image} alt='Item post' />
+//     )
+//     : categoryId === '4' ?
+//     (
+//         <img src={'https://mealize.s3.amazonaws.com/grains_request.png'} className={styles.image} alt='Item post' />
+//     )
+//     :
+//     (
+//         <img src={'https://mealize.s3.amazonaws.com/protein_request.png'} className={styles.image} alt='Item post' />
+//     )
+// }
+// <preview.UserTitle>
+//     <preview.UserImage>
+//         <img src={sessionUser.profileImageUrl} className={styles.profile} alt="User profile."/>
+//         <preview.NameText>{ `${sessionUser.firstName}` }</preview.NameText>
+//     </preview.UserImage>
+//     <preview.TitleBox>
+//         <preview.Title>
+//             <TitleDiv>
+//                 { !title ? 'Your post title' : (title.length > 0 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? title.slice(0, 1).toUpperCase().concat(title.slice(1, title.length)) : <strong style={{color: 'red'}}>Please add line breaks like this!</strong> }
+//             </TitleDiv>
+//         </preview.Title>
+//     </preview.TitleBox>
+//     <preview.CategoryBox>
+//         { categoryId === '2'
+//         ? <VegetablesIcon />
+//         : categoryId === '3'
+//         ? <FruitsIcon />
+//         : categoryId === '4'
+//         ? <GrainsIcon />
+//         : categoryId === '5'
+//         ? <ProteinIcon />
+//         : <DairyIcon />
+//         }
+//     </preview.CategoryBox>
+// </preview.UserTitle>
+// <preview.InfoBox>
+//     <preview.DescriptionBox>
+//         <preview.DescriptionLabel>[Description] <preview.DescriptionText>{description ? description.slice(0, 1).toUpperCase().concat(description.slice(1, description.length)) : 'Your description goes here...'}</preview.DescriptionText></preview.DescriptionLabel>
+//     </preview.DescriptionBox>
+//     <preview.SubInfoContainer>
+//         <preview.SubInfoBox>Quantity:
+//             <preview.SubInfoText>{`${number} ${unit}`}</preview.SubInfoText>
+//         </preview.SubInfoBox>
+//         <preview.SubInfoBox>Expires:
+//             <preview.SubInfoText>{expDate ? `${monthNames[expDate.toString().slice(5,7)]}/${expDate.toString().slice(8, 10)}/${expDate.toString().slice(0, 4)}` : 'mm/dd/yyyy'}</preview.SubInfoText>
+//         </preview.SubInfoBox>
+//     </preview.SubInfoContainer>
+// </preview.InfoBox>
+// <preview.IdBox>
+//     <preview.IdText>Id:{sessionUser.id}</preview.IdText>
+//     <preview.MealizeText>Mealize LLC <XSLogo /></preview.MealizeText>
+// </preview.IdBox>
+// </div>

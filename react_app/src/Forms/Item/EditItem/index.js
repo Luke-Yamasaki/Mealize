@@ -15,7 +15,7 @@ import { ProteinIcon } from '../../../Assets/Icons/FoodGroups/Protein';
 
 import styles from './EditItem.module.css';
 import styled from 'styled-components';
-import * as preview from '../../../Components/ItemCard';
+import * as preview from '../../../Components/Cards/ItemCard';
 
 const monthNames = {
     '01': 'Jan',
@@ -108,7 +108,6 @@ const TitleDiv = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-    overflow: hidden;
 `;
 
 const ErrorMessage = styled.div`
@@ -396,7 +395,7 @@ export const EditItemForm = ({post}) => {
     };
 
     return (
-        <div style={{overflow: 'hidden', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
             <PreviewSection>
                 {errors && (
                     <div>{errors}</div>

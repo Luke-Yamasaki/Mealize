@@ -99,7 +99,7 @@ export default function messagesReducer(state = {}, action) {
             newState[action.payload.id] = action.payload;
             return newState;
         case GOT_MESSAGES:
-            newState.messages = action.payload;
+            newState = action.payload;
             return newState;
         case GOT_ONE_MESSAGE:
             newState[action.payload.id] = action.payload;

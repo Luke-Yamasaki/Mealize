@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 export const NotificationSection = styled.section`
-    background-color: #76D97E;
     width: 1600px;
     height: 40px;
-    border-bottom: 4px solid #608F41;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
+    background-color: ${props => props.theme === 'light' ? '#76D97E' : '#327647'};
+    border-bottom: 2px solid #608F41;
 `;
 
 export const NotificationContainer = styled.div`
@@ -28,6 +28,6 @@ export const NotificationText = styled.p`
     font-style: normal;
     font-weigth: 700;
     font-size: 1em;
-    color: white;
+    color: ${props => props.theme === 'light' ? 'black' : 'white'};
     height: 25px;
 `;

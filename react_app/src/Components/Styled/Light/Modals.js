@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const BackGround = styled.div`
+export const ModalBackGround = styled.div`
     position: fixed;
     top: 0;
     left: 0;
@@ -10,8 +10,14 @@ export const BackGround = styled.div`
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 11.75vw;
     z-index: 201;
+    background-color: rgba(0, 0, 0, 0.5);
+`;
+
+export const SettingsModalBackGround = styled(ModalBackGround)`
+    background-color: rgba(0, 0, 0, 0);
+    padding-right: 11.75vw;
+    z-index: 202;
 `;
 
 export const SettingsModalField = styled.div`

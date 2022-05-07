@@ -37,6 +37,7 @@ export const SearchBar = () => {
         e.preventDefault();
         setIsText(!isText);
     }
+    //test
 
     return (
         <>

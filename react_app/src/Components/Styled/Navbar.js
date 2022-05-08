@@ -10,7 +10,7 @@ export const NavBar = styled.div`
     justify-content: center;
 `;
 
-export const StyledNavLink = styled(NavLink)`
+export const LogoNavLink = styled(NavLink)`
     color: ${props => props.theme === 'light' ? '#FFFFFF' : '#191919'};
     text-decoration: none;
     font-family: motiva-sans, sans-serif;
@@ -37,7 +37,7 @@ export const Navigation = styled.nav`
     z-index: 200;
 `;
 
-export const NavList = styled.ul`
+export const NavList = styled.div`
     width: 56.2vw;
     max-width: 1700px;
     height: 60px;

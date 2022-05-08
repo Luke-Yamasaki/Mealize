@@ -8,8 +8,8 @@ import styles from './SessionNavbar.module.css';
 import { logout } from '../../../store/session';
 import { setCurrentModal, showModal } from '../../../store/modal';
 // Styled-components
-import { NavBar, Navigation, NavList, LogoBox, AuthBox, StyledNavLink } from '../../Styled/Navbar';
-import { VectorBox } from '../Styled/Layout';
+import { NavBar, Navigation, NavList, LogoBox, LogoNavLink } from '../../Styled/Navbar';
+import { VectorBox } from '../../Styled/Layout';
 //Components
 import { NotificationBar } from '../NotificationBar';
 import { Logo } from '../../../Assets/Logo';
@@ -38,7 +38,7 @@ export const SessionNavbar = () => {
                         <VectorBox>
                             <Logo theme={theme} />
                         </VectorBox>
-                        <StyledNavLink theme={theme} to='/' exact={true}>Mealize</StyledNavLink>
+                        <LogoNavLink theme={theme} to='/' exact={true}>Mealize</LogoNavLink>
                     </LogoBox>
                     <SearchBar />
                     <div className={styles.signup}>User</div>

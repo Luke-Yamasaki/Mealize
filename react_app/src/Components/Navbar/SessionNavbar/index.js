@@ -1,5 +1,5 @@
 //Hooks
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTheme } from '../../../Context/ThemeContext';
 // Actions
 import { logout } from '../../../store/session';
@@ -18,8 +18,7 @@ import { PostButton } from '../../Styled/Buttons';
 import { Logo } from '../../../Assets/Logo';
 import { InboxIcon } from '../../../Assets/Icons/Inbox';
 
-export const SessionNavbar = () => {
-    const sessionUser = useSelector(state => state.session.user);
+export const SessionNavbar = ({sessionUser}) => {
     const dispatch = useDispatch();
     const {theme} = useTheme();
 

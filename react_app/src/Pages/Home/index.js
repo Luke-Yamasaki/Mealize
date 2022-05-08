@@ -1,7 +1,7 @@
 //Hooks
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
 import { useTheme } from '../../Context/ThemeContext';
+import { useFilter } from '../../Context/FilterContext';
 //Components
 import { ItemCard } from '../../Components/Cards/ItemCard';
 import { CategoryBox } from '../../Components/Filter';
@@ -11,6 +11,8 @@ import { CategoryBox } from '../../Components/Filter';
 // import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
 // import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 // import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
+import { FavoritesFilterIcon } from '../../Assets/Icons/FavoritesFilterIcon';
+import { AvailableIcon, UnavailableIcon } from '../../Assets/Icons/Availability';
 import { Business } from '../../Assets/Icons/Business';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 //styled-components
@@ -32,14 +34,14 @@ import {
 // import { categoriesList } from '../../utils/Categories/categories';
 
 export const Home = () => {
+    const {filter, setFilter} = useFilter();
+    const {theme} = useTheme();
     const sessionUser = useSelector(state => state.session.user);
     const categoriesObj = useSelector(state => state.categories)
     const organizationsObj = useSelector(state => state.organizations)
-    const categories = Object.values(categoriesObj);
     const postsObj = useSelector(state => state.posts.all);
-    const [mode, setMode] = useState('available');
-    const {theme} = useTheme();
 
+    const categories = Object.values(categoriesObj);
     const businesses = Object.values(organizationsObj.businesses);
     const threeBusinesses = businesses.slice(0, 3);
     const nonprofits = Object.values(organizationsObj.nonprofits);
@@ -81,44 +83,55 @@ export const Home = () => {
                 {sessionUser && (
                     <SideField theme={theme}>
                         <SideLegend theme={theme}>Favorites</SideLegend>
-                        <SideBarInfoBox onClick={() => setMode('favorites')}>
+                        <SideBarInfoBox onClick={() => setFilter('favorites')}>
+                            <VectorBox resize='32px'>
+                                <FavoritesFilterIcon theme={theme}/>
+                            </VectorBox>
                             <SideBarInfoText>My favorites</SideBarInfoText>
                         </SideBarInfoBox>
                     </SideField>
                 )}
                 <SideField theme={theme}>
                     <SideLegend theme={theme}>Availability</SideLegend>
-                    <SideBarInfoBox onClick={() => setMode('available')}>
+                    <SideBarInfoBox onClick={() => setFilter('available')}>
+                        <VectorBox resize='32px'>
+                            <AvailableIcon theme={theme} />
+                        </VectorBox>
                         <SideBarInfoText theme={theme}>Available</SideBarInfoText>
                     </SideBarInfoBox>
-                    <SideBarInfoBox onClick={() => setMode('available')}>
+                    <SideBarInfoBox onClick={() => setFilter('unavailable')}>
+                        <VectorBox resize='32px'>
+                            <UnavailableIcon theme={theme} />
+                        </VectorBox>
                         <SideBarInfoText theme={theme}>Unavailable</SideBarInfoText>
                     </SideBarInfoBox>
                 </SideField>
                 <SideField theme={theme}>
                     <SideLegend theme={theme}>Post type</SideLegend>
-                    <SideBarInfoBox onClick={() => setMode('requests')}>
-                        <Business />
+                    <SideBarInfoBox onClick={() => setFilter('requests')}>
+                        <VectorBox resize='32px'>
+                            <Business />
+                        </VectorBox>
                         <SideBarInfoText theme={theme}>Requests</SideBarInfoText>
                     </SideBarInfoBox>
-                    <SideBarInfoBox onClick={() => setMode('items')}>
-                        <Nonprofit />
+                    <SideBarInfoBox onClick={() => setFilter('items')}>
+                        <VectorBox resize='32px'>
+                            <Nonprofit />
+                        </VectorBox>
                         <SideBarInfoText theme={theme}>Items</SideBarInfoText>
                     </SideBarInfoBox>
                 </SideField>
                 <SideField theme={theme}>
                     <SideLegend theme={theme}>Categories</SideLegend>
-                    {categories.map((category, idx) => (
-                        <CategoryBox key={idx} category={category.category} onClick={setMode(category.category.toLowerCase())} />
+                    {categories.map((group, idx) => (
+                        <CategoryBox key={idx} category={group.category} onClick={setFilter(group.category.toLowerCase())} />
                     ))}
                 </SideField>
                 <SideField theme={theme}>
                     <SideLegend theme={theme}>Nonprofits</SideLegend>
-                {threeNonprofits.map((nonprofit, idx) => (
+                    {threeNonprofits.map((nonprofit, idx) => (
                     <SideBarInfoBox key={idx}>
-                        <VectorBox resize='32px'>
-                            <ImageBox src={nonprofit.logoUrl} alt='Nonprofit logo' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
-                        </VectorBox>
+                        <ImageBox src={nonprofit.logoUrl} alt='Nonprofit logo' />
                         <SideBarInfoText theme={theme}>{nonprofit.name}</SideBarInfoText>
                     </SideBarInfoBox>
                     ))}
@@ -127,9 +140,7 @@ export const Home = () => {
                     <SideLegend theme={theme}>Businesses</SideLegend>
                 {threeBusinesses.map((business, idx) => (
                     <SideBarInfoBox key={idx}>
-                        <VectorBox resize='32px'>
-                            <ImageBox src={business.logoUrl} alt='Business logo' />
-                        </VectorBox>
+                        <ImageBox src={business.logoUrl} alt='Business logo' />
                         <SideBarInfoText theme={theme}>{business.name}</SideBarInfoText>
                     </SideBarInfoBox>
                 ))}
@@ -138,17 +149,17 @@ export const Home = () => {
             <PostsSection>
                 <PostsTitle theme={theme}>Posts</PostsTitle>
                 <FeedContainer>
-                    {!sessionUser && posts.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                    {mode === 'available' && available.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                    {mode === 'unavailable' && unavailable.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                    {mode === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                    {mode === 'requests' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                    {mode === 'dairy' && dairyArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                    {mode === 'vegetables' && vegetablesArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                    {mode === 'fruits' && fruitsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                    {mode === 'grains' && grainsArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                    {mode === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
-                    {mode === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} sessionUser={sessionUser}/>)}
+                    {!sessionUser && posts.map((post, idx) => <ItemCard key={idx} post={post} />)}
+                    {filter === 'available' && available.map((post, idx) => <ItemCard key={idx} post={post} />)}
+                    {filter === 'unavailable' && unavailable.map((post, idx) => <ItemCard key={idx} post={post} />)}
+                    {filter === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+                    {filter === 'requests' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+                    {filter === 'dairy' && dairyArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+                    {filter === 'vegetables' && vegetablesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+                    {filter === 'fruits' && fruitsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+                    {filter === 'grains' && grainsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+                    {filter === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+                    {filter === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
                 </FeedContainer>
             </PostsSection>
         </PageBackGround>

@@ -1,4 +1,4 @@
-export const AvailabileIcon = ({theme}) => {
+export const AvailableIcon = ({theme}) => {
     return(
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
             <g id="Group_1068" dataname="Group 1068" transform="translate(-5503 14947)">
@@ -9,7 +9,7 @@ export const AvailabileIcon = ({theme}) => {
     )
 };
 
-export const UnavailabileIcon = ({theme}) => {
+export const UnavailableIcon = ({theme}) => {
     return(
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
             <g id="Group_1067" dataname="Group 1067" transform="translate(-5461 14947)">

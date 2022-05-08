@@ -189,5 +189,6 @@ export const ImageBox = styled.img`
     height: ${props => props.square ? props.square : '30px'};
     border-radius: 5px;
     object-fit: cover;
+    object-position: center;
     background-color: black;
 `;

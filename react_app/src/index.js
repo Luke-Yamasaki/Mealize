@@ -38,14 +38,14 @@ const Root = () => {
           <SaturationProvider>
             <BackGroundProvider>
               <LocationProvider>
-                <ModalProvider>
-                  <FilterProvider>
+                <FilterProvider>
+                  <ModalProvider>
                     <RootContainer>
                       < App />
                       <ModalContainer ref={modalMountRef} />
                     </RootContainer>
-                  </FilterProvider>
-                </ModalProvider>
+                  </ModalProvider>
+                </FilterProvider>
               </LocationProvider>
             </BackGroundProvider>
           </SaturationProvider>

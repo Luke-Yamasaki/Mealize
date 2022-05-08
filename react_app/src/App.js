@@ -41,8 +41,7 @@ function App() {
       await dispatch(getBatchedOrganizations())
       await dispatch(getAllPosts())
       await dispatch(getBatchedUsers())
-      setIsLoaded(true);
-    })();
+    })().then(() => setIsLoaded(true))
   },[dispatch]);
 
   if(!isLoaded) {
@@ -54,24 +53,20 @@ function App() {
       <AppBackGround theme={theme} background={backGround}>
         <BackGroundAside />
         <AppContentContainer>
-          {sessionUser ?
-            <SessionNavbar sessionUser={sessionUser} />
-          :
-            <Navbar />
-          }
-            <Modal />
+          {sessionUser ? <SessionNavbar sessionUser={sessionUser} /> : <Navbar />}
+          <Modal />
           <Switch>
-            <Route exact path='/'>
-                <Home />
-            </Route>
+          <Route exact path='/'>
+              <Home/>
+          </Route>
           {sessionUser &&
-            <Route exact path='/deliveries'>
-              <Deliveries />
-            </Route>
+          <Route exact path='/deliveries'>
+            <Deliveries />
+          </Route>
           }
-            <Route>
-              <FourOFour />
-            </Route>
+          <Route>
+            <FourOFour />
+          </Route>
           </Switch>
           <Footer />
         </AppContentContainer>

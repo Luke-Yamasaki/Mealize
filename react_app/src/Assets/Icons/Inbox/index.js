@@ -8,7 +8,7 @@ export const InboxIcon = ({theme}) => {
 
 export const InboxIconNotification = ({theme}) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25.845" viewBox="0 0 25 25.845">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="25" height="25.845" viewBox="0 0 25 25.845">
             <defs>
             <clipPath id="clippath">
                 <rect id="Rectangle_762" dataname="Rectangle 762" width="25" height="21.689" fill="none"/>

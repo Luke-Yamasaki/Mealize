@@ -1,8 +1,6 @@
 //Hooks
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../../Context/ThemeContext';
-//CSS
-import styles from './SessionNavbar.module.css';
 // Actions
 import { logout } from '../../../store/session';
 import { setCurrentModal, showModal } from '../../../store/modal';
@@ -13,10 +11,12 @@ import { ProfileButton } from '../../Styled/Buttons';
 import { ProfileBox } from '../../Styled/Navbar';
 //Components
 import { NotificationBar } from '../NotificationBar';
-import { Logo } from '../../../Assets/Logo';
 import { SearchBar } from '../SearchBar';
 import ItemForm from '../../../Forms/Item';
 import { PostButton } from '../../Styled/Buttons';
+//Icons
+import { Logo } from '../../../Assets/Logo';
+import { InboxIcon } from '../../../Assets/Icons/Inbox';
 
 export const SessionNavbar = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -47,15 +47,14 @@ export const SessionNavbar = () => {
                         <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' />
                         <ProfileName>{`Hello ${sessionUser.firstName}!`}</ProfileName>
                     </ProfileBox>
-                    {sessionUser.isNonprofit && sessionUser.isManager ?
-                    <PostButton onClick={showItemForm}>New request</PostButton>
-                    :
-                    <PostButton onClick={showItemForm}>Post item</PostButton>
-                    }
+                    <VectorBox square='30px' resize='32px'>
+                        <InboxIcon theme={theme} />
+                    </VectorBox>
+                    <PostButton onClick={showItemForm}>{sessionUser.isNonprofit && sessionUser.isManager ? 'New request' : 'Post item'}</PostButton>
                     <PostButton onClick={logOut}>Log out</PostButton>
                 </NavList>
             </Navigation>
-            <NotificationBar />
+            <NotificationBar theme={theme}/>
         </NavBar>
     )
 }

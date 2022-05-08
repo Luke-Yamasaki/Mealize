@@ -7,8 +7,8 @@ export const NotificationSection = styled.section`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    background-color: ${props => props.theme === 'light' ? '#76D97E' : '#327647'};
-    border-bottom: 2px solid #608F41;
+    background-color: ${props => props.theme === 'light' ? '#9AF2C0' : '#76D97E'};
+    border-bottom: 1px solid #608F41;
 `;
 
 export const NotificationContainer = styled.div`
@@ -26,8 +26,8 @@ export const NotificationText = styled.p`
     padding: 0px;
     font-family: motiva-sans, sans-serif;
     font-style: normal;
-    font-weigth: 700;
+    font-weight: 700;
     font-size: 1em;
-    color: ${props => props.theme === 'light' ? 'black' : 'white'};
+    color: black;
     height: 25px;
 `;

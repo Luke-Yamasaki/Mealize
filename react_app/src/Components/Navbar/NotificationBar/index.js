@@ -30,11 +30,11 @@ export const NotificationBar = () => {
     if(!sessionUser) {
         return (
             <NotificationSection theme={theme}>
-                <NotificationContainer theme={theme}>
+                <NotificationContainer>
                     <IconBox>
-                        <LocationPin color={theme === 'light' ? 'black' : 'white'} />
+                        <LocationPin/>
                     </IconBox>
-                    <NotificationText theme={theme}>
+                    <NotificationText>
                         Current location: {userLocation}
                     </NotificationText>
                 </NotificationContainer>

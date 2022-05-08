@@ -68,7 +68,7 @@ export const SideBarContainer = styled.div`
     align-items: left;
     justify-content: space-around;
     width: 200px;
-    height: 750px;
+    height: 1200px;
     gap: 15px;
 `;
 
@@ -93,13 +93,12 @@ export const SideLegend = styled.legend`
     width: 100px;
     height: 20px;
     font-size: 14px;
-    background-color: ${props => props.theme === 'light' ? '#9AF2C0' : '#327647'};
+    background-color: ${props => props.theme === 'light' ? '#9AF2C0' : '#76D97E'};
     border: 1px solid;
     border-color: rgba(40, 166, 144, 0.5);
     border-radius: 3px;
-    color: ${props => props.theme === 'light' ? 'black' : 'white'};
-    font-weight: ${props => props.theme === 'light' ? '500' : '300'};
-    letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
+    color: black;
+    font-weight: 500;
 `;
 
 export const EventField = styled.fieldset`
@@ -131,21 +130,6 @@ export const EventLegend = styled.legend`
     margin-left: 5px;
 `;
 
-
-export const OrganizationLegend = styled.legend`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100px;
-    height: 20px;
-    font-size: 14px;
-    background-color: #9AF2C0;
-    border: 1px solid rgba(40, 166, 144, 0.5);
-    border-radius: 3px;
-    color: black;
-    margin-bottom: 5px
-`;
-
 export const SideBarInfoBox = styled.div`
     display: flex;
     flex-direction: row;
@@ -163,16 +147,18 @@ export const SideBarInfoText = styled.div`
 `;
 
 export const FeedContainer = styled.div`
-    width: 1100px;
+    max-width: 1100px;
+    width: 40vw;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 25px;
+    row-gap: 0px;
     flex-wrap: wrap;
 `;
 
 export const PostsTitle = styled(ExtraBold)`
     margin-top: 10px;
-    margin-left: 50px;
     color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
 `;
 
@@ -193,8 +179,5 @@ export const IconBox = styled.div`
     & :hover {
         width: 32px;
         height: 32px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
     }
 `;

@@ -41,21 +41,21 @@ export const SearchBar = () => {
     return (
         <>
             {!browserSupportsSpeechRecognition ?
-                <Searchbar onSubmit={handleSubmit}>
+                <Searchbar theme={theme} onSubmit={handleSubmit}>
                     <MagnifyingContainer>
                         <MagnifyingGlass theme={theme}/>
                     </MagnifyingContainer>
-                    <SearchInput type='text' placeholder="Search" value={searchword} onChange={(e) => setSearchword(e.target.value)} theme={theme} />
+                    <SearchInput theme={theme} type='text' placeholder="Search" value={searchword} onChange={(e) => setSearchword(e.target.value)} theme={theme} />
                     <input type="submit" style={{display: 'none'}}/>
                     <button onClick={() => setSearchword('')}>Reset</button>
                 </Searchbar>
             :
             isText ?
-                <Searchbar onSubmit={handleSubmit}>
+                <Searchbar theme={theme} onSubmit={handleSubmit}>
                     <MagnifyingContainer>
                         <MagnifyingGlass theme={theme}/>
                     </MagnifyingContainer>
-                    <SearchInput type='text' placeholder="Search" value={searchword} onChange={(e) => setSearchword(e.target.value)} theme={theme} />
+                    <SearchInput theme={theme} type='text' placeholder="Search" value={searchword} onChange={(e) => setSearchword(e.target.value)} theme={theme} />
                     <input type="submit" style={{display: 'none'}}/>
                     <MicContainer onClick={switchInput}>
                         <MicrophoneIcon theme={theme}/>
@@ -63,11 +63,11 @@ export const SearchBar = () => {
                     <button onClick={() => setSearchword('')}>Reset</button>
                 </Searchbar>
             :
-                <Searchbar onSubmit={handleSubmit}>
+                <Searchbar theme={theme} onSubmit={handleSubmit}>
                     <MagnifyingContainer>
                         <MagnifyingGlass theme={theme}/>
                     </MagnifyingContainer>
-                    <SearchInput type='text' placeholder='Start and stop speech by clicking the microphone icon.' value={transcript} onChange={(e) => setSearchword(e.target.value)} theme={theme} />
+                    <SearchInput theme={theme} type='text' placeholder='Start and stop speech by clicking the microphone icon.' value={transcript} onChange={(e) => setSearchword(e.target.value)} theme={theme} />
                     <MicContainer onClick={listening ? SpeechRecognition.stopListening : SpeechRecognition.startListening}>
                         <MicrophoneIcon theme={theme}/>
                     </MicContainer>

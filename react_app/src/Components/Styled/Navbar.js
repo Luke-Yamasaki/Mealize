@@ -12,7 +12,7 @@ export const NavBar = styled.div`
 `;
 
 export const StyledNavLink = styled(NavLink)`
-    color: white;
+    color: ${props => props.theme === 'light' ? '#FFFFFF' : '#191919'};
     text-decoration: none;
     font-family: motiva-sans, sans-serif;
     font-weight: 900;
@@ -57,14 +57,15 @@ export const Searchbar = styled.form`
     width:  27.5vw;
     min-width:  30vw;
     height: 30px;
-    background-color: white;
+    background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     border-radius: 50px;
     padding-left: 0.5rem;
     gap: 0.1rem;
 `;
 
 export const SearchInput = styled.input`
-    width: 27.5vw;
+    max-width: 27.5vw;
+    width: 27vw;
     height: 25px;
     font-family: motiva-sans,sans-serif;
     font-weight: 700;
@@ -75,7 +76,9 @@ export const SearchInput = styled.input`
     margin: 0px;
     outline: none;
     font-size: 14px;
-    text-align: center;
+    padding-left: 10px;
+    background-color: ${props => props.theme === 'light' ? '#FFFFFF' : '#191919'};
+    color: ${props => props.theme === 'light' ? 'black' : 'white'};
 `;
 
 export const MagnifyingContainer = styled(IconBox)`
@@ -91,6 +94,11 @@ export const MicContainer = styled(IconBox)`
 export const KeyboardContainer = styled(IconBox)`
     width: 25px;
     height: 25px;
+`;
+
+export const LogoContainer = styled(IconBox)`
+    width: 45px;
+    height: 45px;
 `;
 
 export const LogoBox = styled.div`

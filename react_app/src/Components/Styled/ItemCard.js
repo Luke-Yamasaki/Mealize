@@ -170,7 +170,7 @@ export const InfoContainer = styled(BannerTextContainer)`
 `;
 
 export const ItemTitle = styled(Bold)`
-    max-width: 175px;
+    max-width: 200px;
     font-size: 0.85em;
     color: ${props => props.theme === 'light' ? 'black' : 'white'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};

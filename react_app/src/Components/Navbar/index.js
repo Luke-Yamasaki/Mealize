@@ -16,7 +16,7 @@ import { LoginForm } from '../../Forms/Login';
 import { SignupForm } from '../../Forms/Signup';
 
 //Styled-components
-import { NavBar, Navigation, NavList, LogoBox, AuthBox, StyledNavLink } from '../Styled/Navbar';
+import { NavBar, Navigation, NavList, LogoBox, LogoContainer, AuthBox, StyledNavLink } from '../Styled/Navbar';
 
 
 export const Navbar = () => {
@@ -38,10 +38,12 @@ export const Navbar = () => {
             <Navigation>
                 <NavList>
                     <LogoBox>
-                        <Logo dimension={"medium"} />
-                        <StyledNavLink to="/" exact={true}>Mealize</StyledNavLink>
+                        <LogoContainer>
+                            <Logo theme={theme}/>
+                        </LogoContainer>
+                        <StyledNavLink theme={theme} to="/" exact={true}>Mealize</StyledNavLink>
                     </LogoBox>
-                    <SearchBar />
+                    <SearchBar/>
                     <AuthBox>
                         <AuthButton action={'Sign up'} onClick={showSignupModal}/>
                         <AuthButton action={'Log in'} onClick={showLoginModal}/>

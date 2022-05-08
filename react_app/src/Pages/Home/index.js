@@ -124,25 +124,25 @@ export const Home = () => {
                         </SideBarInfoBox>
                     ))}
                 </SideField>
-                <SideField>
-                    <SideLegend>Nonprofits</SideLegend>
+                <SideField theme={theme}>
+                    <SideLegend theme={theme}>Nonprofits</SideLegend>
                 {threeNonprofits.map((nonprofit, idx) => (
                     <SideBarInfoBox key={idx}>
-                        <IconBox >
+                        <IconBox>
                             <img src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
                         </IconBox>
-                        <SideBarInfoText >{nonprofit.name}</SideBarInfoText>
+                        <SideBarInfoText theme={theme}>{nonprofit.name}</SideBarInfoText>
                     </SideBarInfoBox>
                     ))}
                 </SideField>
-                <SideField>
-                    <SideLegend>Businesses</SideLegend>
+                <SideField theme={theme}>
+                    <SideLegend theme={theme}>Businesses</SideLegend>
                 {threeBusinesses.map((business, idx) => (
                     <SideBarInfoBox key={idx}>
                         <IconBox >
                             <img src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
                         </IconBox>
-                        <SideBarInfoText>{business.name}</SideBarInfoText>
+                        <SideBarInfoText theme={theme}>{business.name}</SideBarInfoText>
                     </SideBarInfoBox>
                 ))}
                 </SideField>

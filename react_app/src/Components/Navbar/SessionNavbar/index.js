@@ -1,11 +1,16 @@
+//Hooks
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTheme } from '../../../Context/ThemeContext';
+//CSS
 import styles from './SessionNavbar.module.css';
 // Actions
 import { logout } from '../../../store/session';
 import { setCurrentModal, showModal } from '../../../store/modal';
-// Components
-import { Navigation, NavList } from '../../Styled/Navbar';
+// Styled-components
+import { NavBar, Navigation, NavList, LogoBox, AuthBox, StyledNavLink } from '../../Styled/Navbar';
+import { VectorBox } from '../Styled/Layout';
+//Components
 import { NotificationBar } from '../NotificationBar';
 import { Logo } from '../../../Assets/Logo';
 import { SearchBar } from '../SearchBar';
@@ -14,6 +19,7 @@ import ItemForm from '../../../Forms/Item';
 export const SessionNavbar = () => {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
+    const {theme} = useTheme();
 
     const showItemForm = () => {
         dispatch(setCurrentModal(ItemForm));
@@ -25,11 +31,15 @@ export const SessionNavbar = () => {
     };
 
     return (
-        <div>
+        <NavBar>
             <Navigation>
                 <NavList>
-                    <Logo dimension={"medium"} />
-                    <NavLink to="/" exact={true} className={styles.link}>Mealize</NavLink>
+                    <LogoBox>
+                        <VectorBox>
+                            <Logo theme={theme} />
+                        </VectorBox>
+                        <StyledNavLink theme={theme} to='/' exact={true}>Mealize</StyledNavLink>
+                    </LogoBox>
                     <SearchBar />
                     <div className={styles.signup}>User</div>
                     <NavLink style={{textDecoration: 'none'}} to='/deliveries' exact className={styles.signup}>Deliveries</NavLink>
@@ -42,6 +52,6 @@ export const SessionNavbar = () => {
                 </NavList>
             </Navigation>
             <NotificationBar />
-        </div>
+        </NavBar>
     )
 }

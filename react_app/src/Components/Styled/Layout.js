@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import image from '../../Assets/Images/Pattern_10.png';
-import { ExtraBold, Bold, Medium, Regular } from './Fonts';
+import { ExtraBold } from './Fonts';
 
 export const AppBackGround = styled.div`
     width: 100vw;
@@ -170,14 +170,24 @@ export const PostsSection = styled.section`
     flex-direction: column;
 `;
 
-export const IconBox = styled.div`
-    width: 30px;
-    height: 30px;
+export const VectorBox = styled.div`
+    width: ${props => props.square ? props.square : '30px'};
+    height: ${props => props.square ? props.square : '30px'};
     display: flex;
     justify-content: center;
     align-items: center;
-    & :hover {
-        width: 32px;
-        height: 32px;
+    &:hover {
+       width: ${props => props.resize ? props.resize : props.square ? props.square : '30px'};
+       height: ${props => props.resize ? props.resize : props.square ? props.square : '30px'};
+       transform: ${props => props.resize ? 'scale(1.1)' : ''};
+       opacity: ${props => props.opacity ? props.opacity : '100%'};
     }
+`;
+
+export const ImageBox = styled.img`
+    width: ${props => props.square ? props.square : '30px'};
+    height: ${props => props.square ? props.square : '30px'};
+    border-radius: 5px;
+    object-fit: cover;
+    background-color: black;
 `;

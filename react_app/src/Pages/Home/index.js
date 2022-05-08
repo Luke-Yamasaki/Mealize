@@ -1,9 +1,10 @@
-//react hooks
+//Hooks
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useTheme } from '../../Context/ThemeContext';
-//components
+//Components
 import { ItemCard } from '../../Components/Cards/ItemCard';
+import { CategoryBox } from '../../Components/Filter';
 //Icons
 import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
 import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
@@ -20,12 +21,15 @@ import {
     SideLegend,
     SideBarInfoBox,
     SideBarInfoText,
-    IconBox,
+    VectorBox,
+    ImageBox,
     FeedContainer,
     FilterTitle,
     PostsTitle,
     PostsSection
 } from '../../Components/Styled/Layout';
+//Categories
+import { categoriesList } from '../../utils/Categories/categories';
 
 export const Home = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -72,19 +76,14 @@ export const Home = () => {
     return(
         <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}>
             <SideBarContainer>
-                {!sessionUser && (
-                    <FilterTitle theme={theme}>Filter</FilterTitle>
-                )}
+                <FilterTitle theme={theme}>Filter</FilterTitle>
                 {sessionUser && (
-                    <>
-                        <FilterTitle theme={theme}>Filter</FilterTitle>
-                        <SideField theme={theme}>
-                            <SideLegend theme={theme}>Favorites</SideLegend>
-                            <SideBarInfoBox onClick={() => setMode('favorites')}>
-                                <div style={{textDecoration: 'underline'}}>My favorites</div>
-                            </SideBarInfoBox>
-                        </SideField>
-                    </>
+                    <SideField theme={theme}>
+                        <SideLegend theme={theme}>Favorites</SideLegend>
+                        <SideBarInfoBox onClick={() => setMode('favorites')}>
+                            <SideBarInfoText>My favorites</SideBarInfoText>
+                        </SideBarInfoBox>
+                    </SideField>
                 )}
                 <SideField theme={theme}>
                     <SideLegend theme={theme}>Availability</SideLegend>
@@ -109,28 +108,16 @@ export const Home = () => {
                 <SideField theme={theme}>
                     <SideLegend theme={theme}>Categories</SideLegend>
                     {categories.map((category, idx) => (
-                        <SideBarInfoBox key={idx}>
-                            {category.category === 'Dairy' ?
-                            <IconBox onClick={() => setMode('dairy')}><DairyIcon dimension={'small'}/></IconBox>
-                            : category.category === 'Vegetables' ?
-                            <IconBox onClick={() => setMode('vegetables')}><VegetablesIcon dimension={'small'}/></IconBox>
-                            : category.category === 'Fruits' ?
-                            <IconBox onClick={() => setMode('fruits')}><FruitsIcon dimension={'small'} /></IconBox>
-                            : category.category === 'Grains' ?
-                            <IconBox onClick={() => setMode('grains')}><GrainsIcon dimension={'small'}/></IconBox>
-                            : <IconBox onClick={() => setMode('protein')}><ProteinIcon dimension={'small'}/></IconBox>
-                            }
-                            <SideBarInfoText theme={theme}>{category.category}</SideBarInfoText>
-                        </SideBarInfoBox>
+                        <CategoryBox key={idx} category={category.category} onClick={setMode(category.category.toLowerCase())} />
                     ))}
                 </SideField>
                 <SideField theme={theme}>
                     <SideLegend theme={theme}>Nonprofits</SideLegend>
                 {threeNonprofits.map((nonprofit, idx) => (
                     <SideBarInfoBox key={idx}>
-                        <IconBox>
-                            <img src={nonprofit.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
-                        </IconBox>
+                        <VectorBox resize='32px'>
+                            <ImageBox src={nonprofit.logoUrl} alt='Nonprofit logo' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', objectPosition: 'center', backgroundColor: 'black'}} />
+                        </VectorBox>
                         <SideBarInfoText theme={theme}>{nonprofit.name}</SideBarInfoText>
                     </SideBarInfoBox>
                     ))}
@@ -139,9 +126,9 @@ export const Home = () => {
                     <SideLegend theme={theme}>Businesses</SideLegend>
                 {threeBusinesses.map((business, idx) => (
                     <SideBarInfoBox key={idx}>
-                        <IconBox >
-                            <img src={business.logoUrl} alt='' style={{width: '30px', height: '30px', borderRadius: '5px', objectFit: 'cover', backgroundColor: 'black'}} />
-                        </IconBox>
+                        <VectorBox resize='32px'>
+                            <ImageBox src={business.logoUrl} alt='Business logo' />
+                        </VectorBox>
                         <SideBarInfoText theme={theme}>{business.name}</SideBarInfoText>
                     </SideBarInfoBox>
                 ))}

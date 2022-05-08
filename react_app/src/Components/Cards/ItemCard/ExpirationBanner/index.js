@@ -1,7 +1,7 @@
 //Hooks
 import { useState, useEffect } from "react";
 import { useTheme } from "../../../../Context/ThemeContext";
-import { IconBox } from "../../../Styled/Layout";
+import { VectorBox } from "../../../Styled/Layout";
 import {
     ExpBanner,
     BannerTextContainer,
@@ -47,7 +47,9 @@ export const ExpirationBanner = ({ post }) => {
 
     return (
         <ExpBanner>
-            <Flag color={flagColor} />
+            <VectorBox square='25px'>
+                <Flag color={flagColor} />
+            </VectorBox>
             <BannerTextContainer>
                 <BannerText theme={theme}>Expires:</BannerText>
                 <ExpText theme={theme}>{date}</ExpText>

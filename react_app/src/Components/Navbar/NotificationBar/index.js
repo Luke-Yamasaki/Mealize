@@ -1,18 +1,18 @@
 //hooks
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../../Context/ThemeContext';
 import { useUserLocation } from '../../../Context/LocationContext';
 
 //helpers
-import { getGeoLocation } from '../../../utils/geo_location';
+// import { getGeoLocation } from '../../../utils/geo_location';
 
 //Icons
 import { LocationPin } from '../../../Assets/Icons/Location';
 
 //styled-components
 import {NotificationSection, NotificationContainer, NotificationText } from '../../../Components/Styled/NotificationBar';
-import { IconBox } from '../../Styled/Layout';
+import { VectorBox } from '../../Styled/Layout';
 
 export const NotificationBar = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -31,9 +31,9 @@ export const NotificationBar = () => {
         return (
             <NotificationSection theme={theme}>
                 <NotificationContainer>
-                    <IconBox>
+                    <VectorBox>
                         <LocationPin/>
-                    </IconBox>
+                    </VectorBox>
                     <NotificationText>
                         Current location: {userLocation}
                     </NotificationText>

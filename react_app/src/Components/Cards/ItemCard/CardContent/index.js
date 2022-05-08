@@ -13,7 +13,7 @@ import { DeliveryForm } from '../../../../Forms/Delivery';
 import { LocationPin } from '../../../../Assets/Icons/Location';
 import { FavoritesIcon } from '../../../../Assets/Logo/FavoritesIcon';
 import { QuestionBtn, RequestBtn } from '../../../Styled/Buttons';
-import { IconBox } from '../../../Styled/Layout';
+import { VectorBox } from '../../../Styled/Layout';
 import {
     Card,
     TitleBox,
@@ -88,9 +88,9 @@ export const CardContent = ({ post }) => {
         return (
             <Card color={styleObj} height={sessionUser ? '390px' : '350px'}>
                 <TitleBox to={`/organizations/${organization.id}`}>
-                    <IconBox >
+                    <VectorBox square='30px' resize='32px'>
                         <CompanyLogo src={organization.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='black'/>
-                    </IconBox>
+                    </VectorBox>
                     <TitleTextContainer>
                         <CompanyName>{organization.name}</CompanyName>
                         {/* <PinContainer width='15px' height='15px'>
@@ -106,11 +106,11 @@ export const CardContent = ({ post }) => {
                         <ItemTitle theme={theme}>{post?.title}</ItemTitle>
                         <ItemQuantity theme={theme}>({post?.quantity})</ItemQuantity>
                     </InfoContainer>
-                    <IconBox>
+                    <VectorBox square='30px' opacity='50%'>
                         {sessionUser && (
                             <FavoritesIcon post={post} />
                         )}
-                    </IconBox>
+                    </VectorBox>
                 </InfoBox>
                 <DescriptionBox>
                     <DescriptionText theme={theme}>{post.description}</DescriptionText>

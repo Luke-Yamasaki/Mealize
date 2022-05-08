@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { IconBox } from '../../Components/Styled/Layout';
 
 export const NavBar = styled.div`
     max-width: 1600px;
@@ -79,26 +78,6 @@ export const SearchInput = styled.input`
     padding-left: 10px;
     background-color: ${props => props.theme === 'light' ? '#FFFFFF' : '#191919'};
     color: ${props => props.theme === 'light' ? 'black' : 'white'};
-`;
-
-export const MagnifyingContainer = styled(IconBox)`
-    width: 20px;
-    height: 20px;
-`;
-
-export const MicContainer = styled(IconBox)`
-    width: 15px;
-    height: 15px;
-`;
-
-export const KeyboardContainer = styled(IconBox)`
-    width: 25px;
-    height: 25px;
-`;
-
-export const LogoContainer = styled(IconBox)`
-    width: 45px;
-    height: 45px;
 `;
 
 export const LogoBox = styled.div`

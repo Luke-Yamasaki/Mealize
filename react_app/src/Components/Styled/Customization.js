@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
-import { IconBox } from './Layout';
+import { VectorBox } from './Layout';
 
 const up = keyframes`
     0% { opacity: 35%; transform: rotate(0deg);}
@@ -64,7 +64,7 @@ export const Label = styled.p`
     margin-left: 3.4em;
 `;
 
-export const IconContainer = styled(IconBox)`
+export const IconContainer = styled(VectorBox)`
     width: 100px;
     height: 50px;
     margin-left: -50px;

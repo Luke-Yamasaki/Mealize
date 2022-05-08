@@ -1,5 +1,4 @@
 //Hooks
-import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../../Context/ThemeContext';
 //CSS
@@ -8,13 +7,16 @@ import styles from './SessionNavbar.module.css';
 import { logout } from '../../../store/session';
 import { setCurrentModal, showModal } from '../../../store/modal';
 // Styled-components
-import { NavBar, Navigation, NavList, LogoBox, LogoNavLink } from '../../Styled/Navbar';
+import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, ProfileName } from '../../Styled/Navbar';
 import { VectorBox } from '../../Styled/Layout';
+import { ProfileButton } from '../../Styled/Buttons';
+import { ProfileBox } from '../../Styled/Navbar';
 //Components
 import { NotificationBar } from '../NotificationBar';
 import { Logo } from '../../../Assets/Logo';
 import { SearchBar } from '../SearchBar';
 import ItemForm from '../../../Forms/Item';
+import { PostButton } from '../../Styled/Buttons';
 
 export const SessionNavbar = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -35,20 +37,22 @@ export const SessionNavbar = () => {
             <Navigation>
                 <NavList>
                     <LogoBox>
-                        <VectorBox>
+                        <VectorBox square='45px' resize='47px'>
                             <Logo theme={theme} />
                         </VectorBox>
                         <LogoNavLink theme={theme} to='/' exact={true}>Mealize</LogoNavLink>
                     </LogoBox>
                     <SearchBar />
-                    <div className={styles.signup}>User</div>
-                    <NavLink style={{textDecoration: 'none'}} to='/deliveries' exact className={styles.signup}>Deliveries</NavLink>
+                    <ProfileBox>
+                        <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' />
+                        <ProfileName>{`Hello ${sessionUser.firstName}!`}</ProfileName>
+                    </ProfileBox>
                     {sessionUser.isNonprofit && sessionUser.isManager ?
-                    <div style={{width: '100px'}} className={styles.signup} onClick={showItemForm}>New request</div>
+                    <PostButton onClick={showItemForm}>New request</PostButton>
                     :
-                    <div className={styles.signup} onClick={showItemForm}>Post item</div>
+                    <PostButton onClick={showItemForm}>Post item</PostButton>
                     }
-                    <div className={styles.signup} onClick={logOut}>Log out</div>
+                    <PostButton onClick={logOut}>Log out</PostButton>
                 </NavList>
             </Navigation>
             <NotificationBar />

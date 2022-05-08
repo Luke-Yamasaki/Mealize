@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { Bold } from './Fonts';
 
 export const NavBar = styled.div`
     max-width: 1600px;
@@ -97,3 +98,16 @@ export const AuthBox = styled.div`
     justify-content: space-between;
     align-items: center;
 `;
+
+export const ProfileBox = styled(AuthBox)`
+    height: 30px;
+    display: flex;
+    gap: 5px;
+`;
+
+export const ProfileName = styled(Bold)`
+    max-width: 140px;
+    height: 30px;
+    color: ${props => props.theme === 'light' ? '#FFFFFF' : '#191919'};
+`;
+

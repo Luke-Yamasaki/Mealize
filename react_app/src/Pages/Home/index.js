@@ -6,11 +6,11 @@ import { useTheme } from '../../Context/ThemeContext';
 import { ItemCard } from '../../Components/Cards/ItemCard';
 import { CategoryBox } from '../../Components/Filter';
 //Icons
-import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
-import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
-import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
-import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
-import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
+// import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
+// import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
+// import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
+// import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
+// import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 import { Business } from '../../Assets/Icons/Business';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 //styled-components
@@ -29,7 +29,7 @@ import {
     PostsSection
 } from '../../Components/Styled/Layout';
 //Categories
-import { categoriesList } from '../../utils/Categories/categories';
+// import { categoriesList } from '../../utils/Categories/categories';
 
 export const Home = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -50,13 +50,13 @@ export const Home = () => {
     const itemsArr = []
     const available = []
     const unavailable = []
-    const availableItems = []
-    const unavailableItems = []
-    const availableRequests = []
-    const unavailableRequests = []
-    const separateItems = posts.map(post => post.isItem === true  ? itemsArr.push(post) : requestsArr.push(post))
-    const findAvailable = posts.map(post => post.isItem && post.status > 0 ? unavailableItems.push(post) : post.isItem && post.status === 0 ? availableItems.push(post) : post.isItem === false && post.status > 0 ? unavailableRequests.push(post) : availableRequests.push(post))
-    const allAvailable = posts.map(post => post.status === 0 ? available.push(post) : unavailable.push(post))
+    // const availableItems = []
+    // const unavailableItems = []
+    // const availableRequests = []
+    // const unavailableRequests = []
+    // const separateItems = posts.map(post => post.isItem === true  ? itemsArr.push(post) : requestsArr.push(post))
+    // const findAvailable = posts.map(post => post.isItem && post.status > 0 ? unavailableItems.push(post) : post.isItem && post.status === 0 ? availableItems.push(post) : post.isItem === false && post.status > 0 ? unavailableRequests.push(post) : availableRequests.push(post))
+    // const allAvailable = posts.map(post => post.status === 0 ? available.push(post) : unavailable.push(post))
 
     const dairyArr = []
     const vegetablesArr = []
@@ -64,7 +64,8 @@ export const Home = () => {
     const grainsArr = []
     const proteinArr = []
 
-    const categoriesSplit = posts.map(post => parseInt(post.categoryId) === 1 ? dairyArr.push(post) : parseInt(post.categoryId) === 2 ? vegetablesArr.push(post) : parseInt(post.categoryId) === 3 ? fruitsArr.push(post) : parseInt(post.categoryId) === 4 ? grainsArr.push(post) : proteinArr.push(post))
+    // const categoriesSplit = posts.map(post => parseInt(post.categoryId) === 1 ? dairyArr.push(post) : parseInt(post.categoryId) === 2 ? vegetablesArr.push(post) : parseInt(post.categoryId) === 3 ? fruitsArr.push(post) : parseInt(post.categoryId) === 4 ? grainsArr.push(post) : proteinArr.push(post))
+
     let favorites;
     let favoritesArr;
     if(sessionUser) {

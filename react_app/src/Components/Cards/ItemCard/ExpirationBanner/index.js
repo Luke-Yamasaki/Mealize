@@ -1,6 +1,8 @@
 //Hooks
 import { useState, useEffect } from "react";
 import { useTheme } from "../../../../Context/ThemeContext";
+
+//Styled-components
 import { VectorBox } from "../../../Styled/Layout";
 import {
     ExpBanner,
@@ -9,27 +11,16 @@ import {
     ExpText
 } from "../../../Styled/ItemCard";
 
+//Icons
 import { Flag } from '../../../../Assets/Icons/Flag';
+
+//Helper
+import { determineExpiration } from "../../../../utils/Expiration";
 
 export const ExpirationBanner = ({ post }) => {
     const [flagColor, setFlagColor] = useState('');
     const [date, setDate] = useState('');
     const {theme} = useTheme();
-    console.log(theme)
-    const determineExpiration = (expDate) => {
-        const today = new Date();
-        const expiration = new Date(expDate)
-        //milliseconds to minutes to hours
-        const hoursLeft = Math.floor((expiration - today) / 1000 / 60 / 60);
-        //Greater than or equal to one week?
-        hoursLeft >= 168 ? setFlagColor('green')
-        :
-        //In between a week and 3 days
-        hoursLeft < 168 && hoursLeft >= 72 ? setFlagColor('yellow')
-        :
-        //less than 3 days
-        setFlagColor('red')
-    };
 
     const formatDateString = (someDate) => {
         // Only accepts strings
@@ -41,7 +32,14 @@ export const ExpirationBanner = ({ post }) => {
     };
 
     useEffect(() => {
-        determineExpiration(post.expDate);
+        const hoursLeft = determineExpiration(post.expDate);
+
+        hoursLeft >= 168 ? setFlagColor('green') //Greater than or equal to one week?
+        :
+        hoursLeft < 168 && hoursLeft >= 72 ? setFlagColor('yellow') //In between a week and 3 days
+        :
+        setFlagColor('red') //less than 3 days
+
         formatDateString(post.expDate);
     }, []);
 

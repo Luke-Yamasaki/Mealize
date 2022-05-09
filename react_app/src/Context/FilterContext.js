@@ -4,7 +4,7 @@ export const FilterContext = createContext();
 export const useFilter = () => useContext(FilterContext);
 
 export default function FilterProvider(props) {
-    const [filter, setFilter] = useState(false);
+    const [filter, setFilter] = useState('available');
 
     return (
         <FilterContext.Provider value={{ filter, setFilter }}>

@@ -41,7 +41,8 @@ function App() {
       await dispatch(getBatchedOrganizations())
       await dispatch(getAllPosts())
       await dispatch(getBatchedUsers())
-    })().then(() => setIsLoaded(true))
+      setIsLoaded(true)
+    })()
   },[dispatch]);
 
   if(!isLoaded) {

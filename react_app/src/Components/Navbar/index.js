@@ -1,6 +1,8 @@
 //Hooks
+import { useState } from 'react';
 import { useTheme } from '../../Context/ThemeContext';
 import { useDispatch } from "react-redux";
+import { useModal } from '../../Context/ModalContext';
 
 //Actions
 import { showModal, setCurrentModal } from '../../store/modal';
@@ -12,8 +14,7 @@ import { Logo } from '../../Assets/Logo';
 import { NotificationBar } from './NotificationBar';
 import { SearchBar } from './SearchBar';
 import { AuthButton } from '../../Components/Buttons/Authentication';
-import { LoginForm } from '../../Forms/Login';
-import { SignupForm } from '../../Forms/Signup';
+import { FormModal } from '../../Forms/FormModal';
 
 //Styled-components
 import { NavBar, Navigation, NavList, LogoBox, AuthBox, LogoNavLink } from '../Styled/Navbar';
@@ -23,14 +24,13 @@ import { MealizeLogoBox } from '../Styled/Layout';
 export const Navbar = () => {
     const dispatch = useDispatch();
     const {theme} = useTheme();
+    const {setModalName} = useModal();
 
-    const showLoginModal = () => {
-        dispatch(setCurrentModal(LoginForm));
-        dispatch(showModal());
-    };
-
-    const showSignupModal = () => {
-        dispatch(setCurrentModal(SignupForm));
+    const showFormModal = (e) => {
+        e.preventDefault();
+        const formName = e.target.innerText.toLowerCase().split(' ').join('');
+        setModalName(formName);
+        dispatch(setCurrentModal(() => (<FormModal />)));
         dispatch(showModal());
     };
 
@@ -45,9 +45,9 @@ export const Navbar = () => {
                         <LogoNavLink theme={theme} to="/" exact={true}>Mealize</LogoNavLink>
                     </LogoBox>
                     <SearchBar/>
-                    <AuthBox>
-                        <AuthButton action={'Sign up'} onClick={showSignupModal}/>
-                        <AuthButton action={'Log in'} onClick={showLoginModal}/>
+                    <AuthBox onClick={showFormModal}>
+                        <AuthButton action={'Sign up'}/>
+                        <AuthButton action={'Log in'}/>
                     </AuthBox>
                 </NavList>
             </Navigation>

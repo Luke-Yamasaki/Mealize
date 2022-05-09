@@ -8,7 +8,7 @@ export const ModalBackGround = styled.div`
     bottom: 0;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     z-index: 201;
     background-color: rgba(0, 0, 0, 0.5);
@@ -23,6 +23,8 @@ export const ModalField = styled.div`
 `;
 
 export const SettingsModalBackGround = styled(ModalBackGround)`
+    flex-direction: row;
+    justify-content: flex-end;
     background-color: rgba(0, 0, 0, 0);
     padding-right: 11.75vw;
     z-index: 202;

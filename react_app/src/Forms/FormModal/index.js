@@ -7,7 +7,7 @@ import { hideModal } from '../../store/modal';
 import { LoginForm } from '../Login';
 import { SignupForm } from '../Signup';
 import { DeliveryForm } from '../Delivery';
-import { EditDeliveryForm } from '../Delivery/EditDelivery';
+// import { EditDeliveryForm } from '../Delivery/EditDelivery';
 
 import { ModalBackGround, ModalField  } from '../../Components/Styled/Modals';
 
@@ -28,7 +28,7 @@ export const FormModal = () => {
                 {modalName === 'post' && <LoginForm />}
                 {modalName === 'editPost' && <LoginForm />}
                 {modalName === 'request' && <DeliveryForm />}
-                {modalName === 'editRequest' && <EditDeliveryForm />}
+                {/* {modalName === 'editRequest' && <EditDeliveryForm />} */}
             </ModalField>
         </ModalBackGround>
     )

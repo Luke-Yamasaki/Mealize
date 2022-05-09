@@ -23,23 +23,20 @@ export const PostsFeed = ({filter, sessionUser}) => {
     const grainsArr = [];
     const proteinArr = [];
 
+    //Favorites filter
     if(sessionUser) {
         Object.values(sessionUser.favorites).map(fav => favoritesArr.push(posts[fav.postId]));
     };
-    //AvailabilityFilter
+
+    //Availability filter
     posts.map(post => {
         const hoursLeft = determineExpiration(post.expDate);
         post.status === 0 && hoursLeft > 1 ? availableArr.push(post) : unavailableArr.push(post)
     })
-    console.log(availableArr)
-    //Postsfilter
+    //Posts filter
     posts.map(post => post.isItem ? itemsArr.push(post) : requestsArr.push(post));
     //CategoriesFilter
     posts.map(post => parseInt(post.categoryId) === 1 ? dairyArr.push(post) : parseInt(post.categoryId) === 2 ? vegetablesArr.push(post) : parseInt(post.categoryId) === 3 ? fruitsArr.push(post) : parseInt(post.categoryId) === 4 ? grainsArr.push(post) : proteinArr.push(post))
-    console.log(dairyArr)
-
-    useEffect(() => {
-    },[])
 
     return (
         <FeedContainer>

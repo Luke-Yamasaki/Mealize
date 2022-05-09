@@ -1,4 +1,4 @@
-//React
+//Hooks
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -7,6 +7,8 @@ import { login, signup } from '../../store/session';
 import { setCurrentModal, hideModal } from '../../store/modal';
 //Helper
 import { validateSignup, uploadProfileImage } from '../../utils/forms/signup';
+import * as nsfwjs from 'nsfwjs';
+
 //Components
 import { LoginForm } from '../Login';
 import { ButtonBox, FormButtonBox, DemoBox, LoginBtn, SignupBtn, CancelBtn, SubmitBtn, NonprofitBtn, BusinessBtn, VolunteerBtn } from '../../Components/Styled/Buttons';
@@ -186,7 +188,7 @@ export const SignupForm = () => {
     // const today = year.toString() + '-' + formattedDate + '-' + formattedMonth
     const tooOld = (year - 90).toString() + '-' + formattedMonth + '-' + formattedDate;
 
-    const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-'
+    const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -375,11 +377,37 @@ export const SignupForm = () => {
 		dispatch(setCurrentModal(LoginForm));
 	};
 
-    const updateImage = (e) => {
+    const repaint = (file) => {
+        setImage(file)
+    };
+
+    const nsfwCheck = async() => {
+        const nsfwArr = [];
+        const img = document.getElementById('imageBox');
+        const model = await nsfwjs.load();
+        const predictions = await model.classify(img);
+        console.log('Predictions: ', predictions);
+        for(let i = 1; i < predictions.length; i++) {
+            if(predictions[i].probability > 0.5) {
+                alert('NSFW!!!');
+                nsfwArr.push(predictions[i])
+            }
+        }
+        return nsfwArr;
+    };
+
+    const updateImage = async (e) => {
         e.preventDefault();
-        setResponseErrors([])
+        setResponseErrors([]);
+
         const file = e.target.files[0];
+        repaint(file);
+        const nsfwArr = nsfwCheck();
+
+        nsfwArr.length > 0 ? alert('NSFW!!!') : alert('Ok')
+
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
+
         if(fileSize > 2 ) {
             e.target.value = '';
             setImage('');
@@ -507,7 +535,7 @@ export const SignupForm = () => {
                     <p style={{width: '415px', padding: '0px', margin: '-10px 0px 0px 10px', fontFamily: 'motiva-sans, sans-serif', fontSize: '12px', fontWeight: '700'}}>{ isManager ? 'Manager Id Card' : 'Volunteer Id Card' }</p>
                     <section className={styles.content}>
                         <div className={styles.imageBox}>
-                            <img src={image ? URL.createObjectURL(image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} className={styles.image} alt='User profile.'/>
+                            <img id='imageBox' src={image ? URL.createObjectURL(image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} className={styles.image} alt='User profile.'/>
                             <p style={{fontFamily: 'motiva-sans, sans-serif', fontSize: '10px', fontWeight: '700', fontStyle: 'normal', paddingTop: '10px', margin: '0px', height: '15px'}}>Id: 12345 </p>
                             <p style={{fontFamily: 'motiva-sans, sans-serif', fontSize: '10px', fontWeight: '700', fontStyle: 'normal', paddingTop: '5px', paddingBottom: '5px', margin: '0px', height: '15px'}}>Issued: {new Date().toISOString().split('T')[0].slice(0,11)}</p>
                         </div>

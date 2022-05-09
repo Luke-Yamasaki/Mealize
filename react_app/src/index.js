@@ -1,4 +1,4 @@
-//React
+//Hooks
 import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, useDispatch } from 'react-redux';
@@ -15,6 +15,7 @@ import SaturationProvider from './Context/SaturationContext';
 import BackGroundProvider from './Context/BackGroundContext';
 import LocationProvider from './Context/LocationContext';
 import ModalProvider from './Context/ModalContext';
+import FilterProvider from './Context/FilterContext';
 
 //Store
 import configureStore from './store';
@@ -37,12 +38,14 @@ const Root = () => {
           <SaturationProvider>
             <BackGroundProvider>
               <LocationProvider>
-                <ModalProvider>
-                  <RootContainer>
-                    <App />
-                    <ModalContainer ref={modalMountRef} />
-                  </RootContainer>
-                </ModalProvider>
+                <FilterProvider>
+                  <ModalProvider>
+                    <RootContainer>
+                      < App />
+                      <ModalContainer ref={modalMountRef} />
+                    </RootContainer>
+                  </ModalProvider>
+                </FilterProvider>
               </LocationProvider>
             </BackGroundProvider>
           </SaturationProvider>

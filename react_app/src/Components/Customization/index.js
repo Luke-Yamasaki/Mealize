@@ -1,5 +1,5 @@
 //Hooks
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
 import { useModal } from '../../Context/ModalContext';

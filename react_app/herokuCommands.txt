@@ -5,3 +5,11 @@ git remote add heroku https://git.heroku.com/mealize.git
 go to Heroku settings and configure things
 
 ...?
+
+heroku pg:push databasename DATABASE_URL --app appname
+
+make sure docker is running
+sudo service docker status
+sudo service docker start
+
+If you changed you Heroku password, you need to reset the API Key

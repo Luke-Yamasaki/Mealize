@@ -1,13 +1,12 @@
 //Hooks
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 
 //Components
 import { ItemCard } from "../Cards/ItemCard";
 import { FeedContainer } from "../Styled/Layout"
 
 //Helper
-import { determineExpiration } from "../../utils/Expiration";
+import { determineExpiration } from "../../utils/Date";
 
 export const PostsFeed = ({filter, sessionUser}) => {
     const allPosts = useSelector(state => state.posts.all);

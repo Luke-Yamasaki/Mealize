@@ -1,20 +1,15 @@
 //Hooks
-import { useHistory } from "react-router-dom";
-
+import { useSelector } from 'react-redux';
 //Components
-import { CardContainer } from '../../Styled/Light/ItemCard';
+import { CardContainer } from '../../Styled/ItemCard';
 import { ExpirationBanner } from './ExpirationBanner';
 import { CardContent } from "./CardContent";
 
 export const ItemCard = ({ post }) => {
-    const history = useHistory();
-
-    const handleClick = () => {
-        return history.push(`/items/${post.id}`)
-    }
-
+    const sessionUser = useSelector(state => state.session.user);
+    
     return (
-        <CardContainer onClick={handleClick}>
+        <CardContainer height={sessionUser ? '450px' : '410px'}>
             <ExpirationBanner post={post}/>
             <CardContent post={post} />
         </CardContainer>

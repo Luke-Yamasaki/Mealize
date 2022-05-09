@@ -83,25 +83,3 @@ export const Deliveries = () => {
         </Wrapper>
     )
 }
-
-//<div key={idx}>
-{/* <div>
-<img src={users[messages.receiverId].profileImageUrl} alt='User profile.' />
-<p>{users[messages.receiverId].firstName}</p>
-</div>
-<div>
-<p>{message.title}</p>
-<p>{message.content}</p>
-</div>
-</div>
-:
-<div key={idx}>
-<div>
-<img src={sessionUser.profileImageUrl} alt='Your profile.' />
-<p>{sessionUser.firstName}</p>
-</div>
-<div>
-<p>{message.title}</p>
-<p>{message.content}</p>
-</div>
-</div> */}

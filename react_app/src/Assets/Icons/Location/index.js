@@ -1,28 +1,21 @@
-export const LocationPin = ({ color }) => {
-    if(color === 'black' || color === 'white') {
+export const LocationPin = ({theme}) => {
+    if(theme === 'black' || theme === 'white') {
         return (
-            <svg id="Black_location" dataname="Black location" xmlns="http://www.w3.org/2000/svg" width="26.5" height="35.34" viewBox="0 0 26.5 35.34">
-                <g id="Group_807" dataname="Group 807" transform="translate(3172 14689)">
-                    <path id="Path_209" dataname="Path 209" d="M47.75,29.5A13.26,13.26,0,0,0,34.5,42.75c0,5.38,6.79,15.39,10.84,20.87a2.99,2.99,0,0,0,4.82,0C54.21,58.14,61,48.13,61,42.75A13.26,13.26,0,0,0,47.75,29.5m.4,32.64a.5.5,0,0,1-.8,0C40.87,53.35,37,46.11,37,42.75a10.75,10.75,0,0,1,21.5,0c0,3.36-3.87,10.6-10.35,19.39" transform="translate(-3206.5 -14718.5)" fill={ color === 'black' ? 'black' : 'white' } />
-                    <path id="Path_210" dataname="Path 210" d="M47.75,37.5A5.25,5.25,0,1,0,53,42.75a5.256,5.256,0,0,0-5.25-5.25m0,8a2.75,2.75,0,1,1,2.75-2.75,2.748,2.748,0,0,1-2.75,2.75" transform="translate(-3206.5 -14718.5)"/>
-                </g>
+            <svg xmlns="http://www.w3.org/2000/svg" width="23.141" height="30" viewBox="0 0 23.141 30">
+                <path id="Path_18239" dataname="Path 18239" d="M11.571,0A11.571,11.571,0,0,0,0,11.571c0,5.094,7.353,14.322,10.336,17.855a1.614,1.614,0,0,0,2.47,0c2.983-3.533,10.336-12.761,10.336-17.855A11.571,11.571,0,0,0,11.571,0m0,15.194a4.417,4.417,0,1,1,4.418-4.418,4.417,4.417,0,0,1-4.418,4.418" fill={theme === 'light' ? 'white' : '#191919'}/>
             </svg>
         )
     } else {
         return (
-        <svg id="Gradient_location" dataname="Gradient location" xmlns="http://www.w3.org/2000/svg" width="26.5" height="35.34" viewBox="0 0 26.5 35.34">
-            <defs>
-                <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
-                    <stop offset="0" stopColor="#76d97e"/>
-                    <stop offset="1" stopColor="#28a690"/>
-                </linearGradient>
-            </defs>
-            <g id="Group_808" dataname="Group 808" transform="translate(3172 14689)">
-                <path id="Path_209" dataname="Path 209" d="M47.75,29.5A13.26,13.26,0,0,0,34.5,42.75c0,5.38,6.79,15.39,10.84,20.87a2.99,2.99,0,0,0,4.82,0C54.21,58.14,61,48.13,61,42.75A13.26,13.26,0,0,0,47.75,29.5m.4,32.64a.5.5,0,0,1-.8,0C40.87,53.35,37,46.11,37,42.75a10.75,10.75,0,0,1,21.5,0c0,3.36-3.87,10.6-10.35,19.39" transform="translate(-3206.5 -14718.5)" fill="url(#linear-gradient)"/>
-                <path id="Path_210" dataname="Path 210" d="M47.75,37.5A5.25,5.25,0,1,0,53,42.75a5.256,5.256,0,0,0-5.25-5.25m0,8a2.75,2.75,0,1,1,2.75-2.75,2.748,2.748,0,0,1-2.75,2.75" transform="translate(-3206.5 -14718.5)" fill="url(#linear-gradient)"/>
-            </g>
-        </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="23.141" height="30" viewBox="0 0 23.141 30">
+                <defs>
+                    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+                        <stop offset="0" stopColor="#76d97e"/>
+                        <stop offset="1" stopColor="#28a690"/>
+                    </linearGradient>
+                </defs>
+                <path id="Path_18240" dataname="Path 18240" d="M11.571,0A11.571,11.571,0,0,0,0,11.571c0,5.094,7.353,14.322,10.336,17.855a1.614,1.614,0,0,0,2.47,0c2.983-3.533,10.336-12.761,10.336-17.855A11.571,11.571,0,0,0,11.571,0m0,15.194a4.417,4.417,0,1,1,4.418-4.418,4.417,4.417,0,0,1-4.418,4.418" fill="url(#linear-gradient)"/>
+            </svg>
         )
     }
-
-}
+};

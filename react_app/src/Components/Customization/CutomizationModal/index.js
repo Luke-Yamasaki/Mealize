@@ -5,7 +5,7 @@ import { useModal } from '../../../Context/ModalContext';
 import { hideModal } from '../../../store/modal';
 //Components
 import { CustomizationSection } from '../CustomizationSection';
-import { BackGround, SettingsModalField } from '../../Styled/Light/Modals';
+import { SettingsModalBackGround, SettingsModalField } from '../../Styled/Modals';
 
 export const CustomizationModal = () => {
     const dispatch = useDispatch();
@@ -17,10 +17,10 @@ export const CustomizationModal = () => {
     };
 
     return (
-        <BackGround onClick={closeModal}>
+        <SettingsModalBackGround onClick={closeModal}>
             <SettingsModalField onClick={e => e.stopPropagation()}>
                 <CustomizationSection />
             </SettingsModalField>
-        </BackGround>
+        </SettingsModalBackGround>
     )
 };

@@ -11,27 +11,20 @@ import { getCategories } from './store/categories';
 import { getBatchedOrganizations } from './store/organizations';
 import { getBatchedUsers } from './store/users';
 import { getAllPosts } from './store/posts';
-import { getAllDeliveries } from './store/deliveries';
+// import { getAllDeliveries } from './store/deliveries';
 
 //Pages
 import { Home } from './Pages/Home';
 import { FourOFour } from './Pages/FourOFour';
-// import { About } from './Pages/About';
-// import { Questions } from './Pages/Questions';
-// import { Nonprofits } from './Pages/Nonprofits';
-// import { Businesses } from './Pages/Businesses';
-// import { Categories } from './Pages/Categories';
-// import { Users } from './Pages/Users';
-// import { Settings } from './Pages/Settings';
 import { Deliveries } from './Pages/Deliveries';
 //components
 import { Customization } from './Components/Customization';
 import Modal from './Components/Modal';
-import { AppBackGround, AppContentContainer, BackGroundAside } from './Components/Styled/Light/Layout';
+import { AppBackGround, AppContentContainer, BackGroundAside } from './Components/Styled/Layout';
 //layouts
-import { Navbar } from './Layout/Navbar';
-import { SessionNavbar } from './Layout/Navbar/SessionNavbar';
-import { Footer } from './Layout/Footer';
+import { Navbar } from './Components/Navbar';
+import { SessionNavbar } from './Components/Navbar/SessionNavbar';
+import { Footer } from './Components/Footer';
 
 
 function App() {
@@ -40,7 +33,6 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
-  const className = backGround === true ? theme + 'Pattern' : theme;
 
   useEffect(() => {
     (async () => {
@@ -49,8 +41,8 @@ function App() {
       await dispatch(getBatchedOrganizations())
       await dispatch(getAllPosts())
       await dispatch(getBatchedUsers())
-      setIsLoaded(true);
-    })();
+      setIsLoaded(true)
+    })()
   },[dispatch]);
 
   if(!isLoaded) {
@@ -62,53 +54,29 @@ function App() {
       <AppBackGround theme={theme} background={backGround}>
         <BackGroundAside />
         <AppContentContainer>
-        {sessionUser ? <SessionNavbar sessionUser={sessionUser} /> : <Navbar />}
-        <Modal />
-        <Switch>
+          {sessionUser ? <SessionNavbar sessionUser={sessionUser} /> : <Navbar />}
+          <Modal />
+          <Switch>
           <Route exact path='/'>
-            <Home />
+              <Home/>
           </Route>
-          {/* <Route exact path='/about'>
-            <About />
-          </Route>
-          <Route exact path='/questions'>
-            <Questions />
-          </Route> */}
-          {/* <Route exact path='/nonprofits'>
-            <Nonprofits />
-          </Route>
-          <Route exact path='/businesses'>
-            <Businesses />
-          </Route>
-          <Route exact path='/categories'>
-            <Categories />
-          </Route> */}
-          {/* <Route exact path='/users'>
-            <Users />
-          </Route>
-          <Route exact path='/settings'>
-            <Settings />
-          </Route> */}
-          {/* <Route exact path='/search/:searchword'>
-            <h1>Search results</h1>
-          </Route> */}
           {sessionUser &&
-            <Route exact path='/deliveries'>
-              <Deliveries />
-            </Route>
+          <Route exact path='/deliveries'>
+            <Deliveries />
+          </Route>
           }
           <Route>
             <FourOFour />
           </Route>
-        </Switch>
-        <Footer />
+          </Switch>
+          <Footer />
         </AppContentContainer>
         <BackGroundAside>
             <Customization />
         </BackGroundAside>
       </AppBackGround>
     </BrowserRouter>
-  );
-}
+  )
+};
 
 export default App;

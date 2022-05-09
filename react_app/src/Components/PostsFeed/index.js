@@ -23,27 +23,27 @@ export const PostsFeed = ({filter, sessionUser}) => {
     const grainsArr = [];
     const proteinArr = [];
 
+    if(sessionUser) {
+        Object.values(sessionUser.favorites).map(fav => favoritesArr.push(posts[fav.postId]));
+    };
+    //AvailabilityFilter
+    posts.map(post => {
+        const hoursLeft = determineExpiration(post.expDate);
+        post.status === 0 && hoursLeft > 1 ? availableArr.push(post) : unavailableArr.push(post)
+    })
+    console.log(availableArr)
+    //Postsfilter
+    posts.map(post => post.isItem ? itemsArr.push(post) : requestsArr.push(post));
+    //CategoriesFilter
+    posts.map(post => parseInt(post.categoryId) === 1 ? dairyArr.push(post) : parseInt(post.categoryId) === 2 ? vegetablesArr.push(post) : parseInt(post.categoryId) === 3 ? fruitsArr.push(post) : parseInt(post.categoryId) === 4 ? grainsArr.push(post) : proteinArr.push(post))
+    console.log(dairyArr)
+
     useEffect(() => {
-        if(sessionUser) {
-            Object.values(sessionUser.favorites).map(fav => favoritesArr.push(posts[fav.postId]));
-        };
-        //AvailabilityFilter
-        posts.map(post => {
-            const hoursLeft = determineExpiration(post.expDate);
-            post.status === 0 && hoursLeft > 1 ? availableArr.push(post) : unavailableArr.push(post)
-        })
-        console.log(availableArr)
-        //Postsfilter
-        posts.map(post => post.isItem ? itemsArr.push(post) : requestsArr.push(post));
-        //CategoriesFilter
-        posts.map(post => parseInt(post.categoryId) === 1 ? dairyArr.push(post) : parseInt(post.categoryId) === 2 ? vegetablesArr.push(post) : parseInt(post.categoryId) === 3 ? fruitsArr.push(post) : parseInt(post.categoryId) === 4 ? grainsArr.push(post) : proteinArr.push(post))
     },[])
 
     return (
         <FeedContainer>
-            {availableArr.map((post, idx) => (<ItemCard key={idx} post={post} />))}
-
-            {/* {(sessionUser && filter === 'favorites') && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {(sessionUser && filter === 'favorites') && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
             {filter === 'available' && availableArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
             {filter === 'unavailable' && unavailableArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
             {filter === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
@@ -53,7 +53,7 @@ export const PostsFeed = ({filter, sessionUser}) => {
             {filter === 'fruits' && fruitsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
             {filter === 'grains' && grainsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
             {filter === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
-            {filter === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)} */}
+            {filter === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
         </FeedContainer>
     )
 }

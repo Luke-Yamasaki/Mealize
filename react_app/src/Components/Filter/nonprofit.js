@@ -1,6 +1,5 @@
 //Hooks
 import { useFilter } from "../../Context/FilterContext";
-import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 //Styled-components
 import { SideField, SideLegend, SideBarInfoBox, SideBarViewAll, SideBarInfoText } from "../Styled/Layout";
@@ -32,10 +31,6 @@ export const NonprofitFilter = ({theme, nonprofits}) => {
         e.preventDefault();
         return history.push('/Nonprofits');
     }
-
-    useEffect(() => {
-        console.log(filter)
-    },[filter])
 
     return (
         <SideField theme={theme}>

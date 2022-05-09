@@ -1,6 +1,5 @@
 //Hooks
 import { useFilter } from "../../Context/FilterContext";
-import { useEffect } from 'react';
 //Styled-components
 import { SideField, SideLegend, SideBarInfoBox, SideBarInfoText } from "../Styled/Layout";
 import { VectorBox } from "../Styled/Layout";
@@ -20,10 +19,6 @@ export const AvailabilityFilter = ({theme}) => {
         e.preventDefault();
         setFilter('unavailable');
     };
-
-    useEffect(() => {
-        console.log(filter)
-    },[filter])
 
     return (
         <SideField theme={theme}>

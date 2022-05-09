@@ -1,6 +1,5 @@
 //Hooks
 import { useFilter } from "../../Context/FilterContext";
-import { useEffect } from "react";
 //Styled-components
 import { SideField, SideLegend, SideBarInfoBox, SideBarInfoText, VectorBox } from "../Styled/Layout";
 
@@ -34,11 +33,6 @@ export const CategoryFilter = ({theme}) => {
         e.preventDefault();
         setFilter('protein')
     };
-
-    useEffect(() => {
-        console.log(filter)
-    },[filter])
-
 
     return (
         <SideField theme={theme}>

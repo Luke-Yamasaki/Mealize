@@ -1,6 +1,5 @@
 //Hooks
 import { useFilter } from "../../Context/FilterContext";
-import { useEffect } from "react";
 //Styled-components
 import { SideField, SideLegend, SideBarInfoBox, SideBarInfoText } from "../Styled/Layout";
 import { VectorBox } from "../Styled/Layout";
@@ -21,10 +20,6 @@ export const PostTypeFilter = ({theme}) => {
         e.preventDefault();
         setFilter('items')
     }
-
-    useEffect(() => {
-        console.log(filter)
-    }, [filter])
 
     return (
         <SideField theme={theme}>

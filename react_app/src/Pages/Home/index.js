@@ -47,7 +47,7 @@ export const Home = () => {
             </SideBarContainer>
             <PostsSection>
                 <PostsTitle theme={theme}>Posts</PostsTitle>
-                <PostsFeed filter={filter}/>
+                <PostsFeed filter={filter} sessionUser={sessionUser}/>
             </PostsSection>
         </PageBackGround>
     )

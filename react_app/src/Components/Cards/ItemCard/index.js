@@ -7,6 +7,7 @@ import { CardContent } from "./CardContent";
 
 export const ItemCard = ({ post }) => {
     const sessionUser = useSelector(state => state.session.user);
+    
     return (
         <CardContainer height={sessionUser ? '450px' : '410px'}>
             <ExpirationBanner post={post}/>

@@ -6,10 +6,9 @@ import { useModal } from '../../Context/ModalContext';
 
 //Actions
 import { login } from '../../store/session';
-import { setCurrentModal, hideModal } from '../../store/modal';
+import { hideModal } from '../../store/modal';
 
 //Components
-import { SignupForm } from '../Signup';
 import { Logo } from '../../Assets/Logo';
 
 //Styled-components
@@ -29,7 +28,10 @@ import {
     NonprofitDemoButton,
     BusinessDemoButton,
     ErrorBox,
-    PasswordLegend
+    PasswordLegend,
+    SubmitButton,
+    ButtonText,
+    ResetButton
 } from '../../Components/Styled/AuthenticationForm';
 
 import styles from './Login.module.css';
@@ -60,7 +62,7 @@ export const LoginForm = () => {
     }
 
     const validateEmail = (email) => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        const emailRegex = '/^[^\s@]+@[^\s@]+\.[^\s@]+$/'
         return emailRegex.test(email)
     }
 
@@ -147,10 +149,11 @@ export const LoginForm = () => {
                     ))
                 )}
                 <Fieldset error={emailError.length > 0}>
-                    <EmailLegend htmlFor='email' theme={theme} error={emailError.length > 0}> Email
+                    <EmailLegend htmlFor='email' theme={theme} error={emailError.length > 0}>
+                    Email
                         <Input
                             name="email"
-                            type="text"
+                            type="email"
                             value={email}
                             theme={theme}
                             onChange={handleEmail}
@@ -165,7 +168,8 @@ export const LoginForm = () => {
                     ))
                 )}
                 <Fieldset error={passwordError.length > 0}>
-                    <PasswordLegend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
+                    <PasswordLegend htmlFor="password" theme={theme} error={passwordError.length > 0}>
+                    Password
                         <Input
                             name='password'
                             type='password'
@@ -177,13 +181,23 @@ export const LoginForm = () => {
                     </PasswordLegend>
                 </Fieldset>
                 <ButtonBox>
-                    <div className={styles.cancel} onClick={reset}>Reset</div>
-                    <div className={styles.submit} onClick={handleSubmit}>Submit</div>
+                    <ResetButton onClick={reset}>
+                        <ButtonText>Reset</ButtonText>
+                    </ResetButton>
+                    <SubmitButton onClick={handleSubmit}>
+                        <ButtonText>Submit</ButtonText>
+                    </SubmitButton>
                 </ButtonBox>
                 <DemoBox onClick={handleDemo}>
-                    <VolunteerDemoButton>Volunteer demo</VolunteerDemoButton>
-                    <NonprofitDemoButton>Nonprofit demo</NonprofitDemoButton>
-                    <BusinessDemoButton>Business demo</BusinessDemoButton>
+                    <VolunteerDemoButton>
+                        <ButtonText weight='800'>Volunteer demo</ButtonText>
+                    </VolunteerDemoButton>
+                    <NonprofitDemoButton>
+                        <ButtonText>Nonprofit demo</ButtonText>
+                    </NonprofitDemoButton>
+                    <BusinessDemoButton>
+                        <ButtonText color='white' weight='500'>Business demo</ButtonText>
+                    </BusinessDemoButton>
                 </DemoBox>
                 <div className={styles.question}>Don't have an account?
                     <div className={styles.modalOption} onClick={handleSignup}>Sign up</div>

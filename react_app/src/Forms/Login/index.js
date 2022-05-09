@@ -103,49 +103,28 @@ export const LoginForm = () => {
         setPassword('');
     };
 
-    const volunteerDemo = async (e) => {
+    const handleDemo = async (e) => {
         e.preventDefault();
-        const emailErrArr =[]
-        const passwordErrArr =[];
+        const emailErrArr = [];
+        const passwordErrArr = [];
 
-        const data = await dispatch(login('volunteer_demo@testing.com', '064324651d0-72fe-49c5-aa1-0ba223f4fcmv3'));
+        let data;
+
+        if(e.target.innerText.includes('Volunteer')) {
+            data = await dispatch(login('volunteer_demo@testing.com', '064324651d0-72fe-49c5-aa1-0ba223f4fcmv3'))
+        } else if(e.target.innerText.includes('Nonprofit')) {
+            data = await dispatch(login('nonprofit_demo@testing.com', '062651d0-01fe-49c5-aaa1-0829ba3f4ff3'));
+        } else {
+            data = await dispatch(login('business_demo@testing.com', '8f08d594-2275-4c8f-93f3-4cb6dbed4b70'));
+        }
+
         if(data.errors) {
-            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push('Someone tampered with our demo data.') : emailErrArr.push('Someone tampered with our demo data.'));
             setEmailError(emailErrArr);
             setPasswordError(passwordErrArr)
         }
         dispatch(hideModal())
     }
-
-    const nonprofitDemo = async (e) => {
-        e.preventDefault();
-        const emailErrArr =[]
-        const passwordErrArr =[];
-        const data = await dispatch(login('nonprofit_demo@testing.com', '062651d0-01fe-49c5-aaa1-0829ba3f4ff3'));
-        if(data.errors) {
-            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
-            setEmailError(emailErrArr);
-            setPasswordError(passwordErrArr)
-        }
-        dispatch(hideModal())
-    };
-
-    const businessDemo = async (e) => {
-        e.preventDefault();
-        const emailErrArr =[]
-        const passwordErrArr =[];
-        const data = await dispatch(login('business_demo@testing.com', '8f08d594-2275-4c8f-93f3-4cb6dbed4b70'));
-        if(data.errors) {
-            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
-            setEmailError(emailErrArr);
-            setPasswordError(passwordErrArr)
-        }
-        dispatch(hideModal())
-    };
-
-    const showSignupForm = () => {
-		dispatch(setCurrentModal(SignupForm));
-	};
 
     return (
         <FormContainer>
@@ -197,10 +176,10 @@ export const LoginForm = () => {
                     <div className={styles.cancel} onClick={reset}>Reset</div>
                     <div className={styles.submit} onClick={handleSubmit}>Submit</div>
                 </ButtonBox>
-                <DemoBox>
-                    <VolunteerDemoButton onClick={volunteerDemo}>Volunteer demo</VolunteerDemoButton>
-                    <NonprofitDemoButton onClick={nonprofitDemo}>Nonprofit demo</NonprofitDemoButton>
-                    <BusinessDemoButton onClick={businessDemo}>Business demo</BusinessDemoButton>
+                <DemoBox onClick={handleDemo}>
+                    <VolunteerDemoButton>Volunteer demo</VolunteerDemoButton>
+                    <NonprofitDemoButton>Nonprofit demo</NonprofitDemoButton>
+                    <BusinessDemoButton>Business demo</BusinessDemoButton>
                 </DemoBox>
                 <div className={styles.question}>Don't have an account?<div className={styles.modalOption}>Sign up</div></div>
             </Form>

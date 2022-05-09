@@ -16,8 +16,8 @@ import { VectorBox } from '../../Styled/Layout';
 
 export const NotificationBar = () => {
     const sessionUser = useSelector(state => state.session.user);
-    const businesses = useSelector(state => state.businesses);
-    const nonProfits = useSelector(state => state.nonprofits);
+    const businesses = useSelector(state => state.organizations.businesses);
+    const nonProfits = useSelector(state => state.organizations.nonprofits);
     const organization = !sessionUser ? '' : sessionUser.isNonprofit ? nonProfits[sessionUser.organizationId] : businesses[sessionUser.organizationId];
     const { userLocation, setUserLocation } = useUserLocation();
     const { theme } = useTheme();

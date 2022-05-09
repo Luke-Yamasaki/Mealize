@@ -332,7 +332,7 @@ export const OldItemCard = ({ post, sessionUser }) => {
             </InfoBox>
             <IdBox>
                 <IdText>Id:{post.id}</IdText>
-                <MealizeText>Mealize LLC <XSLogo id='logo' color={post.status === 0 ? 'black' : 'white'} /></MealizeText>
+                <MealizeText>Mealize LLC <XSLogo id='logo' color={post.status === 0 ? '#191919' : 'white'} /></MealizeText>
             </IdBox>
         </div>
     )

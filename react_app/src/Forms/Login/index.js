@@ -10,165 +10,30 @@ import { setCurrentModal, hideModal } from '../../store/modal';
 
 //Components
 import { SignupForm } from '../Signup';
+import { Logo } from '../../Assets/Logo';
+
+//Styled-components
+import { LogoBox } from '../../Components/Styled/Navbar';
+import {
+    FormContainer,
+    FormLegend,
+    LogoType,
+    Form,
+    Fieldset,
+    Legend,
+    EmailLegend,
+    Input,
+    Error,
+    ButtonBox,
+    DemoBox,
+    VolunteerDemoButton,
+    NonprofitDemoButton,
+    BusinessDemoButton,
+    ErrorBox,
+    PasswordLegend
+} from '../../Components/Styled/AuthenticationForm';
 
 import styles from './Login.module.css';
-import styled from 'styled-components';
-import banner from '../../Assets/Images/Mealize-banner.png'
-
-const FormContainer = styled.fieldset`
-    width: 450px;
-    height: 650px;
-    background: linear-gradient(#76D97E, #28A690);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-`;
-
-const FormLegend = styled.legend`
-    width: 300px;
-    height: 80px;
-    background-image: url(${banner});
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    margin: 0px;
-    padding-top: 0px;
-`;
-
-const Form = styled.form`
-    width: 400px;
-    height: 500px;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    border-radius: 5px;
-    border: 1px solid #F5F5F5;
-    font-size: 32px;
-    font-family: motiva-sans, sans-serif;
-    font-weight: 900;
-    text-align: left;
-`;
-
-const Fieldset = styled.fieldset`
-    width: 340px;
-    height: 35px;
-    border: 1px solid #28A690;
-    border-radius: 3px;
-    font-size: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    margin: 0px;
-    padding-left: 5px;
-`;
-
-const Legend = styled.legend`
-    color: #28A690;
-    font-size: 16px;
-    width: 70px;
-    height: 15px;
-    font-weight: 600;
-`;
-
-const Input = styled.input`
-    width: 348px;
-    height: 30px;
-    font-size: 16px;
-    border: none;
-    margin-left: -6px;
-    margin-top: 1px;
-    padding-left: 5px;
-    border-radius: none;
-    cursor: pointer;
-`;
-
-const Error = styled.p`
-    color: #90311D;
-    font-size: 14px;
-    padding: 0px;
-    margin: 0px;
-    width: 300px;
-    height: 50px;
-    text-justify: center;
-    text-align: center;
-`;
-
-const ButtonBox = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: 10px;
-    align-items: center;
-    width: 400px;
-    height: 30px;
-    margin-right: 20px;
-`;
-
-const DemoBox = styled.div`
-    width: 400px;
-    height: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-`;
-
-const VolunteerDemoButton = styled.div`
-    width: 115px;
-    height: 35px;
-    background-color: #9AF2C0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-size: 12px;
-    font-weight: 800;
-    font-family: motiva-sans, sans-serif;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-`;
-
-const NonprofitDemoButton = styled.div`
-    width: 115px;
-    height: 35px;
-    background-color: #04B1D9;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-size: 12px;
-    font-weight: 800;
-    font-family: motiva-sans, sans-serif;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-`;
-
-const BusinessDemoButton = styled.div`
-    width: 115px;
-    height: 35px;
-    background-color: #024A59;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 12px;
-    font-weight: 500;
-    font-family: motiva-sans, sans-serif;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-`;
-
 
 export const LoginForm = () => {
     const dispatch = useDispatch();
@@ -176,6 +41,8 @@ export const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState([]);
     const [passwordError, setPasswordError] = useState([]);
+    const {theme} = useTheme();
+    const {setModalName} = useModal();
 
     const handleEmail = (e) => {
         e.preventDefault();
@@ -282,41 +149,49 @@ export const LoginForm = () => {
 
     return (
         <FormContainer>
-            <FormLegend/>
-            <Form> Welcome back!
+            <FormLegend>
+                <LogoBox width='175px'>
+                    <Logo theme={theme} />
+                    <LogoType theme={theme}>Mealize</LogoType>
+                </LogoBox>
+            </FormLegend>
+            <Form theme={theme}> Welcome back!
                 {emailError.length > 0 && (
                     emailError.map((error, idx) => (
-                        <div key={idx} style={{width: '300px', height: '50px', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '14px'}}>
+                        <ErrorBox id={idx} theme={theme}>
                             <Error>{error}</Error>
-                        </div>
-
+                        </ErrorBox>
                     ))
                 )}
-                <Fieldset>
-                    <Legend style={{width: '40px'}} htmlFor='email'> Email
+                <Fieldset error={emailError.length > 0}>
+                    <EmailLegend htmlFor='email' theme={theme} error={emailError.length > 0}> Email
                         <Input
                             name="email"
                             type="text"
                             value={email}
+                            theme={theme}
                             onChange={handleEmail}
                         />
-                    </Legend>
+                    </EmailLegend>
                 </Fieldset>
                 {passwordError.length > 0 && (
                     passwordError.map((error, idx) => (
-                        <Error key={idx}>{error}</Error>
+                        <ErrorBox id={idx} theme={theme}>
+                            <Error key={idx}>{error}</Error>
+                        </ErrorBox>
                     ))
                 )}
-                <Fieldset>
-                    <Legend htmlFor="password">Password
+                <Fieldset error={passwordError.length > 0}>
+                    <PasswordLegend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
                         <Input
                             name='password'
                             type='password'
                             autoComplete="none"
                             value={password}
+                            theme={theme}
                             onChange={handlePassword}
                         />
-                    </Legend>
+                    </PasswordLegend>
                 </Fieldset>
                 <ButtonBox>
                     <div className={styles.cancel} onClick={reset}>Reset</div>
@@ -327,7 +202,7 @@ export const LoginForm = () => {
                     <NonprofitDemoButton onClick={nonprofitDemo}>Nonprofit demo</NonprofitDemoButton>
                     <BusinessDemoButton onClick={businessDemo}>Business demo</BusinessDemoButton>
                 </DemoBox>
-                <div className={styles.question}>Don't have an account?<div className={styles.modalOption} onClick={showSignupForm}>Sign up</div></div>
+                <div className={styles.question}>Don't have an account?<div className={styles.modalOption}>Sign up</div></div>
             </Form>
         </FormContainer>
     )

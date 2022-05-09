@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postItem } from '../../store/posts';
 import { hideModal } from '../../store/modal';
 //Helpers
-import { validateItem, uploadImage } from '../../utils/forms/items';
+import { validateItem, uploadImage } from '../../utils/Forms/items';
 
 //Components
 import { ItemCard } from "../../Components/Cards/ItemCard";

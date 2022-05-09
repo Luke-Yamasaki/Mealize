@@ -41,14 +41,14 @@ export const BannerTextContainer = styled.div`
 `;
 
 export const BannerText = styled(Paragraph)`
-    color: ${props => props.theme === 'light' ? 'black' : 'white'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-size: 0.7em;
     font-weight: ${props => props.theme === 'light' ? '800' : '500'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
 `;
 
 export const ExpText = styled(Paragraph)`
-    color: ${props => props.theme === 'light' ? 'black' : 'white'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-size: 0.6em;
     font-weight: ${props => props.theme === 'light' ? '700' : '400'};
     letter-spacing: 0.5px;
@@ -100,7 +100,7 @@ export const CompanyLogo = styled.img`
 `;
 
 export const CompanyName = styled(Bold)`
-    color: black;
+    color: #191919;
     width: 220px;
     height: 30px;
     font-size: 0.9em;
@@ -124,14 +124,14 @@ export const PinContainer = styled.div`
 `;
 
 export const CompanyAddress = styled(Paragraph)`
-    color: black;
+    color: #191919;
     width: 110px;
     height: 35px;
     font-size: 0.7em;
 `;
 
 export const ItemDateText = styled(Medium)`
-    color: black;
+    color: #191919;
     font-size: 0.65em;
     max-width: 60px;
     margin-left: 5px;
@@ -172,7 +172,7 @@ export const InfoContainer = styled(BannerTextContainer)`
 export const ItemTitle = styled(Bold)`
     max-width: 200px;
     font-size: 0.85em;
-    color: ${props => props.theme === 'light' ? 'black' : 'white'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
     font-weight: ${props => props.theme === 'light' ? '700' : '500'};
 `;
@@ -181,7 +181,7 @@ export const ItemQuantity = styled(Medium)`
     max-width: 75px;
     font-size: 0.65em;
     max-width: 75px;
-    color: ${props => props.theme === 'light' ? 'black' : 'white'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
     font-weight: ${props => props.theme === 'light' ? '700' : '400'};
 `;
@@ -198,7 +198,7 @@ export const DescriptionBox = styled.div`
 `;
 
 export const DescriptionText = styled(Medium)`
-    color: ${props => props.theme === 'light' ? 'black' : 'white'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-weight: ${props => props.theme === 'light' ? '700' : '300'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
     font-size: 0.65em;
@@ -219,12 +219,12 @@ export const ButtonBox = styled(ExpBanner)`
 
 export const ButtonText = styled(Medium)`
     font-size: 0.75em;
-    color: black;
+    color: #191919;
     max-width: 100px;
     max-height: 25px;
 `;
 
 export const QuestionText = styled(ButtonText)`
-    color: ${props => props.theme === 'light' ? 'black' : 'white'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-weight: ${props => props.theme === 'light' ? '700' : '300'};
 `;

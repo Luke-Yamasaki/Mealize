@@ -149,7 +149,7 @@ export const SideBarViewAll = styled(SideBarInfoBox)`
 
 export const SideBarInfoText = styled.div`
     font-size: 12px;
-    color: ${props => props.theme === 'light' ? 'black' : 'white'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-weight: bold;
     &:hover {
         text-decoration: underline;

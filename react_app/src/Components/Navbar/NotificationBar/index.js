@@ -45,7 +45,7 @@ export const NotificationBar = () => {
     return (
         <NotificationSection theme={theme}>
             <NotificationContainer theme={theme}>
-                <LocationPin color={theme === 'light' ? 'black' : 'white'} />
+                <LocationPin color={theme === 'light' ? '#191919' : 'white'} />
                 {sessionUser.isNonprofit && sessionUser.isManager ?
                     <NotificationText theme={theme}>
                         Drop off at: {organization.street + ', ' + organization.city + ', ' + organization.state.slice(0, 2).toUpperCase() + ' ' + organization.zip}

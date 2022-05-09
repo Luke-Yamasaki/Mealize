@@ -89,7 +89,7 @@ export const CardContent = ({ post }) => {
             <Card color={styleObj} height={sessionUser ? '390px' : '350px'}>
                 <TitleBox to={`/organizations/${organization.id}`}>
                     <VectorBox square='30px' resize='32px'>
-                        <CompanyLogo src={organization.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='black'/>
+                        <CompanyLogo src={organization.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='#191919'/>
                     </VectorBox>
                     <TitleTextContainer>
                         <CompanyName>{organization.name}</CompanyName>

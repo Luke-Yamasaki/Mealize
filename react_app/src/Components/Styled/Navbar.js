@@ -78,16 +78,17 @@ export const SearchInput = styled.input`
     font-size: 14px;
     padding-left: 10px;
     background-color: ${props => props.theme === 'light' ? '#FFFFFF' : '#191919'};
-    color: ${props => props.theme === 'light' ? 'black' : 'white'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
 export const LogoBox = styled.div`
-    width: 165px;
+    width: ${props => props.width ? props.width : '165px'};
     height: 60px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    gap: 5px;
 `;
 
 export const AuthBox = styled.div`

@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { login, signup } from '../../store/session';
 import { setCurrentModal, hideModal } from '../../store/modal';
 //Helper
-import { validateSignup, uploadProfileImage } from '../../utils/forms/signup';
+import { validateSignup, uploadProfileImage } from '../../utils/Forms/signup';
 import * as nsfwjs from 'nsfwjs';
 
 //Components

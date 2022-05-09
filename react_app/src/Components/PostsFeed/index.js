@@ -1,5 +1,4 @@
 //Hooks
-import { useFilter } from "../../Context/FilterContext"
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
@@ -10,8 +9,7 @@ import { FeedContainer } from "../Styled/Layout"
 //Helper
 import { determineExpiration } from "../../utils/Expiration";
 
-export const PostsFeed = ({sessionUser}) => {
-    const {filter} = useFilter();
+export const PostsFeed = ({filter, sessionUser}) => {
     const allPosts = useSelector(state => state.posts.all);
     const posts = Object.values(allPosts);
     const favoritesArr = [];
@@ -34,6 +32,7 @@ export const PostsFeed = ({sessionUser}) => {
             const hoursLeft = determineExpiration(post.expDate);
             post.status === 0 && hoursLeft > 1 ? availableArr.push(post) : unavailableArr.push(post)
         })
+        console.log(availableArr)
         //Postsfilter
         posts.map(post => post.isItem ? itemsArr.push(post) : requestsArr.push(post));
         //CategoriesFilter
@@ -42,7 +41,9 @@ export const PostsFeed = ({sessionUser}) => {
 
     return (
         <FeedContainer>
-            {(sessionUser && filter === 'favorites') && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {availableArr.map((post, idx) => (<ItemCard key={idx} post={post} />))}
+
+            {/* {(sessionUser && filter === 'favorites') && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
             {filter === 'available' && availableArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
             {filter === 'unavailable' && unavailableArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
             {filter === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
@@ -52,7 +53,7 @@ export const PostsFeed = ({sessionUser}) => {
             {filter === 'fruits' && fruitsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
             {filter === 'grains' && grainsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
             {filter === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
-            {filter === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {filter === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)} */}
         </FeedContainer>
     )
 }

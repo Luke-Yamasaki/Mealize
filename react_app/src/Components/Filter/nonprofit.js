@@ -9,30 +9,49 @@ import { ImageBox } from "../Styled/Layout";
 export const NonprofitFilter = ({theme, nonprofits}) => {
     const {filter, setFilter} = useFilter();
     const history = useHistory();
+    const one = nonprofits[0];
+    const two = nonprofits[1];
+    const three = nonprofits[2];
 
-    const handleNonprofit = (id) => {
-        setFilter(id);
+    const handleNonprofitOne = (e) => {
+        e.preventDefault();
+        setFilter(one.id);
+    };
+
+    const handleNonprofitTwo = (e) => {
+        e.preventDefault();
+        setFilter(two.id);
+    };
+
+    const handleNonprofitThree = (e) => {
+        e.preventDefault();
+        setFilter(three.id);
     };
 
     const redirectToNonprofits = (e) => {
         e.preventDefault();
-        return history.push('/nonprofits')
+        return history.push('/Nonprofits');
     }
 
     useEffect(() => {
         console.log(filter)
     },[filter])
 
-
     return (
         <SideField theme={theme}>
             <SideLegend theme={theme}>Nonprofits</SideLegend>
-            {nonprofits.map((nonprofit, idx) => (
-                <SideBarInfoBox key={idx}>
-                    <ImageBox src={nonprofit.logoUrl} alt='nonprofit logo' onClick={handleNonprofit(nonprofit.id)}/>
-                    <SideBarInfoText theme={theme} onClick={handleNonprofit(nonprofit.id)}>{nonprofit.name}</SideBarInfoText>
-                </SideBarInfoBox>
-            ))}
+            <SideBarInfoBox onClick={handleNonprofitOne}>
+                <ImageBox resize='32px' src={one.logoUrl} alt='Nonprofit logo' />
+                <SideBarInfoText theme={theme}>{one.name}</SideBarInfoText>
+            </SideBarInfoBox>
+            <SideBarInfoBox onClick={handleNonprofitTwo}>
+                <ImageBox resize='32px' src={two.logoUrl} alt='Nonprofit logo' />
+                <SideBarInfoText theme={theme}>{two.name}</SideBarInfoText>
+            </SideBarInfoBox>
+            <SideBarInfoBox onClick={handleNonprofitThree}>
+                <ImageBox resize='32px' src={three.logoUrl} alt='Nonprofit logo' />
+                <SideBarInfoText theme={theme}>{three.name}</SideBarInfoText>
+            </SideBarInfoBox>
             <SideBarInfoText onClick={redirectToNonprofits}>View all</SideBarInfoText>
         </SideField>
     )

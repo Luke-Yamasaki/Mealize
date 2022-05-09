@@ -195,4 +195,10 @@ export const ImageBox = styled.img`
     object-fit: cover;
     object-position: center;
     background-color: black;
+    &:hover {
+        width: ${props => props.resize ? props.resize : props.square ? props.square : '30px'};
+        height: ${props => props.resize ? props.resize : props.square ? props.square : '30px'};
+        transform: ${props => props.resize ? 'scale(1.1)' : ''};
+        opacity: ${props => props.opacity ? props.opacity : '100%'};
+     }
 `;

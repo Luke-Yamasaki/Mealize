@@ -9,9 +9,23 @@ import { ImageBox } from "../Styled/Layout";
 export const BusinessFilter = ({theme, businesses}) => {
     const {filter, setFilter} = useFilter();
     const history = useHistory();
+    const one = businesses[0];
+    const two = businesses[1];
+    const three = businesses[2];
 
-    const handleBusiness = (id) => {
-        setFilter(id);
+    const handleBusinessOne = (e) => {
+        e.preventDefault();
+        setFilter(one.id);
+    };
+
+    const handleBusinessTwo = (e) => {
+        e.preventDefault();
+        setFilter(two.id);
+    };
+
+    const handleBusinessThree = (e) => {
+        e.preventDefault();
+        setFilter(three.id);
     };
 
     const redirectToBusinesses = (e) => {
@@ -26,12 +40,18 @@ export const BusinessFilter = ({theme, businesses}) => {
     return (
         <SideField theme={theme}>
             <SideLegend theme={theme}>Businesses</SideLegend>
-            {businesses.map((business, idx) => (
-                <SideBarInfoBox key={idx} onClick={handleBusiness(business.id)} >
-                    <ImageBox src={business.logoUrl} alt='Business logo' />
-                    <SideBarInfoText theme={theme}>{business.name}</SideBarInfoText>
-                </SideBarInfoBox>
-            ))}
+            <SideBarInfoBox onClick={handleBusinessOne}>
+                <ImageBox resize='32px' src={one.logoUrl} alt='Business logo' />
+                <SideBarInfoText theme={theme}>{one.name}</SideBarInfoText>
+            </SideBarInfoBox>
+            <SideBarInfoBox onClick={handleBusinessTwo}>
+                <ImageBox resize='32px' src={two.logoUrl} alt='Business logo' />
+                <SideBarInfoText theme={theme}>{two.name}</SideBarInfoText>
+            </SideBarInfoBox>
+            <SideBarInfoBox onClick={handleBusinessThree}>
+                <ImageBox resize='32px' src={three.logoUrl} alt='Business logo' />
+                <SideBarInfoText theme={theme}>{three.name}</SideBarInfoText>
+            </SideBarInfoBox>
             <SideBarInfoText onClick={redirectToBusinesses}>View all</SideBarInfoText>
         </SideField>
     )

@@ -1,6 +1,7 @@
 //Hooks
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
+import { useFilter } from '../../Context/FilterContext';
 //Components
 import { PostsFeed } from '../../Components/PostsFeed';
 import { CategoryFilter } from '../../Components/Filter/category';
@@ -23,6 +24,7 @@ export const Home = () => {
     const categoriesObj = useSelector(state => state.categories)
     const organizationsObj = useSelector(state => state.organizations)
     const {theme} = useTheme();
+    const {filter} = useFilter();
 
     const categories = Object.values(categoriesObj);
     const businesses = Object.values(organizationsObj.businesses);
@@ -45,7 +47,7 @@ export const Home = () => {
             </SideBarContainer>
             <PostsSection>
                 <PostsTitle theme={theme}>Posts</PostsTitle>
-                <PostsFeed />
+                <PostsFeed filter={filter}/>
             </PostsSection>
         </PageBackGround>
     )

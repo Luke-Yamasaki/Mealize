@@ -14,6 +14,14 @@ export const ModalBackGround = styled.div`
     background-color: rgba(0, 0, 0, 0.5);
 `;
 
+export const ModalField = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    cursor-pointer;
+`;
+
 export const SettingsModalBackGround = styled(ModalBackGround)`
     background-color: rgba(0, 0, 0, 0);
     padding-right: 11.75vw;

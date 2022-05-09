@@ -1,8 +1,16 @@
+//Hooks
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTheme } from '../../Context/ThemeContext';
+import { useModal } from '../../Context/ModalContext';
+
+//Actions
 import { login } from '../../store/session';
 import { setCurrentModal, hideModal } from '../../store/modal';
+
+//Components
 import { SignupForm } from '../Signup';
+
 import styles from './Login.module.css';
 import styled from 'styled-components';
 import banner from '../../Assets/Images/Mealize-banner.png'

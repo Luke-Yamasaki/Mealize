@@ -138,12 +138,22 @@ export const SideBarInfoBox = styled.div`
     align-items: center;
     width: 150px;
     height: 50px;
+    cursor: pointer;
+`;
+
+export const SideBarViewAll = styled(SideBarInfoBox)`
+    height: 30px;
+    cursor: pointer;
+    text-decoration: underline;
 `;
 
 export const SideBarInfoText = styled.div`
     font-size: 12px;
     color: ${props => props.theme === 'light' ? 'black' : 'white'};
     font-weight: bold;
+    &:hover {
+        text-decoration: underline;
+    }
 `;
 
 export const FeedContainer = styled.div`

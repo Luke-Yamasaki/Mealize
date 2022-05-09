@@ -3,8 +3,8 @@ import { useFilter } from "../../Context/FilterContext";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 //Styled-components
-import { SideField, SideLegend, SideBarInfoBox, SideBarInfoText } from "../Styled/Layout";
-import { ImageBox } from "../Styled/Layout";
+import { SideField, SideLegend, SideBarInfoBox, SideBarViewAll, SideBarInfoText } from "../Styled/Layout";
+import { ImageBox, VectorBox } from "../Styled/Layout";
 
 export const BusinessFilter = ({theme, businesses}) => {
     const {filter, setFilter} = useFilter();
@@ -52,7 +52,10 @@ export const BusinessFilter = ({theme, businesses}) => {
                 <ImageBox resize='32px' src={three.logoUrl} alt='Business logo' />
                 <SideBarInfoText theme={theme}>{three.name}</SideBarInfoText>
             </SideBarInfoBox>
-            <SideBarInfoText onClick={redirectToBusinesses}>View all</SideBarInfoText>
+            <SideBarViewAll onClick={handleBusinessThree}>
+                <VectorBox />
+                <SideBarInfoText theme={theme} onClick={redirectToBusinesses}>View all</SideBarInfoText>
+            </SideBarViewAll>
         </SideField>
     )
 };

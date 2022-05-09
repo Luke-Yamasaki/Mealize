@@ -3,8 +3,8 @@ import { useFilter } from "../../Context/FilterContext";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 //Styled-components
-import { SideField, SideLegend, SideBarInfoBox, SideBarInfoText } from "../Styled/Layout";
-import { ImageBox } from "../Styled/Layout";
+import { SideField, SideLegend, SideBarInfoBox, SideBarViewAll, SideBarInfoText } from "../Styled/Layout";
+import { ImageBox, VectorBox } from "../Styled/Layout";
 
 export const NonprofitFilter = ({theme, nonprofits}) => {
     const {filter, setFilter} = useFilter();
@@ -52,7 +52,10 @@ export const NonprofitFilter = ({theme, nonprofits}) => {
                 <ImageBox resize='32px' src={three.logoUrl} alt='Nonprofit logo' />
                 <SideBarInfoText theme={theme}>{three.name}</SideBarInfoText>
             </SideBarInfoBox>
-            <SideBarInfoText onClick={redirectToNonprofits}>View all</SideBarInfoText>
+            <SideBarViewAll onClick={handleNonprofitThree}>
+                <VectorBox />
+                <SideBarInfoText theme={theme} onClick={redirectToNonprofits}>View all</SideBarInfoText>
+            </SideBarViewAll>
         </SideField>
     )
 };

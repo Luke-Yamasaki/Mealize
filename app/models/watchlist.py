@@ -7,6 +7,7 @@ class Watchlist(db.Model):
     organizationId = db.Column(db.Integer, db.ForeignKey('organizations.id'))
     userId = db.Column(db.Integer, db.ForeignKey('users.id'))
     ip = db.Column(db.String, nullable=False)
+    count = db.Column(db.Integer, nullable=False)
     createdAt = db.Column(db.DateTime, default=db.func.now())
 
     organization = db.relationship('Organization', back_populates='watchlist')
@@ -16,12 +17,14 @@ class Watchlist(db.Model):
         if self.organizationId == False:
             return {
                 'id': self.id,
-                'ip': self.ip
+                'ip': self.ip,
+                'count': self.count
             }
         else:
             return {
                 'id': self.id,
                 'organizationId': self.organizationId,
                 'userId': self.userId,
-                'ip': self.ip
+                'ip': self.ip,
+                'count': self.count
             }

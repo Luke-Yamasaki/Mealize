@@ -1,4 +1,6 @@
+//Hooks
 import { useFilter } from "../../Context/FilterContext";
+import { useEffect } from "react";
 //Styled-components
 import { SideField, SideLegend, SideBarInfoBox, SideBarInfoText } from "../Styled/Layout";
 import { VectorBox } from "../Styled/Layout";
@@ -8,18 +10,32 @@ import { Business } from "../../Assets/Icons/Business";
 import { Nonprofit } from "../../Assets/Icons/Nonprofit";
 
 export const PostTypeFilter = ({theme}) => {
-    const {setFilter} = useFilter();
+    const {filter, setFilter} = useFilter();
+
+    const handleRequests = (e) => {
+        e.preventDefault();
+        setFilter('requests')
+    }
+
+    const handleItems = (e) => {
+        e.preventDefault();
+        setFilter('items')
+    }
+
+    useEffect(() => {
+        console.log(filter)
+    }, [filter])
 
     return (
         <SideField theme={theme}>
             <SideLegend theme={theme}>Post type</SideLegend>
-            <SideBarInfoBox onClick={setFilter('requests')}>
+            <SideBarInfoBox onClick={handleRequests}>
                 <VectorBox resize='32px'>
                     <Business />
                 </VectorBox>
                 <SideBarInfoText theme={theme}>Requests</SideBarInfoText>
             </SideBarInfoBox>
-            <SideBarInfoBox onClick={setFilter('items')}>
+            <SideBarInfoBox onClick={handleItems}>
                 <VectorBox resize='32px'>
                     <Nonprofit />
                 </VectorBox>

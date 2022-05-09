@@ -9,6 +9,11 @@ export const NavBar = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    will-change: transform;
+    z-index: 200;
 `;
 
 export const LogoNavLink = styled(NavLink)`
@@ -31,11 +36,6 @@ export const Navigation = styled.nav`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    will-change: transform;
-    z-index: 200;
 `;
 
 export const NavList = styled.div`
@@ -110,4 +110,3 @@ export const ProfileName = styled(Bold)`
     height: 30px;
     color: ${props => props.theme === 'light' ? '#FFFFFF' : '#191919'};
 `;
-

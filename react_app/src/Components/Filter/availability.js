@@ -32,13 +32,13 @@ export const AvailabilityFilter = ({theme}) => {
                 <VectorBox resize='32px'>
                     <AvailableIcon theme={theme}/>
                 </VectorBox>
-                <SideBarInfoText>Available</SideBarInfoText>
+                <SideBarInfoText theme={theme}>Available</SideBarInfoText>
             </SideBarInfoBox>
             <SideBarInfoBox onClick={handleUnavailable}>
                 <VectorBox resize='32px'>
                     <UnavailableIcon theme={theme}/>
                 </VectorBox>
-                <SideBarInfoText>Unavailable</SideBarInfoText>
+                <SideBarInfoText theme={theme}>Unavailable</SideBarInfoText>
             </SideBarInfoBox>
         </SideField>
     )

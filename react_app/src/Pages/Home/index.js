@@ -39,11 +39,9 @@ export const Home = () => {
                 )}
                 <AvailabilityFilter theme={theme}/>
                 <PostTypeFilter theme={theme} />
-                {categories.map((group, idx) => (
-                    <CategoryFilter key={idx} category={group.category} theme={theme} />
-                ))}
-               <BusinessFilter businesses={threeBusinesses} />
-               <NonprofitFilter nonprofits={threeNonprofits} />
+                <CategoryFilter theme={theme} categories={categories} />
+                <BusinessFilter theme={theme} businesses={threeBusinesses} />
+                <NonprofitFilter theme={theme} nonprofits={threeNonprofits} />
             </SideBarContainer>
             <PostsSection>
                 <PostsTitle theme={theme}>Posts</PostsTitle>

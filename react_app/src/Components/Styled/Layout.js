@@ -184,6 +184,10 @@ export const VectorBox = styled.div`
     }
 `;
 
+export const MealizeLogoBox = styled(VectorBox)`
+    object-fit: contain;
+`;
+
 export const ImageBox = styled.img`
     width: ${props => props.square ? props.square : '30px'};
     height: ${props => props.square ? props.square : '30px'};

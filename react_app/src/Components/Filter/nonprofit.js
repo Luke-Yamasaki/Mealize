@@ -28,9 +28,9 @@ export const NonprofitFilter = ({theme, nonprofits}) => {
         <SideField theme={theme}>
             <SideLegend theme={theme}>Nonprofits</SideLegend>
             {nonprofits.map((nonprofit, idx) => (
-                <SideBarInfoBox key={idx} onClick={handleNonprofit(nonprofit.id)}>
-                    <ImageBox src={nonprofit.logoUrl} alt='nonprofit logo' />
-                    <SideBarInfoText theme={theme}>{nonprofit.name}</SideBarInfoText>
+                <SideBarInfoBox key={idx}>
+                    <ImageBox src={nonprofit.logoUrl} alt='nonprofit logo' onClick={handleNonprofit(nonprofit.id)}/>
+                    <SideBarInfoText theme={theme} onClick={handleNonprofit(nonprofit.id)}>{nonprofit.name}</SideBarInfoText>
                 </SideBarInfoBox>
             ))}
             <SideBarInfoText onClick={redirectToNonprofits}>View all</SideBarInfoText>

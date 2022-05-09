@@ -20,7 +20,6 @@ import {
     LogoType,
     Form,
     Fieldset,
-    Legend,
     EmailLegend,
     Input,
     Error,
@@ -124,6 +123,11 @@ export const LoginForm = () => {
             setPasswordError(passwordErrArr)
         }
         dispatch(hideModal())
+    };
+
+    const handleSignup = (e) => {
+        e.preventDefault();
+        setModalName('signup')
     }
 
     return (
@@ -181,7 +185,9 @@ export const LoginForm = () => {
                     <NonprofitDemoButton>Nonprofit demo</NonprofitDemoButton>
                     <BusinessDemoButton>Business demo</BusinessDemoButton>
                 </DemoBox>
-                <div className={styles.question}>Don't have an account?<div className={styles.modalOption}>Sign up</div></div>
+                <div className={styles.question}>Don't have an account?
+                    <div className={styles.modalOption} onClick={handleSignup}>Sign up</div>
+                </div>
             </Form>
         </FormContainer>
     )

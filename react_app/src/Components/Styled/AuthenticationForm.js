@@ -3,8 +3,8 @@ import { Black, ExtraBold, Paragraph } from './Fonts';
 import { DemoBox } from './Buttons';
 
 export const FormContainer = styled.fieldset`
-    width: 450px;
-    height: 45vh;
+    width: ${props => props.width ? props.width : '450px'};
+    height: ${props => props.height ? props.height : '600px'};
     background: linear-gradient(#76D97E, #28A690);
     border-radius: 5px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -12,7 +12,7 @@ export const FormContainer = styled.fieldset`
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: -350px;
+    margin-top: ${props => props.marginTop ? props.marginTop : '0px'};
 `;
 
 export const FormLegend = styled.legend`
@@ -34,8 +34,8 @@ export const LogoType = styled(ExtraBold)`
 `;
 
 export const Form = styled.form`
-    width: 400px;
-    height: 450px;
+    width: ${props => props.width ? props.width : '400px'};
+    height: ${props => props.height ? props.height : '450px'};
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     display: flex;
@@ -179,3 +179,14 @@ export const OptionalInfoLabel = styled.label`
     font-weight: 700;
     font-size: 12px;
 `;
+
+export const SlidingFormContainer = styled.div`
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+`;
+
+export const SlidingForm = styled.div

@@ -1,18 +1,25 @@
 //Hooks
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from '../../Context/ThemeContext';
 import { useModal } from '../../Context/ModalContext';
+
 //Store
 import { login, signup } from '../../store/session';
 import { hideModal } from '../../store/modal';
+
 //Helper
 import { validateSignup, uploadProfileImage } from '../../utils/Forms/signup';
 import * as nsfwjs from 'nsfwjs';
+
 //Components
 import { PreviewSection } from '../../Components/Preview';
-import { IdCardPreview } from '../../Components/Preview/IdCard';
+import { Logo } from '../../Assets/Logo';
+
+//Styled-components
+import { LogoBox } from '../../Components/Styled/Navbar';
+
 
 import {
     FormContainer,
@@ -69,6 +76,7 @@ export const SignupForm = () => {
     const organizations = useSelector(state => state.organizations);
     const { theme } = useTheme();
     const {setModalName}= useModal();
+    console.log(organizations)
 
     // states
     const [firstName, setFirstName] = useState('');
@@ -101,8 +109,9 @@ export const SignupForm = () => {
     const [responseErrors, setResponseErrors] = useState([]);
 
     const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
-
-
+    console.log(allOrganizations)
+    const nonprofitStatus = allOrganizations[organizationId]?.isNonprofit ? true : false;
+    console.log(nonprofitStatus)
     //dates
     const year = new Date().getFullYear()
     const month = new Date().getMonth()
@@ -115,13 +124,51 @@ export const SignupForm = () => {
 
     const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
 
+
+
+    let dataProp = {
+        organizationId,
+        firstName,
+        lastName,
+        dob,
+        deaf,
+        wheelchair,
+        learningDisabled,
+        lgbtq,
+        nonprofitStatus,
+        isManager,
+    };
+
+    useEffect(() => {
+        dataProp = {
+            organizationId,
+            firstName,
+            lastName,
+            dob,
+            deaf,
+            wheelchair,
+            learningDisabled,
+            lgbtq,
+            nonprofitStatus,
+            isManager,
+        };
+
+    },[organizationId,
+        firstName,
+        lastName,
+        dob,
+        deaf,
+        wheelchair,
+        learningDisabled,
+        lgbtq,
+        nonprofitStatus,
+        isManager,])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const formData = new FormData();
         formData.append("image", image);
-
-        const nonprofitStatus = allOrganizations[organizationId].isNonprofit ? true : false;
 
         const inputData = {
             organizationId,
@@ -217,39 +264,6 @@ export const SignupForm = () => {
             setResponseErrors(['Please resolve all errors.'])
         }
     }
-
-    // const cancel = (e) => {
-    //     e.preventDefault();
-    //     setResponseErrors([]);
-    //     setFirstName('');
-    //     setLastName('');
-    //     setImage(null);
-    //     setDob((new Date().toISOString().split('T')[0].slice(0,4)-18).toString() + new Date().toISOString().split('T')[0].slice(4,11))
-    //     setDeaf(false);
-    //     setWheelchair(false);
-    //     setLearningDisabled(false);
-    //     setLgbtq(false);
-    //     setOrganizationId('');
-    //     setIsNonprofit(false);
-    //     setIsManager(false);
-    //     setEmail('');
-    //     setPhone('');
-    //     setPassword('');
-    //     setConfirm('');
-
-    //     setFirstNameError([]);
-    //     setLastNameError([]);
-    //     setDobError([]);
-    //     setOrganizationError([]);
-    //     setEmailError([]);
-    //     setPhoneError([]);
-    //     setConfirmError([]);
-    //     setImageError([]);
-
-    //     const imageInput = document.getElementById('profileImage');
-    //     imageInput.value = '';
-    //     imageInput.style.color = '#C2462A';
-    // };
 
     const cancel = (e) => {
         e.preventDefault();
@@ -409,10 +423,19 @@ export const SignupForm = () => {
     }
 
     return (
-        <PreviewWrapper>
-           <PreviewSection type='id' props={'hi'}/>
-            <FormContainer>
-                <Form> Welcome to Mealize!
+        <PreviewWrapper width='1200px' height='652px'>
+           <PreviewSection type='id' props={dataProp}/>
+            <FormContainer marginTop='-35px' width='500px' height='670px'>
+                <FormLegend>
+                    <LogoBox width='175px'>
+                        <Logo theme={theme} />
+                        <LogoType theme={theme}>Mealize</LogoType>
+                    </LogoBox>
+                </FormLegend>
+                <Form width='450px' height='550px' theme={theme}>
+                <FormTitleBox>
+                    <FormTitle theme={theme}>Welcome back!</FormTitle>
+                </FormTitleBox>
                 {responseErrors.length > 0 && (
                         <Error>{responseErrors[0]}</Error>
                     )}
@@ -636,14 +659,6 @@ export const SignupForm = () => {
                     </Legend>
                 </Fieldset>
                 <ButtonBox>
-                    <InputButtonBox>
-                        <CancelButton onClick={cancel}>
-                            <ButtonText>Cancel</ButtonText>
-                        </CancelButton>
-                        <SubmitButton onClick={handleSubmit}>
-                            <ButtonText>Submit</ButtonText>
-                        </SubmitButton>
-                    </InputButtonBox>
                     <DemoBox onClick={handleDemo}>
                         <VolunteerDemoButton>
                             <ButtonText weight='800'>Volunteer demo</ButtonText>
@@ -665,3 +680,14 @@ export const SignupForm = () => {
         </PreviewWrapper>
     )
 }
+
+
+// Final slide
+{/* <InputButtonBox>
+    <CancelButton onClick={cancel}>
+        <ButtonText>Cancel</ButtonText>
+    </CancelButton>
+    <SubmitButton onClick={handleSubmit}>
+        <ButtonText>Submit</ButtonText>
+    </SubmitButton>
+</InputButtonBox> */}

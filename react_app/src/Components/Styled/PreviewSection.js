@@ -5,8 +5,8 @@ export const PreviewWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 1200px;
-    height: 900px;
+    width: ${props => props.width};
+    height: ${props => props.height};
     background: linear-gradient(#28A690,#76D97E);
     border-radius: 5px;
 `;

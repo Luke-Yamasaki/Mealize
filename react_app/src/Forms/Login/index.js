@@ -40,7 +40,8 @@ import {
     FormTitle,
     FormContent,
     InputContainer,
-    InputErrorBox
+    InputErrorBox,
+    FormSubTitle
 } from '../../Components/Styled/AuthenticationForm';
 
 
@@ -153,9 +154,9 @@ export const LoginForm = () => {
                     <FormTitle theme={theme}>Welcome back!</FormTitle>
                 </FormTitleBox>
                 <FormContent>
-                    <InputContainer>
+                    <InputContainer height={emailError.length > 0 ? '170px' : '150px'}>
                         <InputErrorBox>
-                            <ErrorBox theme={theme} visibility={emailError.length > 0 ? 'visible' : 'hidden'}>
+                            <ErrorBox theme={theme} height={emailError.length > 0 ? '20px' : '0px'}>
                                 <Error>{emailError[0]}</Error>
                             </ErrorBox>
                             <Fieldset error={emailError.length > 0}>
@@ -165,7 +166,7 @@ export const LoginForm = () => {
                             </Fieldset>
                         </InputErrorBox>
                         <InputErrorBox>
-                            <ErrorBox theme={theme} visibility={passwordError.length > 0 ? 'visible' : 'hidden'}>
+                            <ErrorBox theme={theme} height={passwordError.length > 0 ? '20px' : '0px'}>
                                 <Error>{passwordError[0]}</Error>
                             </ErrorBox>
                             <Fieldset error={passwordError.length > 0}>

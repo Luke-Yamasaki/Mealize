@@ -3,7 +3,7 @@ import { Black, ExtraBold, Paragraph } from './Fonts';
 
 export const FormContainer = styled.fieldset`
     width: 450px;
-    height: 650px;
+    height: 600px;
     background: linear-gradient(#76D97E, #28A690);
     border-radius: 5px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -33,13 +33,14 @@ export const LogoType = styled(ExtraBold)`
 
 export const Form = styled.form`
     width: 400px;
-    height: 500px;
+    height: 450px;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
+    gap: 25px;
     border-radius: 5px;
     border: 1px solid;
     border-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
@@ -53,6 +54,7 @@ export const FormTitleBox = styled.div`
     width: 400px;
     height: 50px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 `;
@@ -68,18 +70,20 @@ export const FormContent = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
 `;
 
 export const InputContainer = styled(FormContent)`
-    height: 200px;
+    height: ${props => props.height};
 `;
 
 export const InputErrorBox = styled(FormContent)`
-    height: 100px;
+    max-height: 120px;
+    min-height: 70px;
+    height: auto;
     justify-content: flex-end;
     align-items: left;
-    gap: 10px;
+    gap: 5px;
 `;
 
 export const Fieldset = styled.fieldset`
@@ -130,9 +134,8 @@ export const Input = styled.input`
 
 export const ErrorBox = styled.div`
     width: 350px;
-    height: 20px;
+    height: ${props => props.height};
     display: flex;
-    visibility: ${props => props.visibility};
     justify-content: left;
     align-items: center;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
@@ -141,8 +144,11 @@ export const ErrorBox = styled.div`
 
 export const Error = styled(Paragraph)`
     color: red;
-    font-size: 14px;
+    font-size: 12px;
     text-align: center;
+    height: 12px;
+    margin-left: 5px;
+    margin-top: 5px;
 `;
 
 export const ButtonBox = styled.div`
@@ -151,7 +157,7 @@ export const ButtonBox = styled.div`
     justify-content: space-between;
     align-items: right;
     width: 400px;
-    height: 105px;
+    height: 100px;
 `;
 
 export const InputButtonBox = styled(ButtonBox)`
@@ -225,11 +231,11 @@ export const ActionText = styled(Black)`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-weight: ${props => props.theme === 'light' ? '900' : '700'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.1px'};
-    font-size: 18px;
+    font-size: 16px;
 `;
 
 export const SignupText = styled(ActionText)`
-    font-size: 16px;
+    font-size: 14px;
     text-decoration: underline;
     cursor: pointer;
 `;

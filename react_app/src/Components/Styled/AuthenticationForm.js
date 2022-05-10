@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ExtraBold, Paragraph } from './Fonts';
+import { Black, ExtraBold, Paragraph } from './Fonts';
 
 export const FormContainer = styled.fieldset`
     width: 450px;
@@ -39,7 +39,7 @@ export const Form = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-end;
     border-radius: 5px;
     border: 1px solid;
     border-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
@@ -47,6 +47,38 @@ export const Form = styled.form`
     font-family: motiva-sans, sans-serif;
     font-weight: 900;
     text-align: left;
+`;
+
+export const FormTitleBox = styled.div`
+    width: 400px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const FormTitle = styled(Black)`
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    font-size: 1.1em;
+`;
+
+export const FormContent = styled.div`
+    width: 400px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+`;
+
+export const InputContainer = styled(FormContent)`
+    height: 200px;
+`;
+
+export const InputErrorBox = styled(FormContent)`
+    height: 100px;
+    justify-content: flex-end;
+    gap: 10px;
 `;
 
 export const Fieldset = styled.fieldset`
@@ -103,7 +135,6 @@ export const ErrorBox = styled.div`
     align-items: center;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     font-weight: ${props => props.theme === 'light' ? '700' : '500'};
-    margin-bottom: -25px;
 `;
 
 export const Error = styled(Paragraph)`
@@ -114,23 +145,31 @@ export const Error = styled(Paragraph)`
 
 export const ButtonBox = styled.div`
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: right;
+    width: 400px;
+    height: 105px;
+`;
+
+export const InputButtonBox = styled(ButtonBox)`
+    width: 380px;
+    height: 50px;
+    gap: 10px;
+    padding-right: 20px;
+    flex-direction: row;
+    justify-content: flex-end;
+`;
+
+export const DemoBox = styled(ButtonBox)`
+    width: 380px;
+    height: 50px;
     flex-direction: row;
     justify-content: flex-end;
     gap: 10px;
-    align-items: center;
-    width: 400px;
-    height: 30px;
-    margin-right: 20px;
 `;
 
-export const DemoBox = styled.div`
-    width: 400px;
-    height: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-`;
+
 
 export const FormButton = styled.div`
     display: flex;
@@ -170,4 +209,25 @@ export const ButtonText = styled(Paragraph)`
     color: ${props => props.color ? props.color : '#191919'};
     font-weight: ${props => props.weight ? props.weight : '700'};
     letter-spacing: ${props => props.color ? '0.3px' : '0.11px'}
+`;
+
+export const ActionBox = styled(DemoBox)`
+    justify-content: flex-end;
+    align-items: center;
+    width: 380px;
+    padding-right: 20px;
+    gap: 10px;
+`;
+
+export const ActionText = styled(Black)`
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    font-weight: ${props => props.theme === 'light' ? '900' : '700'};
+    letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.1px'};
+    font-size: 18px;
+`;
+
+export const SignupText = styled(ActionText)`
+    font-size: 16px;
+    text-decoration: underline;
+    cursor: pointer;
 `;

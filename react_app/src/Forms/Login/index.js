@@ -31,10 +31,18 @@ import {
     PasswordLegend,
     SubmitButton,
     ButtonText,
-    ResetButton
+    ResetButton,
+    ActionBox,
+    ActionText,
+    SignupText,
+    InputButtonBox,
+    FormTitleBox,
+    FormTitle,
+    FormContent,
+    InputContainer,
+    InputErrorBox
 } from '../../Components/Styled/AuthenticationForm';
 
-import styles from './Login.module.css';
 
 export const LoginForm = () => {
     const dispatch = useDispatch();
@@ -140,68 +148,59 @@ export const LoginForm = () => {
                     <LogoType theme={theme}>Mealize</LogoType>
                 </LogoBox>
             </FormLegend>
-            <Form theme={theme}> Welcome back!
-                {emailError.length > 0 && (
-                    emailError.map((error, idx) => (
-                        <ErrorBox id={idx} theme={theme}>
-                            <Error>{error}</Error>
-                        </ErrorBox>
-                    ))
-                )}
-                <Fieldset error={emailError.length > 0}>
-                    <EmailLegend htmlFor='email' theme={theme} error={emailError.length > 0}>
-                    Email
-                        <Input
-                            name="email"
-                            type="email"
-                            value={email}
-                            theme={theme}
-                            onChange={handleEmail}
-                        />
-                    </EmailLegend>
-                </Fieldset>
-                {passwordError.length > 0 && (
-                    passwordError.map((error, idx) => (
-                        <ErrorBox id={idx} theme={theme}>
-                            <Error key={idx}>{error}</Error>
-                        </ErrorBox>
-                    ))
-                )}
-                <Fieldset error={passwordError.length > 0}>
-                    <PasswordLegend htmlFor="password" theme={theme} error={passwordError.length > 0}>
-                    Password
-                        <Input
-                            name='password'
-                            type='password'
-                            autoComplete="none"
-                            value={password}
-                            theme={theme}
-                            onChange={handlePassword}
-                        />
-                    </PasswordLegend>
-                </Fieldset>
-                <ButtonBox>
-                    <ResetButton onClick={reset}>
-                        <ButtonText>Reset</ButtonText>
-                    </ResetButton>
-                    <SubmitButton onClick={handleSubmit}>
-                        <ButtonText>Submit</ButtonText>
-                    </SubmitButton>
-                </ButtonBox>
-                <DemoBox onClick={handleDemo}>
-                    <VolunteerDemoButton>
-                        <ButtonText weight='800'>Volunteer demo</ButtonText>
-                    </VolunteerDemoButton>
-                    <NonprofitDemoButton>
-                        <ButtonText>Nonprofit demo</ButtonText>
-                    </NonprofitDemoButton>
-                    <BusinessDemoButton>
-                        <ButtonText color='white' weight='500'>Business demo</ButtonText>
-                    </BusinessDemoButton>
-                </DemoBox>
-                <div className={styles.question}>Don't have an account?
-                    <div className={styles.modalOption} onClick={handleSignup}>Sign up</div>
-                </div>
+            <Form theme={theme}>
+                <FormTitleBox>
+                    <FormTitle theme={theme}> Welcome back!</FormTitle>
+                </FormTitleBox>
+                <FormContent>
+                    <InputContainer>
+                        <InputErrorBox>
+                            <ErrorBox theme={theme} display={emailError.length > 0}>
+                                <Error>{emailError[0]}</Error>
+                            </ErrorBox>
+                            <Fieldset error={emailError.length > 0}>
+                                <EmailLegend htmlFor='email' theme={theme} error={emailError.length > 0}>Email
+                                    <Input name="email" type="email" value={email} theme={theme} onChange={handleEmail}/>
+                                </EmailLegend>
+                            </Fieldset>
+                        </InputErrorBox>
+                        <InputErrorBox>
+                            <ErrorBox theme={theme} display={emailError.length > 0}>
+                                <Error>{passwordError[0]}</Error>
+                            </ErrorBox>
+                            <Fieldset error={passwordError.length > 0}>
+                                <PasswordLegend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
+                                    <Input name='password' type='password' autoComplete="none" value={password} theme={theme} onChange={handlePassword}/>
+                                </PasswordLegend>
+                            </Fieldset>
+                        </InputErrorBox>
+                    </InputContainer>
+                    <ButtonBox>
+                        <InputButtonBox>
+                            <ResetButton onClick={reset}>
+                                <ButtonText>Reset</ButtonText>
+                            </ResetButton>
+                            <SubmitButton onClick={handleSubmit}>
+                                <ButtonText>Submit</ButtonText>
+                            </SubmitButton>
+                        </InputButtonBox>
+                        <DemoBox onClick={handleDemo}>
+                            <VolunteerDemoButton>
+                                <ButtonText weight='800'>Volunteer demo</ButtonText>
+                            </VolunteerDemoButton>
+                            <NonprofitDemoButton>
+                                <ButtonText>Nonprofit demo</ButtonText>
+                            </NonprofitDemoButton>
+                            <BusinessDemoButton>
+                                <ButtonText color='white' weight='500'>Business demo</ButtonText>
+                            </BusinessDemoButton>
+                        </DemoBox>
+                    </ButtonBox>
+                    <ActionBox>
+                        <ActionText theme={theme}>Don't have an account?</ActionText>
+                        <SignupText theme={theme} onClick={handleSignup}>Sign up</SignupText>
+                    </ActionBox>
+                </FormContent>
             </Form>
         </FormContainer>
     )

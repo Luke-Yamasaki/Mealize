@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import image from '../../Assets/Images/Pattern_10.png';
-import { ExtraBold } from './Fonts';
+import { ExtraBold, Bold } from './Fonts';
 
 export const AppBackGround = styled.div`
     width: 100vw;
@@ -59,7 +59,7 @@ export const BackGroundAside = styled.aside`
 
 export const FilterTitle = styled(ExtraBold)`
     margin-bottom: -5px;
-    color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
 export const SideBarContainer = styled.div`
@@ -147,10 +147,9 @@ export const SideBarViewAll = styled(SideBarInfoBox)`
     text-decoration: underline;
 `;
 
-export const SideBarInfoText = styled.div`
-    font-size: 12px;
+export const SideBarInfoText = styled(Bold)`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
-    font-weight: bold;
+    font-size: 12px;
     &:hover {
         text-decoration: underline;
     }
@@ -169,7 +168,7 @@ export const FeedContainer = styled.div`
 
 export const PostsTitle = styled(ExtraBold)`
     margin-top: 10px;
-    color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
 export const PostsSection = styled.section`

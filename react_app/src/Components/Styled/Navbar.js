@@ -81,6 +81,19 @@ export const SearchInput = styled.input`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
+export const SearchSubmitInput = styled.input`
+    display: none;
+`;
+
+export const ResetSearchBox = styled.div`
+    display: ${props => props.entering ? 'flex' : 'none'};
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+`;
+
 export const LogoBox = styled.div`
     width: ${props => props.width ? props.width : '165px'};
     height: 60px;

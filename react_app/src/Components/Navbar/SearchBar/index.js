@@ -8,8 +8,8 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import { MagnifyingGlass } from '../../../Assets/Icons/MagnifyingGlass';
 import { MicrophoneIcon } from '../../../Assets/Icons/Microphone';
 import { KeyboardIcon } from '../../../Assets/Icons/Keyboard';
-import { Searchbar, SearchInput } from '../../Styled/Navbar';
-import { ResetSearchBox, ResetIcon, SearchSubmitIn, ResetIconput } from '../../Styled/Buttons';
+import { Searchbar, SearchInput, SearchSubmitInput, ResetSearchBox} from '../../Styled/Navbar';
+import { ResetIcon } from '../../Styled/Buttons';
 import { VectorBox } from '../../Styled/Layout';
 
 export const SearchBar = () => {

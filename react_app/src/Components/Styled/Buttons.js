@@ -149,19 +149,6 @@ export const PostButton = styled.div`
     background-color: ${props => props.theme === 'light' ? 'green' : 'blue'}
 `;
 
-export const SearchSubmitInput = styled.input`
-    display: none;
-`;
-
-export const ResetSearchBox = styled.div`
-    display: ${props => props.entering ? 'flex' : 'none'};
-    width: 20px;
-    height: 20px;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-`;
-
 export const ResetIcon = styled.p`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-size: 1em;

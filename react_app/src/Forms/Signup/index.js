@@ -29,7 +29,9 @@ import {
     FormTitle,
     FormContent,
     InputContainer,
-    InputErrorBox
+    InputErrorBox,
+    Legend,
+    OptionalInfoLabel
 } from '../../Components/Styled/AuthenticationForm';
 
 import {
@@ -90,7 +92,6 @@ export const SignupForm = () => {
     const [firstNameError, setFirstNameError] = useState([]);
     const [lastNameError, setLastNameError] = useState([]);
     const [imageError, setImageError] = useState([]);
-    const [jobDescriptionError, setJobDescriptionError] = useState([]);
     const [dobError, setDobError] = useState([]);
     const [organizationError, setOrganizationError] = useState([]);
     const [emailError, setEmailError] = useState([]);
@@ -120,13 +121,12 @@ export const SignupForm = () => {
         const formData = new FormData();
         formData.append("image", image);
 
-        const descriptionCap = jobDescription.slice(0, 1).toUpperCase().concat(jobDescription.slice(1, jobDescription.length));
         const nonprofitStatus = allOrganizations[organizationId].isNonprofit ? true : false;
+
         const inputData = {
             organizationId,
             firstName,
             lastName,
-            jobDescription: descriptionCap,
             dob,
             deaf,
             wheelchair,
@@ -155,7 +155,6 @@ export const SignupForm = () => {
                     firstName,
                     profileImageUrl,
                     lastName,
-                    jobDescription: descriptionCap,
                     dob,
                     deaf,
                     wheelchair,
@@ -195,7 +194,6 @@ export const SignupForm = () => {
         if((firstName && !firstNameError.length) &&
             (lastName && !lastNameError.length) &&
             (image && !imageError.length) &&
-            (jobDescription && !jobDescriptionError.length) &&
             (dob && !dobError.length )&&
             (organizationId && !organizationError.length) &&
             (email && !emailError.length) &&
@@ -207,7 +205,7 @@ export const SignupForm = () => {
                 setResponseErrors([]);
                 handleSubmit(e);
             }
-        else if(!firstName || !lastName || !image || !jobDescription || !dob || !organizationId || !email || !phone || !password || !confirm) {
+        else if(!firstName || !lastName || !image || !dob || !organizationId || !email || !phone || !password || !confirm) {
             setResponseErrors(['Please fill out all required fields.'])
         } else if (regex.test(email) === false) {
             setEmailError(['Not a valid email.'])
@@ -220,39 +218,42 @@ export const SignupForm = () => {
         }
     }
 
-    const reset = (e) => {
+    // const cancel = (e) => {
+    //     e.preventDefault();
+    //     setResponseErrors([]);
+    //     setFirstName('');
+    //     setLastName('');
+    //     setImage(null);
+    //     setDob((new Date().toISOString().split('T')[0].slice(0,4)-18).toString() + new Date().toISOString().split('T')[0].slice(4,11))
+    //     setDeaf(false);
+    //     setWheelchair(false);
+    //     setLearningDisabled(false);
+    //     setLgbtq(false);
+    //     setOrganizationId('');
+    //     setIsNonprofit(false);
+    //     setIsManager(false);
+    //     setEmail('');
+    //     setPhone('');
+    //     setPassword('');
+    //     setConfirm('');
+
+    //     setFirstNameError([]);
+    //     setLastNameError([]);
+    //     setDobError([]);
+    //     setOrganizationError([]);
+    //     setEmailError([]);
+    //     setPhoneError([]);
+    //     setConfirmError([]);
+    //     setImageError([]);
+
+    //     const imageInput = document.getElementById('profileImage');
+    //     imageInput.value = '';
+    //     imageInput.style.color = '#C2462A';
+    // };
+
+    const cancel = (e) => {
         e.preventDefault();
-        setResponseErrors([]);
-        setFirstName('');
-        setLastName('');
-        setJobDescription('');
-        setImage(null);
-        setDob((new Date().toISOString().split('T')[0].slice(0,4)-18).toString() + new Date().toISOString().split('T')[0].slice(4,11))
-        setDeaf(false);
-        setWheelchair(false);
-        setLearningDisabled(false);
-        setLgbtq(false);
-        setOrganizationId('');
-        setIsNonprofit(false);
-        setIsManager(false);
-        setEmail('');
-        setPhone('');
-        setPassword('');
-        setConfirm('');
-
-        setFirstNameError([]);
-        setLastNameError([]);
-        setJobDescriptionError([]);
-        setDobError([]);
-        setOrganizationError([]);
-        setEmailError([]);
-        setPhoneError([]);
-        setConfirmError([]);
-        setImageError([]);
-
-        const imageInput = document.getElementById('profileImage');
-        imageInput.value = '';
-        imageInput.style.color = '#C2462A';
+        dispatch(hideModal());
     };
 
     const handleDemo = async (e) => {
@@ -360,20 +361,6 @@ export const SignupForm = () => {
         }
     }
 
-    const handleDescription = (e) => {
-        e.preventDefault();
-        setResponseErrors([])
-
-        if(jobDescription.length >= 100) {
-            setJobDescriptionError(['Job descriptions must be less than 100 characters.'])
-        } else if (jobDescription.length >= 24 && !jobDescription.includes(' ')) {
-            setJobDescriptionError(['Please add a line break.'])
-        } else {
-            setJobDescriptionError([]);
-            setJobDescription(e.target.value)
-        }
-    }
-
     const handleEmail = (e) => {
         e.preventDefault();
         setResponseErrors([])
@@ -423,24 +410,24 @@ export const SignupForm = () => {
 
     return (
         <PreviewWrapper>
-           <PreviewSection jsxComponent={IdCardPreview}/>
-            <FormBox>
+           <PreviewSection type='id' props={'hi'}/>
+            <FormContainer>
                 <Form> Welcome to Mealize!
                 {responseErrors.length > 0 && (
-                        <ErrorMessage>{responseErrors[0]}</ErrorMessage>
+                        <Error>{responseErrors[0]}</Error>
                     )}
                     {organizationError.length > 0 && (
-                        <ErrorMessage>{organizationError[0]}</ErrorMessage>
+                        <Error>{organizationError[0]}</Error>
                 )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Fieldset style={{width: '235px'}}>
                     <Legend style={{width: '200px'}}> Select your organization
                     <div style={{display: 'flex', flexDirection: 'row', width: '200px', height: '30px', justifyContent: 'flex-start', alignItems: 'center'}}>
                         <select style={{width: '200px', height: '25px'}} value={organizationId} onChange={(e) => setOrganizationId(e.target.value)} required>
-                            <optgroup label='Nonprofits'>
+                            <optgroup OptionalInfoLabel='Nonprofits'>
                                 {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
                             </optgroup>
-                            <optgroup label='Businesses'>
+                            <optgroup OptionalInfoLabel='Businesses'>
                                 {Object.values(organizations.businesses).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
                             </optgroup>
                         </select>
@@ -450,7 +437,7 @@ export const SignupForm = () => {
                 <Fieldset style={{width: '235px'}}>
                     <Legend style={{width: '160px'}}> Are you a manager?
                     <ButtonBox style={{width: '200px', height: '50px', display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', justifyContent: 'flex-start'}}>
-                        <label style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <OptionalInfoLabel style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                         <Input
                             name="isManager"
                             type="checkbox"
@@ -459,16 +446,16 @@ export const SignupForm = () => {
                             onChange={() => setIsManager(!isManager)}
                         />
                         Yes
-                        </label>
+                        </OptionalInfoLabel>
                     </ButtonBox>
                     </Legend>
                 </Fieldset>
                 </div>
                 {firstNameError.length > 0 && (
-                        <ErrorMessage>{firstNameError[0]}</ErrorMessage>
+                        <Error>{firstNameError[0]}</Error>
                     )}
                 {lastNameError.length > 0 && (
-                        <ErrorMessage>{lastNameError[0]}</ErrorMessage>
+                        <Error>{lastNameError[0]}</Error>
                     )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Fieldset style={{width: '235px'}}>
@@ -497,10 +484,10 @@ export const SignupForm = () => {
                     </Fieldset>
                 </div>
                 {imageError.length > 0 && (
-                        <ErrorMessage>{imageError[0]}</ErrorMessage>
+                        <Error>{imageError[0]}</Error>
                     )}
                     {dobError.length > 0 && (
-                        <ErrorMessage>{dobError[0]}</ErrorMessage>
+                        <Error>{dobError[0]}</Error>
                     )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Fieldset style={{width: '235px', height: '40px'}}>
@@ -528,28 +515,11 @@ export const SignupForm = () => {
                         </Legend>
                     </Fieldset>
                 </div>
-                {jobDescriptionError.length > 0 && (
-                        <ErrorMessage>{jobDescriptionError[0]}</ErrorMessage>
-                    )}
-                <Fieldset style={{height: '100px'}}>
-                    <Legend style={{width: '120px'}}> Job description
-                        <textarea
-                            name="jobDescription"
-                            placeholder="Add your job description (100 character limit)."
-                            value={jobDescription}
-                            minLength='1'
-                            maxLength='100'
-                            onChange={handleDescription}
-                            style={{width: "475px", height: "75px", resize: 'none', fontSize: '14px', marginTop: '7px'}}
-                            required
-                        />
-                    </Legend>
-                </Fieldset>
                 {emailError.length > 0 && (
-                        <ErrorMessage>{emailError[0]}</ErrorMessage>
+                        <Error>{emailError[0]}</Error>
                     )}
                     {phoneError.length > 0 && (
-                        <ErrorMessage>{phoneError[0]}</ErrorMessage>
+                        <Error>{phoneError[0]}</Error>
                     )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                     <Fieldset style={{height: '40px', width: '235px'}}>
@@ -579,10 +549,10 @@ export const SignupForm = () => {
                     </Fieldset>
                 </div>
                 {passwordError.length > 0 && (
-                        <ErrorMessage>{passwordError[0]}</ErrorMessage>
+                        <Error>{passwordError[0]}</Error>
                 )}
                 {confirmError.length > 0 && (
-                        <ErrorMessage>{confirmError[0]}</ErrorMessage>
+                        <Error>{confirmError[0]}</Error>
                 )}
                 <div style={{width: '520px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Fieldset style={{height: '40px', width: '235px'}}>
@@ -615,7 +585,7 @@ export const SignupForm = () => {
                     <div style={{width: '400px', height: '60px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                         <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
                             <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
-                                <Label htmlFor='deaf'>
+                                <OptionalInfoLabel htmlFor='deaf'>
                                     <Input
                                             name="deaf"
                                             type="checkbox"
@@ -624,10 +594,10 @@ export const SignupForm = () => {
                                             style={{width: '20px', height: '20px'}}
                                         />
                                 Are you deaf?
-                                </Label>
+                                </OptionalInfoLabel>
                             </ButtonBox>
                             <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
-                                <Label htmlFor='wheelchair'>
+                                <OptionalInfoLabel htmlFor='wheelchair'>
                                     <Input
                                         name="wheelchair"
                                         type="checkbox"
@@ -635,13 +605,13 @@ export const SignupForm = () => {
                                         onChange={() => setWheelchair(!wheelchair)}
                                         style={{width: '20px', height: '20px'}}
                                     />
-                                Do you use a wheelchair?</Label>
+                                Do you use a wheelchair?</OptionalInfoLabel>
                             </ButtonBox>
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
                         <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
-                                <Label htmlFor='learningDisabled'>
+                                <OptionalInfoLabel htmlFor='learningDisabled'>
                                 <Input
                                     name="learningDisabled"
                                     type="checkbox"
@@ -649,10 +619,10 @@ export const SignupForm = () => {
                                     onChange={() => setLearningDisabled(!learningDisabled)}
                                     style={{width: '20px', height: '20px'}}
                                 />
-                                Do you have learning disabilities?</Label>
+                                Do you have learning disabilities?</OptionalInfoLabel>
                             </ButtonBox>
                             <ButtonBox style={{width: '270px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
-                                <Label htmlFor='lgbtq'>
+                                <OptionalInfoLabel htmlFor='lgbtq'>
                                     <Input
                                         name="lgbtq"
                                         type="checkbox"
@@ -660,7 +630,7 @@ export const SignupForm = () => {
                                         onChange={() => setLgbtq(!lgbtq)}
                                         style={{width: '20px', height: '20px'}}
                                     />
-                                Are you a part of the LGBTQIA+ community?</Label>
+                                Are you a part of the LGBTQIA+ community?</OptionalInfoLabel>
                         </ButtonBox>
                     </div>
                     </Legend>
@@ -691,7 +661,7 @@ export const SignupForm = () => {
                     <SignupText theme={theme} onClick={showLoginForm}>Log in</SignupText>
                 </ActionBox>
                 </Form>
-            </FormBox>
+            </FormContainer>
         </PreviewWrapper>
     )
 }

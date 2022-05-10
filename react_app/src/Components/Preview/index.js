@@ -1,9 +1,10 @@
 import { PreviewBox } from "../Styled/PreviewSection"
+import { IdCardPreview } from "./IdCard";
 
-export const PreviewSection = ({ jsxComponent }) => {
+export const PreviewSection = ({ type, props }) => {
     return (
         <PreviewBox>
-            {jsxComponent}
+            {type === 'id' && <IdCardPreview props={props}/>}
         </PreviewBox>
     )
 };

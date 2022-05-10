@@ -16,6 +16,9 @@ import BackGroundProvider from './Context/BackGroundContext';
 import LocationProvider from './Context/LocationContext';
 import ModalProvider from './Context/ModalContext';
 import FilterProvider from './Context/FilterContext';
+import DyslexicProvider from './Context/DyslexicContext';
+//GlobalStyles
+import GlobalFontStyle from './Fonts/fonts';
 
 //Store
 import configureStore from './store';
@@ -39,12 +42,15 @@ const Root = () => {
             <BackGroundProvider>
               <LocationProvider>
                 <FilterProvider>
-                  <ModalProvider>
-                    <RootContainer>
-                      < App />
-                      <ModalContainer ref={modalMountRef} />
-                    </RootContainer>
-                  </ModalProvider>
+                  <DyslexicProvider>
+                    <ModalProvider>
+                      <GlobalFontStyle />
+                      <RootContainer>
+                        < App />
+                        <ModalContainer ref={modalMountRef} />
+                      </RootContainer>
+                    </ModalProvider>
+                  </DyslexicProvider>
                 </FilterProvider>
               </LocationProvider>
             </BackGroundProvider>

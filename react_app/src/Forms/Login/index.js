@@ -102,7 +102,7 @@ export const LoginForm = () => {
 
         setEmailError(emailErrArr);
         setPasswordError(passwordErrArr);
-    }
+    };
 
     const reset = (e) => {
         e.preventDefault();
@@ -138,7 +138,7 @@ export const LoginForm = () => {
     const handleSignup = (e) => {
         e.preventDefault();
         setModalName('signup')
-    }
+    };
 
     return (
         <FormContainer>
@@ -150,12 +150,12 @@ export const LoginForm = () => {
             </FormLegend>
             <Form theme={theme}>
                 <FormTitleBox>
-                    <FormTitle theme={theme}> Welcome back!</FormTitle>
+                    <FormTitle theme={theme}>Welcome back!</FormTitle>
                 </FormTitleBox>
                 <FormContent>
                     <InputContainer>
                         <InputErrorBox>
-                            <ErrorBox theme={theme} display={emailError.length > 0}>
+                            <ErrorBox theme={theme} visibility={emailError.length > 0 ? 'visible' : 'hidden'}>
                                 <Error>{emailError[0]}</Error>
                             </ErrorBox>
                             <Fieldset error={emailError.length > 0}>
@@ -165,7 +165,7 @@ export const LoginForm = () => {
                             </Fieldset>
                         </InputErrorBox>
                         <InputErrorBox>
-                            <ErrorBox theme={theme} display={emailError.length > 0}>
+                            <ErrorBox theme={theme} visibility={passwordError.length > 0 ? 'visible' : 'hidden'}>
                                 <Error>{passwordError[0]}</Error>
                             </ErrorBox>
                             <Fieldset error={passwordError.length > 0}>

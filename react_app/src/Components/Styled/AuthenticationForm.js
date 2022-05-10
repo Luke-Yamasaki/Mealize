@@ -78,6 +78,7 @@ export const InputContainer = styled(FormContent)`
 export const InputErrorBox = styled(FormContent)`
     height: 100px;
     justify-content: flex-end;
+    align-items: left;
     gap: 10px;
 `;
 
@@ -131,6 +132,7 @@ export const ErrorBox = styled.div`
     width: 350px;
     height: 20px;
     display: flex;
+    visibility: ${props => props.visibility};
     justify-content: left;
     align-items: center;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};

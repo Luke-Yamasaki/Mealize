@@ -174,7 +174,7 @@ export const SignupText = styled(ActionText)`
     cursor: pointer;
 `;
 
-export const OptionalInfoLabel = styled.label`
+export const OptInfoLabel = styled.label`
     font-family: motiva-sans, sans-serif;
     font-weight: 700;
     font-size: 12px;

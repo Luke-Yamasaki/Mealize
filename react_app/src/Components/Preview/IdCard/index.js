@@ -39,14 +39,14 @@ export const IdCardPreview = ({ userData }) => {
                 </SloganBox>
                 <VectorBox square='45px'>
                     <IdIconBackGround>
-                        {userData.isNonprofit ? <Nonprofit /> : <Business />}
+                        {userData?.isNonprofit ? <Nonprofit /> : <Business />}
                     </IdIconBackGround>
                 </VectorBox>
             </IdHeader>
-            <IdType>{userData.isManager ? 'Manager Id Card' : 'Volunteer Id Card' }</IdType>
+            <IdType>{userData?.isManager ? 'Manager Id Card' : 'Volunteer Id Card' }</IdType>
             <IdContent>
                 <IdImageContainer>
-                    <ImageBox src={userData.image ? URL.createObjectURL(userData.image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} alt='User profile.'/>
+                    <ImageBox src={userData?.image ? URL.createObjectURL(userData?.image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} alt='User profile.'/>
                     <IdNumber>Id: xxxxx </IdNumber>
                     <IssueDate>Issued: {new Date().toISOString().split('T')[0].slice(0,11)}</IssueDate>
                 </IdImageContainer>
@@ -55,39 +55,39 @@ export const IdCardPreview = ({ userData }) => {
                     <IdInfoBox>
                         <IdInfoLabel>Name:</IdInfoLabel>
                         <IdInfoText fontSize='8px'>
-                            {userData.organizationId ? allOrganizations[userData.organizationId].name : "Company details."}
+                            {userData?.organizationId ? allOrganizations[userData?.organizationId].name : "Company details."}
                         </IdInfoText>
                     </IdInfoBox>
                     <IdInfoBox>
                         <IdInfoLabel>Email:</IdInfoLabel>
                         <IdInfoText fontSize='8px'>
-                            {userData.organizationId ? allOrganizations[userData.organizationId].email : "Company details."}
+                            {userData?.organizationId ? allOrganizations[userData?.organizationId].email : "Company details."}
                         </IdInfoText>
                     </IdInfoBox>
                     <IdInfoBox>
                         <IdInfoLabel>Phone:</IdInfoLabel>
                         <IdInfoText fontSize='8px'>
-                            {userData.organizationId ? `(${allOrganizations[userData.organizationId].phone.slice(0, 3)}) - ${allOrganizations[userData.organizationId].phone.slice(3, 6)}-${allOrganizations[userData.organizationId].phone.slice(6, 10)}` : "Company details."}
+                            {userData?.organizationId ? `(${allOrganizations[userData?.organizationId].phone.slice(0, 3)}) - ${allOrganizations[userData?.organizationId].phone.slice(3, 6)}-${allOrganizations[userData?.organizationId].phone.slice(6, 10)}` : "Company details."}
                         </IdInfoText>
                     </IdInfoBox>
                     <IdAddressBox>
                         <IdInfoLabel>Address:</IdInfoLabel>
                         <IdInfoText>
-                            {userData.organizationId ? `${allOrganizations[userData.organizationId].street}` : "Company details."}
+                            {userData?.organizationId ? `${allOrganizations[userData?.organizationId].street}` : "Company details."}
                         </IdInfoText>
                         <IdInfoText>
-                            {userData.organizationId ? `${allOrganizations[userData.organizationId].city}, ${allOrganizations[userData.organizationId].state[0].toUpperCase()+allOrganizations[userData.organizationId].state[1].toUpperCase()} ${allOrganizations[userData.organizationId].zip}`  : "Company details."}
+                            {userData?.organizationId ? `${allOrganizations[userData?.organizationId].city}, ${allOrganizations[userData?.organizationId].state[0].toUpperCase()+allOrganizations[userData?.organizationId].state[1].toUpperCase()} ${allOrganizations[userData?.organizationId].zip}`  : "Company details."}
                         </IdInfoText>
                     </IdAddressBox>
                 </OrganizationContainer>
                 <IdUserInfoContainer>
                     <IdInfoBox>
                         <IdInfoLabel>Name:</IdInfoLabel>
-                        <IdInfoText>{userData.firstName + ' ' + userData.lastName}</IdInfoText>
+                        <IdInfoText>{userData?.firstName + ' ' + userData?.lastName}</IdInfoText>
                     </IdInfoBox>
                     <IdInfoBox>
                         <IdInfoLabel>DOB:</IdInfoLabel>
-                        <IdInfoText>{userData.dob}</IdInfoText>
+                        <IdInfoText>{userData?.dob}</IdInfoText>
                     </IdInfoBox>
                 </IdUserInfoContainer>
             </IdContent>

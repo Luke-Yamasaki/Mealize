@@ -1,5 +1,8 @@
 //Hooks
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useTheme } from '../../../Context/ThemeContext';
+
 //Logo
 import { Logo } from "../../../Assets/Logo";
 
@@ -15,6 +18,9 @@ import { IdCard, IdHeader, SloganBox, Slogan, IdIconBackGround, IdType, IdConten
 
 
 export const IdCardPreview = ({ props }) => {
+    const {theme} = useTheme();
+    const organizations = useSelector(state => state.organizations);
+    const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
 
     useEffect(() => {
         console.log('Props changed');

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Black, ExtraBold, Paragraph } from './Fonts';
+import { DemoBox } from './Buttons';
 
 export const FormContainer = styled.fieldset`
     width: 450px;
@@ -172,4 +173,3 @@ export const SignupText = styled(ActionText)`
     text-decoration: underline;
     cursor: pointer;
 `;
-

@@ -1,5 +1,4 @@
 //Hooks
-import { useState } from 'react';
 import { useTheme } from '../../Context/ThemeContext';
 import { useDispatch } from "react-redux";
 import { useModal } from '../../Context/ModalContext';
@@ -13,11 +12,11 @@ import { Logo } from '../../Assets/Logo';
 //Components
 import { NotificationBar } from './NotificationBar';
 import { SearchBar } from './SearchBar';
-import { AuthButton } from '../../Components/Buttons/Authentication';
 import { FormModal } from '../../Forms/FormModal';
 
 //Styled-components
 import { NavBar, Navigation, NavList, LogoBox, AuthBox, LogoNavLink } from '../Styled/Navbar';
+import { LoginButton, SignupButton } from '../Styled/Buttons';
 import { MealizeLogoBox } from '../Styled/Layout';
 
 
@@ -46,12 +45,12 @@ export const Navbar = () => {
                     </LogoBox>
                     <SearchBar/>
                     <AuthBox onClick={showFormModal}>
-                        <AuthButton action={'Sign up'}/>
-                        <AuthButton action={'Log in'}/>
+                        <SignupButton/>
+                        <LoginButton/>
                     </AuthBox>
                 </NavList>
             </Navigation>
-            <NotificationBar />
+            <NotificationBar/>
         </NavBar>
     )
 };

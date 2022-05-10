@@ -112,11 +112,11 @@ const Button = styled.div`
     cursor: pointer;
 `;
 
-export const LoginBtn = styled(Button)`
+export const LoginButton = styled(Button)`
     background-color: #005C4D;
 `;
 
-export const SignupBtn = styled(Button)`
+export const SignupButton = styled(Button)`
     background-color: #D49524;
     color: black;
 `;

@@ -9,7 +9,7 @@ import { MagnifyingGlass } from '../../../Assets/Icons/MagnifyingGlass';
 import { MicrophoneIcon } from '../../../Assets/Icons/Microphone';
 import { KeyboardIcon } from '../../../Assets/Icons/Keyboard';
 import { Searchbar, SearchInput } from '../../Styled/Navbar';
-import { ResetSearchBox, ResetSearchIcon, SearchSubmitInput } from '../../Styled/Buttons';
+import { ResetSearchBox, ResetIcon, SearchSubmitIn, ResetIconput } from '../../Styled/Buttons';
 import { VectorBox } from '../../Styled/Layout';
 
 export const SearchBar = () => {
@@ -49,7 +49,7 @@ export const SearchBar = () => {
                     <SearchInput theme={theme} type='text' placeholder="Search" value={searchword} onChange={(e) => setSearchword(e.target.value)}/>
                     <SearchSubmitInput type="submit" style={{display: 'none'}}/>
                     <ResetSearchBox entering={searchword.length > 0}>
-                        <ResetSearchIcon theme={theme} onClick={() => setSearchword('')}>&#10006;</ResetSearchIcon>
+                        <ResetIcon theme={theme} onClick={() => setSearchword('')}>&#10006;</ResetIcon>
                     </ResetSearchBox>
                 </Searchbar>
             :
@@ -61,7 +61,7 @@ export const SearchBar = () => {
                     <SearchInput theme={theme} type='text' placeholder="Search" value={searchword} onChange={(e) => setSearchword(e.target.value)}/>
                     <SearchSubmitInput type="submit" style={{display: 'none'}}/>
                     <ResetSearchBox entering={searchword.length > 0}>
-                        <ResetSearchIcon theme={theme} onClick={() => setSearchword('')}>&#10006;</ResetSearchIcon>
+                        <ResetIcon theme={theme} onClick={() => setSearchword('')}>&#10006;</ResetIcon>
                     </ResetSearchBox>
                     <VectorBox square='15px' onClick={switchInput}>
                         <MicrophoneIcon theme={theme}/>
@@ -78,7 +78,7 @@ export const SearchBar = () => {
                     </VectorBox>
                     <SearchSubmitInput type="submit" style={{display: 'none'}}/>
                     <ResetSearchBox entering={searchword.length > 0}>
-                        <ResetSearchIcon theme={theme} onClick={() => resetTranscript}>&#10006;</ResetSearchIcon>
+                        <ResetIcon theme={theme} onClick={() => resetTranscript}>&#10006;</ResetIcon>
                     </ResetSearchBox>
                     <VectorBox square='25px' onClick={switchInput}>
                         <KeyboardIcon theme={theme}/>

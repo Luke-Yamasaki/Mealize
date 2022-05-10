@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Black, Paragraph } from "./Fonts";
+import { Black, Bold, Paragraph } from "./Fonts";
 
 export const IdCard = styled.div`
     display: flex;
@@ -89,4 +89,59 @@ export const IdNumber = styled(IdType)`
 export const IssueDate = styled(IdNumber)`
     padding-top: 5px;
     padding-bottom: 5px;
+`;
+
+export const OrganizationContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: left;
+    gap: 5px;
+    width: 170px;
+    height: 141px;
+`;
+
+export const IdInfoLabel = styled(Bold)`
+    font-size: 12px;
+    color: black;
+    height: 20px;
+`;
+
+export const IdInfoBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 150px;
+    height: 20px;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0px;
+    padding: 0px;
+    gap: 5px;
+`;
+
+export const IdInfoText = styled(Paragraph)`
+    font-size: ${props => props.fontSize};
+    color: #191919;
+    font-weight: 500;
+    font-size: 10px;
+    color: black;
+    margin: 0px;
+    margin-top: ${props => props.marginTop ? props.marginTop : '0px' }
+    padding: 0px;
+    height: 20px;
+`;
+
+export const IdAddressBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    height: 200px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 5px;
+`;
+
+export const IdUserInfoContainer = styled(OrganizationContainer)`
+    width: 130px;
+    height: 141px;
 `;

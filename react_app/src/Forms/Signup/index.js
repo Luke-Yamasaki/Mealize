@@ -68,7 +68,7 @@ export const SignupForm = () => {
     const history = useHistory();
     const organizations = useSelector(state => state.organizations);
     const { theme } = useTheme();
-    const [ setModalName ] = useModal();
+    const {setModalName}= useModal();
 
     // states
     const [firstName, setFirstName] = useState('');

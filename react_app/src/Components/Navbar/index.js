@@ -16,7 +16,7 @@ import { FormModal } from '../../Forms/FormModal';
 
 //Styled-components
 import { NavBar, Navigation, NavList, LogoBox, AuthBox, LogoNavLink } from '../Styled/Navbar';
-import { LoginButton, SignupButton } from '../Styled/Buttons';
+import { ButtonText, LoginButton, SignupButton } from '../Styled/Buttons';
 import { MealizeLogoBox } from '../Styled/Layout';
 
 
@@ -45,8 +45,12 @@ export const Navbar = () => {
                     </LogoBox>
                     <SearchBar/>
                     <AuthBox onClick={showFormModal}>
-                        <SignupButton/>
-                        <LoginButton/>
+                        <SignupButton>
+                            <ButtonText weight='800'>Sign up</ButtonText>
+                        </SignupButton>
+                        <LoginButton>
+                            <ButtonText color='white' weight='500'>Log in</ButtonText>
+                        </LoginButton>
                     </AuthBox>
                 </NavList>
             </Navigation>

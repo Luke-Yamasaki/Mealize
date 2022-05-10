@@ -8,12 +8,12 @@ import { Contrast } from './Contrast';
 import { Saturation } from './Saturation';
 import { BackGround } from './BackGround';
 
-export const CustomizationSection = () => {
+export const CustomizationSection = ({animation}) => {
     const {theme} = useTheme();
 
 
     return (
-        <CustomizationContainer theme={theme}>
+        <CustomizationContainer theme={theme} animation={animation}>
             <ContentContainer theme={theme}>
                 <Label theme={theme}>Customization tools</Label>
             </ContentContainer>

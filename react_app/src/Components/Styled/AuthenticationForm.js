@@ -1,6 +1,16 @@
-import styled from 'styled-components';
+import styled, {css, keyframes} from 'styled-components';
 import { Black, ExtraBold, Paragraph } from './Fonts';
 import { DemoBox } from './Buttons';
+
+const left = keyframes`
+    from { margin-left: 0px; opacity: 100% }
+    to { margin-left: -500px; opacity: 0%; width: 0px; }
+`;
+
+const slideLeft = () =>
+    css`
+    ${left} 0.5s forwards;
+    `
 
 export const FormContainer = styled.fieldset`
     width: ${props => props.width ? props.width : '450px'};
@@ -189,4 +199,38 @@ export const SlidingFormContainer = styled.div`
     align-items: center;
 `;
 
-export const SlidingForm = styled.div
+export const SlidingForm = styled.div`
+    animation: ${props => props.next === 'slide' ? slideLeft : 'none'};
+`;
+
+// export const FormContent = styled.div`
+//     width: 400px;
+//     height: 350px;
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: space-between;
+// `;
+// export const InputContainer = styled(FormContent)`
+//     height: ${props => props.height};
+// `;
+
+
+// export const Form = styled.form`
+//     width: ${props => props.width ? props.width : '400px'};
+//     height: ${props => props.height ? props.height : '450px'};
+//     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+//     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: flex-end;
+//     gap: 25px;
+//     border-radius: 5px;
+//     border: 1px solid;
+//     border-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+//     font-size: 32px;
+//     font-family: motiva-sans, sans-serif;
+//     font-weight: 900;
+//     text-align: left;
+// `;

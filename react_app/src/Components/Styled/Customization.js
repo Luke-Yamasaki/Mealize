@@ -1,27 +1,28 @@
 import styled, { css, keyframes } from 'styled-components';
 import { VectorBox } from './Layout';
+import { expandField, shrinkField } from './Layout';
 
 const up = keyframes`
     0% { opacity: 35%; transform: rotate(0deg);}
-    50% { opcaity: 75%;}
-    100% { opacity: 100%; margin-top: -500px; transform: rotate(360deg);}
+    50% { opcaity: 75%; margin-top: -500px; margin-left: 0px;}
+    100% { opacity: 100%; transform: rotate(360deg); margin-top: -500px; margin-left: 350px;}
 `;
 
-const goUp = () =>
+export const goUp = () =>
     css`
-    ${up} 0.5s forwards;
+    ${up} 0.75s forwards;
     `
 
 const down = keyframes`
-    0% { opacity: 35%; margin-top: -500px; transform: rotate(0deg);}
-    50% { opcaity: 75%;}
-    100% { opacity: 100%; margin: 0px; transform: rotate(-360deg);}
+    0% { opacity: 35%; transform: rotate(0deg); margin-top: -500px; margin-left: 400px;}
+    50% { opcaity: 75%; margin-top: -500px; margin-left: 0px;}
+    100% { opacity: 100%; margin-top: 0px; transform: rotate(360deg); margin-left: 0px;}
 `;
 
-const goDown = () =>
+export const goDown = () =>
     css`
-    ${down} 0.5s forwards;
-    `
+    ${down} 1.2s forwards;
+`
 
 export const CustomizationContainer = styled.div`
     margin-left: -25px;
@@ -43,6 +44,9 @@ export const CustomizationContainer = styled.div`
     will-change: transform;
     top: 0;
     color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
+    animation: ${props => props.animation};
+    animation-delay: ${props => props.animation === expandField ? '0.3s' : '0s'};
+    overflow: hidden;
 `;
 
 export const ContentContainer = styled.div`
@@ -74,9 +78,10 @@ export const SettingsBox = styled.div`
     width: 50px;
     height: 50px;
     display: flex;
+    position: fixed;
     justify-content: center;
     align-items: center;
     border-radius: 100%;
     background-color: ${props => props.theme === 'light' ? '#327647' : '#76D97E' };
-    animation: ${props => props.shown === 'goUp' ? goUp : props.shown === 'goDown' ? goDown : 'none'};
+    animation: ${props => props.animation};
 `;

@@ -1,6 +1,28 @@
-import styled from 'styled-components';
+import styled, {css, keyframes} from 'styled-components';
 import image from '../../Assets/Images/Pattern_10.png';
 import { ExtraBold, Bold } from './Fonts';
+
+const expand = keyframes`
+    from { opacity: 0%; width: 0px; visibility: hidden;}
+    to { opacity: 100%; width: 300px; visibility: visible;}
+`;
+
+export const expandField = () =>
+    css`
+    ${expand} 0.5s forwards;
+    `
+
+const shrink = keyframes`
+    0% { width: 300px; visibility: visible; margin-right: 25px;}
+    99% { visibility: visible; margin-right: 25px;}
+    100% { width: 0px; visibility: hidden; margin-right: 25px;}
+`;
+
+export const shrinkField = () =>
+    css`
+    ${shrink} 0.7s forwards;
+    `
+
 
 export const AppBackGround = styled.div`
     width: 100vw;
@@ -210,4 +232,16 @@ export const ImageBox = styled.img`
         transform: ${props => props.resize ? 'scale(1.1)' : ''};
         opacity: ${props => props.opacity ? props.opacity : '100%'};
      }
+`;
+
+export const SettingsField = styled.div`
+    width: 0px;
+    height: 650px;
+    visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    animation: ${props => props.animation};
+    animation-delay: ${props => props.animation === expandField ? '0.3s' : '0s'};
 `;

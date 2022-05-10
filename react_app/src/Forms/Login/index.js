@@ -22,27 +22,29 @@ import {
     EmailLegend,
     Input,
     Error,
+    ErrorBox,
+    PasswordLegend,
+    ActionBox,
+    ActionText,
+    SignupText,
+    FormTitleBox,
+    FormTitle,
+    FormContent,
+    InputContainer,
+    InputErrorBox
+} from '../../Components/Styled/AuthenticationForm';
+
+import {
     ButtonBox,
     DemoBox,
     VolunteerDemoButton,
     NonprofitDemoButton,
     BusinessDemoButton,
-    ErrorBox,
-    PasswordLegend,
     SubmitButton,
     ButtonText,
-    ResetButton,
-    ActionBox,
-    ActionText,
-    SignupText,
+    CancelButton,
     InputButtonBox,
-    FormTitleBox,
-    FormTitle,
-    FormContent,
-    InputContainer,
-    InputErrorBox,
-    FormSubTitle
-} from '../../Components/Styled/AuthenticationForm';
+} from '../../Components/Styled/Buttons';
 
 
 export const LoginForm = () => {
@@ -105,12 +107,13 @@ export const LoginForm = () => {
         setPasswordError(passwordErrArr);
     };
 
-    const reset = (e) => {
+    const cancel = (e) => {
         e.preventDefault();
         setEmailError([]);
         setPasswordError([]);
         setEmail('');
         setPassword('');
+        dispatch(hideModal());
     };
 
     const handleDemo = async (e) => {
@@ -178,9 +181,9 @@ export const LoginForm = () => {
                     </InputContainer>
                     <ButtonBox>
                         <InputButtonBox>
-                            <ResetButton onClick={reset}>
-                                <ButtonText>Reset</ButtonText>
-                            </ResetButton>
+                            <CancelButton onClick={cancel}>
+                                <ButtonText>Cancel</ButtonText>
+                            </CancelButton>
                             <SubmitButton onClick={handleSubmit}>
                                 <ButtonText>Submit</ButtonText>
                             </SubmitButton>

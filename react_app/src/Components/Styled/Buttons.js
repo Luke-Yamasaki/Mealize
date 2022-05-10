@@ -1,12 +1,91 @@
 import styled from "styled-components";
+import { Black, Paragraph } from './Fonts';
 
 export const ButtonBox = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
+    align-items: right;
+    width: 400px;
+    height: 100px;
+`;
+
+export const InputButtonBox = styled(ButtonBox)`
+    width: 380px;
+    height: 50px;
+    gap: 10px;
+    padding-right: 20px;
+    flex-direction: row;
+    justify-content: flex-end;
+`;
+
+export const DemoBox = styled(ButtonBox)`
+    width: 380px;
+    height: 50px;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+`;
+
+export const FormButton = styled.div`
+    display: flex;
+    justify-content: center;
     align-items: center;
-    width: 170px;
-    height: 30px;
+    width: 80px;
+    height: 35px;
+    border-radius: 5px;
+    cursor: pointer;
+`;
+
+export const SubmitButton = styled(FormButton)`
+    background-color: #76D97E;
+`;
+
+export const CancelButton = styled(FormButton)`
+    background-color: #28A690;
+`;
+
+export const VolunteerDemoButton = styled(FormButton)`
+    width: 115px;
+    background-color: #9AF2C0;
+`;
+
+export const NonprofitDemoButton = styled(FormButton)`
+    width: 115px;
+    background-color: #04B1D9;
+`;
+
+export const BusinessDemoButton = styled(FormButton)`
+    width: 115px;
+    background-color: #024A59;
+`;
+
+export const ButtonText = styled(Paragraph)`
+    font-size: 12px;
+    color: ${props => props.color ? props.color : '#191919'};
+    font-weight: ${props => props.weight ? props.weight : '700'};
+    letter-spacing: ${props => props.color ? '0.3px' : '0.11px'}
+`;
+
+export const ActionBox = styled(DemoBox)`
+    justify-content: flex-end;
+    align-items: center;
+    width: 380px;
+    padding-right: 20px;
+    gap: 10px;
+`;
+
+export const ActionText = styled(Black)`
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    font-weight: ${props => props.theme === 'light' ? '900' : '700'};
+    letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.1px'};
+    font-size: 16px;
+`;
+
+export const SignupText = styled(ActionText)`
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
 `;
 
 export const FormButtonBox = styled.div`
@@ -17,16 +96,6 @@ export const FormButtonBox = styled.div`
     align-items: center;
     width: 500px;
     height: 30px;
-`;
-
-export const DemoBox = styled.div`
-    width: 500px;
-    height: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
 `;
 
 const Button = styled.div`
@@ -50,45 +119,6 @@ export const LoginBtn = styled(Button)`
 export const SignupBtn = styled(Button)`
     background-color: #D49524;
     color: black;
-`;
-
-export const SubmitBtn = styled(Button)`
-    background-color: #76D97E;
-    color: black;
-    font-weight: 700;
-`;
-
-export const CancelBtn = styled(Button)`
-    background-color: #28A690;
-    color: black;
-    font-weight: 700;
-`;
-
-const DemoButton = styled.div`
-    width: 115px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    font-size: 12px;
-    font-weight: 800;
-    font-family: motiva-sans, sans-serif;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-`;
-
-export const NonprofitBtn = styled(DemoButton)`
-    background-color: #024A59;
-`;
-
-export const BusinessBtn = styled(DemoButton)`
-    background-color: #024A59;
-`;
-
-export const VolunteerBtn = styled(DemoButton)`
-    background-color: #9AF2C0;
 `;
 
 const ItemButton = styled.div`
@@ -132,7 +162,7 @@ export const ResetSearchBox = styled.div`
     cursor: pointer;
 `;
 
-export const ResetSearchIcon = styled.p`
+export const ResetIcon = styled.p`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-size: 1em;
 `;

@@ -3,7 +3,7 @@ import { Black, ExtraBold, Paragraph } from './Fonts';
 
 export const FormContainer = styled.fieldset`
     width: 450px;
-    height: 600px;
+    height: 45vh;
     background: linear-gradient(#76D97E, #28A690);
     border-radius: 5px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -11,6 +11,7 @@ export const FormContainer = styled.fieldset`
     justify-content: center;
     align-items: center;
     text-align: center;
+    margin-top: -350px;
 `;
 
 export const FormLegend = styled.legend`
@@ -149,74 +150,6 @@ export const Error = styled(Paragraph)`
     height: 12px;
     margin-left: 5px;
     margin-top: 5px;
-`;
-
-export const ButtonBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: right;
-    width: 400px;
-    height: 100px;
-`;
-
-export const InputButtonBox = styled(ButtonBox)`
-    width: 380px;
-    height: 50px;
-    gap: 10px;
-    padding-right: 20px;
-    flex-direction: row;
-    justify-content: flex-end;
-`;
-
-export const DemoBox = styled(ButtonBox)`
-    width: 380px;
-    height: 50px;
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: 10px;
-`;
-
-
-
-export const FormButton = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 80px;
-    height: 35px;
-    border-radius: 5px;
-    cursor: pointer;
-`;
-
-export const SubmitButton = styled(FormButton)`
-    background-color: #76D97E;
-`;
-
-export const ResetButton = styled(FormButton)`
-    background-color: #28A690;
-`;
-
-export const VolunteerDemoButton = styled(FormButton)`
-    width: 115px;
-    background-color: #9AF2C0;
-`;
-
-export const NonprofitDemoButton = styled(FormButton)`
-    width: 115px;
-    background-color: #04B1D9;
-`;
-
-export const BusinessDemoButton = styled(FormButton)`
-    width: 115px;
-    background-color: #024A59;
-`;
-
-export const ButtonText = styled(Paragraph)`
-    font-size: 12px;
-    color: ${props => props.color ? props.color : '#191919'};
-    font-weight: ${props => props.weight ? props.weight : '700'};
-    letter-spacing: ${props => props.color ? '0.3px' : '0.11px'}
 `;
 
 export const ActionBox = styled(DemoBox)`

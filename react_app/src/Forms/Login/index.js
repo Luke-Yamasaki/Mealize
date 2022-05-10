@@ -24,9 +24,6 @@ import {
     Error,
     ErrorBox,
     PasswordLegend,
-    ActionBox,
-    ActionText,
-    SignupText,
     FormTitleBox,
     FormTitle,
     FormContent,
@@ -44,6 +41,9 @@ import {
     ButtonText,
     CancelButton,
     InputButtonBox,
+    ActionBox,
+    ActionText,
+    SignupText,
 } from '../../Components/Styled/Buttons';
 
 
@@ -139,7 +139,7 @@ export const LoginForm = () => {
         dispatch(hideModal())
     };
 
-    const handleSignup = (e) => {
+    const showSignupForm = (e) => {
         e.preventDefault();
         setModalName('signup')
     };
@@ -202,7 +202,7 @@ export const LoginForm = () => {
                     </ButtonBox>
                     <ActionBox>
                         <ActionText theme={theme}>Don't have an account?</ActionText>
-                        <SignupText theme={theme} onClick={handleSignup}>Sign up</SignupText>
+                        <SignupText theme={theme} onClick={showSignupForm}>Sign up</SignupText>
                     </ActionBox>
                 </FormContent>
             </Form>

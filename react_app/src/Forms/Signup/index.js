@@ -2,154 +2,75 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useTheme } from '../../Context/ThemeContext';
+import { useModal } from '../../Context/ModalContext';
 //Store
 import { login, signup } from '../../store/session';
-import { setCurrentModal, hideModal } from '../../store/modal';
+import { hideModal } from '../../store/modal';
 //Helper
 import { validateSignup, uploadProfileImage } from '../../utils/Forms/signup';
 import * as nsfwjs from 'nsfwjs';
 
 //Components
 import { LoginForm } from '../Login';
-import { ButtonBox, FormButtonBox, DemoBox, LoginBtn, SignupBtn, CancelBtn, SubmitBtn, NonprofitBtn, BusinessBtn, VolunteerBtn } from '../../Components/Styled/Buttons';
+import {
+    FormContainer,
+    FormLegend,
+    LogoType,
+    Form,
+    Fieldset,
+    EmailLegend,
+    Input,
+    Error,
+    ErrorBox,
+    PasswordLegend,
+    FormTitleBox,
+    FormTitle,
+    FormContent,
+    InputContainer,
+    InputErrorBox
+} from '../../Components/Styled/AuthenticationForm';
+
+import {
+    ButtonBox,
+    DemoBox,
+    VolunteerDemoButton,
+    NonprofitDemoButton,
+    BusinessDemoButton,
+    SubmitButton,
+    ButtonText,
+    CancelButton,
+    InputButtonBox,
+    ActionBox,
+    ActionText,
+    SignupText,
+} from '../../Components/Styled/Buttons';
+
+import {
+    PreviewWrapper,
+    PreviewBox,
+    UploadingBox,
+    UploadingMessage
+} from '../../Components/Styled/PreviewSection';
+
 //Icons
 import { Business } from '../../Assets/Icons/Business';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 import { Volunteer } from '../../Assets/Icons/Volunteers';
 
 import styles from './Signup.module.css';
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 1200px;
-    height: 900px;
-    background: linear-gradient(#28A690,#76D97E);
-    border-radius: 5px;
-`;
-
-const PreviewBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 600px;
-    height: 900px;
-`;
-
-const UploadingBox = styled.div`
-    width: 400px;
-    height: 100px;
-    background-color: white;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
-const UploadingMessage = styled.div`
-    font-family: motiva-sans, sans-serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 900;
-    color: black;
-`;
-
-const FormBox = styled.div`
-    width: 600px;
-    height: 900px;
-    background-color: #F5F5F5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
-const Form = styled.form`
-    width: 575px;
-    height: 875px;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    border-radius: 5px;
-    1px solid rgb(213, 213, 213);
-    font-family: motiva-sans, sans-serif;
-    font-weight: 900;
-    font-size: 32px;
-`;
-
-const Fieldset = styled.fieldset`
-    width: 500px;
-    height: 40px;
-    border: 1px solid #28A690;
-    font-size: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    margin: 0px;
-    padding-left: 10px;
-    font-weight: 500;
-`;
-
-const Legend = styled.legend`
-    color: #28A690;
-    font-size: 16px;
-    width: 300px;
-    height: 15px;
-    font-weight: 500;
-    color: black;
-`;
-
-const Label = styled.label`
-    font-size: 12px;
-    width: 1000px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-`;
-
-const Input = styled.input`
-    width: 200px;
-    height: 30px;
-    font-size: 16px;
-    border: none;
-    margin-left: -6px;
-    margin-top: 1px;
-    padding-left: 5px;
-    border-radius: none;
-`;
-
-
-const ErrorMessage = styled.div`
-    width: 450px;
-    height: 20px;
-    font-size: 10px;
-    color: red;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: motiva-sans, sans-serif;
-    font-weight: 500;
-`;
-
 
 export const SignupForm = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const organizations = useSelector(state => state.organizations);
-    const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
+    const { theme } = useTheme();
+    const [ setModalName ] = useModal();
 
     // states
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [image, setImage] = useState(null);
-    const [jobDescription, setJobDescription] = useState('');
     const [dob, setDob] = useState((new Date().toISOString().split('T')[0].slice(0,4)-18).toString() + new Date().toISOString().split('T')[0].slice(4,11));
     const [deaf, setDeaf] = useState(false);
     const [wheelchair, setWheelchair] = useState(false);
@@ -164,7 +85,6 @@ export const SignupForm = () => {
     const [confirm, setConfirm] = useState('');
     const [imageUploading, setImageUploading] = useState(false);
 
-
     // errors
     const [firstNameError, setFirstNameError] = useState([]);
     const [lastNameError, setLastNameError] = useState([]);
@@ -177,6 +97,9 @@ export const SignupForm = () => {
     const [passwordError, setPasswordError] = useState([]);
     const [confirmError, setConfirmError] = useState([]);
     const [responseErrors, setResponseErrors] = useState([]);
+
+    const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
+
 
     //dates
     const year = new Date().getFullYear()
@@ -331,50 +254,32 @@ export const SignupForm = () => {
         imageInput.style.color = '#C2462A';
     };
 
-    const volunteerDemo = async (e) => {
+    const handleDemo = async (e) => {
         e.preventDefault();
-        const emailErrArr =[]
-        const passwordErrArr =[];
+        const emailErrArr = [];
+        const passwordErrArr = [];
 
-        const data = await dispatch(login('volunteer_demo@testing.com', '064324651d0-72fe-49c5-aa1-0ba223f4fcmv3'));
-        if(data.errors) {
-            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
-            setEmailError(emailErrArr);
-            setConfirmError(passwordErrArr)
+        let data;
+
+        if(e.target.innerText.includes('Volunteer')) {
+            data = await dispatch(login('volunteer_demo@testing.com', '064324651d0-72fe-49c5-aa1-0ba223f4fcmv3'))
+        } else if(e.target.innerText.includes('Nonprofit')) {
+            data = await dispatch(login('nonprofit_demo@testing.com', '062651d0-01fe-49c5-aaa1-0829ba3f4ff3'));
+        } else {
+            data = await dispatch(login('business_demo@testing.com', '8f08d594-2275-4c8f-93f3-4cb6dbed4b70'));
         }
-        dispatch(hideModal())
-    }
 
-    const nonprofitDemo = async (e) => {
-        e.preventDefault();
-        const emailErrArr =[]
-        const passwordErrArr =[];
-
-        const data = await dispatch(login('nonprofit_demo@testing.com', '062651d0-01fe-49c5-aaa1-0829ba3f4ff3'));
         if(data.errors) {
-            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push('Someone tampered with our demo data.') : emailErrArr.push('Someone tampered with our demo data.'));
             setEmailError(emailErrArr);
-            setConfirmError(passwordErrArr)
+            setPasswordError(passwordErrArr)
         }
         dispatch(hideModal())
     };
 
-    const businessDemo = async (e) => {
+    const showLoginForm = (e) => {
         e.preventDefault();
-        const emailErrArr =[]
-        const passwordErrArr =[];
-
-        const data = await dispatch(login('business_demo@testing.com', '8f08d594-2275-4c8f-93f3-4cb6dbed4b70'));
-        if(data.errors) {
-            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
-            setEmailError(emailErrArr);
-            setConfirmError(passwordErrArr)
-        }
-        dispatch(hideModal())
-    };
-
-    const showLoginForm = () => {
-		dispatch(setCurrentModal(LoginForm));
+		setModalName('login')
 	};
 
     const repaint = (file) => {
@@ -516,7 +421,7 @@ export const SignupForm = () => {
     }
 
     return (
-        <Wrapper>
+        <PreviewWrapper>
             <PreviewBox>
                 <div className={styles.idCard}>
                     <section className={styles.header}>
@@ -834,6 +739,6 @@ export const SignupForm = () => {
                 <div className={styles.question}>Already have an account?<div className={styles.modalOption} onClick={showLoginForm}>Log in</div></div>
                 </Form>
             </FormBox>
-        </Wrapper>
+        </PreviewWrapper>
     )
 }

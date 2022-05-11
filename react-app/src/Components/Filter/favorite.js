@@ -22,7 +22,7 @@ export const FavoritesFilter = ({theme}) => {
                 <VectorBox resize='32px'>
                     <FavoritesFilterIcon theme={theme}/>
                 </VectorBox>
-                <SideBarInfoText>My favorites</SideBarInfoText>
+                <SideBarInfoText theme={theme}>My favorites</SideBarInfoText>
             </SideBarInfoBox>
         </SideField>
     )

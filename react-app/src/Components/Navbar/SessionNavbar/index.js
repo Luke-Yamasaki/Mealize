@@ -7,13 +7,12 @@ import { setCurrentModal, showModal } from '../../../store/modal';
 // Styled-components
 import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, ProfileName } from '../../Styled/Navbar';
 import { VectorBox } from '../../Styled/Layout';
-import { ProfileButton } from '../../Styled/Buttons';
+import { ButtonText, ProfileButton, PostButton, LogoutButton } from '../../Styled/Buttons';
 import { ProfileBox } from '../../Styled/Navbar';
 //Components
 import { NotificationBar } from '../NotificationBar';
 import { SearchBar } from '../SearchBar';
 import ItemForm from '../../../Forms/Item';
-import { PostButton } from '../../Styled/Buttons';
 //Icons
 import { Logo } from '../../../Assets/Logo';
 import { InboxIcon } from '../../../Assets/Icons/Inbox';
@@ -49,8 +48,8 @@ export const SessionNavbar = ({sessionUser}) => {
                     <VectorBox square='30px' resize='32px'>
                         <InboxIcon theme={theme} />
                     </VectorBox>
-                    <PostButton onClick={showItemForm}>{sessionUser.isNonprofit && sessionUser.isManager ? 'New request' : 'Post item'}</PostButton>
-                    <PostButton onClick={logOut}>Log out</PostButton>
+                    <PostButton onClick={showItemForm}><ButtonText>{sessionUser.isNonprofit && sessionUser.isManager ? 'New request' : 'Post item'}</ButtonText></PostButton>
+                    <LogoutButton onClick={logOut}><ButtonText color='white' weight='400'>Log out</ButtonText></LogoutButton>
                 </NavList>
             </Navigation>
             <NotificationBar theme={theme}/>

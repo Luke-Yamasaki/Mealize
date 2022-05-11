@@ -9,7 +9,7 @@ import { Business } from "../../Assets/Icons/Business";
 import { Nonprofit } from "../../Assets/Icons/Nonprofit";
 
 export const PostTypeFilter = ({theme}) => {
-    const {filter, setFilter} = useFilter();
+    const {setFilter} = useFilter();
 
     const handleRequests = (e) => {
         e.preventDefault();
@@ -25,13 +25,13 @@ export const PostTypeFilter = ({theme}) => {
         <SideField theme={theme}>
             <SideLegend theme={theme}>Post type</SideLegend>
             <SideBarInfoBox onClick={handleRequests}>
-                <VectorBox resize='32px'>
+                <VectorBox resize='32px' square='30px'>
                     <Business />
                 </VectorBox>
                 <SideBarInfoText theme={theme}>Requests</SideBarInfoText>
             </SideBarInfoBox>
             <SideBarInfoBox onClick={handleItems}>
-                <VectorBox resize='32px'>
+                <VectorBox resize='32px' square='30px'>
                     <Nonprofit />
                 </VectorBox>
                 <SideBarInfoText theme={theme}>Items</SideBarInfoText>

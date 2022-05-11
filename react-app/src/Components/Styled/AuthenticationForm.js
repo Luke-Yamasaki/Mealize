@@ -218,7 +218,7 @@ export const SlidingForm = styled.div`
 `;
 
 export const CheckBoxContainer = styled.div`
-    width: 200px;
+    width: ${props => props.long ? '350px' : '200px'};
     height: 40px;
     display: flex;
     flex-direction: row;
@@ -227,6 +227,7 @@ export const CheckBoxContainer = styled.div`
     justify-content: flex-start;
     padding-left: 5px;
     margin-bottom: 5px;
+    margin-top: ${props => props.long ? '5px' : '0px'};
 `;
 
 export const OrganizationSelect = styled.select`
@@ -254,10 +255,10 @@ export const DragNDrop = styled.div`
     align-items: center;
     width: ${props => props.width};
     height: ${props => props.height};
-    background: linear-gradient(#76D97E, #28A690);
     margin: ${props => props.margin};
     border-radius: 2px;
     font-family: motiva-sans, sans-serif;
+    background-color: rgba(0, 0, 0, 0.75);
     color: white;
     gap: 15px;
 `;

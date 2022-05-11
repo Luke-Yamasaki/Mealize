@@ -106,6 +106,7 @@ export const SignupForm = () => {
     //S3 uploading section
     const [imageUploading, setImageUploading] = useState(false);
 
+    const [userData, setUserData] = useState('');
     // errors
     const [firstNameError, setFirstNameError] = useState([]);
     const [lastNameError, setLastNameError] = useState([]);
@@ -122,19 +123,18 @@ export const SignupForm = () => {
     const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
 
     const ageBoundariesObj = ageBoundary();
-    console.log(ageBoundariesObj)
     const minDate = ageBoundariesObj.old;
-    console.log(minDate);
     const maxDate = ageBoundariesObj.young;
-    console.log(maxDate);
 
     const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
 
     //props to pass to preview Id card
-    let userData;
-
     useEffect(() => {
-        userData = { organizationId, isNonprofit, isManager, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq };
+        let userInfo = { organizationId, isNonprofit, isManager, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq };
+        console.log(userInfo);
+        console.log(userData);
+        setUserData(userInfo);
+        return () => console.log('???')
     },[organizationId, isNonprofit, isManager, firstName, lastName, dob, image, deaf, wheelchair, learningDisabled, lgbtq ])
 
     const handleSubmit = async (e) => {
@@ -433,7 +433,7 @@ export const SignupForm = () => {
     return (
         <PreviewWrapper width='1000px' height='652px'>
             <PreviewBox>
-                <PreviewSection type='id' userData={userData}/>
+                {userData && <PreviewSection type='id' userData={userData}/>}
                 <UploadingBox>
                     <UploadingMessage>Display when uploading image to S3</UploadingMessage>
                 </UploadingBox>
@@ -553,7 +553,7 @@ export const SignupForm = () => {
                                 </ErrorBox>
                                 <Fieldset error={imageError.length > 0} height='275px'>
                                     <Legend htmlFor='imageBox' theme={theme} error={imageError.length > 0} width='105px'>Profile image
-                                        <DragNDrop onDrop={droppedImage} onDragOver={e => e.preventDefault()} width='358px' height='253px' margin='0px 0px 0px -8px'>
+                                        <DragNDrop onDrop={droppedImage} onDragOver={e => e.preventDefault()} width='357px' height='253px' margin='0px 0px 0px -7px'>
                                             Darg and drop your profile image or
                                             <Input id='imageBox' theme={theme} bg='none' lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
                                         </DragNDrop>
@@ -629,62 +629,37 @@ export const SignupForm = () => {
                 }
                 {formSection === 'optional' &&
                     <FormContent>
-                        <InputContainer>
-                            <Fieldset style={{height: '100px', width: '500px', margin: 'none', padding: 'none'}}>
-                                <Legend style={{width: '130px'}}> Optional details
-                                    <div style={{width: '400px', height: '60px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                        <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
-                                            <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
-                                                <OptInfoLabel htmlFor='deaf'>
-                                                    <Input
-                                                            name="deaf"
-                                                            type="checkbox"
-                                                            value={deaf}
-                                                            onChange={() => setDeaf(!deaf)}
-                                                            style={{width: '20px', height: '20px'}}
-                                                        />
-                                                Are you deaf?
-                                                </OptInfoLabel>
-                                            </ButtonBox>
-                                            <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
-                                                <OptInfoLabel htmlFor='wheelchair'>
-                                                    <Input
-                                                        name="wheelchair"
-                                                        type="checkbox"
-                                                        value={wheelchair}
-                                                        onChange={() => setWheelchair(!wheelchair)}
-                                                        style={{width: '20px', height: '20px'}}
-                                                    />
-                                                Do you use a wheelchair?</OptInfoLabel>
-                                            </ButtonBox>
-                                        </div>
-                                    </div>
-                                    <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
-                                        <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
-                                                <OptInfoLabel htmlFor='learningDisabled'>
-                                                <Input
-                                                    name="learningDisabled"
-                                                    type="checkbox"
-                                                    value={learningDisabled}
-                                                    onChange={() => setLearningDisabled(!learningDisabled)}
-                                                    style={{width: '20px', height: '20px'}}
-                                                />
-                                                Do you have learning disabilities?</OptInfoLabel>
-                                            </ButtonBox>
-                                            <ButtonBox style={{width: '270px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
-                                                <OptInfoLabel htmlFor='lgbtq'>
-                                                    <Input
-                                                        name="lgbtq"
-                                                        type="checkbox"
-                                                        value={lgbtq}
-                                                        onChange={() => setLgbtq(!lgbtq)}
-                                                        style={{width: '20px', height: '20px'}}
-                                                    />
-                                                Are you a part of the LGBTQIA+ community?</OptInfoLabel>
-                                        </ButtonBox>
-                                    </div>
-                                </Legend>
-                            </Fieldset>
+                        <InputContainer height='275px' margin='50px 0px 0px 0px'>
+                            <InputErrorBox height='200px'>
+                                <Fieldset height='200px'>
+                                    <Legend htmlFor='datails' theme={theme} width='125px'>Optional details
+                                        <CheckBoxContainer long='long'>
+                                            <OptInfoLabel htmlFor='deaf'>
+                                                <Input name="deaf" width='20px' height='20px' type="checkbox" value={deaf} onChange={() => setDeaf(!deaf)}/>
+                                                <InfoLabelText theme={theme}>Are you deaf?</InfoLabelText>
+                                            </OptInfoLabel>
+                                        </CheckBoxContainer>
+                                        <CheckBoxContainer long='long'>
+                                            <OptInfoLabel htmlFor='wheelchair'>
+                                                <Input name="wheelchair" width='20px' height='20px'type="checkbox" value={wheelchair} onChange={() => setWheelchair(!wheelchair)}/>
+                                                <InfoLabelText theme={theme}>Do you use a wheelchair?</InfoLabelText>
+                                            </OptInfoLabel>
+                                        </CheckBoxContainer>
+                                        <CheckBoxContainer long='long'>
+                                            <OptInfoLabel htmlFor='learningDisabled'>
+                                                <Input name="learningDisabled" width='20px' height='20px'type="checkbox" value={learningDisabled} onChange={() => setLearningDisabled(!learningDisabled)}/>
+                                                <InfoLabelText theme={theme}>Do you have learning disabilities?</InfoLabelText>
+                                            </OptInfoLabel>
+                                        </CheckBoxContainer>
+                                        <CheckBoxContainer long='long'>
+                                            <OptInfoLabel htmlFor='lgbtq'>
+                                                <Input name="lgbtq" width='20px' height='20px'type="checkbox" value={lgbtq} onChange={() => setLgbtq(!lgbtq)}/>
+                                                <InfoLabelText theme={theme}>Are you a part of the LGBTQIA+ community?</InfoLabelText>
+                                            </OptInfoLabel>
+                                        </CheckBoxContainer>
+                                    </Legend>
+                                </Fieldset>
+                            </InputErrorBox>
                         </InputContainer>
                     </FormContent>
                 }

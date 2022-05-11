@@ -109,6 +109,7 @@ export const SideField = styled.fieldset`
 `;
 
 export const SideLegend = styled.legend`
+    font-family: motiva-sans, sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;

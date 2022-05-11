@@ -256,15 +256,17 @@ export const SignupForm = () => {
         e.preventDefault();
         setResponseErrors([]);
         const file = e.target.files[0];
+        //Filter adult content
         const url = URL.createObjectURL(file);
         const img = new Image();
         img.src = url;
         const nsfwArr = await nsfwCheck(img);
+        nsfwArr.length > 0 ? setResponseErrors(["Adult content violates Mealize's community standards."]) : setResponseErrors([]);
 
+        //If good, preview the image
         repaint(file);
 
-        nsfwArr.length > 0 ? alert('NSFW!!!') : alert('Ok')
-
+        //Validate file size
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
 
         if(fileSize > 2 ) {
@@ -279,38 +281,41 @@ export const SignupForm = () => {
         }
     }
 
-    // const droppedImage = async (e) => {
-    //     e.preventDefault();
-    //     if(e.dataTransfer.items) {
-    //         for(let i = 0; i < e.dataTransfer.items.length; i++) {
-    //             if(e.dataTransfer.items[i].kind === 'file') {
-    //                 const file = e.dataTransfer.items[i].getAsFile();
-    //                 repaint(file);
-    //                 const nsfwArr = nsfwCheck();
+    const droppedImage = async (e) => {
+        e.preventDefault();
+        if(e.dataTransfer.items) {
+            for(let i = 0; i < e.dataTransfer.items.length; i++) {
+                if(e.dataTransfer.items[i].kind === 'file') {
+                    const file = e.dataTransfer.items[i].getAsFile();
+                    //Filter adult content
+                    const url = URL.createObjectURL(file);
+                    const img = new Image();
+                    img.src = url;
+                    const nsfwArr = await nsfwCheck(img);
+                    nsfwArr.length > 0 ? setResponseErrors(["Adult content violates Mealize's community standards."]) : setResponseErrors([]);
+                    //If good, preview the image
+                    repaint(file);
+                    //Validate file size
+                    const fileSize = file.size / 1024 / 1024; //convert to megabytes
 
-    //                 nsfwArr.length > 0 ? alert('NSFW!!!') : alert('Ok')
-
-    //                 const fileSize = file.size / 1024 / 1024; //convert to megabytes
-
-    //                 if(fileSize > 2 ) {
-    //                     e.target.value = '';
-    //                     setImage('');
-    //                     setImageError(['The file size is too large. Images must be under 2MB.'])
-    //                 }
-    //                 else {
-    //                     e.target.style.color = '#608F41'
-    //                     setImageError([])
-    //                     setImage(file)
-    //                 }
-
-    //             }
-    //         }
-    //     } else {
-    //         for(let i = 0; i < e.dataTransfer.files.length; i++) {
-    //             console.log(e.dataTransfer.files[i].name)
-    //         }
-    //     }
-    // }
+                    if(fileSize > 2 ) {
+                        e.target.value = '';
+                        setImage('');
+                        setImageError(['The file size is too large. Images must be under 2MB.'])
+                    }
+                    else {
+                        e.target.style.color = '#608F41'
+                        setImageError([])
+                        setImage(file)
+                    }
+                }
+            }
+        } else {
+            for(let i = 0; i < e.dataTransfer.files.length; i++) {
+                console.log(e.dataTransfer.files[i].name)
+            }
+        }
+    };
 
     const handleFName = (e) => {
         e.preventDefault();
@@ -545,7 +550,8 @@ export const SignupForm = () => {
                                 </ErrorBox>
                                 <Fieldset error={imageError.length > 0} height='275px'>
                                     <Legend htmlFor='imageBox' theme={theme} error={imageError.length > 0} width='105px'>Profile image
-                                        <DragNDrop width='358px' height='253px' margin='0px 0px 0px -8px'>
+                                        <DragNDrop onDrop={droppedImage} onDragOver={e => e.preventDefault()} width='358px' height='253px' margin='0px 0px 0px -8px'>
+                                            Darg and drop your profile image or
                                             <Input id='imageBox' theme={theme} bg='none' lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
                                         </DragNDrop>
                                     </Legend>

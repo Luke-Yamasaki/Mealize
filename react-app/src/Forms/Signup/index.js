@@ -70,6 +70,8 @@ import {
     UploadingMessage
 } from '../../Components/Styled/PreviewSection';
 import { LoginForm } from '../Login';
+import { PasswordIcon } from '../../Assets/Icons/Password';
+import { VectorBox } from '../../Components/Styled/Layout';
 
 export const SignupForm = () => {
     const dispatch = useDispatch();
@@ -94,6 +96,8 @@ export const SignupForm = () => {
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
+    const [passwordVisibility, setPasswordVisibility] = useState(false)
+    const [confirmVisibility, setConfirmVisibility] = useState(false)
     //optional section
     const [deaf, setDeaf] = useState(false);
     const [wheelchair, setWheelchair] = useState(false);
@@ -507,7 +511,7 @@ export const SignupForm = () => {
                                     <Legend htmlFor='firstName' theme={theme} error={firstNameError.length > 0} width='85px'>First name
                                         <InputResetContainer>
                                             <Input name="firstName" cursor='text' type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
-                                            <ResetIcon theme={theme} onClick={() => setFirstName('')}>&#10006;</ResetIcon>
+                                            <ResetIcon theme={theme} onClick={() => setFirstName('')} data={firstName}>&#10006;</ResetIcon>
                                         </InputResetContainer>
                                     </Legend>
                                 </Fieldset>
@@ -520,7 +524,7 @@ export const SignupForm = () => {
                                     <Legend htmlFor="lastName" theme={theme} error={lastNameError.length > 0} width='85px'>Last name
                                         <InputResetContainer>
                                             <Input name='lastName' cursor='text' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={handleLName} required/>
-                                            <ResetIcon theme={theme} onClick={() => setLastName('')}>&#10006;</ResetIcon>
+                                            <ResetIcon theme={theme} onClick={() => setLastName('')} data={lastName}>&#10006;</ResetIcon>
                                         </InputResetContainer>
                                     </Legend>
                                 </Fieldset>
@@ -533,7 +537,6 @@ export const SignupForm = () => {
                                     <Legend htmlFor="dob" theme={theme} error={dobError.length > 0} width='100px'>Date of birth
                                         <InputResetContainer>
                                             <Input name='dob' type='date' cursor='pointer' min={minDate} max={maxDate} width='125px' value={dob} theme={theme} onChange={(e) => setDob(e.target.value)} required/>
-                                            <ResetIcon theme={theme} onClick={() => setDob(maxDate)}>&#10006;</ResetIcon>
                                         </InputResetContainer>
                                     </Legend>
                                 </Fieldset>
@@ -562,15 +565,18 @@ export const SignupForm = () => {
                 }
                 {formSection === 'fourth' &&
                     <FormContent>
-                        <InputContainer>
+                        <InputContainer height='300px' margin='20px 0px 0px 0px'>
                             <InputErrorBox>
                                 <ErrorBox theme={theme} height={emailError.length > 0 ? '20px' : '0px'}>
                                     <Error>{emailError[0]}</Error>
                                 </ErrorBox>
                                 <Fieldset error={emailError.length > 0}>
-                                    <PasswordLegend htmlFor="email" theme={theme} error={emailError.length > 0}>Email
-                                        <Input  name="email" type="email" placeholder="Email" value={email} onChange={handleEmail} required/>
-                                    </PasswordLegend>
+                                    <Legend width='40px' htmlFor="email" theme={theme} error={emailError.length > 0}>Email
+                                    <InputResetContainer>
+                                        <Input cursor='text' theme={theme} name="email" type="email" placeholder="Email" value={email} onChange={handleEmail} required/>
+                                        <ResetIcon theme={theme} onClick={() => setEmail('')} data={email}>&#10006;</ResetIcon>
+                                    </InputResetContainer>
+                                    </Legend>
                                 </Fieldset>
                             </InputErrorBox>
                             <InputErrorBox>
@@ -578,9 +584,12 @@ export const SignupForm = () => {
                                     <Error>{emailError[0]}</Error>
                                 </ErrorBox>
                                 <Fieldset error={phoneError.length > 0}>
-                                    <PasswordLegend htmlFor="phone" theme={theme} error={phoneError.length > 0}>Phone number
-                                        <Input   name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone number" value={phone} onChange={handlePhone} required/>
-                                    </PasswordLegend>
+                                    <Legend width='112px' htmlFor="phone" theme={theme} error={phoneError.length > 0}>Phone number
+                                    <InputResetContainer>
+                                        <Input theme={theme} cursor='text' name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone number" value={phone} onChange={handlePhone} required/>
+                                        <ResetIcon theme={theme} onClick={() => setPhone('')} data={phone}>&#10006;</ResetIcon>
+                                    </InputResetContainer>
+                                    </Legend>
                                 </Fieldset>
                             </InputErrorBox>
                             <InputErrorBox>
@@ -588,9 +597,15 @@ export const SignupForm = () => {
                                     <Error>{passwordError[0]}</Error>
                                 </ErrorBox>
                                 <Fieldset error={passwordError.length > 0}>
-                                    <PasswordLegend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
-                                        <Input  name="password" type="password" placeholder="Password" value={password} onChange={handlePassword} required/>
-                                    </PasswordLegend>
+                                    <Legend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
+                                        <InputResetContainer>
+                                            <Input theme={theme} cursor='text' name="password" type={passwordVisibility === false ? 'password' : 'text'} placeholder="Password" value={password} onChange={handlePassword} required/>
+                                            <VectorBox data={password} square='30px' onClick={() => setPasswordVisibility(!passwordVisibility)} cursor='pointer'>
+                                                <PasswordIcon theme={theme} />
+                                            </VectorBox>
+                                            <ResetIcon theme={theme} onClick={() => setPassword('')} data={password}>&#10006;</ResetIcon>
+                                        </InputResetContainer>
+                                    </Legend>
                                 </Fieldset>
                             </InputErrorBox>
                             <InputErrorBox>
@@ -598,9 +613,15 @@ export const SignupForm = () => {
                                     <Error>{confirmError[0]}</Error>
                                 </ErrorBox>
                                 <Fieldset error={confirmError.length > 0}>
-                                    <PasswordLegend htmlFor="confirm" theme={theme} error={confirmError.length > 0}>Confirm password
-                                        <Input  name="confirm" type="password" placeholder="Password" value={password} onChange={handleConfirm} required/>
-                                    </PasswordLegend>
+                                    <Legend width='140px' htmlFor="confirm" theme={theme} error={confirmError.length > 0}>Confirm password
+                                        <InputResetContainer>
+                                            <Input theme={theme} cursor='text' name="confirm" type={confirmVisibility === false ? 'password' : 'text'} placeholder="Confirm password" value={confirm} onChange={handleConfirm} required/>
+                                            <VectorBox data={confirm} square='30px' onClick={() => setConfirmVisibility(!confirmVisibility)} cursor='pointer'>
+                                                <PasswordIcon theme={theme} />
+                                            </VectorBox>
+                                                <ResetIcon theme={theme} onClick={() => setConfirm('')} data={confirm}>&#10006;</ResetIcon>
+                                        </InputResetContainer>
+                                    </Legend>
                                 </Fieldset>
                             </InputErrorBox>
                         </InputContainer>

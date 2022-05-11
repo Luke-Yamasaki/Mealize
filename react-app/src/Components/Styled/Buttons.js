@@ -161,8 +161,10 @@ export const LogoutButton = styled(PostButton)`
 
 export const ResetIcon = styled.p`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
-    font-size: 1em;
+    font-size: 16px;
     cursor: pointer;
+    height: 22.5px;
+    opacity: ${props => props.data?.length > 0 ? '1' : '0.25' }
 `;
 
 export const ProfileButton = styled.img`

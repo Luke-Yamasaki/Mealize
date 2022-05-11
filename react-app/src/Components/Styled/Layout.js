@@ -208,6 +208,8 @@ export const VectorBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: ${props => props.data?.length > 0 ? '1' : props.data?.length === 0 ? '0.25' : '1'};
+    cursor: ${props => props.cursor ? props.cursor : 'default'};
     &:hover {
        width: ${props => props.resize ? props.resize : props.square ? props.square : '30px'};
        height: ${props => props.resize ? props.resize : props.square ? props.square : '30px'};

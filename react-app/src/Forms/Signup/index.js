@@ -10,6 +10,7 @@ import { setCurrentModal, hideModal } from '../../store/modal';
 
 //Helper
 import { validateSignup, uploadProfileImage } from '../../utils/Forms/signup';
+import { ageBoundary } from '../../utils/Dates';
 import * as nsfwjs from 'nsfwjs';
 
 //Components
@@ -37,7 +38,12 @@ import {
     InputContainer,
     InputErrorBox,
     Legend,
-    OptInfoLabel
+    OptInfoLabel,
+    CheckBoxContainer,
+    InfoLabelText,
+    OrganizationSelect,
+    InputResetContainer,
+    DragNDrop
 } from '../../Components/Styled/AuthenticationForm';
 
 import {
@@ -53,6 +59,8 @@ import {
     ActionBox,
     ActionText,
     SignupText,
+    PreviousButton,
+    ResetIcon,
 } from '../../Components/Styled/Buttons';
 
 import {
@@ -62,32 +70,43 @@ import {
     UploadingMessage
 } from '../../Components/Styled/PreviewSection';
 import { LoginForm } from '../Login';
+import { PasswordIcon } from '../../Assets/Icons/Password';
+import { VectorBox } from '../../Components/Styled/Layout';
 
 export const SignupForm = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const organizations = useSelector(state => state.organizations);
     const { theme } = useTheme();
-    console.log(organizations)
 
-    // states
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [image, setImage] = useState(null);
-    const [dob, setDob] = useState((new Date().toISOString().split('T')[0].slice(0,4)-18).toString() + new Date().toISOString().split('T')[0].slice(4,11));
-    const [deaf, setDeaf] = useState(false);
-    const [wheelchair, setWheelchair] = useState(false);
-    const [learningDisabled, setLearningDisabled] = useState(false);
-    const [lgbtq, setLgbtq] = useState(false);
+    // form states
+    const [formSection, setFormSection] = useState('first');
+    //first section
     const [organizationId, setOrganizationId] = useState('');
     const [isNonprofit, setIsNonprofit] = useState(false);
     const [isManager, setIsManager] = useState(false);
+    //second section
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [dob, setDob] = useState((new Date().toISOString().split('T')[0].slice(0,4)-18).toString() + new Date().toISOString().split('T')[0].slice(4,11));
+    //third section
+    const [image, setImage] = useState(null);
+    //user auth credential section
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
+    const [passwordVisibility, setPasswordVisibility] = useState(false)
+    const [confirmVisibility, setConfirmVisibility] = useState(false)
+    //optional section
+    const [deaf, setDeaf] = useState(false);
+    const [wheelchair, setWheelchair] = useState(false);
+    const [learningDisabled, setLearningDisabled] = useState(false);
+    const [lgbtq, setLgbtq] = useState(false);
+    //S3 uploading section
     const [imageUploading, setImageUploading] = useState(false);
 
+    const [userData, setUserData] = useState('');
     // errors
     const [firstNameError, setFirstNameError] = useState([]);
     const [lastNameError, setLastNameError] = useState([]);
@@ -100,29 +119,23 @@ export const SignupForm = () => {
     const [confirmError, setConfirmError] = useState([]);
     const [responseErrors, setResponseErrors] = useState([]);
 
+    //Spreading all organizations
     const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
 
-    useEffect(() => {
-        allOrganizations[organizationId]?.isNonprofit ? setIsNonprofit(true) : setIsNonprofit(false);
-    },[organizationId])
-
-    //dates
-    const year = new Date().getFullYear()
-    const month = new Date().getMonth()
-    const date = new Date().getDate()
-
-    const formattedMonth = month <= 9 ? '0' + (month+1).toString() : (month+1).toString()
-    const formattedDate = date <= 9 ? `0${date}` : date.toString();
-    // const today = year.toString() + '-' + formattedDate + '-' + formattedMonth
-    const tooOld = (year - 90).toString() + '-' + formattedMonth + '-' + formattedDate;
+    const ageBoundariesObj = ageBoundary();
+    const minDate = ageBoundariesObj.old;
+    const maxDate = ageBoundariesObj.young;
 
     const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
 
-    let userData = { organizationId, firstName, dob, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager,};
-
+    //props to pass to preview Id card
     useEffect(() => {
-        userData = {organizationId, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager};
-    },[organizationId, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager,])
+        let userInfo = { organizationId, isNonprofit, isManager, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq };
+        console.log(userInfo);
+        console.log(userData);
+        setUserData(userInfo);
+        return () => console.log('???')
+    },[organizationId, isNonprofit, isManager, firstName, lastName, dob, image, deaf, wheelchair, learningDisabled, lgbtq ])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -229,9 +242,8 @@ export const SignupForm = () => {
         setImage(file)
     };
 
-    const nsfwCheck = async() => {
+    const nsfwCheck = async(img) => {
         const nsfwArr = [];
-        const img = document.getElementById('imageBox');
         const model = await nsfwjs.load();
         const predictions = await model.classify(img);
         console.log('Predictions: ', predictions);
@@ -247,13 +259,18 @@ export const SignupForm = () => {
     const updateImage = async (e) => {
         e.preventDefault();
         setResponseErrors([]);
-
         const file = e.target.files[0];
+        //Filter adult content
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.src = url;
+        const nsfwArr = await nsfwCheck(img);
+        nsfwArr.length > 0 ? setResponseErrors(["Adult content violates Mealize's community standards."]) : setResponseErrors([]);
+
+        //If good, preview the image
         repaint(file);
-        const nsfwArr = nsfwCheck();
 
-        nsfwArr.length > 0 ? alert('NSFW!!!') : alert('Ok')
-
+        //Validate file size
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
 
         if(fileSize > 2 ) {
@@ -267,6 +284,42 @@ export const SignupForm = () => {
             setImage(file)
         }
     }
+
+    const droppedImage = async (e) => {
+        e.preventDefault();
+        if(e.dataTransfer.items) {
+            for(let i = 0; i < e.dataTransfer.items.length; i++) {
+                if(e.dataTransfer.items[i].kind === 'file') {
+                    const file = e.dataTransfer.items[i].getAsFile();
+                    //Filter adult content
+                    const url = URL.createObjectURL(file);
+                    const img = new Image();
+                    img.src = url;
+                    const nsfwArr = await nsfwCheck(img);
+                    nsfwArr.length > 0 ? setResponseErrors(["Adult content violates Mealize's community standards."]) : setResponseErrors([]);
+                    //If good, preview the image
+                    repaint(file);
+                    //Validate file size
+                    const fileSize = file.size / 1024 / 1024; //convert to megabytes
+
+                    if(fileSize > 2 ) {
+                        e.target.value = '';
+                        setImage('');
+                        setImageError(['The file size is too large. Images must be under 2MB.'])
+                    }
+                    else {
+                        e.target.style.color = '#608F41'
+                        setImageError([])
+                        setImage(file)
+                    }
+                }
+            }
+        } else {
+            for(let i = 0; i < e.dataTransfer.files.length; i++) {
+                console.log(e.dataTransfer.files[i].name)
+            }
+        }
+    };
 
     const handleFName = (e) => {
         e.preventDefault();
@@ -348,9 +401,43 @@ export const SignupForm = () => {
         }
     }
 
+    const handleNext = (e) => {
+        e.preventDefault();
+
+        formSection === 'first' ?
+        setFormSection('second')
+        :
+        formSection === 'second' ?
+        setFormSection('third')
+        :
+        formSection === 'third' ?
+        setFormSection('fourth')
+        :
+        setFormSection('optional')
+    }
+
+    const handlePrevious = (e) => {
+        e.preventDefault();
+        formSection === 'second' ?
+        setFormSection('first')
+        :
+        formSection === 'third' ?
+        setFormSection('second')
+        :
+        formSection === 'fourth' ?
+        setFormSection('third')
+        :
+        setFormSection('fourth')
+    }
+
     return (
-        <PreviewWrapper width='1200px' height='652px'>
-           <PreviewSection type='id' userData={userData}/>
+        <PreviewWrapper width='1000px' height='652px'>
+            <PreviewBox>
+                {userData && <PreviewSection type='id' userData={userData}/>}
+                <UploadingBox>
+                    <UploadingMessage>Display when uploading image to S3</UploadingMessage>
+                </UploadingBox>
+            </PreviewBox>
             <FormContainer marginTop='-35px' width='500px' height='670px'>
                 <FormLegend>
                     <LogoBox width='175px'>
@@ -360,198 +447,236 @@ export const SignupForm = () => {
                 </FormLegend>
                 <Form width='450px' height='550px' theme={theme}>
                 <FormTitleBox>
-                    <FormTitle theme={theme}>Welcome to Mealize!</FormTitle>
-                    <FormTitle theme={theme}>- Let's get started -</FormTitle>
+                    <FormTitle theme={theme} margin='80px 0px 0px 0px'>Welcome to Mealize!</FormTitle>
+                    <FormTitle theme={theme} fontSize='16px' margin='10px 0px 0px 0px' color='rgba(255, 0, 0, 0.75)'>{formSection === 'optional' ? '- These fields are optional -' : '- All fields are required -'}</FormTitle>
                 </FormTitleBox>
-                <FormContent>
-        {/* Organization */}
-                    <InputContainer height={emailError.length > 0 ? '170px' : '150px'}>
-                        <Fieldset style={{width: '235px'}}>
-                            <Legend style={{width: '200px'}}> Select your organization
-                            <div style={{display: 'flex', flexDirection: 'row', width: '200px', height: '30px', justifyContent: 'flex-start', alignItems: 'center'}}>
-                                <select style={{width: '200px', height: '25px'}} value={organizationId} onChange={(e) => setOrganizationId(e.target.value)} required>
-                                    <optgroup label='Nonprofits'>
-                                        {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
-                                    </optgroup>
-                                    <optgroup label='Businesses'>
-                                        {Object.values(organizations.businesses).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
-                                    </optgroup>
-                                </select>
-                            </div>
-                            </Legend>
-                        </Fieldset>
-                        <Fieldset style={{width: '235px'}}>
-                            <Legend style={{width: '160px'}}> Are you a manager?
-                            <ButtonBox style={{width: '200px', height: '50px', display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', justifyContent: 'flex-start'}}>
-                                <OptInfoLabel htmlFor='isManager' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                <Input name="isManager" type="checkbox" value={isManager} style={{width: '20px', height: '20px'}} onChange={() => setIsManager(!isManager)} required/>
-                                Yes
-                                </OptInfoLabel>
-                                <OptInfoLabel htmlFor='isvolunteer' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                <Input name="isVolunteer" type="checkbox" value={isManager} style={{width: '20px', height: '20px'}} onChange={() => setIsManager(!isManager)} required/>
-                                No
-                                </OptInfoLabel>
-                            </ButtonBox>
-                            </Legend>
-                        </Fieldset>
-                    </InputContainer>
-                </FormContent>
-        {/* Name and DOB */}
-                <FormContent>
-                  <InputContainer height={emailError.length > 0 ? '170px' : '150px'}>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={firstNameError.length > 0 ? '20px' : '0px'}>
-                                <Error>{firstNameError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={firstNameError.length > 0}>
-                                <EmailLegend htmlFor='firName' theme={theme} error={firstNameError.length > 0}>First name
-                                    <Input name="firname" type="text" autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
-                                </EmailLegend>
+                {formSection === 'first' &&
+                    <FormContent>
+                        <InputContainer height='200px' margin='50px 0px 0px 0px'>
+                            <Fieldset>
+                                <Legend theme={theme} width='223px'> Do you work for a nonprofit?
+                                <CheckBoxContainer>
+                                    <OptInfoLabel htmlFor='isManager'>
+                                    <Input name="isNonprofit" type="checkbox" width='20px' height='20px' onChange={() => isNonprofit === false ? setIsNonprofit(true) : setIsNonprofit(false)} checked={isNonprofit === true}/>
+                                    <InfoLabelText theme={theme}>Yes</InfoLabelText>
+                                    </OptInfoLabel>
+                                    <OptInfoLabel htmlFor='isvolunteer'>
+                                    <Input name="isNonprofit" type="checkbox" width='20px' height='20px' onChange={() => setIsNonprofit(!isNonprofit)} checked={isNonprofit === false}/>
+                                    <InfoLabelText theme={theme}>No</InfoLabelText>
+                                    </OptInfoLabel>
+                                </CheckBoxContainer>
+                                </Legend>
                             </Fieldset>
-                        </InputErrorBox>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={dobError.length > 0 ? '20px' : '0px'}>
-                                <Error>{dobError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={dobError.length > 0}>
-                                <PasswordLegend htmlFor="dob" theme={theme} error={dobError.length > 0}>Last name
-                                    <Input name='dob' type='text' placeholder='First name' autoComplete="none" value={dob} theme={theme} onChange={handleLName} required/>
-                                </PasswordLegend>
+                            <Fieldset>
+                                <Legend theme={theme} width='190px'> Select your organization
+                                    <OrganizationSelect value={organizationId} onChange={(e) => setOrganizationId(e.target.value)} required>
+                                        {isNonprofit &&
+                                            <optgroup label='Nonprofits'>
+                                                {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
+                                            </optgroup>
+                                        }
+                                        {!isNonprofit &&
+                                            <optgroup label='Businesses'>
+                                                {Object.values(organizations.businesses).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
+                                            </optgroup>
+                                        }
+                                    </OrganizationSelect>
+                                </Legend>
                             </Fieldset>
-                        </InputErrorBox>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={dobError.length > 0 ? '20px' : '0px'}>
-                                <Error>{dobError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={dobError.length > 0}>
-                                <PasswordLegend htmlFor="dob" theme={theme} error={dobError.length > 0}>Date of birth
-                                    <Input name='dob' type='date' min={tooOld} max={(year - 18).toString + '-' + formattedMonth + '-' + formattedDate} placeholder="Your DOB (must be 18 or older)." value={dob}theme={theme} onChange={(e) => setDob(e.target.value)} required/>
-                                </PasswordLegend>
+                            <Fieldset>
+                                <Legend theme={theme} width='160px'> Are you a manager?
+                                <CheckBoxContainer>
+                                    <OptInfoLabel htmlFor='isManager'>
+                                    <Input name="isManager" type="checkbox" width='20px' height='20px' onChange={() => isManager === false ? setIsManager(true) : setIsManager(false)} checked={isManager === true}/>
+                                    <InfoLabelText theme={theme}>Yes</InfoLabelText>
+                                    </OptInfoLabel>
+                                    <OptInfoLabel htmlFor='isvolunteer'>
+                                    <Input name="isVolunteer" type="checkbox" width='20px' height='20px' onChange={() => isManager === true ? setIsManager(false) : setIsManager(true)} checked={isManager === false}/>
+                                    <InfoLabelText theme={theme}>No</InfoLabelText>
+                                    </OptInfoLabel>
+                                </CheckBoxContainer>
+                                </Legend>
                             </Fieldset>
-                        </InputErrorBox>
-                    </InputContainer>
-                </FormContent>
-        {/* Profile Iamge */}
-                <FormContent>
-                    <InputContainer>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={imageError.length > 0 ? '20px' : '0px'}>
-                                <Error>{imageError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={imageError.length > 0}>
-                                <PasswordLegend htmlFor="image" theme={theme} error={imageError.length > 0}>Profile image
-                                    <Input id="profileImage" type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
-                                </PasswordLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                    </InputContainer>
-                </FormContent>
-        {/* Credentials */}
-                <FormContent>
-                    <InputContainer>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={emailError.length > 0 ? '20px' : '0px'}>
-                                <Error>{emailError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={emailError.length > 0}>
-                                <PasswordLegend htmlFor="email" theme={theme} error={emailError.length > 0}>Email
-                                    <Input  name="email" type="email" placeholder="Email" value={email} onChange={handleEmail} required/>
-                                </PasswordLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={phoneError.length > 0 ? '20px' : '0px'}>
-                                <Error>{emailError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={phoneError.length > 0}>
-                                <PasswordLegend htmlFor="phone" theme={theme} error={phoneError.length > 0}>Phone number
-                                    <Input   name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone number" value={phone} onChange={handlePhone} required/>
-                                </PasswordLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={passwordError.length > 0 ? '20px' : '0px'}>
-                                <Error>{passwordError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={passwordError.length > 0}>
-                                <PasswordLegend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
-                                    <Input  name="password" type="password" placeholder="Password" value={password} onChange={handlePassword} required/>
-                                </PasswordLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={confirmError.length > 0 ? '20px' : '0px'}>
-                                <Error>{confirmError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={confirmError.length > 0}>
-                                <PasswordLegend htmlFor="confirm" theme={theme} error={confirmError.length > 0}>Confirm password
-                                    <Input  name="confirm" type="password" placeholder="Password" value={password} onChange={handleConfirm} required/>
-                                </PasswordLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                    </InputContainer>
-                </FormContent>
-        {/* Credentials */}
-                <FormContent>
-                    <InputContainer>
-                        <Fieldset style={{height: '100px', width: '500px', margin: 'none', padding: 'none'}}>
-                            <Legend style={{width: '130px'}}> Optional details
-                                <div style={{width: '400px', height: '60px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                    <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
-                                        <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                        </InputContainer>
+                    </FormContent>
+                }
+                {formSection === 'second' &&
+                    <FormContent>
+                    <InputContainer height='200px' margin='50px 0px 0px 0px'>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={firstNameError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{firstNameError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={firstNameError.length > 0}>
+                                    <Legend htmlFor='firstName' theme={theme} error={firstNameError.length > 0} width='85px'>First name
+                                        <InputResetContainer>
+                                            <Input name="firstName" cursor='text' type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
+                                            <ResetIcon theme={theme} onClick={() => setFirstName('')} data={firstName}>&#10006;</ResetIcon>
+                                        </InputResetContainer>
+                                    </Legend>
+                                </Fieldset>
+                            </InputErrorBox>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={lastNameError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{lastNameError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={lastNameError.length > 0}>
+                                    <Legend htmlFor="lastName" theme={theme} error={lastNameError.length > 0} width='85px'>Last name
+                                        <InputResetContainer>
+                                            <Input name='lastName' cursor='text' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={handleLName} required/>
+                                            <ResetIcon theme={theme} onClick={() => setLastName('')} data={lastName}>&#10006;</ResetIcon>
+                                        </InputResetContainer>
+                                    </Legend>
+                                </Fieldset>
+                            </InputErrorBox>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={dobError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{dobError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={dobError.length > 0}>
+                                    <Legend htmlFor="dob" theme={theme} error={dobError.length > 0} width='100px'>Date of birth
+                                        <InputResetContainer>
+                                            <Input name='dob' type='date' cursor='pointer' min={minDate} max={maxDate} width='125px' value={dob} theme={theme} onChange={(e) => setDob(e.target.value)} required/>
+                                        </InputResetContainer>
+                                    </Legend>
+                                </Fieldset>
+                            </InputErrorBox>
+                        </InputContainer>
+                    </FormContent>
+                }
+                {formSection === 'third' &&
+                    <FormContent>
+                        <InputContainer height='275px' margin='50px 0px 0px 0px'>
+                            <InputErrorBox height='275px'>
+                                <ErrorBox theme={theme} height={imageError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{imageError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={imageError.length > 0} height='275px'>
+                                    <Legend htmlFor='imageBox' theme={theme} error={imageError.length > 0} width='105px'>Profile image
+                                        <DragNDrop onDrop={droppedImage} onDragOver={e => e.preventDefault()} width='357px' height='253px' margin='0px 0px 0px -7px'>
+                                            Darg and drop your profile image or
+                                            <Input id='imageBox' theme={theme} bg='none' lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
+                                        </DragNDrop>
+                                    </Legend>
+                                </Fieldset>
+                            </InputErrorBox>
+                        </InputContainer>
+                    </FormContent>
+                }
+                {formSection === 'fourth' &&
+                    <FormContent>
+                        <InputContainer height='300px' margin='20px 0px 0px 0px'>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={emailError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{emailError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={emailError.length > 0}>
+                                    <Legend width='40px' htmlFor="email" theme={theme} error={emailError.length > 0}>Email
+                                    <InputResetContainer>
+                                        <Input cursor='text' theme={theme} name="email" type="email" placeholder="Email" value={email} onChange={handleEmail} required/>
+                                        <ResetIcon theme={theme} onClick={() => setEmail('')} data={email}>&#10006;</ResetIcon>
+                                    </InputResetContainer>
+                                    </Legend>
+                                </Fieldset>
+                            </InputErrorBox>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={phoneError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{emailError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={phoneError.length > 0}>
+                                    <Legend width='112px' htmlFor="phone" theme={theme} error={phoneError.length > 0}>Phone number
+                                    <InputResetContainer>
+                                        <Input theme={theme} cursor='text' name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone number" value={phone} onChange={handlePhone} required/>
+                                        <ResetIcon theme={theme} onClick={() => setPhone('')} data={phone}>&#10006;</ResetIcon>
+                                    </InputResetContainer>
+                                    </Legend>
+                                </Fieldset>
+                            </InputErrorBox>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={passwordError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{passwordError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={passwordError.length > 0}>
+                                    <Legend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
+                                        <InputResetContainer>
+                                            <Input theme={theme} cursor='text' name="password" type={passwordVisibility === false ? 'password' : 'text'} placeholder="Password" value={password} onChange={handlePassword} required/>
+                                            <VectorBox data={password} square='30px' onClick={() => setPasswordVisibility(!passwordVisibility)} cursor='pointer'>
+                                                <PasswordIcon theme={theme} />
+                                            </VectorBox>
+                                            <ResetIcon theme={theme} onClick={() => setPassword('')} data={password}>&#10006;</ResetIcon>
+                                        </InputResetContainer>
+                                    </Legend>
+                                </Fieldset>
+                            </InputErrorBox>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={confirmError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{confirmError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={confirmError.length > 0}>
+                                    <Legend width='140px' htmlFor="confirm" theme={theme} error={confirmError.length > 0}>Confirm password
+                                        <InputResetContainer>
+                                            <Input theme={theme} cursor='text' name="confirm" type={confirmVisibility === false ? 'password' : 'text'} placeholder="Confirm password" value={confirm} onChange={handleConfirm} required/>
+                                            <VectorBox data={confirm} square='30px' onClick={() => setConfirmVisibility(!confirmVisibility)} cursor='pointer'>
+                                                <PasswordIcon theme={theme} />
+                                            </VectorBox>
+                                                <ResetIcon theme={theme} onClick={() => setConfirm('')} data={confirm}>&#10006;</ResetIcon>
+                                        </InputResetContainer>
+                                    </Legend>
+                                </Fieldset>
+                            </InputErrorBox>
+                        </InputContainer>
+                    </FormContent>
+                }
+                {formSection === 'optional' &&
+                    <FormContent>
+                        <InputContainer height='275px' margin='50px 0px 0px 0px'>
+                            <InputErrorBox height='200px'>
+                                <Fieldset height='200px'>
+                                    <Legend htmlFor='datails' theme={theme} width='125px'>Optional details
+                                        <CheckBoxContainer long='long'>
                                             <OptInfoLabel htmlFor='deaf'>
-                                                <Input
-                                                        name="deaf"
-                                                        type="checkbox"
-                                                        value={deaf}
-                                                        onChange={() => setDeaf(!deaf)}
-                                                        style={{width: '20px', height: '20px'}}
-                                                    />
-                                            Are you deaf?
+                                                <Input name="deaf" width='20px' height='20px' type="checkbox" value={deaf} onChange={() => setDeaf(!deaf)}/>
+                                                <InfoLabelText theme={theme}>Are you deaf?</InfoLabelText>
                                             </OptInfoLabel>
-                                        </ButtonBox>
-                                        <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                        </CheckBoxContainer>
+                                        <CheckBoxContainer long='long'>
                                             <OptInfoLabel htmlFor='wheelchair'>
-                                                <Input
-                                                    name="wheelchair"
-                                                    type="checkbox"
-                                                    value={wheelchair}
-                                                    onChange={() => setWheelchair(!wheelchair)}
-                                                    style={{width: '20px', height: '20px'}}
-                                                />
-                                            Do you use a wheelchair?</OptInfoLabel>
-                                        </ButtonBox>
-                                    </div>
-                                </div>
-                                <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
-                                    <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                                <Input name="wheelchair" width='20px' height='20px'type="checkbox" value={wheelchair} onChange={() => setWheelchair(!wheelchair)}/>
+                                                <InfoLabelText theme={theme}>Do you use a wheelchair?</InfoLabelText>
+                                            </OptInfoLabel>
+                                        </CheckBoxContainer>
+                                        <CheckBoxContainer long='long'>
                                             <OptInfoLabel htmlFor='learningDisabled'>
-                                            <Input
-                                                name="learningDisabled"
-                                                type="checkbox"
-                                                value={learningDisabled}
-                                                onChange={() => setLearningDisabled(!learningDisabled)}
-                                                style={{width: '20px', height: '20px'}}
-                                            />
-                                            Do you have learning disabilities?</OptInfoLabel>
-                                        </ButtonBox>
-                                        <ButtonBox style={{width: '270px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                                <Input name="learningDisabled" width='20px' height='20px'type="checkbox" value={learningDisabled} onChange={() => setLearningDisabled(!learningDisabled)}/>
+                                                <InfoLabelText theme={theme}>Do you have learning disabilities?</InfoLabelText>
+                                            </OptInfoLabel>
+                                        </CheckBoxContainer>
+                                        <CheckBoxContainer long='long'>
                                             <OptInfoLabel htmlFor='lgbtq'>
-                                                <Input
-                                                    name="lgbtq"
-                                                    type="checkbox"
-                                                    value={lgbtq}
-                                                    onChange={() => setLgbtq(!lgbtq)}
-                                                    style={{width: '20px', height: '20px'}}
-                                                />
-                                            Are you a part of the LGBTQIA+ community?</OptInfoLabel>
-                                    </ButtonBox>
-                                </div>
-                            </Legend>
-                        </Fieldset>
-                    </InputContainer>
-                </FormContent>
+                                                <Input name="lgbtq" width='20px' height='20px'type="checkbox" value={lgbtq} onChange={() => setLgbtq(!lgbtq)}/>
+                                                <InfoLabelText theme={theme}>Are you a part of the LGBTQIA+ community?</InfoLabelText>
+                                            </OptInfoLabel>
+                                        </CheckBoxContainer>
+                                    </Legend>
+                                </Fieldset>
+                            </InputErrorBox>
+                        </InputContainer>
+                    </FormContent>
+                }
                 <ButtonBox>
+                    <InputButtonBox>
+                        <CancelButton onClick={cancel}>
+                            <ButtonText>Cancel</ButtonText>
+                        </CancelButton>
+                        {formSection !== 'first' &&
+                            <PreviousButton onClick={handlePrevious}>
+                                <ButtonText>Previous</ButtonText>
+                            </PreviousButton>
+                        }
+                        <SubmitButton onClick={formSection === 'optional' ? handleSubmit : handleNext}>
+                            <ButtonText>{formSection === 'optional' ? 'Submit' : 'Next'}</ButtonText>
+                        </SubmitButton>
+                    </InputButtonBox>
                     <DemoBox onClick={handleDemo}>
                         <VolunteerDemoButton>
                             <ButtonText weight='800'>Volunteer demo</ButtonText>
@@ -572,15 +697,4 @@ export const SignupForm = () => {
             </FormContainer>
         </PreviewWrapper>
     )
-}
-
-
-// Final slide
-{/* <InputButtonBox>
-    <CancelButton onClick={cancel}>
-        <ButtonText>Cancel</ButtonText>
-    </CancelButton>
-    <SubmitButton onClick={handleSubmit}>
-        <ButtonText>Submit</ButtonText>
-    </SubmitButton>
-</InputButtonBox> */}
+};

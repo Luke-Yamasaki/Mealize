@@ -84,4 +84,5 @@ export const SettingsBox = styled.div`
     border-radius: 100%;
     background-color: ${props => props.theme === 'light' ? '#327647' : '#76D97E' };
     animation: ${props => props.animation};
+    z-index: 1000;
 `;

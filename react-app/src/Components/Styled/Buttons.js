@@ -41,6 +41,10 @@ export const SubmitButton = styled(FormButton)`
     background-color: #76D97E;
 `;
 
+export const PreviousButton = styled(FormButton)`
+    background-color: #D49524;
+`;
+
 export const CancelButton = styled(FormButton)`
     background-color: #28A690;
 `;
@@ -148,6 +152,7 @@ export const PostButton = styled.div`
     border-radius: 5px;
     background-color: #D49524;
     color: black;
+    cursor: pointer;
 `;
 
 export const LogoutButton = styled(PostButton)`
@@ -156,7 +161,10 @@ export const LogoutButton = styled(PostButton)`
 
 export const ResetIcon = styled.p`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
-    font-size: 1em;
+    font-size: 16px;
+    cursor: pointer;
+    height: 22.5px;
+    opacity: ${props => props.data?.length > 0 ? '1' : '0.25' }
 `;
 
 export const ProfileButton = styled.img`

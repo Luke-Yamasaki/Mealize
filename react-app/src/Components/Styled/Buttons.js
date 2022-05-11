@@ -41,6 +41,10 @@ export const SubmitButton = styled(FormButton)`
     background-color: #76D97E;
 `;
 
+export const PreviousButton = styled(FormButton)`
+    background-color: #D49524;
+`;
+
 export const CancelButton = styled(FormButton)`
     background-color: #28A690;
 `;

@@ -54,6 +54,7 @@ import {
     ActionBox,
     ActionText,
     SignupText,
+    PreviousButton,
 } from '../../Components/Styled/Buttons';
 
 import {
@@ -384,8 +385,13 @@ export const SignupForm = () => {
     }
 
     return (
-        <PreviewWrapper width='1200px' height='652px'>
-           <PreviewSection type='id' userData={userData}/>
+        <PreviewWrapper width='1000px' height='652px'>
+            <PreviewBox>
+                <PreviewSection type='id' userData={userData}/>
+                <UploadingBox>
+                    <UploadingMessage>Display when uploading image to S3</UploadingMessage>
+                </UploadingBox>
+            </PreviewBox>
             <FormContainer marginTop='-35px' width='500px' height='670px'>
                 <FormLegend>
                     <LogoBox width='175px'>
@@ -401,6 +407,20 @@ export const SignupForm = () => {
                 {formSection === 'first' &&
                     <FormContent>
                         <InputContainer height={emailError.length > 0 ? '170px' : '150px'}>
+                            <Fieldset style={{width: '235px'}}>
+                                <Legend theme={theme}> Do you work for a nonprofit?
+                                <ButtonBox style={{width: '200px', height: '50px', display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', justifyContent: 'flex-start'}}>
+                                    <OptInfoLabel htmlFor='isManager' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                    <Input name="isManager" type="checkbox" value={isManager} style={{width: '20px', height: '20px'}} onChange={() => setIsManager(!isManager)} required/>
+                                    Yes
+                                    </OptInfoLabel>
+                                    <OptInfoLabel htmlFor='isvolunteer' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                    <Input name="isVolunteer" type="checkbox" value={isManager} style={{width: '20px', height: '20px'}} onChange={() => setIsManager(!isManager)} required/>
+                                    No
+                                    </OptInfoLabel>
+                                </ButtonBox>
+                                </Legend>
+                            </Fieldset>
                             <Fieldset style={{width: '235px'}}>
                                 <Legend style={{width: '200px'}}> Select your organization
                                 <div style={{display: 'flex', flexDirection: 'row', width: '200px', height: '30px', justifyContent: 'flex-start', alignItems: 'center'}}>
@@ -598,8 +618,13 @@ export const SignupForm = () => {
                         <CancelButton onClick={cancel}>
                             <ButtonText>Cancel</ButtonText>
                         </CancelButton>
-                        <SubmitButton onClick={handleSubmit}>
-                            <ButtonText>Submit</ButtonText>
+                        {formSection !== 'first' &&
+                            <PreviousButton onClick={handlePrevious}>
+                                <ButtonText>Previous</ButtonText>
+                            </PreviousButton>
+                        }
+                        <SubmitButton onClick={formSection === 'optional' ? handleSubmit : handleNext}>
+                            <ButtonText>{formSection === 'optional' ? 'Submit' : 'Next'}</ButtonText>
                         </SubmitButton>
                     </InputButtonBox>
                     <DemoBox onClick={handleDemo}>

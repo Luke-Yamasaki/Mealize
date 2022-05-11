@@ -71,21 +71,27 @@ export const SignupForm = () => {
     console.log(organizations)
 
     // states
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [image, setImage] = useState(null);
-    const [dob, setDob] = useState((new Date().toISOString().split('T')[0].slice(0,4)-18).toString() + new Date().toISOString().split('T')[0].slice(4,11));
-    const [deaf, setDeaf] = useState(false);
-    const [wheelchair, setWheelchair] = useState(false);
-    const [learningDisabled, setLearningDisabled] = useState(false);
-    const [lgbtq, setLgbtq] = useState(false);
+    //first section
     const [organizationId, setOrganizationId] = useState('');
     const [isNonprofit, setIsNonprofit] = useState(false);
     const [isManager, setIsManager] = useState(false);
+    //second section
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [dob, setDob] = useState((new Date().toISOString().split('T')[0].slice(0,4)-18).toString() + new Date().toISOString().split('T')[0].slice(4,11));
+    //third section
+    const [image, setImage] = useState(null);
+    //user auth credential section
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [confirm, setConfirm] = useState('');
+    //optional section
+    const [deaf, setDeaf] = useState(false);
+    const [wheelchair, setWheelchair] = useState(false);
+    const [learningDisabled, setLearningDisabled] = useState(false);
+    const [lgbtq, setLgbtq] = useState(false);
+    //S3 uploading section
     const [imageUploading, setImageUploading] = useState(false);
 
     // errors
@@ -100,8 +106,10 @@ export const SignupForm = () => {
     const [confirmError, setConfirmError] = useState([]);
     const [responseErrors, setResponseErrors] = useState([]);
 
+    //Spreading all organizations
     const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
 
+    //Determine organization type could be refactored with a checkbox
     useEffect(() => {
         allOrganizations[organizationId]?.isNonprofit ? setIsNonprofit(true) : setIsNonprofit(false);
     },[organizationId])
@@ -118,11 +126,12 @@ export const SignupForm = () => {
 
     const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
 
-    let userData = { organizationId, firstName, dob, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager,};
+    //props to pass to preview Id card
+    let userData;
 
     useEffect(() => {
-        userData = {organizationId, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager};
-    },[organizationId, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager,])
+        userData = { organizationId, isNonprofit, isManager, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq };
+    },[organizationId, isNonprofit, isManager, firstName, lastName, dob, image, deaf, wheelchair, learningDisabled, lgbtq ])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -552,6 +561,14 @@ export const SignupForm = () => {
                     </InputContainer>
                 </FormContent>
                 <ButtonBox>
+                    <InputButtonBox>
+                        <CancelButton onClick={cancel}>
+                            <ButtonText>Cancel</ButtonText>
+                        </CancelButton>
+                        <SubmitButton onClick={handleSubmit}>
+                            <ButtonText>Submit</ButtonText>
+                        </SubmitButton>
+                    </InputButtonBox>
                     <DemoBox onClick={handleDemo}>
                         <VolunteerDemoButton>
                             <ButtonText weight='800'>Volunteer demo</ButtonText>
@@ -572,15 +589,4 @@ export const SignupForm = () => {
             </FormContainer>
         </PreviewWrapper>
     )
-}
-
-
-// Final slide
-{/* <InputButtonBox>
-    <CancelButton onClick={cancel}>
-        <ButtonText>Cancel</ButtonText>
-    </CancelButton>
-    <SubmitButton onClick={handleSubmit}>
-        <ButtonText>Submit</ButtonText>
-    </SubmitButton>
-</InputButtonBox> */}
+};

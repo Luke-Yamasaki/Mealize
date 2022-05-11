@@ -13,9 +13,9 @@ jobs:
       with:
         node-version: '16'
         cache: 'npm'
-        cache-dependency-path: react_app/package-lock.json
+        cache-dependency-path: react-app/package-lock.json
     - name: Build React App
-      working-directory: react_app
+      working-directory: react-app
       run: npm install && CI=false npm run build
     - uses: actions/setup-python@v3
       with:

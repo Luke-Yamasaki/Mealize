@@ -7,7 +7,7 @@ import { ItemCard } from "../Cards/ItemCard";
 import { FeedContainer } from "../Styled/Layout"
 
 //Helper
-import { determineExpiration } from "../../utils/Expiration";
+import { determineExpiration } from "../../utils/Dates";
 
 export const PostsFeed = ({filter, sessionUser}) => {
     const allPosts = useSelector(state => state.posts.all);

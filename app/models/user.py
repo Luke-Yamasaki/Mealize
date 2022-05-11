@@ -34,6 +34,7 @@ class User(db.Model, UserMixin):
     received_messages = db.relationship('Message', back_populates='receiver', foreign_keys=[Message.receiverId], cascade='all, delete-orphan')
     events = db.relationship('Event', back_populates='manager', cascade='all, delete-orphan')
     watchlist = db.relationship('Watchlist', back_populates='user')
+    
     @property
     def password(self):
         return self.hashedPassword

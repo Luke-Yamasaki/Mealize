@@ -11,7 +11,8 @@ export const Modal = () => {
     const display = useSelector(state => state.modals.display);
     const Current = useSelector(state => state.modals.currentModal);
 
-    const closeModal = () => {
+    const closeModal = (e) => {
+        e.preventDefault();
         dispatch(hideModal());
     };
 

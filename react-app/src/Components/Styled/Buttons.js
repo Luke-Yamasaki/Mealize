@@ -146,7 +146,7 @@ export const PostButton = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    background-color: ${props => props.theme === 'light' ? 'green' : 'blue'}
+    background-color: ${props => props.theme === 'light' ? '#D49524' : '#005C4D'}
 `;
 
 export const ResetIcon = styled.p`

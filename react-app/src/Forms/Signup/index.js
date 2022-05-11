@@ -38,7 +38,10 @@ import {
     InputContainer,
     InputErrorBox,
     Legend,
-    OptInfoLabel
+    OptInfoLabel,
+    CheckBoxContainer,
+    InfoLabelText,
+    OrganizationSelect
 } from '../../Components/Styled/AuthenticationForm';
 
 import {
@@ -358,6 +361,7 @@ export const SignupForm = () => {
 
     const handleNext = (e) => {
         e.preventDefault();
+
         formSection === 'first' ?
         setFormSection('second')
         :
@@ -401,58 +405,59 @@ export const SignupForm = () => {
                 </FormLegend>
                 <Form width='450px' height='550px' theme={theme}>
                 <FormTitleBox>
-                    <FormTitle theme={theme}>Welcome to Mealize!</FormTitle>
-                    <FormTitle theme={theme}>- Let's get started -</FormTitle>
+                    <FormTitle theme={theme} margin='80px 0px 0px 0px'>Welcome to Mealize!</FormTitle>
+                    <FormTitle theme={theme} fontSize='16px' margin='10px 0px 0px 0px' color='rgba(255, 0, 0, 0.75)'>{formSection === 'optional' ? '- These fields are optional -' : '- All fields are required -'}</FormTitle>
                 </FormTitleBox>
                 {formSection === 'first' &&
                     <FormContent>
-                        <InputContainer height={emailError.length > 0 ? '170px' : '150px'}>
-                            <Fieldset style={{width: '235px'}}>
-                                <Legend theme={theme}> Do you work for a nonprofit?
-                                <ButtonBox style={{width: '200px', height: '50px', display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', justifyContent: 'flex-start'}}>
-                                    <OptInfoLabel htmlFor='isManager' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                    <Input name="isManager" type="checkbox" value={isManager} style={{width: '20px', height: '20px'}} onChange={() => setIsManager(!isManager)} required/>
-                                    Yes
+                        <InputContainer height={emailError.length > 0 ? '200px' : '200px'} margin='50px 0px 0px 0px'>
+                            <Fieldset>
+                                <Legend theme={theme} width='223px'> Do you work for a nonprofit?
+                                <CheckBoxContainer>
+                                    <OptInfoLabel htmlFor='isManager'>
+                                    <Input name="isNonprofit" type="checkbox" width='20px' height='20px' onClick={() => isNonprofit === false ? setIsNonprofit(true) : setIsNonprofit(false)} checked={isNonprofit === true}/>
+                                    <InfoLabelText theme={theme}>Yes</InfoLabelText>
                                     </OptInfoLabel>
-                                    <OptInfoLabel htmlFor='isvolunteer' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                    <Input name="isVolunteer" type="checkbox" value={isManager} style={{width: '20px', height: '20px'}} onChange={() => setIsManager(!isManager)} required/>
-                                    No
+                                    <OptInfoLabel htmlFor='isvolunteer'>
+                                    <Input name="isNonprofit" type="checkbox" width='20px' height='20px' onClick={() => setIsNonprofit(!isNonprofit)} checked={isNonprofit === false}/>
+                                    <InfoLabelText theme={theme}>No</InfoLabelText>
                                     </OptInfoLabel>
-                                </ButtonBox>
+                                </CheckBoxContainer>
                                 </Legend>
                             </Fieldset>
-                            <Fieldset style={{width: '235px'}}>
-                                <Legend style={{width: '200px'}}> Select your organization
-                                <div style={{display: 'flex', flexDirection: 'row', width: '200px', height: '30px', justifyContent: 'flex-start', alignItems: 'center'}}>
-                                    <select style={{width: '200px', height: '25px'}} value={organizationId} onChange={(e) => setOrganizationId(e.target.value)} required>
-                                        <optgroup label='Nonprofits'>
-                                            {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
-                                        </optgroup>
-                                        <optgroup label='Businesses'>
-                                            {Object.values(organizations.businesses).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
-                                        </optgroup>
-                                    </select>
-                                </div>
+                            <Fieldset>
+                                <Legend theme={theme} width='190px'> Select your organization
+                                    <OrganizationSelect value={organizationId} onChange={(e) => setOrganizationId(e.target.value)} required>
+                                        {isNonprofit &&
+                                            <optgroup label='Nonprofits'>
+                                                {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
+                                            </optgroup>
+                                        }
+                                        {!isNonprofit &&
+                                            <optgroup label='Businesses'>
+                                                {Object.values(organizations.businesses).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
+                                            </optgroup>
+                                        }
+                                    </OrganizationSelect>
                                 </Legend>
                             </Fieldset>
-                            <Fieldset style={{width: '235px'}}>
-                                <Legend style={{width: '160px'}}> Are you a manager?
-                                <ButtonBox style={{width: '200px', height: '50px', display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', justifyContent: 'flex-start'}}>
-                                    <OptInfoLabel htmlFor='isManager' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                    <Input name="isManager" type="checkbox" value={isManager} style={{width: '20px', height: '20px'}} onChange={() => setIsManager(!isManager)} required/>
-                                    Yes
+                            <Fieldset>
+                                <Legend theme={theme} width='160px'> Are you a manager?
+                                <CheckBoxContainer>
+                                    <OptInfoLabel htmlFor='isManager'>
+                                    <Input name="isManager" type="checkbox" width='20px' height='20px' onClick={() => isManager === false ? setIsManager(true) : setIsManager(false)} checked={isManager === true}/>
+                                    <InfoLabelText theme={theme}>Yes</InfoLabelText>
                                     </OptInfoLabel>
-                                    <OptInfoLabel htmlFor='isvolunteer' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                    <Input name="isVolunteer" type="checkbox" value={isManager} style={{width: '20px', height: '20px'}} onChange={() => setIsManager(!isManager)} required/>
-                                    No
+                                    <OptInfoLabel htmlFor='isvolunteer'>
+                                    <Input name="isVolunteer" type="checkbox" width='20px' height='20px' onClick={() => isManager === true ? setIsManager(false) : setIsManager(true)} checked={isManager === false}/>
+                                    <InfoLabelText theme={theme}>No</InfoLabelText>
                                     </OptInfoLabel>
-                                </ButtonBox>
+                                </CheckBoxContainer>
                                 </Legend>
                             </Fieldset>
                         </InputContainer>
                     </FormContent>
                 }
-
                 {formSection === 'second' &&
                     <FormContent>
                     <InputContainer height={emailError.length > 0 ? '170px' : '150px'}>

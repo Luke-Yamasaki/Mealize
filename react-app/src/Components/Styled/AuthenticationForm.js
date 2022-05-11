@@ -1,5 +1,5 @@
 import styled, {css, keyframes} from 'styled-components';
-import { Black, ExtraBold, Paragraph } from './Fonts';
+import { Black, Bold, ExtraBold, Paragraph, Regular } from './Fonts';
 import { DemoBox } from './Buttons';
 
 const left = keyframes`
@@ -72,8 +72,9 @@ export const FormTitleBox = styled.div`
 `;
 
 export const FormTitle = styled(Black)`
-    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
-    font-size: 1.1em;
+    color: ${props => props.color ? props.color : props.theme === 'light' ? '#191919' : 'white'};
+    font-size: ${props => props.fontSize ? props.fontSize : '1.1em'};
+    margin: ${props => props.margin ? props.margin : '0px'};
 `;
 
 export const FormContent = styled.div`
@@ -87,6 +88,7 @@ export const FormContent = styled.div`
 
 export const InputContainer = styled(FormContent)`
     height: ${props => props.height};
+    margin: ${props => props.margin ? props.margin : '0px'};
 `;
 
 export const InputErrorBox = styled(FormContent)`
@@ -116,7 +118,7 @@ export const Legend = styled.legend`
     color: ${props => props.error ? 'rgba(255, 0, 0, 0.75)' : '#28A690'};
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     font-size: 16px;
-    width: 70px;
+    width: ${props => props.width ? props.width : '70px'};
     height: 15px;
     font-weight: 600;
 `;
@@ -130,8 +132,8 @@ export const PasswordLegend = styled(Legend)`
 `;
 
 export const Input = styled.input`
-    width: 348px;
-    height: 30px;
+    width: ${props => props.width ? props.width : '348px'};
+    height: ${props => props.height ? props.height : '30px'};
     font-size: 16px;
     margin-left: -6px;
     margin-top: 1px;
@@ -188,6 +190,18 @@ export const OptInfoLabel = styled.label`
     font-family: motiva-sans, sans-serif;
     font-weight: 700;
     font-size: 12px;
+    display: flex;
+    alignItems: center;
+    justifyContent: center;
+`;
+
+export const InfoLabelText = styled(Bold)`
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2px;
+    margin-right: 5px;
 `;
 
 export const SlidingFormContainer = styled.div`
@@ -201,4 +215,23 @@ export const SlidingFormContainer = styled.div`
 
 export const SlidingForm = styled.div`
     animation: ${props => props.next === 'slide' ? slideLeft : 'none'};
+`;
+
+export const CheckBoxContainer = styled.div`
+    width: 200px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 5px;
+    margin-bottom: 5px;
+`;
+
+export const OrganizationSelect = styled.select`
+    border: 1.5px solid green;
+    border-radius: 3px;
+    height: 20px;
+    margin-top: 5px;
 `;

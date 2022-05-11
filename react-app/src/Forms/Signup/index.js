@@ -73,7 +73,6 @@ export const SignupForm = () => {
     const history = useHistory();
     const organizations = useSelector(state => state.organizations);
     const { theme } = useTheme();
-    console.log(organizations)
 
     // form states
     const [formSection, setFormSection] = useState('first');
@@ -115,15 +114,11 @@ export const SignupForm = () => {
     //Spreading all organizations
     const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
 
-    //Determine organization type could be refactored with a checkbox
-    useEffect(() => {
-        allOrganizations[organizationId]?.isNonprofit ? setIsNonprofit(true) : setIsNonprofit(false);
-    },[organizationId])
-
     const ageBoundariesObj = ageBoundary();
-    const minDate = ageBoundariesObj['tooOld'];
+    console.log(ageBoundariesObj)
+    const minDate = ageBoundariesObj.old;
     console.log(minDate);
-    const maxDate = ageBoundariesObj['tooYoung'];
+    const maxDate = ageBoundariesObj.young;
     console.log(maxDate);
 
     const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
@@ -415,11 +410,11 @@ export const SignupForm = () => {
                                 <Legend theme={theme} width='223px'> Do you work for a nonprofit?
                                 <CheckBoxContainer>
                                     <OptInfoLabel htmlFor='isManager'>
-                                    <Input name="isNonprofit" type="checkbox" width='20px' height='20px' onClick={() => isNonprofit === false ? setIsNonprofit(true) : setIsNonprofit(false)} checked={isNonprofit === true}/>
+                                    <Input name="isNonprofit" type="checkbox" width='20px' height='20px' onChange={() => isNonprofit === false ? setIsNonprofit(true) : setIsNonprofit(false)} checked={isNonprofit === true}/>
                                     <InfoLabelText theme={theme}>Yes</InfoLabelText>
                                     </OptInfoLabel>
                                     <OptInfoLabel htmlFor='isvolunteer'>
-                                    <Input name="isNonprofit" type="checkbox" width='20px' height='20px' onClick={() => setIsNonprofit(!isNonprofit)} checked={isNonprofit === false}/>
+                                    <Input name="isNonprofit" type="checkbox" width='20px' height='20px' onChange={() => setIsNonprofit(!isNonprofit)} checked={isNonprofit === false}/>
                                     <InfoLabelText theme={theme}>No</InfoLabelText>
                                     </OptInfoLabel>
                                 </CheckBoxContainer>
@@ -445,11 +440,11 @@ export const SignupForm = () => {
                                 <Legend theme={theme} width='160px'> Are you a manager?
                                 <CheckBoxContainer>
                                     <OptInfoLabel htmlFor='isManager'>
-                                    <Input name="isManager" type="checkbox" width='20px' height='20px' onClick={() => isManager === false ? setIsManager(true) : setIsManager(false)} checked={isManager === true}/>
+                                    <Input name="isManager" type="checkbox" width='20px' height='20px' onChange={() => isManager === false ? setIsManager(true) : setIsManager(false)} checked={isManager === true}/>
                                     <InfoLabelText theme={theme}>Yes</InfoLabelText>
                                     </OptInfoLabel>
                                     <OptInfoLabel htmlFor='isvolunteer'>
-                                    <Input name="isVolunteer" type="checkbox" width='20px' height='20px' onClick={() => isManager === true ? setIsManager(false) : setIsManager(true)} checked={isManager === false}/>
+                                    <Input name="isVolunteer" type="checkbox" width='20px' height='20px' onChange={() => isManager === true ? setIsManager(false) : setIsManager(true)} checked={isManager === false}/>
                                     <InfoLabelText theme={theme}>No</InfoLabelText>
                                     </OptInfoLabel>
                                 </CheckBoxContainer>
@@ -466,18 +461,18 @@ export const SignupForm = () => {
                                     <Error>{firstNameError[0]}</Error>
                                 </ErrorBox>
                                 <Fieldset error={firstNameError.length > 0}>
-                                    <EmailLegend htmlFor='firName' theme={theme} error={firstNameError.length > 0}>First name
-                                        <Input name="firname" type="text" autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
+                                    <EmailLegend htmlFor='firstName' theme={theme} error={firstNameError.length > 0}>First name
+                                        <Input name="firstName" type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
                                     </EmailLegend>
                                 </Fieldset>
                             </InputErrorBox>
                             <InputErrorBox>
-                                <ErrorBox theme={theme} height={dobError.length > 0 ? '20px' : '0px'}>
-                                    <Error>{dobError[0]}</Error>
+                                <ErrorBox theme={theme} height={lastNameError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{lastNameError[0]}</Error>
                                 </ErrorBox>
-                                <Fieldset error={dobError.length > 0}>
-                                    <PasswordLegend htmlFor="dob" theme={theme} error={dobError.length > 0}>Last name
-                                        <Input name='dob' type='text' placeholder='First name' autoComplete="none" value={dob} theme={theme} onChange={handleLName} required/>
+                                <Fieldset error={lastNameError.length > 0}>
+                                    <PasswordLegend htmlFor="lastName" theme={theme} error={lastNameError.length > 0}>Last name
+                                        <Input name='lastName' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={handleLName} required/>
                                     </PasswordLegend>
                                 </Fieldset>
                             </InputErrorBox>

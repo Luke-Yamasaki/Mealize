@@ -41,7 +41,8 @@ import {
     OptInfoLabel,
     CheckBoxContainer,
     InfoLabelText,
-    OrganizationSelect
+    OrganizationSelect,
+    InputResetContainer
 } from '../../Components/Styled/AuthenticationForm';
 
 import {
@@ -58,6 +59,7 @@ import {
     ActionText,
     SignupText,
     PreviousButton,
+    ResetIcon,
 } from '../../Components/Styled/Buttons';
 
 import {
@@ -405,7 +407,7 @@ export const SignupForm = () => {
                 </FormTitleBox>
                 {formSection === 'first' &&
                     <FormContent>
-                        <InputContainer height={emailError.length > 0 ? '200px' : '200px'} margin='50px 0px 0px 0px'>
+                        <InputContainer height='200px' margin='50px 0px 0px 0px'>
                             <Fieldset>
                                 <Legend theme={theme} width='223px'> Do you work for a nonprofit?
                                 <CheckBoxContainer>
@@ -455,15 +457,18 @@ export const SignupForm = () => {
                 }
                 {formSection === 'second' &&
                     <FormContent>
-                    <InputContainer height={emailError.length > 0 ? '170px' : '150px'}>
+                    <InputContainer height='200px' margin='50px 0px 0px 0px'>
                             <InputErrorBox>
                                 <ErrorBox theme={theme} height={firstNameError.length > 0 ? '20px' : '0px'}>
                                     <Error>{firstNameError[0]}</Error>
                                 </ErrorBox>
                                 <Fieldset error={firstNameError.length > 0}>
-                                    <EmailLegend htmlFor='firstName' theme={theme} error={firstNameError.length > 0}>First name
-                                        <Input name="firstName" type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
-                                    </EmailLegend>
+                                    <Legend htmlFor='firstName' theme={theme} error={firstNameError.length > 0} width='85px'>First name
+                                        <InputResetContainer>
+                                            <Input name="firstName" type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
+                                            <ResetIcon theme={theme} onClick={() => setFirstName('')}>&#10006;</ResetIcon>
+                                        </InputResetContainer>
+                                    </Legend>
                                 </Fieldset>
                             </InputErrorBox>
                             <InputErrorBox>
@@ -471,9 +476,12 @@ export const SignupForm = () => {
                                     <Error>{lastNameError[0]}</Error>
                                 </ErrorBox>
                                 <Fieldset error={lastNameError.length > 0}>
-                                    <PasswordLegend htmlFor="lastName" theme={theme} error={lastNameError.length > 0}>Last name
-                                        <Input name='lastName' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={handleLName} required/>
-                                    </PasswordLegend>
+                                    <Legend htmlFor="lastName" theme={theme} error={lastNameError.length > 0} width='85px'>Last name
+                                        <InputResetContainer>
+                                            <Input name='lastName' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={handleLName} required/>
+                                            <ResetIcon theme={theme} onClick={() => setLastName('')}>&#10006;</ResetIcon>
+                                        </InputResetContainer>
+                                    </Legend>
                                 </Fieldset>
                             </InputErrorBox>
                             <InputErrorBox>
@@ -481,15 +489,17 @@ export const SignupForm = () => {
                                     <Error>{dobError[0]}</Error>
                                 </ErrorBox>
                                 <Fieldset error={dobError.length > 0}>
-                                    <PasswordLegend htmlFor="dob" theme={theme} error={dobError.length > 0}>Date of birth
-                                        <Input name='dob' type='date' min={minDate} max={maxDate} placeholder="Your DOB (must be 18 or older)." value={dob} theme={theme} onChange={(e) => setDob(e.target.value)} required/>
-                                    </PasswordLegend>
+                                    <Legend htmlFor="dob" theme={theme} error={dobError.length > 0} width='100px'>Date of birth
+                                        <InputResetContainer>
+                                            <Input name='dob' type='date' min={minDate} max={maxDate} width='125px' value={dob} theme={theme} onChange={(e) => setDob(e.target.value)} required/>
+                                            <ResetIcon theme={theme} onClick={() => setDob(maxDate)}>&#10006;</ResetIcon>
+                                        </InputResetContainer>
+                                    </Legend>
                                 </Fieldset>
                             </InputErrorBox>
                         </InputContainer>
                     </FormContent>
                 }
-
                 {formSection === 'third' &&
                     <FormContent>
                         <InputContainer>

@@ -235,3 +235,14 @@ export const OrganizationSelect = styled.select`
     height: 20px;
     margin-top: 5px;
 `;
+
+export const InputResetContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 330px;
+    height: 20px;
+    padding: 5px;
+    padding-right: 20px;
+`;

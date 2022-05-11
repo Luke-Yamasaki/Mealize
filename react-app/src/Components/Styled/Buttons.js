@@ -152,6 +152,7 @@ export const PostButton = styled.div`
     border-radius: 5px;
     background-color: #D49524;
     color: black;
+    cursor: pointer;
 `;
 
 export const LogoutButton = styled(PostButton)`
@@ -161,6 +162,7 @@ export const LogoutButton = styled(PostButton)`
 export const ResetIcon = styled.p`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-size: 1em;
+    cursor: pointer;
 `;
 
 export const ProfileButton = styled.img`

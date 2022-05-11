@@ -42,7 +42,8 @@ import {
     CheckBoxContainer,
     InfoLabelText,
     OrganizationSelect,
-    InputResetContainer
+    InputResetContainer,
+    DragNDrop
 } from '../../Components/Styled/AuthenticationForm';
 
 import {
@@ -237,9 +238,8 @@ export const SignupForm = () => {
         setImage(file)
     };
 
-    const nsfwCheck = async() => {
+    const nsfwCheck = async(img) => {
         const nsfwArr = [];
-        const img = document.getElementById('imageBox');
         const model = await nsfwjs.load();
         const predictions = await model.classify(img);
         console.log('Predictions: ', predictions);
@@ -255,10 +255,13 @@ export const SignupForm = () => {
     const updateImage = async (e) => {
         e.preventDefault();
         setResponseErrors([]);
-
         const file = e.target.files[0];
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.src = url;
+        const nsfwArr = await nsfwCheck(img);
+
         repaint(file);
-        const nsfwArr = nsfwCheck();
 
         nsfwArr.length > 0 ? alert('NSFW!!!') : alert('Ok')
 
@@ -275,6 +278,39 @@ export const SignupForm = () => {
             setImage(file)
         }
     }
+
+    // const droppedImage = async (e) => {
+    //     e.preventDefault();
+    //     if(e.dataTransfer.items) {
+    //         for(let i = 0; i < e.dataTransfer.items.length; i++) {
+    //             if(e.dataTransfer.items[i].kind === 'file') {
+    //                 const file = e.dataTransfer.items[i].getAsFile();
+    //                 repaint(file);
+    //                 const nsfwArr = nsfwCheck();
+
+    //                 nsfwArr.length > 0 ? alert('NSFW!!!') : alert('Ok')
+
+    //                 const fileSize = file.size / 1024 / 1024; //convert to megabytes
+
+    //                 if(fileSize > 2 ) {
+    //                     e.target.value = '';
+    //                     setImage('');
+    //                     setImageError(['The file size is too large. Images must be under 2MB.'])
+    //                 }
+    //                 else {
+    //                     e.target.style.color = '#608F41'
+    //                     setImageError([])
+    //                     setImage(file)
+    //                 }
+
+    //             }
+    //         }
+    //     } else {
+    //         for(let i = 0; i < e.dataTransfer.files.length; i++) {
+    //             console.log(e.dataTransfer.files[i].name)
+    //         }
+    //     }
+    // }
 
     const handleFName = (e) => {
         e.preventDefault();
@@ -465,7 +501,7 @@ export const SignupForm = () => {
                                 <Fieldset error={firstNameError.length > 0}>
                                     <Legend htmlFor='firstName' theme={theme} error={firstNameError.length > 0} width='85px'>First name
                                         <InputResetContainer>
-                                            <Input name="firstName" type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
+                                            <Input name="firstName" cursor='text' type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
                                             <ResetIcon theme={theme} onClick={() => setFirstName('')}>&#10006;</ResetIcon>
                                         </InputResetContainer>
                                     </Legend>
@@ -478,7 +514,7 @@ export const SignupForm = () => {
                                 <Fieldset error={lastNameError.length > 0}>
                                     <Legend htmlFor="lastName" theme={theme} error={lastNameError.length > 0} width='85px'>Last name
                                         <InputResetContainer>
-                                            <Input name='lastName' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={handleLName} required/>
+                                            <Input name='lastName' cursor='text' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={handleLName} required/>
                                             <ResetIcon theme={theme} onClick={() => setLastName('')}>&#10006;</ResetIcon>
                                         </InputResetContainer>
                                     </Legend>
@@ -491,7 +527,7 @@ export const SignupForm = () => {
                                 <Fieldset error={dobError.length > 0}>
                                     <Legend htmlFor="dob" theme={theme} error={dobError.length > 0} width='100px'>Date of birth
                                         <InputResetContainer>
-                                            <Input name='dob' type='date' min={minDate} max={maxDate} width='125px' value={dob} theme={theme} onChange={(e) => setDob(e.target.value)} required/>
+                                            <Input name='dob' type='date' cursor='pointer' min={minDate} max={maxDate} width='125px' value={dob} theme={theme} onChange={(e) => setDob(e.target.value)} required/>
                                             <ResetIcon theme={theme} onClick={() => setDob(maxDate)}>&#10006;</ResetIcon>
                                         </InputResetContainer>
                                     </Legend>
@@ -502,15 +538,17 @@ export const SignupForm = () => {
                 }
                 {formSection === 'third' &&
                     <FormContent>
-                        <InputContainer>
-                            <InputErrorBox>
+                        <InputContainer height='275px' margin='50px 0px 0px 0px'>
+                            <InputErrorBox height='275px'>
                                 <ErrorBox theme={theme} height={imageError.length > 0 ? '20px' : '0px'}>
                                     <Error>{imageError[0]}</Error>
                                 </ErrorBox>
-                                <Fieldset error={imageError.length > 0}>
-                                    <PasswordLegend htmlFor="image" theme={theme} error={imageError.length > 0}>Profile image
-                                        <Input id="profileImage" type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
-                                    </PasswordLegend>
+                                <Fieldset error={imageError.length > 0} height='275px'>
+                                    <Legend htmlFor='imageBox' theme={theme} error={imageError.length > 0} width='105px'>Profile image
+                                        <DragNDrop width='358px' height='253px' margin='0px 0px 0px -8px'>
+                                            <Input id='imageBox' theme={theme} bg='none' lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
+                                        </DragNDrop>
+                                    </Legend>
                                 </Fieldset>
                             </InputErrorBox>
                         </InputContainer>

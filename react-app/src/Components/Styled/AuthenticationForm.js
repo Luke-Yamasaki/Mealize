@@ -92,9 +92,8 @@ export const InputContainer = styled(FormContent)`
 `;
 
 export const InputErrorBox = styled(FormContent)`
-    max-height: 120px;
     min-height: 70px;
-    height: auto;
+    height: ${props => props.height ? props.height : 'auto'};
     justify-content: flex-end;
     align-items: left;
     gap: 5px;
@@ -102,7 +101,7 @@ export const InputErrorBox = styled(FormContent)`
 
 export const Fieldset = styled.fieldset`
     width: 340px;
-    height: 35px;
+    height: ${props => props.height ? props.height : '35px'};
     border: ${props => props.error ? '1px solid rgba(255, 0, 0, 0.75)' : '1px solid #28A690'};
     border-radius: 3px;
     font-size: 16px;
@@ -139,11 +138,12 @@ export const Input = styled.input`
     margin-top: 1px;
     padding-left: 5px;
     border-radius: none;
-    cursor: pointer;
+    cursor: ${props => props.cursor ? props.cursor : 'pointer'};
     outline: none;
     border: none;
-    background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
-    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    border-radius: 3px;
+    background-color: ${props => props.bg ? props.bg : props.theme === 'light' ? 'white' : '#191919'};
+    color: ${props => props.bg ? 'white' : props.theme === 'light' ? '#191919' : 'white'};
 `;
 
 export const ErrorBox = styled.div`
@@ -245,4 +245,19 @@ export const InputResetContainer = styled.div`
     height: 20px;
     padding: 5px;
     padding-right: 20px;
+`;
+
+export const DragNDrop = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: ${props => props.width};
+    height: ${props => props.height};
+    background: linear-gradient(#76D97E, #28A690);
+    margin: ${props => props.margin};
+    border-radius: 2px;
+    font-family: motiva-sans, sans-serif;
+    color: white;
+    gap: 15px;
 `;

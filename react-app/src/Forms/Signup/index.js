@@ -10,6 +10,7 @@ import { setCurrentModal, hideModal } from '../../store/modal';
 
 //Helper
 import { validateSignup, uploadProfileImage } from '../../utils/Forms/signup';
+import { ageBoundary } from '../../utils/Dates';
 import * as nsfwjs from 'nsfwjs';
 
 //Components
@@ -70,7 +71,8 @@ export const SignupForm = () => {
     const { theme } = useTheme();
     console.log(organizations)
 
-    // states
+    // form states
+    const [formSection, setFormSection] = useState('first');
     //first section
     const [organizationId, setOrganizationId] = useState('');
     const [isNonprofit, setIsNonprofit] = useState(false);
@@ -114,15 +116,11 @@ export const SignupForm = () => {
         allOrganizations[organizationId]?.isNonprofit ? setIsNonprofit(true) : setIsNonprofit(false);
     },[organizationId])
 
-    //dates
-    const year = new Date().getFullYear()
-    const month = new Date().getMonth()
-    const date = new Date().getDate()
-
-    const formattedMonth = month <= 9 ? '0' + (month+1).toString() : (month+1).toString()
-    const formattedDate = date <= 9 ? `0${date}` : date.toString();
-    // const today = year.toString() + '-' + formattedDate + '-' + formattedMonth
-    const tooOld = (year - 90).toString() + '-' + formattedMonth + '-' + formattedDate;
+    const ageBoundariesObj = ageBoundary();
+    const minDate = ageBoundariesObj['tooOld'];
+    console.log(minDate);
+    const maxDate = ageBoundariesObj['tooYoung'];
+    console.log(maxDate);
 
     const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
 
@@ -357,6 +355,34 @@ export const SignupForm = () => {
         }
     }
 
+    const handleNext = (e) => {
+        e.preventDefault();
+        formSection === 'first' ?
+        setFormSection('second')
+        :
+        formSection === 'second' ?
+        setFormSection('third')
+        :
+        formSection === 'third' ?
+        setFormSection('fourth')
+        :
+        setFormSection('optional')
+    }
+
+    const handlePrevious = (e) => {
+        e.preventDefault();
+        formSection === 'second' ?
+        setFormSection('first')
+        :
+        formSection === 'third' ?
+        setFormSection('second')
+        :
+        formSection === 'fourth' ?
+        setFormSection('third')
+        :
+        setFormSection('fourth')
+    }
+
     return (
         <PreviewWrapper width='1200px' height='652px'>
            <PreviewSection type='id' userData={userData}/>
@@ -372,194 +398,201 @@ export const SignupForm = () => {
                     <FormTitle theme={theme}>Welcome to Mealize!</FormTitle>
                     <FormTitle theme={theme}>- Let's get started -</FormTitle>
                 </FormTitleBox>
-                <FormContent>
-        {/* Organization */}
+                {formSection === 'first' &&
+                    <FormContent>
+                        <InputContainer height={emailError.length > 0 ? '170px' : '150px'}>
+                            <Fieldset style={{width: '235px'}}>
+                                <Legend style={{width: '200px'}}> Select your organization
+                                <div style={{display: 'flex', flexDirection: 'row', width: '200px', height: '30px', justifyContent: 'flex-start', alignItems: 'center'}}>
+                                    <select style={{width: '200px', height: '25px'}} value={organizationId} onChange={(e) => setOrganizationId(e.target.value)} required>
+                                        <optgroup label='Nonprofits'>
+                                            {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
+                                        </optgroup>
+                                        <optgroup label='Businesses'>
+                                            {Object.values(organizations.businesses).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                </Legend>
+                            </Fieldset>
+                            <Fieldset style={{width: '235px'}}>
+                                <Legend style={{width: '160px'}}> Are you a manager?
+                                <ButtonBox style={{width: '200px', height: '50px', display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', justifyContent: 'flex-start'}}>
+                                    <OptInfoLabel htmlFor='isManager' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                    <Input name="isManager" type="checkbox" value={isManager} style={{width: '20px', height: '20px'}} onChange={() => setIsManager(!isManager)} required/>
+                                    Yes
+                                    </OptInfoLabel>
+                                    <OptInfoLabel htmlFor='isvolunteer' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                    <Input name="isVolunteer" type="checkbox" value={isManager} style={{width: '20px', height: '20px'}} onChange={() => setIsManager(!isManager)} required/>
+                                    No
+                                    </OptInfoLabel>
+                                </ButtonBox>
+                                </Legend>
+                            </Fieldset>
+                        </InputContainer>
+                    </FormContent>
+                }
+
+                {formSection === 'second' &&
+                    <FormContent>
                     <InputContainer height={emailError.length > 0 ? '170px' : '150px'}>
-                        <Fieldset style={{width: '235px'}}>
-                            <Legend style={{width: '200px'}}> Select your organization
-                            <div style={{display: 'flex', flexDirection: 'row', width: '200px', height: '30px', justifyContent: 'flex-start', alignItems: 'center'}}>
-                                <select style={{width: '200px', height: '25px'}} value={organizationId} onChange={(e) => setOrganizationId(e.target.value)} required>
-                                    <optgroup label='Nonprofits'>
-                                        {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
-                                    </optgroup>
-                                    <optgroup label='Businesses'>
-                                        {Object.values(organizations.businesses).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
-                                    </optgroup>
-                                </select>
-                            </div>
-                            </Legend>
-                        </Fieldset>
-                        <Fieldset style={{width: '235px'}}>
-                            <Legend style={{width: '160px'}}> Are you a manager?
-                            <ButtonBox style={{width: '200px', height: '50px', display: 'flex', flexDirection: 'row', gap: '10px', alignItems: 'center', justifyContent: 'flex-start'}}>
-                                <OptInfoLabel htmlFor='isManager' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                <Input name="isManager" type="checkbox" value={isManager} style={{width: '20px', height: '20px'}} onChange={() => setIsManager(!isManager)} required/>
-                                Yes
-                                </OptInfoLabel>
-                                <OptInfoLabel htmlFor='isvolunteer' style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                                <Input name="isVolunteer" type="checkbox" value={isManager} style={{width: '20px', height: '20px'}} onChange={() => setIsManager(!isManager)} required/>
-                                No
-                                </OptInfoLabel>
-                            </ButtonBox>
-                            </Legend>
-                        </Fieldset>
-                    </InputContainer>
-                </FormContent>
-        {/* Name and DOB */}
-                <FormContent>
-                  <InputContainer height={emailError.length > 0 ? '170px' : '150px'}>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={firstNameError.length > 0 ? '20px' : '0px'}>
-                                <Error>{firstNameError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={firstNameError.length > 0}>
-                                <EmailLegend htmlFor='firName' theme={theme} error={firstNameError.length > 0}>First name
-                                    <Input name="firname" type="text" autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
-                                </EmailLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={dobError.length > 0 ? '20px' : '0px'}>
-                                <Error>{dobError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={dobError.length > 0}>
-                                <PasswordLegend htmlFor="dob" theme={theme} error={dobError.length > 0}>Last name
-                                    <Input name='dob' type='text' placeholder='First name' autoComplete="none" value={dob} theme={theme} onChange={handleLName} required/>
-                                </PasswordLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={dobError.length > 0 ? '20px' : '0px'}>
-                                <Error>{dobError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={dobError.length > 0}>
-                                <PasswordLegend htmlFor="dob" theme={theme} error={dobError.length > 0}>Date of birth
-                                    <Input name='dob' type='date' min={tooOld} max={(year - 18).toString + '-' + formattedMonth + '-' + formattedDate} placeholder="Your DOB (must be 18 or older)." value={dob}theme={theme} onChange={(e) => setDob(e.target.value)} required/>
-                                </PasswordLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                    </InputContainer>
-                </FormContent>
-        {/* Profile Iamge */}
-                <FormContent>
-                    <InputContainer>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={imageError.length > 0 ? '20px' : '0px'}>
-                                <Error>{imageError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={imageError.length > 0}>
-                                <PasswordLegend htmlFor="image" theme={theme} error={imageError.length > 0}>Profile image
-                                    <Input id="profileImage" type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
-                                </PasswordLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                    </InputContainer>
-                </FormContent>
-        {/* Credentials */}
-                <FormContent>
-                    <InputContainer>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={emailError.length > 0 ? '20px' : '0px'}>
-                                <Error>{emailError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={emailError.length > 0}>
-                                <PasswordLegend htmlFor="email" theme={theme} error={emailError.length > 0}>Email
-                                    <Input  name="email" type="email" placeholder="Email" value={email} onChange={handleEmail} required/>
-                                </PasswordLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={phoneError.length > 0 ? '20px' : '0px'}>
-                                <Error>{emailError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={phoneError.length > 0}>
-                                <PasswordLegend htmlFor="phone" theme={theme} error={phoneError.length > 0}>Phone number
-                                    <Input   name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone number" value={phone} onChange={handlePhone} required/>
-                                </PasswordLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={passwordError.length > 0 ? '20px' : '0px'}>
-                                <Error>{passwordError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={passwordError.length > 0}>
-                                <PasswordLegend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
-                                    <Input  name="password" type="password" placeholder="Password" value={password} onChange={handlePassword} required/>
-                                </PasswordLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={confirmError.length > 0 ? '20px' : '0px'}>
-                                <Error>{confirmError[0]}</Error>
-                            </ErrorBox>
-                            <Fieldset error={confirmError.length > 0}>
-                                <PasswordLegend htmlFor="confirm" theme={theme} error={confirmError.length > 0}>Confirm password
-                                    <Input  name="confirm" type="password" placeholder="Password" value={password} onChange={handleConfirm} required/>
-                                </PasswordLegend>
-                            </Fieldset>
-                        </InputErrorBox>
-                    </InputContainer>
-                </FormContent>
-        {/* Credentials */}
-                <FormContent>
-                    <InputContainer>
-                        <Fieldset style={{height: '100px', width: '500px', margin: 'none', padding: 'none'}}>
-                            <Legend style={{width: '130px'}}> Optional details
-                                <div style={{width: '400px', height: '60px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                    <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
-                                        <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
-                                            <OptInfoLabel htmlFor='deaf'>
-                                                <Input
-                                                        name="deaf"
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={firstNameError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{firstNameError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={firstNameError.length > 0}>
+                                    <EmailLegend htmlFor='firName' theme={theme} error={firstNameError.length > 0}>First name
+                                        <Input name="firname" type="text" autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
+                                    </EmailLegend>
+                                </Fieldset>
+                            </InputErrorBox>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={dobError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{dobError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={dobError.length > 0}>
+                                    <PasswordLegend htmlFor="dob" theme={theme} error={dobError.length > 0}>Last name
+                                        <Input name='dob' type='text' placeholder='First name' autoComplete="none" value={dob} theme={theme} onChange={handleLName} required/>
+                                    </PasswordLegend>
+                                </Fieldset>
+                            </InputErrorBox>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={dobError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{dobError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={dobError.length > 0}>
+                                    <PasswordLegend htmlFor="dob" theme={theme} error={dobError.length > 0}>Date of birth
+                                        <Input name='dob' type='date' min={minDate} max={maxDate} placeholder="Your DOB (must be 18 or older)." value={dob} theme={theme} onChange={(e) => setDob(e.target.value)} required/>
+                                    </PasswordLegend>
+                                </Fieldset>
+                            </InputErrorBox>
+                        </InputContainer>
+                    </FormContent>
+                }
+
+                {formSection === 'third' &&
+                    <FormContent>
+                        <InputContainer>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={imageError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{imageError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={imageError.length > 0}>
+                                    <PasswordLegend htmlFor="image" theme={theme} error={imageError.length > 0}>Profile image
+                                        <Input id="profileImage" type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
+                                    </PasswordLegend>
+                                </Fieldset>
+                            </InputErrorBox>
+                        </InputContainer>
+                    </FormContent>
+                }
+                {formSection === 'fourth' &&
+                    <FormContent>
+                        <InputContainer>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={emailError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{emailError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={emailError.length > 0}>
+                                    <PasswordLegend htmlFor="email" theme={theme} error={emailError.length > 0}>Email
+                                        <Input  name="email" type="email" placeholder="Email" value={email} onChange={handleEmail} required/>
+                                    </PasswordLegend>
+                                </Fieldset>
+                            </InputErrorBox>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={phoneError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{emailError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={phoneError.length > 0}>
+                                    <PasswordLegend htmlFor="phone" theme={theme} error={phoneError.length > 0}>Phone number
+                                        <Input   name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone number" value={phone} onChange={handlePhone} required/>
+                                    </PasswordLegend>
+                                </Fieldset>
+                            </InputErrorBox>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={passwordError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{passwordError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={passwordError.length > 0}>
+                                    <PasswordLegend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
+                                        <Input  name="password" type="password" placeholder="Password" value={password} onChange={handlePassword} required/>
+                                    </PasswordLegend>
+                                </Fieldset>
+                            </InputErrorBox>
+                            <InputErrorBox>
+                                <ErrorBox theme={theme} height={confirmError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{confirmError[0]}</Error>
+                                </ErrorBox>
+                                <Fieldset error={confirmError.length > 0}>
+                                    <PasswordLegend htmlFor="confirm" theme={theme} error={confirmError.length > 0}>Confirm password
+                                        <Input  name="confirm" type="password" placeholder="Password" value={password} onChange={handleConfirm} required/>
+                                    </PasswordLegend>
+                                </Fieldset>
+                            </InputErrorBox>
+                        </InputContainer>
+                    </FormContent>
+                }
+                {formSection === 'optional' &&
+                    <FormContent>
+                        <InputContainer>
+                            <Fieldset style={{height: '100px', width: '500px', margin: 'none', padding: 'none'}}>
+                                <Legend style={{width: '130px'}}> Optional details
+                                    <div style={{width: '400px', height: '60px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                        <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
+                                            <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                                <OptInfoLabel htmlFor='deaf'>
+                                                    <Input
+                                                            name="deaf"
+                                                            type="checkbox"
+                                                            value={deaf}
+                                                            onChange={() => setDeaf(!deaf)}
+                                                            style={{width: '20px', height: '20px'}}
+                                                        />
+                                                Are you deaf?
+                                                </OptInfoLabel>
+                                            </ButtonBox>
+                                            <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                                <OptInfoLabel htmlFor='wheelchair'>
+                                                    <Input
+                                                        name="wheelchair"
                                                         type="checkbox"
-                                                        value={deaf}
-                                                        onChange={() => setDeaf(!deaf)}
+                                                        value={wheelchair}
+                                                        onChange={() => setWheelchair(!wheelchair)}
                                                         style={{width: '20px', height: '20px'}}
                                                     />
-                                            Are you deaf?
-                                            </OptInfoLabel>
-                                        </ButtonBox>
+                                                Do you use a wheelchair?</OptInfoLabel>
+                                            </ButtonBox>
+                                        </div>
+                                    </div>
+                                    <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
                                         <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
-                                            <OptInfoLabel htmlFor='wheelchair'>
+                                                <OptInfoLabel htmlFor='learningDisabled'>
                                                 <Input
-                                                    name="wheelchair"
+                                                    name="learningDisabled"
                                                     type="checkbox"
-                                                    value={wheelchair}
-                                                    onChange={() => setWheelchair(!wheelchair)}
+                                                    value={learningDisabled}
+                                                    onChange={() => setLearningDisabled(!learningDisabled)}
                                                     style={{width: '20px', height: '20px'}}
                                                 />
-                                            Do you use a wheelchair?</OptInfoLabel>
+                                                Do you have learning disabilities?</OptInfoLabel>
+                                            </ButtonBox>
+                                            <ButtonBox style={{width: '270px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
+                                                <OptInfoLabel htmlFor='lgbtq'>
+                                                    <Input
+                                                        name="lgbtq"
+                                                        type="checkbox"
+                                                        value={lgbtq}
+                                                        onChange={() => setLgbtq(!lgbtq)}
+                                                        style={{width: '20px', height: '20px'}}
+                                                    />
+                                                Are you a part of the LGBTQIA+ community?</OptInfoLabel>
                                         </ButtonBox>
                                     </div>
-                                </div>
-                                <div style={{display: 'flex', flexDirection: 'row', width: '400px', height: '20px'}}>
-                                    <ButtonBox style={{width: '225px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
-                                            <OptInfoLabel htmlFor='learningDisabled'>
-                                            <Input
-                                                name="learningDisabled"
-                                                type="checkbox"
-                                                value={learningDisabled}
-                                                onChange={() => setLearningDisabled(!learningDisabled)}
-                                                style={{width: '20px', height: '20px'}}
-                                            />
-                                            Do you have learning disabilities?</OptInfoLabel>
-                                        </ButtonBox>
-                                        <ButtonBox style={{width: '270px', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', gap: '5px'}}>
-                                            <OptInfoLabel htmlFor='lgbtq'>
-                                                <Input
-                                                    name="lgbtq"
-                                                    type="checkbox"
-                                                    value={lgbtq}
-                                                    onChange={() => setLgbtq(!lgbtq)}
-                                                    style={{width: '20px', height: '20px'}}
-                                                />
-                                            Are you a part of the LGBTQIA+ community?</OptInfoLabel>
-                                    </ButtonBox>
-                                </div>
-                            </Legend>
-                        </Fieldset>
-                    </InputContainer>
-                </FormContent>
+                                </Legend>
+                            </Fieldset>
+                        </InputContainer>
+                    </FormContent>
+                }
                 <ButtonBox>
                     <InputButtonBox>
                         <CancelButton onClick={cancel}>

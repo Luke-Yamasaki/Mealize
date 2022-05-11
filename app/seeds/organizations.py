@@ -11,8 +11,8 @@ def seed_organizations():
     mealize = Organization(
         federalId='77-7777777',
         isNonprofit=True,
-        logoUrl='https://latn.com/wp-content/uploads/2014/12/walmart-logo-vector.png',
-        imageUrl='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Walmart_Home_Office_sign.jpg/1024px-Walmart_Home_Office_sign.jpg',
+        logoUrl='https://mealize.s3.amazonaws.com/Mealize-circle.png',
+        imageUrl='https://mealize.s3.amazonaws.com/Mealize-banner.png',
         open='5:00',
         close='22:30',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
@@ -49,7 +49,7 @@ def seed_organizations():
     bienvenidos_food_bank = Organization(
         federalId='84-0772672',
         isNonprofit=True,
-        logoUrl='http://www.bienvenidosfoodbank.org/wp-content/uploads/2017/12/LogoBienvenidos.png',
+        logoUrl='https://mealize.s3.amazonaws.com/FGCyguIWUAcQOoY.png',
         imageUrl='https://media.9news.com/assets/KUSA/images/dc308017-8594-40d0-93c8-e2808c9b9ed5/dc308017-8594-40d0-93c8-e2808c9b9ed5_1140x641.jpg',
         open='11:00',
         close='17:30',
@@ -107,8 +107,8 @@ def seed_organizations():
     mealize_market = Organization(
         federalId='88-8888888',
         isNonprofit=False,
-        logoUrl='https://latn.com/wp-content/uploads/2014/12/walmart-logo-vector.png',
-        imageUrl='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Walmart_Home_Office_sign.jpg/1024px-Walmart_Home_Office_sign.jpg',
+        logoUrl='https://mealize.s3.amazonaws.com/Mealize-circle.png',
+        imageUrl='https://mealize.s3.amazonaws.com/Mealize-banner.png',
         open='8:00',
         close='6:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),

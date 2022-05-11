@@ -2,7 +2,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../../Context/ThemeContext';
 import { useHistory } from 'react-router-dom';
-//Styling
+
+//Styling for card colors
 import { category } from './category.js';
 
 //Actions
@@ -10,18 +11,18 @@ import { setCurrentModal, showModal } from '../../../../store/modal';
 
 //Components
 import { DeliveryForm } from '../../../../Forms/Delivery';
-import { LocationPin } from '../../../../Assets/Icons/Location';
 import { FavoritesIcon } from '../../../../Assets/Logo/FavoritesIcon';
 import { QuestionBtn, RequestBtn } from '../../../Styled/Buttons';
 import { VectorBox } from '../../../Styled/Layout';
+// import { LocationPin } from '../../../../Assets/Icons/Location';
 import {
     Card,
     TitleBox,
     TitleTextContainer,
     CompanyLogo,
     CompanyName,
-    PinContainer,
-    CompanyAddress,
+    // PinContainer,
+    // CompanyAddress,
     ItemDateText,
     ItemImage,
     InfoBox,
@@ -35,6 +36,9 @@ import {
     QuestionText
 } from "../../../Styled/ItemCard";
 
+//Helper function
+import { daysAgo } from '../../../../utils/Dates';
+
 export const CardContent = ({ post }) => {
     const dispatch = useDispatch();
     const { theme } = useTheme();
@@ -43,9 +47,9 @@ export const CardContent = ({ post }) => {
     const organizations = useSelector(state => state.organizations);
     const businesses = organizations.businesses;
     const nonprofits = organizations.nonprofits;
-    const organization = post.isItem ? businesses[post.organizationId] : nonprofits[post.organizationId];
+    const organization = post?.isItem ? businesses[post?.organizationId] : nonprofits[post?.organizationId];
 
-    const styleObj = category[theme][post.categoryId];
+    const styleObj = category[theme][post?.categoryId];
 
     const handleQuestion = () => {
         dispatch(setCurrentModal(() => <DeliveryForm post={post}/>));
@@ -57,27 +61,11 @@ export const CardContent = ({ post }) => {
         dispatch(showModal());
     };
 
-    const formatAddress = () => {
-        const address = `${organization.street}, ${organization.city}, ${organization.state.slice(0, 2).toUpperCase()} ${organization.zip}`;
-        return address;
-    };
-
-
-    const daysAgo = () => {
-        const today = new Date();
-        const postDate = new Date(post.updatedAt);
-        const milliseconds = today - postDate;
-        const daysPassed = Math.floor(milliseconds / 1000 / 60 / 60 / 24);
-        const hoursPassed = Math.floor(milliseconds / 1000 / 60 / 60);
-        if(daysPassed >= 1) {
-            return daysPassed.toString() + 'd';
-        } else if(daysPassed < 1 && hoursPassed >= 1) {
-            return hoursPassed.toString + 'h';
-        } else {
-            return 'now';
-        }
-    }
-
+    // const formatAddress = () => {
+    //     const address = `${organization.street}, ${organization.city}, ${organization.state.slice(0, 2).toUpperCase()} ${organization.zip}`;
+    //     return address;
+    // };
+    
     const handleClick = () => {
         return history.push(`/items/${post.id}`)
     };
@@ -98,7 +86,7 @@ export const CardContent = ({ post }) => {
                         </PinContainer>
                         <CompanyAddress>{formatAddress()}</CompanyAddress> */}
                     </TitleTextContainer>
-                    <ItemDateText theme={theme}>{daysAgo()}</ItemDateText>
+                    <ItemDateText theme={theme}>{daysAgo(post)}</ItemDateText>
                 </TitleBox>
                 <ItemImage src={post.imageUrl} alt='Food available for pick up.' onClick={handleClick}/>
                 <InfoBox>

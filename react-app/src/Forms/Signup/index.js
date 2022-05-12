@@ -12,7 +12,7 @@ import { setCurrentModal, hideModal } from '../../store/modal';
 import { validateSignup, uploadProfileImage } from '../../utils/Forms/signup';
 import { ageBoundary } from '../../utils/Dates';
 import * as nsfwjs from 'nsfwjs';
-
+import { BanUser } from '../../utils/Forms/signup';
 //Components
 import { PreviewSection } from '../../Components/Preview';
 import { Logo } from '../../Assets/Logo';
@@ -112,18 +112,19 @@ export const SignupForm = () => {
     const [lastNameError, setLastNameError] = useState([]);
     const [imageError, setImageError] = useState([]);
     const [dobError, setDobError] = useState([]);
-    const [organizationError, setOrganizationError] = useState([]);
     const [emailError, setEmailError] = useState([]);
     const [phoneError, setPhoneError] = useState([]);
     const [passwordError, setPasswordError] = useState([]);
     const [confirmError, setConfirmError] = useState([]);
-    const [responseErrors, setResponseErrors] = useState([]);
 
     const ageBoundariesObj = ageBoundary();
     const minDate = ageBoundariesObj.old;
     const maxDate = ageBoundariesObj.young;
 
     const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
+
+    console.log(BanUser())
+
     let props = {
         organizationId,
         isNonprofit,
@@ -136,6 +137,11 @@ export const SignupForm = () => {
         wheelchair,
         learningDisabled,
         lgbtq
+    };
+
+    const cancel = (e) => {
+        e.preventDefault();
+        dispatch(hideModal());
     };
 
     const handleSubmit = async (e) => {
@@ -165,50 +171,13 @@ export const SignupForm = () => {
                 } else {
                     const responseErrArr = []
                     responseErrArr.push(newUser)
+                    console.log(responseErrArr)
                     setImageUploading(false);
-                    setResponseErrors(responseErrArr);
                 }
             }
         } else {
-            setResponseErrors(stagedPost.errors)
+            console.log(stagedPost.errors)
         }
-    };
-
-    const handleErrors = (e) => {
-        e.preventDefault();
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        const phoneReg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
-
-        if((firstName && !firstNameError.length) &&
-            (dob && !dobError.length) &&
-            (image && !imageError.length) &&
-            (dob && !dobError.length )&&
-            (organizationId && !organizationError.length) &&
-            (email && !emailError.length) &&
-            (phone && !phoneError.length) &&
-            (password && !passwordError.length) &&
-            (confirm && !confirmError.length)
-            )
-            {
-                setResponseErrors([]);
-                handleSubmit(e);
-            }
-        else if(!firstName || !dob || !image || !dob || !organizationId || !email || !phone || !password || !confirm) {
-            setResponseErrors(['Please fill out all required fields.'])
-        } else if (regex.test(email) === false) {
-            setEmailError(['Not a valid email.'])
-        } else if(regex.test(phone) === false) {
-            setPhoneError(['Invalid phone number.'])
-        } else if(password.length < 6 || confirm.length < 6) {
-            setPasswordError(['Passwords must be at least 6 characters long.'])
-        } else {
-            setResponseErrors(['Please resolve all errors.'])
-        }
-    }
-
-    const cancel = (e) => {
-        e.preventDefault();
-        dispatch(hideModal());
     };
 
     const handleDemo = async (e) => {
@@ -247,11 +216,9 @@ export const SignupForm = () => {
         const nsfwArr = [];
         const model = await nsfwjs.load();
         const predictions = await model.classify(img);
-        console.log('Predictions: ', predictions);
         for(let i = 1; i < predictions.length; i++) {
-            if(predictions[i].probability > 0.5) {
-                alert('NSFW!!!');
-                nsfwArr.push(predictions[i])
+            if(predictions[i].probability > 0.6) {
+                nsfwArr.push("Adult content violates Mealize's community standards.")
             }
         }
         return nsfwArr;
@@ -259,14 +226,13 @@ export const SignupForm = () => {
 
     const updateImage = async (e) => {
         e.preventDefault();
-        setResponseErrors([]);
         const file = e.target.files[0];
         //Filter adult content
         const url = URL.createObjectURL(file);
         const img = new Image();
         img.src = url;
         const nsfwArr = await nsfwCheck(img);
-        nsfwArr.length > 0 ? setResponseErrors(["Adult content violates Mealize's community standards."]) : setResponseErrors([]);
+        nsfwArr.length > 0 ? setImageError(["Adult content violates Mealize's community standards."]) : setImageError([]);
 
         //If good, preview the image
         repaint(file);
@@ -288,6 +254,7 @@ export const SignupForm = () => {
 
     const droppedImage = async (e) => {
         e.preventDefault();
+        setImageError([]);
         if(e.dataTransfer.items) {
             for(let i = 0; i < e.dataTransfer.items.length; i++) {
                 if(e.dataTransfer.items[i].kind === 'file') {
@@ -297,8 +264,7 @@ export const SignupForm = () => {
                     const img = new Image();
                     img.src = url;
                     const nsfwArr = await nsfwCheck(img);
-                    nsfwArr.length > 0 ? setResponseErrors(["Adult content violates Mealize's community standards."]) : setResponseErrors([]);
-                    //If good, preview the image
+                    nsfwArr.length > 0 ? setImageError(["Adult content violates Mealize's community standards."]) : setImageError([]);                    //If good, preview the image
                     repaint(file);
                     //Validate file size
                     const fileSize = file.size / 1024 / 1024; //convert to megabytes
@@ -324,7 +290,7 @@ export const SignupForm = () => {
 
     const handleFName = (e) => {
         e.preventDefault();
-        setResponseErrors([])
+        setFirstNameError([])
         const regex = /\d+/g;
 
         if(firstName.length >= 50) {
@@ -341,7 +307,7 @@ export const SignupForm = () => {
 
     const handleLName = (e) => {
         e.preventDefault();
-        setResponseErrors([])
+        setLastNameError([])
         const regex = /\d+/g;
 
         if(lastName.length >= 50) {
@@ -358,7 +324,7 @@ export const SignupForm = () => {
 
     const handleEmail = (e) => {
         e.preventDefault();
-        setResponseErrors([])
+        setEmailError([])
 
         if(email.length >= 255) {
             setEmailError(['Your email is too long.'])
@@ -370,7 +336,7 @@ export const SignupForm = () => {
 
     const handlePhone = (e) => {
         e.preventDefault();
-        setResponseErrors([])
+        setPhoneError([])
         if(e.target.value.toString().length >= 15) {
             setPhoneError(['The phone number is too long.'])
         } else {
@@ -381,7 +347,7 @@ export const SignupForm = () => {
 
     const handlePassword = (e) => {
         e.preventDefault();
-        setResponseErrors([])
+        setPasswordError([])
 
         if(specialCharacters.includes(e.target.value)) {
             setPasswordError(['Special characters are not allowed.'])
@@ -393,7 +359,7 @@ export const SignupForm = () => {
 
     const handleConfirm = (e) => {
         e.preventDefault();
-        setResponseErrors([])
+        setConfirmError([])
         if(!e.target.value === password) {
             setConfirmError(['Passwords do not match.'])
         } else {

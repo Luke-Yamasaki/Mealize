@@ -84,7 +84,7 @@ export const IdImage = styled.img`
     width: 100px;
     height: 140px;
     border-radius: 5px;
-    object-fit: scale-down;
+    object-fit: cover;
     object-position: center;
 `;
 

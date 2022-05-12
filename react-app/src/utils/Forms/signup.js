@@ -31,3 +31,24 @@ export const validateSignup = async (inputData) => {
         return 'Connection failed. Please check your internet connection.'
     };
 };
+
+export const BanUser = async () => {
+    let xmlhttp;
+
+    if (window.XMLHttpRequest){
+        xmlhttp = new XMLHttpRequest();
+    }
+    // else {
+    //     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    // }
+
+    xmlhttp.open("GET","http://api.hostip.info/get_html.php",false);
+    xmlhttp.send();
+
+    const hostipInfo = xmlhttp.responseText.split("\n");
+    const split = hostipInfo[2].split(' ')[1];
+    const ipAddress = {'Ip': split};
+    console.log(ipAddress)
+
+    return ipAddress;
+};

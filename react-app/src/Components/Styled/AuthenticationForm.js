@@ -39,7 +39,7 @@ export const FormLegend = styled.legend`
 `;
 
 export const LogoType = styled(ExtraBold)`
-    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     font-size: 2em;
 `;
 
@@ -144,6 +144,9 @@ export const Input = styled.input`
     border-radius: 3px;
     background-color: ${props => props.bg ? props.bg : props.theme === 'light' ? 'white' : '#191919'};
     color: ${props => props.bg ? 'white' : props.theme === 'light' ? '#191919' : 'white'};
+    ::-webkit-calendar-picker-indicator {
+        filter: ${props => props.theme === 'light' ? '' : 'invert(1)'};
+    }
 `;
 
 export const ErrorBox = styled.div`

@@ -31,3 +31,43 @@ export const validateSignup = async (inputData) => {
         return 'Connection failed. Please check your internet connection.'
     };
 };
+
+export const getIp = () => {
+    let xmlhttp;
+
+    if (window.XMLHttpRequest){
+        xmlhttp = new XMLHttpRequest();
+    }
+
+    xmlhttp.open("GET","http://api.hostip.info/get_html.php",false);
+    xmlhttp.send();
+
+    const hostipInfo = xmlhttp.responseText.split("\n");
+    const split = hostipInfo[2].split(' ')[1];
+    const ipAddress = {'Ip': split};
+
+    const userIp = banUser(ipAddress);
+    return userIp;
+};
+
+const banUser = async(ipAddress) => {
+    const response = await fetch('/api/watchlist/blacklist', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(ipAddress)
+    });
+
+    if(response.ok) {
+        const userIp = await response.json();
+        return userIp
+    } else if(response.status < 500) {
+        const data = await response.json();
+        if(data.errors){
+            return data
+        };
+    } else {
+        return 'Connection failed. Please check your internet connection.'
+    };
+}

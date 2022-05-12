@@ -13,10 +13,8 @@ export const PreviewWrapper = styled.div`
 
 export const PreviewBox = styled.div`
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     width: 600px;
     height: 900px;
 `;

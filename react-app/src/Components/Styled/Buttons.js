@@ -76,6 +76,8 @@ export const ActionBox = styled(DemoBox)`
     align-items: center;
     width: 380px;
     padding-right: 20px;
+    padding-bottom: ${props => props.padding ? props.padding : '0px'};
+    margin-top: ${props => props.marginTop ? props.marginTop : '0px'};
     gap: 10px;
 `;
 

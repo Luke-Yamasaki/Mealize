@@ -689,7 +689,7 @@ export const SignupForm = () => {
                         </BusinessDemoButton>
                     </DemoBox>
                 </ButtonBox>
-                <ActionBox>
+                <ActionBox padding='5px' marginTop='-10px'>
                     <ActionText theme={theme}>Already have an account?</ActionText>
                     <SignupText theme={theme} onClick={showLoginForm}>Log in</SignupText>
                 </ActionBox>

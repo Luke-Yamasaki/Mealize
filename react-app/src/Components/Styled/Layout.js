@@ -32,8 +32,15 @@ export const AppBackGround = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: top;
-    background: ${props => props.theme === 'light' ? 'linear-gradient(rgba(40, 166, 144, 1), rgba(118, 217, 126, 1))' : '#191919' };
-    background-image: ${props => props.background === true ? `url(${image})` : 'none'};
+    background-image: ${
+    props => props.theme === 'light' && props.background === true ?
+    'linear-gradient(rgba(118, 217, 126, 0.75), rgba(40, 166, 144, 0.75)), url("https://mealize.s3.amazonaws.com/Pattern_10.png")'
+    : props.theme === 'light' && props.background === false ?
+    'linear-gradient(rgba(118, 217, 126, 0.75), rgba(40, 166, 144, 0.75))'
+    : props.theme === 'dark' && props.background === true ?
+    'linear-gradient(rgba(25, 25, 25, 0.85), rgba(25, 25, 25, 0.85)), url("https://mealize.s3.amazonaws.com/Pattern_10.png")'
+    : 'linear-gradient(rgba(25, 25, 25, 0.85), rgba(25, 25, 25, 0.85))'
+    };
     background-size: contain;
     background-repeat: repeat;
 `;

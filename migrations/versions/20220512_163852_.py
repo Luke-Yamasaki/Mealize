@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 5b4f2382fa46
+Revision ID: cce4571f4aff
 Revises: 
-Create Date: 2022-04-25 03:54:08.714598
+Create Date: 2022-05-12 16:38:52.895223
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '5b4f2382fa46'
+revision = 'cce4571f4aff'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -73,7 +73,6 @@ def upgrade():
     sa.Column('learningDisabled', sa.Boolean(), nullable=True),
     sa.Column('lgbtq', sa.Boolean(), nullable=True),
     sa.Column('profileImageUrl', sa.String(length=2048), nullable=False),
-    sa.Column('jobDescription', sa.String(length=100), nullable=False),
     sa.Column('hashedPassword', sa.String(length=255), nullable=False),
     sa.Column('createdAt', sa.DateTime(), nullable=True),
     sa.Column('updatedAt', sa.DateTime(), nullable=True),
@@ -127,6 +126,17 @@ def upgrade():
     sa.ForeignKeyConstraint(['userId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('watchlists',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('organizationId', sa.Integer(), nullable=True),
+    sa.Column('userId', sa.Integer(), nullable=True),
+    sa.Column('ip', sa.String(), nullable=False),
+    sa.Column('count', sa.Integer(), nullable=False),
+    sa.Column('createdAt', sa.DateTime(), nullable=True),
+    sa.ForeignKeyConstraint(['organizationId'], ['organizations.id'], ),
+    sa.ForeignKeyConstraint(['userId'], ['users.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('deliveries',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('isDropoff', sa.Boolean(), nullable=False),
@@ -175,6 +185,7 @@ def downgrade():
     op.drop_table('message_receiver')
     op.drop_table('favorites')
     op.drop_table('deliveries')
+    op.drop_table('watchlists')
     op.drop_table('posts')
     op.drop_table('messages')
     op.drop_table('events')

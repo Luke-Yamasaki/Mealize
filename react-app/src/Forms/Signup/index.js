@@ -12,7 +12,7 @@ import { setCurrentModal, hideModal } from '../../store/modal';
 import { validateSignup, uploadProfileImage } from '../../utils/Forms/signup';
 import { ageBoundary } from '../../utils/Dates';
 import * as nsfwjs from 'nsfwjs';
-
+import { getIp } from '../../utils/Forms/signup';
 //Components
 import { PreviewSection } from '../../Components/Preview';
 import { Logo } from '../../Assets/Logo';
@@ -88,7 +88,7 @@ export const SignupForm = () => {
     //second section
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [dob, setDob] = useState((new Date().toISOString().split('T')[0].slice(0,4)-18).toString() + new Date().toISOString().split('T')[0].slice(4,11));
+    const [dob, setDob] = useState('');
     //third section
     const [image, setImage] = useState(null);
     //user auth credential section
@@ -108,19 +108,55 @@ export const SignupForm = () => {
 
     const [userData, setUserData] = useState('');
     // errors
+    //first
+    const [organizationIdError, setOrganizationIdError] = useState([]);
+    //second
     const [firstNameError, setFirstNameError] = useState([]);
     const [lastNameError, setLastNameError] = useState([]);
-    const [imageError, setImageError] = useState([]);
     const [dobError, setDobError] = useState([]);
-    const [organizationError, setOrganizationError] = useState([]);
+     //third
+    const [imageError, setImageError] = useState([]);
+    //fourth
     const [emailError, setEmailError] = useState([]);
     const [phoneError, setPhoneError] = useState([]);
     const [passwordError, setPasswordError] = useState([]);
     const [confirmError, setConfirmError] = useState([]);
-    const [responseErrors, setResponseErrors] = useState([]);
 
-    //Spreading all organizations
-    const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
+    useEffect(() => {
+        setOrganizationIdError([])
+    },[organizationId])
+
+    useEffect(() => {
+        setFirstNameError([])
+    },[firstName])
+
+    useEffect(() => {
+        setLastNameError([])
+    },[lastName])
+
+    useEffect(() => {
+        setDobError([])
+    },[dob])
+
+    useEffect(() => {
+        setImageError([])
+    },[image])
+
+    useEffect(() => {
+        setEmailError([])
+    },[email])
+
+    useEffect(() => {
+        setPhoneError([])
+    },[phone])
+
+    useEffect(() => {
+        setPasswordError([])
+    },[password])
+
+    useEffect(() => {
+        setConfirmError([])
+    },[confirm])
 
     const ageBoundariesObj = ageBoundary();
     const minDate = ageBoundariesObj.old;
@@ -128,14 +164,24 @@ export const SignupForm = () => {
 
     const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
 
-    //props to pass to preview Id card
-    useEffect(() => {
-        let userInfo = { organizationId, isNonprofit, isManager, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq };
-        console.log(userInfo);
-        console.log(userData);
-        setUserData(userInfo);
-        return () => console.log('???')
-    },[organizationId, isNonprofit, isManager, firstName, lastName, dob, image, deaf, wheelchair, learningDisabled, lgbtq ])
+    let props = {
+        organizationId,
+        isNonprofit,
+        isManager,
+        firstName,
+        lastName,
+        dob,
+        image,
+        deaf,
+        wheelchair,
+        learningDisabled,
+        lgbtq
+    };
+
+    const cancel = (e) => {
+        e.preventDefault();
+        dispatch(hideModal());
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -164,50 +210,13 @@ export const SignupForm = () => {
                 } else {
                     const responseErrArr = []
                     responseErrArr.push(newUser)
+                    console.log(responseErrArr)
                     setImageUploading(false);
-                    setResponseErrors(responseErrArr);
                 }
             }
         } else {
-            setResponseErrors(stagedPost.errors)
+            console.log(stagedPost.errors)
         }
-    };
-
-    const handleErrors = (e) => {
-        e.preventDefault();
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        const phoneReg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
-
-        if((firstName && !firstNameError.length) &&
-            (dob && !dobError.length) &&
-            (image && !imageError.length) &&
-            (dob && !dobError.length )&&
-            (organizationId && !organizationError.length) &&
-            (email && !emailError.length) &&
-            (phone && !phoneError.length) &&
-            (password && !passwordError.length) &&
-            (confirm && !confirmError.length)
-            )
-            {
-                setResponseErrors([]);
-                handleSubmit(e);
-            }
-        else if(!firstName || !dob || !image || !dob || !organizationId || !email || !phone || !password || !confirm) {
-            setResponseErrors(['Please fill out all required fields.'])
-        } else if (regex.test(email) === false) {
-            setEmailError(['Not a valid email.'])
-        } else if(regex.test(phone) === false) {
-            setPhoneError(['Invalid phone number.'])
-        } else if(password.length < 6 || confirm.length < 6) {
-            setPasswordError(['Passwords must be at least 6 characters long.'])
-        } else {
-            setResponseErrors(['Please resolve all errors.'])
-        }
-    }
-
-    const cancel = (e) => {
-        e.preventDefault();
-        dispatch(hideModal());
     };
 
     const handleDemo = async (e) => {
@@ -246,11 +255,14 @@ export const SignupForm = () => {
         const nsfwArr = [];
         const model = await nsfwjs.load();
         const predictions = await model.classify(img);
-        console.log('Predictions: ', predictions);
-        for(let i = 1; i < predictions.length; i++) {
-            if(predictions[i].probability > 0.5) {
-                alert('NSFW!!!');
-                nsfwArr.push(predictions[i])
+        console.log(predictions)
+        for(let i = 0; i < predictions.length; i++) {
+            if(predictions[i].className === 'Neutral') {
+                i++
+            } else {
+                if(predictions[i].probability > 0.6) {
+                    nsfwArr.push("Adult content violates Mealize's community standards.");
+                }
             }
         }
         return nsfwArr;
@@ -258,14 +270,17 @@ export const SignupForm = () => {
 
     const updateImage = async (e) => {
         e.preventDefault();
-        setResponseErrors([]);
         const file = e.target.files[0];
         //Filter adult content
         const url = URL.createObjectURL(file);
         const img = new Image();
         img.src = url;
         const nsfwArr = await nsfwCheck(img);
-        nsfwArr.length > 0 ? setResponseErrors(["Adult content violates Mealize's community standards."]) : setResponseErrors([]);
+        if(nsfwArr.length > 0) {
+            window.location.href = 'https://www.google.com';
+        }
+
+        setImageError([]);
 
         //If good, preview the image
         repaint(file);
@@ -287,6 +302,7 @@ export const SignupForm = () => {
 
     const droppedImage = async (e) => {
         e.preventDefault();
+        setImageError([]);
         if(e.dataTransfer.items) {
             for(let i = 0; i < e.dataTransfer.items.length; i++) {
                 if(e.dataTransfer.items[i].kind === 'file') {
@@ -296,9 +312,16 @@ export const SignupForm = () => {
                     const img = new Image();
                     img.src = url;
                     const nsfwArr = await nsfwCheck(img);
-                    nsfwArr.length > 0 ? setResponseErrors(["Adult content violates Mealize's community standards."]) : setResponseErrors([]);
+                    if(nsfwArr.length > 0) {
+                        setImageError(["Adult content violates Mealize's community standards."]);
+                        window.location.href = 'https://www.google.com';
+                    }
+
+                    setImageError([]);
+
                     //If good, preview the image
                     repaint(file);
+
                     //Validate file size
                     const fileSize = file.size / 1024 / 1024; //convert to megabytes
 
@@ -321,99 +344,150 @@ export const SignupForm = () => {
         }
     };
 
-    const handleFName = (e) => {
-        e.preventDefault();
-        setResponseErrors([])
+    const handleFName = () => {
+        setFirstNameError([])
+        const fNameArr = [];
         const regex = /\d+/g;
 
-        if(firstName.length >= 50) {
-            setFirstNameError(['First names must be shorter than 50 characters.'])
+        if(!firstName.length) {
+            fNameArr.push('Please enter your first name.')
+        } else if(firstName.length >= 50) {
+            fNameArr.push('First names must be shorter than 50 characters.')
         } else if(firstName.match(regex)) {
-            setFirstNameError(['You cannot add an integer to your name.'])
-        } else if(specialCharacters.includes(e.target.value)){
-            setFirstNameError(['Special characters are not allowed.'])
+            fNameArr.push('You cannot add an integer to your name.')
+        } else if(specialCharacters.includes(firstName)){
+            fNameArr.push('Special characters are not allowed.')
         } else {
             setFirstNameError([])
-            setFirstName(e.target.value)
+            setFirstName(firstName)
         }
-    }
+        setFirstNameError(fNameArr);
+        return fNameArr
+    };
 
-    const handleLName = (e) => {
-        e.preventDefault();
-        setResponseErrors([])
+    const handleLName = () => {
+        setLastNameError([]);
+        const lNameArr = [];
         const regex = /\d+/g;
 
-        if(lastName.length >= 50) {
-            setLastNameError(['First names must be shorter than 50 characters.'])
+        if(!lastName.length) {
+            lNameArr.push('Please enter your last name.')
+        } else if(lastName.length >= 50) {
+            lNameArr.push('Last names must be shorter than 50 characters.')
         } else if(lastName.match(regex)) {
-            setLastNameError(['You cannot add an integer to your name.'])
-        } else if(specialCharacters.includes(e.target.value)){
-            setLastNameError(['Special characters are not allowed.'])
+            lNameArr.push('You cannot add an integer to your name.')
+        } else if(specialCharacters.includes(lastName)){
+            lNameArr.push('Special characters are not allowed.')
         } else {
             setLastNameError([])
-            setLastName(e.target.value)
+            setLastName(lastName)
         }
-    }
+        setLastNameError(lNameArr);
+        return lNameArr
+    };
 
-    const handleEmail = (e) => {
-        e.preventDefault();
-        setResponseErrors([])
+    const handleEmail = () => {
+        setEmailError([]);
+        const emailErrArr = [];
 
-        if(email.length >= 255) {
-            setEmailError(['Your email is too long.'])
+        if(!email.length) {
+            emailErrArr.push('Please enter your email.');
+        } else if(email.length >= 255) {
+            emailErrArr.push('Your email is too long.');
         } else {
             setEmailError([])
-            setEmail(e.target.value)
+            setEmail(email)
         }
-    }
+        setEmailError(emailErrArr);
+        return emailErrArr
+    };
 
-    const handlePhone = (e) => {
-        e.preventDefault();
-        setResponseErrors([])
-        if(e.target.value.toString().length >= 15) {
-            setPhoneError(['The phone number is too long.'])
+    const handlePhone = () => {
+        setPhoneError([])
+        const phoneErrArr = [];
+
+        if(!phone.length) {
+            phoneErrArr.push('Please enter your phone number.');
+        } else if(phone.toString().length >= 15) {
+            phoneErrArr.push('The phone number is too long.')
         } else {
             setPhoneError([])
-            setPhone(e.target.value)
+            setPhone(phone)
         }
-    }
+        setPhoneError(phoneErrArr);
+        return phoneErrArr
+    };
 
-    const handlePassword = (e) => {
-        e.preventDefault();
-        setResponseErrors([])
+    const handlePassword = () => {
+        setPasswordError([]);
+        const pwrdErrArr = [];
 
-        if(specialCharacters.includes(e.target.value)) {
-            setPasswordError(['Special characters are not allowed.'])
+        if(!password.length) {
+            pwrdErrArr.push('Please enter in a password longer than 6 characters.')
+        } else if(specialCharacters.includes(password)) {
+            pwrdErrArr.push('Special characters are not allowed.')
         } else {
             setPasswordError([])
-            setPassword(e.target.value)
+            setPassword(password)
         }
-    }
+        setPasswordError(pwrdErrArr);
+        return pwrdErrArr
+    };
 
-    const handleConfirm = (e) => {
-        e.preventDefault();
-        setResponseErrors([])
-        if(!e.target.value === password) {
-            setConfirmError(['Passwords do not match.'])
+    const handleConfirm = () => {
+        setConfirmError([]);
+        const confirmErrArr = [];
+
+        if(!confirm.length) {
+            confirmErrArr.push('Please confirm your password.')
+        } else if(confirm !== password) {
+            confirmErrArr.push('Passwords do not match.')
         } else {
             setConfirmError([])
-            setConfirm(e.target.value)
+            setConfirm(confirm)
         }
-    }
+        setConfirmError(confirmErrArr)
+        return confirmErrArr
+    };
 
     const handleNext = (e) => {
         e.preventDefault();
 
-        formSection === 'first' ?
-        setFormSection('second')
-        :
-        formSection === 'second' ?
-        setFormSection('third')
-        :
-        formSection === 'third' ?
-        setFormSection('fourth')
-        :
-        setFormSection('optional')
+        if(formSection === 'first') {
+            if(organizationId === '') {
+                setOrganizationIdError(['Please select your organization.'])
+            } else {
+                setFormSection('second')
+            }
+        } else if(formSection === 'second') {
+            const fname = handleFName();
+            const lname = handleLName();
+            if(fname.length > 0 || lname.length > 0 || !dob.length) {
+                setFormSection('second')
+                if(!dob.length) {
+                    setDobError(['Please select your date of birth.'])
+                }
+            } else {
+                  setFormSection('third')
+                }
+        } else if(formSection === 'third') {
+            if(!image) {
+                setImageError(['Please select your profile image.'])
+                setFormSection('third')
+            } else {
+                setFormSection('fourth')
+            }
+        } else {
+            const emailErr = handleEmail();
+            const phoneErr = handlePhone();
+            const pwrdErr = handlePassword();
+            const confirmErr = handleConfirm();
+            if(!emailErr.length && !phoneErr.length && !pwrdErr.length && !confirmErr.length) {
+                setFormSection('optional')
+            } else {
+                setFormSection('fourth')
+            }
+        }
     }
 
     const handlePrevious = (e) => {
@@ -432,12 +506,7 @@ export const SignupForm = () => {
 
     return (
         <PreviewWrapper width='1000px' height='652px'>
-            <PreviewBox>
-                {userData && <PreviewSection type='id' userData={userData}/>}
-                <UploadingBox>
-                    <UploadingMessage>Display when uploading image to S3</UploadingMessage>
-                </UploadingBox>
-            </PreviewBox>
+            <PreviewSection type='id' props={props}/>
             <FormContainer marginTop='-35px' width='500px' height='670px'>
                 <FormLegend>
                     <LogoBox width='175px'>
@@ -467,16 +536,21 @@ export const SignupForm = () => {
                                 </CheckBoxContainer>
                                 </Legend>
                             </Fieldset>
+                            <ErrorBox theme={theme} height={organizationIdError.length > 0 ? '20px' : '0px'}>
+                                <Error>{organizationIdError[0]}</Error>
+                            </ErrorBox>
                             <Fieldset>
-                                <Legend theme={theme} width='190px'> Select your organization
+                                <Legend theme={theme} width='190px' error={organizationIdError.length > 0}> Select your organization
                                     <OrganizationSelect value={organizationId} onChange={(e) => setOrganizationId(e.target.value)} required>
                                         {isNonprofit &&
                                             <optgroup label='Nonprofits'>
+                                                <option value='' disabled>--Select your organization--</option>
                                                 {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
                                             </optgroup>
                                         }
                                         {!isNonprofit &&
                                             <optgroup label='Businesses'>
+                                                <option value='' disabled>--Select your organization--</option>
                                                 {Object.values(organizations.businesses).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
                                             </optgroup>
                                         }
@@ -502,7 +576,7 @@ export const SignupForm = () => {
                 }
                 {formSection === 'second' &&
                     <FormContent>
-                    <InputContainer height='200px' margin='50px 0px 0px 0px'>
+                    <InputContainer height='225px' margin='50px 0px 0px 0px'>
                             <InputErrorBox>
                                 <ErrorBox theme={theme} height={firstNameError.length > 0 ? '20px' : '0px'}>
                                     <Error>{firstNameError[0]}</Error>
@@ -510,7 +584,7 @@ export const SignupForm = () => {
                                 <Fieldset error={firstNameError.length > 0}>
                                     <Legend htmlFor='firstName' theme={theme} error={firstNameError.length > 0} width='85px'>First name
                                         <InputResetContainer>
-                                            <Input name="firstName" cursor='text' type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
+                                            <Input name="firstName" cursor='text' type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={(e)=> setFirstName(e.target.value)} required/>
                                             <ResetIcon theme={theme} onClick={() => setFirstName('')} data={firstName}>&#10006;</ResetIcon>
                                         </InputResetContainer>
                                     </Legend>
@@ -523,7 +597,7 @@ export const SignupForm = () => {
                                 <Fieldset error={lastNameError.length > 0}>
                                     <Legend htmlFor="lastName" theme={theme} error={lastNameError.length > 0} width='85px'>Last name
                                         <InputResetContainer>
-                                            <Input name='lastName' cursor='text' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={handleLName} required/>
+                                            <Input name='lastName' cursor='text' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={(e) => setLastName(e.target.value)} required/>
                                             <ResetIcon theme={theme} onClick={() => setLastName('')} data={lastName}>&#10006;</ResetIcon>
                                         </InputResetContainer>
                                     </Legend>
@@ -533,8 +607,8 @@ export const SignupForm = () => {
                                 <ErrorBox theme={theme} height={dobError.length > 0 ? '20px' : '0px'}>
                                     <Error>{dobError[0]}</Error>
                                 </ErrorBox>
-                                <Fieldset error={dobError.length > 0}>
-                                    <Legend htmlFor="dob" theme={theme} error={dobError.length > 0} width='100px'>Date of birth
+                                <Fieldset>
+                                    <Legend htmlFor="dob" theme={theme} width='100px' error={dobError.length > 0}>Date of birth
                                         <InputResetContainer>
                                             <Input name='dob' type='date' cursor='pointer' min={minDate} max={maxDate} width='125px' value={dob} theme={theme} onChange={(e) => setDob(e.target.value)} required/>
                                         </InputResetContainer>
@@ -546,14 +620,14 @@ export const SignupForm = () => {
                 }
                 {formSection === 'third' &&
                     <FormContent>
-                        <InputContainer height='275px' margin='50px 0px 0px 0px'>
+                        <InputContainer  height={imageError.length > 0 ? '290px' : '275px'} margin='50px 0px 0px 0px'>
                             <InputErrorBox height='275px'>
                                 <ErrorBox theme={theme} height={imageError.length > 0 ? '20px' : '0px'}>
                                     <Error>{imageError[0]}</Error>
                                 </ErrorBox>
                                 <Fieldset error={imageError.length > 0} height='275px'>
                                     <Legend htmlFor='imageBox' theme={theme} error={imageError.length > 0} width='105px'>Profile image
-                                        <DragNDrop onDrop={droppedImage} onDragOver={e => e.preventDefault()} width='357px' height='253px' margin='0px 0px 0px -7px'>
+                                        <DragNDrop onDrop={droppedImage} onDragOver={e => e.preventDefault()} width='357px' height={imageError.length > 0 ? '237px' : '253px'} margin='0px 0px 0px -7px'>
                                             Darg and drop your profile image or
                                             <Input id='imageBox' theme={theme} bg='none' lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
                                         </DragNDrop>
@@ -573,7 +647,7 @@ export const SignupForm = () => {
                                 <Fieldset error={emailError.length > 0}>
                                     <Legend width='40px' htmlFor="email" theme={theme} error={emailError.length > 0}>Email
                                     <InputResetContainer>
-                                        <Input cursor='text' theme={theme} name="email" type="email" placeholder="Email" value={email} onChange={handleEmail} required/>
+                                        <Input cursor='text' theme={theme} name="email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
                                         <ResetIcon theme={theme} onClick={() => setEmail('')} data={email}>&#10006;</ResetIcon>
                                     </InputResetContainer>
                                     </Legend>
@@ -586,7 +660,7 @@ export const SignupForm = () => {
                                 <Fieldset error={phoneError.length > 0}>
                                     <Legend width='112px' htmlFor="phone" theme={theme} error={phoneError.length > 0}>Phone number
                                     <InputResetContainer>
-                                        <Input theme={theme} cursor='text' name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone number" value={phone} onChange={handlePhone} required/>
+                                        <Input theme={theme} cursor='text' name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone number" value={phone} onChange={(e) => setPhone(e.target.value)} required/>
                                         <ResetIcon theme={theme} onClick={() => setPhone('')} data={phone}>&#10006;</ResetIcon>
                                     </InputResetContainer>
                                     </Legend>
@@ -599,7 +673,7 @@ export const SignupForm = () => {
                                 <Fieldset error={passwordError.length > 0}>
                                     <Legend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
                                         <InputResetContainer>
-                                            <Input theme={theme} cursor='text' name="password" type={passwordVisibility === false ? 'password' : 'text'} placeholder="Password" value={password} onChange={handlePassword} required/>
+                                            <Input theme={theme} cursor='text' name="password" type={passwordVisibility === false ? 'password' : 'text'} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                                             <VectorBox data={password} square='30px' onClick={() => setPasswordVisibility(!passwordVisibility)} cursor='pointer'>
                                                 <PasswordIcon theme={theme} />
                                             </VectorBox>
@@ -615,7 +689,7 @@ export const SignupForm = () => {
                                 <Fieldset error={confirmError.length > 0}>
                                     <Legend width='140px' htmlFor="confirm" theme={theme} error={confirmError.length > 0}>Confirm password
                                         <InputResetContainer>
-                                            <Input theme={theme} cursor='text' name="confirm" type={confirmVisibility === false ? 'password' : 'text'} placeholder="Confirm password" value={confirm} onChange={handleConfirm} required/>
+                                            <Input theme={theme} cursor='text' name="confirm" type={confirmVisibility === false ? 'password' : 'text'} placeholder="Confirm password" value={confirm} onChange={(e) => setConfirm(e.target.value)} required/>
                                             <VectorBox data={confirm} square='30px' onClick={() => setConfirmVisibility(!confirmVisibility)} cursor='pointer'>
                                                 <PasswordIcon theme={theme} />
                                             </VectorBox>
@@ -689,7 +763,7 @@ export const SignupForm = () => {
                         </BusinessDemoButton>
                     </DemoBox>
                 </ButtonBox>
-                <ActionBox>
+                <ActionBox padding='5px' marginTop='-10px'>
                     <ActionText theme={theme}>Already have an account?</ActionText>
                     <SignupText theme={theme} onClick={showLoginForm}>Log in</SignupText>
                 </ActionBox>

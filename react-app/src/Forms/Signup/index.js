@@ -436,18 +436,17 @@ export const SignupForm = () => {
             } else {
                 setFormSection('fourth')
             }
-        } else if()
-
-        formSection === 'first' ?
-        setFormSection('second')
-        :
-        formSection === 'second' ?
-        setFormSection('third')
-        :
-        formSection === 'third' ?
-        setFormSection('fourth')
-        :
-        setFormSection('optional')
+        } else {
+            const emailErr = handleEmail();
+            const phoneErr = handlePhone();
+            const pwrdErr = handlePassword();
+            const confirmErr = handleConfirm();
+            if(!emailErr.length && !phoneErr.length && !pwrdErr.length && !confirmErr.length) {
+                setFormSection('optional')
+            } else {
+                setFormSection('fourth')
+            }
+        } 
     }
 
     const handlePrevious = (e) => {

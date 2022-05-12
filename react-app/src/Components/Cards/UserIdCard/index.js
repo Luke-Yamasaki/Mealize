@@ -13,7 +13,7 @@ import { Nonprofit } from "../../../Assets/Icons/Nonprofit";
 import { LogoBox } from "../../Styled/Navbar";
 import { LogoType } from "../../Styled/AuthenticationForm";
 import { VectorBox } from '../../Styled/Layout';
-import { IdCard, IdHeader, SloganBox, Slogan, IdIconBackGround, IdType, IdContent, IdImageContainer, IdNumber, IssueDate, OrganizationContainer, IdInfoLabel, IdInfoBox, IdInfoText, IdAddressBox, IdUserInfoContainer, IdImage, EmailBox } from '../../Styled/IdCard';
+import { IdCard, IdHeader, SloganBox, Slogan, IdIconBackGround, IdType, IdContent, IdImageContainer, IdNumber, IssueDate, OrganizationContainer, IdInfoLabel, IdInfoBox, IdInfoText, IdAddressBox, IdUserInfoContainer, IdImage, EmailBox, IdLogoType } from '../../Styled/IdCard';
 
 export const UserIdCard = ({ props }) => {
     const {theme} = useTheme();
@@ -39,7 +39,7 @@ export const UserIdCard = ({ props }) => {
             <IdHeader>
                 <LogoBox width='100px'>
                     <Logo theme={theme} />
-                    <LogoType theme={theme}>Mealize</LogoType>
+                    <IdLogoType theme={theme}>Mealize</IdLogoType>
                 </LogoBox>
                 <SloganBox>
                     <Slogan theme={theme}>- Share from your heart -</Slogan>

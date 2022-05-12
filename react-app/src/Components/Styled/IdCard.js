@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Black, Bold, Paragraph } from "./Fonts";
+import { Black, ExtraBold, Bold, Paragraph } from "./Fonts";
 import pattern from '../../Assets/Images/Pattern_10.png';
 
 export const IdCard = styled.div`
@@ -31,6 +31,11 @@ export const IdHeader = styled.section`
     padding: 0px;
 `;
 
+export const IdLogoType = styled(ExtraBold)`
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    font-size: 2em;
+`;
+
 export const SloganBox = styled.div`
     width: 270px;
     height: 51px;
@@ -58,7 +63,7 @@ export const IdType = styled(Paragraph)`
     width: 415px;
     margin: -15px 0px 0px 18px;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: ${props => props.theme === 'light' ? '500' : '700'};
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 

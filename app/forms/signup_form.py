@@ -17,8 +17,6 @@ class SignupForm(FlaskForm):
     lastName = StringField('Last Name', validators=[InputRequired(), Length(min=1, max=50, message='Sorry, we cannot store last names longer than 50 characters.')])
     dob = DateField("DOB", validators=[InputRequired()])
     organizationId = IntegerField("Organization Id", validators=[InputRequired()])
-    isNonprofit = BooleanField("Nonprofit", validators=[InputRequired()])
-    isManager = BooleanField("Manager", validators=[InputRequired()])
     email = StringField("Email",  validators=[InputRequired("Please provide your email address."), Email("Please provide a valid email address."), existing_user])
     phone = StringField("Phone number", validators=[InputRequired()])
     password = PasswordField("Password", validators=[InputRequired()])

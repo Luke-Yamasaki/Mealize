@@ -37,6 +37,7 @@ def image_validation():
 def form_validation():
     form = SignupForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    print('/////////////', request)
     if form.validate_on_submit():
         return {'message': 'success'}
     return {'errors': errors_to_list(form.errors)}
@@ -48,8 +49,8 @@ def sign_up():
     if form.validate_on_submit():
         user = User(
             organizationId = form.data['organizationId'],
-            isNonprofit = form.data['isNonprofit'],
-            isManager = form.data['isManager'],
+            isNonprofit = request.json['isNonprofit'],
+            isManager = request.json['isManager'],
             firstName = form.data['firstName'],
             lastName = form.data['lastName'],
             email = form.data['email'],

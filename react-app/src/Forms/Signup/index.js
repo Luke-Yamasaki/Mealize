@@ -113,6 +113,7 @@ export const SignupForm = () => {
     //second
     const [firstNameError, setFirstNameError] = useState([]);
     const [lastNameError, setLastNameError] = useState([]);
+    const [dobError, setDobError] = useState([]);
      //third
     const [imageError, setImageError] = useState([]);
     //fourth
@@ -132,6 +133,10 @@ export const SignupForm = () => {
     useEffect(() => {
         setLastNameError([])
     },[lastName])
+
+    useEffect(() => {
+        setDobError([])
+    },[dob])
 
     useEffect(() => {
         setImageError([])
@@ -458,13 +463,17 @@ export const SignupForm = () => {
         } else if(formSection === 'second') {
             const fname = handleFName();
             const lname = handleLName();
-            if(fname.length > 0 || lname.length > 0) {
-                return
+            if(fname.length > 0 || lname.length > 0 || !dob.length) {
+                setFormSection('second')
+                if(!dob.length) {
+                    setDobError(['Please select your date of birth.'])
+                }
             } else {
-                setFormSection('third')
-            }
+                  setFormSection('third')
+                }
         } else if(formSection === 'third') {
             if(!image) {
+                setImageError(['Please select your profile image.'])
                 setFormSection('third')
             } else {
                 setFormSection('fourth')
@@ -532,7 +541,7 @@ export const SignupForm = () => {
                                 <Error>{organizationIdError[0]}</Error>
                             </ErrorBox>
                             <Fieldset>
-                                <Legend theme={theme} width='190px'> Select your organization
+                                <Legend theme={theme} width='190px' error={organizationIdError.length > 0}> Select your organization
                                     <OrganizationSelect value={organizationId} onChange={(e) => setOrganizationId(e.target.value)} required>
                                         {isNonprofit &&
                                             <optgroup label='Nonprofits'>
@@ -568,7 +577,7 @@ export const SignupForm = () => {
                 }
                 {formSection === 'second' &&
                     <FormContent>
-                    <InputContainer height='200px' margin='50px 0px 0px 0px'>
+                    <InputContainer height='225px' margin='50px 0px 0px 0px'>
                             <InputErrorBox>
                                 <ErrorBox theme={theme} height={firstNameError.length > 0 ? '20px' : '0px'}>
                                     <Error>{firstNameError[0]}</Error>
@@ -596,8 +605,11 @@ export const SignupForm = () => {
                                 </Fieldset>
                             </InputErrorBox>
                             <InputErrorBox>
+                                <ErrorBox theme={theme} height={dobError.length > 0 ? '20px' : '0px'}>
+                                    <Error>{dobError[0]}</Error>
+                                </ErrorBox>
                                 <Fieldset>
-                                    <Legend htmlFor="dob" theme={theme} width='100px'>Date of birth
+                                    <Legend htmlFor="dob" theme={theme} width='100px' error={dobError.length > 0}>Date of birth
                                         <InputResetContainer>
                                             <Input name='dob' type='date' cursor='pointer' min={minDate} max={maxDate} width='125px' value={dob} theme={theme} onChange={(e) => setDob(e.target.value)} required/>
                                         </InputResetContainer>
@@ -609,14 +621,14 @@ export const SignupForm = () => {
                 }
                 {formSection === 'third' &&
                     <FormContent>
-                        <InputContainer height='275px' margin='50px 0px 0px 0px'>
+                        <InputContainer  height={imageError.length > 0 ? '290px' : '275px'} margin='50px 0px 0px 0px'>
                             <InputErrorBox height='275px'>
                                 <ErrorBox theme={theme} height={imageError.length > 0 ? '20px' : '0px'}>
                                     <Error>{imageError[0]}</Error>
                                 </ErrorBox>
                                 <Fieldset error={imageError.length > 0} height='275px'>
                                     <Legend htmlFor='imageBox' theme={theme} error={imageError.length > 0} width='105px'>Profile image
-                                        <DragNDrop onDrop={droppedImage} onDragOver={e => e.preventDefault()} width='357px' height='253px' margin='0px 0px 0px -7px'>
+                                        <DragNDrop onDrop={droppedImage} onDragOver={e => e.preventDefault()} width='357px' height={imageError.length > 0 ? '237px' : '253px'} margin='0px 0px 0px -7px'>
                                             Darg and drop your profile image or
                                             <Input id='imageBox' theme={theme} bg='none' lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
                                         </DragNDrop>
@@ -636,7 +648,7 @@ export const SignupForm = () => {
                                 <Fieldset error={emailError.length > 0}>
                                     <Legend width='40px' htmlFor="email" theme={theme} error={emailError.length > 0}>Email
                                     <InputResetContainer>
-                                        <Input cursor='text' theme={theme} name="email" type="email" placeholder="Email" value={email} onChange={handleEmail} required/>
+                                        <Input cursor='text' theme={theme} name="email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
                                         <ResetIcon theme={theme} onClick={() => setEmail('')} data={email}>&#10006;</ResetIcon>
                                     </InputResetContainer>
                                     </Legend>
@@ -649,7 +661,7 @@ export const SignupForm = () => {
                                 <Fieldset error={phoneError.length > 0}>
                                     <Legend width='112px' htmlFor="phone" theme={theme} error={phoneError.length > 0}>Phone number
                                     <InputResetContainer>
-                                        <Input theme={theme} cursor='text' name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone number" value={phone} onChange={handlePhone} required/>
+                                        <Input theme={theme} cursor='text' name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone number" value={phone} onChange={(e) => setPhone(e.target.value)} required/>
                                         <ResetIcon theme={theme} onClick={() => setPhone('')} data={phone}>&#10006;</ResetIcon>
                                     </InputResetContainer>
                                     </Legend>
@@ -662,7 +674,7 @@ export const SignupForm = () => {
                                 <Fieldset error={passwordError.length > 0}>
                                     <Legend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
                                         <InputResetContainer>
-                                            <Input theme={theme} cursor='text' name="password" type={passwordVisibility === false ? 'password' : 'text'} placeholder="Password" value={password} onChange={handlePassword} required/>
+                                            <Input theme={theme} cursor='text' name="password" type={passwordVisibility === false ? 'password' : 'text'} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                                             <VectorBox data={password} square='30px' onClick={() => setPasswordVisibility(!passwordVisibility)} cursor='pointer'>
                                                 <PasswordIcon theme={theme} />
                                             </VectorBox>
@@ -678,7 +690,7 @@ export const SignupForm = () => {
                                 <Fieldset error={confirmError.length > 0}>
                                     <Legend width='140px' htmlFor="confirm" theme={theme} error={confirmError.length > 0}>Confirm password
                                         <InputResetContainer>
-                                            <Input theme={theme} cursor='text' name="confirm" type={confirmVisibility === false ? 'password' : 'text'} placeholder="Confirm password" value={confirm} onChange={handleConfirm} required/>
+                                            <Input theme={theme} cursor='text' name="confirm" type={confirmVisibility === false ? 'password' : 'text'} placeholder="Confirm password" value={confirm} onChange={(e) => setConfirm(e.target.value)} required/>
                                             <VectorBox data={confirm} square='30px' onClick={() => setConfirmVisibility(!confirmVisibility)} cursor='pointer'>
                                                 <PasswordIcon theme={theme} />
                                             </VectorBox>

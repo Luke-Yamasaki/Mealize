@@ -41,7 +41,7 @@ export const SloganBox = styled.div`
 
 export const Slogan = styled(Black)`
     font-size: 18px;
-    color: black;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
 export const IdIconBackGround = styled.div`
@@ -56,14 +56,13 @@ export const IdIconBackGround = styled.div`
 
 export const IdType = styled(Paragraph)`
     width: 415px;
-    padding: 0px;
-    margin: -10px 0px 0px 10px;
+    margin: -15px 0px 0px 18px;
     font-size: 12px;
-    font-weight: 700';
-    color: black;
+    font-weight: 700;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
-export const IdContent = styled.section`
+export const IdContent = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -81,22 +80,28 @@ export const IdImageContainer = styled.div`
     height: 175px;
 `;
 
-export const IdImageBox = styled.img`
+export const IdImage = styled.img`
     width: 100px;
-    height: auto;
+    height: 140px;
     border-radius: 5px;
+    object-fit: scale-down;
+    object-position: center;
 `;
 
 export const IdNumber = styled(IdType)`
     font-size: 10px;
     font-weight: 700;
     padding-top: 10px;
+    margin: 0px;
     height: 15px;
+    width: 100px;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
 export const IssueDate = styled(IdNumber)`
     padding-top: 5px;
     padding-bottom: 5px;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
 export const OrganizationContainer = styled.div`
@@ -105,13 +110,13 @@ export const OrganizationContainer = styled.div`
     align-items: flex-start;
     justify-content: left;
     gap: 5px;
-    width: 170px;
+    width: 100px;
     height: 141px;
 `;
 
 export const IdInfoLabel = styled(Bold)`
     font-size: 12px;
-    color: black;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     height: 20px;
 `;
 
@@ -132,9 +137,9 @@ export const IdInfoText = styled(Paragraph)`
     color: #191919;
     font-weight: 500;
     font-size: 10px;
-    color: black;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     margin: 0px;
-    margin-top: ${props => props.marginTop ? props.marginTop : '0px' }
+    margin-top: ${props => props.marginTop ? props.marginTop : '0px' };
     padding: 0px;
     height: 20px;
 `;

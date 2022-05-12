@@ -433,12 +433,7 @@ export const SignupForm = () => {
 
     return (
         <PreviewWrapper width='1000px' height='652px'>
-            <PreviewBox>
-                <PreviewSection type='id' props={props}/>
-                <UploadingBox>
-                    <UploadingMessage>Display when uploading image to S3</UploadingMessage>
-                </UploadingBox>
-            </PreviewBox>
+            <PreviewSection type='id' props={props}/>
             <FormContainer marginTop='-35px' width='500px' height='670px'>
                 <FormLegend>
                     <LogoBox width='175px'>

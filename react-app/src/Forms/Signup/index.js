@@ -119,23 +119,24 @@ export const SignupForm = () => {
     const [confirmError, setConfirmError] = useState([]);
     const [responseErrors, setResponseErrors] = useState([]);
 
-    //Spreading all organizations
-    const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
-
     const ageBoundariesObj = ageBoundary();
     const minDate = ageBoundariesObj.old;
     const maxDate = ageBoundariesObj.young;
 
     const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
-
-    //props to pass to preview Id card
-    useEffect(() => {
-        let userInfo = { organizationId, isNonprofit, isManager, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq };
-        console.log(userInfo);
-        console.log(userData);
-        setUserData(userInfo);
-        return () => console.log('???')
-    },[organizationId, isNonprofit, isManager, firstName, lastName, dob, image, deaf, wheelchair, learningDisabled, lgbtq ])
+    let props = {
+        organizationId,
+        isNonprofit,
+        isManager,
+        firstName,
+        lastName,
+        dob,
+        image,
+        deaf,
+        wheelchair,
+        learningDisabled,
+        lgbtq
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -433,7 +434,7 @@ export const SignupForm = () => {
     return (
         <PreviewWrapper width='1000px' height='652px'>
             <PreviewBox>
-                {userData && <PreviewSection type='id' userData={userData}/>}
+                <PreviewSection type='id' props={props}/>
                 <UploadingBox>
                     <UploadingMessage>Display when uploading image to S3</UploadingMessage>
                 </UploadingBox>

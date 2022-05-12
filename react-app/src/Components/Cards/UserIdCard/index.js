@@ -17,15 +17,18 @@ import { LogoType } from "../../Styled/AuthenticationForm";
 import { VectorBox } from '../../Styled/Layout';
 import { IdCard, IdHeader, SloganBox, Slogan, IdIconBackGround, IdType, IdContent, IdImageContainer, IdNumber, IssueDate, OrganizationContainer, IdInfoLabel, IdInfoBox, IdInfoText, IdAddressBox, IdUserInfoContainer, IdImageBox } from '../../Styled/IdCard';
 
-export const UserIdCard = ({ userData }) => {
+export const UserIdCard = ({ props }) => {
+    console.log(props)
     const {theme} = useTheme();
+    console.log(theme)
     const organizations = useSelector(state => state.organizations);
     const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
+    let organization = allOrganizations[props.organizationId];
 
     useEffect(() => {
-        console.log('userData changed');
+        console.log(props);
         return () => console.log('changing')
-    },[userData])
+    },[props])
 
     return(
         <IdCard theme={theme}>
@@ -39,14 +42,14 @@ export const UserIdCard = ({ userData }) => {
                 </SloganBox>
                 <VectorBox square='45px'>
                     <IdIconBackGround>
-                        {userData?.isNonprofit ? <Nonprofit /> : <Business />}
+                        {props.isNonprofit ? <Nonprofit /> : <Business />}
                     </IdIconBackGround>
                 </VectorBox>
             </IdHeader>
-            <IdType>{userData?.isManager ? 'Manager Id Card' : 'Volunteer Id Card' }</IdType>
+            <IdType>{props.isManager ? 'Manager Id Card' : 'Volunteer Id Card' }</IdType>
             <IdContent>
                 <IdImageContainer>
-                    <IdImageBox src={userData?.image ? URL.createObjectURL(userData?.image) : placeholder } alt='User profile.'/>
+                    <IdImageBox src={props.image ? URL.createObjectURL(props.image) : placeholder } alt='User profile.'/>
                     <IdNumber>Id: xxxxx </IdNumber>
                     <IssueDate>Issued: {new Date().toISOString().split('T')[0].slice(0,11)}</IssueDate>
                 </IdImageContainer>
@@ -55,42 +58,42 @@ export const UserIdCard = ({ userData }) => {
                     <IdInfoBox>
                         <IdInfoLabel>Name:</IdInfoLabel>
                         <IdInfoText fontSize='8px'>
-                            {userData?.organizationId ? allOrganizations[userData?.organizationId].name : "Company details."}
+                            {organization ? organization.name : "Company details."}
                         </IdInfoText>
                     </IdInfoBox>
                     <IdInfoBox>
                         <IdInfoLabel>Email:</IdInfoLabel>
                         <IdInfoText fontSize='8px'>
-                            {userData?.organizationId ? allOrganizations[userData?.organizationId].email : "Company details."}
+                            {organization ? organization.email : "Company details."}
                         </IdInfoText>
                     </IdInfoBox>
                     <IdInfoBox>
                         <IdInfoLabel>Phone:</IdInfoLabel>
                         <IdInfoText fontSize='8px'>
-                            {userData?.organizationId ? `(${allOrganizations[userData?.organizationId].phone.slice(0, 3)}) - ${allOrganizations[userData?.organizationId].phone.slice(3, 6)}-${allOrganizations[userData?.organizationId].phone.slice(6, 10)}` : "Company details."}
+                            {organization ? `(${organization.phone.slice(0, 3)}) - ${organization.phone.slice(3, 6)}-${organization.phone.slice(6, 10)}` : "Company details."}
                         </IdInfoText>
                     </IdInfoBox>
                     <IdAddressBox>
                         <IdInfoLabel>Address:</IdInfoLabel>
                         <IdInfoText>
-                            {userData?.organizationId ? `${allOrganizations[userData?.organizationId].street}` : "Company details."}
+                            {organization ? `organization.street}` : "Company details."}
                         </IdInfoText>
                         <IdInfoText>
-                            {userData?.organizationId ? `${allOrganizations[userData?.organizationId].city}, ${allOrganizations[userData?.organizationId].state[0].toUpperCase()+allOrganizations[userData?.organizationId].state[1].toUpperCase()} ${allOrganizations[userData?.organizationId].zip}`  : "Company details."}
+                            {organization ? `${organization.city}, ${organization.state[0].toUpperCase() + organization.state[1].toUpperCase()} ${organization.zip}`  : "Company details."}
                         </IdInfoText>
                     </IdAddressBox>
                 </OrganizationContainer>
                 <IdUserInfoContainer>
                     <IdInfoBox>
                         <IdInfoLabel>Name:</IdInfoLabel>
-                        <IdInfoText>{userData?.firstName + ' ' + userData?.lastName}</IdInfoText>
+                        <IdInfoText>{props.firstName && props.lastName ? props.firstName + ' ' + props.lastName : 'Your name'}</IdInfoText>
                     </IdInfoBox>
                     <IdInfoBox>
                         <IdInfoLabel>DOB:</IdInfoLabel>
-                        <IdInfoText>{userData?.dob}</IdInfoText>
+                        <IdInfoText>{props.dob ? props.dob : 'Your DOB'}</IdInfoText>
                     </IdInfoBox>
                 </IdUserInfoContainer>
             </IdContent>
         </IdCard>
     )
-}
+};

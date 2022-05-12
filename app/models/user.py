@@ -21,7 +21,6 @@ class User(db.Model, UserMixin):
     learningDisabled = db.Column(db.Boolean, nullable=True)
     lgbtq = db.Column(db.Boolean, nullable=True)
     profileImageUrl = db.Column(db.String(2048), nullable=False)
-    jobDescription = db.Column(db.String(100), nullable=False)
     hashedPassword = db.Column(db.String(255), nullable=False)
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
@@ -34,7 +33,7 @@ class User(db.Model, UserMixin):
     received_messages = db.relationship('Message', back_populates='receiver', foreign_keys=[Message.receiverId], cascade='all, delete-orphan')
     events = db.relationship('Event', back_populates='manager', cascade='all, delete-orphan')
     watchlist = db.relationship('Watchlist', back_populates='user')
-    
+
     @property
     def password(self):
         return self.hashedPassword
@@ -66,7 +65,6 @@ class User(db.Model, UserMixin):
                 'profileImageUrl': self.profileImageUrl,
                 'firstName': self.firstName,
                 'lastName': self.lastName,
-                'jobDescription': self.jobDescription,
                 'organization': self.organization.to_dict(),
                 'favorites': {favorite.postId:favorite.to_dict() for favorite in self.favorites},
                 'createdAt': self.createdAt
@@ -82,7 +80,6 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'phone': self.phone,
             'profileImageUrl': self.profileImageUrl,
-            'jobDescription': self.jobDescription,
             'favorites': {favorite.postId:favorite.to_dict() for favorite in self.favorites},
             'createdAt': self.createdAt
         }

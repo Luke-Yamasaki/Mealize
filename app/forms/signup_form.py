@@ -15,7 +15,6 @@ def existing_user(form, field):
 class SignupForm(FlaskForm):
     firstName = StringField('First Name', validators=[InputRequired(), Length(min=1, max=50, message='Sorry, we cannot store first names longer than 50 characters.')])
     lastName = StringField('Last Name', validators=[InputRequired(), Length(min=1, max=50, message='Sorry, we cannot store last names longer than 50 characters.')])
-    jobDescription = StringField('Job description', validators=[InputRequired(), Length(max=255, message='Sorry, job descriptions must be less than 255 characters.')])
     dob = DateField("DOB", validators=[InputRequired()])
     deaf = BooleanField("Deaf")
     autism = BooleanField("Deaf")

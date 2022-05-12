@@ -108,10 +108,14 @@ export const SignupForm = () => {
 
     const [userData, setUserData] = useState('');
     // errors
+    //first
+    const [organizationIdError, setOrganizationIdError] = useState([]);
+    //second
     const [firstNameError, setFirstNameError] = useState([]);
     const [lastNameError, setLastNameError] = useState([]);
+     //third
     const [imageError, setImageError] = useState([]);
-    const [dobError, setDobError] = useState([]);
+    //fourth
     const [emailError, setEmailError] = useState([]);
     const [phoneError, setPhoneError] = useState([]);
     const [passwordError, setPasswordError] = useState([]);
@@ -122,8 +126,6 @@ export const SignupForm = () => {
     const maxDate = ageBoundariesObj.young;
 
     const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
-
-    console.log(getIp())
 
     let props = {
         organizationId,
@@ -218,7 +220,11 @@ export const SignupForm = () => {
         const predictions = await model.classify(img);
         for(let i = 1; i < predictions.length; i++) {
             if(predictions[i].probability > 0.6) {
-                nsfwArr.push("Adult content violates Mealize's community standards.")
+                nsfwArr.push("Adult content violates Mealize's community standards.");
+                //Get user Ip and add them to blacklist
+                const user = getIp();
+                console.log(user);
+                return nsfwArr
             }
         }
         return nsfwArr;
@@ -232,7 +238,12 @@ export const SignupForm = () => {
         const img = new Image();
         img.src = url;
         const nsfwArr = await nsfwCheck(img);
-        nsfwArr.length > 0 ? setImageError(["Adult content violates Mealize's community standards."]) : setImageError([]);
+        if(nsfwArr.length > 0) {
+            setImageError(["Adult content violates Mealize's community standards."]);
+            window.location.href = 'https://www.google.com';
+        }
+
+        setImageError([]);
 
         //If good, preview the image
         repaint(file);
@@ -264,8 +275,16 @@ export const SignupForm = () => {
                     const img = new Image();
                     img.src = url;
                     const nsfwArr = await nsfwCheck(img);
-                    nsfwArr.length > 0 ? setImageError(["Adult content violates Mealize's community standards."]) : setImageError([]);                    //If good, preview the image
+                    if(nsfwArr.length > 0) {
+                        setImageError(["Adult content violates Mealize's community standards."]);
+                        window.location.href = 'https://www.google.com';
+                    }
+
+                    setImageError([]);
+
+                    //If good, preview the image
                     repaint(file);
+
                     //Validate file size
                     const fileSize = file.size / 1024 / 1024; //convert to megabytes
 
@@ -288,88 +307,136 @@ export const SignupForm = () => {
         }
     };
 
-    const handleFName = (e) => {
-        e.preventDefault();
+    const handleFName = () => {
         setFirstNameError([])
+        const fNameArr = [];
         const regex = /\d+/g;
 
-        if(firstName.length >= 50) {
-            setFirstNameError(['First names must be shorter than 50 characters.'])
+        if(!firstName.length) {
+            fNameArr.push('Please enter your first name.')
+        } else if(firstName.length >= 50) {
+            fNameArr.push('First names must be shorter than 50 characters.')
         } else if(firstName.match(regex)) {
-            setFirstNameError(['You cannot add an integer to your name.'])
-        } else if(specialCharacters.includes(e.target.value)){
-            setFirstNameError(['Special characters are not allowed.'])
+            fNameArr.push('You cannot add an integer to your name.')
+        } else if(specialCharacters.includes(firstName)){
+            fNameArr.push('Special characters are not allowed.')
         } else {
             setFirstNameError([])
-            setFirstName(e.target.value)
+            setFirstName(firstName)
         }
-    }
+        setFirstNameError(fNameArr);
+        return fNameArr
+    };
 
-    const handleLName = (e) => {
-        e.preventDefault();
-        setLastNameError([])
+    const handleLName = () => {
+        setLastNameError([]);
+        const lNameArr = [];
         const regex = /\d+/g;
 
-        if(lastName.length >= 50) {
-            setLastNameError(['First names must be shorter than 50 characters.'])
+        if(!lastName.length) {
+            lNameArr.push('Please enter your last name.')
+        } else if(lastName.length >= 50) {
+            lNameArr.push('Last names must be shorter than 50 characters.')
         } else if(lastName.match(regex)) {
-            setLastNameError(['You cannot add an integer to your name.'])
-        } else if(specialCharacters.includes(e.target.value)){
-            setLastNameError(['Special characters are not allowed.'])
+            lNameArr.push('You cannot add an integer to your name.')
+        } else if(specialCharacters.includes(lastName)){
+            lNameArr.push('Special characters are not allowed.')
         } else {
             setLastNameError([])
-            setLastName(e.target.value)
+            setLastName(lastName)
         }
-    }
+        setLastNameError(lNameArr);
+        return lNameArr
+    };
 
-    const handleEmail = (e) => {
-        e.preventDefault();
-        setEmailError([])
+    const handleEmail = () => {
+        setEmailError([]);
+        const emailErrArr = [];
 
-        if(email.length >= 255) {
-            setEmailError(['Your email is too long.'])
+        if(!email.length) {
+            emailErrArr.push('Please enter your email.');
+        } else if(email.length >= 255) {
+            emailErrArr.push('Your email is too long.');
         } else {
             setEmailError([])
-            setEmail(e.target.value)
+            setEmail(email)
         }
-    }
+        setEmailError(emailErrArr);
+        return emailErrArr
+    };
 
-    const handlePhone = (e) => {
-        e.preventDefault();
+    const handlePhone = () => {
         setPhoneError([])
-        if(e.target.value.toString().length >= 15) {
-            setPhoneError(['The phone number is too long.'])
+        const phoneErrArr = [];
+
+        if(!phone.length) {
+            phoneErrArr.push('Please enter your phone number.');
+        } else if(phone.toString().length >= 15) {
+            phoneErrArr.push('The phone number is too long.')
         } else {
             setPhoneError([])
-            setPhone(e.target.value)
+            setPhone(phone)
         }
-    }
+        setPhoneError(phoneErrArr);
+        return phoneErrArr
+    };
 
-    const handlePassword = (e) => {
-        e.preventDefault();
-        setPasswordError([])
+    const handlePassword = () => {
+        setPasswordError([]);
+        const pwrdErrArr = [];
 
-        if(specialCharacters.includes(e.target.value)) {
-            setPasswordError(['Special characters are not allowed.'])
+        if(!password.length) {
+            pwrdErrArr.push('Please enter in a password longer than 6 characters.')
+        } else if(specialCharacters.includes(password)) {
+            pwrdErrArr.push('Special characters are not allowed.')
         } else {
             setPasswordError([])
-            setPassword(e.target.value)
+            setPassword(password)
         }
-    }
+        setPasswordError(pwrdErrArr);
+        return pwrdErrArr
+    };
 
-    const handleConfirm = (e) => {
-        e.preventDefault();
-        setConfirmError([])
-        if(!e.target.value === password) {
-            setConfirmError(['Passwords do not match.'])
+    const handleConfirm = () => {
+        setConfirmError([]);
+        const confirmErrArr = [];
+
+        if(!confirm.length) {
+            confirmErrArr.push('Please confirm your password.')
+        } else if(confirm !== password) {
+            confirmErrArr.push('Passwords do not match.')
         } else {
             setConfirmError([])
-            setConfirm(e.target.value)
+            setConfirm(confirm)
         }
-    }
+        setConfirmError(confirmErrArr)
+        return confirmErrArr
+    };
 
     const handleNext = (e) => {
         e.preventDefault();
+
+        if(formSection === 'first') {
+            if(organizationId === '') {
+                setOrganizationIdError(['Please select your organization.'])
+            } else {
+                setFormSection('second')
+            }
+        } else if(formSection === 'second') {
+            const fname = handleFName();
+            const lname = handleLName();
+            if(fname.length > 0 || lname.length > 0) {
+                setFormSection('second')
+            } else {
+                setFormSection('third')
+            }
+        } else if(formSection === 'third') {
+            if(!image) {
+                setFormSection('third')
+            } else {
+                setFormSection('fourth')
+            }
+        } else if()
 
         formSection === 'first' ?
         setFormSection('second')
@@ -472,7 +539,7 @@ export const SignupForm = () => {
                                 <Fieldset error={firstNameError.length > 0}>
                                     <Legend htmlFor='firstName' theme={theme} error={firstNameError.length > 0} width='85px'>First name
                                         <InputResetContainer>
-                                            <Input name="firstName" cursor='text' type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={handleFName} required/>
+                                            <Input name="firstName" cursor='text' type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={(e)=> setFirstName(e.target.value)} required/>
                                             <ResetIcon theme={theme} onClick={() => setFirstName('')} data={firstName}>&#10006;</ResetIcon>
                                         </InputResetContainer>
                                     </Legend>
@@ -485,7 +552,7 @@ export const SignupForm = () => {
                                 <Fieldset error={lastNameError.length > 0}>
                                     <Legend htmlFor="lastName" theme={theme} error={lastNameError.length > 0} width='85px'>Last name
                                         <InputResetContainer>
-                                            <Input name='lastName' cursor='text' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={handleLName} required/>
+                                            <Input name='lastName' cursor='text' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={(e) => setLastName(e.target.value)} required/>
                                             <ResetIcon theme={theme} onClick={() => setLastName('')} data={lastName}>&#10006;</ResetIcon>
                                         </InputResetContainer>
                                     </Legend>

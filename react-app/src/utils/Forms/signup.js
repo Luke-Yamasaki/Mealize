@@ -32,15 +32,12 @@ export const validateSignup = async (inputData) => {
     };
 };
 
-export const BanUser = async () => {
+export const getIp = () => {
     let xmlhttp;
 
     if (window.XMLHttpRequest){
         xmlhttp = new XMLHttpRequest();
     }
-    // else {
-    //     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    // }
 
     xmlhttp.open("GET","http://api.hostip.info/get_html.php",false);
     xmlhttp.send();
@@ -50,5 +47,31 @@ export const BanUser = async () => {
     const ipAddress = {'Ip': split};
     console.log(ipAddress)
 
-    return ipAddress;
+    const userIp = banUser(ipAddress);
+    console.log(userIp);
+    return userIp;
 };
+
+const banUser = async(ipAddress) => {
+    const response = await fetch('/api/watchlist/blacklist', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(ipAddress)
+    });
+
+    if(response.ok) {
+        const userIp = await response.json();
+        console.log(userIp)
+        return userIp
+    } else if(response.status < 500) {
+        const data = await response.json();
+        if(data.errors){
+            console.log(data)
+            return data
+        };
+    } else {
+        return 'Connection failed. Please check your internet connection.'
+    };
+}

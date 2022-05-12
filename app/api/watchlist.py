@@ -1,5 +1,4 @@
-from flask import Blueprint, request
-from flask import jsonify
+from flask import Blueprint, request, jsonify
 from flask_login import current_user
 from app.models import db, Watchlist
 
@@ -49,5 +48,17 @@ def add_to_blacklist():
     userId = current_user.id
     user = Watchlist.query.get(userId)
     user.count = 3
+    db.session.commit()
+    return {'message': 'You are now banned from Mealize. Be good to others.'}
+
+@watchlist_routes.route("/blacklist", methods=["POST"])
+def ban_user():
+    ip_address = request.json['Ip']
+    print('///////////////////////', ip_address)
+    user = Watchlist(
+        ip = ip_address,
+        count = 3
+    )
+    db.session.add(user)
     db.session.commit()
     return {'message': 'You are now banned from Mealize. Be good to others.'}

@@ -12,7 +12,7 @@ import { setCurrentModal, hideModal } from '../../store/modal';
 import { validateSignup, uploadProfileImage } from '../../utils/Forms/signup';
 import { ageBoundary } from '../../utils/Dates';
 import * as nsfwjs from 'nsfwjs';
-import { BanUser } from '../../utils/Forms/signup';
+import { getIp } from '../../utils/Forms/signup';
 //Components
 import { PreviewSection } from '../../Components/Preview';
 import { Logo } from '../../Assets/Logo';
@@ -123,7 +123,7 @@ export const SignupForm = () => {
 
     const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
 
-    console.log(BanUser())
+    console.log(getIp())
 
     let props = {
         organizationId,

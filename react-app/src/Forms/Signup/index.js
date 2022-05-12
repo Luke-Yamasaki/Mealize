@@ -257,12 +257,12 @@ export const SignupForm = () => {
         const predictions = await model.classify(img);
         console.log(predictions)
         for(let i = 0; i < predictions.length; i++) {
-            if(predictions[i].probability > 0.6) {
-                nsfwArr.push("Adult content violates Mealize's community standards.");
-                //Get user Ip and add them to blacklist
-                const user = getIp();
-                console.log(user);
-                return nsfwArr
+            if(predictions[i].className === 'Neutral') {
+                i++
+            } else {
+                if(predictions[i].probability > 0.6) {
+                    nsfwArr.push("Adult content violates Mealize's community standards.");
+                }
             }
         }
         return nsfwArr;
@@ -277,7 +277,6 @@ export const SignupForm = () => {
         img.src = url;
         const nsfwArr = await nsfwCheck(img);
         if(nsfwArr.length > 0) {
-            setImageError(["Adult content violates Mealize's community standards."]);
             window.location.href = 'https://www.google.com';
         }
 

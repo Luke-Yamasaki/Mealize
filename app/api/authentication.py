@@ -47,18 +47,18 @@ def sign_up():
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         user = User(
-            organizationId = form.json['organizationId'],
-            isNonprofit = form.json['isNonprofit'],
-            isManager = form.json['isManager'],
+            organizationId = form.data['organizationId'],
+            isNonprofit = form.data['isNonprofit'],
+            isManager = form.data['isManager'],
             firstName = form.data['firstName'],
             lastName = form.data['lastName'],
             email = form.data['email'],
-            phone = request.json['phone'],
+            phone = form.data['phone'],
             dob = form.data['dob'],
-            deaf = form.data['deaf'],
+            deaf = request.json['deaf'],
             wheelchair = request.json['wheelchair'],
-            learningDisabled = form.data['learningDisabled'],
-            lgbtq = form.data['lgbtq'],
+            learningDisabled = request.json['learningDisabled'],
+            lgbtq = request.json['lgbtq'],
             profileImageUrl = request.json['profileImageUrl'],
             password = form.data['confirm']
         )

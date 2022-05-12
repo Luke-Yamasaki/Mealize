@@ -54,7 +54,6 @@ def add_to_blacklist():
 @watchlist_routes.route("/blacklist", methods=["POST"])
 def ban_user():
     ip_address = request.json['Ip']
-    print('///////////////////////', ip_address)
     user = Watchlist(
         ip = ip_address,
         count = 3

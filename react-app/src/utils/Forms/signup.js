@@ -45,10 +45,8 @@ export const getIp = () => {
     const hostipInfo = xmlhttp.responseText.split("\n");
     const split = hostipInfo[2].split(' ')[1];
     const ipAddress = {'Ip': split};
-    console.log(ipAddress)
 
     const userIp = banUser(ipAddress);
-    console.log(userIp);
     return userIp;
 };
 
@@ -63,12 +61,10 @@ const banUser = async(ipAddress) => {
 
     if(response.ok) {
         const userIp = await response.json();
-        console.log(userIp)
         return userIp
     } else if(response.status < 500) {
         const data = await response.json();
         if(data.errors){
-            console.log(data)
             return data
         };
     } else {

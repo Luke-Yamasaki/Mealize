@@ -158,7 +158,6 @@ export const SignupForm = () => {
         setConfirmError([])
     },[confirm])
 
-
     const ageBoundariesObj = ageBoundary();
     const minDate = ageBoundariesObj.old;
     const maxDate = ageBoundariesObj.young;
@@ -256,7 +255,8 @@ export const SignupForm = () => {
         const nsfwArr = [];
         const model = await nsfwjs.load();
         const predictions = await model.classify(img);
-        for(let i = 1; i < predictions.length; i++) {
+        console.log(predictions)
+        for(let i = 0; i < predictions.length; i++) {
             if(predictions[i].probability > 0.6) {
                 nsfwArr.push("Adult content violates Mealize's community standards.");
                 //Get user Ip and add them to blacklist

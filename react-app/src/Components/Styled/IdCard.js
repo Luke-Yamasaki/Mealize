@@ -111,7 +111,13 @@ export const OrganizationContainer = styled.div`
     justify-content: left;
     gap: 5px;
     width: 100px;
-    height: 141px;
+    height: 11px;
+`;
+
+export const EmailBox = styled(OrganizationContainer)`
+    width: 139px;
+    height: 20px;
+    gap: 0px;
 `;
 
 export const IdInfoLabel = styled(Bold)`
@@ -122,9 +128,11 @@ export const IdInfoLabel = styled(Bold)`
 
 export const IdInfoBox = styled.div`
     display: flex;
+    line-break: auto;
     flex-direction: row;
-    width: 150px;
-    height: 20px;
+    max-width: 139px;
+    width: 139px;
+    height: 30px;
     align-items: center;
     justify-content: flex-start;
     margin: 0px;
@@ -147,7 +155,8 @@ export const IdInfoText = styled(Paragraph)`
 export const IdAddressBox = styled.div`
     display: flex;
     flex-direction: column;
-    width: 150px;
+    max-width: 139px;
+    width: 139px;
     height: 200px;
     align-items: flex-start;
     justify-content: flex-start;

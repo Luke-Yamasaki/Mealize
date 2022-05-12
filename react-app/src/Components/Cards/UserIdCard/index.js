@@ -13,13 +13,26 @@ import { Nonprofit } from "../../../Assets/Icons/Nonprofit";
 import { LogoBox } from "../../Styled/Navbar";
 import { LogoType } from "../../Styled/AuthenticationForm";
 import { VectorBox } from '../../Styled/Layout';
-import { IdCard, IdHeader, SloganBox, Slogan, IdIconBackGround, IdType, IdContent, IdImageContainer, IdNumber, IssueDate, OrganizationContainer, IdInfoLabel, IdInfoBox, IdInfoText, IdAddressBox, IdUserInfoContainer, IdImage } from '../../Styled/IdCard';
+import { IdCard, IdHeader, SloganBox, Slogan, IdIconBackGround, IdType, IdContent, IdImageContainer, IdNumber, IssueDate, OrganizationContainer, IdInfoLabel, IdInfoBox, IdInfoText, IdAddressBox, IdUserInfoContainer, IdImage, EmailBox } from '../../Styled/IdCard';
 
 export const UserIdCard = ({ props }) => {
     const {theme} = useTheme();
     const organizations = useSelector(state => state.organizations);
     const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
     let organization = allOrganizations[props.organizationId];
+    let organizationEmail = organization?.email;
+    let splitEmailOne;
+    let splitEmailTwo;
+    let splitEmailThree = '';
+
+    if(organization?.email.length > 15) {
+        splitEmailOne = organization.email.slice(0, 16);
+        splitEmailTwo = organization.email.slice(16, 32);
+    }
+
+    if(organization?.email.length > 32) {
+        splitEmailThree = 'Please call instead.'
+    };
 
     return(
         <IdCard theme={theme}>
@@ -54,9 +67,30 @@ export const UserIdCard = ({ props }) => {
                     </IdInfoBox>
                     <IdInfoBox>
                         <IdInfoLabel theme={theme}>Email:</IdInfoLabel>
-                        <IdInfoText fontSize='8px' theme={theme}>
-                            {organization ? organization.email : "Company details."}
-                        </IdInfoText>
+
+                            {organization?.email.length > 32 ?
+                            <IdInfoText fontSize='8px' theme={theme}>
+                                {splitEmailThree}
+                            </IdInfoText>
+                            : organization?.email.length > 16 ?
+                            <EmailBox>
+                                <IdInfoText fontSize='8px' theme={theme}>
+                                    {splitEmailOne}
+                                </IdInfoText>
+                                <IdInfoText fontSize='8px' theme={theme}>
+                                    {splitEmailTwo}
+                                </IdInfoText>
+                            </EmailBox>
+                            : organization?.email.length < 16 ?
+                            <IdInfoText fontSize='8px' theme={theme}>
+                                {splitEmailOne}
+                            </IdInfoText>
+                           :
+                            <IdInfoText fontSize='8px' theme={theme}>
+                                Company details.
+                            </IdInfoText>
+                            }
+
                     </IdInfoBox>
                     <IdInfoBox>
                         <IdInfoLabel theme={theme}>Phone:</IdInfoLabel>
@@ -67,7 +101,7 @@ export const UserIdCard = ({ props }) => {
                     <IdAddressBox>
                         <IdInfoLabel theme={theme}>Address:</IdInfoLabel>
                         <IdInfoText theme={theme}>
-                            {organization ? `organization.street}` : "Company details."}
+                            {organization ? `${organization.street}` : "Company details."}
                         </IdInfoText>
                         <IdInfoText theme={theme}>
                             {organization ? `${organization.city}, ${organization.state[0].toUpperCase() + organization.state[1].toUpperCase()} ${organization.zip}`  : "Company details."}

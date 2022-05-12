@@ -88,7 +88,7 @@ export const SignupForm = () => {
     //second section
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [dob, setDob] = useState((new Date().toISOString().split('T')[0].slice(0,4)-18).toString() + new Date().toISOString().split('T')[0].slice(4,11));
+    const [dob, setDob] = useState('');
     //third section
     const [image, setImage] = useState(null);
     //user auth credential section
@@ -120,6 +120,39 @@ export const SignupForm = () => {
     const [phoneError, setPhoneError] = useState([]);
     const [passwordError, setPasswordError] = useState([]);
     const [confirmError, setConfirmError] = useState([]);
+
+    useEffect(() => {
+        setOrganizationIdError([])
+    },[organizationId])
+
+    useEffect(() => {
+        setFirstNameError([])
+    },[firstName])
+
+    useEffect(() => {
+        setLastNameError([])
+    },[lastName])
+
+    useEffect(() => {
+        setImageError([])
+    },[image])
+
+    useEffect(() => {
+        setEmailError([])
+    },[email])
+
+    useEffect(() => {
+        setPhoneError([])
+    },[phone])
+
+    useEffect(() => {
+        setPasswordError([])
+    },[password])
+
+    useEffect(() => {
+        setConfirmError([])
+    },[confirm])
+
 
     const ageBoundariesObj = ageBoundary();
     const minDate = ageBoundariesObj.old;
@@ -426,7 +459,7 @@ export const SignupForm = () => {
             const fname = handleFName();
             const lname = handleLName();
             if(fname.length > 0 || lname.length > 0) {
-                setFormSection('second')
+                return
             } else {
                 setFormSection('third')
             }
@@ -446,7 +479,7 @@ export const SignupForm = () => {
             } else {
                 setFormSection('fourth')
             }
-        } 
+        }
     }
 
     const handlePrevious = (e) => {
@@ -495,16 +528,21 @@ export const SignupForm = () => {
                                 </CheckBoxContainer>
                                 </Legend>
                             </Fieldset>
+                            <ErrorBox theme={theme} height={organizationIdError.length > 0 ? '20px' : '0px'}>
+                                <Error>{organizationIdError[0]}</Error>
+                            </ErrorBox>
                             <Fieldset>
                                 <Legend theme={theme} width='190px'> Select your organization
                                     <OrganizationSelect value={organizationId} onChange={(e) => setOrganizationId(e.target.value)} required>
                                         {isNonprofit &&
                                             <optgroup label='Nonprofits'>
+                                                <option value='' disabled>--Select your organization--</option>
                                                 {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
                                             </optgroup>
                                         }
                                         {!isNonprofit &&
                                             <optgroup label='Businesses'>
+                                                <option value='' disabled>--Select your organization--</option>
                                                 {Object.values(organizations.businesses).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
                                             </optgroup>
                                         }
@@ -558,11 +596,8 @@ export const SignupForm = () => {
                                 </Fieldset>
                             </InputErrorBox>
                             <InputErrorBox>
-                                <ErrorBox theme={theme} height={dobError.length > 0 ? '20px' : '0px'}>
-                                    <Error>{dobError[0]}</Error>
-                                </ErrorBox>
-                                <Fieldset error={dobError.length > 0}>
-                                    <Legend htmlFor="dob" theme={theme} error={dobError.length > 0} width='100px'>Date of birth
+                                <Fieldset>
+                                    <Legend htmlFor="dob" theme={theme} width='100px'>Date of birth
                                         <InputResetContainer>
                                             <Input name='dob' type='date' cursor='pointer' min={minDate} max={maxDate} width='125px' value={dob} theme={theme} onChange={(e) => setDob(e.target.value)} required/>
                                         </InputResetContainer>

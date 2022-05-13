@@ -1,4 +1,5 @@
 //Hooks
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../../Context/ThemeContext';
 import { useHistory } from 'react-router-dom';
@@ -39,28 +40,38 @@ import {
 //Helper function
 import { daysAgo } from '../../../../utils/Dates';
 
-export const CardContent = ({ post }) => {
-    console.log(post)
+export const PreviewCardContent = ({ props }) => {
+    console.log(props)
     const dispatch = useDispatch();
     const { theme } = useTheme();
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
     const organizations = useSelector(state => state.organizations);
+    const [organization, setOrganization] = useState('');
+    const [styleObj, setStyleObj] = useState(category[theme][6]);
     const businesses = organizations.businesses;
     const nonprofits = organizations.nonprofits;
-    const organization = post?.isItem ? businesses[post?.organizationId] : nonprofits[post?.organizationId];
 
+    useEffect(() => {
+        if(props.organiationId) {
+            sessionUser.isNonprofit ? setOrganization(nonprofits[props.organizationId]) : setOrganization(businesses[props.organizationId]);
+        }
+    },[props.organizationId])
 
+    useEffect(() => {
+        if(props.categoryId) {
+            setStyleObj(category[theme][props.categoryId]);
+        }
+    },[props.categoryId])
 
-    const styleObj = category[theme][post?.categoryId];
 
     const handleQuestion = () => {
-        dispatch(setCurrentModal(() => <DeliveryForm post={post}/>));
+        dispatch(setCurrentModal(() => <DeliveryForm props={props}/>));
         dispatch(showModal());
     };
 
     const handleRequest = () => {
-        dispatch(setCurrentModal(() => <DeliveryForm post={post}/>));
+        dispatch(setCurrentModal(() => <DeliveryForm props={props}/>));
         dispatch(showModal());
     };
 
@@ -70,7 +81,7 @@ export const CardContent = ({ post }) => {
     // };
 
     const handleClick = () => {
-        return history.push(`/items/${post.id}`)
+        return history.push(`/items/${props.id}`)
     };
 
     return (
@@ -86,22 +97,22 @@ export const CardContent = ({ post }) => {
                     </PinContainer>
                     <CompanyAddress>{formatAddress()}</CompanyAddress> */}
                 </TitleTextContainer>
-                <ItemDateText theme={theme}>{daysAgo(post)}</ItemDateText>
+                <ItemDateText theme={theme}>{daysAgo(props)}</ItemDateText>
             </TitleBox>
-            <ItemImage src={post.imageUrl} alt='Food available for pick up.' onClick={handleClick}/>
+            <ItemImage src={props.imageUrl} alt='Food available for pick up.' onClick={handleClick}/>
             <InfoBox>
                 <InfoContainer>
-                    <ItemTitle theme={theme}>{post?.title}</ItemTitle>
-                    <ItemQuantity theme={theme}>({post?.quantity})</ItemQuantity>
+                    <ItemTitle theme={theme}>{props?.title}</ItemTitle>
+                    <ItemQuantity theme={theme}>({props?.quantity})</ItemQuantity>
                 </InfoContainer>
                 <VectorBox square='30px' opacity='50%'>
                     {sessionUser && (
-                        <FavoritesIcon post={post} />
+                        <FavoritesIcon props={props} />
                     )}
                 </VectorBox>
             </InfoBox>
             <DescriptionBox>
-                <DescriptionText theme={theme}>{post.description}</DescriptionText>
+                <DescriptionText theme={theme}>{props.description}</DescriptionText>
             </DescriptionBox>
             {sessionUser && (
                 <ButtonBox>

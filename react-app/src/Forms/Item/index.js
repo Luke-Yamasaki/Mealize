@@ -79,19 +79,6 @@ const FormContent = styled.div`
     align-items: center;
 `;
 
-const TitleDiv = styled.div`
-    font-family: motiva-sans, sans-serif;
-    font-weight: 900;
-    font-style: normal;
-    font-size: 16px;
-    height: 45px;
-    width: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-`;
-
 const ErrorMessage = styled.div`
     color: #C2462A;
     font-size: 10px;
@@ -126,7 +113,7 @@ const ItemForm = () => {
     const [expDateErrors, setExpDateErrors] = useState([]);
 
     let props = {title, description, number, unit, categoryId, image, expDate}
-    console.log(props)
+
     const organizationId = sessionUser.organizationId;
     const userId = sessionUser.id;
 

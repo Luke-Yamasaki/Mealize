@@ -16,11 +16,7 @@ import validator from 'validator';
 
 //Packages
 import * as nsfwjs from 'nsfwjs';
-import {
-    exportComponentAsJPEG,
-    exportComponentAsPDF,
-    exportComponentAsPNG
-} from "react-component-export-image";
+import { exportComponentAsJPEG } from "react-component-export-image";
 
 //Components
 import { PreviewSection } from '../../Components/Preview';
@@ -195,15 +191,15 @@ export const SignupForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
-        formData.append("image", image);
-        console.log(formData)
-
         const inputData = { organizationId, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager, email, phone, password, confirm}
 
         const stagedPost = await validateSignup(inputData);
         console.log(stagedPost)
         if(stagedPost.message === 'success') {
+            const formData = new FormData();
+            formData.append("image", image);
+            console.log(image)
+            console.log(formData)
             setImageUploading(true);
             const response = await uploadProfileImage(formData);
             console.log(response)

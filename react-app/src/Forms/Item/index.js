@@ -18,20 +18,12 @@ import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
 import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
 import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
 import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
+import { PreviewSection } from "../../Components/Preview";
 
 import styles from './Item.module.css';
 import styled from 'styled-components';
+import { PreviewBox } from "../../Components/Styled/PreviewSection";
 // import * as preview from '../../Components/ItemCard';
-
-const PreviewSection = styled.section`
-    display: flex;
-    width: 500px;
-    height: 700px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-`;
 
 const FormSection = styled.section`
     display: flex;
@@ -133,6 +125,8 @@ const ItemForm = () => {
     const [imageErrors, setImageErrors] = useState(null);
     const [expDateErrors, setExpDateErrors] = useState([]);
 
+    let props = {title, description, number, unit, categoryId, image, expDate}
+    console.log(props)
     const organizationId = sessionUser.organizationId;
     const userId = sessionUser.id;
 
@@ -359,16 +353,17 @@ const ItemForm = () => {
         setClassName('dairy')
     };
 
+
     return (
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
-            <PreviewSection>
-                <ItemCard props={{title, description, number, unit, categoryId, image, expDate}} />
+            <PreviewBox>
+                <PreviewSection type='item' props={props} />
+            </PreviewBox>
             {imageUploading && (
                 <div style={{display: 'flex', alginItems: 'center', justifyContent: 'center',  width: '300px', height: '30px'}}>
                     <p style={{fontFamily: 'motiva-sans, sans-serif', fontWeight: '900', color: 'white', fontSize: '24px', padding: 'none', margin: 'none'}}>Uploading image...</p>
                 </div>
             )}
-            </PreviewSection>
             <FormSection>
                 <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '675px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
                     <FormContent>

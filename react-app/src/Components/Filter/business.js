@@ -6,7 +6,7 @@ import { SideField, SideLegend, SideBarInfoBox, SideBarViewAll, SideBarInfoText 
 import { ImageBox, VectorBox } from "../Styled/Layout";
 
 export const BusinessFilter = ({theme, businesses}) => {
-    const {filter, setFilter} = useFilter();
+    const {setFilter} = useFilter();
     const history = useHistory();
     const one = businesses[0];
     const two = businesses[1];

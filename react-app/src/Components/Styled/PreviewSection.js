@@ -1,5 +1,6 @@
 import styled from "styled-components";
-
+import patternTen from '../../Assets/Images/Pattern_10.png';
+import patternFive from '../../Assets/Images/Pattern_5.png';
 export const PreviewWrapper = styled.div`
     display: flex;
     flex-direction: row;
@@ -13,10 +14,22 @@ export const PreviewWrapper = styled.div`
 
 export const PreviewBox = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 600px;
     height: 900px;
+`;
+
+export const PrintId = styled.div`
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 480px;
+    height: 270px;
+    border-radius: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
 `;
 
 export const UploadingBox = styled.div`

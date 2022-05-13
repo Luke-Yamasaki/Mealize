@@ -35,7 +35,7 @@ export const ExpirationBanner = ({ post }) => {
         setFlagColor('red') //less than 3 days
 
         formatDateString(post.expDate);
-    }, []);
+    }, [post.expDate]);
 
     return (
         <ExpBanner>

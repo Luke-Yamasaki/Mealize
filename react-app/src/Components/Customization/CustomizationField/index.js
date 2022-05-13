@@ -1,5 +1,4 @@
 //Hooks
-import { useEffect } from 'react';
 //Components
 import { CustomizationSection } from '../CustomizationSection';
 import { SettingsField } from '../../Styled/Layout';

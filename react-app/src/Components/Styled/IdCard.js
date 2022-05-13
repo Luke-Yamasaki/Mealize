@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Black, ExtraBold, Bold, Paragraph } from "./Fonts";
-import pattern from '../../Assets/Images/Pattern_10.png';
+import patternTen from '../../Assets/Images/Pattern_10.png';
+import patternFive from '../../Assets/Images/Pattern_5.png';
 
 export const IdCard = styled.div`
     display: flex;
@@ -12,12 +13,12 @@ export const IdCard = styled.div`
     height: 260px;
     border: none;
     border-radius: 5px;
-    background: ${props => props.theme === 'light' ? 'linear-gradient(#76D97E, #28A690)' : '#191919'};
-    background-image: url(${pattern});
-    background-size: contain;
+    background: ${props => props.theme === 'light' ? 'white' : '#191919'};
+    background-image: ${props => props.theme === 'light' ? `url(${patternTen})` : `url(${patternFive})`};
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 1);
 `;
 
 export const IdHeader = styled.section`
@@ -91,6 +92,7 @@ export const IdImage = styled.img`
     border-radius: 5px;
     object-fit: cover;
     object-position: center;
+    border: 1px solid rgba(0, 0, 0, 0.3);
 `;
 
 export const IdNumber = styled(IdType)`

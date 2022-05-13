@@ -11,7 +11,7 @@ import { useUserLocation } from '../../../Context/LocationContext';
 import { LocationPin } from '../../../Assets/Icons/Location';
 
 //styled-components
-import {NotificationSection, NotificationContainer, NotificationText } from '../../../Components/Styled/NotificationBar';
+import {NotificationSection, NotificationContainer, NotificationText, NotificationTextBox } from '../../../Components/Styled/NotificationBar';
 import { VectorBox } from '../../Styled/Layout';
 
 export const NotificationBar = () => {
@@ -22,6 +22,7 @@ export const NotificationBar = () => {
     const { userLocation, setUserLocation } = useUserLocation();
     const { theme } = useTheme();
 
+
     // useEffect(() => {
     //     const location = getGeoLocation();
     //     console.log(location)
@@ -31,8 +32,8 @@ export const NotificationBar = () => {
         return (
             <NotificationSection theme={theme}>
                 <NotificationContainer>
-                    <VectorBox>
-                        <LocationPin/>
+                    <VectorBox square='15px'>
+                        <LocationPin theme={theme}/>
                     </VectorBox>
                     <NotificationText>
                         Current location: {userLocation}

@@ -6,7 +6,7 @@ import { SideField, SideLegend, SideBarInfoBox, SideBarViewAll, SideBarInfoText 
 import { ImageBox, VectorBox } from "../Styled/Layout";
 
 export const NonprofitFilter = ({theme, nonprofits}) => {
-    const {filter, setFilter} = useFilter();
+    const {setFilter} = useFilter();
     const history = useHistory();
     const one = nonprofits[0];
     const two = nonprofits[1];

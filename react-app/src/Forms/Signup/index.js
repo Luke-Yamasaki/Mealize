@@ -1,5 +1,5 @@
 //Hooks
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from '../../Context/ThemeContext';
@@ -11,8 +11,16 @@ import { setCurrentModal, hideModal } from '../../store/modal';
 //Helper
 import { validateSignup, uploadProfileImage } from '../../utils/Forms/signup';
 import { ageBoundary } from '../../utils/Dates';
-import * as nsfwjs from 'nsfwjs';
 import { getIp } from '../../utils/Forms/signup';
+
+//Packages
+import * as nsfwjs from 'nsfwjs';
+import {
+    exportComponentAsJPEG,
+    exportComponentAsPDF,
+    exportComponentAsPNG
+} from "react-component-export-image";
+
 //Components
 import { PreviewSection } from '../../Components/Preview';
 import { Logo } from '../../Assets/Logo';
@@ -27,11 +35,9 @@ import {
     LogoType,
     Form,
     Fieldset,
-    EmailLegend,
     Input,
     Error,
     ErrorBox,
-    PasswordLegend,
     FormTitleBox,
     FormTitle,
     FormContent,
@@ -66,6 +72,7 @@ import {
 import {
     PreviewWrapper,
     PreviewBox,
+    PrintId,
     UploadingBox,
     UploadingMessage
 } from '../../Components/Styled/PreviewSection';
@@ -78,6 +85,7 @@ export const SignupForm = () => {
     const history = useHistory();
     const organizations = useSelector(state => state.organizations);
     const { theme } = useTheme();
+    const componentRef = useRef();
 
     // form states
     const [formSection, setFormSection] = useState('first');
@@ -105,8 +113,7 @@ export const SignupForm = () => {
     const [lgbtq, setLgbtq] = useState(false);
     //S3 uploading section
     const [imageUploading, setImageUploading] = useState(false);
-
-    const [userData, setUserData] = useState('');
+    const [imageValidating, setImageValidating] = useState(false);
     // errors
     //first
     const [organizationIdError, setOrganizationIdError] = useState([]);
@@ -157,6 +164,7 @@ export const SignupForm = () => {
     useEffect(() => {
         setConfirmError([])
     },[confirm])
+
 
     const ageBoundariesObj = ageBoundary();
     const minDate = ageBoundariesObj.old;
@@ -262,6 +270,8 @@ export const SignupForm = () => {
             } else {
                 if(predictions[i].probability > 0.6) {
                     nsfwArr.push("Adult content violates Mealize's community standards.");
+                    const user = getIp();
+                    return user
                 }
             }
         }
@@ -270,8 +280,9 @@ export const SignupForm = () => {
 
     const updateImage = async (e) => {
         e.preventDefault();
-        const file = e.target.files[0];
+        setImageValidating(true);
         setImageError([]);
+        const file = e.target.files[0];
         //Validate file size
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
         if(fileSize > 2 ) {
@@ -294,10 +305,12 @@ export const SignupForm = () => {
                 repaint(file);
             }
         }
+        setImageValidating(false);
     };
 
     const droppedImage = async (e) => {
         e.preventDefault();
+        setImageValidating(true);
         setImageError([]);
         if(e.dataTransfer.items) {
             for(let i = 0; i < e.dataTransfer.items.length; i++) {
@@ -333,6 +346,7 @@ export const SignupForm = () => {
                 }
             }
         }
+        setImageValidating(false);
     };
 
     const handleFName = () => {
@@ -497,7 +511,28 @@ export const SignupForm = () => {
 
     return (
         <PreviewWrapper width='1000px' height='652px'>
-            <PreviewSection type='id' props={props}/>
+            <PreviewBox>
+                <PrintId ref={componentRef}>
+                    <PreviewSection type='id' props={props} />
+                </PrintId>
+               <button onClick={() => exportComponentAsJPEG(componentRef)}>
+                Export As JPEG
+                </button>
+               {imageUploading &&
+                <UploadingBox>
+                    <UploadingMessage>
+                        Uploading image...
+                    </UploadingMessage>
+                </UploadingBox>
+               }
+                {imageValidating &&
+                <UploadingBox>
+                    <UploadingMessage>
+                        Validating image...
+                    </UploadingMessage>
+                </UploadingBox>
+               }
+            </PreviewBox>
             <FormContainer marginTop='-35px' width='500px' height='670px'>
                 <FormLegend>
                     <LogoBox width='175px'>

@@ -8,7 +8,7 @@ import { VectorBox } from "../Styled/Layout";
 import { AvailableIcon, UnavailableIcon } from "../../Assets/Icons/Availability";
 
 export const AvailabilityFilter = ({theme}) => {
-    const {filter, setFilter} = useFilter();
+    const {setFilter} = useFilter();
 
     const handleAvailable = (e) => {
         e.preventDefault();

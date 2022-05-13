@@ -8,12 +8,12 @@ export const NotificationSection = styled.section`
     justify-content: space-around;
     align-items: center;
     background-color: ${props => props.theme === 'light' ? '#9AF2C0' : '#76D97E'};
-    border-bottom: 1px solid #608F41;
+    border-bottom: 0.2px solid #608F41;
 `;
 
 export const NotificationContainer = styled.div`
     width: 350px;
-    height: 25px;
+    height: 40px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -21,7 +21,15 @@ export const NotificationContainer = styled.div`
     gap: 5px;
 `;
 
+export const NotificationTextBox = styled(NotificationContainer)`
+    width: 300px;
+`;
+
+
 export const NotificationText = styled.p`
+    display: flex;
+    justify-centent: center;
+    align-items: center;
     margin: 0px;
     padding: 0px;
     font-family: motiva-sans, sans-serif;

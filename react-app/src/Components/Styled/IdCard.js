@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Black, ExtraBold, Bold, Paragraph } from "./Fonts";
+import patternTen from '../../Assets/Images/Pattern_10.png';
+import patternFive from '../../Assets/Images/Pattern_5.png';
 
 export const IdCard = styled.div`
     display: flex;
@@ -12,11 +14,11 @@ export const IdCard = styled.div`
     border: none;
     border-radius: 5px;
     background: ${props => props.theme === 'light' ? 'white' : '#191919'};
-    background-image: ${props => props.theme === 'light' ? 'url("https://mealize.s3.amazonaws.com/Pattern_10.png")' : 'url("https://mealize.s3.amazonaws.com/Pattern_5.png")'};
-    background-size: contain;
+    background-image: ${props => props.theme === 'light' ? `url(${patternTen})` : `url(${patternFive})`};
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 1);
 `;
 
 export const IdHeader = styled.section`

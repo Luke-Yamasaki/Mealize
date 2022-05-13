@@ -13,7 +13,7 @@ def authenticate():
         return current_user.profile_dict()
     return {'errors': ['Unauthorized']}
 
-@auth_routes.route('/images/', methods=['POST'])
+@auth_routes.route('/images', methods=['POST'])
 def image_validation():
     # print('////////////request.file', request.files)
     if "image" not in request.files:

@@ -11,7 +11,6 @@ import { Nonprofit } from "../../../Assets/Icons/Nonprofit";
 
 //Styled-components
 import { LogoBox } from "../../Styled/Navbar";
-import { LogoType } from "../../Styled/AuthenticationForm";
 import { VectorBox } from '../../Styled/Layout';
 import { IdCard, IdHeader, SloganBox, Slogan, IdIconBackGround, IdType, IdContent, IdImageContainer, IdNumber, IssueDate, OrganizationContainer, IdInfoLabel, IdInfoBox, IdInfoText, IdAddressBox, IdUserInfoContainer, IdImage, EmailBox, IdLogoType } from '../../Styled/IdCard';
 
@@ -20,7 +19,6 @@ export const UserIdCard = ({ props }) => {
     const organizations = useSelector(state => state.organizations);
     const allOrganizations = {...organizations.nonprofits, ...organizations.businesses}
     let organization = allOrganizations[props.organizationId];
-    let organizationEmail = organization?.email;
     let splitEmailOne;
     let splitEmailTwo;
     let splitEmailThree = '';

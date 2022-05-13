@@ -11,7 +11,7 @@ import { GrainsIcon } from "../../Assets/Icons/FoodGroups/Grains";
 import { ProteinIcon } from "../../Assets/Icons/FoodGroups/Protein";
 
 export const CategoryFilter = ({theme}) => {
-    const {filter, setFilter} = useFilter();
+    const {setFilter} = useFilter();
 
     const filterDairy = (e) => {
         e.preventDefault();

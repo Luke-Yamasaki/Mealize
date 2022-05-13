@@ -8,7 +8,7 @@ import { VectorBox } from "../Styled/Layout";
 import { FavoritesFilterIcon } from "../../Assets/Icons/FavoritesFilterIcon";
 
 export const FavoritesFilter = ({theme}) => {
-    const {filter, setFilter} = useFilter();
+    const {setFilter} = useFilter();
 
     const handleFavorites = (e) => {
         e.preventDefault();

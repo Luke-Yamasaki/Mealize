@@ -22,6 +22,7 @@ export const NotificationBar = () => {
     const { userLocation, setUserLocation } = useUserLocation();
     const { theme } = useTheme();
 
+
     // useEffect(() => {
     //     const location = getGeoLocation();
     //     console.log(location)
@@ -32,7 +33,7 @@ export const NotificationBar = () => {
             <NotificationSection theme={theme}>
                 <NotificationContainer>
                     <VectorBox>
-                        <LocationPin/>
+                        <LocationPin />
                     </VectorBox>
                     <NotificationText>
                         Current location: {userLocation}

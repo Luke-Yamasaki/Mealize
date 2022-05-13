@@ -37,7 +37,6 @@ def image_validation():
 def form_validation():
     form = SignupForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    print('/////////////', request)
     if form.validate_on_submit():
         return {'message': 'success'}
     return {'errors': errors_to_list(form.errors)}

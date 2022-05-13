@@ -19,7 +19,6 @@ export const ExpirationBanner = ({ post }) => {
 
     const formatDateString = (someDate) => {
         // Only accepts strings
-        console.log(someDate)
         const day = someDate.slice(5, 7);
         const month = someDate.slice(8, 11);
         const year = someDate.slice(12, 16);
@@ -29,7 +28,6 @@ export const ExpirationBanner = ({ post }) => {
 
     useEffect(() => {
         const hoursLeft = determineExpiration(post.expDate);
-        console.log(hoursLeft)
         hoursLeft >= 168 ? setFlagColor('green') //Greater than or equal to one week?
         :
         hoursLeft < 168 && hoursLeft >= 72 ? setFlagColor('yellow') //In between a week and 3 days

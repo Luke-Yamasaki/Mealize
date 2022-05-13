@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
 
+//Packages
+import validator from 'validator';
+
 //Actions
 import { login } from '../../store/session';
 import { hideModal, setCurrentModal } from '../../store/modal';
@@ -71,8 +74,8 @@ export const LoginForm = () => {
     }
 
     const validateEmail = (email) => {
-        const emailRegex = '/^[^\s@]+@[^\s@]+\.[^\s@]+$/'
-        return emailRegex.test(email)
+        const validation = validator.isEmail(email);
+        return validation
     }
 
     const handleSubmit = async (e) => {

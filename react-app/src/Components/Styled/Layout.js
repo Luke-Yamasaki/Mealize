@@ -105,7 +105,7 @@ export const SideField = styled.fieldset`
     width: 150px;
     height: auto;
     border-radius: 5px;
-    border: 1px solid #616161;
+    border: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.2)' : '1px solid #616161'};
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     display: flex;
     flex-direction: column;

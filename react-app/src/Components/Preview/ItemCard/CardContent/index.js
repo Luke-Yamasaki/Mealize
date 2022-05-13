@@ -1,18 +1,14 @@
 //Hooks
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTheme } from '../../../../Context/ThemeContext';
 import { useHistory } from 'react-router-dom';
 
 //Styling for card colors
-import { category } from './category.js';
-
-//Actions
-import { setCurrentModal, showModal } from '../../../../store/modal';
+import { previewCategory } from './category.js';
 
 //Components
-import { DeliveryForm } from '../../../../Forms/Delivery';
-import { FavoritesIcon } from '../../../../Assets/Logo/FavoritesIcon';
+import { PreviewFavoritesIcon } from '../FavoritesIcon';
 import { QuestionBtn, RequestBtn } from '../../../Styled/Buttons';
 import { VectorBox } from '../../../Styled/Layout';
 // import { LocationPin } from '../../../../Assets/Icons/Location';
@@ -38,92 +34,57 @@ import {
 } from "../../../Styled/ItemCard";
 
 //Helper function
-import { daysAgo } from '../../../../utils/Dates';
+import { daysAgo, determineExpiration } from '../../../../utils/Dates';
 
 export const PreviewCardContent = ({ props }) => {
     console.log(props)
-    const dispatch = useDispatch();
     const { theme } = useTheme();
-    const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
-    const organizations = useSelector(state => state.organizations);
-    const [organization, setOrganization] = useState('');
-    const [styleObj, setStyleObj] = useState(category[theme][6]);
-    const businesses = organizations.businesses;
-    const nonprofits = organizations.nonprofits;
-
-    useEffect(() => {
-        if(props.organiationId) {
-            sessionUser.isNonprofit ? setOrganization(nonprofits[props.organizationId]) : setOrganization(businesses[props.organizationId]);
-        }
-    },[props.organizationId])
-
+    const nonprofits = useSelector(state => state.organizations.nonprofits);
+    const businesses = useSelector(state => state.organizations.businesses);
+    const [styleObj, setStyleObj] = useState(previewCategory[theme][6]);
+    const [date, setDate] = useState(new Date);
+    const organization = sessionUser.isNonprofit ? nonprofits[sessionUser.organizationId] : businesses[sessionUser.organizationId];
+    console.log(organization)
     useEffect(() => {
         if(props.categoryId) {
-            setStyleObj(category[theme][props.categoryId]);
+            setStyleObj(previewCategory[theme][props.categoryId]);
         }
     },[props.categoryId])
 
-
-    const handleQuestion = () => {
-        dispatch(setCurrentModal(() => <DeliveryForm props={props}/>));
-        dispatch(showModal());
-    };
-
-    const handleRequest = () => {
-        dispatch(setCurrentModal(() => <DeliveryForm props={props}/>));
-        dispatch(showModal());
-    };
-
-    // const formatAddress = () => {
-    //     const address = `${organization.street}, ${organization.city}, ${organization.state.slice(0, 2).toUpperCase()} ${organization.zip}`;
-    //     return address;
-    // };
-
-    const handleClick = () => {
-        return history.push(`/items/${props.id}`)
-    };
-
     return (
-        <Card color={styleObj} height={sessionUser ? '390px' : '350px'}>
-            <TitleBox to={`/organizations/${organization.id}`}>
+        <Card color={styleObj} height='390px'>
+            <TitleBox>
                 <VectorBox square='30px' resize='32px'>
                     <CompanyLogo src={organization.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='#191919'/>
                 </VectorBox>
                 <TitleTextContainer>
                     <CompanyName>{organization.name}</CompanyName>
-                    {/* <PinContainer width='15px' height='15px'>
-                        <LocationPin color='black'/>
-                    </PinContainer>
-                    <CompanyAddress>{formatAddress()}</CompanyAddress> */}
                 </TitleTextContainer>
-                <ItemDateText theme={theme}>{daysAgo(props)}</ItemDateText>
+                <ItemDateText theme={theme}>now</ItemDateText>
             </TitleBox>
-            <ItemImage src={props.imageUrl} alt='Food available for pick up.' onClick={handleClick}/>
+            {sessionUser.isNonprofit && <ItemImage src={'https://mealize.s3.amazonaws.com/Mealize-circle.png'} alt='Food available for pick up.'/>}
+            <ItemImage src={props.image ? URL.createObjectURL(props.image) : 'https://mealize.s3.amazonaws.com/Mealize-circle.png'} alt='Food available for pick up.'/>
             <InfoBox>
                 <InfoContainer>
-                    <ItemTitle theme={theme}>{props?.title}</ItemTitle>
-                    <ItemQuantity theme={theme}>({props?.quantity})</ItemQuantity>
+                    <ItemTitle theme={theme}>{props.title ? props.title : 'Item title goes here'}</ItemTitle>
+                    <ItemQuantity theme={theme}>({props.number ? props.number + ' ' + props.unit : 'quantity info'})</ItemQuantity>
                 </InfoContainer>
                 <VectorBox square='30px' opacity='50%'>
-                    {sessionUser && (
-                        <FavoritesIcon props={props} />
-                    )}
+                    <PreviewFavoritesIcon/>
                 </VectorBox>
             </InfoBox>
             <DescriptionBox>
-                <DescriptionText theme={theme}>{props.description}</DescriptionText>
+                <DescriptionText theme={theme}>{props.description ? props.description : 'Your item description goes here.'}</DescriptionText>
             </DescriptionBox>
-            {sessionUser && (
-                <ButtonBox>
-                    <QuestionBtn theme={theme} onClick={handleQuestion}>
-                        <QuestionText theme={theme}>Ask a question</QuestionText>
-                    </QuestionBtn>
-                    <RequestBtn onClick={handleRequest}>
-                        <ButtonText>Send a request</ButtonText>
-                    </RequestBtn>
-                </ButtonBox>
-            )}
+            <ButtonBox>
+                <QuestionBtn theme={theme}>
+                    <QuestionText theme={theme}>Ask a question</QuestionText>
+                </QuestionBtn>
+                <RequestBtn>
+                    <ButtonText>Send a request</ButtonText>
+                </RequestBtn>
+            </ButtonBox>
         </Card>
     )
 };

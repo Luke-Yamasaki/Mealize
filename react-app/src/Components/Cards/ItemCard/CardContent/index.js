@@ -108,10 +108,10 @@ export const CardContent = ({ post }) => {
             {sessionUser && (
                 <ButtonBox>
                     <QuestionBtn theme={theme} onClick={handleQuestion}>
-                        <QuestionText theme={theme}>Ask a question</QuestionText>
+                        <QuestionText theme={theme}>{sessionUser.id === post.userId ? 'Edit Item' : 'Ask a question'}</QuestionText>
                     </QuestionBtn>
                     <RequestBtn onClick={handleRequest}>
-                        <ButtonText>Send a request</ButtonText>
+                        <ButtonText>{sessionUser.id === post.userId ? 'Delete Item' : 'Send a request'}</ButtonText>
                     </RequestBtn>
                 </ButtonBox>
             )}

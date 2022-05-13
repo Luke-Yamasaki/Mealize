@@ -18,7 +18,7 @@ my_config = Config(
 )
 
 # v3 may not work next month
-# switch t0 v4
+# switch to v4
 
 # heroku may randomly assign s3 database to strange region
 

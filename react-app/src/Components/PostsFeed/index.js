@@ -1,6 +1,5 @@
 //Hooks
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 
 //Components
 import { ItemCard } from "../Cards/ItemCard";
@@ -40,17 +39,17 @@ export const PostsFeed = ({filter, sessionUser}) => {
 
     return (
         <FeedContainer>
-            {(sessionUser && filter === 'favorites') && favoritesArr.map((post, idx) => <ItemCard key={idx} props={post} />)}
-            {filter === 'available' && availableArr.map((post, idx) => <ItemCard key={idx} props={post} />)}
-            {filter === 'unavailable' && unavailableArr.map((post, idx) => <ItemCard key={idx} props={post} />)}
-            {filter === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} props={post} />)}
-            {filter === 'requests' && requestsArr.map((post, idx) => <ItemCard key={idx} props={post} />)}
-            {filter === 'dairy' && dairyArr.map((post, idx) => <ItemCard key={idx} props={post} />)}
-            {filter === 'vegetables' && vegetablesArr.map((post, idx) => <ItemCard key={idx} props={post} />)}
-            {filter === 'fruits' && fruitsArr.map((post, idx) => <ItemCard key={idx} props={post} />)}
-            {filter === 'grains' && grainsArr.map((post, idx) => <ItemCard key={idx} props={post} />)}
-            {filter === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} props={post} />)}
-            {filter === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} props={post} />)}
+            {(sessionUser && filter === 'favorites') && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {filter === 'available' && availableArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {filter === 'unavailable' && unavailableArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {filter === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {filter === 'requests' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {filter === 'dairy' && dairyArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {filter === 'vegetables' && vegetablesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {filter === 'fruits' && fruitsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {filter === 'grains' && grainsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {filter === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {filter === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
         </FeedContainer>
     )
 }

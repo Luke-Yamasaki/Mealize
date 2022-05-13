@@ -1,13 +1,13 @@
 import { PreviewBox } from "../Styled/PreviewSection"
 import { UserIdCard } from "../Cards/UserIdCard";
-import { ItemCard } from "../Cards/ItemCard";
+import { PreviewItemCard } from "./ItemCard";
 
 export const PreviewSection = ({ type, props }) => {
     console.log(props)
     return (
         <PreviewBox>
             {type === 'id' && <UserIdCard props={props}/>}
-            {type === 'item' && <ItemCard props={props}/>}
+            {type === 'item' && <PreviewItemCard props={props}/>}
         </PreviewBox>
     )
 };

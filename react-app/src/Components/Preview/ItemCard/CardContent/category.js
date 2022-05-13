@@ -1,4 +1,4 @@
-export const category = {
+export const previewCategory = {
     'light': {
         1: {
             'background': 'linear-gradient(#15BAFA, #FFFFFF)',
@@ -21,7 +21,7 @@ export const category = {
             'border': '1px solid #FF623E'
         },
         6: {
-            'background-color': '#E8E8E8',
+            'background': '#E8E8E8',
             'border': '1px solid #D5D5D5'
         }
     },
@@ -47,7 +47,7 @@ export const category = {
             'border': '1px solid #FF623E'
         },
         6: {
-            'background-color': '#191919',
+            'background': '#191919',
             'border': '1px solid #707070'
         }
     }

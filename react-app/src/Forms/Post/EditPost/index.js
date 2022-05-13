@@ -118,7 +118,7 @@ const ErrorMessage = styled.div`
     height: 10px;
 `;
 
-export const EditItemForm = ({post}) => {
+export const EditPostForm = ({post}) => {
     const sessionUser = useSelector(state => state.session.user);
     const categories = useSelector(state => state.categories)
     const dispatch = useDispatch();

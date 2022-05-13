@@ -17,6 +17,11 @@ my_config = Config(
     }
 )
 
+# v3 may not work next month
+# switch t0 v4
+
+# heroku may randomly assign s3 database to strange region
+
 s3 = boto3.client(
     "s3",
     aws_access_key_id=os.environ.get("S3_KEY"),

@@ -88,7 +88,7 @@ const ErrorMessage = styled.div`
 `;
 
 
-const ItemForm = () => {
+const PostForm = () => {
     const sessionUser = useSelector(state => state.session.user);
     const categories = useSelector(state => state.categories)
     const dispatch = useDispatch();
@@ -450,7 +450,7 @@ const ItemForm = () => {
     );
 };
 
-export default ItemForm;
+export default PostForm;
 
 //<div className={[styles.card, styles[`${className}`]].join(' ')}>
 // {!sessionUser.isNonprofit ?

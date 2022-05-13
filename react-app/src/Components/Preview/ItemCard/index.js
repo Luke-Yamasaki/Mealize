@@ -7,7 +7,7 @@ import { PreviewCardContent } from "./CardContent";
 
 export const PreviewItemCard = ({ props }) => {
     const sessionUser = useSelector(state => state.session.user);
-    console.log(props)
+
     return (
         <CardContainer height={sessionUser ? '450px' : '410px'}>
             <PreviewExpirationBanner props={props}/>

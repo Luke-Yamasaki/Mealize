@@ -29,7 +29,6 @@ export const PrintId = styled.div`
     width: 480px;
     height: 270px;
     border-radius: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
 `;
 
 export const UploadingBox = styled.div`

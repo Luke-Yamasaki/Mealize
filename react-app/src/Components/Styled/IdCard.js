@@ -18,7 +18,7 @@ export const IdCard = styled.div`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    border: 1px solid rgba(0, 0, 0, 1);
+    border: 1px solid rgba(0, 0, 0, 0.5);
 `;
 
 export const IdHeader = styled.section`

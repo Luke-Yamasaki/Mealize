@@ -20,7 +20,7 @@ export const validateItem = async (itemData) => {
 };
 
 export const uploadImage = async (formData) => {
-    const response = await fetch('/api/posts/images', {
+    const response = await fetch('/api/posts/images/', {
         method: "POST",
         body: formData,
     });

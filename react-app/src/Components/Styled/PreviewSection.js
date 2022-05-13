@@ -11,6 +11,7 @@ export const PreviewWrapper = styled.div`
     background: linear-gradient(#28A690,#76D97E);
     border-radius: 5px;
 `;
+//push
 
 export const PreviewBox = styled.div`
     display: flex;

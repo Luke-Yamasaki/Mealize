@@ -40,6 +40,7 @@ import {
 import { daysAgo } from '../../../../utils/Dates';
 
 export const CardContent = ({ post }) => {
+    console.log(post)
     const dispatch = useDispatch();
     const { theme } = useTheme();
     const history = useHistory();
@@ -48,6 +49,8 @@ export const CardContent = ({ post }) => {
     const businesses = organizations.businesses;
     const nonprofits = organizations.nonprofits;
     const organization = post?.isItem ? businesses[post?.organizationId] : nonprofits[post?.organizationId];
+
+
 
     const styleObj = category[theme][post?.categoryId];
 
@@ -65,6 +68,8 @@ export const CardContent = ({ post }) => {
     //     const address = `${organization.street}, ${organization.city}, ${organization.state.slice(0, 2).toUpperCase()} ${organization.zip}`;
     //     return address;
     // };
+
+    //test
 
     const handleClick = () => {
         return history.push(`/items/${post.id}`)
@@ -103,10 +108,10 @@ export const CardContent = ({ post }) => {
             {sessionUser && (
                 <ButtonBox>
                     <QuestionBtn theme={theme} onClick={handleQuestion}>
-                        <QuestionText theme={theme}>Ask a question</QuestionText>
+                        <QuestionText theme={theme}>{sessionUser.id === post.userId ? 'Edit Item' : 'Ask a question'}</QuestionText>
                     </QuestionBtn>
                     <RequestBtn onClick={handleRequest}>
-                        <ButtonText>Send a request</ButtonText>
+                        <ButtonText>{sessionUser.id === post.userId ? 'Delete Item' : 'Send a request'}</ButtonText>
                     </RequestBtn>
                 </ButtonBox>
             )}

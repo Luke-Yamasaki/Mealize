@@ -6,11 +6,27 @@ import uuid
 BUCKET_NAME = os.environ.get("S3_BUCKET")
 S3_LOCATION = f"https://{BUCKET_NAME}.s3.amazonaws.com/"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
+from botocore.config import Config
+
+my_config = Config(
+    region_name = 'us-east-1',
+    signature_version = 'v3',
+    retries = {
+        'max_attempts': 10,
+        'mode': 'standard'
+    }
+)
+
+# v3 may not work next month
+# switch t0 v4
+
+# heroku may randomly assign s3 database to strange region
 
 s3 = boto3.client(
     "s3",
     aws_access_key_id=os.environ.get("S3_KEY"),
-    aws_secret_access_key=os.environ.get("S3_SECRET")
+    aws_secret_access_key=os.environ.get("S3_SECRET"),
+    config=my_config
 )
 
 def accepted_file(file):

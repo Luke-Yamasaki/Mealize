@@ -12,7 +12,7 @@ import { ProfileBox } from '../../Styled/Navbar';
 //Components
 import { NotificationBar } from '../NotificationBar';
 import { SearchBar } from '../SearchBar';
-import ItemForm from '../../../Forms/Item';
+import PostForm from '../../../Forms/Post';
 //Icons
 import { Logo } from '../../../Assets/Logo';
 import { InboxIcon } from '../../../Assets/Icons/Inbox';
@@ -21,8 +21,8 @@ export const SessionNavbar = ({sessionUser}) => {
     const dispatch = useDispatch();
     const {theme} = useTheme();
 
-    const showItemForm = () => {
-        dispatch(setCurrentModal(ItemForm));
+    const showPostForm = () => {
+        dispatch(setCurrentModal(PostForm));
         dispatch(showModal());
     };
 
@@ -48,7 +48,7 @@ export const SessionNavbar = ({sessionUser}) => {
                     <VectorBox square='30px' resize='32px'>
                         <InboxIcon theme={theme} />
                     </VectorBox>
-                    <PostButton onClick={showItemForm}><ButtonText>{sessionUser.isNonprofit && sessionUser.isManager ? 'New request' : 'Post item'}</ButtonText></PostButton>
+                    <PostButton onClick={showPostForm}><ButtonText>{sessionUser.isNonprofit && sessionUser.isManager ? 'New request' : 'Post item'}</ButtonText></PostButton>
                     <LogoutButton onClick={logOut}><ButtonText color='white' weight='400'>Log out</ButtonText></LogoutButton>
                 </NavList>
             </Navigation>

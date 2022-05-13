@@ -12,6 +12,7 @@ import { setCurrentModal, hideModal } from '../../store/modal';
 import { validateSignup, uploadProfileImage } from '../../utils/Forms/signup';
 import { ageBoundary } from '../../utils/Dates';
 import { getIp } from '../../utils/Forms/signup';
+import validator from 'validator';
 
 //Packages
 import * as nsfwjs from 'nsfwjs';
@@ -399,7 +400,9 @@ export const SignupForm = () => {
             emailErrArr.push('Please enter your email.');
         } else if(email.length >= 255) {
             emailErrArr.push('Your email is too long.');
-        } else {
+        } else if(validator.isEmail(email) === false){
+            emailErrArr.push('Please enter a valid email address.')
+        }else {
             setEmailError([])
             setEmail(email)
         }

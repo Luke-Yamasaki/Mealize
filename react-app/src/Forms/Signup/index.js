@@ -271,34 +271,30 @@ export const SignupForm = () => {
     const updateImage = async (e) => {
         e.preventDefault();
         const file = e.target.files[0];
-        //Filter adult content
-        const url = URL.createObjectURL(file);
-        const img = new Image();
-        img.src = url;
-        const nsfwArr = await nsfwCheck(img);
-        if(nsfwArr.length > 0) {
-            window.location.href = 'https://www.google.com';
-        }
-
         setImageError([]);
-
-        //If good, preview the image
-        repaint(file);
-
         //Validate file size
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
-
         if(fileSize > 2 ) {
             e.target.value = '';
             setImage('');
             setImageError(['The file size is too large. Images must be under 2MB.'])
+        } else {
+            //Filter adult content
+            const url = URL.createObjectURL(file);
+            const img = new Image();
+            img.src = url;
+            const nsfwArr = await nsfwCheck(img);
+            if(nsfwArr.length > 0) {
+                window.location.href = 'https://www.google.com';
+            } else {
+                e.target.style.color = '#608F41'
+                setImageError([])
+                setImage(file)
+                //If good, preview the image
+                repaint(file);
+            }
         }
-        else {
-            e.target.style.color = '#608F41'
-            setImageError([])
-            setImage(file)
-        }
-    }
+    };
 
     const droppedImage = async (e) => {
         e.preventDefault();
@@ -307,39 +303,34 @@ export const SignupForm = () => {
             for(let i = 0; i < e.dataTransfer.items.length; i++) {
                 if(e.dataTransfer.items[i].kind === 'file') {
                     const file = e.dataTransfer.items[i].getAsFile();
-                    //Filter adult content
-                    const url = URL.createObjectURL(file);
-                    const img = new Image();
-                    img.src = url;
-                    const nsfwArr = await nsfwCheck(img);
-                    if(nsfwArr.length > 0) {
-                        setImageError(["Adult content violates Mealize's community standards."]);
-                        window.location.href = 'https://www.google.com';
-                    }
-
-                    setImageError([]);
-
-                    //If good, preview the image
-                    repaint(file);
-
                     //Validate file size
                     const fileSize = file.size / 1024 / 1024; //convert to megabytes
 
-                    if(fileSize > 2 ) {
+                    if(fileSize > 2) {
                         e.target.value = '';
                         setImage('');
                         setImageError(['The file size is too large. Images must be under 2MB.'])
-                    }
-                    else {
-                        e.target.style.color = '#608F41'
-                        setImageError([])
-                        setImage(file)
+                    } else if(!file.type.match('image/jpeg') || !file.type.match('image/png')) {
+                        setImage('');
+                        setImageError(['We can only accept jpeg or png format images.'])
+                    } else {
+                        //Filter adult content
+                        const url = URL.createObjectURL(file);
+                        const img = new Image();
+                        img.src = url;
+                        const nsfwArr = await nsfwCheck(img);
+                        if(nsfwArr.length > 0) {
+                            setImageError(["Adult content violates Mealize's community standards."]);
+                            window.location.href = 'https://www.google.com';
+                        } else {
+                            e.target.style.color = '#608F41'
+                            setImageError([])
+                            setImage(file)
+                            //If good, preview the image
+                            repaint(file);
+                        }
                     }
                 }
-            }
-        } else {
-            for(let i = 0; i < e.dataTransfer.files.length; i++) {
-                console.log(e.dataTransfer.files[i].name)
             }
         }
     };

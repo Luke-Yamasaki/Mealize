@@ -6,10 +6,6 @@ export const useFilter = () => useContext(FilterContext);
 export default function FilterProvider(props) {
     const [filter, setFilter] = useState('available');
 
-    useEffect(() => {
-        console.log(filter)
-    },[filter])
-
     return (
         <FilterContext.Provider value={{ filter, setFilter }}>
             {props.children}

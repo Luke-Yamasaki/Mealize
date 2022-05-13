@@ -11,9 +11,7 @@ export const daysAgo = (post) => {
     const postDate = new Date(post.updatedAt);
     const milliseconds = today - postDate;
     const daysPassed = Math.floor(milliseconds / 1000 / 60 / 60 / 24);
-    console.log(daysPassed)
     const hoursPassed = Math.floor(milliseconds / 1000 / 60 / 60);
-    console.log(hoursPassed)
     if(daysPassed >= 1) {
         return daysPassed.toString() + 'd';
     } else if(daysPassed < 1 && hoursPassed >= 1) {

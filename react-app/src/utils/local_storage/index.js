@@ -9,7 +9,6 @@ export const useLocalStorage = (key, startingValue) => {
             const data = window.localStorage.getItem(key);
             return data ? JSON.parse(data) : startingValue;
         } catch (error) {
-            console.log(error)
             return startingValue;
         }
     });
@@ -22,7 +21,6 @@ export const useLocalStorage = (key, startingValue) => {
                 window.localStorage.setItem(key, JSON.stringify(selectionToStore));
             }
         } catch (error) {
-            console.log(error)
         }
     };
     return [storedData, setSelection];

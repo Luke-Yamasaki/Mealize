@@ -9,6 +9,7 @@ import { Logo } from "../../../Assets/Logo";
 //Icons
 import { Business } from "../../../Assets/Icons/Business";
 import { Nonprofit } from "../../../Assets/Icons/Nonprofit";
+import profilePlaceholder from './profileicon.png';
 
 //Styled-components
 import { LogoBox } from "../../Styled/Navbar";
@@ -52,7 +53,7 @@ export const UserIdCard = ({props}) => {
             <IdType theme={theme}>{props.isManager ? 'Manager Id Card' : 'Volunteer Id Card' }</IdType>
             <IdContent>
                 <IdImageContainer>
-                    <IdImage src={props.image ? URL.createObjectURL(props.image) : 'https://mealize.s3.amazonaws.com/profileicon.png'}/>
+                    <IdImage src={props.image ? URL.createObjectURL(props.image) : profilePlaceholder }/>
                     <IdNumber theme={theme}>Id: xxxxx </IdNumber>
                     <IssueDate theme={theme}>Issued: {new Date().toISOString().split('T')[0].slice(0,11)}</IssueDate>
                 </IdImageContainer>

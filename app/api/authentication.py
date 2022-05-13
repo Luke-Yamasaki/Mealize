@@ -15,20 +15,22 @@ def authenticate():
 
 @auth_routes.route('/images/', methods=['POST'])
 def image_validation():
-    print('////////////request.file', request.files)
+    # print('////////////request.file', request.files)
     if "image" not in request.files:
         return {"errors": "image required"}, 401
 
     image = request.files["image"]
-    print('///////////////image', image)
+    # print('///////////////image', image)
 
     if not accepted_file(image.filename):
-        print('////////////image.filename', image.filename)
+        # print('////////////image.filename', image.filename)
         return {"errors": "file type not permitted"}, 402
 
     image.filename = generate_unique_file(image.filename)
 
     upload = upload_to_s3_bucket(image)
+    print('///////// image filename', image.filename)
+    print('/////////////// upload', upload)
     if "url" not in upload:
         print('//////////////upload', upload)
         return upload, 403

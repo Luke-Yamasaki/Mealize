@@ -4,6 +4,7 @@ export const emailValidate = (email) => {
 };
 
 export const uploadProfileImage = async (formData) => {
+    console.log(formData)
     const response = await fetch('/api/auth/images', {
         method: "POST",
         body: formData,

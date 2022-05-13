@@ -87,7 +87,6 @@ const deliveriesReducer = (state = {}, action) => {
           return newState
         }
         case GOT_ALL_DELIVERIES: {
-          console.log(action.payload.deliveries)
           newState.deliveries = action.payload.deliveries
           return newState;
         }

@@ -141,12 +141,21 @@ export const QuestionBtn = styled(ItemButton)`
     filter: drop-shadow(${props => props.theme === 'light' ? '0px 0px 1px rgba(0, 0, 0, 0.75)' : '0px 0px 1px rgba(255, 255, 255, 0.75)'});
 `;
 
+export const EditBtn = styled(ItemButton)`
+    background-color: #D49524;
+    filter: drop-shadow(${props => props.theme === 'light' ? '0px 0px 1px rgba(0, 0, 0, 0.75)' : '0px 0px 1px rgba(255, 255, 255, 0.75)'});
+`;
+
 export const RequestBtn = styled(ItemButton)`
     background: linear-gradient(#76D97E, #28A690);
 `;
 
+export const DeleteBtn = styled(ItemButton)`
+    background-color: #C2462A;
+`;
+
 export const PostButton = styled.div`
-    width: 100px;
+    width: 75px;
     height: 30px;
     display: flex;
     justify-content: center;
@@ -158,7 +167,7 @@ export const PostButton = styled.div`
 `;
 
 export const LogoutButton = styled(PostButton)`
-    background-color: #005C4D;
+    background-color: ${props => props.type === 'volunteer' ? '#D49524' : '#005C4D'};
 `;
 
 export const ResetIcon = styled.p`

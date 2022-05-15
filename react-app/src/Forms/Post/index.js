@@ -7,23 +7,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postItem } from '../../store/posts';
 import { hideModal } from '../../store/modal';
 //Helpers
-import { validateItem, uploadImage } from '../../utils/Forms/items';
+import { validatePost, uploadImage } from '../../utils/Forms/items';
+
+//backgrounds
+import { requestBackgrounds } from './backgrounds';
 
 //Components
-import { ItemCard } from "../../Components/Cards/ItemCard";
-import { XSLogo } from '../../Assets/Logo';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
-import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
-import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
-import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
-import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
-import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 import { PreviewSection } from "../../Components/Preview";
-
+import { UploadingBox, UploadingMessage } from "../../Components/Styled/PreviewSection";
 import styles from './Item.module.css';
 import styled from 'styled-components';
 import { PreviewBox } from "../../Components/Styled/PreviewSection";
-// import * as preview from '../../Components/ItemCard';
+// import * as preview from '../../Components/PostCard';
+
 
 const FormSection = styled.section`
     display: flex;
@@ -140,17 +137,12 @@ const PostForm = () => {
             expDate,
         };
 
-        const stagedPost = await validateItem(itemData)
+        const stagedPost = await validatePost(itemData)
 
         if(stagedPost.message === 'success') {
-
-            setImageUploading(true);
-
-            const response = await uploadImage(formData)
-
-            if (response.ok) {
-                const data = await response.json();
-                const imageUrl = await data.imageUrl
+            if(sessionUser.isNonprofit) {
+                const imageUrl = requestBackgrounds[categoryId];
+                console.log(imageUrl)
 
                 const postData = {
                     organizationId,
@@ -166,12 +158,41 @@ const PostForm = () => {
                 const newPost = await dispatch(postItem(postData))
 
                 if(!newPost.error || !newPost.errors) {
-                    setImageUploading(false);
                     history.push(`/`)
                     dispatch(hideModal());
                 } else {
-                    setImageUploading(false);
                     setErrors(newPost.errors);
+                }
+            } else {
+                setImageUploading(true);
+
+                const response = await uploadImage(formData)
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const imageUrl = await data.imageUrl
+
+                    const postData = {
+                        organizationId,
+                        userId,
+                        title: titleCap,
+                        description: descriptionCap,
+                        quantity,
+                        categoryId,
+                        imageUrl,
+                        expDate,
+                    };
+
+                    const newPost = await dispatch(postItem(postData))
+
+                    if(!newPost.error || !newPost.errors) {
+                        setImageUploading(false);
+                        history.push(`/`)
+                        dispatch(hideModal());
+                    } else {
+                        setImageUploading(false);
+                        setErrors(newPost.errors);
+                    }
                 }
             }
         }
@@ -346,11 +367,13 @@ const PostForm = () => {
             <PreviewBox>
                 <PreviewSection type='item' props={props} />
             </PreviewBox>
-            {imageUploading && (
-                <div style={{display: 'flex', alginItems: 'center', justifyContent: 'center',  width: '300px', height: '30px'}}>
-                    <p style={{fontFamily: 'motiva-sans, sans-serif', fontWeight: '900', color: 'white', fontSize: '24px', padding: 'none', margin: 'none'}}>Uploading image...</p>
-                </div>
-            )}
+            {imageUploading &&
+                <UploadingBox>
+                    <UploadingMessage>
+                        Uploading image...
+                    </UploadingMessage>
+                </UploadingBox>
+               }
             <FormSection>
                 <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '675px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
                     <FormContent>

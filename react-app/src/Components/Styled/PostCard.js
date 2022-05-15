@@ -81,6 +81,16 @@ export const TitleBox = styled(Link)`
     text-decoration: none;
 `;
 
+export const PreviewTitleBox = styled.div`
+    width: 280px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 10px;
+`;
+
 export const TitleTextContainer = styled(BannerTextContainer)`
     justify-content: flex-start;
     align-items: center;
@@ -214,7 +224,7 @@ export const ButtonBox = styled(ExpBanner)`
     height: 35px;
     padding-left: 10px;
     padding-right: 10px;
-    justify-content: space-between;
+    justify-content: ${props => props.number === '1' ? 'flex-end' : 'space-between'};
 `;
 
 export const ButtonText = styled(Medium)`

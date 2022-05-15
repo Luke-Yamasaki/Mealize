@@ -21,6 +21,7 @@ def add_to_favorites():
 @login_required
 def removeFavorite(id):
     favorite = Favorite.query.get(id)
-    current_user.favorites.remove(favorite)
+    postId = favorite.postId
+    db.session.delete(favorite)
     db.session.commit()
-    return favorite.to_dict()
+    return str(postId)

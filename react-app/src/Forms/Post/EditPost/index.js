@@ -480,7 +480,7 @@ export const EditPostForm = ({post}) => {
                             <div className={(title !== post.title) || (description !== post.description) || (number !== post.quantity.split(' ', 2)[0]) || (unit !== post.quantity.split(' ', 2)[1]) || (categoryId !== post.categoryId.toString()) || (expDate !== `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
                         )}
                         {sessionUser.isNonprofit && (
-                            <div className={(title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
+                            <div className={(title !== post.title) || (description !== post.description) || (number !== post.quantity.split(' ', 2)[0]) || (unit !== post.quantity.split(' ', 2)[1]) || (categoryId !== post.categoryId.toString()) || (expDate !== `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
                         )}
                     </div>
                 </form>

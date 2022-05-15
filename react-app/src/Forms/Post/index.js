@@ -9,6 +9,9 @@ import { hideModal } from '../../store/modal';
 //Helpers
 import { validatePost, uploadImage } from '../../utils/Forms/items';
 
+//backgrounds
+import { requestBackgrounds } from './backgrounds';
+
 //Components
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 import { PreviewSection } from "../../Components/Preview";
@@ -137,14 +140,9 @@ const PostForm = () => {
         const stagedPost = await validatePost(itemData)
 
         if(stagedPost.message === 'success') {
-
-            setImageUploading(true);
-
-            const response = await uploadImage(formData)
-
-            if (response.ok) {
-                const data = await response.json();
-                const imageUrl = await data.imageUrl
+            if(sessionUser.isNonprofit) {
+                const imageUrl = requestBackgrounds[categoryId];
+                console.log(imageUrl)
 
                 const postData = {
                     organizationId,
@@ -160,12 +158,41 @@ const PostForm = () => {
                 const newPost = await dispatch(postItem(postData))
 
                 if(!newPost.error || !newPost.errors) {
-                    setImageUploading(false);
                     history.push(`/`)
                     dispatch(hideModal());
                 } else {
-                    setImageUploading(false);
                     setErrors(newPost.errors);
+                }
+            } else {
+                setImageUploading(true);
+
+                const response = await uploadImage(formData)
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const imageUrl = await data.imageUrl
+
+                    const postData = {
+                        organizationId,
+                        userId,
+                        title: titleCap,
+                        description: descriptionCap,
+                        quantity,
+                        categoryId,
+                        imageUrl,
+                        expDate,
+                    };
+
+                    const newPost = await dispatch(postItem(postData))
+
+                    if(!newPost.error || !newPost.errors) {
+                        setImageUploading(false);
+                        history.push(`/`)
+                        dispatch(hideModal());
+                    } else {
+                        setImageUploading(false);
+                        setErrors(newPost.errors);
+                    }
                 }
             }
         }

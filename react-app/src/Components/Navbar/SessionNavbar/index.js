@@ -48,8 +48,14 @@ export const SessionNavbar = ({sessionUser}) => {
                     <VectorBox square='30px' resize='32px'>
                         <InboxIcon theme={theme} />
                     </VectorBox>
-                    <PostButton onClick={showPostForm}><ButtonText>{sessionUser.isNonprofit && sessionUser.isManager ? 'New request' : 'Post item'}</ButtonText></PostButton>
-                    <LogoutButton onClick={logOut}><ButtonText color='white' weight='400'>Log out</ButtonText></LogoutButton>
+                    {sessionUser.isManager &&
+                        <PostButton onClick={showPostForm}>
+                            <ButtonText>{sessionUser.isNonprofit && sessionUser.isManager ? 'New request' : 'Post item'}</ButtonText>
+                        </PostButton>
+                    }
+                    <LogoutButton onClick={logOut} type={sessionUser.isManager ? 'manager' : 'volunteer'}>
+                        <ButtonText color={sessionUser.isManager ? 'white' : 'black'} weight={sessionUser.isManager ? '400' : '700'}>Log out</ButtonText>
+                    </LogoutButton>
                 </NavList>
             </Navigation>
             <NotificationBar theme={theme}/>

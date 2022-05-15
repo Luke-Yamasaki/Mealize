@@ -194,32 +194,25 @@ export const SignupForm = () => {
         const inputData = { organizationId, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager, email, phone, password, confirm}
 
         const stagedPost = await validateSignup(inputData);
-        console.log(stagedPost)
         if(stagedPost.message === 'success') {
             const formData = new FormData();
             formData.append("image", image);
-            console.log(image)
-            console.log(formData)
             setImageUploading(true);
             const response = await uploadProfileImage(formData);
-            console.log(response)
 
             if(response.ok) {
                 const data = await response.json();
                 const profileImageUrl = await data.imageUrl
-                console.log(profileImageUrl)
                 const userDataObj = { organizationId, firstName, profileImageUrl, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager, email, phone, password, confirm };
 
                 const newUser = await dispatch(signup(userDataObj))
                 if(newUser && !newUser.errors || !newUser.error) {
-                    console.log(newUser)
                     setImageUploading(false);
                     history.push('/')
                     dispatch(hideModal())
                 } else {
                     const responseErrArr = []
                     responseErrArr.push(newUser)
-                    console.log(responseErrArr)
                     setImageUploading(false);
                 }
             }
@@ -264,7 +257,6 @@ export const SignupForm = () => {
         const nsfwArr = [];
         const model = await nsfwjs.load();
         const predictions = await model.classify(img);
-        console.log(predictions)
         for(let i = 0; i < predictions.length; i++) {
             if(predictions[i].className === 'Neutral') {
                 i++

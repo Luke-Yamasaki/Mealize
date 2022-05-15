@@ -1,11 +1,11 @@
 //Hooks
 import { useSelector } from 'react-redux';
 //Components
-import { CardContainer } from '../../Styled/ItemCard';
+import { CardContainer } from '../../Styled/PostCard';
 import { ExpirationBanner } from './ExpirationBanner';
 import { CardContent } from "./CardContent";
 
-export const ItemCard = ({ post }) => {
+export const PostCard = ({ post }) => {
     const sessionUser = useSelector(state => state.session.user);
 
     return (

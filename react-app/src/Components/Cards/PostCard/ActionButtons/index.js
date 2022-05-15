@@ -9,6 +9,7 @@ import { ButtonBox } from "../../../Styled/PostCard";
 import { QuestionBtn, RequestBtn, ButtonText } from "../../../Styled/Buttons";
 import { QuestionText } from "../../../Styled/PostCard";
 import  { DeliveryForm } from '../../../../Forms/Delivery';
+import { MessageForm } from "../../../../Forms/Message";
 import  { EditPostForm } from '../../../../Forms/Post/EditPost';
 
 export const ActionButtons = ({post}) => {
@@ -17,7 +18,7 @@ export const ActionButtons = ({post}) => {
     const {theme} = useTheme();
 
     const handleQuestion = () => {
-        dispatch(setCurrentModal(() => <DeliveryForm post={post}/>));
+        dispatch(setCurrentModal(() => <MessageForm post={post}/>));
         dispatch(showModal());
     };
 

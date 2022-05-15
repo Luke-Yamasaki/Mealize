@@ -51,7 +51,7 @@ export const CardContent = ({ post }) => {
     };
 
     return (
-        <Card color={styleObj} height={!sessionUser ? '350px' : sessionUser.isNonprofit && !post.isItem ? '350px' : !sessionUser.isNonprofit && post.isItem ? '350px' : '390px'}>
+        <Card color={styleObj} height={!sessionUser ? '350px' : '390px'}>
             <TitleBox to={`/organizations/${organization.id}`}>
                 <VectorBox square='30px' resize='32px'>
                     <CompanyLogo src={organization.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='#191919'/>

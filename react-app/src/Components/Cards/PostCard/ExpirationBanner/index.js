@@ -4,7 +4,7 @@ import { useTheme } from "../../../../Context/ThemeContext";
 
 //Styled-components
 import { VectorBox } from "../../../Styled/Layout";
-import { ExpBanner, BannerTextContainer, BannerText, ExpText } from "../../../Styled/ItemCard";
+import { ExpBanner, BannerTextContainer, BannerText, ExpText } from "../../../Styled/PostCard";
 
 //Icons
 import { Flag } from '../../../../Assets/Icons/Flag';

@@ -1,7 +1,8 @@
-const SENT_MESSAGE = 'session/SENT_MESSAGE';
-const GOT_MESSAGES = 'session/GOT_MESSAGES';
-const GOT_ONE_MESSAGE = 'session/GOT_ONE_MESSAGE';
-const DELETED_MESSAGE = 'session/DELETED_MESSAGE';
+const SENT_MESSAGE = 'message/SENT_MESSAGE';
+const GOT_MESSAGES = 'message/GOT_MESSAGES';
+const GOT_ONE_MESSAGE = 'message/GOT_ONE_MESSAGE';
+const EDITED_MESSAGE = 'message/EDITED_MESSAGE';
+const DELETED_MESSAGE = 'message/DELETED_MESSAGE';
 
 const sentMessage = payload => ({
     type: SENT_MESSAGE,
@@ -18,18 +19,23 @@ const gotOneMessage = payload => ({
     payload
 });
 
+const editedMessage = payload => ({
+    type: EDITED_MESSAGE,
+    payload
+})
+
 const deletedMessage = payload => ({
     type: DELETED_MESSAGE,
     payload
 });
 
-export const sendMessage = (message) => async (dispatch) => {
+export const sendMessage = (messageData) => async (dispatch) => {
     const response = await fetch('/api/messages/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(message)
+        body: JSON.stringify(messageData)
     });
     if(response.ok) {
         const sent = await response.json();
@@ -76,6 +82,22 @@ export const getOneMessage = (id) => async (dispatch) => {
     };
 };
 
+export const editMessage = (message) => async (dispatch) => {
+    const response = await fetch(`/api/messages/${message.id}`);
+    if(response.ok) {
+        const newMessage = await response.json();
+        dispatch(editedMessage(newMessage));
+    } else if(response.status < 500) {
+        const data = await response.json();
+        if(data.errors){
+            return data.errors;
+        };
+    } else {
+        return 'Connection failed. Please check your internet connection.'
+    };
+
+}
+
 export const deleteMessage = (id) => async (dispatch) => {
     const response = await fetch(`/api/messages/${id}`);
     if(response.ok) {
@@ -104,6 +126,9 @@ export default function messagesReducer(state = {}, action) {
         case GOT_ONE_MESSAGE:
             newState[action.payload.id] = action.payload;
             return newState;
+        case EDITED_MESSAGE:
+                newState[action.payload.id] = action.payload;
+                return newState;
         case DELETED_MESSAGE:
             delete newState[action.payload.id];
             return newState;

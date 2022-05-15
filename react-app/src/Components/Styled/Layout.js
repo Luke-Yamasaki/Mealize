@@ -97,8 +97,8 @@ export const SideBarContainer = styled.div`
     align-items: left;
     justify-content: space-around;
     width: 200px;
-    height: 1200px;
-    gap: 15px;
+    height: 870px;
+    gap: 5px;
 `;
 
 export const SideField = styled.fieldset`

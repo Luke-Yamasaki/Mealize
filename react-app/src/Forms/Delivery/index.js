@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createDelivery } from '../../store/deliveries';
 import { sendMessage } from '../../store/messages';
 import { useHistory } from 'react-router-dom';
-import { ItemCard } from '../../Components/Cards/ItemCard';
+import { PostCard } from '../../Components/Cards/PostCard';
 import { Business } from '../../Assets/Icons/Business';
 import { hideModal } from '../../store/modal';
 import { OrganizationCard } from '../../Components/Cards/OrganizationCard'
@@ -107,6 +107,7 @@ const DateTimeBox = styled.div`
 export const DeliveryForm = ({ post }) => {
     const sessionUser = useSelector(state => state.session.user);
     const business = useSelector(state => state.organizations.businesses[post.organizationId])
+    console.log(business)
     const dispatch = useDispatch();
     const history = useHistory();
     const [date, setDate] = useState("");
@@ -185,7 +186,7 @@ export const DeliveryForm = ({ post }) => {
     return (
         <DeliveryBox>
             <ItemContainer>
-                <ItemCard props={post}/>
+                <PostCard post={post}/>
             </ItemContainer>
             <DeliveryFormContainer>
                 <Form onSubmit={handleSubmit} >

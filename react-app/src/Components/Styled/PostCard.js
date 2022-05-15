@@ -144,7 +144,6 @@ export const ItemDateText = styled(Medium)`
     color: #191919;
     font-size: 0.65em;
     max-width: 60px;
-    margin-left: 5px;
 `;
 
 //image

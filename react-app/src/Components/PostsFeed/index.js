@@ -12,9 +12,9 @@ import { determineExpiration } from "../../utils/Dates";
 export const PostsFeed = ({filter}) => {
     const allPosts = useSelector(state => state.posts.all);
     const sessionUser = useSelector(state => state.session.user);
-    const favoritesObj = useSelector(state => state.session.user.favorites);
+    const favoritesObj = useSelector(state => state.session.user?.favorites);
 
-    const favorites = Object.values(favoritesObj);
+    const favorites = favoritesObj ? Object.values(favoritesObj) : [];
     const posts = Object.values(allPosts);
 
     const availableArr = [];

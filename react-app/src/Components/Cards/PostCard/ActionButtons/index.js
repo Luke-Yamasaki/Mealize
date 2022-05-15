@@ -4,18 +4,29 @@ import { useTheme } from '../../../../Context/ThemeContext';
 //Actions
 import { setCurrentModal, showModal } from '../../../../store/modal';
 import { removePost } from "../../../../store/posts";
+import { sendMessage } from "../../../../store/messages";
+import { getOneOrganization } from '../../../../utils/Organizations';
 //Components
 import { ButtonBox } from "../../../Styled/PostCard";
-import { QuestionBtn, RequestBtn, ButtonText } from "../../../Styled/Buttons";
+import { QuestionBtn, RequestBtn, ButtonText, EditBtn, DeleteBtn } from "../../../Styled/Buttons";
 import { QuestionText } from "../../../Styled/PostCard";
 import  { DeliveryForm } from '../../../../Forms/Delivery';
 import { MessageForm } from "../../../../Forms/Message";
 import  { EditPostForm } from '../../../../Forms/Post/EditPost';
+import { useEffect } from "react";
 
 export const ActionButtons = ({post}) => {
     const sessionUser = useSelector(state => state.session.user);
+    const organization = useSelector(state => state.organizations[sessionUser.organizationId])
     const dispatch = useDispatch();
     const {theme} = useTheme();
+
+
+    useEffect(() => {
+        const org = dispatch(getOneOrganization(sessionUser.organizationId));
+        console.log(org)
+    },[dispatch])
+
 
     const handleQuestion = () => {
         dispatch(setCurrentModal(() => <MessageForm post={post}/>));
@@ -27,6 +38,11 @@ export const ActionButtons = ({post}) => {
         dispatch(showModal());
     };
 
+    const handleNotify = () => {
+        console.log(organization);
+
+    };
+
     const handleEdit = () => {
         dispatch(setCurrentModal(() => <EditPostForm post={post}/>));
         dispatch(showModal());
@@ -36,21 +52,25 @@ export const ActionButtons = ({post}) => {
         dispatch(removePost(post.id))
     };
 
+    if(!sessionUser) {
+        return null
+    }
+
     return (
         <>
-            {sessionUser?.isNonprofit && sessionUser.isManager ?
+            {sessionUser.isNonprofit && sessionUser.isManager ?
                 <ButtonBox>
-                {sessionUser?.id === post.userId &&
+                {sessionUser.id === post.userId &&
                     <>
-                        <QuestionBtn theme={theme} onClick={handleEdit}>
+                        <EditBtn theme={theme} onClick={handleEdit}>
                             <QuestionText theme={theme}>Edit Request</QuestionText>
-                        </QuestionBtn>
-                        <RequestBtn onClick={handleDelete}>
+                        </EditBtn>
+                        <DeleteBtn onClick={handleDelete}>
                             <ButtonText>Delete Item</ButtonText>
-                        </RequestBtn>
+                        </DeleteBtn>
                     </>
                 }
-                {sessionUser?.id !== post.userId &&
+                {sessionUser.id !== post.userId &&
                     <>
                         <QuestionBtn theme={theme} onClick={handleQuestion}>
                             <QuestionText theme={theme}>Ask a question</QuestionText>
@@ -62,25 +82,37 @@ export const ActionButtons = ({post}) => {
                 }
             </ButtonBox>
             :
-            !sessionUser?.isNonprofit ?
+            !sessionUser.isNonprofit ?
             <ButtonBox>
-                <QuestionBtn theme={theme} onClick={sessionUser.id === post.userId ? handleEdit : handleQuestion}>
-                    <QuestionText theme={theme}>{sessionUser.id === post.userId ? 'Edit Item' : 'Ask a question'}</QuestionText>
-                </QuestionBtn>
-                {post.isItem &&
-                <RequestBtn onClick={sessionUser.id === post.userId ? handleDelete : handleRequest}>
-                    <ButtonText>{sessionUser.id === post.userId ? 'Delete Item' : 'Send a request'}</ButtonText>
-                </RequestBtn>
+               {sessionUser.id === post.userId &&
+                    <>
+                        <EditBtn theme={theme} onClick={handleEdit}>
+                            <QuestionText theme={theme}>Edit Request</QuestionText>
+                        </EditBtn>
+                        <DeleteBtn onClick={handleDelete}>
+                            <ButtonText>Delete Item</ButtonText>
+                        </DeleteBtn>
+                    </>
+                }
+                {sessionUser.id !== post.userId &&
+                    <>
+                        <QuestionBtn theme={theme} onClick={handleQuestion}>
+                            <QuestionText theme={theme}>Ask a question</QuestionText>
+                        </QuestionBtn>
+                        <RequestBtn onClick={handleRequest}>
+                            <ButtonText>Send a request</ButtonText>
+                        </RequestBtn>
+                    </>
                 }
             </ButtonBox>
             :
             <ButtonBox>
-                <QuestionBtn theme={theme} onClick={sessionUser.id === post.userId ? handleEdit : handleQuestion}>
-                    <QuestionText theme={theme}>{sessionUser.id === post.userId ? 'Edit Item' : 'Ask a question'}</QuestionText>
+                <QuestionBtn theme={theme} onClick={handleQuestion}>
+                    <QuestionText theme={theme}>Ask a question</QuestionText>
                 </QuestionBtn>
                 {post.isItem &&
-                <RequestBtn onClick={sessionUser.id === post.userId ? handleDelete : handleRequest}>
-                    <ButtonText>{sessionUser.id === post.userId ? 'Delete Item' : 'Send a request'}</ButtonText>
+                <RequestBtn onClick={handleNotify}>
+                    <ButtonText>Notify your manager</ButtonText>
                 </RequestBtn>
                 }
             </ButtonBox>

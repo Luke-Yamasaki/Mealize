@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import current_user, login_required
-from app.models import db, Organization
+from app.models import db, Organization, User
 from app.forms import OrganizationForm
 from app.utils import errors_to_list
 
@@ -15,7 +15,18 @@ def all_organizations():
 @organization_routes.route('/<int:id>')
 def one_organization(id):
     organization = Organization.query.get(id)
-    return organization.to_dict()
+    all_employees = organization.employees
+    employees_list = []
+    for employee in all_employees:
+        if employee.isManager == False:
+            employees_list.append(employee)
+    print('///////employees', employees_list)
+    managers_list = []
+    for employee in all_employees:
+        if employee.isManager == True:
+            managers_list.append(employee)
+    print('//////////////manager', managers_list)
+    return {'organization': organization.to_dict(), 'managers': {manager.id:manager.to_dict() for manager in managers_list}, 'employees': {employee.id:employee.to_dict() for employee in employees_list}}
 
 @organization_routes.route('/', methods=['POST'])
 @login_required

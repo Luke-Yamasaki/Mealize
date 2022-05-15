@@ -1,6 +1,6 @@
 //Hooks
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
 
 //Packages
@@ -11,7 +11,7 @@ import Filter from 'bad-words';
 import { getIp } from '../../utils/Forms/signup';
 
 //Actions
-import { login } from '../../store/session';
+import { sendMessage } from '../../store/messages';
 import { hideModal } from '../../store/modal';
 
 //Components
@@ -47,12 +47,16 @@ import {
 
 export const MessageForm = ({ post }) => {
     const dispatch = useDispatch();
+    const users = useSelector(state => state.users);
     const [content, setContent] = useState('');
     const [image, setImage] = useState(null);
     const [imageValidating, setImageValidating] = useState(false);
     const [contentError, setContentError] = useState([]);
     const [imageError, setImageError] = useState([]);
     const {theme} = useTheme();
+
+    const user = users[post.userId];
+    console.log(user)
 
     const filter = new Filter();
 
@@ -115,22 +119,24 @@ export const MessageForm = ({ post }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const contentErrArr = [];
+        const imageErrArr = [];
 
         if(!content.length) {
             contentErrArr.push('Please enter a message.');
         } else if(content.length > 1000) {
             contentErrArr.push('Messages must be under 1000 characters.')
         } else {
-            const data = await dispatch(login(email, password));
+            const messageData = {content, image, receiverId: post.userId}
+            const data = await dispatch(sendMessage(messageData));
             if(data && data.errors) {
-                data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+                data.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
             } else {
                 dispatch(hideModal())
             }
         }
 
         setContentError(contentErrArr);
-        setImageError(imagedErrArr);
+        setImageError(imageErrArr);
     };
 
     const cancel = (e) => {

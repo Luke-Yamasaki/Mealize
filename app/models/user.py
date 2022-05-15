@@ -53,9 +53,22 @@ class User(db.Model, UserMixin):
             'lastName': self.lastName,
         }
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'organizationId': self.organizationId,
+            'isNonprofit': self.isNonprofit,
+            'isManager': self.isManager,
+            'firstName': self.firstName,
+            'lastName': self.lastName,
+            'email': self.email,
+            'phone': self.phone,
+            'profileImageUrl': self.profileImageUrl,
+            'createdAt': self.createdAt
+        }
 
     def profile_dict(self):
-            return {
+        return {
             'id': self.id,
             'organizationId': self.organizationId,
             'isNonprofit': self.isNonprofit,

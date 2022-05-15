@@ -1,17 +1,18 @@
 //Hooks
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 //Components
-import { ItemCard } from "../Cards/ItemCard";
+import { PostCard } from "../Cards/PostCard";
 import { FeedContainer } from "../Styled/Layout"
 
 //Helper
 import { determineExpiration } from "../../utils/Dates";
 
-export const PostsFeed = ({filter, sessionUser}) => {
+export const PostsFeed = ({filter, favorites}) => {
     const allPosts = useSelector(state => state.posts.all);
+    const sessionUser = useSelector(state => state.session.user);
     const posts = Object.values(allPosts);
-    const favoritesArr = [];
     const availableArr = [];
     const unavailableArr = [];
     const itemsArr = [];
@@ -22,10 +23,9 @@ export const PostsFeed = ({filter, sessionUser}) => {
     const grainsArr = [];
     const proteinArr = [];
 
-    //Favorites filter
-    if(sessionUser) {
-        Object.values(sessionUser.favorites).map(fav => favoritesArr.push(posts[fav.postId]));
-    };
+    useEffect(() => {
+        console.log(favorites)
+    },[favorites])
 
     //Availability filter
     posts.map(post => {
@@ -39,17 +39,16 @@ export const PostsFeed = ({filter, sessionUser}) => {
 
     return (
         <FeedContainer>
-            {(sessionUser && filter === 'favorites') && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
-            {filter === 'available' && availableArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
-            {filter === 'unavailable' && unavailableArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
-            {filter === 'items' && itemsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
-            {filter === 'requests' && requestsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
-            {filter === 'dairy' && dairyArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
-            {filter === 'vegetables' && vegetablesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
-            {filter === 'fruits' && fruitsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
-            {filter === 'grains' && grainsArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
-            {filter === 'protein' && proteinArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
-            {filter === 'favorites' && favoritesArr.map((post, idx) => <ItemCard key={idx} post={post} />)}
+            {((sessionUser && filter === 'favorites') && favorites.length > 0) && favorites.map((obj, idx) => <PostCard key={idx} post={allPosts[obj.postId]}/>)}
+            {filter === 'available' && availableArr.map((post, idx) => <PostCard key={idx} post={post} />)}
+            {filter === 'unavailable' && unavailableArr.map((post, idx) => <PostCard key={idx} post={post} />)}
+            {filter === 'items' && itemsArr.map((post, idx) => <PostCard key={idx} post={post} />)}
+            {filter === 'requests' && requestsArr.map((post, idx) => <PostCard key={idx} post={post} />)}
+            {filter === 'dairy' && dairyArr.map((post, idx) => <PostCard key={idx} post={post} />)}
+            {filter === 'vegetables' && vegetablesArr.map((post, idx) => <PostCard key={idx} post={post} />)}
+            {filter === 'fruits' && fruitsArr.map((post, idx) => <PostCard key={idx} post={post} />)}
+            {filter === 'grains' && grainsArr.map((post, idx) => <PostCard key={idx} post={post} />)}
+            {filter === 'protein' && proteinArr.map((post, idx) => <PostCard key={idx} post={post} />)}
         </FeedContainer>
     )
 }

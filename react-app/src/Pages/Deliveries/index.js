@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { getAllDeliveries, updateDelivery, deleteDelivery } from '../../store/deliveries';
 import { useEffect } from 'react';
 import { setCurrentModal } from '../../store/modal';
-import { ItemCard } from '../../Components/Cards/ItemCard';
+import { PostCard } from '../../Components/Cards/PostCard';
 import { DeliveryForm } from '../../Forms/Delivery';
 import { OrganizationCard } from '../../Components/Cards/OrganizationCard';
 
@@ -76,7 +76,7 @@ export const Deliveries = () => {
             <MessageContent>
                 <div>
                     <div>
-                        {selected !== '' &&  <div style={{width: '500px', height: '600px', backgroundColor: 'rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><ItemCard post={posts.posts[selected]} /></div>}
+                        {selected !== '' &&  <div style={{width: '500px', height: '600px', backgroundColor: 'rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><PostCard post={posts.posts[selected]} /></div>}
                     </div>
                 </div>
             </MessageContent>

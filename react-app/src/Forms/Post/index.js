@@ -7,23 +7,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import { postItem } from '../../store/posts';
 import { hideModal } from '../../store/modal';
 //Helpers
-import { validateItem, uploadImage } from '../../utils/Forms/items';
+import { validatePost, uploadImage } from '../../utils/Forms/items';
 
 //Components
-import { ItemCard } from "../../Components/Cards/ItemCard";
-import { XSLogo } from '../../Assets/Logo';
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
-import { DairyIcon } from '../../Assets/Icons/FoodGroups/Dairy';
-import { VegetablesIcon } from '../../Assets/Icons/FoodGroups/Vegetables';
-import { FruitsIcon } from '../../Assets/Icons/FoodGroups/Fruits';
-import { GrainsIcon } from '../../Assets/Icons/FoodGroups/Grains';
-import { ProteinIcon } from '../../Assets/Icons/FoodGroups/Protein';
 import { PreviewSection } from "../../Components/Preview";
 
 import styles from './Item.module.css';
 import styled from 'styled-components';
 import { PreviewBox } from "../../Components/Styled/PreviewSection";
-// import * as preview from '../../Components/ItemCard';
+// import * as preview from '../../Components/PostCard';
 
 const FormSection = styled.section`
     display: flex;
@@ -140,7 +133,7 @@ const PostForm = () => {
             expDate,
         };
 
-        const stagedPost = await validateItem(itemData)
+        const stagedPost = await validatePost(itemData)
 
         if(stagedPost.message === 'success') {
 

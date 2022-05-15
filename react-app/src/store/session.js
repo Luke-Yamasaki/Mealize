@@ -104,7 +104,6 @@ export const logout = () => async (dispatch) => {
 };
 
 export const signup = (data) => async (dispatch) => {
-    console.log(data)
     const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: {
@@ -114,7 +113,6 @@ export const signup = (data) => async (dispatch) => {
     });
     if(response.ok) {
         const data = await response.json();
-        console.log(data)
         dispatch(userIsSet(data));
         return data;
     } else if(response.status < 500) {
@@ -129,20 +127,8 @@ export const signup = (data) => async (dispatch) => {
     };
 };
 
-export const refreshUser = () => async (dispatch) => {
-    const response = await fetch('/api/auth/');
-
-    if(response.ok) {
-        const data = await response.json();
-        dispatch(refreshedUser(data));
-    } else if(response.status < 500) {
-        const data = await response.json();
-        if(data.errors){
-            return data.errors;
-        };
-    } else {
-        return 'Connection failed. Please check your internet connection.'
-    };
+export const refreshUser = (sessionUser) => async (dispatch) => {
+    dispatch(refreshedUser(sessionUser));
 };
 
 export const addFavorite = (postId) => async (dispatch) => {
@@ -240,10 +226,15 @@ export default function sessionReducer(state = initialState, action) {
         case REFRESHED_USER:
             return { user: action.payload };
         case ADDED_FAVORITE:
+            console.log(newState.user.favorites)
             newState.user.favorites[action.payload.postId] = action.payload;
+            console.log(newState.user.favorites)
             return newState;
         case REMOVED_FAVORITE:
+            console.log(newState.user.favorites)
             delete newState.user.favorites[action.payload]; // Double check to see that payload is the removed id
+            console.log(newState.user.favorites)
+
             return newState;
         default:
             return state;

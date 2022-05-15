@@ -10,7 +10,6 @@ class User(db.Model, UserMixin):
     organizationId = db.Column(db.Integer, db.ForeignKey('organizations.id'), nullable=False)
     isNonprofit = db.Column(db.Boolean, nullable=False)
     isManager = db.Column(db.Boolean, nullable=False)
-    private = db.Column(db.Boolean, nullable=True)
     firstName = db.Column(db.String(50), nullable=False)
     lastName = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
@@ -56,20 +55,6 @@ class User(db.Model, UserMixin):
 
 
     def profile_dict(self):
-        if self.private == True:
-            return {
-                'id': self.id,
-                'organizationId': self.organizationId,
-                'isNonprofit': self.isNonprofit,
-                'isManager': self.isManager,
-                'profileImageUrl': self.profileImageUrl,
-                'firstName': self.firstName,
-                'lastName': self.lastName,
-                'organization': self.organization.to_dict(),
-                'favorites': {favorite.postId:favorite.to_dict() for favorite in self.favorites},
-                'createdAt': self.createdAt
-            }
-        else:
             return {
             'id': self.id,
             'organizationId': self.organizationId,

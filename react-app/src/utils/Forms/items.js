@@ -1,10 +1,10 @@
-export const validateItem = async (itemData) => {
+export const validatePost = async (postData) => {
     const response = await fetch('/api/posts/validate', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(itemData)
+        body: JSON.stringify(postData)
     });
     if(response.ok) {
         const stagedPost = await response.json();

@@ -1,11 +1,11 @@
 //Hooks
 import { useSelector } from 'react-redux';
 //Components
-import { CardContainer } from '../../Styled/ItemCard';
-import { PreviewExpirationBanner } from './ExpirationBanner';
-import { PreviewCardContent } from "./CardContent";
+import { CardContainer } from '../../Styled/PostCard';
+import { PreviewExpirationBanner } from './PreviewExpirationBanner';
+import { PreviewCardContent } from "./PreviewCardContent";
 
-export const PreviewItemCard = ({ props }) => {
+export const PreviewPostCard = ({ props }) => {
     const sessionUser = useSelector(state => state.session.user);
 
     return (

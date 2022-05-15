@@ -4,7 +4,7 @@ import { useTheme } from "../../../../Context/ThemeContext";
 
 //Styled-components
 import { VectorBox } from "../../../Styled/Layout";
-import { ExpBanner, BannerTextContainer, BannerText, ExpText } from "../../../Styled/ItemCard";
+import { ExpBanner, BannerTextContainer, BannerText, ExpText } from "../../../Styled/PostCard";
 
 //Icons
 import { Flag } from '../../../../Assets/Icons/Flag';
@@ -12,7 +12,7 @@ import { Flag } from '../../../../Assets/Icons/Flag';
 //Helper
 import { determineExpiration } from "../../../../utils/Dates";
 
-export const PreviewExpirationBanner = ({ props }) => {
+export const ExpirationBanner = ({ post }) => {
     const [flagColor, setFlagColor] = useState('');
     const [date, setDate] = useState('');
     const {theme} = useTheme();
@@ -27,19 +27,15 @@ export const PreviewExpirationBanner = ({ props }) => {
     };
 
     useEffect(() => {
-        if(props.expDate.length > 0) {
-            const hoursLeft = determineExpiration(props.expDate);
-            hoursLeft >= 168 ? setFlagColor('green') //Greater than or equal to one week?
-            :
-            hoursLeft < 168 && hoursLeft >= 72 ? setFlagColor('yellow') //In between a week and 3 days
-            :
-            setFlagColor('red') //less than 3 days
+        const hoursLeft = determineExpiration(post?.expDate);
+        hoursLeft >= 168 ? setFlagColor('green') //Greater than or equal to one week?
+        :
+        hoursLeft < 168 && hoursLeft >= 72 ? setFlagColor('yellow') //In between a week and 3 days
+        :
+        setFlagColor('red') //less than 3 days
 
-            formatDateString(props.expDate);
-        } else {
-            setFlagColor('green')
-        }
-    },[props.expDate]);
+        if(post !== undefined) formatDateString(post.expDate);
+    },[post]);
 
     return (
         <ExpBanner>

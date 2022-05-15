@@ -146,7 +146,7 @@ export const RequestBtn = styled(ItemButton)`
 `;
 
 export const PostButton = styled.div`
-    width: 100px;
+    width: 75px;
     height: 30px;
     display: flex;
     justify-content: center;

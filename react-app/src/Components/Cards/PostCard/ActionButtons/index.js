@@ -9,6 +9,8 @@ import { sendMessage } from "../../../../store/messages";
 import { getOneOrganization } from '../../../../utils/Organizations';
 //Components
 import { ButtonBox } from "../../../Styled/PostCard";
+import { ActionBox } from "../../../Styled/Buttons";
+
 import { QuestionBtn, RequestBtn, ButtonText, EditBtn, DeleteBtn } from "../../../Styled/Buttons";
 import { QuestionText } from "../../../Styled/PostCard";
 import  { DeliveryForm } from '../../../../Forms/Delivery';
@@ -74,8 +76,8 @@ export const ActionButtons = ({post}) => {
     return (
         <>
             {sessionUser.isNonprofit && sessionUser.isManager ?
-                <ButtonBox>
-                {sessionUser.id === post.userId &&
+                <ButtonBox number={sessionUser.id !== post.userId && !post.isItem ? '1' : '2'}>
+                    {sessionUser.id === post.userId &&
                     <>
                         <EditBtn theme={theme} onClick={handleEdit}>
                             <QuestionText theme={theme}>Edit Request</QuestionText>
@@ -84,21 +86,23 @@ export const ActionButtons = ({post}) => {
                             <ButtonText>Delete Item</ButtonText>
                         </DeleteBtn>
                     </>
-                }
-                {sessionUser.id !== post.userId &&
+                    }
+                    {sessionUser.id !== post.userId &&
                     <>
                         <QuestionBtn theme={theme} onClick={handleQuestion}>
                             <QuestionText theme={theme}>Ask a question</QuestionText>
                         </QuestionBtn>
-                        <RequestBtn onClick={handleRequest}>
-                            <ButtonText>Send a request</ButtonText>
-                        </RequestBtn>
+                        {post.isItem &&
+                            <RequestBtn onClick={handleRequest}>
+                                <ButtonText>Send a request</ButtonText>
+                            </RequestBtn>
+                        }
                     </>
-                }
-            </ButtonBox>
+                    }
+                </ButtonBox>
             :
             !sessionUser.isNonprofit && sessionUser.isManager ?
-            <ButtonBox>
+            <ButtonBox number={sessionUser.id === post.userId ? '2' : '1'}>
                {sessionUser.id === post.userId &&
                     <>
                         <EditBtn theme={theme} onClick={handleEdit}>
@@ -114,14 +118,11 @@ export const ActionButtons = ({post}) => {
                         <QuestionBtn theme={theme} onClick={handleQuestion}>
                             <QuestionText theme={theme}>Ask a question</QuestionText>
                         </QuestionBtn>
-                        <RequestBtn onClick={handleRequest}>
-                            <ButtonText>Send a request</ButtonText>
-                        </RequestBtn>
                     </>
                 }
             </ButtonBox>
             :
-            <ButtonBox>
+            <ButtonBox number={post.isItem ? '2' : '1'}>
                 <QuestionBtn theme={theme} onClick={handleQuestion}>
                     <QuestionText theme={theme}>Ask a question</QuestionText>
                 </QuestionBtn>

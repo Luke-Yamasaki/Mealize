@@ -4,15 +4,18 @@ import { useDispatch } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
 
 //Packages
-import validator from 'validator';
+import * as nsfwjs from 'nsfwjs';
+import Filter from 'bad-words';
+
+//Helpers
+import { getIp } from '../../utils/Forms/signup';
 
 //Actions
 import { login } from '../../store/session';
-import { hideModal, setCurrentModal } from '../../store/modal';
+import { hideModal } from '../../store/modal';
 
 //Components
 import { Logo } from '../../Assets/Logo';
-import { SignupForm } from '../Signup';
 //Styled-components
 import { LogoBox } from '../../Components/Styled/Navbar';
 import {
@@ -35,17 +38,10 @@ import {
 
 import {
     ButtonBox,
-    DemoBox,
-    VolunteerDemoButton,
-    NonprofitDemoButton,
-    BusinessDemoButton,
     SubmitButton,
     ButtonText,
     CancelButton,
-    InputButtonBox,
-    ActionBox,
-    ActionText,
-    SignupText,
+    InputButtonBox
 } from '../../Components/Styled/Buttons';
 
 
@@ -53,9 +49,15 @@ export const MessageForm = ({ post }) => {
     const dispatch = useDispatch();
     const [content, setContent] = useState('');
     const [image, setImage] = useState(null);
+    const [imageValidating, setImageValidating] = useState(false);
     const [contentError, setContentError] = useState([]);
-    const [imgeError, setImageError] = useState([]);
+    const [imageError, setImageError] = useState([]);
     const {theme} = useTheme();
+
+    const filter = new Filter();
+
+    const swearWords = ['fuck', 'shit', 'ass', 'damn', 'dammit', 'ass', 'arse', 'bastard', 'bitch', 'cocksucker', 'cunt', 'nigger', 'nigga', 'chink', 'beaner', 'slut', 'whore', 'twat'];
+    filter.addWords(...swearWords);
 
     const handleContent = (e) => {
         e.preventDefault();
@@ -63,38 +65,61 @@ export const MessageForm = ({ post }) => {
         setContent(e.target.value)
     }
 
-    const handleImage = (e) => {
-        e.preventDefault();
-        if (e.target.value.length > 6) {
-            setPasswordError([]);
-            setPassword(e.target.value)
-        } else {
-            setPassword(e.target.value)
+    const nsfwCheck = async(img) => {
+        const nsfwArr = [];
+        const model = await nsfwjs.load();
+        const predictions = await model.classify(img);
+        for(let i = 0; i < predictions.length; i++) {
+            if(predictions[i].className === 'Neutral') {
+                i++
+            } else {
+                if(predictions[i].probability > 0.6) {
+                    nsfwArr.push("Adult content violates Mealize's community standards.");
+                    const user = getIp();
+                    return user
+                }
+            }
         }
-    }
+        return nsfwArr;
+    };
 
-    const validateEmail = (email) => {
-        const validation = validator.isEmail(email);
-        return validation
-    }
+    const updateImage = async (e) => {
+        e.preventDefault();
+        setImageValidating(true);
+        setImageError([]);
+        const file = e.target.files[0];
+        //Validate file size
+        const fileSize = file.size / 1024 / 1024; //convert to megabytes
+        if(fileSize > 2 ) {
+            e.target.value = '';
+            setImage('');
+            setImageError(['The file size is too large. Images must be under 2MB.'])
+        } else {
+            //Filter adult content
+            const url = URL.createObjectURL(file);
+            const img = new Image();
+            img.src = url;
+            const nsfwArr = await nsfwCheck(img);
+            if(nsfwArr.length > 0) {
+                window.location.href = 'https://www.google.com';
+            } else {
+                e.target.style.color = '#608F41'
+                setImageError([])
+                setImage(file)
+            }
+        }
+        setImageValidating(false);
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const emailErrArr = [];
-        const passwordErrArr = [];
+        const contentErrArr = [];
 
-        if(!email.length) {
-            emailErrArr.push('Please enter your email.');
-        } else if(!password.length) {
-            passwordErrArr.push('Please enter you password.')
-        } else if(password.length < 6 ) {
-            passwordErrArr.push('Passwords must be at least 6 characters long.')
-        } else if (validateEmail(email) === false) {
-            emailErrArr.push('Please enter a valid email address.')
-        } else if(emailError.length > 0) {
-            emailErrArr.push('Please resolve the following: ');
-        } else if (passwordError.length > 0) {
-            passwordErrArr.push('Please resolve the following: ')
+        if(!content.length) {
+            contentErrArr.push('Please enter a message.');
+        } else if(content.length > 1000) {
+            contentErrArr.push('Messages must be under 1000 characters.')
         } else {
             const data = await dispatch(login(email, password));
             if(data && data.errors) {
@@ -104,45 +129,18 @@ export const MessageForm = ({ post }) => {
             }
         }
 
-        setEmailError(emailErrArr);
-        setPasswordError(passwordErrArr);
+        setContentError(contentErrArr);
+        setImageError(imagedErrArr);
     };
 
     const cancel = (e) => {
         e.preventDefault();
-        setEmailError([]);
-        setPasswordError([]);
-        setEmail('');
-        setPassword('');
+        setContentError([]);
+        setImageError([]);
+        setImageValidating(false);
+        setContent('');
+        setImage('');
         dispatch(hideModal());
-    };
-
-    const handleDemo = async (e) => {
-        e.preventDefault();
-        const emailErrArr = [];
-        const passwordErrArr = [];
-
-        let data;
-
-        if(e.target.innerText.includes('Volunteer')) {
-            data = await dispatch(login('volunteer_demo@testing.com', '064324651d0-72fe-49c5-aa1-0ba223f4fcmv3'))
-        } else if(e.target.innerText.includes('Nonprofit')) {
-            data = await dispatch(login('nonprofit_demo@testing.com', '062651d0-01fe-49c5-aaa1-0829ba3f4ff3'));
-        } else {
-            data = await dispatch(login('business_demo@testing.com', '8f08d594-2275-4c8f-93f3-4cb6dbed4b70'));
-        }
-
-        if(data.errors) {
-            data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push('Someone tampered with our demo data.') : emailErrArr.push('Someone tampered with our demo data.'));
-            setEmailError(emailErrArr);
-            setPasswordError(passwordErrArr)
-        }
-        dispatch(hideModal())
-    };
-
-    const showSignupForm = (e) => {
-        e.preventDefault();
-        dispatch(setCurrentModal(SignupForm))
     };
 
     return (
@@ -165,7 +163,7 @@ export const MessageForm = ({ post }) => {
                             </ErrorBox>
                             <Fieldset error={contentError.length > 0}>
                                 <EmailLegend htmlFor='content' theme={theme} error={contentError.length > 0}>Message
-                                    <Input name="content" type="text" value={content} theme={theme} onChange={handleContent}/>
+                                    <Input name="content" type="text" value={content} theme={theme} onChange={handleContent} required/>
                                 </EmailLegend>
                             </Fieldset>
                         </InputErrorBox>
@@ -174,8 +172,8 @@ export const MessageForm = ({ post }) => {
                                 <Error>{imageError[0]}</Error>
                             </ErrorBox>
                             <Fieldset error={imageError.length > 0}>
-                                <PasswordLegend htmlFor="password" theme={theme} error={imageError.length > 0}>Password
-                                    <Input name='password' type='password' autoComplete="none" value={image} theme={theme} onChange={handlePassword}/>
+                                <PasswordLegend htmlFor="image" theme={theme} error={imageError.length > 0}>Optional image
+                                    <Input id='image' theme={theme} bg='none' lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                                 </PasswordLegend>
                             </Fieldset>
                         </InputErrorBox>

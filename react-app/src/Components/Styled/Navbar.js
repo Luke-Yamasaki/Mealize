@@ -115,12 +115,15 @@ export const AuthBox = styled.div`
 
 export const ProfileBox = styled(AuthBox)`
     height: 30px;
-    display: flex;
     gap: 5px;
 `;
 
 export const ProfileName = styled(Bold)`
-    max-width: 140px;
-    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 200px;
+    height: 25px;
+    padding-top: 5px;
     color: ${props => props.theme === 'light' ? '#FFFFFF' : '#191919'};
 `;

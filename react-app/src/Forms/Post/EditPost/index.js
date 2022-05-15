@@ -12,7 +12,7 @@ import { validatePost, uploadImage } from '../../../utils/Forms/items';
 import { Nonprofit } from '../../../Assets/Icons/Nonprofit';
 //Components
 import { PreviewSection } from "../../../Components/Preview";
-
+import { PreviewBox } from "../../../Components/Styled/PreviewSection";
 import styles from './EditItem.module.css';
 import styled from 'styled-components';
 
@@ -133,6 +133,9 @@ export const EditPostForm = ({post}) => {
     const organizationId = sessionUser.organizationId;
     const userId = sessionUser.id;
     //variables
+
+    let props = {title, description, number, unit, categoryId, image, previewImage: post.imageUrl, expDate};
+
 
     const handleEdit = async (e) => {
         e.preventDefault();
@@ -384,7 +387,9 @@ export const EditPostForm = ({post}) => {
 
     return (
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
-            
+            <PreviewBox>
+                <PreviewSection type='item' props={props} />
+            </PreviewBox>
             <FormSection>
                 <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '675px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleEdit}>
                     <FormContent>
@@ -472,10 +477,10 @@ export const EditPostForm = ({post}) => {
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
                         <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
                         {!sessionUser.isNonprofit && (
-                            <div className={(image && !imageErrors.length) && (title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length) ? styles.submit : styles.hold} onClick={(e) => e.target.calssName === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
+                            <div className={(title !== post.title) || (description !== post.description) || (number !== post.quantity.split(' ', 2)[0]) || (unit !== post.quantity.split(' ', 2)[1]) || (categoryId !== post.categoryId.toString()) || (expDate !== `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
                         )}
                         {sessionUser.isNonprofit && (
-                            <div className={(title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length) ? styles.submit : styles.hold} onClick={(e) => e.target.calssName === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
+                            <div className={(title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
                         )}
                     </div>
                 </form>

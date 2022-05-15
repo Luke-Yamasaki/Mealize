@@ -167,7 +167,7 @@ export const PostButton = styled.div`
 `;
 
 export const LogoutButton = styled(PostButton)`
-    background-color: #005C4D;
+    background-color: ${props => props.type === 'volunteer' ? '#D49524' : '#005C4D'};
 `;
 
 export const ResetIcon = styled.p`

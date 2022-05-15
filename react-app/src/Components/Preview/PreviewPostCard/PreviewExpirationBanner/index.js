@@ -12,6 +12,21 @@ import { Flag } from '../../../../Assets/Icons/Flag';
 //Helper
 import { determineExpiration } from "../../../../utils/Dates";
 
+const monthNames = {
+    '01': 'Jan',
+    '02': 'Feb',
+    '03': 'Mar',
+    '04': 'Apr',
+    '05': 'May',
+    '06': 'Jun',
+    '07': 'Jul',
+    '08': 'Aug',
+    '09': 'Sep',
+    '10': 'Oct',
+    '11': 'Nov',
+    '12': 'Dec',
+};
+
 export const PreviewExpirationBanner = ({ props }) => {
     const [flagColor, setFlagColor] = useState('');
     const [date, setDate] = useState('');
@@ -19,9 +34,9 @@ export const PreviewExpirationBanner = ({ props }) => {
 
     const formatDateString = (someDate) => {
         // Only accepts strings
-        const day = someDate.slice(5, 7);
-        const month = someDate.slice(8, 11);
-        const year = someDate.slice(12, 16);
+        const year = someDate.slice(0, 4);
+        const month = monthNames[someDate.slice(5, 7)];
+        const day = someDate.slice(8, 10);
         const formattedDate = month + '/' + day + '/' + year;
         setDate(formattedDate)
     };
@@ -35,6 +50,7 @@ export const PreviewExpirationBanner = ({ props }) => {
             :
             setFlagColor('red') //less than 3 days
 
+            console.log(props.expDate)
             formatDateString(props.expDate);
         } else {
             setFlagColor('green')

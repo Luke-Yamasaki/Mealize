@@ -12,11 +12,12 @@ import { validatePost, uploadImage } from '../../utils/Forms/items';
 //Components
 import { Nonprofit } from '../../Assets/Icons/Nonprofit';
 import { PreviewSection } from "../../Components/Preview";
-
+import { UploadingBox, UploadingMessage } from "../../Components/Styled/PreviewSection";
 import styles from './Item.module.css';
 import styled from 'styled-components';
 import { PreviewBox } from "../../Components/Styled/PreviewSection";
 // import * as preview from '../../Components/PostCard';
+
 
 const FormSection = styled.section`
     display: flex;
@@ -339,11 +340,13 @@ const PostForm = () => {
             <PreviewBox>
                 <PreviewSection type='item' props={props} />
             </PreviewBox>
-            {imageUploading && (
-                <div style={{display: 'flex', alginItems: 'center', justifyContent: 'center',  width: '300px', height: '30px'}}>
-                    <p style={{fontFamily: 'motiva-sans, sans-serif', fontWeight: '900', color: 'white', fontSize: '24px', padding: 'none', margin: 'none'}}>Uploading image...</p>
-                </div>
-            )}
+            {imageUploading &&
+                <UploadingBox>
+                    <UploadingMessage>
+                        Uploading image...
+                    </UploadingMessage>
+                </UploadingBox>
+               }
             <FormSection>
                 <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '675px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
                     <FormContent>

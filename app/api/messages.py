@@ -39,8 +39,9 @@ def new_message():
         image_url = upload["url"]
         message = Message(
             senderId = current_user.id,
-            reveiverId = request.json['receiverId'],
+            receiverId = request.json['receiverId'],
             content = form.data['content'],
+            postId = form.data['postId'],
             imageUrl = image_url
         )
 
@@ -50,8 +51,9 @@ def new_message():
     elif form.validate_on_submit():
         message = Message(
             senderId = current_user.id,
-            reveiverId = request.json['receiverId'],
+            receiverId = request.json['receiverId'],
             content = form.data['content'],
+            postId = form.data['postId'],
             imageUrl = ''
         )
 

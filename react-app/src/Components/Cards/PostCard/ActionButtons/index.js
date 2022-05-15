@@ -97,12 +97,12 @@ export const ActionButtons = ({post}) => {
                 }
             </ButtonBox>
             :
-            !sessionUser.isNonprofit ?
+            !sessionUser.isNonprofit && sessionUser.isManager ?
             <ButtonBox>
                {sessionUser.id === post.userId &&
                     <>
                         <EditBtn theme={theme} onClick={handleEdit}>
-                            <QuestionText theme={theme}>Edit Request</QuestionText>
+                            <QuestionText theme={theme}>Edit Item</QuestionText>
                         </EditBtn>
                         <DeleteBtn onClick={handleDelete}>
                             <ButtonText>Delete Item</ButtonText>

@@ -23,16 +23,10 @@ import { useEffect } from 'react';
 export const Home = () => {
     const sessionUser = useSelector(state => state.session.user);
     const categoriesObj = useSelector(state => state.categories);
-    const favoritesObj = useSelector(state => state.session.user.favorites);
-    let favorites = Object.values(favoritesObj);
 
     // const organizationsObj = useSelector(state => state.organizations)
     const {theme} = useTheme();
     const {filter} = useFilter();
-
-    useEffect(() => {
-        favorites= Object.values(favoritesObj)
-    },[favoritesObj])
 
     const categories = Object.values(categoriesObj);
     // const businesses = Object.values(organizationsObj.businesses);
@@ -55,7 +49,7 @@ export const Home = () => {
             </SideBarContainer>
             <PostsSection>
                 <PostsTitle theme={theme}>Posts</PostsTitle>
-                <PostsFeed filter={filter} favorites={favorites}/>
+                <PostsFeed filter={filter}/>
             </PostsSection>
         </PageBackGround>
     )

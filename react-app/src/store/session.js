@@ -214,10 +214,9 @@ export const removeFavorite = (favoriteId) => async (dispatch) => {
 //     };
 // };
 
-const initialState = { user:null };
+const initialState = { user: null };
 
 export default function sessionReducer(state = initialState, action) {
-    let newState = { ...state };
     switch(action.type) {
         case USER_IS_SET:
             return { user: action.payload };
@@ -226,16 +225,39 @@ export default function sessionReducer(state = initialState, action) {
         case REFRESHED_USER:
             return { user: action.payload };
         case ADDED_FAVORITE:
-            console.log(newState.user.favorites)
-            newState.user.favorites[action.payload.postId] = action.payload;
-            console.log(newState.user.favorites)
-            return newState;
-        case REMOVED_FAVORITE:
-            console.log(newState.user.favorites)
-            delete newState.user.favorites[action.payload]; // Double check to see that payload is the removed id
-            console.log(newState.user.favorites)
+            const newFavoritesState = {
+                ...state,
+                user: {
+                    ...state.user,
+                    favorites: {
+                        ...state.user.favorites
+                    }
+                }
+            };
 
-            return newState;
+            console.log(newFavoritesState.user.favorites)
+            newFavoritesState.user.favorites[action.payload.postId] = action.payload;
+            console.log(newFavoritesState.user.favorites)
+            console.log(newFavoritesState.user.favorites)
+            return newFavoritesState;
+        case REMOVED_FAVORITE:
+              const removedFavoritesState = {
+                ...state,
+                user: {
+                    ...state.user,
+                    favorites: {
+                        ...state.user.favorites
+                    }
+                }
+            };
+
+            console.log(removedFavoritesState.user.favorites)
+            delete removedFavoritesState.user.favorites[action.payload]; // Double check to see that payload is the removed id
+            console.log(removedFavoritesState.user.favorites)
+
+
+            // return removedFavoritesState;
+            return removedFavoritesState;
         default:
             return state;
         // case SENT_MESSAGE:

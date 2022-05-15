@@ -1,17 +1,11 @@
 //Hooks
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTheme } from '../../../../Context/ThemeContext';
 import { useHistory } from 'react-router-dom';
 
 //Styling for card colors
 import { category } from './category.js';
-
-//Actions
-import { setCurrentModal, showModal } from '../../../../store/modal';
-import { removePost } from '../../../../store/posts';
 //Components
-import { DeliveryForm } from '../../../../Forms/Delivery';
-import { EditPostForm } from '../../../../Forms/Post/EditPost';
 import { FavoritesIcon } from '../FavoritesIcon';
 import { ActionButtons } from '../ActionButtons';
 import { VectorBox } from '../../../Styled/Layout';
@@ -32,16 +26,12 @@ import {
     ItemQuantity,
     DescriptionBox,
     DescriptionText,
-    ButtonBox,
-    ButtonText,
-    QuestionText
 } from "../../../Styled/PostCard";
 
 //Helper function
 import { daysAgo } from '../../../../utils/Dates';
 
 export const CardContent = ({ post }) => {
-    const dispatch = useDispatch();
     const { theme } = useTheme();
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);

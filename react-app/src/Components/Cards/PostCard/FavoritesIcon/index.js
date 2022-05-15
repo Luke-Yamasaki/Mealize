@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addFavorite, removeFavorite, refreshUser } from '../../../../store/session';
+import { addFavorite, removeFavorite } from '../../../../store/session';
 
 
 export const FavoritesIcon = ({ post }) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
-    const [favoriteStatus, setFavoriteStatus] = useState(sessionUser?.favorites[post.id] ? true : false);
+    const [favoriteStatus, setFavoriteStatus] = useState(sessionUser.favorites.hasOwnProperty(post.id));
 
     const handleLike = async (e) => {
         e.preventDefault();
@@ -17,8 +17,7 @@ export const FavoritesIcon = ({ post }) => {
     const handleDelete = async (e) => {
         e.preventDefault();
         setFavoriteStatus(false)
-        const favoriteId = sessionUser.favorites[post.id].id
-        dispatch(removeFavorite(favoriteId));
+        dispatch(removeFavorite(sessionUser.favorites[post.id].id));
     };
 
     if(sessionUser.id === post.userId) {

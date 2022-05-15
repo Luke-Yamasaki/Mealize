@@ -9,10 +9,14 @@ import { FeedContainer } from "../Styled/Layout"
 //Helper
 import { determineExpiration } from "../../utils/Dates";
 
-export const PostsFeed = ({filter, favorites}) => {
+export const PostsFeed = ({filter}) => {
     const allPosts = useSelector(state => state.posts.all);
     const sessionUser = useSelector(state => state.session.user);
+    const favoritesObj = useSelector(state => state.session.user.favorites);
+
+    const favorites = Object.values(favoritesObj);
     const posts = Object.values(allPosts);
+
     const availableArr = [];
     const unavailableArr = [];
     const itemsArr = [];
@@ -22,10 +26,6 @@ export const PostsFeed = ({filter, favorites}) => {
     const fruitsArr = [];
     const grainsArr = [];
     const proteinArr = [];
-
-    useEffect(() => {
-        console.log(favorites)
-    },[favorites])
 
     //Availability filter
     posts.map(post => {
@@ -39,7 +39,7 @@ export const PostsFeed = ({filter, favorites}) => {
 
     return (
         <FeedContainer>
-            {((sessionUser && filter === 'favorites') && favorites.length > 0) && favorites.map((obj, idx) => <PostCard key={idx} post={allPosts[obj.postId]}/>)}
+            {sessionUser && filter === 'favorites' && favorites.map((obj, idx) => <PostCard key={idx} post={allPosts[obj.postId]}/>)}
             {filter === 'available' && availableArr.map((post, idx) => <PostCard key={idx} post={post} />)}
             {filter === 'unavailable' && unavailableArr.map((post, idx) => <PostCard key={idx} post={post} />)}
             {filter === 'items' && itemsArr.map((post, idx) => <PostCard key={idx} post={post} />)}

@@ -1,4 +1,5 @@
 //Hooks
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from '../../../../Context/ThemeContext';
 //Actions
@@ -17,14 +18,16 @@ import { useEffect } from "react";
 
 export const ActionButtons = ({post}) => {
     const sessionUser = useSelector(state => state.session.user);
-    const organization = useSelector(state => state.organizations[sessionUser.organizationId])
+    const [organization, setOrganization] = useState('');
     const dispatch = useDispatch();
     const {theme} = useTheme();
 
 
     useEffect(() => {
-        const org = dispatch(getOneOrganization(sessionUser.organizationId));
-        console.log(org)
+        (async() => {
+            const org = await getOneOrganization(sessionUser.organizationId);
+            setOrganization(org)
+        })()
     },[dispatch])
 
 
@@ -39,8 +42,20 @@ export const ActionButtons = ({post}) => {
     };
 
     const handleNotify = () => {
-        console.log(organization);
+        const messages = [];
+        const managersArr = Object.values(organization.managers);
+        managersArr.forEach(manager => {
+            messages.push({
+                content: 'I found a good item!',
+                postId: post.id,
+                imageUrl: '',
+                receiverId: manager.id
+            })
+        })
 
+        messages.forEach(message => {
+            dispatch(sendMessage(message))
+        })
     };
 
     const handleEdit = () => {
@@ -112,7 +127,7 @@ export const ActionButtons = ({post}) => {
                 </QuestionBtn>
                 {post.isItem &&
                 <RequestBtn onClick={handleNotify}>
-                    <ButtonText>Notify your manager</ButtonText>
+                    <ButtonText>Notify manager</ButtonText>
                 </RequestBtn>
                 }
             </ButtonBox>

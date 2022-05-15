@@ -1,9 +1,8 @@
-export const getOneOrganization = (organizationId) => async dispatch => {
+export const getOneOrganization = async (organizationId) => {
     const response = await fetch(`/api/organizations/${organizationId}`);
 
     if(response.ok) {
         const organization = await response.json();
-        console.log(organization)
         return organization
     } else if(response.status < 500) {
         const data = await response.json();

@@ -6,7 +6,7 @@ import { OrganizationCard } from "../../Components/Cards/OrganizationCard";
 import { PostCard } from "../../Components/Cards/PostCard";
 import { PostsSection }  from "../../Components/Styled/Layout"
 import { MessageItem, MessageList, MessagePreviewBox,MessageProfileIcon, MessageSideMenu, MessageTime, MessageUserBox, MessageUserName, MessageContentPreview, MessagePageWrapper, MessageThreadField, MessengerBanner, SelectMessageBox, SelectMessageText } from "../../Components/Styled/Messages";
-import { getMessages } from "../../store/messages";
+import { getBoards } from "../../store/messages";
 import { daysAgo } from "../../utils/Dates";
 
 export const MessagesPage = () => {
@@ -23,7 +23,7 @@ export const MessagesPage = () => {
     let messageThread;
 
     useEffect(() => {
-        dispatch(getMessages());
+        dispatch(getBoards());
         setLoaded(true);
     },[dispatch])
 

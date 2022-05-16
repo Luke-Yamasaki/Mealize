@@ -173,11 +173,8 @@ def delete_message(id):
 @message_routes.route('/conversations/<int:id>', methods=['DELETE'])
 @login_required
 def delete_conversation(id):
-    deleted_data = {}
     board = Messageboard.query.get(id)
-    deleted_data['boardId'] = board.deleted_info()
-
     db.session.delete(board)
     db.session.commit()
 
-    return deleted_data
+    return {'boardId': id}

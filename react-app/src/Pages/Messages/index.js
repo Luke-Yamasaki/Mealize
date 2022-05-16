@@ -17,7 +17,6 @@ export const MessagesPage = () => {
     const users = useSelector(state => state.users);
     const dispatch = useDispatch();
     const [loaded, setLoaded] = useState(false);
-    const [messageArr, setMessageArr] = useState([]);
     const [messageBoardId, setMessageBoardId] = useState(false);
     const {theme} = useTheme();
 
@@ -26,44 +25,48 @@ export const MessagesPage = () => {
         setLoaded(true);
     },[dispatch])
 
+    const handleClick = (e, id) => {
+        e.preventDefault();
+        setMessageBoardId(id)
+    }
 
     return loaded && (
         <MessagePageWrapper>
             <MessageSideMenu theme={theme}>
                 <MessageList> All messages
-                    {/* {Object.values(messageBoards).map((messageBoard, idx) =>
-                        <MessageItem key={idx} theme={theme} onClick={setMessageBoardId(messageBoard.id)}>
-                            <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
+                    {Object.values(messageBoards).map((messageBoard, idx) =>
+                       (<MessageItem key={idx} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>
+                            <MessageProfileIcon src={users[messageBoard.messages[messageBoard.messages.length - 1].senderId].profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>
                                 <MessagePreviewBox>
-                                    <MessageUserName theme={theme}>{users[message.senderId].firstName + ' ' + users[message.senderId].lastName}</MessageUserName>
-                                    <MessageContentPreview>{message.content}</MessageContentPreview>
+                                    <MessageUserName theme={theme}>{users[messageBoard.messages[messageBoard.messages.length - 1].senderId].firstName + ' ' + users[messageBoard.messages[messageBoard.messages.length - 1].senderId].lastName}</MessageUserName>
+                                    <MessageContentPreview>{messageBoard.messages[messageBoard.messages.length - 1].content}</MessageContentPreview>
                                 </MessagePreviewBox>
-                                <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
+                                <MessageTime theme={theme}>{daysAgo(messageBoard.messages[messageBoard.messages.length - 1].createdAt)}</MessageTime>
                             </MessageUserBox>
-                        </MessageItem>
-                    )} */}
+                        </MessageItem>)
+                    )}
                 </MessageList>
             </MessageSideMenu>
             <MessageThreadField theme={theme}>
-                {(!messageBoardId && messageBoards) &&
+                {(!messageBoardId && Object.values(messageBoards).length > 0) &&
                     <SelectMessageBox>
                         <SelectMessageText theme={theme}>
                             Please select a message from the left menu.
                         </SelectMessageText>
                     </SelectMessageBox>
                 }
-                {(!messageBoardId && !messageBoards) &&
+                {(!messageBoardId && !Object.values(messageBoards).length) &&
                     <SelectMessageBox>
                         <SelectMessageText theme={theme}>
                             {sessionUser.isManaer ? "You can send messages by clicking on the 'Ask a question' button on items or request." : "You can send messages by clicking on the 'Ask a question' or 'Notify manager' button on items or request."}
                         </SelectMessageText>
                     </SelectMessageBox>
                 }
-                {(messageBoardId && messageBoards) &&
+                {(messageBoardId && Object.values(messageBoards).length > 0) &&
                     <>
-                        {Object.values(messageBoards[messageBoardId].messages).map((message, idx) =>
-                            <MessengerBanner id={idx}>
+                        {Object.values(messageBoards[messageBoardId].messages).map((message) =>
+                            <MessengerBanner id={message.id}>
                                 <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
                                     <MessageUserBox>
                                         <MessagePreviewBox>

@@ -391,7 +391,7 @@ const PostForm = () => {
                             <legend className={categoryId ? styles.completed : styles.incomplete}>Food category</legend>
                                 <select style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} id='food-group' value={categoryId} onChange={handleCategory}>
                                     <optgroup label="Food category">
-                            <option value='' disabled>Select a category</option>
+                                    <option value='' disabled>Select a category</option>
                                         <option value={1}>Dairy</option>
                                         <option value={2}>Vegetables</option>
                                         <option value={3}>Fruits</option>
@@ -461,10 +461,10 @@ const PostForm = () => {
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
                         <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
                         {!sessionUser.isNonprofit && (
-                            <div className={(image && !imageErrors.length) && (title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length) ? styles.submit : styles.hold} onClick={(e) => e.target.calssName === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
+                            <div className={(image && !imageErrors.length) && (title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
                         )}
                         {sessionUser.isNonprofit && (
-                            <div className={(title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length) ? styles.submit : styles.hold} onClick={(e) => e.target.calssName === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
+                            <div className={(title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
                         )}
                     </div>
                 </form>
@@ -474,73 +474,3 @@ const PostForm = () => {
 };
 
 export default PostForm;
-
-//<div className={[styles.card, styles[`${className}`]].join(' ')}>
-// {!sessionUser.isNonprofit ?
-//     (
-//         <img src={ image ? URL.createObjectURL(image) : 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg'} className={styles.image} alt='Item post'/>
-//     )
-//     : categoryId === '' || categoryId === '1' ?
-//     (
-//         <img src={'https://mealize.s3.amazonaws.com/dairy_request.png'} className={styles.image} alt='Item post' />
-//     )
-//     : categoryId === '2' ?
-//     (
-//         <img src={'https://mealize.s3.amazonaws.com/vegetables_request.png'} className={styles.image} alt='Item post' />
-//     )
-//     : categoryId === '3' ?
-//     (
-//         <img src={'https://mealize.s3.amazonaws.com/fruits_request.png'} className={styles.image} alt='Item post' />
-//     )
-//     : categoryId === '4' ?
-//     (
-//         <img src={'https://mealize.s3.amazonaws.com/grains_request.png'} className={styles.image} alt='Item post' />
-//     )
-//     :
-//     (
-//         <img src={'https://mealize.s3.amazonaws.com/protein_request.png'} className={styles.image} alt='Item post' />
-//     )
-// }
-// <preview.UserTitle>
-//     <preview.UserImage>
-//         <img src={sessionUser.profileImageUrl} className={styles.profile} alt="User profile."/>
-//         <preview.NameText>{ `${sessionUser.firstName}` }</preview.NameText>
-//     </preview.UserImage>
-//     <preview.TitleBox>
-//         <preview.Title>
-//             <TitleDiv>
-//                 { !title ? 'Your post title' : (title.length > 0 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? title.slice(0, 1).toUpperCase().concat(title.slice(1, title.length)) : <strong style={{color: 'red'}}>Please add line breaks like this!</strong> }
-//             </TitleDiv>
-//         </preview.Title>
-//     </preview.TitleBox>
-//     <preview.CategoryBox>
-//         { categoryId === '2'
-//         ? <VegetablesIcon />
-//         : categoryId === '3'
-//         ? <FruitsIcon />
-//         : categoryId === '4'
-//         ? <GrainsIcon />
-//         : categoryId === '5'
-//         ? <ProteinIcon />
-//         : <DairyIcon />
-//         }
-//     </preview.CategoryBox>
-// </preview.UserTitle>
-// <preview.InfoBox>
-//     <preview.DescriptionBox>
-//         <preview.DescriptionLabel>[Description] <preview.DescriptionText>{description ? description.slice(0, 1).toUpperCase().concat(description.slice(1, description.length)) : 'Your description goes here...'}</preview.DescriptionText></preview.DescriptionLabel>
-//     </preview.DescriptionBox>
-//     <preview.SubInfoContainer>
-//         <preview.SubInfoBox>Quantity:
-//             <preview.SubInfoText>{`${number} ${unit}`}</preview.SubInfoText>
-//         </preview.SubInfoBox>
-//         <preview.SubInfoBox>Expires:
-//             <preview.SubInfoText>{expDate ? `${monthNames[expDate.toString().slice(5,7)]}/${expDate.toString().slice(8, 10)}/${expDate.toString().slice(0, 4)}` : 'mm/dd/yyyy'}</preview.SubInfoText>
-//         </preview.SubInfoBox>
-//     </preview.SubInfoContainer>
-// </preview.InfoBox>
-// <preview.IdBox>
-//     <preview.IdText>Id:{sessionUser.id}</preview.IdText>
-//     <preview.MealizeText>Mealize LLC <XSLogo /></preview.MealizeText>
-// </preview.IdBox>
-// </div>

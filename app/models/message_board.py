@@ -16,7 +16,7 @@ class Messageboard(db.Model):
             'id': self.id,
             'user_one': self.user_one,
             'user_two': self.user_two,
-            'messages': {message.id:message.to_dict() for message in self.messages},
+            'messages': [message.to_dict() for message in self.messages],
             'createdAt': self.createdAt
         }
 

@@ -80,14 +80,13 @@ async dispatch => {
 
 const deliveriesReducer = (state = {}, action) => {
     const newState = {...state};
-
     switch(action.type) {
         case CREATED_DELIVERY: {
-          newState.deliveries[action.payload.delivery.id] = action.payload
+          newState[action.payload.id] = action.payload
           return newState
         }
         case GOT_ALL_DELIVERIES: {
-          newState.deliveries = action.payload.deliveries
+          newState = action.payload
           return newState;
         }
         case UPDATED_DELIVERY: {

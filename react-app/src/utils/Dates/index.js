@@ -8,7 +8,7 @@ export const determineExpiration = (expDate) => {
 
 export const daysAgo = (post) => {
     const today = new Date();
-    const postDate = new Date(post.updatedAt);
+    const postDate = new Date(post.updatedAt ? post.updatedAt : post.createdAt);
     const milliseconds = today - postDate;
     const daysPassed = Math.floor(milliseconds / 1000 / 60 / 60 / 24);
     const hoursPassed = Math.floor(milliseconds / 1000 / 60 / 60);

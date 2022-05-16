@@ -11,34 +11,28 @@ import { daysAgo } from "../../utils/Dates";
 
 export const MessagesPage = () => {
     const sessionUser = useSelector(state => state.session.user);
-    const messages = useSelector(state => state.messages);
+    const messageBoards = useSelector(state => state.messageBoards);
     const posts = useSelector(state => state.posts.all);
     const organizations = useSelector(state => state.organizations);
     const users = useSelector(state => state.users);
     const dispatch = useDispatch();
     const [loaded, setLoaded] = useState(false);
+    const [messageArr, setMessageArr] = useState([]);
     const [messageBoardId, setMessageBoardId] = useState(false);
     const {theme} = useTheme();
-
-    let messageThread;
 
     useEffect(() => {
         dispatch(getBoards());
         setLoaded(true);
     },[dispatch])
 
-    useEffect(() => {
-        if(messageBoardId) {
-            messageThread = messages[messageBoardId]
-        }
-    },[messageBoardId])
 
     return loaded && (
         <MessagePageWrapper>
             <MessageSideMenu theme={theme}>
                 <MessageList> All messages
-                    {Object.values(messages).map((message, idx) =>
-                        <MessageItem key={idx} theme={theme} onClick={setMessageBoardId(message.boardId)}>
+                    {/* {Object.values(messageBoards).map((messageBoard, idx) =>
+                        <MessageItem key={idx} theme={theme} onClick={setMessageBoardId(messageBoard.id)}>
                             <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>
                                 <MessagePreviewBox>
@@ -48,27 +42,27 @@ export const MessagesPage = () => {
                                 <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
                             </MessageUserBox>
                         </MessageItem>
-                    )}
+                    )} */}
                 </MessageList>
             </MessageSideMenu>
             <MessageThreadField theme={theme}>
-                {(!messageBoardId && messages) &&
+                {(!messageBoardId && messageBoards) &&
                     <SelectMessageBox>
                         <SelectMessageText theme={theme}>
                             Please select a message from the left menu.
                         </SelectMessageText>
                     </SelectMessageBox>
                 }
-                {(!messageBoardId && !messages) &&
+                {(!messageBoardId && !messageBoards) &&
                     <SelectMessageBox>
                         <SelectMessageText theme={theme}>
                             {sessionUser.isManaer ? "You can send messages by clicking on the 'Ask a question' button on items or request." : "You can send messages by clicking on the 'Ask a question' or 'Notify manager' button on items or request."}
                         </SelectMessageText>
                     </SelectMessageBox>
                 }
-                {messageBoardId &&
+                {(messageBoardId && messageBoards) &&
                     <>
-                        {Object.values(messageThread).map((message, idx) =>
+                        {Object.values(messageBoards[messageBoardId].messages).map((message, idx) =>
                             <MessengerBanner id={idx}>
                                 <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
                                     <MessageUserBox>

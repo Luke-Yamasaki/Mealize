@@ -79,7 +79,7 @@ async dispatch => {
 
 
 const deliveriesReducer = (state = {}, action) => {
-    const newState = {...state};
+    let newState = {...state};
     switch(action.type) {
         case CREATED_DELIVERY: {
           newState[action.payload.id] = action.payload

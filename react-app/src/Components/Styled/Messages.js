@@ -7,7 +7,8 @@ export const MessagePageWrapper = styled.main`
     justify-content: flex-start;
     align-items: top;
     width: 1600px;
-    height: 95vh;
+    min-height: 55vh;
+    height: auto;
 `;
 
 export const MessageSideMenu = styled.section`

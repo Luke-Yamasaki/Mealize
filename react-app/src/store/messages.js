@@ -37,6 +37,7 @@ const deletedConversation = payload => ({
 
 export const getBoards = () => async (dispatch) => {
     const response = await fetch('/api/messages/');
+    console.log(response)
     if(response.ok) {
         const messages = await response.json();
         dispatch(gotBoards(messages));

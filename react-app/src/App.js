@@ -17,6 +17,7 @@ import { getAllPosts } from './store/posts';
 import { Home } from './Pages/Home';
 import { FourOFour } from './Pages/FourOFour';
 import { Deliveries } from './Pages/Deliveries';
+import { MessagesPage } from './Pages/Messages';
 
 //Components
 import { Settings } from './Assets/Icons/Settings';
@@ -78,6 +79,11 @@ function App() {
           {sessionUser &&
           <Route exact path='/deliveries'>
             <Deliveries />
+          </Route>
+          }
+          {sessionUser &&
+          <Route exact path='/messages'>
+            <MessagesPage />
           </Route>
           }
           <Route>

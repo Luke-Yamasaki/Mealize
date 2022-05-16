@@ -9,6 +9,7 @@ import { hideModal } from '../../store/modal';
 import { OrganizationCard } from '../../Components/Cards/OrganizationCard'
 import styles from './Delivery.module.css';
 import styled from 'styled-components';
+import { timesObj } from './times';
 
 const DeliveryBox = styled.div`
     display: flex;
@@ -105,7 +106,6 @@ const DateTimeBox = styled.div`
 
 
 export const DeliveryForm = ({ post }) => {
-    const sessionUser = useSelector(state => state.session.user);
     const business = useSelector(state => state.organizations.businesses[post.organizationId])
     const dispatch = useDispatch();
     const history = useHistory();
@@ -161,14 +161,15 @@ export const DeliveryForm = ({ post }) => {
             //check errors
             if (!newDelivery.error) {
                 const requestMessage = {
+                    content: `Hello! I would like to pick up this item at ${timesObj[time]} on ${date.slice(5, 7)}/${date.slice(8, 10)}/${date.slice(0, 4)}`,
                     receiverId: post.userId,
+                    postId: post.id,
                     imageUrl: post.imageUrl
                 }
                 const newMessage = await dispatch(sendMessage(requestMessage))
 
                 dispatch(hideModal())
-                history.push(`/`);
-                return newDelivery
+                history.push(`/messages`);
             } else {
                 newDelivery.error.map(err => {
                     if(err.includes('date')) {
@@ -179,9 +180,9 @@ export const DeliveryForm = ({ post }) => {
                 })
             }
         }
-
         setDateErrors(dateErrArr);
         setTimeErrors(timeErrArr);
+        return
     }
 
     return (
@@ -209,14 +210,14 @@ export const DeliveryForm = ({ post }) => {
                             )}
                             <fieldset style={{width: '200px', height: '50px'}} className={styles.fieldsets}>
                                 <legend className={date && !dateErrors.length ? `${styles.legends} ${styles.confirmed}` : `${styles.legends} ${styles.error}`}>Select a date</legend>
-                                <input required type="date" name="date" style={{width: '170px', padding: '0px'}} className={styles.date} min={today} value={date} onChange={(e) => setDate(e.target.value) }/>
+                                <input required type="date" name="date" style={{width: '170px', padding: '0px'}} className={styles.date} min={today} value={date} onChange={(e) => setDate(e.target.value)}/>
                             </fieldset>
                             {timeErrors && (
                                 <ErrorMessage>{timeErrors[0]}</ErrorMessage>
                             )}
                             <fieldset style={{width: '200px', height: '50px'}} className={styles.fieldsets}>
                                 <legend className={time && !timeErrors.length ? `${styles.legends} ${styles.confirmed}` : `${styles.legends} ${styles.error}`}>Select a time</legend>
-                                <select required value={time} style={{width: '170px', height: '20px', padding: '0px'}} className={styles.time} onChange={(e) => setTime(e.target.value)}>
+                                <select required value={time} style={{width: '170px', height: '20px', padding: '0px'}} className={styles.time} onChange={(e) => setTime(e.target.value) }>
                                     <option value="">{!date ? '<-- Select a date first' : '--Select a time--'}</option>
                                     {date &&
                                     <>

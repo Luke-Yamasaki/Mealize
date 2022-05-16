@@ -8,7 +8,7 @@ import { useBackGround } from './Context/BackGroundContext';
 // actions
 import { authenticate } from './store/session';
 import { getCategories } from './store/categories';
-import { getBatchedOrganizations } from './store/organizations';
+import { getBatchedOrganizations, getOneOrganization } from './store/organizations';
 import { getBatchedUsers } from './store/users';
 import { getAllPosts } from './store/posts';
 // import { getAllDeliveries } from './store/deliveries';
@@ -53,6 +53,12 @@ function App() {
       setIsLoaded(true)
     })()
   },[dispatch]);
+
+  useEffect(() => {
+    if(sessionUser) {
+        dispatch(getOneOrganization(sessionUser.organizationId));
+    }
+},[sessionUser])
 
   if(!isLoaded) {
     return null;

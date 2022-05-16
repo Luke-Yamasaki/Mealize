@@ -1,7 +1,7 @@
 //Hooks
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
-import { useFilter } from '../../Context/FilterContext';
+
 //Components
 import { PostsFeed } from '../../Components/PostsFeed';
 import { CategoryFilter } from '../../Components/Filter/category';
@@ -22,7 +22,6 @@ import {
 export const Home = () => {
     const sessionUser = useSelector(state => state.session.user);
     const categoriesObj = useSelector(state => state.categories);
-
     // const organizationsObj = useSelector(state => state.organizations)
     const {theme} = useTheme();
 

@@ -132,17 +132,17 @@ export const removePost = (postId) => async (dispatch) => {
     };
 };
 
-export default function postsReducer(state = {}, action) {
-    const newState = { ...state };
+export default function postsReducer(state = {all: null}, action) {
+    let newState = { all: {...state.all} };
     switch(action.type) {
         case CREATED_POST:
-            newState.all[action.payload?.id] = action.payload;
+            newState.all[action.payload?.id] = action.payload
             return newState
         case GOT_ALL_POSTS:
             newState.all = action.payload;
             return newState
         case GOT_BATCHED_POSTS:
-            newState.batched = action.payload;
+            newState.all = action.payload;
             return newState;
         case UPDATED_POST:
             newState.all[action.payload?.id] = action.payload;

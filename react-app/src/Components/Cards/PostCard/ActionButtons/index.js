@@ -1,37 +1,24 @@
 //Hooks
-import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from '../../../../Context/ThemeContext';
 //Actions
 import { setCurrentModal, showModal } from '../../../../store/modal';
 import { removePost } from "../../../../store/posts";
 import { sendMessage } from "../../../../store/messages";
-import { getOneOrganization } from '../../../../utils/Organizations';
 //Components
 import { ButtonBox } from "../../../Styled/PostCard";
-import { ActionBox } from "../../../Styled/Buttons";
 
 import { QuestionBtn, RequestBtn, ButtonText, EditBtn, DeleteBtn } from "../../../Styled/Buttons";
 import { QuestionText } from "../../../Styled/PostCard";
 import  { DeliveryForm } from '../../../../Forms/Delivery';
 import { MessageForm } from "../../../../Forms/Message";
 import  { EditPostForm } from '../../../../Forms/Post/EditPost';
-import { useEffect } from "react";
 
 export const ActionButtons = ({post}) => {
     const sessionUser = useSelector(state => state.session.user);
-    const [organization, setOrganization] = useState('');
     const dispatch = useDispatch();
     const {theme} = useTheme();
-
-
-    useEffect(() => {
-        (async() => {
-            const org = await getOneOrganization(sessionUser.organizationId);
-            setOrganization(org)
-        })()
-    },[dispatch])
-
+    const organization = useSelector(state => state.organizations.session);
 
     const handleQuestion = () => {
         dispatch(setCurrentModal(() => <MessageForm post={post}/>));
@@ -45,6 +32,7 @@ export const ActionButtons = ({post}) => {
 
     const handleNotify = () => {
         const messages = [];
+        console.log(organization)
         const managersArr = Object.values(organization.managers);
         managersArr.forEach(manager => {
             messages.push({

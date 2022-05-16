@@ -5,7 +5,7 @@ import usersReducer from './users';
 import organizationsReducer from './organizations';
 import postsReducer from './posts';
 import deliveriesReducer from './deliveries';
-import messagesReducer from './messages';
+import messageBoardsReducer from './messages';
 import categoriesReducer from './categories';
 
 import modals from './modal';
@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
     users: usersReducer,
     posts: postsReducer,
     deliveries: deliveriesReducer,
-    messages: messagesReducer,
+    messageBoards: messageBoardsReducer,
     modals
 });
 

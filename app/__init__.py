@@ -69,6 +69,10 @@ def inject_csrf_token(response):
         httponly=True)
     return response
 
+@app.errorhandler(405)
+def bad_method(e):
+    return {'message': ['Method not allowed']}, 405
+
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')

@@ -1,15 +1,20 @@
-// packages
-import styled from 'styled-components';
-
+//Hooks
 import { useDispatch, useSelector} from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+//Actions
 import { getAllDeliveries, updateDelivery, deleteDelivery } from '../../store/deliveries';
-import { useEffect } from 'react';
 import { setCurrentModal } from '../../store/modal';
+
+//Components
 import { PostCard } from '../../Components/Cards/PostCard';
 import { DeliveryForm } from '../../Forms/Delivery';
 import { OrganizationCard } from '../../Components/Cards/OrganizationCard';
+
+// packages
+import styled from 'styled-components';
+import { MessageList, MessagePageWrapper, MessageSideMenu, MessageThreadField } from '../../Components/Styled/Messages';
 
 const Wrapper = styled.div`
     width: 1550px;
@@ -65,21 +70,30 @@ export const Deliveries = () => {
     const deliveries = useSelector(state => state.deliveries)
     const sessionUser = useSelector(state => state.session.user)
     const posts = useSelector(state => state.posts);
-    const [selected, setSelected] = useState('')
+    const [selected, setSelected] = useState('');
+    const [loaded, setLoaded] = useState(false)
 
-    return (
-        <Wrapper>
-            <Header>
-                <PageLabel>Deliveries</PageLabel>
-                {deliveries && deliveries.deliveries.map((delivery, idx) => <div style={{width: '500px', height: '200px', display: 'flex', alignItems: 'left', justifyContent: 'left', flexDirection: 'column'}} key={idx} id={delivery.postId} onClick={(e) => setSelected(e.target.id)}>Picking up at: <div>{`${delivery.date}`}</div><OrganizationCard organization={delivery.location} /></div>)}
-            </Header>
-            <MessageContent>
-                <div>
-                    <div>
-                        {selected !== '' &&  <div style={{width: '500px', height: '600px', backgroundColor: 'rgba(0, 0, 0, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center'}}><PostCard post={posts.posts[selected]} /></div>}
-                    </div>
-                </div>
-            </MessageContent>
-        </Wrapper>
+    useEffect(() => {
+        dispatch(getAllDeliveries());
+        setLoaded(true)
+    },[dispatch])
+
+    console.log(deliveries)
+
+    return loaded && (
+            <MessagePageWrapper>
+            <MessageSideMenu>
+                <MessageList>Deliveries</MessageList>
+                {deliveries !== {} && Object.values(deliveries).map((delivery, idx) =>
+                <div style={{width: '500px', height: '200px', display: 'flex', alignItems: 'left', justifyContent: 'left', flexDirection: 'column'}} key={idx} id={delivery.postId} onClick={(e) => setSelected(e.target.id)}>
+                    Picking up at:
+                    <div>{`${delivery.date}`}</div>
+                    <OrganizationCard organization={delivery.location} />
+                </div>)}
+            </MessageSideMenu>
+            <MessageThreadField>
+
+            </MessageThreadField>
+            </MessagePageWrapper>
     )
 }

@@ -6,7 +6,7 @@ import { addFavorite, removeFavorite } from '../../../../store/session';
 export const FavoritesIcon = ({ post }) => {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
-    const [favoriteStatus, setFavoriteStatus] = useState(sessionUser.favorites.hasOwnProperty(post.id));
+    const [favoriteStatus, setFavoriteStatus] = useState(sessionUser.favorites[post.id] !== undefined);
 
     const handleLike = async (e) => {
         e.preventDefault();

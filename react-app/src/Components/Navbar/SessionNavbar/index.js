@@ -1,5 +1,6 @@
 //Hooks
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { useTheme } from '../../../Context/ThemeContext';
 // Actions
 import { logout } from '../../../store/session';
@@ -20,6 +21,7 @@ import { InboxIcon } from '../../../Assets/Icons/Inbox';
 export const SessionNavbar = ({sessionUser}) => {
     const dispatch = useDispatch();
     const {theme} = useTheme();
+    const history = useHistory();
 
     const showPostForm = () => {
         dispatch(setCurrentModal(PostForm));
@@ -29,6 +31,11 @@ export const SessionNavbar = ({sessionUser}) => {
     const logOut = () => {
         dispatch(logout())
     };
+
+    const handleMessages = (e) => {
+        e.preventDefault();
+        history.push('/messages')
+    }
 
     return (
         <NavBar>
@@ -45,8 +52,8 @@ export const SessionNavbar = ({sessionUser}) => {
                         <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' />
                         <ProfileName>{`Hello ${sessionUser.firstName}!`}</ProfileName>
                     </ProfileBox>
-                    <VectorBox square='30px' resize='32px'>
-                        <InboxIcon theme={theme} />
+                    <VectorBox square='30px' resize='32px' cursor='pointer' onClick={handleMessages}>
+                        <InboxIcon theme={theme}/>
                     </VectorBox>
                     {sessionUser.isManager &&
                         <PostButton onClick={showPostForm}>

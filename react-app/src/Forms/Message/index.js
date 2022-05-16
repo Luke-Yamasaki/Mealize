@@ -9,7 +9,7 @@ import Filter from 'bad-words';
 
 //Helpers
 import { getIp } from '../../utils/Forms/signup';
-
+import { swearWords } from './swearWords';
 //Actions
 import { sendMessage } from '../../store/messages';
 import { hideModal } from '../../store/modal';
@@ -24,16 +24,17 @@ import {
     LogoType,
     Form,
     Fieldset,
-    EmailLegend,
+    Legend,
     Input,
     Error,
     ErrorBox,
-    PasswordLegend,
     FormTitleBox,
     FormTitle,
-    FormContent,
+    MessageFormContent,
     InputContainer,
-    InputErrorBox
+    InputErrorBox,
+    MessageArea,
+    MessageFieldset
 } from '../../Components/Styled/AuthenticationForm';
 
 import {
@@ -41,7 +42,8 @@ import {
     SubmitButton,
     ButtonText,
     CancelButton,
-    InputButtonBox
+    InputButtonBox,
+    MessageButtonBox
 } from '../../Components/Styled/Buttons';
 
 
@@ -60,7 +62,6 @@ export const MessageForm = ({ post }) => {
 
     const filter = new Filter();
 
-    const swearWords = ['fuck', 'shit', 'ass', 'damn', 'dammit', 'ass', 'arse', 'bastard', 'bitch', 'cocksucker', 'cunt', 'nigger', 'nigga', 'chink', 'beaner', 'slut', 'whore', 'twat'];
     filter.addWords(...swearWords);
 
     const handleContent = (e) => {
@@ -161,30 +162,29 @@ export const MessageForm = ({ post }) => {
                 <FormTitleBox>
                     <FormTitle theme={theme}>Message form</FormTitle>
                 </FormTitleBox>
-                <FormContent>
-                    <InputContainer height={contentError.length > 0 ? '170px' : '150px'}>
+                <MessageFormContent>
+                    <InputContainer height='auto'>
                         <InputErrorBox>
                             <ErrorBox theme={theme} height={contentError.length > 0 ? '20px' : '0px'}>
                                 <Error>{contentError[0]}</Error>
                             </ErrorBox>
-                            <Fieldset error={contentError.length > 0}>
-                                <EmailLegend htmlFor='content' theme={theme} error={contentError.length > 0}>Message
-                                    <Input name="content" type="text" value={content} theme={theme} onChange={handleContent} required/>
-                                </EmailLegend>
-                            </Fieldset>
+                            <MessageFieldset error={contentError.length > 0} height='auto'>
+                                <Legend htmlFor='content' theme={theme} error={contentError.length > 0}>Message</Legend>
+                                    <MessageArea name="content" type="text" value={content} theme={theme} onChange={handleContent} required/>
+                            </MessageFieldset>
                         </InputErrorBox>
                         <InputErrorBox>
                             <ErrorBox theme={theme} height={imageError.length > 0 ? '20px' : '0px'}>
                                 <Error>{imageError[0]}</Error>
                             </ErrorBox>
                             <Fieldset error={imageError.length > 0}>
-                                <PasswordLegend htmlFor="image" theme={theme} error={imageError.length > 0}>Optional image
-                                    <Input id='image' theme={theme} bg='none' lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
-                                </PasswordLegend>
+                                <Legend htmlFor="image" theme={theme} width='117px' error={imageError.length > 0}>Optional image
+                                    <Input id='image' theme={theme} lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
+                                </Legend>
                             </Fieldset>
                         </InputErrorBox>
                     </InputContainer>
-                    <ButtonBox>
+                    <MessageButtonBox>
                         <InputButtonBox>
                             <CancelButton onClick={cancel}>
                                 <ButtonText>Cancel</ButtonText>
@@ -193,8 +193,8 @@ export const MessageForm = ({ post }) => {
                                 <ButtonText>Submit</ButtonText>
                             </SubmitButton>
                         </InputButtonBox>
-                    </ButtonBox>
-                </FormContent>
+                    </MessageButtonBox>
+                </MessageFormContent>
             </Form>
         </FormContainer>
     )

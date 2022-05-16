@@ -1,7 +1,7 @@
 //Hooks
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
+import { useFilter } from "../../Context/FilterContext";
 //Components
 import { PostCard } from "../Cards/PostCard";
 import { FeedContainer } from "../Styled/Layout"
@@ -9,10 +9,11 @@ import { FeedContainer } from "../Styled/Layout"
 //Helper
 import { determineExpiration } from "../../utils/Dates";
 
-export const PostsFeed = ({filter}) => {
+export const PostsFeed = () => {
     const allPosts = useSelector(state => state.posts.all);
     const sessionUser = useSelector(state => state.session.user);
     const favoritesObj = useSelector(state => state.session.user?.favorites);
+    const {filter} = useFilter();
 
     const favorites = favoritesObj ? Object.values(favoritesObj) : [];
     const posts = Object.values(allPosts);
@@ -39,11 +40,11 @@ export const PostsFeed = ({filter}) => {
 
     return (
         <FeedContainer>
-            {sessionUser && filter === 'favorites' && favorites.map((obj, idx) => <PostCard key={idx} post={allPosts[obj.postId]}/>)}
-            {filter === 'available' && availableArr.map((post, idx) => <PostCard key={idx} post={post} />)}
+            {filter === 'favorites' && favorites.map((obj) => <PostCard key={obj.id} post={allPosts[obj.postId]}/>)}
+            {filter === 'available' && availableArr.reverse().map((post, idx) => <PostCard key={idx} post={post} />)}
             {filter === 'unavailable' && unavailableArr.map((post, idx) => <PostCard key={idx} post={post} />)}
-            {filter === 'items' && itemsArr.map((post, idx) => <PostCard key={idx} post={post} />)}
-            {filter === 'requests' && requestsArr.map((post, idx) => <PostCard key={idx} post={post} />)}
+            {filter === 'items' && itemsArr.reverse().map((post, idx) => <PostCard key={idx} post={post} />)}
+            {filter === 'requests' && requestsArr.reverse().map((post, idx) => <PostCard key={idx} post={post} />)}
             {filter === 'dairy' && dairyArr.map((post, idx) => <PostCard key={idx} post={post} />)}
             {filter === 'vegetables' && vegetablesArr.map((post, idx) => <PostCard key={idx} post={post} />)}
             {filter === 'fruits' && fruitsArr.map((post, idx) => <PostCard key={idx} post={post} />)}

@@ -86,6 +86,13 @@ export const FormContent = styled.div`
     justify-content: space-between;
 `;
 
+export const MessageFormContent = styled(FormContent)`
+    height: auto;
+    max-height: 350px;
+    min-height: 350px;
+    justify-content: flex-start;
+`;
+
 export const InputContainer = styled(FormContent)`
     height: ${props => props.height};
     margin: ${props => props.margin ? props.margin : '0px'};
@@ -113,7 +120,31 @@ export const Fieldset = styled.fieldset`
     padding-left: 5px;
 `;
 
+
 export const Legend = styled.legend`
+    color: ${props => props.error ? 'rgba(255, 0, 0, 0.75)' : '#28A690'};
+    background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+    font-size: 16px;
+    width: ${props => props.width ? props.width : '70px'};
+    height: 15px;
+    font-weight: 600;
+`;
+
+export const MessageFieldset = styled.fieldset`
+    width: 340px;
+    height: ${props => props.height ? props.height : '35px'};
+    border: ${props => props.error ? '1px solid rgba(255, 0, 0, 0.75)' : '1px solid #28A690'};
+    border-radius: 3px;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0px;
+    padding-left: 5px;
+`;
+
+export const MessageLegend = styled.legend`
     color: ${props => props.error ? 'rgba(255, 0, 0, 0.75)' : '#28A690'};
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     font-size: 16px;
@@ -147,6 +178,13 @@ export const Input = styled.input`
     ::-webkit-calendar-picker-indicator {
         filter: ${props => props.theme === 'light' ? '' : 'invert(1)'};
     }
+`;
+
+export const MessageArea = styled.textarea`
+    width: 335px;
+    height: auto;
+    resize: vertical;
+    max-height: 180px;
 `;
 
 export const ErrorBox = styled.div`

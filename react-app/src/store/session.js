@@ -238,7 +238,6 @@ export default function sessionReducer(state = initialState, action) {
             console.log(newFavoritesState.user.favorites)
             newFavoritesState.user.favorites[action.payload.postId] = action.payload;
             console.log(newFavoritesState.user.favorites)
-            console.log(newFavoritesState.user.favorites)
             return newFavoritesState;
         case REMOVED_FAVORITE:
               const removedFavoritesState = {

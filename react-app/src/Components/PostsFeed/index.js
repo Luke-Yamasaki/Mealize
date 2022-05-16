@@ -13,8 +13,10 @@ export const PostsFeed = ({filter}) => {
     const allPosts = useSelector(state => state.posts.all);
     const sessionUser = useSelector(state => state.session.user);
     const favoritesObj = useSelector(state => state.session.user?.favorites);
+    console.log(favoritesObj)
 
     const favorites = favoritesObj ? Object.values(favoritesObj) : [];
+    console.log(favorites)
     const posts = Object.values(allPosts);
 
     const availableArr = [];
@@ -39,7 +41,7 @@ export const PostsFeed = ({filter}) => {
 
     return (
         <FeedContainer>
-            {sessionUser && filter === 'favorites' && favorites.map((obj, idx) => <PostCard key={idx} post={allPosts[obj.postId]}/>)}
+            {sessionUser && filter === 'favorites' && favorites.map((obj) => <PostCard key={obj.id} post={allPosts[obj.postId]}/>)}
             {filter === 'available' && availableArr.map((post, idx) => <PostCard key={idx} post={post} />)}
             {filter === 'unavailable' && unavailableArr.map((post, idx) => <PostCard key={idx} post={post} />)}
             {filter === 'items' && itemsArr.map((post, idx) => <PostCard key={idx} post={post} />)}

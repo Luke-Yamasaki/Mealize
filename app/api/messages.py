@@ -54,7 +54,7 @@ def new_conversation():
         )
         db.session.add(message)
         db.session.commit()
-        return {board.id:board.to_dict()}
+        return board.to_dict()
     elif form.validate_on_submit():
         board = Messageboard(
             user_one = current_user.id,
@@ -73,7 +73,7 @@ def new_conversation():
 
         db.session.add(message)
         db.session.commit()
-        return {board.id:board.to_dict()}
+        return board.to_dict()
     else:
         return {'errors': errors_to_list(form.errors)}
 
@@ -102,7 +102,7 @@ def reply():
 
         db.session.add(message)
         db.session.commit()
-        return {board.id:board.to_dict()}
+        return board.to_dict()
     elif form.validate_on_submit():
         board = Messageboard.query.get(request.json['boardId'])
         message = Message(
@@ -115,7 +115,7 @@ def reply():
 
         db.session.add(message)
         db.session.commit()
-        return {board.id:board.to_dict()}
+        return board.to_dict()
     else:
         return {'errors': errors_to_list(form.errors)}
 
@@ -143,7 +143,7 @@ def edit_message(id):
             message.postId = form.data['postId'],
             message.imageUrl = image_url
         db.session.commit()
-        return {board.id:board.to_dict()}
+        return board.to_dict()
     elif form.validate_on_submit():
         message = Message.query.get(id)
         board = Messageboard.query.get(message.boardId)
@@ -155,7 +155,7 @@ def edit_message(id):
             message.postId = form.data['postId'],
             message.imageUrl = image_url
         db.session.commit()
-        return {board.id:board.to_dict()}
+        return board.to_dict()
     else:
         return {'errors': errors_to_list(form.errors)}
 
@@ -168,7 +168,7 @@ def delete_message(id):
     db.session.delete(message)
     db.session.commit()
 
-    return {board.id:board.to_dict()}
+    return board.to_dict()
 
 @message_routes.route('/conversations/<int:id>', methods=['DELETE'])
 @login_required

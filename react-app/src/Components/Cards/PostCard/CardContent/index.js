@@ -28,7 +28,6 @@ import {
     DescriptionText,
 } from "../../../Styled/PostCard";
 
-
 //Helper function
 import { daysAgo } from '../../../../utils/Dates';
 

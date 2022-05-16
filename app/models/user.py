@@ -1,3 +1,4 @@
+from re import M
 from .db import db
 from .message import Message
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -28,8 +29,7 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', back_populates='uploader', cascade='all, delete-orphan')
     delivery = db.relationship('Delivery', back_populates='volunteer', cascade='all, delete-orphan')
     favorites = db.relationship('Favorite', back_populates='user', cascade='all, delete-orphan')
-    sent_messages = db.relationship('Message', back_populates='sender', foreign_keys=[Message.senderId], cascade='all, delete-orphan')
-    received_messages = db.relationship('Message', back_populates='receiver', foreign_keys=[Message.receiverId], cascade='all, delete-orphan')
+    sent_messages = db.relationship('Message', back_populates='sender', cascade='all, delete-orphan')
     events = db.relationship('Event', back_populates='manager', cascade='all, delete-orphan')
     watchlist = db.relationship('Watchlist', back_populates='user')
 

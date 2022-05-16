@@ -42,6 +42,8 @@ def new_conversation():
             user_one = current_user.id,
             user_two = request.json['receiverId']
         )
+        db.session.add(board)
+        db.session.commit()
 
         message = Message(
             boardId = board.id,
@@ -50,8 +52,6 @@ def new_conversation():
             postId = form.data['postId'],
             imageUrl = image_url
         )
-
-        db.session.add(board)
         db.session.add(message)
         db.session.commit()
         return {board.id:board.to_dict()}
@@ -60,6 +60,8 @@ def new_conversation():
             user_one = current_user.id,
             user_two = request.json['receiverId']
         )
+        db.session.add(board)
+        db.session.commit()
 
         message = Message(
             boardId = board.id,
@@ -68,7 +70,7 @@ def new_conversation():
             postId = form.data['postId'],
             imageUrl = ''
         )
-        db.session.add(board)
+
         db.session.add(message)
         db.session.commit()
         return {board.id:board.to_dict()}

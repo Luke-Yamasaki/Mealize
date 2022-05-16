@@ -15,6 +15,7 @@ class Message(db.Model):
 
     message_board = db.relationship('Messageboard', back_populates='messages')
     post = db.relationship('Post', back_populates='message')
+    sender = db.relationship('User', back_populates='sent_messages')
 
     def to_dict(self):
         return {

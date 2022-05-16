@@ -31,6 +31,7 @@ export const ActionButtons = ({post}) => {
 
     const handleNotify = () => {
         const messages = [];
+        console.log(organization)
         const managersArr = Object.values(organization.managers);
         managersArr.forEach(manager => {
             messages.push({

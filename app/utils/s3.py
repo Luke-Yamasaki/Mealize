@@ -1,12 +1,12 @@
 import boto3
-import botocore
+from botocore.config import Config
 import os
 import uuid
 
 BUCKET_NAME = os.environ.get("S3_BUCKET")
 S3_LOCATION = f"https://{BUCKET_NAME}.s3.amazonaws.com/"
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg"}
-from botocore.config import Config
+
 
 my_config = Config(
     region_name = 'us-east-1',
@@ -18,7 +18,7 @@ my_config = Config(
 )
 
 # v3 may not work next month
-# switch to v4
+# switch to s3v4
 
 # heroku may randomly assign s3 database to strange region
 

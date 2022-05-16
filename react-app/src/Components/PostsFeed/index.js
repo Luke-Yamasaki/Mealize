@@ -1,7 +1,7 @@
 //Hooks
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-
+import { useFilter } from "../../Context/FilterContext";
 //Components
 import { PostCard } from "../Cards/PostCard";
 import { FeedContainer } from "../Styled/Layout"
@@ -9,14 +9,17 @@ import { FeedContainer } from "../Styled/Layout"
 //Helper
 import { determineExpiration } from "../../utils/Dates";
 
-export const PostsFeed = ({filter}) => {
+export const PostsFeed = () => {
     const allPosts = useSelector(state => state.posts.all);
     const sessionUser = useSelector(state => state.session.user);
     const favoritesObj = useSelector(state => state.session.user?.favorites);
-    console.log(favoritesObj)
+    const {filter, setFilter} = useFilter();
+
+    useEffect(() => {
+        setFilter(sessionUser?.isNonprofit ? 'items' : !sessionUser?.isNonprofit ? 'requests' : 'available');
+    },[sessionUser])
 
     const favorites = favoritesObj ? Object.values(favoritesObj) : [];
-    console.log(favorites)
     const posts = Object.values(allPosts);
 
     const availableArr = [];

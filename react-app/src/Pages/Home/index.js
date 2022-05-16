@@ -18,7 +18,6 @@ import {
     PostsTitle,
     PostsSection
 } from '../../Components/Styled/Layout';
-import { useEffect } from 'react';
 
 export const Home = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -26,7 +25,6 @@ export const Home = () => {
 
     // const organizationsObj = useSelector(state => state.organizations)
     const {theme} = useTheme();
-    const {filter} = useFilter();
 
     const categories = Object.values(categoriesObj);
     // const businesses = Object.values(organizationsObj.businesses);
@@ -49,7 +47,7 @@ export const Home = () => {
             </SideBarContainer>
             <PostsSection>
                 <PostsTitle theme={theme}>Posts</PostsTitle>
-                <PostsFeed filter={filter}/>
+                <PostsFeed />
             </PostsSection>
         </PageBackGround>
     )

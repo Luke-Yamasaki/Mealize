@@ -23,13 +23,19 @@ export const ActionButtons = ({post}) => {
     const dispatch = useDispatch();
     const {theme} = useTheme();
 
-
     useEffect(() => {
-        (async() => {
-            const org = await getOneOrganization(sessionUser.organizationId);
-            setOrganization(org)
-        })()
-    },[dispatch])
+        if(!sessionUser) {
+            return null
+        }else {
+            (async() => {
+                const org = await getOneOrganization(sessionUser?.organizationId);
+                setOrganization(org)
+            })()
+        }
+        return () => {
+            console.log('hi')
+        }
+    },[])
 
 
     const handleQuestion = () => {

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Bold } from "./Fonts";
+import { Bold, ExtraBold } from "./Fonts";
 
 export const MessagePageWrapper = styled.main`
     display: flex;
@@ -129,5 +129,19 @@ export const MessageContainer = styled.div`
 export const MessagesContent = styled.div`
     display: flex;
     flex-direction: row;
+`;
 
+
+export const SelectMessageBox = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const SelectMessageText = styled(ExtraBold)`
+    width: 400px;
+    height: 400px;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;

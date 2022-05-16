@@ -5,7 +5,7 @@ import { useTheme } from "../../Context/ThemeContext";
 import { OrganizationCard } from "../../Components/Cards/OrganizationCard";
 import { PostCard } from "../../Components/Cards/PostCard";
 import { PostsSection }  from "../../Components/Styled/Layout"
-import { MessageItem, MessageList, MessagePreviewBox,MessageProfileIcon, MessageSideMenu, MessageTime, MessageUserBox, MessageUserName, MessageContentPreview, MessagePageWrapper, MessageThreadField, MessengerBanner } from "../../Components/Styled/Messages";
+import { MessageItem, MessageList, MessagePreviewBox,MessageProfileIcon, MessageSideMenu, MessageTime, MessageUserBox, MessageUserName, MessageContentPreview, MessagePageWrapper, MessageThreadField, MessengerBanner, SelectMessageBox, SelectMessageText } from "../../Components/Styled/Messages";
 import { getMessages } from "../../store/messages";
 import { daysAgo } from "../../utils/Dates";
 
@@ -19,10 +19,16 @@ export const MessagesPage = () => {
     const [messageBoardId, setMessageBoardId] = useState(false);
     const {theme} = useTheme();
 
+    let messageThread;
+
     useEffect(() => {
         dispatch(getMessages());
         setLoaded(true);
     },[dispatch])
+
+    useEffect(() => {
+        messageThread = messages[]
+    },[messageBoardId])
 
     const compareTime = (someDate) => {
         const today = new Date();
@@ -34,7 +40,7 @@ export const MessagesPage = () => {
             <MessageSideMenu theme={theme}>
                 <MessageList> All messages
                     {Object.values(messages).map((message, idx) =>
-                        <MessageItem key={idx} theme={theme}>
+                        <MessageItem key={idx} theme={theme} onClick={setMessageBoardId(message.boardId)}>
                             <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>
                                 <MessagePreviewBox>
@@ -48,16 +54,25 @@ export const MessagesPage = () => {
                 </MessageList>
             </MessageSideMenu>
             <MessageThreadField theme={theme}>
-            <MessengerBanner>
-                <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
-                    <MessageUserBox>
-                        <MessagePreviewBox>
-                            <MessageUserName theme={theme}>{users[message.senderId].firstName + ' ' + users[message.senderId].lastName}</MessageUserName>
-                            <MessageContentPreview>{message.content}</MessageContentPreview>
-                        </MessagePreviewBox>
-                        <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
-                    </MessageUserBox>
-            </MessengerBanner>
+                {messageBoardId &&
+                    <MessengerBanner>
+                        <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
+                            <MessageUserBox>
+                                <MessagePreviewBox>
+                                    <MessageUserName theme={theme}>{users[message.senderId].firstName + ' ' + users[message.senderId].lastName}</MessageUserName>
+                                    <MessageContentPreview>{message.content}</MessageContentPreview>
+                                </MessagePreviewBox>
+                                <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
+                            </MessageUserBox>
+                    </MessengerBanner>
+                }
+                {!messageBoardId &&
+                <SelectMessageBox>
+                    <SelectMessageText theme={theme}>
+                        Please select a message from the left menu.
+                    </SelectMessageText>
+                </SelectMessageBox>
+                }
             </MessageThreadField>
         </MessagePageWrapper>
     )

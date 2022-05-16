@@ -10,9 +10,9 @@ message_routes = Blueprint('messages', __name__)
 @login_required
 def messages():
     userId = current_user.id
-    all_messages = Message.query.filter(Message.senderId == userId or Message.receiverId == userId)
+    message_boards = Messageboard.query.filter(Messageboard.user_one == userId or Messageboard.user_two == userId)
 
-    return {message.id:message.to_dict() for message in all_messages}
+    return {message_board.id:message_board.to_dict() for message_board in message_boards}
 
 @message_routes.route('/<int:id>')
 @login_required
@@ -37,25 +37,33 @@ def new_conversation():
         if "url" not in upload:
             return upload, 400
         image_url = upload["url"]
-        board = Messageboard()
+
+        board = Messageboard(
+            user_one = current_user.id,
+            user_two = request.json['receiverId']
+        )
+
         message = Message(
             boardId = board.id,
             senderId = current_user.id,
-            receiverId = request.json['receiverId'],
             content = form.data['content'],
             postId = form.data['postId'],
             imageUrl = image_url
         )
+
         db.session.add(board)
         db.session.add(message)
         db.session.commit()
-        return {'board':board.id, 'messages':{message.id:message.to_dict() for message in board.messages}}
+        return {board.id:board.to_dict()}
     elif form.validate_on_submit():
-        board = Messageboard()
+        board = Messageboard(
+            user_one = current_user.id,
+            user_two = request.json['receiverId']
+        )
+
         message = Message(
             boardId = board.id,
             senderId = current_user.id,
-            receiverId = request.json['receiverId'],
             content = form.data['content'],
             postId = form.data['postId'],
             imageUrl = ''
@@ -63,7 +71,7 @@ def new_conversation():
         db.session.add(board)
         db.session.add(message)
         db.session.commit()
-        return {'board':board.id, 'messages':{message.id:message.to_dict() for message in board.messages}}
+        return {board.id:board.to_dict()}
     else:
         return {'errors': errors_to_list(form.errors)}
 
@@ -85,7 +93,6 @@ def reply():
         message = Message(
             boardId = board.id,
             senderId = current_user.id,
-            receiverId = request.json['receiverId'],
             content = form.data['content'],
             postId = form.data['postId'],
             imageUrl = image_url
@@ -93,13 +100,12 @@ def reply():
 
         db.session.add(message)
         db.session.commit()
-        return {'board':board.id, 'messages':{message.id:message.to_dict() for message in board.messages}}
+        return {board.id:board.to_dict()}
     elif form.validate_on_submit():
         board = Messageboard.query.get(request.json['boardId'])
         message = Message(
             boardId = board.id,
             senderId = current_user.id,
-            receiverId = request.json['receiverId'],
             content = form.data['content'],
             postId = form.data['postId'],
             imageUrl = ''
@@ -107,7 +113,7 @@ def reply():
 
         db.session.add(message)
         db.session.commit()
-        return {'board':board.id, 'messages':{message.id:message.to_dict() for message in board.messages}}
+        return {board.id:board.to_dict()}
     else:
         return {'errors': errors_to_list(form.errors)}
 
@@ -131,12 +137,11 @@ def edit_message(id):
             return {'error': "Unauthorized"}
         else:
             message.senderId = current_user.id,
-            message.receiverId = request.json['receiverId'],
             message.content = form.data['content'],
             message.postId = form.data['postId'],
             message.imageUrl = image_url
         db.session.commit()
-        return {'board':board.id, 'messages':{message.id:message.to_dict() for message in board.messages}}
+        return {board.id:board.to_dict()}
     elif form.validate_on_submit():
         message = Message.query.get(id)
         board = Messageboard.query.get(message.boardId)
@@ -144,26 +149,24 @@ def edit_message(id):
             return {'error': "Unauthorized"}
         else:
             message.senderId = current_user.id,
-            message.receiverId = request.json['receiverId'],
             message.content = form.data['content'],
             message.postId = form.data['postId'],
             message.imageUrl = image_url
         db.session.commit()
-        return {'board':board.id, 'messages':{message.id:message.to_dict() for message in board.messages}}
+        return {board.id:board.to_dict()}
     else:
         return {'errors': errors_to_list(form.errors)}
 
 @message_routes.route('/<int:id>', methods=['DELETE'])
 @login_required
 def delete_message(id):
-    deleted_data = {}
     message = Message.query.get(id)
-    deleted_data['message'] = message.deleted_info()
+    board = Messageboard.query.get(message.boardId)
 
     db.session.delete(message)
     db.session.commit()
 
-    return deleted_data
+    return {board.id:board.to_dict()}
 
 @message_routes.route('/conversations/<int:id>', methods=['DELETE'])
 @login_required

@@ -177,43 +177,6 @@ export const removeFavorite = (favoriteId) => async (dispatch) => {
     // return favorite;
 };
 
-// export const sendMessage = (message) => async (dispatch) => {
-//     const response = await fetch('/api/messages/', {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(message)
-//     });
-//     if(response.ok) {
-//         const sent = await response.json();
-//         dispatch(sentMessage(sent));
-//     } else if(response.status < 500) {
-//         const data = await response.json();
-//         if(data.errors){
-//             return data.errors;
-//         };
-//     } else {
-//         return 'Connection failed. Please check your internet connection.'
-//     };
-// };
-
-// export const getMessages = () => async (dispatch) => {
-//     const response = await fetch('/api/messages/');
-
-//     if(response.ok) {
-//         const messages = await response.json();
-//         dispatch(gotMessages(messages));
-//     } else if(response.status < 500) {
-//         const data = await response.json();
-//         if(data.errors){
-//             return data.errors;
-//         };
-//     } else {
-//         return 'Connection failed. Please check your internet connection.'
-//     };
-// };
-
 const initialState = { user: null };
 
 export default function sessionReducer(state = initialState, action) {
@@ -226,7 +189,6 @@ export default function sessionReducer(state = initialState, action) {
             return { user: action.payload };
         case ADDED_FAVORITE:
             const newFavoritesState = {
-                ...state,
                 user: {
                     ...state.user,
                     favorites: {
@@ -234,15 +196,10 @@ export default function sessionReducer(state = initialState, action) {
                     }
                 }
             };
-
-            console.log(newFavoritesState.user.favorites)
             newFavoritesState.user.favorites[action.payload.postId] = action.payload;
-            console.log(newFavoritesState.user.favorites)
-            console.log(newFavoritesState.user.favorites)
             return newFavoritesState;
         case REMOVED_FAVORITE:
               const removedFavoritesState = {
-                ...state,
                 user: {
                     ...state.user,
                     favorites: {
@@ -250,12 +207,7 @@ export default function sessionReducer(state = initialState, action) {
                     }
                 }
             };
-
-            console.log(removedFavoritesState.user.favorites)
             delete removedFavoritesState.user.favorites[action.payload]; // Double check to see that payload is the removed id
-            console.log(removedFavoritesState.user.favorites)
-
-
             // return removedFavoritesState;
             return removedFavoritesState;
         default:

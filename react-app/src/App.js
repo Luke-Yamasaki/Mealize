@@ -8,7 +8,7 @@ import { useBackGround } from './Context/BackGroundContext';
 // actions
 import { authenticate } from './store/session';
 import { getCategories } from './store/categories';
-import { getBatchedOrganizations } from './store/organizations';
+import { getBatchedOrganizations, getOneOrganization } from './store/organizations';
 import { getBatchedUsers } from './store/users';
 import { getAllPosts } from './store/posts';
 // import { getAllDeliveries } from './store/deliveries';
@@ -17,6 +17,7 @@ import { getAllPosts } from './store/posts';
 import { Home } from './Pages/Home';
 import { FourOFour } from './Pages/FourOFour';
 import { Deliveries } from './Pages/Deliveries';
+import { MessagesPage } from './Pages/Messages';
 
 //Components
 import { Settings } from './Assets/Icons/Settings';
@@ -54,6 +55,12 @@ function App() {
     })()
   },[dispatch]);
 
+  useEffect(() => {
+    if(sessionUser) {
+        dispatch(getOneOrganization(sessionUser.organizationId));
+    }
+},[sessionUser])
+
   if(!isLoaded) {
     return null;
   }
@@ -72,6 +79,11 @@ function App() {
           {sessionUser &&
           <Route exact path='/deliveries'>
             <Deliveries />
+          </Route>
+          }
+          {sessionUser &&
+          <Route exact path='/messages'>
+            <MessagesPage />
           </Route>
           }
           <Route>

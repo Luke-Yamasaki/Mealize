@@ -9,3 +9,4 @@ from .calendar import Calendar
 from .event import Event
 from .favorite import Favorite
 from .watchlist import Watchlist
+from .message_board import Messageboard

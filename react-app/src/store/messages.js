@@ -1,23 +1,24 @@
+const GOT_BOARDS = 'message/GOT_BOARDS';
 const SENT_MESSAGE = 'message/SENT_MESSAGE';
-const GOT_MESSAGES = 'message/GOT_MESSAGES';
-const GOT_ONE_MESSAGE = 'message/GOT_ONE_MESSAGE';
+const SENT_REPLY = 'message/SENT_REPLY';
 const EDITED_MESSAGE = 'message/EDITED_MESSAGE';
 const DELETED_MESSAGE = 'message/DELETED_MESSAGE';
+const DELETED_CONVERSATION = 'message/DELETED_CONVERSATION';
+
+const gotBoards = payload => ({
+    type: GOT_BOARDS,
+    payload
+});
 
 const sentMessage = payload => ({
     type: SENT_MESSAGE,
     payload
 });
 
-const gotMessages = payload => ({
-    type: GOT_MESSAGES,
+const sentReply = payload => ({
+    type: SENT_REPLY,
     payload
-});
-
-const gotOneMessage = payload => ({
-    type: GOT_ONE_MESSAGE,
-    payload
-});
+})
 
 const editedMessage = payload => ({
     type: EDITED_MESSAGE,
@@ -28,6 +29,27 @@ const deletedMessage = payload => ({
     type: DELETED_MESSAGE,
     payload
 });
+
+const deletedConversation = payload => ({
+    type: DELETED_CONVERSATION,
+    payload
+});
+
+export const getBoards = () => async (dispatch) => {
+    const response = await fetch('/api/messages/');
+    console.log(response)
+    if(response.ok) {
+        const messages = await response.json();
+        dispatch(gotBoards(messages));
+    } else if(response.status < 500) {
+        const data = await response.json();
+        if(data.errors){
+            return data.errors;
+        };
+    } else {
+        return 'Connection failed. Please check your internet connection.'
+    };
+};
 
 export const sendMessage = (messageData) => async (dispatch) => {
     const response = await fetch('/api/messages/', {
@@ -50,28 +72,17 @@ export const sendMessage = (messageData) => async (dispatch) => {
     };
 };
 
-export const getMessages = () => async (dispatch) => {
-    const response = await fetch('/api/messages/');
-
+export const sendReply= (messageData) => async (dispatch) => {
+    const response = await fetch('/api/messages/reply', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(messageData)
+    });
     if(response.ok) {
-        const messages = await response.json();
-        dispatch(gotMessages(messages));
-    } else if(response.status < 500) {
-        const data = await response.json();
-        if(data.errors){
-            return data.errors;
-        };
-    } else {
-        return 'Connection failed. Please check your internet connection.'
-    };
-};
-
-export const getOneMessage = (id) => async (dispatch) => {
-    const response = await fetch(`/api/messages/${id}`);
-
-    if(response.ok) {
-        const message = await response.json();
-        dispatch(gotOneMessage(message));
+        const sent = await response.json();
+        dispatch(sentReply(sent));
     } else if(response.status < 500) {
         const data = await response.json();
         if(data.errors){
@@ -95,8 +106,7 @@ export const editMessage = (message) => async (dispatch) => {
     } else {
         return 'Connection failed. Please check your internet connection.'
     };
-
-}
+};
 
 export const deleteMessage = (id) => async (dispatch) => {
     const response = await fetch(`/api/messages/${id}`);
@@ -111,26 +121,44 @@ export const deleteMessage = (id) => async (dispatch) => {
     } else {
         return 'Connection failed. Please check your internet connection.'
     };
+};
 
-}
+export const deleteConversation = (id) => async (dispatch) => {
+    const response = await fetch(`/api/messages/conversation/${id}`);
+    if(response.ok) {
+        const boardId = await response.json();
+        dispatch(deletedConversation(boardId));
+    } else if(response.status < 500) {
+        const data = await response.json();
+        if(data.errors){
+            return data.errors;
+        };
+    } else {
+        return 'Connection failed. Please check your internet connection.'
+    };
+};
 
-export default function messagesReducer(state = {}, action) {
-    let newState = {...state};
+export default function messageBoardsReducer(state = {}, action) {
+    let newState = {...state}
     switch(action.type) {
-        case SENT_MESSAGE:
-            newState[action.payload.id] = action.payload;
-            return newState;
-        case GOT_MESSAGES:
+        case GOT_BOARDS:
             newState = action.payload;
             return newState;
-        case GOT_ONE_MESSAGE:
-            newState[action.payload.id] = action.payload;
+        case SENT_MESSAGE:
+            if(newState === null){
+                newState[action.payload.id] = action.payload
+            } else {
+                newState[action.payload.id] = action.payload
+            };
             return newState;
         case EDITED_MESSAGE:
-                newState[action.payload.id] = action.payload;
-                return newState;
+            newState[action.payload.id] = action.payload;
+            return newState;
         case DELETED_MESSAGE:
-            delete newState[action.payload.id];
+            newState[action.payload.id] = action.payload;
+            return newState;
+        case DELETED_CONVERSATION:
+            delete newState[action.payload.boardId];
             return newState;
         default:
             return state;

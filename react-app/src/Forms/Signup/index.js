@@ -217,7 +217,7 @@ export const SignupForm = () => {
                 }
             }
         } else {
-            console.log(stagedPost.errors)
+            return stagedPost.errors;
         }
     };
 
@@ -566,13 +566,13 @@ export const SignupForm = () => {
                                         {isNonprofit &&
                                             <optgroup label='Nonprofits'>
                                                 <option value='' disabled>--Select your organization--</option>
-                                                {Object.values(organizations.nonprofits).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
+                                                {Object.values(organizations.nonprofits).map((organization) => <option key={organization.id} value={organization.id}>{organization.name}</option>)}
                                             </optgroup>
                                         }
                                         {!isNonprofit &&
                                             <optgroup label='Businesses'>
                                                 <option value='' disabled>--Select your organization--</option>
-                                                {Object.values(organizations.businesses).map((organization, idx) => <option key={idx} value={organization.id}>{organization.name}</option>)}
+                                                {Object.values(organizations.businesses).map((organization) => <option key={organization.id} value={organization.id}>{organization.name}</option>)}
                                             </optgroup>
                                         }
                                     </OrganizationSelect>

@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import current_user, login_required
-from app.models import db, Delivery
+from app.models import db, Delivery, Post
 from app.forms.delivery_form import DeliveryForm
 from app.utils import errors_to_list
 from time import strftime
@@ -30,7 +30,7 @@ def new_delivery():
     month = strftime("%m")
     day = strftime("%d")
     # tuples are immutable
-    times = ('9AM', '9:30AM', '10AM', '10.5', '11', '11.5', '12', '12.5', '13', '13.5', '14', '14.5', '15', '15.5', '16', '16.5')
+    times = ('9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13', '13.5', '14', '14.5', '15', '15.5', '16', '16.5')
 
     # For some reason, form.data['date'] does not work.
     form_date = request.json['date']
@@ -59,6 +59,11 @@ def new_delivery():
         )
         db.session.add(delivery)
         db.session.commit()
+
+        post = Post.query.get(delivery.postId)
+        post.status = 1
+        db.session.commit()
+        
         return delivery.to_dict()
     return {'errors': errors_to_list(form.errors)}
 

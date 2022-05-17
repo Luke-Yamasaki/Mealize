@@ -35,9 +35,9 @@ export const CardContent = ({ post }) => {
     const { theme } = useTheme();
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
-    const businesses = useSelector(state => state.organizations.businesses)
-    const nonprofits = useSelector(state => state.organizations.nonprofits)
-    const organization = post?.isItem ? businesses[post?.organizationId] : nonprofits[post?.organizationId];
+    const organizations = useSelector(state => state.organizations);
+    const organizationsObj = {...organizations.nonprofits, ...organizations.businesses};
+    const organization = organizationsObj[post.organizationId];
 
     const styleObj = category[theme][post?.categoryId];
 
@@ -51,7 +51,7 @@ export const CardContent = ({ post }) => {
     };
 
     return (
-        <Card color={styleObj} height={!sessionUser ? '350px' : '390px'}>
+        <Card color={styleObj} height={(!sessionUser || post.status > 0) ? '350px' : '390px'}>
             <TitleBox to={`/organizations/${organization.id}`}>
                 <VectorBox square='30px' resize='32px'>
                     <CompanyLogo src={organization.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='#191919'/>

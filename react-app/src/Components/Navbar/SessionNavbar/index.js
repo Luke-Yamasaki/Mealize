@@ -2,6 +2,7 @@
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useTheme } from '../../../Context/ThemeContext';
+import { useFilter } from '../../../Context/FilterContext';
 // Actions
 import { logout } from '../../../store/session';
 import { setCurrentModal, showModal } from '../../../store/modal';
@@ -21,6 +22,7 @@ import { InboxIcon } from '../../../Assets/Icons/Inbox';
 export const SessionNavbar = ({sessionUser}) => {
     const dispatch = useDispatch();
     const {theme} = useTheme();
+    const {setFilter} = useFilter();
     const history = useHistory();
 
     const showPostForm = () => {
@@ -29,6 +31,7 @@ export const SessionNavbar = ({sessionUser}) => {
     };
 
     const logOut = () => {
+        setFilter('available')
         dispatch(logout())
     };
 

@@ -112,10 +112,9 @@
     height: 25px;
     border-radius: 5px;
     color: white;
-    background-color: #46A843;
+    background-color: rgba(70,168,67,1);
     font-size: 12px;
     font-weight: 400;
-    opacity: 100%;
     cursor: pointer;
 }
 
@@ -127,9 +126,8 @@
     height: 25px;
     border-radius: 5px;
     color: white;
-    background-color: #46A843;
-    cursor: not-allowed;
+    background-color: rgba(70,168,67,0.5);
+    cursor: pointer;
     font-size: 12px;
     font-weight: 400;
-    opacity: 50%;
 }

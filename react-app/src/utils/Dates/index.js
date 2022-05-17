@@ -21,6 +21,21 @@ export const daysAgo = (post) => {
     }
 }
 
+export const createdAtDaysAgo = (createdAt) => {
+    const today = new Date();
+    const postDate = new Date(createdAt);
+    const milliseconds = today - postDate;
+    const daysPassed = Math.floor(milliseconds / 1000 / 60 / 60 / 24);
+    const hoursPassed = Math.floor(milliseconds / 1000 / 60 / 60);
+    if(daysPassed >= 1) {
+        return daysPassed.toString() + 'd';
+    } else if(daysPassed < 1 && hoursPassed >= 1) {
+        return hoursPassed.toString() + 'h';
+    } else {
+        return 'now';
+    }
+}
+
 // [1] Frbruary will be 29 on leap years
 // const monthsAndDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 

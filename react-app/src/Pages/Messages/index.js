@@ -7,7 +7,6 @@ import { useTheme } from "../../Context/ThemeContext";
 import { getBoards } from "../../store/messages";
 
 //Components
-import { OrganizationCard } from "../../Components/Cards/OrganizationCard";
 import { PostCard } from "../../Components/Cards/PostCard";
 import {
     MessageItem,
@@ -34,6 +33,7 @@ import {
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
 
 import { daysAgo } from "../../utils/Dates";
+import { ButtonText, CancelButton, MessageButtonBox, SubmitButton } from "../../Components/Styled/Buttons";
 
 export const MessagesPage = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -54,6 +54,17 @@ export const MessagesPage = () => {
     const handleClick = (e, id) => {
         e.preventDefault();
         setMessageBoardId(id)
+    }
+
+    const handleDecline = (e, post) => {
+        e.preventDefault();
+        console.log(post)
+    };
+
+    const handleAccept = (e, post) => {
+        e.preventDefault();
+        console.log(post)
+
     }
 
     return loaded && (
@@ -138,10 +149,19 @@ export const MessagesPage = () => {
                                 </PostBox>
                             </PostContainer>
                             }
+                            {message.content.includes('I would like to pick up this item') &&
+                                <MessageButtonBox>
+                                    <CancelButton onClick={e => handleDecline(e, posts[message.postId])}>
+                                        <ButtonText>Decline</ButtonText>
+                                    </CancelButton>
+                                    <SubmitButton onClick={e => handleAccept(e, posts[message.postId])}>
+                                        <ButtonText>Accept</ButtonText>
+                                    </SubmitButton>
+                                </MessageButtonBox>
+                            }
                         </>
-
                         )}
-                        <MessagePageInput boardId={messageBoardId}/>
+                        <MessagePageInput boardId={messageBoardId}/> 
                     </>
                 }
             </MessageThreadField>

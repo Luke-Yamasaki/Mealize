@@ -126,7 +126,7 @@ export const MessageThreadField = styled.section`
     display: flex;
     flex-direction: column;
     algin-items: flex-start;
-    justify-content: flex-start;
+    justify-content: space-between;
     overflow-y: scroll;
     overflow-x: hidden;
     background-color: ${props => props.theme === 'light' ? '#F1F1F1' : '#191919'};
@@ -206,38 +206,70 @@ export const SelectMessageText = styled(ExtraBold)`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
-
-
 export const MessageInputForm = styled.form`
-    width: 99%;
+    width: 100%;
     height: auto;
-    min-height: 50px;
     padding: 5px;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     display: flex;
     flex-direction: column;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
 `;
 
 export const MessageInputBox = styled.div`
-    width: 90%;
+    width: 95%;
     height: auto;
     min-height: 30px;
     display: flex;
-    flex-direction: column;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
-    border: ${props => props.theme === 'light' ? '1px solid #F1F1F1' : '1px solid white'};
+    border: ${props => props.theme === 'light' ? '1px solid #B7B7B7' : '1px solid white'};
+    border-radius: 100px;
 `;
 
 export const MessageInput = styled.input`
-    width: 90%;
+    width: 97%;
     min-height: 25px;
     height: auto;
     outline: none;
+    border: none;
+    padding: 5px;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-family: motiva-sans, sans-serif;
+    font-size: 14px;
+    border-radius: 100px;
+`;
+
+
+export const MessageFileAndButtons = styled.div`
+    width: 70%;
+    height: 75px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+`;
+
+export const MessageFileLabel = styled.label`
+    width: 175px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    color: #34AE8D;
+`;
+
+export const MessageErrorBox = styled.div`
+    width: 95%;
+    height: 65px;
+    display: flex;
+    flex-direction: column;
+    algin-items: center;
+    justify-content: center;
 `;

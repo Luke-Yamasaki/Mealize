@@ -11,13 +11,11 @@ import Filter from 'bad-words';
 import { getIp } from '../../../utils/Forms/signup';
 import { swearWords } from '../swearWords';
 //Actions
-import { sendMessage } from '../../../store/messages';
+import { sendMessage, sendReply } from '../../../store/messages';
 import { hideModal } from '../../../store/modal';
 
 //Components
 import {
-    Fieldset,
-    Legend,
     Input,
     Error,
     ErrorBox,
@@ -28,14 +26,13 @@ import {
     SubmitButton,
     ButtonText,
     CancelButton,
-    InputButtonBox,
     MessageButtonBox
 } from '../../../Components/Styled/Buttons';
 
-import { MessageInput, MessageInputBox, MessageInputForm } from '../../../Components/Styled/Messages';
+import { MessageErrorBox, MessageFileAndButtons, MessageFileLabel, MessageInput, MessageInputBox, MessageInputForm } from '../../../Components/Styled/Messages';
 
 
-export const MessagePageInput = () => {
+export const MessagePageInput = ({boardId}) => {
     const dispatch = useDispatch();
     const users = useSelector(state => state.users);
     const [content, setContent] = useState('');
@@ -112,8 +109,8 @@ export const MessagePageInput = () => {
         } else if(content.length > 1000) {
             contentErrArr.push('Messages must be under 1000 characters.')
         } else {
-            const messageData = {content, image }
-            const data = await dispatch(sendMessage(messageData));
+            const messageData = {content, image, boardId}
+            const data = await dispatch(sendReply(messageData));
             if(data && data.errors) {
                 data.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
             } else {
@@ -132,37 +129,38 @@ export const MessagePageInput = () => {
         setImageValidating(false);
         setContent('');
         setImage('');
-        dispatch(hideModal());
+        const input = document.getElementById('image');
+        input.value = '';
     };
 
     return (
         <MessageInputForm theme={theme} onSubmit={handleSubmit}>
-             <InputErrorBox>
-                <ErrorBox theme={theme} height={contentError.length > 0 ? '20px' : '0px'}>
-                    <Error>{contentError[0]}</Error>
-                </ErrorBox>
-                <MessageInputBox theme={theme}>
-                    <MessageInput type='text' theme={theme} value={content} onChange={handleContent} required/>
-                </MessageInputBox>
-            </InputErrorBox>
-            <InputErrorBox>
-                <ErrorBox theme={theme} height={imageError.length > 0 ? '20px' : '0px'}>
-                    <Error>{imageError[0]}</Error>
-                </ErrorBox>
-                <Fieldset error={imageError.length > 0}>
-                    <Legend htmlFor="image" theme={theme} width='117px' error={imageError.length > 0}>Optional image
-                        <Input id='image' theme={theme} lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
-                    </Legend>
-                </Fieldset>
-            </InputErrorBox>
-            <MessageButtonBox>
-                <CancelButton onClick={cancel}>
-                    <ButtonText>Cancel</ButtonText>
-                </CancelButton>
-                <SubmitButton onClick={handleSubmit}>
-                    <ButtonText>Submit</ButtonText>
-                </SubmitButton>
-            </MessageButtonBox>
+            {contentError.length > 0 &&
+                <MessageErrorBox>
+                    <ErrorBox theme={theme} height='20px'>
+                        <Error>{contentError[0]}</Error>
+                    </ErrorBox>
+                    <MessageInputBox theme={theme}>
+                        <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
+                    </MessageInputBox>
+                </MessageErrorBox>
+                }
+                {!contentError.length &&
+                    <MessageInputBox theme={theme}>
+                        <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
+                    </MessageInputBox>                }
+            <MessageFileAndButtons>
+                <MessageFileLabel htmlFor='image'>{imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : '(Optional image)'}</MessageFileLabel>
+                <Input id='image' theme={theme} lineHeight='10px' width='230px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
+                <MessageButtonBox>
+                    <CancelButton onClick={cancel}>
+                        <ButtonText>Cancel</ButtonText>
+                    </CancelButton>
+                    <SubmitButton onClick={handleSubmit}>
+                        <ButtonText>Submit</ButtonText>
+                    </SubmitButton>
+                </MessageButtonBox>
+            </MessageFileAndButtons>
         </MessageInputForm>
     )
 }

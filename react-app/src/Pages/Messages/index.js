@@ -24,7 +24,6 @@ import {
     MessengerBanner,
     SelectMessageBox,
     SelectMessageText,
-    MessageSpacer,
     MessageContainer,
     UserAndTime,
     PostContainer,
@@ -61,7 +60,7 @@ export const MessagesPage = () => {
         <MessagePageWrapper>
             <MessageSideMenu theme={theme}>
                 <MessageList theme={theme}> All messages
-                    <MessageItem />
+                    <MessageItem key='placeholderItem'/>
                     {Object.values(messageBoards).map((messageBoard, idx) =>
                        (<MessageItem key={idx} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>
                             <MessageProfileIcon src={users[messageBoard.messages[messageBoard.messages.length - 1].senderId].profileImageUrl} alt='User profile.'/>
@@ -112,9 +111,14 @@ export const MessagesPage = () => {
                                     users[messageBoards[messageBoardId].user_one].firstName + ' ' + users[messageBoards[messageBoardId].user_one].lastName
                                 }
                                 </MessageUserName>
-                                <MessageUserName>
-                                </MessageUserName>
                             </MessagePreviewBox>
+                            <MessageUserName theme={theme} size='18px'>
+                                {sessionUser.id === messageBoards[messageBoardId].user_one ?
+                                    organizations.nonprofits[users[messageBoards[messageBoardId].user_one].organizationId].name
+                                    :
+                                    organizations.nonprofits[users[messageBoards[messageBoardId].user_one].organizationId].name
+                                }
+                                </MessageUserName>
                         </MessengerBanner>
                         {Object.values(messageBoards[messageBoardId].messages).map((message) =>
                         <>
@@ -137,10 +141,9 @@ export const MessagesPage = () => {
                         </>
 
                         )}
-                        <MessagePageInput />
+                        <MessagePageInput boardId={messageBoardId}/>
                     </>
                 }
-
             </MessageThreadField>
         </MessagePageWrapper>
     )

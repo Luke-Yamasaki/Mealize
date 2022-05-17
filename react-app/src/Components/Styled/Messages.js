@@ -7,8 +7,7 @@ export const MessagePageWrapper = styled.main`
     justify-content: flex-start;
     align-items: top;
     width: 1600px;
-    min-height: 65vh;
-    height: auto;
+    height: 62%;
 `;
 
 export const MessageSideMenu = styled.section`
@@ -49,6 +48,7 @@ export const MessageSpacer = styled.div`
 export const MessageItem = styled.li`
     list-style: none;
     padding: 0px;
+    cursor: pointer;
     margin: 0px;
     display: flex;
     flex-direction: row;
@@ -60,9 +60,19 @@ export const MessageItem = styled.li`
     border: ${props => props.theme === 'light' ? '0.1px solid #B7B7B7' : props.theme === 'dark' ? '0.1px solid rgba(255, 255, 255, 0.1)' : 'none'};
 `;
 
+export const BannerTextBox = styled.div`
+    width: 500px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-contenet: flex-start;
+    align-items: center;
+    gap: 5px;
+`;
+
 export const MessageProfileIcon = styled.img`
-    width: ${props => props.size ? props.size : '40px'};
-    height: ${props => props.size ? props.size : '40px'};
+    width: ${props => props.square ? props.square : '40px'};
+    height: ${props => props.square ? props.square : '40px'};
     border-radius: 100%;
     object-fit: cover;
     object-position: center;
@@ -99,7 +109,7 @@ export const MessageContentPreview = styled(MessageUserBox)`
     flex-direction: ${props => props.direction};
     justify-content: flex-start;
     font-family: motiva-sans, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     opacity: 60%;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
@@ -107,8 +117,12 @@ export const MessageContentPreview = styled(MessageUserBox)`
 
 export const MessageUserName = styled(Bold)`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
-    width: 250px;
+    width: ${props => props.width? props.width : 'auto'};
     height: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-style: ${props => props.font ? props.font : 'normal'};
     font-size: ${props => props.size ? props.size : '14px'};
 `;
 
@@ -127,19 +141,31 @@ export const MessageThreadField = styled.section`
     flex-direction: column;
     algin-items: flex-start;
     justify-content: space-between;
-    overflow-y: scroll;
-    overflow-x: hidden;
     background-color: ${props => props.theme === 'light' ? '#F1F1F1' : '#191919'};
     border-left: ${props => props.theme === 'light' ? '1px solid #B7B7B7' : '1px solid #F1F1F1'};
 `;
 
-export const MessengerBanner = styled.header`
+export const MessageFeed = styled.div`
     width: 100%;
+    height: 80%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+`;
+
+export const MessengerBanner = styled.header`
+    width: 98%;
+    padding-left: 2%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
+    justify-content: flex-start;
+    gap: 20px;
     height: 100px;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     border-bottom: ${props => props.theme === 'light' ? '1px solid #B7B7B7' : '1px solid white'};
@@ -147,11 +173,14 @@ export const MessengerBanner = styled.header`
 
 export const MessageContainer = styled.div`
     display: flex;
+    flex-direction: row;
     flex-direction: ${props => props.direction};
-    justify-content: flex-start;
-    width: 93%;
+    align-items: center;
+    width: 98%;
+    gap: 10px;
     padding: 20px;
-    height: 30px;
+    min-height: 30px;
+    height: auto;
 `;
 
 export const PostContainer = styled.div`
@@ -159,9 +188,9 @@ export const PostContainer = styled.div`
     flex-direction: ${props => props.direction};
     justify-content: flex-start;
     align-items: center;
-    width: 93%;
+    width: 95%;
     height: 450px;
-    padding-left: 8%;
+    padding: ${props => props.direction === 'row' ? '0% 0% 0% 6.75%' : '0% 6.75% 0% 0%'};
 `;
 
 export const PostBox = styled.div`
@@ -177,8 +206,11 @@ export const PostBox = styled.div`
 
 
 export const MessageContent = styled.div`
-    width: 90%;
+    width: 50%;
+    min-height: 25px;
     height: auto;
+    display: flex;
+    flex-direction: row;
     flex-direction: ${props => props.direction};
     justify-content: flex-start;
     align-items: center;
@@ -207,9 +239,10 @@ export const SelectMessageText = styled(ExtraBold)`
 `;
 
 export const MessageInputForm = styled.form`
-    width: 100%;
-    height: auto;
+    width: 99%;
+    height: 15%;
     padding: 5px;
+    padding-top: 20px;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     display: flex;
     flex-direction: column;

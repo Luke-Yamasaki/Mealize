@@ -41,15 +41,15 @@ export const PostsFeed = () => {
     return (
         <FeedContainer>
             {filter === 'favorites' && favorites.map((obj) => <PostCard key={obj.id} post={allPosts[obj.postId]}/>)}
-            {filter === 'available' && availableArr.reverse().map((post, idx) => <PostCard key={idx} post={post} />)}
-            {filter === 'unavailable' && unavailableArr.map((post, idx) => <PostCard key={idx} post={post} />)}
-            {filter === 'items' && itemsArr.reverse().map((post, idx) => <PostCard key={idx} post={post} />)}
-            {filter === 'requests' && requestsArr.reverse().map((post, idx) => <PostCard key={idx} post={post} />)}
-            {filter === 'dairy' && dairyArr.map((post, idx) => <PostCard key={idx} post={post} />)}
-            {filter === 'vegetables' && vegetablesArr.map((post, idx) => <PostCard key={idx} post={post} />)}
-            {filter === 'fruits' && fruitsArr.map((post, idx) => <PostCard key={idx} post={post} />)}
-            {filter === 'grains' && grainsArr.map((post, idx) => <PostCard key={idx} post={post} />)}
-            {filter === 'protein' && proteinArr.map((post, idx) => <PostCard key={idx} post={post} />)}
+            {filter === 'available' && availableArr.reverse().map((post) => <PostCard key={post.id} post={post} />)}
+            {filter === 'unavailable' && unavailableArr.map((post) => <PostCard key={post.id} post={post} />)}
+            {filter === 'items' && itemsArr.reverse().map((post) => <PostCard key={post.id} post={post} />)}
+            {filter === 'requests' && requestsArr.reverse().map((post) => <PostCard key={post.id} post={post} />)}
+            {filter === 'dairy' && dairyArr.map((post) => <PostCard key={post.id} post={post} />)}
+            {filter === 'vegetables' && vegetablesArr.map((post) => <PostCard key={post.id} post={post} />)}
+            {filter === 'fruits' && fruitsArr.map((post) => <PostCard key={post.id} post={post} />)}
+            {filter === 'grains' && grainsArr.map((post) => <PostCard key={post.id} post={post} />)}
+            {filter === 'protein' && proteinArr.map((post) => <PostCard key={post.id} post={post} />)}
         </FeedContainer>
     )
 }

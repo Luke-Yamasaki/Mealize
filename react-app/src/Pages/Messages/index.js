@@ -27,7 +27,9 @@ import {
     UserAndTime,
     PostContainer,
     PostBox,
-    MessageContent
+    MessageContent,
+    BannerTextBox,
+    MessageFeed
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
@@ -77,7 +79,7 @@ export const MessagesPage = () => {
                             <MessageProfileIcon src={users[messageBoard.messages[messageBoard.messages.length - 1].senderId].profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>
                                 <MessagePreviewBox>
-                                    <MessageUserName theme={theme}>
+                                    <MessageUserName theme={theme} size='14px' width='250px'>
                                         {sessionUser.id === messageBoard.messages[messageBoard.messages.length - 1].senderId ?
                                         'You' :
                                         users[messageBoard.messages[messageBoard.messages.length - 1].senderId].firstName + ' ' + users[messageBoard.messages[messageBoard.messages.length - 1].senderId].lastName}
@@ -108,76 +110,78 @@ export const MessagesPage = () => {
                 {(messageBoardId && Object.values(messageBoards).length > 0) &&
                     <>
                         <MessengerBanner theme={theme}>
-                            <MessageProfileIcon size='55px'
+                            <MessageProfileIcon square='55px'
                             src={users[sessionUser.id === messageBoards[messageBoardId].user_one ?
                             messageBoards[messageBoardId].user_two
                             : messageBoards[messageBoardId].user_one].profileImageUrl}
                             alt='User profile.'
                             />
-                            <MessagePreviewBox>
-                                <MessageUserName theme={theme} size='18px'>
-                                {sessionUser.id === messageBoards[messageBoardId].user_one ?
-                                    users[messageBoards[messageBoardId].user_two].firstName + ' ' + users[messageBoards[messageBoardId].user_two].lastName
-                                    :
-                                    users[messageBoards[messageBoardId].user_one].firstName + ' ' + users[messageBoards[messageBoardId].user_one].lastName
-                                }
+                            <MessageUserName theme={theme} size='18px'>
+                            {sessionUser.id === messageBoards[messageBoardId].user_one ?
+                                users[messageBoards[messageBoardId].user_two].firstName + ' ' + users[messageBoards[messageBoardId].user_two].lastName
+                                :
+                                users[messageBoards[messageBoardId].user_one].firstName + ' ' + users[messageBoards[messageBoardId].user_one].lastName
+                            }
+                            </MessageUserName>
+                            <BannerTextBox>
+                                <MessageUserName theme={theme} size='18px' width='120px'>
+                                    {
+                                        sessionUser.id === messageBoards[messageBoardId].user_one &&
+                                        users[messageBoards[messageBoardId].user_two].isManager ?
+                                        'Manager at -'
+                                        :
+                                        sessionUser.id === messageBoards[messageBoardId].user_one &&
+                                        !users[messageBoards[messageBoardId].user_two].isManager ?
+                                        'Volunteer at -'
+                                        :
+                                        sessionUser.id === messageBoards[messageBoardId].user_two &&
+                                        users[messageBoards[messageBoardId].user_one].isManager ?
+                                        'Manager at -'
+                                        :
+                                        'Volunteer at -'
+                                    }
                                 </MessageUserName>
-                            </MessagePreviewBox>
-                            <MessageUserName theme={theme} size='18px'>
-                                {
-                                    sessionUser.id === messageBoards[messageBoardId].user_one &&
-                                    users[messageBoards[messageBoardId].user_two].isManager ?
-                                    'Manager at -'
-                                    :
-                                    sessionUser.id === messageBoards[messageBoardId].user_one &&
-                                    !users[messageBoards[messageBoardId].user_two].isManager ?
-                                    'Volunteer at -'
-                                    :
-                                    sessionUser.id === messageBoards[messageBoardId].user_two &&
-                                    users[messageBoards[messageBoardId].user_one].isManager ?
-                                    'Manager at -'
-                                    :
-                                    'Volunteer at -'
-                                }
-                            </MessageUserName>
-                            <MessageUserName theme={theme} size='18px'>
-                                {sessionUser.id === messageBoards[messageBoardId].user_one ?
-                                    organizations.nonprofits[users[messageBoards[messageBoardId].user_one].organizationId].name
-                                    :
-                                    organizations.nonprofits[users[messageBoards[messageBoardId].user_one].organizationId].name
-                                }
-                            </MessageUserName>
+                                <MessageUserName theme={theme} size='18px' font='italic' width='180px'>
+                                    {sessionUser.id === messageBoards[messageBoardId].user_one ?
+                                        organizations.nonprofits[users[messageBoards[messageBoardId].user_one].organizationId].name
+                                        :
+                                        organizations.nonprofits[users[messageBoards[messageBoardId].user_one].organizationId].name
+                                    }
+                                </MessageUserName>
+                            </BannerTextBox>
                         </MessengerBanner>
-                        {Object.values(messageBoards[messageBoardId].messages).map((message) =>
-                        <>
-                            <MessageContainer key={message.id} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                <UserAndTime>
-                                    <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
-                                    <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
-                                </UserAndTime>
-                                <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                    {message.content}
-                                </MessageContent>
-                            </MessageContainer>
-                            {message.postId &&
-                            <PostContainer key={`${message.id} ${message.senderId}`} theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                <PostBox theme={theme}>
-                                    <PostCard post={posts[message.postId]} />
-                                </PostBox>
-                            </PostContainer>
-                            }
-                            {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&
-                                <MessageButtonBox key={`${message.id} ${message.createdAt}`}>
-                                    <CancelButton onClick={e => handleDecline(e, posts[message.postId])}>
-                                        <ButtonText>Decline</ButtonText>
-                                    </CancelButton>
-                                    <SubmitButton onClick={e => handleAccept(e, posts[message.postId])}>
-                                        <ButtonText>Accept</ButtonText>
-                                    </SubmitButton>
-                                </MessageButtonBox>
-                            }
-                        </>
-                        )}
+                        <MessageFeed>
+                            {Object.values(messageBoards[messageBoardId].messages).map((message) =>
+                                <>
+                                    <MessageContainer key={message.id} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                        <UserAndTime>
+                                            <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
+                                            <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
+                                        </UserAndTime>
+                                        <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                            {message.content}
+                                        </MessageContent>
+                                    </MessageContainer>
+                                    {message.postId &&
+                                    <PostContainer key={`${message.id} ${message.senderId}`} theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                        <PostBox theme={theme}>
+                                            <PostCard post={posts[message.postId]} />
+                                        </PostBox>
+                                    </PostContainer>
+                                    }
+                                    {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&
+                                        <MessageButtonBox key={`${message.id} ${message.createdAt}`}>
+                                            <CancelButton onClick={e => handleDecline(e, posts[message.postId])}>
+                                                <ButtonText>Decline</ButtonText>
+                                            </CancelButton>
+                                            <SubmitButton onClick={e => handleAccept(e, posts[message.postId])}>
+                                                <ButtonText>Accept</ButtonText>
+                                            </SubmitButton>
+                                        </MessageButtonBox>
+                                    }
+                                </>
+                            )}
+                        </MessageFeed>
                         <MessagePageInput boardId={messageBoardId}/>
                     </>
                 }

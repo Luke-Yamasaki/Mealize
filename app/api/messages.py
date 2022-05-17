@@ -9,8 +9,7 @@ message_routes = Blueprint('messages', __name__)
 @message_routes.route('/')
 @login_required
 def messages():
-    message_boards = Messageboard.query.filter(Messageboard.user_one == current_user.id or Messageboard.user_two == current_user.id)
-    print('/////////////////', message_boards)
+    message_boards = Messageboard.query.filter((Messageboard.user_one == current_user.id) | (Messageboard.user_two == current_user.id))
     return {message_board.id:message_board.to_dict() for message_board in message_boards}
 
 @message_routes.route('/<int:id>')

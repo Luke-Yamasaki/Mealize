@@ -10,8 +10,14 @@ export const ButtonBox = styled.div`
     height: 100px;
 `;
 
-export const MessageButtonBox = styled(ButtonBox)`
-    margin-top: 10px;
+export const MessageButtonBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    width: 150px;
+    height: 50px;
 `;
 
 export const InputButtonBox = styled(ButtonBox)`

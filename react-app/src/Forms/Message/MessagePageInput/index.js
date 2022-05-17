@@ -11,8 +11,9 @@ import Filter from 'bad-words';
 import { getIp } from '../../../utils/Forms/signup';
 import { swearWords } from '../swearWords';
 //Actions
-import { sendMessage, sendReply } from '../../../store/messages';
+import { sendReply } from '../../../store/messages';
 import { hideModal } from '../../../store/modal';
+import { uploadImage } from '../../../utils/Forms/items';
 
 //Components
 import {
@@ -34,12 +35,15 @@ import { MessageErrorBox, MessageFileAndButtons, MessageFileLabel, MessageInput,
 
 export const MessagePageInput = ({boardId}) => {
     const dispatch = useDispatch();
+    const sessionUser = useSelector(state => state.session.user);
+    const messageBoard = useSelector(state => state.messageBoards[boardId])
     const [content, setContent] = useState('');
     const [image, setImage] = useState(null);
     const [imageValidating, setImageValidating] = useState(false);
     const [contentError, setContentError] = useState([]);
     const [imageError, setImageError] = useState([]);
     const {theme} = useTheme();
+    const [imageUploading, setImageUploading] = useState(false);
 
     const filter = new Filter();
 
@@ -115,21 +119,56 @@ export const MessagePageInput = ({boardId}) => {
             contentErrArr.push('Messages must be at least 2 characters long.')
         } else if(imageValidating) {
             contentErrArr.push('We are validating your image.')
+        } else if(image && !imageError.length) {
+            const formData = new FormData();
+            formData.append("image", image);
+
+            setImageUploading(true);
+
+            const response = await uploadImage(formData)
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const imageUrl = await data.imageUrl;
+                    const receiverId = messageBoard.user_one === sessionUser.id ? messageBoard.user_two : messageBoard.user_one
+
+                    const messageData = {content, imageUrl, receiverId, boardId };
+
+                    const resData = await dispatch(sendReply(messageData));
+                    if(resData && resData.errors) {
+                        resData.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
+                        setContentError(contentErrArr);
+                        setImageError(imageErrArr);
+                    } else {
+                        const fileInput = document.getElementById('image');
+                        fileInput.value = '';
+                        setImage('');
+                        setContent('')
+                        setContentError(contentErrArr);
+                        setImageError(imageErrArr);
+                        dispatch(hideModal())
+                    }
+                }
         } else {
-            const messageData = {content, image, boardId}
+            const receiverId = messageBoard.user_one === sessionUser.id ? messageBoard.user_two : messageBoard.user_one
+            const messageData = {content, imageUrl: image, receiverId, boardId}
             const data = await dispatch(sendReply(messageData));
             if(data && data.errors) {
                 data.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
+                setContentError(contentErrArr);
+                setImageError(imageErrArr);
             } else {
-                const input = document.getElementById('image');
-                input.value = '';
+                const fileInput = document.getElementById('image');
+                fileInput.value = '';
                 setImage('');
-                setContent('')
+                setContent('');
+                setContentError(contentErrArr);
+                setImageError(imageErrArr);
+                dispatch(hideModal())
             }
         }
-        setContentError(contentErrArr);
-        setImageError(imageErrArr);
     };
+
 
     const cancel = (e) => {
         e.preventDefault();

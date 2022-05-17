@@ -84,8 +84,8 @@ export const Deliveries = () => {
             <MessagePageWrapper>
             <MessageSideMenu>
                 <MessageList>Deliveries</MessageList>
-                {deliveries !== {} && Object.values(deliveries).map((delivery, idx) =>
-                <div style={{width: '500px', height: '200px', display: 'flex', alignItems: 'left', justifyContent: 'left', flexDirection: 'column'}} key={idx} id={delivery.postId} onClick={(e) => setSelected(e.target.id)}>
+                {deliveries !== {} && Object.values(deliveries).map((delivery) =>
+                <div key={delivery.id} style={{width: '500px', height: '200px', display: 'flex', alignItems: 'left', justifyContent: 'left', flexDirection: 'column'}} onClick={(e) => setSelected(e.target.id)}>
                     Picking up at:
                     <div>{`${delivery.date}`}</div>
                     <OrganizationCard organization={delivery.location} />

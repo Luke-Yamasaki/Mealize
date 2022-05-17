@@ -21,8 +21,8 @@ class Post(db.Model):
     uploader = db.relationship('User', back_populates='posts')
     message = db.relationship('Message', back_populates='post')
     category = db.relationship('Category', back_populates='posts')
-    delivery = db.relationship('Delivery', back_populates='post')
-    favorites = db.relationship('Favorite', back_populates='post')
+    delivery = db.relationship('Delivery', back_populates='post', cascade='all, delete-orphan')
+    favorites = db.relationship('Favorite', back_populates='post', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {

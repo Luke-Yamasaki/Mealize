@@ -9,16 +9,17 @@ import Filter from 'bad-words';
 
 //Helpers
 import { getIp } from '../../../utils/Forms/signup';
+import { uploadImage } from '../../../utils/Forms/items';
 import { swearWords } from '../swearWords';
 //Actions
-import { sendReply } from '../../../store/messages';
-import { uploadImage } from '../../../utils/Forms/items';
+import { editMessage } from '../../../store/messages';
 
 //Components
 import {
     Input,
     Error,
-    ErrorBox
+    ErrorBox,
+    InputErrorBox
 } from '../../../Components/Styled/AuthenticationForm';
 
 import {
@@ -31,17 +32,15 @@ import {
 import { MessageErrorBox, MessageFileAndButtons, MessageFileLabel, MessageInput, MessageInputBox, MessageInputForm } from '../../../Components/Styled/Messages';
 
 
-export const MessagePageInput = ({boardId}) => {
+export const EditMessageInput = ({message}) => {
     const dispatch = useDispatch();
-    const sessionUser = useSelector(state => state.session.user);
-    const messageBoard = useSelector(state => state.messageBoards[boardId])
-    const [content, setContent] = useState('');
-    const [image, setImage] = useState(null);
+    const [content, setContent] = useState(message.content);
+    const [image, setImage] = useState(message.imageUrl);
     const [imageValidating, setImageValidating] = useState(false);
     const [contentError, setContentError] = useState([]);
     const [imageError, setImageError] = useState([]);
-    const {theme} = useTheme();
     const [imageUploading, setImageUploading] = useState(false);
+    const {theme} = useTheme();
 
     const filter = new Filter();
 
@@ -117,7 +116,9 @@ export const MessagePageInput = ({boardId}) => {
             contentErrArr.push('Messages must be at least 2 characters long.')
         } else if(imageValidating) {
             contentErrArr.push('We are validating your image.')
-        } else if(image && !imageError.length) {
+        } else if(content === message.content) {
+            contentErrArr.push('Please edit your original message or upload a new image to submit.')
+        } else if((image !== message.imageUrl && image !== '') && !imageError.length){
             const formData = new FormData();
             formData.append("image", image);
 
@@ -128,11 +129,9 @@ export const MessagePageInput = ({boardId}) => {
                 if (response.ok) {
                     const data = await response.json();
                     const imageUrl = await data.imageUrl;
-                    const receiverId = messageBoard.user_one === sessionUser.id ? messageBoard.user_two : messageBoard.user_one
+                    const messageData = { content, imageUrl };
 
-                    const messageData = {content, imageUrl, receiverId, boardId };
-
-                    const resData = await dispatch(sendReply(messageData));
+                    const resData = await dispatch(editMessage(messageData));
                     if(resData && resData.errors) {
                         resData.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
                         setContentError(contentErrArr);
@@ -146,25 +145,21 @@ export const MessagePageInput = ({boardId}) => {
                         setImageError(imageErrArr);
                     }
                 }
-        } else {
-            const receiverId = messageBoard.user_one === sessionUser.id ? messageBoard.user_two : messageBoard.user_one
-            const messageData = {content, imageUrl: image, receiverId, boardId}
-            const data = await dispatch(sendReply(messageData));
+        }  else {
+            const messageData = {content, image, boardId: message.boardId}
+            const data = await dispatch(editMessage(messageData));
             if(data && data.errors) {
                 data.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
-                setContentError(contentErrArr);
-                setImageError(imageErrArr);
             } else {
-                const fileInput = document.getElementById('image');
-                fileInput.value = '';
+                const input = document.getElementById('image');
+                input.value = '';
                 setImage('');
-                setContent('');
-                setContentError(contentErrArr);
-                setImageError(imageErrArr);
+                setContent('')
             }
         }
+        setContentError(contentErrArr);
+        setImageError(imageErrArr);
     };
-
 
     const cancel = (e) => {
         e.preventDefault();
@@ -185,17 +180,17 @@ export const MessagePageInput = ({boardId}) => {
                         <Error>{contentError[0]}</Error>
                     </ErrorBox>
                     <MessageInputBox theme={theme}>
-                        <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
+                        <MessageInput type='text' theme={theme} value={content} onChange={handleContent} required/>
                     </MessageInputBox>
                 </MessageErrorBox>
                 }
                 {!contentError.length &&
                     <MessageInputBox theme={theme}>
-                        <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
+                        <MessageInput type='text' theme={theme} value={content} onChange={handleContent} required/>
                     </MessageInputBox>
                 }
             <MessageFileAndButtons>
-                <MessageFileLabel htmlFor='image'>{imageUploading ? 'Image uploading...' : !image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
+                <MessageFileLabel htmlFor='image'>{imageUploading ? 'Image uploading...' : !image.length && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
                 <Input id='image' theme={theme} lineHeight='10px' width='230px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                 <MessageButtonBox>
                     <CancelButton onClick={cancel}>

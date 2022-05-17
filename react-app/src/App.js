@@ -81,11 +81,9 @@ function App() {
             <Deliveries />
           </Route>
           }
-          {sessionUser &&
           <Route exact path='/messages'>
             <MessagesPage />
           </Route>
-          }
           <Route>
             <FourOFour />
           </Route>

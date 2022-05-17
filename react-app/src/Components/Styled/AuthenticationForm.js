@@ -182,9 +182,12 @@ export const Input = styled.input`
 
 export const MessageArea = styled.textarea`
     width: 335px;
+    min-height: 25px;
     height: auto;
     resize: vertical;
     max-height: 180px;
+    font-family: motiva-sans, sans-serif;
+    font-size: 14px;
 `;
 
 export const ErrorBox = styled.div`

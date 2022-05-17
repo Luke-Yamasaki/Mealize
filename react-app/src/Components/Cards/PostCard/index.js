@@ -9,7 +9,7 @@ export const PostCard = ({ post }) => {
     const sessionUser = useSelector(state => state.session.user);
 
     return (
-        <CardContainer height={sessionUser ? '450px' : '410px'}>
+        <CardContainer height={(!sessionUser || post.status > 0) ? '410px' : '450px'}>
             <ExpirationBanner post={post}/>
             <CardContent post={post} />
         </CardContainer>

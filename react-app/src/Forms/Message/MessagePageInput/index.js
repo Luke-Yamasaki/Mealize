@@ -111,6 +111,10 @@ export const MessagePageInput = ({boardId}) => {
             contentErrArr.push('Please enter a message.');
         } else if(content.length > 1000) {
             contentErrArr.push('Messages must be under 1000 characters.')
+        } else if(content.length < 2) {
+            contentErrArr.push('Messages must be at least 2 characters long.')
+        } else if(imageValidating) {
+            contentErrArr.push('We are validating your image.')
         } else {
             const messageData = {content, image, boardId}
             const data = await dispatch(sendReply(messageData));
@@ -156,7 +160,7 @@ export const MessagePageInput = ({boardId}) => {
                     </MessageInputBox>
                 }
             <MessageFileAndButtons>
-                <MessageFileLabel htmlFor='image'>{imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : '(Optional image)'}</MessageFileLabel>
+                <MessageFileLabel htmlFor='image'>{!image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
                 <Input id='image' theme={theme} lineHeight='10px' width='230px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                 <MessageButtonBox>
                     <CancelButton onClick={cancel}>

@@ -145,6 +145,7 @@ export default function messageBoardsReducer(state = {}, action) {
             newState = action.payload;
             return newState;
         case SENT_MESSAGE:
+            console.log(action.payload)
             if(newState === null){
                 newState[action.payload.id] = action.payload
             } else {
@@ -152,12 +153,8 @@ export default function messageBoardsReducer(state = {}, action) {
             };
             return newState;
         case SENT_REPLY:
-            console.log(action.payload)
-            console.log(newState);
             const replyState = {...state, ...state.messages};
-            console.log(replyState);
             replyState[action.payload.id] = action.payload;
-            console.log(replyState)
             return replyState;
         case EDITED_MESSAGE:
             newState[action.payload.id] = action.payload;

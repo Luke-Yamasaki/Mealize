@@ -73,7 +73,7 @@ export const BannerTextBox = styled.div`
 export const MessageProfileIcon = styled.img`
     width: ${props => props.square ? props.square : '40px'};
     height: ${props => props.square ? props.square : '40px'};
-    border-radius: 100%;
+    border-radius: 60px;
     object-fit: cover;
     object-position: center;
 `;
@@ -95,7 +95,7 @@ export const MessagePreviewBox = styled(MessageUserBox)`
 
 export const UserAndTime = styled.div`
     width: 50px;
-    height: 50px;
+    height: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -176,10 +176,21 @@ export const MessageContainer = styled.div`
     flex-direction: row;
     flex-direction: ${props => props.direction};
     align-items: center;
-    width: 98%;
+    width: 100%;
     gap: 10px;
     padding: 20px;
     min-height: 30px;
+    height: auto;
+`;
+
+export const MessageBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-direction: ${props => props.direction};
+    align-items: center;
+    width: 98%;
+    padding: 20px;
+    min-height: 50px;
     height: auto;
 `;
 
@@ -206,8 +217,10 @@ export const PostBox = styled.div`
 
 
 export const MessageContent = styled.div`
-    width: 50%;
+    width: 60%;
     min-height: 25px;
+    line-height: 24px;
+    letter-spacing: 0.15px;
     height: auto;
     display: flex;
     flex-direction: row;
@@ -215,7 +228,7 @@ export const MessageContent = styled.div`
     justify-content: flex-start;
     align-items: center;
     font-family: motiva-sans, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;

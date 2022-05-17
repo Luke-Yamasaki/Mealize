@@ -126,18 +126,23 @@ export const MessageForm = ({ post }) => {
             contentErrArr.push('Please enter a message.');
         } else if(content.length > 1000) {
             contentErrArr.push('Messages must be under 1000 characters.')
-        } else {
+            setContentError(contentErrArr);
+        } else if(content.length < 10) {
+            contentErrArr.push('Messages must be greater than 10 characters.')
+            setContentError(contentErrArr);
+        }else {
             const messageData = {content, image, receiverId: post.userId}
             const data = await dispatch(sendMessage(messageData));
             if(data && data.errors) {
                 data.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
+                setContentError(contentErrArr);
+                setImageError(imageErrArr);
             } else {
+                setContentError(contentErrArr);
+                setImageError(imageErrArr);
                 dispatch(hideModal())
             }
         }
-
-        setContentError(contentErrArr);
-        setImageError(imageErrArr);
     };
 
     const cancel = (e) => {

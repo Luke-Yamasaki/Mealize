@@ -29,7 +29,8 @@ import {
     PostBox,
     MessageContent,
     BannerTextBox,
-    MessageFeed
+    MessageFeed,
+    MessageBox
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
@@ -50,8 +51,13 @@ export const MessagesPage = () => {
 
     useEffect(() => {
         dispatch(getBoards());
-        setLoaded(true);
     },[dispatch])
+
+    useEffect(() => {
+        if(Object.values(messageBoards).length > 0) {
+            setLoaded(true);
+        }
+    },[messageBoards])
 
     const handleClick = (e, id) => {
         e.preventDefault();
@@ -74,8 +80,9 @@ export const MessagesPage = () => {
             <MessageSideMenu theme={theme}>
                 <MessageList theme={theme}> All messages
                     <MessageItem key='placeholderItem'/>
-                    {Object.values(messageBoards).reverse().map((messageBoard) =>
+                    { Object.values(messageBoards).reverse().map((messageBoard) =>
                        (<MessageItem key={messageBoard.id} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>
+                           {console.log(messageBoard.messages.length)}
                             <MessageProfileIcon src={users[messageBoard.messages[messageBoard.messages.length - 1].senderId].profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>
                                 <MessagePreviewBox>
@@ -141,21 +148,27 @@ export const MessagesPage = () => {
                                         'Volunteer at -'
                                     }
                                 </MessageUserName>
-                                <MessageUserName theme={theme} size='18px' font='italic' width='180px'>
-                                    {sessionUser.id === messageBoards[messageBoardId].user_one ?
+                                <MessageUserName theme={theme} size='18px' font='italic'>
+                                    {sessionUser.id === messageBoards[messageBoardId].user_one && users[messageBoards[messageBoardId].user_two].isNonprofit ?
+                                        organizations.nonprofits[users[messageBoards[messageBoardId].user_two].organizationId].name
+                                        :
+                                        sessionUser.id === messageBoards[messageBoardId].user_one && !users[messageBoards[messageBoardId].user_two].isNonprofit ?
+                                        organizations.businesses[users[messageBoards[messageBoardId].user_two].organizationId].name
+                                        :
+                                        sessionUser.id === messageBoards[messageBoardId].user_two && users[messageBoards[messageBoardId].user_one].isNonprofit ?
                                         organizations.nonprofits[users[messageBoards[messageBoardId].user_one].organizationId].name
                                         :
-                                        organizations.nonprofits[users[messageBoards[messageBoardId].user_one].organizationId].name
+                                        organizations.businesses[users[messageBoards[messageBoardId].user_one].organizationId].name
                                     }
                                 </MessageUserName>
                             </BannerTextBox>
                         </MessengerBanner>
                         <MessageFeed>
                             {Object.values(messageBoards[messageBoardId].messages).map((message) =>
-                                <>
-                                    <MessageContainer key={message.id} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                <MessageBox key={message.id}>
+                                    <MessageContainer  direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                         <UserAndTime>
-                                            <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
+                                            <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.' square='40px'/>
                                             <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
                                         </UserAndTime>
                                         <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
@@ -163,14 +176,14 @@ export const MessagesPage = () => {
                                         </MessageContent>
                                     </MessageContainer>
                                     {message.postId &&
-                                    <PostContainer key={`${message.id} ${message.senderId}`} theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                    <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                         <PostBox theme={theme}>
                                             <PostCard post={posts[message.postId]} />
                                         </PostBox>
                                     </PostContainer>
                                     }
                                     {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&
-                                        <MessageButtonBox key={`${message.id} ${message.createdAt}`}>
+                                        <MessageButtonBox>
                                             <CancelButton onClick={e => handleDecline(e, posts[message.postId])}>
                                                 <ButtonText>Decline</ButtonText>
                                             </CancelButton>
@@ -179,7 +192,7 @@ export const MessagesPage = () => {
                                             </SubmitButton>
                                         </MessageButtonBox>
                                     }
-                                </>
+                                </MessageBox>
                             )}
                         </MessageFeed>
                         <MessagePageInput boardId={messageBoardId}/>

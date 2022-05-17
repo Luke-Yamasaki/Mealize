@@ -12,7 +12,7 @@ export const NotificationSection = styled.section`
 `;
 
 export const NotificationContainer = styled.div`
-    width: 350px;
+    width: auto;
     height: 40px;
     display: flex;
     flex-direction: row;
@@ -35,7 +35,8 @@ export const NotificationText = styled.p`
     font-family: motiva-sans, sans-serif;
     font-style: normal;
     font-weight: 700;
-    font-size: 1em;
+    font-size: 14px;
     color: black;
     height: 25px;
+    width: auto;
 `;

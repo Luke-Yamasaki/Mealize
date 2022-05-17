@@ -50,7 +50,6 @@ export const PreviewExpirationBanner = ({ props }) => {
             :
             setFlagColor('red') //less than 3 days
 
-            console.log(props.expDate)
             formatDateString(props.expDate);
         } else {
             setFlagColor('green')

@@ -32,7 +32,6 @@ export const ActionButtons = ({post}) => {
 
     const handleNotify = () => {
         const messages = [];
-        console.log(organization)
         const managersArr = Object.values(organization.managers);
         managersArr.forEach(manager => {
             messages.push({
@@ -57,15 +56,15 @@ export const ActionButtons = ({post}) => {
         dispatch(removePost(post.id))
     };
 
-    if(!sessionUser) {
+    if(!sessionUser || post.status > 0) {
         return null
     }
 
     return (
         <>
             {sessionUser.isNonprofit && sessionUser.isManager ?
-                <ButtonBox number={sessionUser.id !== post.userId && !post.isItem ? '1' : '2'}>
-                    {sessionUser.id === post.userId &&
+                <ButtonBox number={!post.isItem ? '1' : (sessionUser.organiztionId !== post.organizationId && (post.isItem && post.status === 0) ) ? '2' : '1'}>
+                    {(sessionUser.isManager && sessionUser.organizationId === post.organizationId) &&
                     <>
                         <EditBtn theme={theme} onClick={handleEdit}>
                             <QuestionText theme={theme}>Edit Request</QuestionText>
@@ -75,12 +74,12 @@ export const ActionButtons = ({post}) => {
                         </DeleteBtn>
                     </>
                     }
-                    {sessionUser.id !== post.userId &&
+                    {sessionUser.organizationId !== post.organizationId &&
                     <>
                         <QuestionBtn theme={theme} onClick={handleQuestion}>
                             <QuestionText theme={theme}>Ask a question</QuestionText>
                         </QuestionBtn>
-                        {post.isItem &&
+                        {(post.isItem && post.status === 0) &&
                             <RequestBtn onClick={handleRequest}>
                                 <ButtonText>Send a request</ButtonText>
                             </RequestBtn>
@@ -110,11 +109,11 @@ export const ActionButtons = ({post}) => {
                 }
             </ButtonBox>
             :
-            <ButtonBox number={post.isItem ? '2' : '1'}>
+            <ButtonBox number={post.isItem && post.status === 0 ? '2' : '1'}>
                 <QuestionBtn theme={theme} onClick={handleQuestion}>
                     <QuestionText theme={theme}>Ask a question</QuestionText>
                 </QuestionBtn>
-                {post.isItem &&
+                {post.isItem && post.status === 0 &&
                 <RequestBtn onClick={handleNotify}>
                     <ButtonText>Notify manager</ButtonText>
                 </RequestBtn>

@@ -159,7 +159,6 @@ export const DeliveryForm = ({ post }) => {
 
             // create delivery, then create message
             const newDelivery = await dispatch(createDelivery(deliveryData))
-            console.log(newDelivery)
             //check errors
             if (!newDelivery.error) {
                 const requestMessage = {
@@ -170,13 +169,11 @@ export const DeliveryForm = ({ post }) => {
                     imageUrl: ''
                 }
                 const newMessage = await dispatch(sendMessage(requestMessage))
-                console.log(newMessage)
                 setDateErrors(dateErrArr);
                 setTimeErrors(timeErrArr);
                 dispatch(hideModal())
                 history.push(`/messages`);
             } else {
-                console.log(newDelivery)
                 newDelivery.error?.map(err => {
                     if(err.includes('date')) {
                         dateErrArr.push('Invalid date.')

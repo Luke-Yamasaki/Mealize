@@ -20,7 +20,7 @@ export const FavoritesIcon = ({ post }) => {
         dispatch(removeFavorite(sessionUser.favorites[post.id].id));
     };
 
-    if(sessionUser.id === post.userId) {
+    if((sessionUser.organizationId === post.organizationId) || (post.status > 0)) {
         return null
     }
 

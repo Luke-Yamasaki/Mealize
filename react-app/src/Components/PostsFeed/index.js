@@ -40,6 +40,7 @@ export const PostsFeed = () => {
     if(filter === 'favorites' && !favorites.length) {
         setFilter('available')
     }
+    
     return (
         <FeedContainer>
             {filter === 'favorites' && favorites.map((obj) => <PostCard key={obj.id} post={allPosts[obj.postId]}/>)}

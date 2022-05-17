@@ -142,7 +142,6 @@ const PostForm = () => {
         if(stagedPost.message === 'success') {
             if(sessionUser.isNonprofit) {
                 const imageUrl = requestBackgrounds[categoryId];
-                console.log(imageUrl)
 
                 const postData = {
                     organizationId,

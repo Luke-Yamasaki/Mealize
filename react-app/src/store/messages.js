@@ -37,7 +37,6 @@ const deletedConversation = payload => ({
 
 export const getBoards = () => async (dispatch) => {
     const response = await fetch('/api/messages/');
-    console.log(response)
     if(response.ok) {
         const messages = await response.json();
         dispatch(gotBoards(messages));
@@ -68,7 +67,6 @@ export const sendMessage = (messageData) => async (dispatch) => {
             return data.errors;
         };
     } else {
-        console.log(response)
         return 'Connection failed. Please check your internet connection.'
     };
 };
@@ -181,9 +179,7 @@ export default function messageBoardsReducer(state = {}, action) {
             return editedState;
         case DELETED_MESSAGE:
             const deletedState = {...state, ...state.messages};
-            console.log(action.payload)
             deletedState[action.payload.id] = action.payload;
-            console.log(deletedState)
             return deletedState;
         case DELETED_CONVERSATION:
             delete newState[action.payload.boardId];

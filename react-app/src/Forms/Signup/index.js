@@ -217,7 +217,7 @@ export const SignupForm = () => {
                 }
             }
         } else {
-            console.log(stagedPost.errors)
+            return stagedPost.errors;
         }
     };
 

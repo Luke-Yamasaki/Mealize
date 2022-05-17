@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import current_user, login_required
-from app.models import db, Delivery
+from app.models import db, Delivery, Post
 from app.forms.delivery_form import DeliveryForm
 from app.utils import errors_to_list
 from time import strftime
@@ -59,6 +59,11 @@ def new_delivery():
         )
         db.session.add(delivery)
         db.session.commit()
+
+        post = Post.query.get(delivery.postId)
+        post.status = 1
+        db.session.commit()
+        
         return delivery.to_dict()
     return {'errors': errors_to_list(form.errors)}
 

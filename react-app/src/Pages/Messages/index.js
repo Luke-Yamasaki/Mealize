@@ -31,12 +31,14 @@ import {
     MessageContent,
     BannerTextBox,
     MessageFeed,
-    MessageBox
+    MessageBox,
+    PreviewMessageTime,
+    ImageMessage
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
 
-import { daysAgo } from "../../utils/Dates";
+import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
 import { ButtonText, CancelButton, MessageButtonBox, SubmitButton } from "../../Components/Styled/Buttons";
 import { EditMessageInput } from "../../Forms/Message/EditMessageInput";
 
@@ -111,7 +113,7 @@ export const MessagesPage = () => {
                                     </MessageUserName>
                                     <MessageContentPreview theme={theme}>{messageBoard.messages[messageBoard.messages.length - 1].content.length > 30 ? messageBoard.messages[messageBoard.messages.length - 1].content.slice(0, 30) + '...' : messageBoard.messages[messageBoard.messages.length - 1].content}</MessageContentPreview>
                                 </MessagePreviewBox>
-                                <MessageTime theme={theme}>{daysAgo(new Date(messageBoard.messages[messageBoard.messages.length - 1].createdAt))}</MessageTime>
+                                <PreviewMessageTime theme={theme}>{createdAtDaysAgo(new Date(messageBoard.messages[messageBoard.messages.length - 1].createdAt))}</PreviewMessageTime>
                             </MessageUserBox>
                         </MessageItem>)
                     )}
@@ -223,7 +225,7 @@ export const MessagesPage = () => {
                                     <>
                                         <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                             <PostBox theme={theme}>
-                                                <img src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
+                                                <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
                                             </PostBox>
                                             {message.senderId === sessionUser.id &&
                                                 <button onClick={e => handleDelete(e, message)}>Delete image</button>

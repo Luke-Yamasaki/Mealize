@@ -195,16 +195,40 @@ export const MessagesPage = () => {
                                             {message.content}
                                         </MessageContent>
                                     </MessageContainer>
+                                    {((message.content.includes('I would like to pick up this item') && message.postId === null) || (message.content.includes('I found a good item!') && message.postId === null)) &&
+                                    <>
+                                        <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                            <PostBox theme={theme}>
+                                                <div>The item you found has been deleted...</div>
+                                            </PostBox>
+                                            {message.senderId === sessionUser.id &&
+                                                <button onClick={e => handleDelete(e, message)}>Delete image</button>
+                                            }
+                                        </PostContainer>
+                                    </>
+                                    }
                                     {message.postId &&
                                     <>
                                         <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                             <PostBox theme={theme}>
                                                 <PostCard post={posts[message.postId]} />
                                             </PostBox>
+                                            {message.senderId === sessionUser.id &&
+                                                <button onClick={e => handleDelete(e, message)}>Delete</button>
+                                            }
                                         </PostContainer>
-                                        {message.senderId === sessionUser.id &&
-                                            <div onClick={e => handleDelete(e, message)}>Delete</div>
-                                        }
+                                    </>
+                                    }
+                                     {message.imageUrl &&
+                                    <>
+                                        <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                            <PostBox theme={theme}>
+                                                <img src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
+                                            </PostBox>
+                                            {message.senderId === sessionUser.id &&
+                                                <button onClick={e => handleDelete(e, message)}>Delete image</button>
+                                            }
+                                        </PostContainer>
                                     </>
                                     }
                                     {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&

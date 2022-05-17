@@ -11,9 +11,8 @@ import { determineExpiration } from "../../utils/Dates";
 
 export const PostsFeed = () => {
     const allPosts = useSelector(state => state.posts.all);
-    const sessionUser = useSelector(state => state.session.user);
     const favoritesObj = useSelector(state => state.session.user?.favorites);
-    const {filter} = useFilter();
+    const {filter, setFilter} = useFilter();
 
     const favorites = favoritesObj ? Object.values(favoritesObj) : [];
     const posts = Object.values(allPosts);
@@ -38,6 +37,9 @@ export const PostsFeed = () => {
     //CategoriesFilter
     posts.map(post => parseInt(post.categoryId) === 1 ? dairyArr.push(post) : parseInt(post.categoryId) === 2 ? vegetablesArr.push(post) : parseInt(post.categoryId) === 3 ? fruitsArr.push(post) : parseInt(post.categoryId) === 4 ? grainsArr.push(post) : proteinArr.push(post))
 
+    if(filter === 'favorites' && !favorites.length) {
+        setFilter('available')
+    }
     return (
         <FeedContainer>
             {filter === 'favorites' && favorites.map((obj) => <PostCard key={obj.id} post={allPosts[obj.postId]}/>)}

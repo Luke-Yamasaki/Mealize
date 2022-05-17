@@ -9,6 +9,7 @@ import Filter from 'bad-words';
 
 //Helpers
 import { getIp } from '../../../utils/Forms/signup';
+import { uploadImage } from '../../../utils/Forms/items';
 import { swearWords } from '../swearWords';
 //Actions
 import { editMessage } from '../../../store/messages';
@@ -38,6 +39,7 @@ export const EditMessageInput = ({message}) => {
     const [imageValidating, setImageValidating] = useState(false);
     const [contentError, setContentError] = useState([]);
     const [imageError, setImageError] = useState([]);
+    const [imageUploading, setImageUploading] = useState(false);
     const {theme} = useTheme();
 
     const filter = new Filter();
@@ -115,7 +117,35 @@ export const EditMessageInput = ({message}) => {
         } else if(imageValidating) {
             contentErrArr.push('We are validating your image.')
         } else if(content === message.content) {
-        } else {
+            contentErrArr.push('Please edit your original message or upload a new image to submit.')
+        } else if((image !== message.imageUrl && image !== '') && !imageError.length){
+            const formData = new FormData();
+            formData.append("image", image);
+
+            setImageUploading(true);
+
+            const response = await uploadImage(formData)
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const imageUrl = await data.imageUrl;
+                    const messageData = { content, imageUrl };
+
+                    const resData = await dispatch(editMessage(messageData));
+                    if(resData && resData.errors) {
+                        resData.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
+                        setContentError(contentErrArr);
+                        setImageError(imageErrArr);
+                    } else {
+                        const fileInput = document.getElementById('image');
+                        fileInput.value = '';
+                        setImage('');
+                        setContent('')
+                        setContentError(contentErrArr);
+                        setImageError(imageErrArr);
+                    }
+                }
+        }  else {
             const messageData = {content, image, boardId: message.boardId}
             const data = await dispatch(editMessage(messageData));
             if(data && data.errors) {
@@ -160,7 +190,7 @@ export const EditMessageInput = ({message}) => {
                     </MessageInputBox>
                 }
             <MessageFileAndButtons>
-                <MessageFileLabel htmlFor='image'>{!image.length && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
+                <MessageFileLabel htmlFor='image'>{imageUploading ? 'Image uploading...' : !image.length && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
                 <Input id='image' theme={theme} lineHeight='10px' width='230px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                 <MessageButtonBox>
                     <CancelButton onClick={cancel}>

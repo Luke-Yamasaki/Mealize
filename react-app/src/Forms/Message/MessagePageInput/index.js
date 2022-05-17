@@ -12,15 +12,13 @@ import { getIp } from '../../../utils/Forms/signup';
 import { swearWords } from '../swearWords';
 //Actions
 import { sendReply } from '../../../store/messages';
-import { hideModal } from '../../../store/modal';
 import { uploadImage } from '../../../utils/Forms/items';
 
 //Components
 import {
     Input,
     Error,
-    ErrorBox,
-    InputErrorBox
+    ErrorBox
 } from '../../../Components/Styled/AuthenticationForm';
 
 import {
@@ -146,7 +144,6 @@ export const MessagePageInput = ({boardId}) => {
                         setContent('')
                         setContentError(contentErrArr);
                         setImageError(imageErrArr);
-                        dispatch(hideModal())
                     }
                 }
         } else {
@@ -164,7 +161,6 @@ export const MessagePageInput = ({boardId}) => {
                 setContent('');
                 setContentError(contentErrArr);
                 setImageError(imageErrArr);
-                dispatch(hideModal())
             }
         }
     };
@@ -199,7 +195,7 @@ export const MessagePageInput = ({boardId}) => {
                     </MessageInputBox>
                 }
             <MessageFileAndButtons>
-                <MessageFileLabel htmlFor='image'>{!image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
+                <MessageFileLabel htmlFor='image'>{imageUploading ? 'Image uploading...' : !image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
                 <Input id='image' theme={theme} lineHeight='10px' width='230px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                 <MessageButtonBox>
                     <CancelButton onClick={cancel}>

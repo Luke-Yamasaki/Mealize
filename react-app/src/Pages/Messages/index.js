@@ -2,11 +2,35 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux"
 import { useTheme } from "../../Context/ThemeContext";
+
+//Actions
+import { getBoards } from "../../store/messages";
+
+//Components
 import { OrganizationCard } from "../../Components/Cards/OrganizationCard";
 import { PostCard } from "../../Components/Cards/PostCard";
-import { PostsSection }  from "../../Components/Styled/Layout"
-import { MessageItem, MessageList, MessagePreviewBox,MessageProfileIcon, MessageSideMenu, MessageTime, MessageUserBox, MessageUserName, MessageContentPreview, MessagePageWrapper, MessageThreadField, MessengerBanner, SelectMessageBox, SelectMessageText } from "../../Components/Styled/Messages";
-import { getBoards } from "../../store/messages";
+import {
+    MessageItem,
+    MessageList,
+    MessagePreviewBox,
+    MessageProfileIcon,
+    MessageSideMenu,
+    MessageTime,
+    MessageUserBox,
+    MessageUserName,
+    MessageContentPreview,
+    MessagePageWrapper,
+    MessageThreadField,
+    MessengerBanner,
+    SelectMessageBox,
+    SelectMessageText,
+    MessageSpacer,
+    MessageContainer,
+    UserAndTime
+} from "../../Components/Styled/Messages";
+
+import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
+
 import { daysAgo } from "../../utils/Dates";
 
 export const MessagesPage = () => {
@@ -33,16 +57,21 @@ export const MessagesPage = () => {
     return loaded && (
         <MessagePageWrapper>
             <MessageSideMenu theme={theme}>
-                <MessageList> All messages
+                <MessageList theme={theme}> All messages
+                    <MessageItem />
                     {Object.values(messageBoards).map((messageBoard, idx) =>
                        (<MessageItem key={idx} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>
                             <MessageProfileIcon src={users[messageBoard.messages[messageBoard.messages.length - 1].senderId].profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>
                                 <MessagePreviewBox>
-                                    <MessageUserName theme={theme}>{users[messageBoard.messages[messageBoard.messages.length - 1].senderId].firstName + ' ' + users[messageBoard.messages[messageBoard.messages.length - 1].senderId].lastName}</MessageUserName>
-                                    <MessageContentPreview>{messageBoard.messages[messageBoard.messages.length - 1].content}</MessageContentPreview>
+                                    <MessageUserName theme={theme}>
+                                        {sessionUser.id === messageBoard.messages[messageBoard.messages.length - 1].senderId ?
+                                        'You' :
+                                        users[messageBoard.messages[messageBoard.messages.length - 1].senderId].firstName + ' ' + users[messageBoard.messages[messageBoard.messages.length - 1].senderId].lastName}
+                                    </MessageUserName>
+                                    <MessageContentPreview theme={theme}>{messageBoard.messages[messageBoard.messages.length - 1].content}</MessageContentPreview>
                                 </MessagePreviewBox>
-                                <MessageTime theme={theme}>{daysAgo(messageBoard.messages[messageBoard.messages.length - 1].createdAt)}</MessageTime>
+                                <MessageTime theme={theme}>{daysAgo(new Date(messageBoard.messages[messageBoard.messages.length - 1].createdAt))}</MessageTime>
                             </MessageUserBox>
                         </MessageItem>)
                     )}
@@ -65,20 +94,50 @@ export const MessagesPage = () => {
                 }
                 {(messageBoardId && Object.values(messageBoards).length > 0) &&
                     <>
+                        <MessengerBanner theme={theme}>
+                            <MessageProfileIcon size='55px'
+                            src={users[sessionUser.id === messageBoards[messageBoardId].user_one ?
+                            messageBoards[messageBoardId].user_two
+                            : messageBoards[messageBoardId].user_one].profileImageUrl}
+                            alt='User profile.'
+                            />
+                            <MessagePreviewBox>
+                                <MessageUserName theme={theme} size='18px'>
+                                {sessionUser.id === messageBoards[messageBoardId].user_one ?
+                                    users[messageBoards[messageBoardId].user_two].firstName + ' ' + users[messageBoards[messageBoardId].user_two].lastName
+                                    :
+                                    users[messageBoards[messageBoardId].user_one].firstName + ' ' + users[messageBoards[messageBoardId].user_one].lastName
+                                }
+                                </MessageUserName>
+                                <MessageUserName>
+                                </MessageUserName>
+                            </MessagePreviewBox>
+                        </MessengerBanner>
                         {Object.values(messageBoards[messageBoardId].messages).map((message) =>
-                            <MessengerBanner id={message.id}>
-                                <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
+                        <>
+                            <MessageContainer id={message.id} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                <UserAndTime>
+                                    <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
+                                    <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
+                                </UserAndTime>
                                     <MessageUserBox>
                                         <MessagePreviewBox>
-                                            <MessageUserName theme={theme}>{users[message.senderId].firstName + ' ' + users[message.senderId].lastName}</MessageUserName>
-                                            <MessageContentPreview>{message.content}</MessageContentPreview>
+                                            <MessageContentPreview theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>{message.content}</MessageContentPreview>
                                         </MessagePreviewBox>
-                                        <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
                                     </MessageUserBox>
-                            </MessengerBanner>
+                            </MessageContainer>
+                            {message.postId &&
+                            <MessageContainer id={message.id} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                <PostCard post={posts[message.postId]} />
+                            </MessageContainer>
+                            }
+                        </>
+
                         )}
+                        <MessagePageInput />
                     </>
                 }
+
             </MessageThreadField>
         </MessagePageWrapper>
     )

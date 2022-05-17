@@ -26,7 +26,10 @@ import {
     SelectMessageText,
     MessageSpacer,
     MessageContainer,
-    UserAndTime
+    UserAndTime,
+    PostContainer,
+    PostBox,
+    MessageContent
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
@@ -69,7 +72,7 @@ export const MessagesPage = () => {
                                         'You' :
                                         users[messageBoard.messages[messageBoard.messages.length - 1].senderId].firstName + ' ' + users[messageBoard.messages[messageBoard.messages.length - 1].senderId].lastName}
                                     </MessageUserName>
-                                    <MessageContentPreview theme={theme}>{messageBoard.messages[messageBoard.messages.length - 1].content}</MessageContentPreview>
+                                    <MessageContentPreview theme={theme}>{messageBoard.messages[messageBoard.messages.length - 1].content.length > 30 ? messageBoard.messages[messageBoard.messages.length - 1].content.slice(0, 30) + '...' : messageBoard.messages[messageBoard.messages.length - 1].content}</MessageContentPreview>
                                 </MessagePreviewBox>
                                 <MessageTime theme={theme}>{daysAgo(new Date(messageBoard.messages[messageBoard.messages.length - 1].createdAt))}</MessageTime>
                             </MessageUserBox>
@@ -120,16 +123,16 @@ export const MessagesPage = () => {
                                     <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
                                     <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
                                 </UserAndTime>
-                                    <MessageUserBox>
-                                        <MessagePreviewBox>
-                                            <MessageContentPreview theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>{message.content}</MessageContentPreview>
-                                        </MessagePreviewBox>
-                                    </MessageUserBox>
+                                <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                    {message.content}
+                                </MessageContent>
                             </MessageContainer>
                             {message.postId &&
-                            <MessageContainer id={message.id} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                <PostCard post={posts[message.postId]} />
-                            </MessageContainer>
+                            <PostContainer id={message.id} theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                <PostBox theme={theme}>
+                                    <PostCard post={posts[message.postId]} />
+                                </PostBox>
+                            </PostContainer>
                             }
                         </>
 

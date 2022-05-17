@@ -1,7 +1,7 @@
 
 export const Footer = () => {
     return (
-        <div style={{width: '1600px', height: '500px', backgroundColor: '#76D97E', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'left', fontFamily: 'motiva-sans, sans-serif'}}>
+        <div style={{width: '1600px', height: '400px', backgroundColor: '#76D97E', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'left', fontFamily: 'motiva-sans, sans-serif'}}>
             <div style={{width: '1590px', height: '300px', display: 'flex', flexDirection: 'row', alignItems: 'top', justifyContent: 'flex-start', gap: '10px', paddingLeft: '10px'}}>
                 <ul style={{fontSize: '21px', fontWeight: '900'}}>
                     <p style={{fontSize: '21px', fontWeight: '900', textDecoration: 'underline'}}>Technology</p>
@@ -17,7 +17,7 @@ export const Footer = () => {
                     <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700'}}><a style={{color: 'black', cursor: 'pointer'}} href='https://github.com/Luke-Yamasaki/Mealize/wiki' target='_blank' rel="noreferrer noopener">About Mealize</a></li>
                 </ul>
             </div>
-            <section style={{width: '1600px', height: '100px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
+            <section style={{width: '1600px', height: '100px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                 <div style={{width: '750px', height: '40px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', gap: '10px', alignItems: 'center', paddingLeft: '50px'}}>
                     <p style={{fontSize: '16px', fontWeight: '900'}}>Mealize was designed and developed by Luke Yamasaki</p>
                     <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700', textDecoration: 'none'}}>

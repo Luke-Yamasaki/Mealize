@@ -100,6 +100,8 @@ export const MessageContentPreview = styled(MessageUserBox)`
     justify-content: flex-start;
     font-family: motiva-sans, sans-serif;
     font-size: 16px;
+    font-weight: 700;
+    opacity: 60%;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
@@ -148,14 +150,42 @@ export const MessageContainer = styled.div`
     flex-direction: ${props => props.direction};
     justify-content: flex-start;
     width: 93%;
-    padding: 5%;
-    height: auto;
+    padding: 20px;
+    height: 30px;
+`;
+
+export const PostContainer = styled.div`
+    display: flex;
+    flex-direction: ${props => props.direction};
+    justify-content: flex-start;
+    align-items: center;
+    width: 93%;
+    height: 450px;
+    padding-left: 8%;
+`;
+
+export const PostBox = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${props => props.theme === 'light' ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)'};
+    border: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.2)'};
+    width: 310px;
+    height: 450px;
+    border-radius: 5px;
 `;
 
 
-export const MessagesContent = styled.div`
-    display: flex;
-    flex-direction: row;
+export const MessageContent = styled.div`
+    width: 90%;
+    height: auto;
+    flex-direction: ${props => props.direction};
+    justify-content: flex-start;
+    align-items: center;
+    font-family: motiva-sans, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
 

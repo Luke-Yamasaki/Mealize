@@ -69,15 +69,13 @@ export const MessagesPage = () => {
         setMessageBoardId(id)
     };
 
-    const handleDelete = async(e, id) => {
+    const handleDelete = async(e, message) => {
         e.preventDefault();
-        if(messageBoards[id].messages.length === 1) {
+        if(messageBoards[message.boardId].messages.length === 1) {
             setMessageBoardId('')
-            const data = await dispatch(deleteConversation(id))
-            console.log(data)
+            const data = await dispatch(deleteConversation(message.boardId))
         } else {
-            const data = await dispatch(deleteMessage(e.target.id))
-            console.log(data)
+            const data = await dispatch(deleteMessage(message.id))
         }
     };
 
@@ -204,7 +202,9 @@ export const MessagesPage = () => {
                                                 <PostCard post={posts[message.postId]} />
                                             </PostBox>
                                         </PostContainer>
-                                        <div id={message.id} onClick={e => handleDelete(e, message.boardId)}>Delete</div>
+                                        {message.senderId === sessionUser.id &&
+                                            <div onClick={e => handleDelete(e, message)}>Delete</div>
+                                        }
                                     </>
                                     }
                                     {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&

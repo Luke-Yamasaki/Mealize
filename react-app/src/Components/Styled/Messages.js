@@ -185,8 +185,7 @@ export const MessageContainer = styled.div`
 
 export const MessageBox = styled.div`
     display: flex;
-    flex-direction: row;
-    flex-direction: ${props => props.direction};
+    flex-direction: column;
     align-items: center;
     width: 98%;
     padding: 20px;

@@ -26,16 +26,8 @@ def message(id):
 def new_conversation():
     form = MessageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    if "image" in request.files and not accepted_file(image.filename):
-        return {"errors": "Sorry, we only accept .png, .jpg or .jpeg image files."}, 400
-    elif "image" in request.files and form.validate_on_submit():
-        image = request.files["image"]
-        image.filename = generate_unique_file(image.filename)
-        upload = upload_to_s3_bucket(image)
-        if "url" not in upload:
-            return upload, 400
-        image_url = upload["url"]
-
+    if form.validate_on_submit():
+        print('////////////', request.json['receiverId'])
         board = Messageboard(
             user_one = current_user.id,
             user_two = request.json['receiverId']
@@ -48,25 +40,7 @@ def new_conversation():
             senderId = current_user.id,
             content = form.data['content'],
             postId = form.data['postId'],
-            imageUrl = image_url
-        )
-        db.session.add(message)
-        db.session.commit()
-        return board.to_dict()
-    elif form.validate_on_submit():
-        board = Messageboard(
-            user_one = current_user.id,
-            user_two = request.json['receiverId']
-        )
-        db.session.add(board)
-        db.session.commit()
-
-        message = Message(
-            boardId = board.id,
-            senderId = current_user.id,
-            content = form.data['content'],
-            postId = form.data['postId'],
-            imageUrl = ''
+            imageUrl = request.json['imageUrl']
         )
 
         db.session.add(message)
@@ -80,37 +54,15 @@ def new_conversation():
 def reply():
     form = MessageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    if "image" in request.files and not accepted_file(image.filename):
-        return {"errors": "Sorry, we only accept .png, .jpg or .jpeg image files."}, 400
-    elif "image" in request.files and form.validate_on_submit():
-        image = request.files["image"]
-        image.filename = generate_unique_file(image.filename)
-        upload = upload_to_s3_bucket(image)
-        if "url" not in upload:
-            return upload, 400
-        image_url = upload["url"]
+    if form.validate_on_submit():
         board = Messageboard.query.get(request.json['boardId'])
         message = Message(
             boardId = board.id,
             senderId = current_user.id,
             content = form.data['content'],
             postId = form.data['postId'],
-            imageUrl = image_url
+            imageUrl = request.json['imageUrl']
         )
-
-        db.session.add(message)
-        db.session.commit()
-        return board.to_dict()
-    elif form.validate_on_submit():
-        board = Messageboard.query.get(request.json['boardId'])
-        message = Message(
-            boardId = board.id,
-            senderId = current_user.id,
-            content = form.data['content'],
-            postId = form.data['postId'],
-            imageUrl = ''
-        )
-
         db.session.add(message)
         db.session.commit()
         return board.to_dict()
@@ -122,15 +74,7 @@ def reply():
 def edit_message(id):
     form = MessageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    if "image" in request.files and not accepted_file(image.filename):
-        return {"errors": "Sorry, we only accept .png, .jpg or .jpeg image files."}, 400
-    elif "image" in request.files and form.validate_on_submit():
-        image = request.files["image"]
-        image.filename = generate_unique_file(image.filename)
-        upload = upload_to_s3_bucket(image)
-        if "url" not in upload:
-            return upload, 400
-        image_url = upload["url"]
+    if form.validate_on_submit():
         message = Message.query.get(id)
         board = Messageboard.query.get(message.boardId)
         if current_user.id != message.senderId:
@@ -139,19 +83,7 @@ def edit_message(id):
             message.senderId = current_user.id,
             message.content = form.data['content'],
             message.postId = form.data['postId'],
-            message.imageUrl = image_url
-        db.session.commit()
-        return board.to_dict()
-    elif form.validate_on_submit():
-        message = Message.query.get(id)
-        board = Messageboard.query.get(message.boardId)
-        if current_user.id != message.senderId:
-            return {'error': "Unauthorized"}
-        else:
-            message.senderId = current_user.id,
-            message.content = form.data['content'],
-            message.postId = form.data['postId'],
-            message.imageUrl = image_url
+            message.imageUrl = request.json['imageUrl']
         db.session.commit()
         return board.to_dict()
     else:
@@ -161,11 +93,13 @@ def edit_message(id):
 @login_required
 def delete_message(id):
     message = Message.query.get(id)
-    board = Messageboard.query.get(message.boardId)
-
+    boardId = message.boardId
+    print('//////////////////', message)
     db.session.delete(message)
     db.session.commit()
 
+    board = Messageboard.query.get(boardId)
+    print('//////////', board)
     return board.to_dict()
 
 @message_routes.route('/conversations/<int:id>', methods=['DELETE'])

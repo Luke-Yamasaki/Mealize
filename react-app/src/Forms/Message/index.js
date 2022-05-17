@@ -10,6 +10,7 @@ import Filter from 'bad-words';
 //Helpers
 import { getIp } from '../../utils/Forms/signup';
 import { swearWords } from './swearWords';
+import { uploadImage } from '../../utils/Forms/items';
 //Actions
 import { sendMessage } from '../../store/messages';
 import { hideModal } from '../../store/modal';
@@ -53,10 +54,12 @@ export const MessageForm = ({ post }) => {
     const [content, setContent] = useState('');
     const [image, setImage] = useState(null);
     const [imageValidating, setImageValidating] = useState(false);
+    const [imageUploading, setImageUploading] = useState(false);
     const [contentError, setContentError] = useState([]);
     const [imageError, setImageError] = useState([]);
     const {theme} = useTheme();
 
+    console.log(post)
     const user = users[post.userId];
     console.log(user)
 
@@ -80,8 +83,8 @@ export const MessageForm = ({ post }) => {
             } else {
                 if(predictions[i].probability > 0.6) {
                     nsfwArr.push("Adult content violates Mealize's community standards.");
-                    const user = getIp();
-                    return user
+                    const badUser = getIp();
+                    return badUser
                 }
             }
         }
@@ -130,8 +133,33 @@ export const MessageForm = ({ post }) => {
         } else if(content.length < 10) {
             contentErrArr.push('Messages must be greater than 10 characters.')
             setContentError(contentErrArr);
-        }else {
-            const messageData = {content, image, receiverId: post.userId}
+        }else if(image && !imageError.length) {
+            const formData = new FormData();
+            formData.append("image", image);
+
+            setImageUploading(true);
+
+            const response = await uploadImage(formData)
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const imageUrl = await data.imageUrl;
+
+                    const messageData = {content, imageUrl, receiverId: post.userId};
+
+                    const resData = await dispatch(sendMessage(messageData));
+                    if(resData && resData.errors) {
+                        resData.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
+                        setContentError(contentErrArr);
+                        setImageError(imageErrArr);
+                    } else {
+                        setContentError(contentErrArr);
+                        setImageError(imageErrArr);
+                        dispatch(hideModal())
+                    }
+                }
+        } else {
+            const messageData = {content, imageUrl: image, receiverId: post.userId}
             const data = await dispatch(sendMessage(messageData));
             if(data && data.errors) {
                 data.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
@@ -183,7 +211,8 @@ export const MessageForm = ({ post }) => {
                                 <Error>{imageError[0]}</Error>
                             </ErrorBox>
                             <Fieldset error={imageError.length > 0}>
-                                <Legend htmlFor="image" theme={theme} width='117px' error={imageError.length > 0}>Optional image
+                                <Legend htmlFor="image" theme={theme} width={imageValidating ? '145px' : imageUploading ? '150px' : '130px'} error={imageError.length > 0}>
+                                    {image === null && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : imageUploading ? 'Image Uploading...' : 'Image validated!'}
                                     <Input id='image' theme={theme} lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                                 </Legend>
                             </Fieldset>

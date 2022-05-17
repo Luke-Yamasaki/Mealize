@@ -1,10 +1,11 @@
 //Hooks
 import { useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import { useTheme } from "../../Context/ThemeContext";
 
 //Actions
-import { getBoards } from "../../store/messages";
+import { deleteMessage, getBoards, deleteConversation} from "../../store/messages";
 
 //Components
 import { PostCard } from "../../Components/Cards/PostCard";
@@ -37,6 +38,7 @@ import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
 
 import { daysAgo } from "../../utils/Dates";
 import { ButtonText, CancelButton, MessageButtonBox, SubmitButton } from "../../Components/Styled/Buttons";
+import { EditMessageInput } from "../../Forms/Message/EditMessageInput";
 
 export const MessagesPage = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -47,10 +49,13 @@ export const MessagesPage = () => {
     const dispatch = useDispatch();
     const [loaded, setLoaded] = useState(false);
     const [messageBoardId, setMessageBoardId] = useState(false);
+    const [editMode, setEditMode] = useState(false);
     const {theme} = useTheme();
 
     useEffect(() => {
-        dispatch(getBoards());
+        if(sessionUser) {
+            dispatch(getBoards());
+        }
     },[dispatch])
 
     useEffect(() => {
@@ -62,7 +67,19 @@ export const MessagesPage = () => {
     const handleClick = (e, id) => {
         e.preventDefault();
         setMessageBoardId(id)
-    }
+    };
+
+    const handleDelete = async(e, id) => {
+        e.preventDefault();
+        if(messageBoards[id].messages.length === 1) {
+            setMessageBoardId('')
+            const data = await dispatch(deleteConversation(id))
+            console.log(data)
+        } else {
+            const data = await dispatch(deleteMessage(e.target.id))
+            console.log(data)
+        }
+    };
 
     const handleDecline = (e, post) => {
         e.preventDefault();
@@ -75,6 +92,10 @@ export const MessagesPage = () => {
 
     }
 
+    if(!sessionUser) {
+        return <Redirect to='/' />
+    }
+
     return loaded && (
         <MessagePageWrapper>
             <MessageSideMenu theme={theme}>
@@ -82,7 +103,6 @@ export const MessagesPage = () => {
                     <MessageItem key='placeholderItem'/>
                     { Object.values(messageBoards).reverse().map((messageBoard) =>
                        (<MessageItem key={messageBoard.id} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>
-                           {console.log(messageBoard.messages.length)}
                             <MessageProfileIcon src={users[messageBoard.messages[messageBoard.messages.length - 1].senderId].profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>
                                 <MessagePreviewBox>
@@ -118,9 +138,11 @@ export const MessagesPage = () => {
                     <>
                         <MessengerBanner theme={theme}>
                             <MessageProfileIcon square='55px'
-                            src={users[sessionUser.id === messageBoards[messageBoardId].user_one ?
-                            messageBoards[messageBoardId].user_two
-                            : messageBoards[messageBoardId].user_one].profileImageUrl}
+                            src={sessionUser.id === messageBoards[messageBoardId].user_one ?
+                            users[messageBoards[messageBoardId].user_two].profileImageUrl
+                            :
+                            users[messageBoards[messageBoardId].user_one].profileImageUrl
+                            }
                             alt='User profile.'
                             />
                             <MessageUserName theme={theme} size='18px'>
@@ -176,11 +198,14 @@ export const MessagesPage = () => {
                                         </MessageContent>
                                     </MessageContainer>
                                     {message.postId &&
-                                    <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                        <PostBox theme={theme}>
-                                            <PostCard post={posts[message.postId]} />
-                                        </PostBox>
-                                    </PostContainer>
+                                    <>
+                                        <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                            <PostBox theme={theme}>
+                                                <PostCard post={posts[message.postId]} />
+                                            </PostBox>
+                                        </PostContainer>
+                                        <div id={message.id} onClick={e => handleDelete(e, message.boardId)}>Delete</div>
+                                    </>
                                     }
                                     {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&
                                         <MessageButtonBox>

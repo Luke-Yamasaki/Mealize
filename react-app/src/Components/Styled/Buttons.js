@@ -16,7 +16,8 @@ export const MessageButtonBox = styled.div`
     justify-content: flex-end;
     align-items: center;
     gap: 15px;
-    width: 150px;
+    width: 400px;
+    margin-top: 10px;
     height: 50px;
 `;
 

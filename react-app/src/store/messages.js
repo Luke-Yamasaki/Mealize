@@ -68,6 +68,7 @@ export const sendMessage = (messageData) => async (dispatch) => {
             return data.errors;
         };
     } else {
+        console.log(response)
         return 'Connection failed. Please check your internet connection.'
     };
 };
@@ -94,7 +95,13 @@ export const sendReply= (messageData) => async (dispatch) => {
 };
 
 export const editMessage = (message) => async (dispatch) => {
-    const response = await fetch(`/api/messages/${message.id}`);
+    const response = await fetch(`/api/messages/${message.id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(message)
+    });
     if(response.ok) {
         const newMessage = await response.json();
         dispatch(editedMessage(newMessage));
@@ -109,7 +116,14 @@ export const editMessage = (message) => async (dispatch) => {
 };
 
 export const deleteMessage = (id) => async (dispatch) => {
-    const response = await fetch(`/api/messages/${id}`);
+    const response = await fetch(`/api/messages/${id}`, {
+        method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(id)
+        }
+    );
     if(response.ok) {
         const messageId = await response.json();
         dispatch(deletedMessage(messageId));
@@ -124,7 +138,13 @@ export const deleteMessage = (id) => async (dispatch) => {
 };
 
 export const deleteConversation = (id) => async (dispatch) => {
-    const response = await fetch(`/api/messages/conversation/${id}`);
+    const response = await fetch(`/api/messages/conversations/${id}`, {
+        method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(id)
+        });
     if(response.ok) {
         const boardId = await response.json();
         dispatch(deletedConversation(boardId));
@@ -145,7 +165,6 @@ export default function messageBoardsReducer(state = {}, action) {
             newState = action.payload;
             return newState;
         case SENT_MESSAGE:
-            console.log(action.payload)
             if(newState === null){
                 newState[action.payload.id] = action.payload
             } else {
@@ -157,11 +176,15 @@ export default function messageBoardsReducer(state = {}, action) {
             replyState[action.payload.id] = action.payload;
             return replyState;
         case EDITED_MESSAGE:
-            newState[action.payload.id] = action.payload;
-            return newState;
+            const editedState = {...state, ...state.messages};
+            editedState[action.payload.id] = action.payload;
+            return editedState;
         case DELETED_MESSAGE:
-            newState[action.payload.id] = action.payload;
-            return newState;
+            const deletedState = {...state, ...state.messages};
+            console.log(action.payload)
+            deletedState[action.payload.id] = action.payload;
+            console.log(deletedState)
+            return deletedState;
         case DELETED_CONVERSATION:
             delete newState[action.payload.boardId];
             return newState;

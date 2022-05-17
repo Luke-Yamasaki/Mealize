@@ -106,7 +106,8 @@ const DateTimeBox = styled.div`
 
 
 export const DeliveryForm = ({ post }) => {
-    const business = useSelector(state => state.organizations.businesses[post.organizationId])
+    const business = useSelector(state => state.organizations.businesses[post.organizationId]);
+    const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const history = useHistory();
     const [date, setDate] = useState("");
@@ -158,32 +159,36 @@ export const DeliveryForm = ({ post }) => {
 
             // create delivery, then create message
             const newDelivery = await dispatch(createDelivery(deliveryData))
+            console.log(newDelivery)
             //check errors
             if (!newDelivery.error) {
                 const requestMessage = {
                     content: `Hello! I would like to pick up this item at ${timesObj[time]} on ${date.slice(5, 7)}/${date.slice(8, 10)}/${date.slice(0, 4)}`,
+                    senderId: sessionUser.id,
                     receiverId: post.userId,
                     postId: post.id,
-                    imageUrl: post.imageUrl
+                    imageUrl: ''
                 }
                 const newMessage = await dispatch(sendMessage(requestMessage))
-
+                console.log(newMessage)
+                setDateErrors(dateErrArr);
+                setTimeErrors(timeErrArr);
                 dispatch(hideModal())
                 history.push(`/messages`);
             } else {
-                newDelivery.error.map(err => {
+                console.log(newDelivery)
+                newDelivery.error?.map(err => {
                     if(err.includes('date')) {
                         dateErrArr.push('Invalid date.')
                     } else {
                         timeErrArr.push('Invalid time.')
                     }
+                    setDateErrors(dateErrArr);
+                    setTimeErrors(timeErrArr);
                 })
             }
         }
-        setDateErrors(dateErrArr);
-        setTimeErrors(timeErrArr);
-        return
-    }
+    };
 
     return (
         <DeliveryBox>

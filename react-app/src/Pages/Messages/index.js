@@ -72,8 +72,8 @@ export const MessagesPage = () => {
             <MessageSideMenu theme={theme}>
                 <MessageList theme={theme}> All messages
                     <MessageItem key='placeholderItem'/>
-                    {Object.values(messageBoards).map((messageBoard, idx) =>
-                       (<MessageItem key={idx} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>
+                    {Object.values(messageBoards).reverse().map((messageBoard) =>
+                       (<MessageItem key={messageBoard.id} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>
                             <MessageProfileIcon src={users[messageBoard.messages[messageBoard.messages.length - 1].senderId].profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>
                                 <MessagePreviewBox>
@@ -133,7 +133,7 @@ export const MessagesPage = () => {
                         </MessengerBanner>
                         {Object.values(messageBoards[messageBoardId].messages).map((message) =>
                         <>
-                            <MessageContainer id={message.id} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                            <MessageContainer key={message.id} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                 <UserAndTime>
                                     <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.'/>
                                     <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
@@ -143,14 +143,14 @@ export const MessagesPage = () => {
                                 </MessageContent>
                             </MessageContainer>
                             {message.postId &&
-                            <PostContainer id={message.id} theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                            <PostContainer key={message.id} theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                 <PostBox theme={theme}>
                                     <PostCard post={posts[message.postId]} />
                                 </PostBox>
                             </PostContainer>
                             }
-                            {message.content.includes('I would like to pick up this item') &&
-                                <MessageButtonBox>
+                            {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&
+                                <MessageButtonBox key={message.id}>
                                     <CancelButton onClick={e => handleDecline(e, posts[message.postId])}>
                                         <ButtonText>Decline</ButtonText>
                                     </CancelButton>
@@ -161,7 +161,7 @@ export const MessagesPage = () => {
                             }
                         </>
                         )}
-                        <MessagePageInput boardId={messageBoardId}/> 
+                        <MessagePageInput boardId={messageBoardId}/>
                     </>
                 }
             </MessageThreadField>

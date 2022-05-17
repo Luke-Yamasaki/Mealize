@@ -124,12 +124,29 @@ export const MessagesPage = () => {
                                 </MessageUserName>
                             </MessagePreviewBox>
                             <MessageUserName theme={theme} size='18px'>
+                                {
+                                    sessionUser.id === messageBoards[messageBoardId].user_one &&
+                                    users[messageBoards[messageBoardId].user_two].isManager ?
+                                    'Manager at -'
+                                    :
+                                    sessionUser.id === messageBoards[messageBoardId].user_one &&
+                                    !users[messageBoards[messageBoardId].user_two].isManager ?
+                                    'Volunteer at -'
+                                    :
+                                    sessionUser.id === messageBoards[messageBoardId].user_two &&
+                                    users[messageBoards[messageBoardId].user_one].isManager ?
+                                    'Manager at -'
+                                    :
+                                    'Volunteer at -'
+                                }
+                            </MessageUserName>
+                            <MessageUserName theme={theme} size='18px'>
                                 {sessionUser.id === messageBoards[messageBoardId].user_one ?
                                     organizations.nonprofits[users[messageBoards[messageBoardId].user_one].organizationId].name
                                     :
                                     organizations.nonprofits[users[messageBoards[messageBoardId].user_one].organizationId].name
                                 }
-                                </MessageUserName>
+                            </MessageUserName>
                         </MessengerBanner>
                         {Object.values(messageBoards[messageBoardId].messages).map((message) =>
                         <>
@@ -143,14 +160,14 @@ export const MessagesPage = () => {
                                 </MessageContent>
                             </MessageContainer>
                             {message.postId &&
-                            <PostContainer key={message.id} theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                            <PostContainer key={`${message.id} ${message.senderId}`} theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                 <PostBox theme={theme}>
                                     <PostCard post={posts[message.postId]} />
                                 </PostBox>
                             </PostContainer>
                             }
                             {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&
-                                <MessageButtonBox key={message.id}>
+                                <MessageButtonBox key={`${message.id} ${message.createdAt}`}>
                                     <CancelButton onClick={e => handleDecline(e, posts[message.postId])}>
                                         <ButtonText>Decline</ButtonText>
                                     </CancelButton>

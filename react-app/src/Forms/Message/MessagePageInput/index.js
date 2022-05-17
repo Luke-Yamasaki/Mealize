@@ -34,7 +34,6 @@ import { MessageErrorBox, MessageFileAndButtons, MessageFileLabel, MessageInput,
 
 export const MessagePageInput = ({boardId}) => {
     const dispatch = useDispatch();
-    const users = useSelector(state => state.users);
     const [content, setContent] = useState('');
     const [image, setImage] = useState(null);
     const [imageValidating, setImageValidating] = useState(false);
@@ -88,6 +87,10 @@ export const MessagePageInput = ({boardId}) => {
             img.src = url;
             const nsfwArr = await nsfwCheck(img);
             if(nsfwArr.length > 0) {
+                setImage('');
+                setContent('');
+                const input = document.getElementById('image');
+                input.value = '';
                 window.location.href = 'https://www.google.com';
             } else {
                 e.target.style.color = '#608F41'
@@ -114,10 +117,12 @@ export const MessagePageInput = ({boardId}) => {
             if(data && data.errors) {
                 data.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
             } else {
-                dispatch(hideModal())
+                const input = document.getElementById('image');
+                input.value = '';
+                setImage('');
+                setContent('')
             }
         }
-
         setContentError(contentErrArr);
         setImageError(imageErrArr);
     };
@@ -148,7 +153,8 @@ export const MessagePageInput = ({boardId}) => {
                 {!contentError.length &&
                     <MessageInputBox theme={theme}>
                         <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
-                    </MessageInputBox>                }
+                    </MessageInputBox>
+                }
             <MessageFileAndButtons>
                 <MessageFileLabel htmlFor='image'>{imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : '(Optional image)'}</MessageFileLabel>
                 <Input id='image' theme={theme} lineHeight='10px' width='230px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>

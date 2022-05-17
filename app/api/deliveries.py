@@ -30,7 +30,7 @@ def new_delivery():
     month = strftime("%m")
     day = strftime("%d")
     # tuples are immutable
-    times = ('9', '9:30', '10', '10.5', '11', '11.5', '12', '12.5', '13', '13.5', '14', '14.5', '15', '15.5', '16', '16.5')
+    times = ('9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13', '13.5', '14', '14.5', '15', '15.5', '16', '16.5')
 
     # For some reason, form.data['date'] does not work.
     form_date = request.json['date']

@@ -35,9 +35,10 @@ export const CardContent = ({ post }) => {
     const { theme } = useTheme();
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
-    const businesses = useSelector(state => state.organizations.businesses)
-    const nonprofits = useSelector(state => state.organizations.nonprofits)
-    const organization = post?.isItem ? businesses[post?.organizationId] : nonprofits[post?.organizationId];
+    const organizations = useSelector(state => state.organizations);
+    const organizationsObj = {...organizations.nonprofits, ...organizations.businesses};
+    console.log(organizationsObj)
+    const organization = organizationsObj[post.organizationId];
 
     const styleObj = category[theme][post?.categoryId];
 

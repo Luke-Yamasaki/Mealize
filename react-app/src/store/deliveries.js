@@ -233,24 +233,37 @@ async dispatch => {
 const deliveriesReducer = (state = {}, action) => {
     let newState = {...state};
     switch(action.type) {
-        case CREATED_REQUEST: {
-          newState[action.payload.id] = action.payload
-          return newState
-        }
-        case GOT_ALL_DELIVERIES: {
+        case GOT_ALL_DELIVERIES:
           newState = action.payload
           return newState;
-        }
-        case UPDATED_DELIVERY: {
+        case CREATED_REQUEST:
           newState[action.payload.id] = action.payload
-            return newState
-        }
-        case DELETED_DELIVERY: {
-          delete newState[action.payload.id]
-            return newState
-        }
+          return newState
+        case UPDATED_DELIVERY:
+          newState[action.payload.id] = action.payload
+          return newState
+        case REQUEST_REVIEWED:
+          const approved = parseInt(action.payload);
+          if(approved === NaN) {
+            newState[action.payload.id] = action.payload
+          } else {
+            delete newState[action.payload]
+          }
+          return newState
+        case DELIVERY_ACCEPTED:
+          newState[action.payload.id] = action.payload
+          return newState
+        case DELIVERY_PICKEDUP:
+          newState[action.payload.id] = action.payload
+          return newState
+        case DELIVERY_CANCELLED:
+          newState[action.payload.id] = action.payload
+          return newState
+        case DELETED_DELIVERY:
+          delete newState[action.payload]
+          return newState
         default:
-            return state;
+          return state;
     }
 };
 

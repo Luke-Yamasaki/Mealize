@@ -121,7 +121,7 @@ def approve_delivery(id):
         delivery = Delivery.query.get(id)
         db.session.delete(delivery)
         db.session.commit()
-        return id
+        return str(id)
 
 @delivery_routes.route('/accept/<int:id>', methods=['PUT'])
 @login_required

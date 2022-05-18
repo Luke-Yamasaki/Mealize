@@ -1,11 +1,12 @@
 //Hooks
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
+import { setCurrentModal, showModal } from '../../store/modal';
 
 //Components
 import { PostCard } from '../../Components/Cards/PostCard/index';
-
+import { MessageForm } from '../../Forms/Message';
 //Styled-components
 import {
     OrgWrapper,
@@ -40,6 +41,7 @@ import {
 export const OrganizationPage = () => {
     const { theme } = useTheme();
     const { id } = useParams();
+    const dispatch = useDispatch();
     const businesses = useSelector(state => state.organizations.businesses);
     const nonprofits = useSelector(state => state.organizations.nonprofits);
     const users = useSelector(state => state.users);
@@ -56,19 +58,25 @@ export const OrganizationPage = () => {
     //Posts
     const postsArr = Object.values(posts).filter(post => post.organizationId === organization.id);
 
+    const handleMessage = (e) => {
+        e.preventDefault();
+        dispatch(setCurrentModal(() => <MessageForm />));
+        dispatch(showModal());
+    }
+
     return (
         <OrgWrapper>
             <OrgBannerBox>
                 <OrgBannerImage src={organization.imageUrl} alt='Organization banner.' />
                 <OrgBannerInfoBox theme={theme}>
                     <OrgProfileImage src={organization.logoUrl} alt='Organization profile.' />
-                    <OrgName>{organization.name}</OrgName>
-                    <OrgBannerText>Contributions calculations in year ...</OrgBannerText>
+                    <OrgName theme={theme}>{organization.name}</OrgName>
+                    <OrgBannerText theme={theme}>Contributions calculations in year ...</OrgBannerText>
                 </OrgBannerInfoBox>
             </OrgBannerBox>
             <OrgContentBox theme={theme}>
                 <ManagerSection>
-                    <ManagerContainer>
+                    <ManagerContainer image={manager.profileImageUrl}>
                         <ManagerForeground>
                             <ManagerInfoBox>
                                 <ManagerName>{manager.firstName + manager.lastName}</ManagerName>
@@ -76,7 +84,7 @@ export const OrganizationPage = () => {
                             </ManagerInfoBox>
                             <ManagerInfoBox>
                                 <ManagerInfoText>Quick responder</ManagerInfoText>
-                                <ManagerButton>
+                                <ManagerButton onClick={handleMessage}>
                                     <QuestionText>{`Ask ${manager.firstName} a question`}</QuestionText>
                                 </ManagerButton>
                             </ManagerInfoBox>

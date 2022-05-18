@@ -67,7 +67,7 @@ export const SessionNavbar = ({sessionUser}) => {
                     </VectorBox>
                     {sessionUser.isManager &&
                         <PostButton onClick={showPostForm}>
-                            <ButtonText>{sessionUser.isNonprofit && sessionUser.isManager ? 'New request' : 'Post item'}</ButtonText>
+                            <ButtonText>{sessionUser.isNonprofit && sessionUser.isManager ? 'New post' : 'Post item'}</ButtonText>
                         </PostButton>
                     }
                     <LogoutButton onClick={logOut} type={sessionUser.isManager ? 'manager' : 'volunteer'}>

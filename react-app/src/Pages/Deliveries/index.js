@@ -1,6 +1,6 @@
 //Hooks
 import { useDispatch, useSelector} from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTheme } from '../../Context/ThemeContext';
 //Actions
@@ -58,25 +58,28 @@ export const Deliveries = () => {
     const handleClick = (e, delivery) => {
         e.preventDefault();
         setDeliveryId(delivery.id)
-    }
+    };
+
+    if(!sessionUser) {
+        return <Redirect to='/' />
+    };
 
     return loaded && (
-            <DeliveryPageWrapper theme={theme}>
-                <DeliverySideMenu theme={theme}>
-                    <DeliveryList theme={theme}>Deliveries</DeliveryList>
-                    {deliveries !== {} && Object.values(deliveries).map((delivery) =>
-                    <DeliveryItem key={delivery.id} onClick={e => handleClick(e, delivery)}>
-                        <DeliveryTime theme={theme}>{`Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
-                        <OrganizationCard organization={delivery.location} />
-                    </DeliveryItem>
-                    )}
-                </DeliverySideMenu>
-                <DeliveryField theme={theme}>
-                    {deliveryId &&
-                        <PostCard post={posts[deliveries[deliveryId].postId]}/>
-                    }
-
-                </DeliveryField>
-            </DeliveryPageWrapper>
+        <DeliveryPageWrapper theme={theme}>
+            <DeliverySideMenu theme={theme}>
+                <DeliveryList theme={theme}>Deliveries</DeliveryList>
+                {deliveries !== {} && Object.values(deliveries).map((delivery) =>
+                <DeliveryItem key={delivery.id} onClick={e => handleClick(e, delivery)}>
+                    <DeliveryTime theme={theme}>{`Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
+                    <OrganizationCard organization={delivery.location} />
+                </DeliveryItem>
+                )}
+            </DeliverySideMenu>
+            <DeliveryField theme={theme}>
+                {deliveryId &&
+                    <PostCard post={posts[deliveries[deliveryId].postId]}/>
+                }
+            </DeliveryField>
+        </DeliveryPageWrapper>
     )
 }

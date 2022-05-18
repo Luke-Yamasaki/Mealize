@@ -16,19 +16,23 @@ import { uploadImage } from '../../../utils/Forms/items';
 
 //Components
 import {
-    Input,
     Error,
     ErrorBox
 } from '../../../Components/Styled/AuthenticationForm';
 
-import {
-    SubmitButton,
-    ButtonText,
-    CancelButton,
-    MessageButtonBox
-} from '../../../Components/Styled/Buttons';
 
-import { MessageErrorBox, MessageFileAndButtons, MessageFileLabel, MessageInput, MessageInputBox, MessageInputForm } from '../../../Components/Styled/Messages';
+import {
+    SubmitMessageButton,
+    CancelMessageButton,
+    FileBox,
+    MessageErrorBox,
+    MessageFileAndButtons,
+    MessageFileInput,
+    MessageFileLabel,
+    MessageInput,
+    MessageInputBox,
+    MessageInputForm
+} from '../../../Components/Styled/Messages';
 
 
 export const MessagePageInput = ({boardId}) => {
@@ -58,10 +62,10 @@ export const MessagePageInput = ({boardId}) => {
         const model = await nsfwjs.load();
         const predictions = await model.classify(img);
         for(let i = 0; i < predictions.length; i++) {
-            if(predictions[i].className === 'Neutral') {
+            if(predictions[i].className === 'Neutral' || predictions[i].className === 'Drawing' || predictions[i].className === 'Sexy') {
                 i++
             } else {
-                if(predictions[i].probability > 0.6) {
+                if(predictions[i].probability > 0.7) {
                     nsfwArr.push("Adult content violates Mealize's community standards.");
                     const user = getIp();
                     return user
@@ -188,23 +192,19 @@ export const MessagePageInput = ({boardId}) => {
                         <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
                     </MessageInputBox>
                 </MessageErrorBox>
-                }
-                {!contentError.length &&
-                    <MessageInputBox theme={theme}>
-                        <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
-                    </MessageInputBox>
-                }
+            }
+            {!contentError.length &&
+                <MessageInputBox theme={theme}>
+                    <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
+                </MessageInputBox>
+            }
             <MessageFileAndButtons>
                 <MessageFileLabel htmlFor='image'>{imageUploading ? 'Image uploading...' : !image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
-                <Input id='image' theme={theme} lineHeight='10px' width='230px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
-                <MessageButtonBox>
-                    <CancelButton onClick={cancel}>
-                        <ButtonText>Cancel</ButtonText>
-                    </CancelButton>
-                    <SubmitButton onClick={handleSubmit}>
-                        <ButtonText>Submit</ButtonText>
-                    </SubmitButton>
-                </MessageButtonBox>
+                <FileBox>
+                    <MessageFileInput id='image' theme={theme} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
+                </FileBox>
+                <CancelMessageButton theme={theme} onClick={cancel}>Cancel</CancelMessageButton>
+                <SubmitMessageButton theme={theme} onClick={handleSubmit}>Submit</SubmitMessageButton>
             </MessageFileAndButtons>
         </MessageInputForm>
     )

@@ -27,7 +27,6 @@ def new_conversation():
     form = MessageForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        print('////////////', request.json['receiverId'])
         board = Messageboard(
             user_one = current_user.id,
             user_two = request.json['receiverId']
@@ -82,10 +81,9 @@ def edit_message(id):
         else:
             message.senderId = current_user.id,
             message.content = form.data['content'],
-            message.postId = form.data['postId'],
             message.imageUrl = request.json['imageUrl']
-        db.session.commit()
-        return board.to_dict()
+            db.session.commit()
+            return board.to_dict()
     else:
         return {'errors': errors_to_list(form.errors)}
 
@@ -94,12 +92,10 @@ def edit_message(id):
 def delete_message(id):
     message = Message.query.get(id)
     boardId = message.boardId
-    print('//////////////////', message)
     db.session.delete(message)
     db.session.commit()
 
     board = Messageboard.query.get(boardId)
-    print('//////////', board)
     return board.to_dict()
 
 @message_routes.route('/conversations/<int:id>', methods=['DELETE'])

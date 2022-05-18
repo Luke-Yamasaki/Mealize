@@ -211,10 +211,11 @@ export const PostContainer = styled.div`
     flex-direction: ${props => props.direction};
     justify-content: flex-start;
     align-items: center;
-    width: 95%;
+    width: 94%;
     max-height: 450px;
     height: auto;
-    padding: ${props => props.direction === 'row' ? '0% 0% 0% 5%' : '0% 5% 0% 0%'};
+    margin-top: -35px;
+    padding: ${props => props.direction === 'row' ? '0% 0% 0% 5%' : '0% 4.3% 0% 0%'};
 `;
 
 export const PostBox = styled.div`
@@ -267,18 +268,18 @@ export const SelectMessageText = styled(ExtraBold)`
 
 export const MessageInputForm = styled.form`
     width: 99%;
-    height: 15%;
+    height: ${props => props.height ? props.height : '15%'};
     padding: 5px;
     padding-top: 20px;
-    background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+    background-color: ${props => props.small === 'true' ? 'none' : props.theme === 'light' ? 'white' : '#191919'};
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: ${props => props.small === 'true' ? 'flex-end' : 'center'};
 `;
 
 export const MessageInputBox = styled.div`
-    width: 95%;
+    width: ${props => props.edit === 'true' ? '53%' : '86%'};
     height: auto;
     min-height: 30px;
     display: flex;
@@ -291,8 +292,7 @@ export const MessageInputBox = styled.div`
 
 export const MessageInput = styled.input`
     width: 97%;
-    min-height: 25px;
-    height: auto;
+    height: 100%
     outline: none;
     border: none;
     padding: 5px;
@@ -301,15 +301,19 @@ export const MessageInput = styled.input`
     font-family: motiva-sans, sans-serif;
     font-size: 14px;
     border-radius: 100px;
+    &:focus {
+        outline: none;
+    }
 `;
 
 
 export const MessageFileAndButtons = styled.div`
-    width: 95%;
+    width: 86%;
     height: 75px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 10px;
     justify-content: flex-end;
 `;
 
@@ -342,4 +346,63 @@ export const ImageMessage = styled.img`
     object-fit: contain;
     object-position: center;
     object-repeat: no-repeat;
+`;
+
+export const MessageEditDelete = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: right;
+    width: 94.6%;
+    height: 35px;
+    margin-top: 10px;
+    gap: 10px;
+    padding: 0px 5% 0px 0px;
+`;
+
+const ItemButton = styled.div`
+    width: 75px;
+    height: 25px;
+    padding: 5px 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+`;
+
+export const EditMessageButton = styled(ItemButton)`
+    background-color: #D49524;
+    filter: drop-shadow(${props => props.theme === 'light' ? '0px 0px 1px rgba(0, 0, 0, 0.75)' : '0px 0px 1px rgba(255, 255, 255, 0.75)'});
+`;
+
+export const DeleteMessageButton = styled(ItemButton)`
+    background-color: #C2462A;
+    filter: drop-shadow(${props => props.theme === 'light' ? '0px 0px 1px rgba(0, 0, 0, 0.75)' : '0px 0px 1px rgba(255, 255, 255, 0.75)'});
+`;
+
+export const CancelMessageButton = styled(ItemButton)`
+    background-color: #28A690;
+`;
+
+export const SubmitMessageButton = styled(ItemButton)`
+    background-color: #76D97E;
+`;
+
+export const FileBox = styled.div`
+    width: 250px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const MessageFileInput = styled.input`
+    height: 25px;
+    width: 220px;
+    background-color: none;
+    font-family: motiva-sans, sans-serif;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
 `;

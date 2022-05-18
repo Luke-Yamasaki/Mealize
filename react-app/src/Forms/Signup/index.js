@@ -258,10 +258,10 @@ export const SignupForm = () => {
         const model = await nsfwjs.load();
         const predictions = await model.classify(img);
         for(let i = 0; i < predictions.length; i++) {
-            if(predictions[i].className === 'Neutral') {
+            if(predictions[i].className === 'Neutral' || predictions[i].className === 'Drawing' || predictions[i].className === 'Sexy') {
                 i++
             } else {
-                if(predictions[i].probability > 0.6) {
+                if(predictions[i].probability > 0.7) {
                     nsfwArr.push("Adult content violates Mealize's community standards.");
                     const user = getIp();
                     return user

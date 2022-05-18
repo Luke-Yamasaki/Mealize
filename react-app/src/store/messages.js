@@ -93,6 +93,7 @@ export const sendReply= (messageData) => async (dispatch) => {
 };
 
 export const editMessage = (message) => async (dispatch) => {
+    console.log(message)
     const response = await fetch(`/api/messages/${message.id}`, {
         method: 'PUT',
         headers: {

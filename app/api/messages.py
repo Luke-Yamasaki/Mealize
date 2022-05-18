@@ -81,10 +81,9 @@ def edit_message(id):
         else:
             message.senderId = current_user.id,
             message.content = form.data['content'],
-            message.postId = form.data['postId'],
             message.imageUrl = request.json['imageUrl']
-        db.session.commit()
-        return board.to_dict()
+            db.session.commit()
+            return board.to_dict()
     else:
         return {'errors': errors_to_list(form.errors)}
 

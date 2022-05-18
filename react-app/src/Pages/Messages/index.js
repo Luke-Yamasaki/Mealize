@@ -41,6 +41,7 @@ import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
 import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
 import { ButtonBox, ButtonText, CancelButton, DeleteBtn, EditBtn, MessageButtonBox, SubmitButton } from "../../Components/Styled/Buttons";
 import { EditMessageInput } from "../../Forms/Message/EditMessageInput";
+import { Input } from "../../Components/Styled/AuthenticationForm";
 
 export const MessagesPage = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -90,12 +91,16 @@ export const MessagesPage = () => {
         e.preventDefault();
         console.log(post)
 
-    }
+    };
 
     const handleEdit = (e, message) => {
         e.preventDefault();
         setEditMode(!editMode)
-    }
+    };
+
+    const changeMode = () => {
+        setEditMode(false)
+    };
 
     if(!sessionUser) {
         return <Redirect to='/' />
@@ -135,7 +140,7 @@ export const MessagesPage = () => {
                 {(!messageBoardId && !Object.values(messageBoards).length) &&
                     <SelectMessageBox>
                         <SelectMessageText theme={theme}>
-                            {sessionUser.isManaer ? "You can send messages by clicking on the 'Ask a question' button on items or request." : "You can send messages by clicking on the 'Ask a question' or 'Notify manager' button on items or request."}
+                            {sessionUser.isManager ? "You can send messages by clicking on the 'Ask a question' button on items or request." : "You can send messages by clicking on the 'Ask a question' or 'Notify manager' button on items or request."}
                         </SelectMessageText>
                     </SelectMessageBox>
                 }
@@ -198,9 +203,13 @@ export const MessagesPage = () => {
                                             <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.' square='40px'/>
                                             <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
                                         </UserAndTime>
-                                        <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                            {message.content}
-                                        </MessageContent>
+                                        {editMode === true ?
+                                            <EditMessageInput message={message} changeMode={changeMode} />
+                                            :
+                                            <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                {message.content}
+                                            </MessageContent>
+                                        }
                                         {message.senderId === sessionUser.id &&
                                         <ButtonBox>
                                             <EditBtn onClick={e => handleEdit(e, message)}>Edit Message</EditBtn>

@@ -267,10 +267,10 @@ export const SelectMessageText = styled(ExtraBold)`
 
 export const MessageInputForm = styled.form`
     width: 99%;
-    height: 15%;
+    height: ${props => props.height ? props.height : '15%'};
     padding: 5px;
     padding-top: 20px;
-    background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+    background-color: ${props => props.small === 'true' ? 'none' : props.theme === 'light' ? 'white' : '#191919'};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -291,8 +291,7 @@ export const MessageInputBox = styled.div`
 
 export const MessageInput = styled.input`
     width: 97%;
-    min-height: 25px;
-    height: auto;
+    height: 100%
     outline: none;
     border: none;
     padding: 5px;
@@ -301,6 +300,9 @@ export const MessageInput = styled.input`
     font-family: motiva-sans, sans-serif;
     font-size: 14px;
     border-radius: 100px;
+    &:focus {
+        outline: none;
+    }
 `;
 
 

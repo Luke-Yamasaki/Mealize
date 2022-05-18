@@ -48,6 +48,11 @@ def new_delivery():
     elif not form.data['time'] in times:
         return {'error': 'Invalid timeslot.', 'message': 'Please do not try to break my app. I worked countless hours.'}
     elif form.data['time'] in times and form.validate_on_submit():
+        id = request.json['postId']
+        post = Post.query.get(id)
+        post.status = 1
+        db.session.commit()
+
         delivery = Delivery(
             isDropoff = False,
             postId = request.json['postId'],
@@ -55,15 +60,11 @@ def new_delivery():
             organizationId = current_user.organizationId,
             date = request.json['date'],
             time = form.data['time'],
-            completed = 0 # 0=not approved yet 1=accepted 2=in progress 3=picked up/droped off 4=cancelled
+            completed = 0 # 0=not approved yet 1=approved 2=accepted 3=picked up/droped off 4=cancelled
         )
         db.session.add(delivery)
         db.session.commit()
 
-        post = Post.query.get(delivery.postId)
-        post.status = 1
-        db.session.commit()
-        
         return delivery.to_dict()
     return {'errors': errors_to_list(form.errors)}
 
@@ -72,33 +73,87 @@ def new_delivery():
 def update_delivery(id):
     form = DeliveryForm()
     form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
-        if len(form.data['cancellationReason']) > 1:
-            delivery = Delivery(
-                isDropoff = request.json['isDropoff'],
-                postId = request.json['postId'],
-                userId = current_user.id,
-                organizationId = request.json['organizationId'],
-                date = form.data['date'],
-                time = form.data['time'],
-                cancellationReason = form.data['cancellationReason'],
-                completed = 4 #  0=not apprevoded yet 1=accepted 2=in progress 3=picked up/droped off 4=cancelled
-            )
-            db.session.add(delivery)
-            db.session.commit()
-            return delivery.to_dict()
-        else:
-            delivery = Delivery(
-                isDropoff = request.json['isDropoff'],
-                postId = request.json['postId'],
-                userId = current_user.id,
-                organizationId = request.json['organizationId'],
-                start = form.data['start'],
-                end = form.data['end'],
-                cancellationReason = form.data['cancellationReason'],
-                completed = 0 #  0=not apprevoded yet 1=accepted 2=in progress 3=picked up/droped off 4=cancelled
-            )
-            db.session.add(delivery)
-            db.session.commit()
-            return delivery.to_dict()
+    year = strftime("%Y")
+    month = strftime("%m")
+    day = strftime("%d")
+    times = ('9', '9.5', '10', '10.5', '11', '11.5', '12', '12.5', '13', '13.5', '14', '14.5', '15', '15.5', '16', '16.5')
+    form_date = request.json['date']
+    form_year = form_date[0:4]
+    form_month = form_date[5:7]
+    form_day = form_date[8:10]
+
+    if form_year < year:
+        return {'error': 'Invalid year.', 'message': 'Please do not try to break my app. I worked countless hours.'}
+    elif form_year == year and form_month < month:
+        return {'error': 'Invalid month.', 'message': 'Please do not try to break my app. I worked countless hours.'}
+    elif form_year == year and form_month == month and form_day < day:
+        return {'error': 'Invalid day.', 'message': 'Please do not try to break my app. I worked countless hours.'}
+    elif not form.data['time'] in times:
+        return {'error': 'Invalid timeslot.', 'message': 'Please do not try to break my app. I worked countless hours.'}
+    elif form.data['time'] in times and form.validate_on_submit():
+        delivery = Delivery.query.get(id)
+        delivery.date = request.json['date'],
+        delivery.time = form.data['time']
+        db.session.commit()
+
+        return delivery.to_dict()
     return {'errors': errors_to_list(form.errors)}
+
+@delivery_routes.route('/approval/<int:id>', methods=['PUT'])
+@login_required
+def approve_delivery(id):
+    if request.json['approval'] == 'approved':
+        post_id = request.json['postId']
+        post = Post.query.get(post_id)
+        post.status = 2
+        db.session.commit()
+
+        delivery = Delivery.query.get(id)
+        delivery.completed = 1
+        db.session.commit()
+        return delivery.to_dict()
+    else:
+        post_id = request.json['postId']
+        post = Post.query.get(post_id)
+        post.status = 0
+        db.session.commit()
+
+        delivery = Delivery.query.get(id)
+        db.session.delete(delivery)
+        db.session.commit()
+        return id
+
+@delivery_routes.route('/cancellation/<int:id>', methods=['PUT'])
+@login_required
+def cancel_delivery(id):
+    delivery = Delivery.query.get(id)
+    delivery.cancellationReason = request.json['cancellationReason']
+    delivery.completed = 4
+    db.session.commit()
+
+    post = Post.query.get(delivery.postId)
+    post.status = 0
+    db.session.commit()
+
+    return delivery.to_dict()
+
+@delivery_routes.route('/accept/<int:id>', methods=['PUT'])
+@login_required
+def accept_delivery(id):
+    accepted_num = request.json['accepted']
+    delivery = Delivery.query.get(id)
+    delivery.completed = accepted_num
+    db.session.commit()
+    return delivery.to_dict()
+
+@delivery_routes.route('/pickedup/<int:id>', methods=['PUT'])
+@login_required
+def pickedup_delivery(id):
+    delivery = Delivery.query.get(id)
+    delivery.completed = 3
+    db.session.commit()
+
+    post = Post.query.get(delivery.postId)
+    post.status = 2
+    db.session.commit()
+    return delivery.to_dict()

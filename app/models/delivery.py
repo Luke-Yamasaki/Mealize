@@ -29,6 +29,7 @@ class Delivery(db.Model):
             'location': self.location.to_dict(),
             'date': self.date,
             'time': self.time,
+            'post': self.post.to_dict(),
             'completed': self.completed,
             'cancellationReason': self.cancellationReason,
             'createdAt': self.createdAt,

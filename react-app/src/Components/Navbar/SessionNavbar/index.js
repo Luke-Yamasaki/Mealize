@@ -1,6 +1,6 @@
 //Hooks
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { useTheme } from '../../../Context/ThemeContext';
 import { useFilter } from '../../../Context/FilterContext';
 // Actions
@@ -33,6 +33,7 @@ export const SessionNavbar = ({sessionUser}) => {
     const logOut = () => {
         setFilter('available')
         dispatch(logout())
+        return <Redirect to='/' />
     };
 
     const handleMessages = (e) => {

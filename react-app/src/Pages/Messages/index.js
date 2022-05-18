@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from "react-redux"
 import { useTheme } from "../../Context/ThemeContext";
 
 //Actions
-import { deleteMessage, getBoards, deleteConversation} from "../../store/messages";
-import { reviewRequest } from "../../store/deliveries";
+import { deleteMessage, getBoards, deleteConversation, sendReply} from "../../store/messages";
+import { getAllDeliveries, reviewRequest } from "../../store/deliveries";
 import { getAllPosts } from "../../store/posts";
 
 //Helpers
@@ -41,7 +41,9 @@ import {
     ImageMessage,
     MessageEditDelete,
     EditMessageButton,
-    DeleteMessageButton
+    DeleteMessageButton,
+    AcceptButton,
+    DeclineButton
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
@@ -49,6 +51,8 @@ import {
     ButtonText,
     CancelButton,
     MessageButtonBox,
+    MessageButtons,
+    MessageButtonsDiv,
     SubmitButton
 } from "../../Components/Styled/Buttons";
 import { EditMessageInput } from "../../Forms/Message/EditMessageInput";
@@ -58,11 +62,9 @@ export const MessagesPage = () => {
     const sessionUser = useSelector(state => state.session.user);
     const messageBoards = useSelector(state => state.messageBoards);
     const posts = useSelector(state => state.posts.all);
-    console.log(posts)
     const organizations = useSelector(state => state.organizations);
-    console.log(organizations)
     const users = useSelector(state => state.users);
-    console.log(users)
+    const deliveries = useSelector(state => state.deliveries);
     const dispatch = useDispatch();
     const [loaded, setLoaded] = useState(false);
     const [messageBoardId, setMessageBoardId] = useState(false);
@@ -73,6 +75,7 @@ export const MessagesPage = () => {
         if(sessionUser) {
             dispatch(getBoards());
             dispatch(getAllPosts())
+            dispatch(getAllDeliveries())
         }
     },[dispatch])
 
@@ -97,20 +100,30 @@ export const MessagesPage = () => {
         }
     };
 
-    const handleDecline = async(e, post) => {
+    const handleDecline = async(e, post, message) => {
         e.preventDefault();
-        console.log(post)
-        const decline = {id:post.deliveryId, postId: post.id, approval: 'declined'}
+        const deliveryArr = Object.values(deliveries).filter(delivery => delivery.postId === post.id);
+        const decline = {id:deliveryArr[0].id, postId: post.id, approval: 'declined'}
         const data = await dispatch(reviewRequest(decline))
-        console.log(data)
+        if(data && !data.errors) {
+            const messageData = {content: 'Your request has been declined.', imageUrl: '', receiverId: message.senderId, postId: post.id, boardId: message.boardId };
+            dispatch(sendReply(messageData))
+        } else {
+            console.log(data)
+        }
     };
 
-    const handleAccept = async (e, post) => {
+    const handleAccept = async (e, post, message) => {
         e.preventDefault();
-        console.log(post)
-        const approve = {id:post.deliveryId, postId: post.id, approval: 'approved'}
-        const data = await dispatch(reviewRequest(approve))
-        console.log(data)
+        const deliveryArr = Object.values(deliveries).filter(delivery => delivery.postId === post.id);
+        const approve = {id:deliveryArr[0].id, postId: post.id, approval: 'approved'}
+        const data = await dispatch(reviewRequest(approve));
+        if(data && !data.errors) {
+            const messageData = {content: 'Your request has been approved!', imageUrl: '', receiverId: message.senderId, postId: post.id, boardId: message.boardId };
+            dispatch(sendReply(messageData))
+        } else {
+            console.log(data)
+        }
     };
 
     const handleEdit = (e) => {
@@ -202,7 +215,7 @@ export const MessagesPage = () => {
                                 </MessageUserName>
                                 <MessageUserName theme={theme} size='18px' font='italic'>
                                     {sessionUser.id === messageBoards[messageBoardId].user_one && users[messageBoards[messageBoardId].user_two].isNonprofit ?
-                                        organizations.businesses[users[messageBoards[messageBoardId].user_two].organizationId].name
+                                        organizations.nonprofits[users[messageBoards[messageBoardId].user_two].organizationId].name
                                         :
                                         sessionUser.id === messageBoards[messageBoardId].user_one && !users[messageBoards[messageBoardId].user_two].isNonprofit ?
                                         organizations.businesses[users[messageBoards[messageBoardId].user_two].organizationId].name
@@ -301,17 +314,18 @@ export const MessagesPage = () => {
                                         </MessageEditDelete>
                                         }
                                     </>
-
                                     }
-                                    {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&
-                                        <MessageButtonBox>
-                                            <CancelButton onClick={e => handleDecline(e, posts[message.postId])}>
-                                                <ButtonText>Decline</ButtonText>
-                                            </CancelButton>
-                                            <SubmitButton onClick={e => handleAccept(e, posts[message.postId])}>
-                                                <ButtonText>Accept</ButtonText>
-                                            </SubmitButton>
-                                        </MessageButtonBox>
+                                    {((!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) && posts[message.postId].status > 0) &&
+                                        <MessageButtons>
+                                            <MessageButtonsDiv>
+                                                <DeclineButton onClick={e => handleDecline(e, posts[message.postId], message)}>
+                                                    <ButtonText>Decline</ButtonText>
+                                                </DeclineButton>
+                                                <AcceptButton onClick={e => handleAccept(e, posts[message.postId], message)}>
+                                                    <ButtonText>Accept</ButtonText>
+                                                </AcceptButton>
+                                            </MessageButtonsDiv>
+                                        </MessageButtons>
                                     }
                                 </MessageBox>
                             )}

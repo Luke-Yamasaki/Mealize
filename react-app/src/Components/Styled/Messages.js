@@ -389,6 +389,24 @@ export const SubmitMessageButton = styled(ItemButton)`
     background-color: #76D97E;
 `;
 
+export const AcceptButton = styled(ItemButton)`
+    background: linear-gradient(#76D97E, #28A690);
+    width: 100px;
+    height: 30px;
+    &:hover {
+        transform: scale(1.05);
+    }
+`;
+
+export const DeclineButton = styled(ItemButton)`
+    background: linear-gradient(#c2462a, #e0a193);
+    width: 100px;
+    height: 30px;
+    &:hover {
+        transform: scale(1.05);
+    }
+`;
+
 export const FileBox = styled.div`
     width: 250px;
     height: 30px;

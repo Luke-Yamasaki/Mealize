@@ -214,7 +214,7 @@ export const PostContainer = styled.div`
     width: 94%;
     max-height: 450px;
     height: auto;
-    margin-top: -35px;
+    margin-top: ${props => props.marginTop ? props.marginTop : '-35px'};
     padding: ${props => props.direction === 'row' ? '0% 0% 0% 5%' : '0% 4.3% 0% 0%'};
 `;
 

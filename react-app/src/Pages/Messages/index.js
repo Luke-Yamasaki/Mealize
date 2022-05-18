@@ -167,9 +167,6 @@ export const MessagesPage = () => {
                 {(messageBoardId && Object.values(messageBoards).length > 0) &&
                     <>
                         <MessengerBanner theme={theme}>
-                            {console.log(messageBoards[messageBoardId])}
-                            {console.log(messageBoards[messageBoardId].user_one)}
-                            {console.log(messageBoards[messageBoardId].user_two)}
                             <MessageProfileIcon square='55px'
                             src={sessionUser.id === messageBoards[messageBoardId].user_one ?
                             users[messageBoards[messageBoardId].user_two].profileImageUrl
@@ -255,7 +252,7 @@ export const MessagesPage = () => {
                                         }
                                     </>
                                     }
-                                    {message.postId &&
+                                    {(message.postId && !message.imageUrl) &&
                                     <>
                                         <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                             <PostBox theme={theme}>
@@ -270,7 +267,7 @@ export const MessagesPage = () => {
                                         }
                                     </>
                                     }
-                                     {message.imageUrl &&
+                                     {(message.imageUrl && !message.postId )&&
                                     <>
                                         <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                             <PostBox theme={theme}>
@@ -284,6 +281,27 @@ export const MessagesPage = () => {
                                         </MessageEditDelete>
                                         }
                                     </>
+                                    }
+                                    {(message.imageUrl && message.postId) &&
+                                    <>
+                                        <PostContainer theme={theme} marginTop='0px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                            <PostBox theme={theme}>
+                                                <PostCard post={posts[message.postId]} />
+                                            </PostBox>
+                                        </PostContainer>
+                                        <PostContainer theme={theme} marginTop='15px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                            <PostBox theme={theme}>
+                                                <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
+                                            </PostBox>
+                                        </PostContainer>
+                                        {message.senderId === sessionUser.id &&
+                                        <MessageEditDelete>
+                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
+                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
+                                        </MessageEditDelete>
+                                        }
+                                    </>
+
                                     }
                                     {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&
                                         <MessageButtonBox>

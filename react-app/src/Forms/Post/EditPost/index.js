@@ -188,7 +188,7 @@ export const EditPostForm = ({post}) => {
                     setErrors(newPost.errors);
                     return errors
                 }
-            }else if(!sessionUser.isNonprofit && !image) {
+            } else if(!sessionUser.isNonprofit && !image) {
                 const postData = {
                     postId: post.id,
                     organizationId,

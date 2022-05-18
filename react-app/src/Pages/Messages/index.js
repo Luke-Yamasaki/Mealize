@@ -74,8 +74,8 @@ export const MessagesPage = () => {
     useEffect(() => {
         if(sessionUser) {
             dispatch(getBoards());
-            dispatch(getAllPosts())
-            dispatch(getAllDeliveries())
+            dispatch(getAllPosts());
+            dispatch(getAllDeliveries());
         }
     },[dispatch])
 
@@ -108,6 +108,7 @@ export const MessagesPage = () => {
         if(data && !data.errors) {
             const messageData = {content: 'Your request has been declined.', imageUrl: '', receiverId: message.senderId, postId: post.id, boardId: message.boardId };
             dispatch(sendReply(messageData))
+            dispatch(getAllPosts());
         } else {
             console.log(data)
         }
@@ -121,6 +122,7 @@ export const MessagesPage = () => {
         if(data && !data.errors) {
             const messageData = {content: 'Your request has been approved!', imageUrl: '', receiverId: message.senderId, postId: post.id, boardId: message.boardId };
             dispatch(sendReply(messageData))
+            dispatch(getAllPosts());
         } else {
             console.log(data)
         }
@@ -267,7 +269,7 @@ export const MessagesPage = () => {
                                     }
                                     {(message.postId && !message.imageUrl) &&
                                     <>
-                                        <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                        <PostContainer theme={theme} marginTop='0px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                             <PostBox theme={theme}>
                                                 <PostCard post={posts[message.postId]} />
                                             </PostBox>
@@ -315,7 +317,7 @@ export const MessagesPage = () => {
                                         }
                                     </>
                                     }
-                                    {((!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) && posts[message.postId].status > 0) &&
+                                    {((!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) && posts[message.postId].status === 1) &&
                                         <MessageButtons>
                                             <MessageButtonsDiv>
                                                 <DeclineButton onClick={e => handleDecline(e, posts[message.postId], message)}>

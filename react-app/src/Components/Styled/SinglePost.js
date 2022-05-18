@@ -2,37 +2,37 @@ import styled from 'styled-components';
 import { Black, Bold, ExtraBold, Medium } from './Fonts';
 
 //Background
-export const OrganizationWrapper = styled.main`
+export const OrgWrapper = styled.main`
 
 `;
 
 //Banner
-export const OrganizationBannerBox = styled.div`
+export const OrgBannerBox = styled.div`
 
 `;
 
-export const OrganizationBannerImage = styled.img`
+export const OrgBannerImage = styled.img`
 
 `;
 
-export const OrganizationBannerInfoBox = styled.div`
+export const OrgBannerInfoBox = styled.div`
 
 `;
 
-export const OrganizationProfileImage = styled.dimg`
+export const OrgProfileImage = styled.dimg`
 
 `;
 
-export const OrganizationName = styled(Black)`
+export const OrgName = styled(Black)`
 
 `;
 
-export const OrganizationBannerText = styled.div`
+export const OrgBannerText = styled.div`
 
 `;
 
 //Main content
-export const OrganizationContentBox = styled.section`
+export const OrgContentBox = styled.section`
 
 `;
 
@@ -70,12 +70,12 @@ export const QuestionText = styled.a(Bold)`
 `;
 
 //Items section
-export const OrganizationItems = styled.section`
+export const OrgItems = styled.section`
 
 `;
 
 //Items filter
-export const OrganizationFitlers = styled.div`
+export const OrgFilters = styled.div`
 
 `;
 
@@ -95,5 +95,3 @@ export const FilterText = styled(Bold)`
 export const OrgItemsFeed = styled.div`
 
 `;
-
-

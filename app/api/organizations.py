@@ -20,12 +20,10 @@ def one_organization(id):
     for employee in all_employees:
         if employee.isManager == False:
             employees_list.append(employee)
-    print('///////employees', employees_list)
     managers_list = []
     for employee in all_employees:
         if employee.isManager == True:
             managers_list.append(employee)
-    print('//////////////manager', managers_list)
     return {'organization': organization.to_dict(), 'managers': {manager.id:manager.to_dict() for manager in managers_list}, 'employees': {employee.id:employee.to_dict() for employee in employees_list}}
 
 @organization_routes.route('/', methods=['POST'])

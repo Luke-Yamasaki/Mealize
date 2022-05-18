@@ -39,7 +39,7 @@ import {
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
 
 import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
-import { ButtonText, CancelButton, MessageButtonBox, SubmitButton } from "../../Components/Styled/Buttons";
+import { ButtonBox, ButtonText, CancelButton, DeleteBtn, EditBtn, MessageButtonBox, SubmitButton } from "../../Components/Styled/Buttons";
 import { EditMessageInput } from "../../Forms/Message/EditMessageInput";
 
 export const MessagesPage = () => {
@@ -90,6 +90,11 @@ export const MessagesPage = () => {
         e.preventDefault();
         console.log(post)
 
+    }
+
+    const handleEdit = (e, message) => {
+        e.preventDefault();
+        setEditMode(!editMode)
     }
 
     if(!sessionUser) {
@@ -196,6 +201,12 @@ export const MessagesPage = () => {
                                         <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                             {message.content}
                                         </MessageContent>
+                                        {message.senderId === sessionUser.id &&
+                                        <ButtonBox>
+                                            <EditBtn onClick={e => handleEdit(e, message)}>Edit Message</EditBtn>
+                                            <DeleteBtn onClick={e => handleDelete(e, message)}>Delete Message</DeleteBtn>
+                                        </ButtonBox>
+                                        }
                                     </MessageContainer>
                                     {((message.content.includes('I would like to pick up this item') && message.postId === null) || (message.content.includes('I found a good item!') && message.postId === null)) &&
                                     <>

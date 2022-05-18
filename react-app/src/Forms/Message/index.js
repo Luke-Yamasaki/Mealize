@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
-
+import { useHistory } from 'react-router-dom';
 //Packages
 import * as nsfwjs from 'nsfwjs';
 import Filter from 'bad-words';
@@ -58,6 +58,7 @@ export const MessageForm = ({ post }) => {
     const [contentError, setContentError] = useState([]);
     const [imageError, setImageError] = useState([]);
     const {theme} = useTheme();
+    const history = useHistory();
 
     console.log(post)
     const user = users[post.userId];
@@ -155,7 +156,8 @@ export const MessageForm = ({ post }) => {
                     } else {
                         setContentError(contentErrArr);
                         setImageError(imageErrArr);
-                        dispatch(hideModal())
+                        dispatch(hideModal());
+                        history.push('/messages');
                     }
                 }
         } else {
@@ -168,7 +170,8 @@ export const MessageForm = ({ post }) => {
             } else {
                 setContentError(contentErrArr);
                 setImageError(imageErrArr);
-                dispatch(hideModal())
+                dispatch(hideModal());
+                history.push('/messages');
             }
         }
     };

@@ -35,3 +35,8 @@ class Delivery(db.Model):
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt,
         }
+
+    def id_to_dict(self):
+        return {
+            'id': self.id
+        }

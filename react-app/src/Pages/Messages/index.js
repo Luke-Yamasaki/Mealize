@@ -42,16 +42,25 @@ import {
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
 
 import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
-import { ButtonText, CancelButton, MessageButtonBox, SubmitButton } from "../../Components/Styled/Buttons";
+import {
+    ButtonText,
+    CancelButton,
+    MessageButtonBox,
+    SubmitButton
+} from "../../Components/Styled/Buttons";
 import { EditMessageInput } from "../../Forms/Message/EditMessageInput";
-import { Input } from "../../Components/Styled/AuthenticationForm";
+import { reviewRequest } from "../../store/deliveries";
+
 
 export const MessagesPage = () => {
     const sessionUser = useSelector(state => state.session.user);
     const messageBoards = useSelector(state => state.messageBoards);
     const posts = useSelector(state => state.posts.all);
+    console.log(posts)
     const organizations = useSelector(state => state.organizations);
+    console.log(organizations)
     const users = useSelector(state => state.users);
+    console.log(users)
     const dispatch = useDispatch();
     const [loaded, setLoaded] = useState(false);
     const [messageBoardId, setMessageBoardId] = useState(false);
@@ -85,18 +94,23 @@ export const MessagesPage = () => {
         }
     };
 
-    const handleDecline = (e, post) => {
+    const handleDecline = async(e, post) => {
         e.preventDefault();
         console.log(post)
+        const decline = {id:post.deliveryId, postId: post.id, approval: 'declined'}
+        const data = await dispatch(reviewRequest(decline))
+        console.log(data)
     };
 
-    const handleAccept = (e, post) => {
+    const handleAccept = async (e, post) => {
         e.preventDefault();
         console.log(post)
-
+        const approve = {id:post.deliveryId, postId: post.id, approval: 'approved'}
+        const data = await dispatch(reviewRequest(approve))
+        console.log(data)
     };
 
-    const handleEdit = (e, message) => {
+    const handleEdit = (e) => {
         e.preventDefault();
         setEditMode(!editMode)
     };
@@ -150,6 +164,9 @@ export const MessagesPage = () => {
                 {(messageBoardId && Object.values(messageBoards).length > 0) &&
                     <>
                         <MessengerBanner theme={theme}>
+                            {console.log(messageBoards[messageBoardId])}
+                            {console.log(messageBoards[messageBoardId].user_one)}
+                            {console.log(messageBoards[messageBoardId].user_two)}
                             <MessageProfileIcon square='55px'
                             src={sessionUser.id === messageBoards[messageBoardId].user_one ?
                             users[messageBoards[messageBoardId].user_two].profileImageUrl
@@ -185,7 +202,7 @@ export const MessagesPage = () => {
                                 </MessageUserName>
                                 <MessageUserName theme={theme} size='18px' font='italic'>
                                     {sessionUser.id === messageBoards[messageBoardId].user_one && users[messageBoards[messageBoardId].user_two].isNonprofit ?
-                                        organizations.nonprofits[users[messageBoards[messageBoardId].user_two].organizationId].name
+                                        organizations.businesses[users[messageBoards[messageBoardId].user_two].organizationId].name
                                         :
                                         sessionUser.id === messageBoards[messageBoardId].user_one && !users[messageBoards[messageBoardId].user_two].isNonprofit ?
                                         organizations.businesses[users[messageBoards[messageBoardId].user_two].organizationId].name

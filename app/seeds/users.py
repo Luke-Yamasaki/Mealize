@@ -100,7 +100,7 @@ def seed_users():
 
     for k in range(52, 76):
         volunteers = User(
-            organizationId=randint(1, 25),
+            organizationId=k-51,
             isNonprofit=True,
             isManager=False,
             firstName=fake.first_name(),

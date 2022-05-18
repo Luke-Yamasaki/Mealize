@@ -22,13 +22,18 @@ export const MessageButtonBox = styled.div`
 `;
 
 export const MessageButtons = styled(MessageButtonBox)`
+    width: 81%;
+    height: 40px;
+    justify-content: flex-start;
+`;
+
+export const MessageButtonsDiv = styled.div`
+    width: 220px;
+    height: 40px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    gap: 15px;
-    width: 165px;
-    height: 30px;
 `;
 
 export const InputButtonBox = styled(ButtonBox)`

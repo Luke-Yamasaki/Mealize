@@ -133,11 +133,11 @@ def seed_organizations():
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
         name='Walmart Inc.',
         description="Retail-variety Stores",
-        street='702 Southwest 8th St',
-        zip='72716',
-        city='Bentonville',
-        state='Arkansas',
-        phone='5012734000',
+        street='2770 W Evans Ave',
+        zip='80219',
+        city='Denver',
+        state='Colorado',
+        phone='3032227043',
         email='service@walmartcontacts.com'
     )
     db.session.add(walmart)
@@ -152,11 +152,11 @@ def seed_organizations():
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
         name='Target Corp',
         description="We fulfill the needs and fuel the potential of our guests. That means making Target your preferred shopping destination in all channels by delivering outstanding value, continuous innovation and exceptional experiences—consistently fulfilling our Expect More. Pay Less.® brand promise.",
-        street='1000 Nicollet Mall',
-        zip='55403',
-        city='Minneapolis',
-        state='Minnesota',
-        phone='6123046073',
+        street='4301 E Virginia Ave',
+        zip='80246',
+        city='Glendale',
+        state='Colorado',
+        phone='3032090182',
         email='guest.relations@target.com'
     )
     db.session.add(target)
@@ -169,12 +169,12 @@ def seed_organizations():
         open='24:00',
         close='24:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
-        name='Amazon Com Inc',
+        name='Amazon Fresh',
         description="Amazon is guided by four principles: customer obsession rather than competitor focus, passion for invention, commitment to operational excellence, and long-term thinking. Amazon strives to be Earth's most customer-centric company, Earth's best employer, and Earth's safest place to work. Customer reviews, 1-Click shopping, personalized recommendations, Prime, Fulfillment by Amazon, AWS, Kindle Direct Publishing, Kindle, Career Choice, Fire tablets, Fire TV, Amazon Echo, Alexa, Just Walk Out technology, Amazon Studios, and The Climate Pledge are some of the things pioneered by Amazon",
-        street='410 Terry Avenue North',
-        zip='98109',
-        city='Seattle',
-        state='Washington',
+        street='480 E 55th Ave STE 100,',
+        zip='80216',
+        city='Denver',
+        state='Colorado',
         phone='2062661000',
         email='jeff@amazon.com'
     )
@@ -188,7 +188,7 @@ def seed_organizations():
             imageUrl='https://static.wixstatic.com/media/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg/v1/fill/w_2543,h_787,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg',
             open='10:00',
             close='22:00',
-        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+            timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
             name=fake.company(),
             description=fake.catch_phrase(),
             street=fake.street_address(),

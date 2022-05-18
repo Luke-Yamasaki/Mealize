@@ -5,7 +5,12 @@ import { useSelector, useDispatch } from "react-redux"
 import { useTheme } from "../../Context/ThemeContext";
 
 //Actions
-import { deleteMessage, getBoards, deleteConversation} from "../../store/messages";
+import { deleteMessage, getBoards, deleteConversation, sendReply} from "../../store/messages";
+import { getAllDeliveries, reviewRequest } from "../../store/deliveries";
+import { getAllPosts } from "../../store/posts";
+
+//Helpers
+import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
 
 //Components
 import { PostCard } from "../../Components/Cards/PostCard";
@@ -36,15 +41,22 @@ import {
     ImageMessage,
     MessageEditDelete,
     EditMessageButton,
-    DeleteMessageButton
+    DeleteMessageButton,
+    AcceptButton,
+    DeclineButton
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
-
-import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
-import { ButtonText, CancelButton, MessageButtonBox, SubmitButton } from "../../Components/Styled/Buttons";
+import {
+    ButtonText,
+    CancelButton,
+    MessageButtonBox,
+    MessageButtons,
+    MessageButtonsDiv,
+    SubmitButton
+} from "../../Components/Styled/Buttons";
 import { EditMessageInput } from "../../Forms/Message/EditMessageInput";
-import { Input } from "../../Components/Styled/AuthenticationForm";
+
 
 export const MessagesPage = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -52,6 +64,7 @@ export const MessagesPage = () => {
     const posts = useSelector(state => state.posts.all);
     const organizations = useSelector(state => state.organizations);
     const users = useSelector(state => state.users);
+    const deliveries = useSelector(state => state.deliveries);
     const dispatch = useDispatch();
     const [loaded, setLoaded] = useState(false);
     const [messageBoardId, setMessageBoardId] = useState(false);
@@ -61,6 +74,8 @@ export const MessagesPage = () => {
     useEffect(() => {
         if(sessionUser) {
             dispatch(getBoards());
+            dispatch(getAllPosts());
+            dispatch(getAllDeliveries());
         }
     },[dispatch])
 
@@ -85,18 +100,35 @@ export const MessagesPage = () => {
         }
     };
 
-    const handleDecline = (e, post) => {
+    const handleDecline = async(e, post, message) => {
         e.preventDefault();
-        console.log(post)
+        const deliveryArr = Object.values(deliveries).filter(delivery => delivery.postId === post.id);
+        const decline = {id:deliveryArr[0].id, postId: post.id, approval: 'declined'}
+        const data = await dispatch(reviewRequest(decline))
+        if(data && !data.errors) {
+            const messageData = {content: 'Your request has been declined.', imageUrl: '', receiverId: message.senderId, postId: post.id, boardId: message.boardId };
+            dispatch(sendReply(messageData))
+            dispatch(getAllPosts());
+        } else {
+            console.log(data)
+        }
     };
 
-    const handleAccept = (e, post) => {
+    const handleAccept = async (e, post, message) => {
         e.preventDefault();
-        console.log(post)
-
+        const deliveryArr = Object.values(deliveries).filter(delivery => delivery.postId === post.id);
+        const approve = {id:deliveryArr[0].id, postId: post.id, approval: 'approved'}
+        const data = await dispatch(reviewRequest(approve));
+        if(data && !data.errors) {
+            const messageData = {content: 'Your request has been approved!', imageUrl: '', receiverId: message.senderId, postId: post.id, boardId: message.boardId };
+            dispatch(sendReply(messageData))
+            dispatch(getAllPosts());
+        } else {
+            console.log(data)
+        }
     };
 
-    const handleEdit = (e, message) => {
+    const handleEdit = (e) => {
         e.preventDefault();
         setEditMode(!editMode)
     };
@@ -235,9 +267,9 @@ export const MessagesPage = () => {
                                         }
                                     </>
                                     }
-                                    {message.postId &&
+                                    {(message.postId && !message.imageUrl) &&
                                     <>
-                                        <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                        <PostContainer theme={theme} marginTop='0px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                             <PostBox theme={theme}>
                                                 <PostCard post={posts[message.postId]} />
                                             </PostBox>
@@ -250,7 +282,7 @@ export const MessagesPage = () => {
                                         }
                                     </>
                                     }
-                                     {message.imageUrl &&
+                                     {(message.imageUrl && !message.postId )&&
                                     <>
                                         <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                             <PostBox theme={theme}>
@@ -265,15 +297,37 @@ export const MessagesPage = () => {
                                         }
                                     </>
                                     }
-                                    {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&
-                                        <MessageButtonBox>
-                                            <CancelButton onClick={e => handleDecline(e, posts[message.postId])}>
-                                                <ButtonText>Decline</ButtonText>
-                                            </CancelButton>
-                                            <SubmitButton onClick={e => handleAccept(e, posts[message.postId])}>
-                                                <ButtonText>Accept</ButtonText>
-                                            </SubmitButton>
-                                        </MessageButtonBox>
+                                    {(message.imageUrl && message.postId) &&
+                                    <>
+                                        <PostContainer theme={theme} marginTop='0px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                            <PostBox theme={theme}>
+                                                <PostCard post={posts[message.postId]} />
+                                            </PostBox>
+                                        </PostContainer>
+                                        <PostContainer theme={theme} marginTop='15px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                            <PostBox theme={theme}>
+                                                <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
+                                            </PostBox>
+                                        </PostContainer>
+                                        {message.senderId === sessionUser.id &&
+                                        <MessageEditDelete>
+                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
+                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
+                                        </MessageEditDelete>
+                                        }
+                                    </>
+                                    }
+                                    {((!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) && posts[message.postId].status === 1) &&
+                                        <MessageButtons>
+                                            <MessageButtonsDiv>
+                                                <DeclineButton onClick={e => handleDecline(e, posts[message.postId], message)}>
+                                                    <ButtonText>Decline</ButtonText>
+                                                </DeclineButton>
+                                                <AcceptButton onClick={e => handleAccept(e, posts[message.postId], message)}>
+                                                    <ButtonText>Accept</ButtonText>
+                                                </AcceptButton>
+                                            </MessageButtonsDiv>
+                                        </MessageButtons>
                                     }
                                 </MessageBox>
                             )}

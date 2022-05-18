@@ -18,18 +18,25 @@ import { editMessage } from '../../../store/messages';
 import {
     Input,
     Error,
-    ErrorBox,
-    InputErrorBox
+    ErrorBox
 } from '../../../Components/Styled/AuthenticationForm';
 
 import {
-    SubmitButton,
-    ButtonText,
-    CancelButton,
-    MessageButtonBox
+    MessageButtonBox, MessageButtons
 } from '../../../Components/Styled/Buttons';
 
-import { MessageErrorBox, MessageFileAndButtons, MessageFileLabel, MessageInput, MessageInputBox, MessageInputForm } from '../../../Components/Styled/Messages';
+import {
+    MessageErrorBox,
+    MessageFileAndButtons,
+    MessageFileLabel,
+    MessageInput,
+    MessageInputBox,
+    MessageInputForm,
+    EditMessageButton,
+    DeleteMessageButton,
+    MessageFileInput,
+    FileBox
+} from '../../../Components/Styled/Messages';
 
 
 export const EditMessageInput = ({message, changeMode}) => {
@@ -183,27 +190,23 @@ export const EditMessageInput = ({message, changeMode}) => {
                     <ErrorBox theme={theme} height='20px'>
                         <Error>{contentError[0]}</Error>
                     </ErrorBox>
-                    <MessageInputBox theme={theme}>
-                        <MessageInput type='text' theme={theme} value={content} onChange={handleContent} required/>
+                    <MessageInputBox theme={theme} edit='true'>
+                        <MessageInput type='text' theme={theme} edit='true' value={content} onChange={handleContent} required/>
                     </MessageInputBox>
                 </MessageErrorBox>
                 }
                 {!contentError.length &&
-                    <MessageInputBox theme={theme}>
-                        <MessageInput type='text' theme={theme} value={content} onChange={handleContent} required/>
+                    <MessageInputBox theme={theme} edit='true'>
+                        <MessageInput type='text' theme={theme} edit='true' value={content} onChange={handleContent} required/>
                     </MessageInputBox>
                 }
             <MessageFileAndButtons>
                 <MessageFileLabel htmlFor='image'>{imageUploading ? 'Image uploading...' : !image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
-                <Input id='image' theme={theme} lineHeight='10px' width='230px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
-                <MessageButtonBox>
-                    <CancelButton onClick={cancel}>
-                        <ButtonText>Cancel</ButtonText>
-                    </CancelButton>
-                    <SubmitButton onClick={handleSubmit}>
-                        <ButtonText>Submit</ButtonText>
-                    </SubmitButton>
-                </MessageButtonBox>
+                <FileBox>
+                    <MessageFileInput id='image' theme={theme} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
+                </FileBox>
+                <EditMessageButton theme={theme} onClick={cancel}>Cancel</EditMessageButton>
+                <DeleteMessageButton theme={theme} onClick={handleSubmit}>Submit</DeleteMessageButton>
             </MessageFileAndButtons>
         </MessageInputForm>
     )

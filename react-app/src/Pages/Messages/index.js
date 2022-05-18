@@ -33,13 +33,16 @@ import {
     MessageFeed,
     MessageBox,
     PreviewMessageTime,
-    ImageMessage
+    ImageMessage,
+    MessageEditDelete,
+    EditMessageButton,
+    DeleteMessageButton
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
 
 import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
-import { ButtonBox, ButtonText, CancelButton, DeleteBtn, EditBtn, MessageButtonBox, SubmitButton } from "../../Components/Styled/Buttons";
+import { ButtonText, CancelButton, MessageButtonBox, SubmitButton } from "../../Components/Styled/Buttons";
 import { EditMessageInput } from "../../Forms/Message/EditMessageInput";
 import { Input } from "../../Components/Styled/AuthenticationForm";
 
@@ -210,22 +213,19 @@ export const MessagesPage = () => {
                                                 {message.content}
                                             </MessageContent>
                                         }
-                                        {message.senderId === sessionUser.id &&
-                                        <ButtonBox>
-                                            <EditBtn onClick={e => handleEdit(e, message)}>Edit Message</EditBtn>
-                                            <DeleteBtn onClick={e => handleDelete(e, message)}>Delete Message</DeleteBtn>
-                                        </ButtonBox>
-                                        }
                                     </MessageContainer>
+                                    {message.senderId === sessionUser.id &&
+                                        <MessageEditDelete>
+                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
+                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
+                                        </MessageEditDelete>
+                                        }
                                     {((message.content.includes('I would like to pick up this item') && message.postId === null) || (message.content.includes('I found a good item!') && message.postId === null)) &&
                                     <>
                                         <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                             <PostBox theme={theme}>
                                                 <div>The item you found has been deleted...</div>
                                             </PostBox>
-                                            {message.senderId === sessionUser.id &&
-                                                <button onClick={e => handleDelete(e, message)}>Delete image</button>
-                                            }
                                         </PostContainer>
                                     </>
                                     }
@@ -235,9 +235,6 @@ export const MessagesPage = () => {
                                             <PostBox theme={theme}>
                                                 <PostCard post={posts[message.postId]} />
                                             </PostBox>
-                                            {message.senderId === sessionUser.id &&
-                                                <button onClick={e => handleDelete(e, message)}>Delete</button>
-                                            }
                                         </PostContainer>
                                     </>
                                     }
@@ -247,9 +244,6 @@ export const MessagesPage = () => {
                                             <PostBox theme={theme}>
                                                 <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
                                             </PostBox>
-                                            {message.senderId === sessionUser.id &&
-                                                <button onClick={e => handleDelete(e, message)}>Delete image</button>
-                                            }
                                         </PostContainer>
                                     </>
                                     }

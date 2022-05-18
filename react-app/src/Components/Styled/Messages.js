@@ -274,11 +274,11 @@ export const MessageInputForm = styled.form`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: ${props => props.small === 'true' ? 'flex-end' : 'center'};
 `;
 
 export const MessageInputBox = styled.div`
-    width: 95%;
+    width: ${props => props.edit === 'true' ? '53%' : '87%'};
     height: auto;
     min-height: 30px;
     display: flex;
@@ -307,11 +307,12 @@ export const MessageInput = styled.input`
 
 
 export const MessageFileAndButtons = styled.div`
-    width: 95%;
+    width: 87%;
     height: 75px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 10px;
     justify-content: flex-end;
 `;
 
@@ -344,4 +345,51 @@ export const ImageMessage = styled.img`
     object-fit: contain;
     object-position: center;
     object-repeat: no-repeat;
+`;
+
+export const MessageEditDelete = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: right;
+    width: 95%;
+    height: 35px;
+    gap: 15px;
+    padding: 0px 5% 0px 0px;
+`;
+
+const ItemButton = styled.div`
+    width: 75px;
+    height: 25px;
+    padding: 5px 0px 0px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+`;
+
+export const EditMessageButton = styled(ItemButton)`
+    background-color: #D49524;
+    filter: drop-shadow(${props => props.theme === 'light' ? '0px 0px 1px rgba(0, 0, 0, 0.75)' : '0px 0px 1px rgba(255, 255, 255, 0.75)'});
+`;
+
+export const DeleteMessageButton = styled(ItemButton)`
+    background-color: #C2462A;
+`;
+
+export const FileBox = styled.div`
+    width: 250px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+export const MessageFileInput = styled.input`
+    height: 25px;
+    width: 250px;
+    background-color: none;
+    font-family: motiva-sans, sans-serif;
+    text-align: center;
+    font-size: 16px;
 `;

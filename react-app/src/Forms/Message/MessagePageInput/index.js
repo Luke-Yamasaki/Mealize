@@ -28,7 +28,7 @@ import {
     MessageButtonBox
 } from '../../../Components/Styled/Buttons';
 
-import { MessageErrorBox, MessageFileAndButtons, MessageFileLabel, MessageInput, MessageInputBox, MessageInputForm } from '../../../Components/Styled/Messages';
+import { DeleteMessageButton, EditMessageButton, FileBox, MessageErrorBox, MessageFileAndButtons, MessageFileInput, MessageFileLabel, MessageInput, MessageInputBox, MessageInputForm } from '../../../Components/Styled/Messages';
 
 
 export const MessagePageInput = ({boardId}) => {
@@ -188,23 +188,19 @@ export const MessagePageInput = ({boardId}) => {
                         <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
                     </MessageInputBox>
                 </MessageErrorBox>
-                }
-                {!contentError.length &&
-                    <MessageInputBox theme={theme}>
-                        <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
-                    </MessageInputBox>
-                }
+            }
+            {!contentError.length &&
+                <MessageInputBox theme={theme}>
+                    <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
+                </MessageInputBox>
+            }
             <MessageFileAndButtons>
                 <MessageFileLabel htmlFor='image'>{imageUploading ? 'Image uploading...' : !image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
-                <Input id='image' theme={theme} lineHeight='10px' width='230px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
-                <MessageButtonBox>
-                    <CancelButton onClick={cancel}>
-                        <ButtonText>Cancel</ButtonText>
-                    </CancelButton>
-                    <SubmitButton onClick={handleSubmit}>
-                        <ButtonText>Submit</ButtonText>
-                    </SubmitButton>
-                </MessageButtonBox>
+                <FileBox>
+                    <MessageFileInput id='image' theme={theme} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
+                </FileBox>
+                <EditMessageButton theme={theme} onClick={cancel}>Cancel</EditMessageButton>
+                <DeleteMessageButton theme={theme} onClick={handleSubmit}>Submit</DeleteMessageButton>
             </MessageFileAndButtons>
         </MessageInputForm>
     )

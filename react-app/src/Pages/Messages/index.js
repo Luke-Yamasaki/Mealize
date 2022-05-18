@@ -33,7 +33,10 @@ import {
     MessageFeed,
     MessageBox,
     PreviewMessageTime,
-    ImageMessage
+    ImageMessage,
+    MessageEditDelete,
+    EditMessageButton,
+    DeleteMessageButton
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
@@ -41,6 +44,7 @@ import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
 import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
 import { ButtonText, CancelButton, MessageButtonBox, SubmitButton } from "../../Components/Styled/Buttons";
 import { EditMessageInput } from "../../Forms/Message/EditMessageInput";
+import { Input } from "../../Components/Styled/AuthenticationForm";
 
 export const MessagesPage = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -90,7 +94,16 @@ export const MessagesPage = () => {
         e.preventDefault();
         console.log(post)
 
-    }
+    };
+
+    const handleEdit = (e, message) => {
+        e.preventDefault();
+        setEditMode(!editMode)
+    };
+
+    const changeMode = () => {
+        setEditMode(false)
+    };
 
     if(!sessionUser) {
         return <Redirect to='/' />
@@ -130,7 +143,7 @@ export const MessagesPage = () => {
                 {(!messageBoardId && !Object.values(messageBoards).length) &&
                     <SelectMessageBox>
                         <SelectMessageText theme={theme}>
-                            {sessionUser.isManaer ? "You can send messages by clicking on the 'Ask a question' button on items or request." : "You can send messages by clicking on the 'Ask a question' or 'Notify manager' button on items or request."}
+                            {sessionUser.isManager ? "You can send messages by clicking on the 'Ask a question' button on items or request." : "You can send messages by clicking on the 'Ask a question' or 'Notify manager' button on items or request."}
                         </SelectMessageText>
                     </SelectMessageBox>
                 }
@@ -193,20 +206,33 @@ export const MessagesPage = () => {
                                             <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.' square='40px'/>
                                             <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
                                         </UserAndTime>
-                                        <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                            {message.content}
-                                        </MessageContent>
+                                        {editMode === true ?
+                                            <EditMessageInput message={message} changeMode={changeMode} />
+                                            :
+                                            <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                {message.content}
+                                            </MessageContent>
+                                        }
                                     </MessageContainer>
+                                    {((!message.imageUrl && !message.postId) && message.senderId === sessionUser.id) &&
+                                        <MessageEditDelete>
+                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
+                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
+                                        </MessageEditDelete>
+                                    }
                                     {((message.content.includes('I would like to pick up this item') && message.postId === null) || (message.content.includes('I found a good item!') && message.postId === null)) &&
                                     <>
                                         <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                             <PostBox theme={theme}>
                                                 <div>The item you found has been deleted...</div>
                                             </PostBox>
-                                            {message.senderId === sessionUser.id &&
-                                                <button onClick={e => handleDelete(e, message)}>Delete image</button>
-                                            }
                                         </PostContainer>
+                                        {message.senderId === sessionUser.id &&
+                                        <MessageEditDelete>
+                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
+                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
+                                        </MessageEditDelete>
+                                        }
                                     </>
                                     }
                                     {message.postId &&
@@ -215,10 +241,13 @@ export const MessagesPage = () => {
                                             <PostBox theme={theme}>
                                                 <PostCard post={posts[message.postId]} />
                                             </PostBox>
-                                            {message.senderId === sessionUser.id &&
-                                                <button onClick={e => handleDelete(e, message)}>Delete</button>
-                                            }
                                         </PostContainer>
+                                        {message.senderId === sessionUser.id &&
+                                        <MessageEditDelete>
+                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
+                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
+                                        </MessageEditDelete>
+                                        }
                                     </>
                                     }
                                      {message.imageUrl &&
@@ -227,10 +256,13 @@ export const MessagesPage = () => {
                                             <PostBox theme={theme}>
                                                 <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
                                             </PostBox>
-                                            {message.senderId === sessionUser.id &&
-                                                <button onClick={e => handleDelete(e, message)}>Delete image</button>
-                                            }
                                         </PostContainer>
+                                        {message.senderId === sessionUser.id &&
+                                        <MessageEditDelete>
+                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
+                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
+                                        </MessageEditDelete>
+                                        }
                                     </>
                                     }
                                     {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&

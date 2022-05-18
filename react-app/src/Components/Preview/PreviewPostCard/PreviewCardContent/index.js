@@ -60,7 +60,7 @@ export const PreviewCardContent = ({ props }) => {
                 <ItemDateText theme={theme}>now</ItemDateText>
             </PreviewTitleBox>
             {sessionUser.isNonprofit && <ItemImage src={ten} alt='Food available for pick up.'/>}
-            {!sessionUser.isNonprofit && <ItemImage src={props.previewImage ? props.previewImage : props.image ? URL.createObjectURL(props.image) : 'https://mealizeaa.s3.amazonaws.com/Mealize-circle.png'} alt='Food available for pick up.'/>}
+            {!sessionUser.isNonprofit && <ItemImage src={props.image ? URL.createObjectURL(props.image) : props.imageUrl ? props.imageUrl : 'https://mealizeaa.s3.amazonaws.com/Mealize-circle.png'} alt='Food available for pick up.'/>}
             <InfoBox>
                 <InfoContainer>
                     <ItemTitle theme={theme}>{props.title ? props.title : 'Item title goes here'}</ItemTitle>

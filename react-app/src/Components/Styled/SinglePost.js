@@ -19,7 +19,7 @@ export const OrgBannerInfoBox = styled.div`
 
 `;
 
-export const OrgProfileImage = styled.dimg`
+export const OrgProfileImage = styled.img`
 
 `;
 
@@ -65,12 +65,12 @@ export const ManagerButton = styled.div`
 
 `;
 
-export const QuestionText = styled.a(Bold)`
+export const QuestionText = styled(Bold)`
 
 `;
 
 //Items section
-export const OrgItems = styled.section`
+export const OrgSection = styled.section`
 
 `;
 
@@ -92,6 +92,6 @@ export const FilterText = styled(Bold)`
 `;
 
 //Items feed
-export const OrgItemsFeed = styled.div`
+export const OrgPostFeed = styled.div`
 
 `;

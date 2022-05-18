@@ -114,6 +114,7 @@ export const DeliveryForm = ({ post }) => {
 	const [time, setTime] = useState("");
     const [dateErrors, setDateErrors] = useState([]);
     const [timeErrors, setTimeErrors] = useState([]);
+    console.log(post)
 
 
     const timeObj = new Date();
@@ -169,9 +170,10 @@ export const DeliveryForm = ({ post }) => {
                     imageUrl: ''
                 }
                 const newMessage = await dispatch(sendMessage(requestMessage))
+                console.log(newMessage);
                 setDateErrors(dateErrArr);
                 setTimeErrors(timeErrArr);
-                dispatch(hideModal())
+                dispatch(hideModal());
                 history.push(`/messages`);
             } else {
                 newDelivery.error?.map(err => {

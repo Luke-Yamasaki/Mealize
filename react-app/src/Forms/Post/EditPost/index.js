@@ -10,6 +10,11 @@ import { hideModal } from '../../../store/modal';
 //Helpers
 import { validatePost, uploadImage } from '../../../utils/Forms/items';
 import { Nonprofit } from '../../../Assets/Icons/Nonprofit';
+
+//Styling
+//backgrounds
+import { requestBackgrounds } from '../backgrounds';
+
 //Components
 import { PreviewSection } from "../../../Components/Preview";
 import { PreviewBox } from "../../../Components/Styled/PreviewSection";
@@ -157,7 +162,33 @@ export const EditPostForm = ({post}) => {
         const stagedPost = await validatePost(itemData)
 
         if(stagedPost.message === 'success') {
-            if(!image) {
+            if(sessionUser.isNonprofit) {
+                const imageUrl = requestBackgrounds[categoryId];
+
+                const postData = {
+                    postId: post.id,
+                    organizationId,
+                    userId,
+                    title: titleCap,
+                    description: descriptionCap,
+                    quantity,
+                    categoryId,
+                    imageUrl,
+                    expDate,
+                };
+
+                const newPost = await dispatch(updateItem(postData))
+
+                if(!newPost.error || !newPost.errors) {
+                    setImageUploading(false);
+                    history.push(`/`)
+                    dispatch(hideModal());
+                } else {
+                    setImageUploading(false);
+                    setErrors(newPost.errors);
+                    return errors
+                }
+            } else if(!sessionUser.isNonprofit && !image) {
                 const postData = {
                     postId: post.id,
                     organizationId,
@@ -285,7 +316,7 @@ export const EditPostForm = ({post}) => {
             setNumberErrors([]);
             setCategoryIdErrors([]);
             setExpDateErrors([]);
-            handleEdit(e)
+            handleEdit(e);
         }
 
         if(sessionUser.isNonprofit && (!titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
@@ -294,7 +325,7 @@ export const EditPostForm = ({post}) => {
             setNumberErrors([]);
             setCategoryIdErrors([]);
             setExpDateErrors([]);
-            handleEdit(e)
+            handleEdit(e);
         }
     }
 
@@ -310,7 +341,7 @@ export const EditPostForm = ({post}) => {
             setImageErrors([])
             setImage(file)
         }
-    }
+    };
 
     const handleCategory = async (e) => {
         e.preventDefault()
@@ -333,18 +364,18 @@ export const EditPostForm = ({post}) => {
             setNumberErrors([])
             setNumber(e.target.value)
         }
-    }
+    };
 
     const handleExp = (e) => {
         e.preventDefault();
         setExpDate(e.target.value);
         setExpDateErrors([]);
-    }
+    };
 
     const handleNull = (e) => {
         e.preventDefault();
         return null;
-    }
+    };
 
     const handleTitle = (e) => {
         e.preventDefault();
@@ -361,7 +392,7 @@ export const EditPostForm = ({post}) => {
         } else {
             setTitleErrors(titleErrorsArr)
         }
-    }
+    };
 
     const handleReset = (e) => {
         e.preventDefault();

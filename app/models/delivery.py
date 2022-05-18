@@ -15,7 +15,7 @@ class Delivery(db.Model):
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())
 
-    post = db.relationship('Post', foreign_keys=[postId], back_populates='delivery')
+    post = db.relationship('Post', back_populates='delivery')
     volunteer = db.relationship('User', back_populates='delivery')
     location = db.relationship('Organization', back_populates='delivery')
 
@@ -29,8 +29,14 @@ class Delivery(db.Model):
             'location': self.location.to_dict(),
             'date': self.date,
             'time': self.time,
+            'post': self.post.to_dict(),
             'completed': self.completed,
             'cancellationReason': self.cancellationReason,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt,
+        }
+
+    def id_to_dict(self):
+        return {
+            'id': self.id
         }

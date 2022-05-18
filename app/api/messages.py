@@ -38,7 +38,7 @@ def new_conversation():
             boardId = board.id,
             senderId = current_user.id,
             content = form.data['content'],
-            postId = form.data['postId'],
+            postId = request.json['postId'],
             imageUrl = request.json['imageUrl']
         )
 

@@ -11,7 +11,7 @@ import { getCategories } from './store/categories';
 import { getBatchedOrganizations, getOneOrganization } from './store/organizations';
 import { getBatchedUsers } from './store/users';
 import { getAllPosts } from './store/posts';
-// import { getAllDeliveries } from './store/deliveries';
+import { getAllDeliveries } from './store/deliveries';
 
 //Pages
 import { Home } from './Pages/Home';
@@ -58,6 +58,7 @@ function App() {
   useEffect(() => {
     if(sessionUser) {
         dispatch(getOneOrganization(sessionUser.organizationId));
+        dispatch(getAllDeliveries())
     }
 },[sessionUser])
 

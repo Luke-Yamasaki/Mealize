@@ -1,6 +1,6 @@
 //Hooks
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { useTheme } from '../../../Context/ThemeContext';
 import { useFilter } from '../../../Context/FilterContext';
 // Actions
@@ -18,6 +18,7 @@ import PostForm from '../../../Forms/Post';
 //Icons
 import { Logo } from '../../../Assets/Logo';
 import { InboxIcon } from '../../../Assets/Icons/Inbox';
+import { VolunteerIcon } from '../../../Assets/Icons/Volunteers';
 
 export const SessionNavbar = ({sessionUser}) => {
     const dispatch = useDispatch();
@@ -33,12 +34,18 @@ export const SessionNavbar = ({sessionUser}) => {
     const logOut = () => {
         setFilter('available')
         dispatch(logout())
+        return <Redirect to='/' />
     };
 
     const handleMessages = (e) => {
         e.preventDefault();
         history.push('/messages')
-    }
+    };
+
+    const handleDeliveries = (e) => {
+        e.preventDefault();
+        history.push('/deliveries');
+    };
 
     return (
         <NavBar>
@@ -51,10 +58,10 @@ export const SessionNavbar = ({sessionUser}) => {
                         <LogoNavLink theme={theme} to='/' exact={true}>Mealize</LogoNavLink>
                     </LogoBox>
                     <SearchBar />
-                    <ProfileBox>
-                        <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' />
-                        <ProfileName>{`Hello ${sessionUser.firstName}!`}</ProfileName>
-                    </ProfileBox>
+                    <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' />
+                    <VectorBox square='30px' resize='32px' cursor='pointer' onClick={handleDeliveries}>
+                        <VolunteerIcon theme={theme}/>
+                    </VectorBox>
                     <VectorBox square='30px' resize='32px' cursor='pointer' onClick={handleMessages}>
                         <InboxIcon theme={theme}/>
                     </VectorBox>

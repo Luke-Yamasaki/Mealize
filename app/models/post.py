@@ -20,13 +20,13 @@ class Post(db.Model):
     organization = db.relationship('Organization', back_populates='posts')
     uploader = db.relationship('User', back_populates='posts')
     message = db.relationship('Message', back_populates='post')
-    category = db.relationship('Category', back_populates='posts')
+    category = db.relationship('Category', foreign_keys=[categoryId], back_populates='posts')
     delivery = db.relationship('Delivery', back_populates='post', cascade='all, delete-orphan')
     favorites = db.relationship('Favorite', back_populates='post', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
-            'id': self.id,
+                'id': self.id,
             'isItem': self.isItem,
             'organizationId': self.organizationId,
             'userId': self.userId,

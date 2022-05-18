@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_login import current_user, login_required
-from app.models import db, Post
+from app.models import db, Post, Delivery
 from app.forms.post_form import PostForm
 from app.utils import errors_to_list
 from app.utils.s3 import accepted_file, generate_unique_file, upload_to_s3_bucket
@@ -16,7 +16,8 @@ def posts():
 @post_routes.route('/<int:id>')
 def post(id):
     post = Post.query.get(id)
-    return post.to_dict()
+    delivery = Delivery.query.filter(Delivery.postId == id)
+    return {post:post.to_dict(), delivery:delivery.to_dict()}
 
 @post_routes.route('/images', methods=['POST'])
 @login_required

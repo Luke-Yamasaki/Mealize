@@ -47,6 +47,7 @@ import {
     ActionText,
     SignupText,
 } from '../../Components/Styled/Buttons';
+import { Redirect } from 'react-router-dom';
 
 
 export const LoginForm = () => {
@@ -99,13 +100,15 @@ export const LoginForm = () => {
             const data = await dispatch(login(email, password));
             if(data && data.errors) {
                 data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+                setEmailError(emailErrArr);
+                setPasswordError(passwordErrArr);
             } else {
-                dispatch(hideModal())
+                setEmailError(emailErrArr);
+                setPasswordError(passwordErrArr);
+                dispatch(hideModal());
+                return <Redirect to='/' />
             }
         }
-
-        setEmailError(emailErrArr);
-        setPasswordError(passwordErrArr);
     };
 
     const cancel = (e) => {

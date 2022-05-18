@@ -214,7 +214,7 @@ export const PostContainer = styled.div`
     width: 94%;
     max-height: 450px;
     height: auto;
-    margin-top: -35px;
+    margin-top: ${props => props.marginTop ? props.marginTop : '-35px'};
     padding: ${props => props.direction === 'row' ? '0% 0% 0% 5%' : '0% 4.3% 0% 0%'};
 `;
 
@@ -387,6 +387,24 @@ export const CancelMessageButton = styled(ItemButton)`
 
 export const SubmitMessageButton = styled(ItemButton)`
     background-color: #76D97E;
+`;
+
+export const AcceptButton = styled(ItemButton)`
+    background: linear-gradient(#76D97E, #28A690);
+    width: 100px;
+    height: 30px;
+    &:hover {
+        transform: scale(1.05);
+    }
+`;
+
+export const DeclineButton = styled(ItemButton)`
+    background: linear-gradient(#c2462a, #e0a193);
+    width: 100px;
+    height: 30px;
+    &:hover {
+        transform: scale(1.05);
+    }
 `;
 
 export const FileBox = styled.div`

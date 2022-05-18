@@ -16,19 +16,23 @@ import { uploadImage } from '../../../utils/Forms/items';
 
 //Components
 import {
-    Input,
     Error,
     ErrorBox
 } from '../../../Components/Styled/AuthenticationForm';
 
-import {
-    SubmitButton,
-    ButtonText,
-    CancelButton,
-    MessageButtonBox
-} from '../../../Components/Styled/Buttons';
 
-import { DeleteMessageButton, EditMessageButton, FileBox, MessageErrorBox, MessageFileAndButtons, MessageFileInput, MessageFileLabel, MessageInput, MessageInputBox, MessageInputForm } from '../../../Components/Styled/Messages';
+import {
+    SubmitMessageButton,
+    CancelMessageButton,
+    FileBox,
+    MessageErrorBox,
+    MessageFileAndButtons,
+    MessageFileInput,
+    MessageFileLabel,
+    MessageInput,
+    MessageInputBox,
+    MessageInputForm
+} from '../../../Components/Styled/Messages';
 
 
 export const MessagePageInput = ({boardId}) => {
@@ -199,8 +203,8 @@ export const MessagePageInput = ({boardId}) => {
                 <FileBox>
                     <MessageFileInput id='image' theme={theme} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                 </FileBox>
-                <EditMessageButton theme={theme} onClick={cancel}>Cancel</EditMessageButton>
-                <DeleteMessageButton theme={theme} onClick={handleSubmit}>Submit</DeleteMessageButton>
+                <CancelMessageButton theme={theme} onClick={cancel}>Cancel</CancelMessageButton>
+                <SubmitMessageButton theme={theme} onClick={handleSubmit}>Submit</SubmitMessageButton>
             </MessageFileAndButtons>
         </MessageInputForm>
     )

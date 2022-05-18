@@ -214,12 +214,12 @@ export const MessagesPage = () => {
                                             </MessageContent>
                                         }
                                     </MessageContainer>
-                                    {message.senderId === sessionUser.id &&
+                                    {((!message.imageUrl && !message.postId) && message.senderId === sessionUser.id) &&
                                         <MessageEditDelete>
                                             <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
                                             <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
                                         </MessageEditDelete>
-                                        }
+                                    }
                                     {((message.content.includes('I would like to pick up this item') && message.postId === null) || (message.content.includes('I found a good item!') && message.postId === null)) &&
                                     <>
                                         <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
@@ -227,6 +227,12 @@ export const MessagesPage = () => {
                                                 <div>The item you found has been deleted...</div>
                                             </PostBox>
                                         </PostContainer>
+                                        {message.senderId === sessionUser.id &&
+                                        <MessageEditDelete>
+                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
+                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
+                                        </MessageEditDelete>
+                                        }
                                     </>
                                     }
                                     {message.postId &&
@@ -236,6 +242,12 @@ export const MessagesPage = () => {
                                                 <PostCard post={posts[message.postId]} />
                                             </PostBox>
                                         </PostContainer>
+                                        {message.senderId === sessionUser.id &&
+                                        <MessageEditDelete>
+                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
+                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
+                                        </MessageEditDelete>
+                                        }
                                     </>
                                     }
                                      {message.imageUrl &&
@@ -245,6 +257,12 @@ export const MessagesPage = () => {
                                                 <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
                                             </PostBox>
                                         </PostContainer>
+                                        {message.senderId === sessionUser.id &&
+                                        <MessageEditDelete>
+                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
+                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
+                                        </MessageEditDelete>
+                                        }
                                     </>
                                     }
                                     {(!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) &&

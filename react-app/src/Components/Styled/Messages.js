@@ -211,10 +211,11 @@ export const PostContainer = styled.div`
     flex-direction: ${props => props.direction};
     justify-content: flex-start;
     align-items: center;
-    width: 95%;
+    width: 94%;
     max-height: 450px;
     height: auto;
-    padding: ${props => props.direction === 'row' ? '0% 0% 0% 5%' : '0% 5% 0% 0%'};
+    margin-top: -35px;
+    padding: ${props => props.direction === 'row' ? '0% 0% 0% 5%' : '0% 4.3% 0% 0%'};
 `;
 
 export const PostBox = styled.div`
@@ -278,7 +279,7 @@ export const MessageInputForm = styled.form`
 `;
 
 export const MessageInputBox = styled.div`
-    width: ${props => props.edit === 'true' ? '53%' : '87%'};
+    width: ${props => props.edit === 'true' ? '53%' : '86%'};
     height: auto;
     min-height: 30px;
     display: flex;
@@ -307,7 +308,7 @@ export const MessageInput = styled.input`
 
 
 export const MessageFileAndButtons = styled.div`
-    width: 87%;
+    width: 86%;
     height: 75px;
     display: flex;
     flex-direction: row;
@@ -352,9 +353,10 @@ export const MessageEditDelete = styled.div`
     flex-direction: row;
     justify-content: flex-end;
     align-items: right;
-    width: 95%;
+    width: 94.6%;
     height: 35px;
-    gap: 15px;
+    margin-top: 10px;
+    gap: 10px;
     padding: 0px 5% 0px 0px;
 `;
 
@@ -366,6 +368,7 @@ const ItemButton = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
+    cursor: pointer;
 `;
 
 export const EditMessageButton = styled(ItemButton)`
@@ -375,6 +378,15 @@ export const EditMessageButton = styled(ItemButton)`
 
 export const DeleteMessageButton = styled(ItemButton)`
     background-color: #C2462A;
+    filter: drop-shadow(${props => props.theme === 'light' ? '0px 0px 1px rgba(0, 0, 0, 0.75)' : '0px 0px 1px rgba(255, 255, 255, 0.75)'});
+`;
+
+export const CancelMessageButton = styled(ItemButton)`
+    background-color: #28A690;
+`;
+
+export const SubmitMessageButton = styled(ItemButton)`
+    background-color: #76D97E;
 `;
 
 export const FileBox = styled.div`
@@ -387,9 +399,10 @@ export const FileBox = styled.div`
 
 export const MessageFileInput = styled.input`
     height: 25px;
-    width: 250px;
+    width: 220px;
     background-color: none;
     font-family: motiva-sans, sans-serif;
     text-align: center;
     font-size: 16px;
+    cursor: pointer;
 `;

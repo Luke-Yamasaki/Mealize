@@ -21,9 +21,6 @@ import {
     ErrorBox
 } from '../../../Components/Styled/AuthenticationForm';
 
-import {
-    MessageButtonBox, MessageButtons
-} from '../../../Components/Styled/Buttons';
 
 import {
     MessageErrorBox,
@@ -32,8 +29,8 @@ import {
     MessageInput,
     MessageInputBox,
     MessageInputForm,
-    EditMessageButton,
-    DeleteMessageButton,
+    CancelMessageButton,
+    SubmitMessageButton,
     MessageFileInput,
     FileBox
 } from '../../../Components/Styled/Messages';
@@ -205,8 +202,8 @@ export const EditMessageInput = ({message, changeMode}) => {
                 <FileBox>
                     <MessageFileInput id='image' theme={theme} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                 </FileBox>
-                <EditMessageButton theme={theme} onClick={cancel}>Cancel</EditMessageButton>
-                <DeleteMessageButton theme={theme} onClick={handleSubmit}>Submit</DeleteMessageButton>
+                <CancelMessageButton theme={theme} onClick={cancel}>Cancel</CancelMessageButton>
+                <SubmitMessageButton theme={theme} onClick={handleSubmit}>Submit</SubmitMessageButton>
             </MessageFileAndButtons>
         </MessageInputForm>
     )

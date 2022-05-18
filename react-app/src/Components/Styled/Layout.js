@@ -46,7 +46,7 @@ export const AppBackGround = styled.div`
 `;
 
 export const AppContentContainer = styled.div`
-    width: 57.1w;
+    width: 57.1vw;
     min-height: 100vh;
     height: auto;
     display: flex;
@@ -97,7 +97,7 @@ export const SideBarContainer = styled.div`
     align-items: left;
     justify-content: space-around;
     width: 200px;
-    height: 870px;
+    height: ${props => props.height};
     gap: 5px;
 `;
 
@@ -202,8 +202,7 @@ export const PostsTitle = styled(ExtraBold)`
 `;
 
 export const PostsSection = styled.section`
-    max-width: 1100px;
-    width: 40vw;
+    width: 1000px;
     height: auto;
     display: flex;
     flex-direction: column;

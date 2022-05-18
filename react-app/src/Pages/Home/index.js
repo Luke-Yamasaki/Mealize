@@ -33,7 +33,7 @@ export const Home = () => {
 
     return(
         <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}>
-            <SideBarContainer>
+            <SideBarContainer height={sessionUser ? '870px' : '745px'}>
                 <FilterTitle theme={theme}>Filter</FilterTitle>
                 {sessionUser && (
                     <FavoritesFilter theme={theme}/>

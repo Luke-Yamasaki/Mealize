@@ -2,98 +2,81 @@
 import { useDispatch, useSelector} from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
+import { useTheme } from '../../Context/ThemeContext';
 //Actions
 import { getAllDeliveries, updateDelivery, deleteDelivery } from '../../store/deliveries';
 import { setCurrentModal } from '../../store/modal';
+import { getAllPosts } from '../../store/posts';
 
 //Components
 import { PostCard } from '../../Components/Cards/PostCard';
 import { DeliveryForm } from '../../Forms/Delivery';
 import { OrganizationCard } from '../../Components/Cards/OrganizationCard';
 
+//Helpers
+import { timesObj } from '../../Forms/Delivery/times';
 // packages
-import styled from 'styled-components';
-import { MessageList, MessagePageWrapper, MessageSideMenu, MessageThreadField } from '../../Components/Styled/Messages';
-
-const Wrapper = styled.div`
-    width: 1550px;
-    height: auto;
-    min-height: 900px;
-    display: flex;
-    flex-direction: row;
-    align-items: top;
-    justify-content: flex-start;
-    gap: 50px;
-    padding-left: 50px;
-    padding-top: 50px;
-    background-color: white;
-`
-
-const Header = styled.section`
-    width: 700px;
-    height: auto;
-    min-height: 600px;
-    max-height: 900px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: left;
-    gap: 10px;
-    background-color: #F5F5F5;
-`
-
-const MessageContent = styled.section`
-    width: 1300px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 10px;
-`;
-
-const PageLabel = styled.div`
-    width: 300px;
-    height: 50px;
-    font-family: motiva-sans, sans-serif;
-    font-size: 24px;
-    color: black;
-    display: flex;
-    flex-direction: center;
-    align-items: center;
-`
+import {
+    DeliveryField,
+    DeliveryItem,
+    DeliveryList,
+    DeliveryPageWrapper,
+    DeliverySideMenu,
+    DeliveryTime
+} from '../../Components/Styled/Deliveries';
 
 export const Deliveries = () => {
     const dispatch = useDispatch()
-    const history = useHistory();
     const deliveries = useSelector(state => state.deliveries)
     const sessionUser = useSelector(state => state.session.user)
-    const posts = useSelector(state => state.posts);
+    const posts = useSelector(state => state.posts.all);
     const [selected, setSelected] = useState('');
-    const [loaded, setLoaded] = useState(false)
+    const [loaded, setLoaded] = useState(false);
+    const [deliveryId, setDeliveryId] = useState('')
+    const {theme} = useTheme();
 
     useEffect(() => {
         dispatch(getAllDeliveries());
+        dispatch(getAllPosts());
         setLoaded(true)
     },[dispatch])
 
-    console.log(deliveries)
+    useEffect(() => {
+        console.log(deliveryId)
+    },[deliveryId])
+
+    const formatDateString = (someDate) => {
+        // Only accepts strings
+        const day = someDate.slice(5, 7);
+        const month = someDate.slice(8, 11);
+        const year = someDate.slice(12, 16);
+        const formattedDate = month + '/' + day + '/' + year;
+
+        return formattedDate;
+    };
+
+    const handleClick = (e, delivery) => {
+        e.preventDefault();
+        setDeliveryId(delivery.id)
+    }
 
     return loaded && (
-            <MessagePageWrapper>
-            <MessageSideMenu>
-                <MessageList>Deliveries</MessageList>
-                {deliveries !== {} && Object.values(deliveries).map((delivery) =>
-                <div key={delivery.id} style={{width: '500px', height: '200px', display: 'flex', alignItems: 'left', justifyContent: 'left', flexDirection: 'column'}} onClick={(e) => setSelected(e.target.id)}>
-                    Picking up at:
-                    <div>{`${delivery.date}`}</div>
-                    <OrganizationCard organization={delivery.location} />
-                </div>)}
-            </MessageSideMenu>
-            <MessageThreadField>
+            <DeliveryPageWrapper theme={theme}>
+                <DeliverySideMenu theme={theme}>
+                    <DeliveryList theme={theme}>Deliveries</DeliveryList>
+                    {deliveries !== {} && Object.values(deliveries).map((delivery) =>
+                    <DeliveryItem key={delivery.id} onClick={e => handleClick(e, delivery)}>
+                        <DeliveryTime theme={theme}>{`Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
+                        <OrganizationCard organization={delivery.location} />
+                    </DeliveryItem>
+                    )}
+                </DeliverySideMenu>
+                <DeliveryField theme={theme}>
+                    {deliveryId &&
+                        <PostCard post={posts[deliveries[deliveryId].postId]}/>
+                    }
 
-            </MessageThreadField>
-            </MessagePageWrapper>
+                </DeliveryField>
+            </DeliveryPageWrapper>
     )
 }

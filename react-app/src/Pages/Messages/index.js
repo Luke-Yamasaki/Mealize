@@ -6,6 +6,11 @@ import { useTheme } from "../../Context/ThemeContext";
 
 //Actions
 import { deleteMessage, getBoards, deleteConversation} from "../../store/messages";
+import { reviewRequest } from "../../store/deliveries";
+import { getAllPosts } from "../../store/posts";
+
+//Helpers
+import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
 
 //Components
 import { PostCard } from "../../Components/Cards/PostCard";
@@ -40,8 +45,6 @@ import {
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
-
-import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
 import {
     ButtonText,
     CancelButton,
@@ -49,7 +52,6 @@ import {
     SubmitButton
 } from "../../Components/Styled/Buttons";
 import { EditMessageInput } from "../../Forms/Message/EditMessageInput";
-import { reviewRequest } from "../../store/deliveries";
 
 
 export const MessagesPage = () => {
@@ -70,6 +72,7 @@ export const MessagesPage = () => {
     useEffect(() => {
         if(sessionUser) {
             dispatch(getBoards());
+            dispatch(getAllPosts())
         }
     },[dispatch])
 

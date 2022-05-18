@@ -123,20 +123,6 @@ def approve_delivery(id):
         db.session.commit()
         return id
 
-@delivery_routes.route('/cancellation/<int:id>', methods=['PUT'])
-@login_required
-def cancel_delivery(id):
-    delivery = Delivery.query.get(id)
-    delivery.cancellationReason = request.json['cancellationReason']
-    delivery.completed = 4
-    db.session.commit()
-
-    post = Post.query.get(delivery.postId)
-    post.status = 0
-    db.session.commit()
-
-    return delivery.to_dict()
-
 @delivery_routes.route('/accept/<int:id>', methods=['PUT'])
 @login_required
 def accept_delivery(id):
@@ -157,3 +143,30 @@ def pickedup_delivery(id):
     post.status = 2
     db.session.commit()
     return delivery.to_dict()
+
+@delivery_routes.route('/cancellation/<int:id>', methods=['PUT'])
+@login_required
+def cancel_delivery(id):
+    delivery = Delivery.query.get(id)
+    delivery.cancellationReason = request.json['cancellationReason']
+    delivery.completed = 4
+    db.session.commit()
+
+    post = Post.query.get(delivery.postId)
+    post.status = 0
+    db.session.commit()
+
+    return delivery.to_dict()
+
+@delivery_routes.route('/<int:id>', methods=['DELETE'])
+@login_required
+def delete_delivery(id):
+    if current_user.isManager == False:
+        return {'error': 'You are not authorized for this action.'}
+    deletedId = id
+    delivery = Delivery.query.get(id)
+
+    db.session.delete(delivery)
+    db.session.commit()
+
+    return str(deletedId)

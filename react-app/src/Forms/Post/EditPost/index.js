@@ -139,7 +139,7 @@ export const EditPostForm = ({post}) => {
     const userId = sessionUser.id;
     //variables
 
-    let props = {title, description, number, unit, categoryId, image, previewImage: post.imageUrl, expDate};
+    let props = {title, description, number, unit, categoryId, image, imageUrl: post.imageUrl, expDate};
 
 
     const handleEdit = async (e) => {

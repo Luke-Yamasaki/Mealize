@@ -75,13 +75,11 @@ function App() {
           <Modal />
           <Switch>
           <Route exact path='/'>
-              <Home/>
+            <Home/>
           </Route>
-          {sessionUser &&
           <Route exact path='/deliveries'>
             <Deliveries />
           </Route>
-          }
           <Route exact path='/messages'>
             <MessagesPage />
           </Route>

@@ -20,6 +20,7 @@ import { Deliveries } from './Pages/Deliveries';
 import { MessagesPage } from './Pages/Messages';
 import { OrganizationPage } from './Pages/Organization';
 import { SinglePostPage } from './Pages/SinglePost';
+import { SearchPage } from './Pages/Search';
 
 //Components
 import { Settings } from './Assets/Icons/Settings';
@@ -90,6 +91,9 @@ function App() {
           </Route>
           <Route exact path='/posts/:id'>
             <SinglePostPage />
+          </Route>
+          <Route exact path='/search/:searchword'>
+            <SearchPage />
           </Route>
           <Route>
             <FourOFour />

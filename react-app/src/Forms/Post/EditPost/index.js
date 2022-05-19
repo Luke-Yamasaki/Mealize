@@ -90,19 +90,6 @@ const FormContent = styled.div`
     align-items: center;
 `;
 
-const TitleDiv = styled.div`
-    font-family: motiva-sans, sans-serif;
-    font-weight: 900;
-    font-style: normal;
-    font-size: 16px;
-    height: 45px;
-    width: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-`;
-
 const ErrorMessage = styled.div`
     color: #C2462A;
     font-size: 10px;
@@ -132,8 +119,9 @@ export const EditPostForm = ({post}) => {
     const [descriptionErrors, setDescriptionErrors] = useState([]);
     const [numberErrors, setNumberErrors] = useState([]);
     const [categoryIdErrors, setCategoryIdErrors] = useState([]);
-    const [imageErrors, setImageErrors] = useState(null);
+    const [imageErrors, setImageErrors] = useState([]);
     const [expDateErrors, setExpDateErrors] = useState([]);
+    const [noChange, setNoChange] = useState([]);
 
     const organizationId = sessionUser.organizationId;
     const userId = sessionUser.id;
@@ -144,16 +132,13 @@ export const EditPostForm = ({post}) => {
 
     const handleEdit = async (e) => {
         e.preventDefault();
-
-        const titleCap = title.slice(0, 1).toUpperCase().concat(title.slice(1, title.length));
-        const descriptionCap = description.slice(0, 1).toUpperCase().concat(description.slice(1, description.length));
         const quantity = number.toString() + ' ' + unit;
 
         const itemData = {
             organizationId,
             userId,
-            title: titleCap,
-            description: descriptionCap,
+            title,
+            description,
             quantity,
             categoryId,
             expDate,
@@ -169,8 +154,8 @@ export const EditPostForm = ({post}) => {
                     postId: post.id,
                     organizationId,
                     userId,
-                    title: titleCap,
-                    description: descriptionCap,
+                    title,
+                    description,
                     quantity,
                     categoryId,
                     imageUrl,
@@ -193,8 +178,8 @@ export const EditPostForm = ({post}) => {
                     postId: post.id,
                     organizationId,
                     userId,
-                    title: titleCap,
-                    description: descriptionCap,
+                    title,
+                    description,
                     quantity,
                     categoryId,
                     imageUrl: post.imageUrl,
@@ -228,8 +213,8 @@ export const EditPostForm = ({post}) => {
                         postId: post.id,
                         organizationId,
                         userId,
-                        title: titleCap,
-                        description: descriptionCap,
+                        title,
+                        description,
                         quantity,
                         categoryId,
                         imageUrl,
@@ -256,6 +241,7 @@ export const EditPostForm = ({post}) => {
     const handleErrors = (e) => {
         e.preventDefault();
 
+        const noChangeArr = [];
         const imageErrorsArr = [];
         const titleErrorsArr = [];
         const descriptionErrorsArr = [];
@@ -263,41 +249,37 @@ export const EditPostForm = ({post}) => {
         const categoryIdErrorsArr = []
         const expErrorsArr = [];
 
-
-        if(!sessionUser.isNonprofit && !image) {
-            imageErrorsArr.push("Please select a .jpg or .png image file to upload.")
-        }
-
-        if(title.length > 11 && !title.includes(' ')) {
-            titleErrorsArr.push("Please add a line break to your title.")
-        }
-
-        if(!title) {
-            titleErrorsArr.push("Please enter a title in 25 characters or less.")
-        }
-
-        if(!description) {
-            descriptionErrorsArr.push("Please enter a description in 120 characters or less.")
-        }
-
-        if(!sessionUser.isNonprofit && !number) {
-            numberErrorsArr.push("Please select a quantity for your post.")
-        }
-
-        if(!number) {
-            numberErrorsArr.push('Please select a desired quantity for your request.')
-        }
-
-        if(!categoryId) {
+        if((!sessionUser.isNonprofit && !image.length) && (categoryId === post.categoryId.toString()) && (title === post.title) && (description === post.description) && (number === post.quantity.split(' ', 2)[0]) && (unit === post.quantity.split(' ', 2)[1]) && (expDate === `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`)) {
+            noChangeArr.push('Please change at least one field to submit')
+        } else if(!categoryId) {
           categoryIdErrorsArr.push("Please select a food category.")
-        }
-
-        if(sessionUser.isNonprofit && !expDate) {
-            expErrorsArr.push('Please select an end date for your request.')
-        }
-
-        if(!expDate) {
-            expErrorsArr.push('Please select an expiration date for your item.')
+        } else if(title.length > 11 && !title.includes(' ')) {
+            titleErrorsArr.push("Please add a line break to your title.")
+        } else if(number === '') {
+            numberErrorsArr.push("Please select a number.")
+        }else if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+            setImageErrors([]);
+            setTitleErrors([]);
+            setDescriptionErrors([]);
+            setNumberErrors([]);
+            setCategoryIdErrors([]);
+            setExpDateErrors([]);
+            return handleEdit(e)
+        } else if(sessionUser.isNonprofit && (!titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+            setTitleErrors([]);
+            setDescriptionErrors([]);
+            setNumberErrors([]);
+            setCategoryIdErrors([]);
+            setExpDateErrors([]);
+            return handleEdit(e)
+        } else {
+            setImageErrors(imageErrorsArr);
+            setTitleErrors(titleErrorsArr);
+            setDescriptionErrors(descriptionErrorsArr);
+            setNumberErrors(numberErrorsArr);
+            setCategoryIdErrors(categoryIdErrorsArr);
+            setExpDateErrors(expErrorsArr);
+            setNoChange(noChangeArr);
         }
 
         setImageErrors(imageErrorsArr);
@@ -306,27 +288,8 @@ export const EditPostForm = ({post}) => {
         setNumberErrors(numberErrorsArr);
         setCategoryIdErrors(categoryIdErrorsArr);
         setExpDateErrors(expErrorsArr);
-
-
-        if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
-            setImageErrors([]);
-            setTitleErrors([]);
-            setDescriptionErrors([]);
-            setNumberErrors([]);
-            setCategoryIdErrors([]);
-            setExpDateErrors([]);
-            handleEdit(e);
-        }
-
-        if(sessionUser.isNonprofit && (!titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
-            setTitleErrors([]);
-            setDescriptionErrors([]);
-            setNumberErrors([]);
-            setCategoryIdErrors([]);
-            setExpDateErrors([]);
-            handleEdit(e);
-        }
-    }
+        setNoChange(noChangeArr);
+    };
 
     const updateImage = (e) => {
         const file = e.target.files[0];
@@ -353,12 +316,15 @@ export const EditPostForm = ({post}) => {
         e.preventDefault();
         if(e.target.value.length > 3 && e.target.value > 1000) {
             setNumber('');
-
             setNumberErrors(['Please select a number between 1 and 1,000.'])
         } else if (e.target.value <= 0) {
             setNumber('');
             e.target.value='';
             setNumberErrors(['Please select a number greater than zero.'])
+        } else if (e.target.value === post.quantity.split(' ', 2)[0]) {
+            setNumber('');
+            e.target.value='';
+            setNumberErrors(['Please select a new number or click reset to revert changes.'])
         } else {
             setNumberErrors([])
             setNumber(e.target.value)
@@ -378,20 +344,34 @@ export const EditPostForm = ({post}) => {
 
     const handleTitle = (e) => {
         e.preventDefault();
-        const titleInput = e.target.value
         setTitleErrors([])
         const titleErrorsArr = [];
 
-        if(titleInput.length > 11 && !titleInput.includes(' ')) {
-            titleErrorsArr.push("Please add a line break to your title.")
-        }
+        const titleInput = e.target.value.slice(0, 1).toUpperCase().concat(e.target.value.slice(1, e.target.value.length))
+        setTitle(titleInput)
 
-        if(titleInput.length >= 0 && !titleErrorsArr.length) {
-            setTitle(titleInput)
-        } else {
-            setTitleErrors(titleErrorsArr)
+        if(title.length > 11 && !title.includes(' ')) {
+            titleErrorsArr.push("Please add a line break to your title.")
+            return setTitleErrors(titleErrorsArr)
         }
+        setTitleErrors(titleErrorsArr)
     };
+
+    const handleDescription = (e) => {
+        e.preventDefault();
+        const descriptionInput = e.target.value;
+        setDescriptionErrors([]);
+        const descriptionErrArr =[];
+
+        if(descriptionInput.length > 11 && !descriptionInput.includes(' ')) {
+            descriptionErrArr.push("Please add a line break to your description.")
+        } else if(descriptionInput.length >= 0 && !descriptionErrArr.length) {
+            const descriptionCap = description.slice(0, 1).toUpperCase().concat(description.slice(1, description.length));
+            setDescription(descriptionCap)
+        } else {
+            setDescriptionErrors(descriptionErrArr);
+        }
+    }
 
     const handleReset = (e) => {
         e.preventDefault();
@@ -405,7 +385,7 @@ export const EditPostForm = ({post}) => {
         setExpDateErrors([]);
         setNumberErrors([]);
 
-        setImage(null);
+        setImage('');
         setTitle(post.title);
         setDescription(post.description);
         setNumber(post.quantity.split(' ', 2)[0]);
@@ -429,7 +409,7 @@ export const EditPostForm = ({post}) => {
                             </div>
                             <div className={styles.formTitle}>{sessionUser.isNonprofit ? 'Edit request form' : 'Edit item form'}</div>
                         </div>
-                        <div style={{ width: '300px', height: '15px', marginBottom: '-10px', color: '#90311D', fontFamily: 'motiva-sans, sans-serif', fontSize: '12px'}}> * Change at least one field to submit </div>
+                        <div style={{ width: '300px', height: '15px', marginBottom: '-10px', color: '#90311D', fontFamily: 'motiva-sans, sans-serif', fontSize: '12px'}}>{ noChange.length ? noChange[0] : '* Change at least one field to submit' }</div>
                         {categoryIdErrors && (
                             <ErrorMessage>{categoryIdErrors[0]}</ErrorMessage>
                         )}
@@ -507,7 +487,36 @@ export const EditPostForm = ({post}) => {
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
                         <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
                         {!sessionUser.isNonprofit && (
-                            <div className={(title !== post.title) || (description !== post.description) || (number !== post.quantity.split(' ', 2)[0]) || (unit !== post.quantity.split(' ', 2)[1]) || (categoryId !== post.categoryId.toString()) || (expDate !== `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
+                            <div className={
+                               (
+                                (image !== '')
+                                ||
+                                (title.length && title !== post.title)
+                                ||
+                                (description.length && description !== post.description)
+                                ||
+                                (number && number !== post.quantity.split(' ', 2)[0])
+                                ||
+                                (unit !== post.quantity.split(' ', 2)[1])
+                                ||
+                                (categoryId !== post.categoryId.toString())
+                                ||
+                                (expDate !== `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`))
+                                &&
+                                (!titleErrors.length)
+                                &&
+                                (!descriptionErrors.length)
+                                &&
+                                (!numberErrors.length)
+                                &&
+                                (!categoryIdErrors.length)
+                                &&
+                                (!expDateErrors.length)
+                                &&
+                                (!imageErrors.length)
+                                &&
+                                (!noChange.length)
+                                ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
                         )}
                         {sessionUser.isNonprofit && (
                             <div className={(title !== post.title) || (description !== post.description) || (number !== post.quantity.split(' ', 2)[0]) || (unit !== post.quantity.split(' ', 2)[1]) || (categoryId !== post.categoryId.toString()) || (expDate !== `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>

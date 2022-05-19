@@ -13,6 +13,7 @@ import { QuestionText } from "../../../Styled/PostCard";
 import  { DeliveryForm } from '../../../../Forms/Delivery';
 import { MessageForm } from "../../../../Forms/Message";
 import  { EditPostForm } from '../../../../Forms/Post/EditPost';
+import { Redirect } from "react-router-dom";
 
 export const ActionButtons = ({post}) => {
     const sessionUser = useSelector(state => state.session.user);
@@ -54,6 +55,7 @@ export const ActionButtons = ({post}) => {
 
     const handleDelete = () => {
         dispatch(removePost(post.id))
+        return <Redirect to='/' />
     };
 
     if(!sessionUser || post.status > 0) {

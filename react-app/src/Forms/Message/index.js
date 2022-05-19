@@ -60,9 +60,7 @@ export const MessageForm = ({ post }) => {
     const {theme} = useTheme();
     const history = useHistory();
 
-    console.log(post)
     const user = users[post.userId];
-    console.log(user)
 
     const filter = new Filter();
 
@@ -146,7 +144,7 @@ export const MessageForm = ({ post }) => {
                     const data = await response.json();
                     const imageUrl = await data.imageUrl;
 
-                    const messageData = {content, imageUrl, receiverId: post.userId};
+                    const messageData = {content, imageUrl, receiverId: post.userId, postId: post.id};
 
                     const resData = await dispatch(sendMessage(messageData));
                     if(resData && resData.errors) {
@@ -161,7 +159,7 @@ export const MessageForm = ({ post }) => {
                     }
                 }
         } else {
-            const messageData = {content, imageUrl: image, receiverId: post.userId}
+            const messageData = {content, imageUrl: image, receiverId: post.userId, postId: post.id}
             const data = await dispatch(sendMessage(messageData));
             if(data && data.errors) {
                 data.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));

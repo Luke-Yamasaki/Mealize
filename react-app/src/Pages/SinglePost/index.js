@@ -2,8 +2,7 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useTheme } from '../../Context/ThemeContext';
-import { useState } from 'react';
-
+import { Redirect } from 'react-router-dom';
 //Components
 import { PostCard } from '../../Components/Cards/PostCard';
 
@@ -29,7 +28,6 @@ import {
     SinglePostName,
     SinglePostBannerText,
     SinglePostContentBox,
-    SinglePostSection,
     SinglePostPinBox
  } from '../../Components/Styled/SinglePost';
 import { VectorBox } from '../../Components/Styled/Layout';
@@ -48,6 +46,11 @@ export const SinglePostPage = () => {
 
     //post
     const post = posts[id];
+
+    if(!post) {
+        return <Redirect to='/' />
+    }
+
     //organization
     const organizations = {...nonprofits, ...businesses};
     const organization = organizations[post.organizationId];
@@ -56,6 +59,8 @@ export const SinglePostPage = () => {
 
     const style = colors[theme][post.categoryId];
     console.log(style)
+
+
 
     return (
         <SinglePostWrapper>

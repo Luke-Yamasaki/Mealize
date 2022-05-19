@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Black, Bold, ExtraBold, Medium } from './Fonts';
+import { Black, Medium } from './Fonts';
 
 //Background
 export const SinglePostWrapper = styled.main`
@@ -47,10 +47,15 @@ export const SinglePostProfileImage = styled.img`
     border-radius: 200px;
     margin: -100px 0px 0px 50px;
     background-color: black;
+    cursor: pointer;
 `;
 
 export const SinglePostName = styled(Black)`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
 `;
 
 export const SinglePostBannerText = styled(Medium)`

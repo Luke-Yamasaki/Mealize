@@ -75,7 +75,7 @@ export const SessionNavbar = ({sessionUser}) => {
                     </LogoutButton>
                 </NavList>
             </Navigation>
-            <NotificationBar theme={theme}/>
+            {/* <NotificationBar theme={theme}/> */}
         </NavBar>
     )
 }

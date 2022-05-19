@@ -66,7 +66,6 @@ export const MessagesPage = () => {
     const users = useSelector(state => state.users);
     const deliveries = useSelector(state => state.deliveries);
     const dispatch = useDispatch();
-    const [loaded, setLoaded] = useState(false);
     const [messageBoardId, setMessageBoardId] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const {theme} = useTheme();
@@ -78,12 +77,6 @@ export const MessagesPage = () => {
             dispatch(getAllDeliveries());
         }
     },[dispatch])
-
-    useEffect(() => {
-        if(Object.values(messageBoards).length > 0) {
-            setLoaded(true);
-        }
-    },[messageBoards])
 
     const handleClick = (e, id) => {
         e.preventDefault();
@@ -141,7 +134,7 @@ export const MessagesPage = () => {
         return <Redirect to='/' />
     }
 
-    return loaded && (
+    return (
         <MessagePageWrapper>
             <MessageSideMenu theme={theme}>
                 <MessageList theme={theme}> All messages

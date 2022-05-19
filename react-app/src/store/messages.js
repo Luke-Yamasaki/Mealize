@@ -51,6 +51,7 @@ export const getBoards = () => async (dispatch) => {
 };
 
 export const sendMessage = (messageData) => async (dispatch) => {
+    console.log(messageData)
     const response = await fetch('/api/messages/', {
         method: 'POST',
         headers: {
@@ -60,9 +61,11 @@ export const sendMessage = (messageData) => async (dispatch) => {
     });
     if(response.ok) {
         const sent = await response.json();
+        console.log(sent)
         dispatch(sentMessage(sent));
     } else if(response.status < 500) {
         const data = await response.json();
+        console.log(data)
         if(data.errors){
             return data.errors;
         };
@@ -164,11 +167,9 @@ export default function messageBoardsReducer(state = {}, action) {
             newState = action.payload;
             return newState;
         case SENT_MESSAGE:
-            if(newState === null){
-                newState[action.payload.id] = action.payload
-            } else {
-                newState[action.payload.id] = action.payload
-            };
+            console.log(action.payload)
+            const sentState = {...state, ...state.messages};
+            sentState[action.payload.id] = action.payload
             return newState;
         case SENT_REPLY:
             const replyState = {...state, ...state.messages};

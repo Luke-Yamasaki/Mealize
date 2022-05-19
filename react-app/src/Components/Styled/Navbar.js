@@ -3,15 +3,16 @@ import styled from 'styled-components';
 import { Bold } from './Fonts';
 
 export const NavBar = styled.div`
-    max-width: 1600px;
-    height: 100px;
+    width: 1600px;
+    height: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: -webkit-sticky;
     position: sticky;
-    top: 0;
+    top: 0px;
+    margin-top: -1px;
     will-change: transform;
     z-index: 200;
 `;
@@ -53,9 +54,7 @@ export const Searchbar = styled.form`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    max-width: 27.5vw;
-    width:  27.5vw;
-    min-width:  30vw;
+    width: 600px;
     height: 30px;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     border-radius: 50px;
@@ -64,9 +63,7 @@ export const Searchbar = styled.form`
 `;
 
 export const SearchInput = styled.input`
-    max-width: 27.5vw;
-    width: 27vw;
-    height: 25px;
+    width: 90%;
     font-family: motiva-sans,sans-serif;
     font-weight: 700;
     font-style: normal;

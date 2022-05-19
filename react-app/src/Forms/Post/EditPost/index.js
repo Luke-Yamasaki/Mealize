@@ -241,7 +241,6 @@ export const EditPostForm = ({post}) => {
                     if(!newPost.error || !newPost.errors) {
                         dispatch(getOneUser(sessionUser.id))
                         setImageUploading(false);
-                        history.push(`/`)
                         dispatch(hideModal());
                     } else {
                         setImageUploading(false);

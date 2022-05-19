@@ -4,7 +4,7 @@ export const BackGroundContext = createContext();
 export const useBackGround = () => useContext(BackGroundContext);
 
 export default function BackGroundProvider(props) {
-    const [backGround, setBackGround] = useState(true);
+    const [backGround, setBackGround] = useState('true');
 
     return (
         <BackGroundContext.Provider value={{ backGround, setBackGround }}>

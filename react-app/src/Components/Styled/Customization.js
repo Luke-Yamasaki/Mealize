@@ -42,7 +42,7 @@ export const CustomizationContainer = styled.div`
     position: -webkit-sticky;
     position: sticky;
     will-change: transform;
-    top: 0;
+    top: 0px;
     color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
     animation: ${props => props.animation};
     animation-delay: ${props => props.animation === expandField ? '0.3s' : '0s'};
@@ -81,8 +81,7 @@ export const SettingsBox = styled.div`
     position: fixed;
     justify-content: center;
     align-items: center;
-    border-radius: 100%;
+    border-radius: 50px;
     background-color: ${props => props.theme === 'light' ? '#327647' : '#76D97E' };
     animation: ${props => props.animation};
-    z-index: 1000;
 `;

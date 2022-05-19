@@ -8,7 +8,7 @@ export const BackGround = () => {
     const {theme} = useTheme();
 
     return (
-        <ContentContainer  theme={theme} onClick={() => setBackGround(!backGround)}>
+        <ContentContainer  theme={theme} onClick={() => backGround === 'true' ? setBackGround('false') : setBackGround('true')}>
             <IconContainer></IconContainer>
             <Label theme={theme}>Background image</Label>
         </ContentContainer>

@@ -7,12 +7,12 @@ export const MessagePageWrapper = styled.main`
     justify-content: flex-start;
     align-items: top;
     width: 1600px;
-    height: 62%;
+    height: 900px;
 `;
 
 export const MessageSideMenu = styled.section`
-    width: 25%;
-    height: 100%;
+    width: 400px;
+    height: 900px;
     overflow-x: hidden;
     overflow-y: scroll;
     display: flex;
@@ -250,8 +250,8 @@ export const MessageContent = styled.div`
 
 
 export const SelectMessageBox = styled.div`
-    width: 100%;
-    height: 50%;
+    width: 1200px;
+    height: 900px;
     display: flex;
     justify-content: center;
     align-items: center;

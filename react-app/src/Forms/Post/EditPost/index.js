@@ -249,7 +249,9 @@ export const EditPostForm = ({post}) => {
         const categoryIdErrorsArr = []
         const expErrorsArr = [];
 
-        if((!sessionUser.isNonprofit && !image.length) && (categoryId === post.categoryId.toString()) && (title === post.title) && (description === post.description) && (number === post.quantity.split(' ', 2)[0]) && (unit === post.quantity.split(' ', 2)[1]) && (expDate === `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`)) {
+        if(titleErrors.length || descriptionErrors.length || numberErrors.length || categoryIdErrors.length || imageErrors.length || expDateErrors.length || noChange.length) {
+            return noChangeArr.push('Please resolve errors before submitting.')
+        } else if((!sessionUser.isNonprofit && !image.length) && (categoryId === post.categoryId.toString()) && (title === post.title) && (description === post.description) && (number === post.quantity.split(' ', 2)[0]) && (unit === post.quantity.split(' ', 2)[1]) && (expDate === `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`)) {
             noChangeArr.push('Please change at least one field to submit')
         } else if(!categoryId) {
           categoryIdErrorsArr.push("Please select a food category.")
@@ -257,7 +259,7 @@ export const EditPostForm = ({post}) => {
             titleErrorsArr.push("Please add a line break to your title.")
         } else if(number === '') {
             numberErrorsArr.push("Please select a number.")
-        }else if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+        } else if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
             setImageErrors([]);
             setTitleErrors([]);
             setDescriptionErrors([]);
@@ -359,19 +361,26 @@ export const EditPostForm = ({post}) => {
 
     const handleDescription = (e) => {
         e.preventDefault();
-        const descriptionInput = e.target.value;
         setDescriptionErrors([]);
         const descriptionErrArr =[];
+        const descriptionInput = e.target.value.slice(0, 1).toUpperCase().concat(e.target.value.slice(1, e.target.value.length));
+        const descriptionArr = descriptionInput.split(' ')
+        setDescription(descriptionInput);
 
         if(descriptionInput.length > 11 && !descriptionInput.includes(' ')) {
-            descriptionErrArr.push("Please add a line break to your description.")
-        } else if(descriptionInput.length >= 0 && !descriptionErrArr.length) {
-            const descriptionCap = description.slice(0, 1).toUpperCase().concat(description.slice(1, description.length));
-            setDescription(descriptionCap)
+            descriptionErrArr.push("Please add a line break to your description.");
+            return setDescriptionErrors(descriptionErrArr);
         } else {
-            setDescriptionErrors(descriptionErrArr);
-        }
-    }
+            descriptionArr.forEach(desc => {
+                if(desc.length > 20) {
+                    descriptionErrArr.push('Please add a line break to your description');
+                    return setDescriptionErrors(descriptionErrArr);
+                } else {
+                    return setDescriptionErrors(descriptionErrArr);
+                }
+            })
+        };
+    };
 
     const handleReset = (e) => {
         e.preventDefault();
@@ -449,7 +458,7 @@ export const EditPostForm = ({post}) => {
                         )}
                         <TextareaFieldset>
                         <legend className={(description.length >= 3 && description.length <= 17) || (description.length > 17 && description.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
-                            <Textarea placeholder='Description' type='text' minLength='3' maxLength='100' value={description} onChange={e => setDescription(e.target.value)} />
+                            <Textarea placeholder='Description' type='text' minLength='3' maxLength='100' value={description} onChange={handleDescription} />
                         </TextareaFieldset>
                         {numberErrors && (
                             <ErrorMessage>{numberErrors[0]}</ErrorMessage>

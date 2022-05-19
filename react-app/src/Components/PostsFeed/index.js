@@ -37,9 +37,9 @@ export const PostsFeed = () => {
     //CategoriesFilter
     posts.map(post => parseInt(post.categoryId) === 1 ? dairyArr.push(post) : parseInt(post.categoryId) === 2 ? vegetablesArr.push(post) : parseInt(post.categoryId) === 3 ? fruitsArr.push(post) : parseInt(post.categoryId) === 4 ? grainsArr.push(post) : proteinArr.push(post))
 
-    if(filter === 'favorites' && !favorites.length) {
-        setFilter('available')
-    }
+    // if(filter === 'favorites' && !favorites.length) {
+    //     setFilter('available')
+    // }
 
     return (
         <FeedContainer>

@@ -27,7 +27,7 @@ export const ExpirationBanner = ({ post }) => {
     };
 
     const handleColor = () => {
-        let hoursLeft = determineExpiration(post.expDate);
+        let hoursLeft = determineExpiration(post?.expDate);
         if(hoursLeft < 72) {
             setFlagColor('red')
         } else if(hoursLeft > 168) {
@@ -38,9 +38,15 @@ export const ExpirationBanner = ({ post }) => {
     };
 
     useEffect(() => {
-        formatDateString(post.expDate);
-        handleColor()
+        if(post) {
+            formatDateString(post?.expDate);
+            handleColor()
+        }
     },[post]);
+
+    if(!post) {
+        return null
+    }
 
     return (
         <ExpBanner>

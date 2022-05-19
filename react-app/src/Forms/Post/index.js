@@ -210,7 +210,9 @@ const PostForm = () => {
 
         if(!categoryId) {
           categoryIdErrorsArr.push("Please select a food category.")
-        }else if(title.length > 11 && !title.includes(' ')) {
+        } else if(!sessionUser.isNonprofit && !image) {
+            imageErrorsArr.push("Please select a .jpg or .png image file to upload.")
+        } else if(title.length > 11 && !title.includes(' ')) {
             titleErrorsArr.push("Please add a line break to your title.")
         } else if(!title.length) {
             titleErrorsArr.push("Please enter a title in 25 characters or less.")
@@ -220,8 +222,6 @@ const PostForm = () => {
             numberErrorsArr.push("Please select a quantity for your post.")
         } else if(!number) {
             numberErrorsArr.push('Please select a desired quantity for your request.')
-        } else if(!sessionUser.isNonprofit && !image) {
-            imageErrorsArr.push("Please select a .jpg or .png image file to upload.")
         } else if(sessionUser.isNonprofit && !expDate) {
             expErrorsArr.push('Please select an end date for your request.')
         } else if(!expDate) {

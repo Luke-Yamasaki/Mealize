@@ -1,10 +1,10 @@
 //Hooks
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useTheme } from "../../Context/ThemeContext";
 import { useFilter } from "../../Context/FilterContext";
 //Components
 import { PostCard } from "../Cards/PostCard";
-import { FeedContainer } from "../Styled/Layout"
+import { FeedContainer, MealizeItalic, NoFavoritesBox, NoFavoritesMessage } from "../Styled/Layout"
 
 //Helper
 import { determineExpiration } from "../../utils/Dates";
@@ -12,8 +12,8 @@ import { determineExpiration } from "../../utils/Dates";
 export const PostsFeed = () => {
     const allPosts = useSelector(state => state.posts.all);
     const favoritesObj = useSelector(state => state.session.user?.favorites);
-    const {filter, setFilter} = useFilter();
-
+    const {filter} = useFilter();
+    const {theme} = useTheme();
     const favorites = favoritesObj ? Object.values(favoritesObj) : [];
     const posts = Object.values(allPosts);
 
@@ -37,13 +37,14 @@ export const PostsFeed = () => {
     //CategoriesFilter
     posts.map(post => parseInt(post.categoryId) === 1 ? dairyArr.push(post) : parseInt(post.categoryId) === 2 ? vegetablesArr.push(post) : parseInt(post.categoryId) === 3 ? fruitsArr.push(post) : parseInt(post.categoryId) === 4 ? grainsArr.push(post) : proteinArr.push(post))
 
-    if(filter === 'favorites' && !favorites.length) {
-        setFilter('available')
-    }
-
     return (
         <FeedContainer>
-            {filter === 'favorites' && favorites.map((obj) => <PostCard key={obj.id} post={allPosts[obj.postId]}/>)}
+            {(filter === 'favorites' && !favorites.length) &&
+                <NoFavoritesBox>
+                    <NoFavoritesMessage theme={theme}>You do not have any favorites. Add them by clicking the <MealizeItalic theme={theme}>Mealize</MealizeItalic> logo on item and request cards!</NoFavoritesMessage>
+                </NoFavoritesBox>
+            }
+            {(filter === 'favorites' && favorites.length > 0) && favorites.map((obj) => <PostCard key={obj.id} post={allPosts[obj.postId]}/>)}
             {filter === 'available' && availableArr.reverse().map((post) => <PostCard key={post.id} post={post} />)}
             {filter === 'unavailable' && unavailableArr.map((post) => <PostCard key={post.id} post={post} />)}
             {filter === 'items' && itemsArr.reverse().map((post) => <PostCard key={post.id} post={post} />)}

@@ -170,7 +170,7 @@ export default function messageBoardsReducer(state = {}, action) {
             console.log(action.payload)
             const sentState = {...state, ...state.messages};
             sentState[action.payload.id] = action.payload
-            return newState;
+            return sentState;
         case SENT_REPLY:
             const replyState = {...state, ...state.messages};
             replyState[action.payload.id] = action.payload;

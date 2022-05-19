@@ -207,8 +207,9 @@ const PostForm = () => {
         const categoryIdErrorsArr = []
         const expErrorsArr = [];
 
-
-        if(!categoryId) {
+        if(titleErrors?.length || descriptionErrors?.length || numberErrors?.length || categoryIdErrors?.length || imageErrors?.length || expDateErrors?.length) {
+            return setErrors(['Please resolve errors before submitting.'])
+        } else if(!categoryId) {
           categoryIdErrorsArr.push("Please select a food category.")
         } else if(!sessionUser.isNonprofit && !image) {
             imageErrorsArr.push("Please select a .jpg or .png image file to upload.")
@@ -309,20 +310,39 @@ const PostForm = () => {
 
     const handleTitle = (e) => {
         e.preventDefault();
-        const titleInput = e.target.value
         setTitleErrors([])
         const titleErrorsArr = [];
+        const titleInput = e.target.value.slice(0, 1).toUpperCase().concat(e.target.value.slice(1, e.target.value.length))
+        setTitle(titleInput)
 
-        if(titleInput.length > 11 && !titleInput.includes(' ')) {
+        if(title.length > 11 && !title.includes(' ')) {
             titleErrorsArr.push("Please add a line break to your title.")
+            return setTitleErrors(titleErrorsArr)
         }
+        setTitleErrors(titleErrorsArr)
+    };
 
-        if(titleInput.length >= 0 && !titleErrorsArr.length) {
-            setTitle(titleInput)
+    const handleDescription = (e) => {
+        e.preventDefault();
+        setDescriptionErrors([]);
+        const descriptionErrArr = [];
+        const descriptionInput = e.target.value.slice(0, 1).toUpperCase().concat(e.target.value.slice(1, e.target.value.length));
+        const descriptionArr = descriptionInput.split(' ')
+        setDescription(descriptionInput);
+
+        if(descriptionInput.length > 11 && !descriptionInput.includes(' ')) {
+            descriptionErrArr.push("Please add a line break to your description.");
+            return setDescriptionErrors(descriptionErrArr);
         } else {
-            setTitleErrors(titleErrorsArr)
-        }
-    }
+            descriptionArr.forEach(desc => {
+                if(desc.length > 20) {
+                    descriptionErrArr.push('Please add a line break to your description');
+                    return setDescriptionErrors(descriptionErrArr);
+                }
+            })
+            return setDescriptionErrors(descriptionErrArr);
+        };
+    };
 
     const handleReset = (e) => {
         e.preventDefault();
@@ -368,7 +388,7 @@ const PostForm = () => {
                             </div>
                             <div className={styles.formTitle}>{sessionUser.isNonprofit ? 'New request form' : 'New item form'}</div>
                         </div>
-                        <div style={{ width: '200px', height: '10px', color: '#90311D'}}> * All fields are required</div>
+                        <div style={{ width: '300px', height: '10px', color: '#90311D'}}>{errors.length ? errors[0] : '* All fields are required'}</div>
                         {categoryIdErrors && (
                             <ErrorMessage>{categoryIdErrors[0]}</ErrorMessage>
                         )}
@@ -408,7 +428,7 @@ const PostForm = () => {
                         )}
                         <TextareaFieldset>
                         <legend className={(description.length >= 3 && description.length <= 17) || (description.length > 17 && description.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
-                            <Textarea placeholder='Description' type='text' minLength='3' maxLength='100' value={description} onChange={e => setDescription(e.target.value)} />
+                            <Textarea placeholder='Description' type='text' minLength='3' maxLength='100' value={description} onChange={handleDescription} />
                         </TextareaFieldset>
                         {numberErrors && (
                             <ErrorMessage>{numberErrors[0]}</ErrorMessage>

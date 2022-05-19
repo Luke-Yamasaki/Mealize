@@ -47,10 +47,15 @@ export const OrgProfileImage = styled.img`
     border-radius: 200px;
     margin: -100px 0px 0px 50px;
     background-color: black;
+    cursor: pointer;
 `;
 
 export const OrgName = styled(Black)`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
 `;
 
 export const OrgBannerText = styled(Medium)`

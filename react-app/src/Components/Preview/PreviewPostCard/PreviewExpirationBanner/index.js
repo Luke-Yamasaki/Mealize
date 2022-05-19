@@ -3,11 +3,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "../../../../Context/ThemeContext";
 
 //Styled-components
-import { VectorBox } from "../../../Styled/Layout";
-import { ExpBanner, BannerTextContainer, BannerText, ExpText } from "../../../Styled/PostCard";
-
-//Icons
-import { Flag } from '../../../../Assets/Icons/Flag';
+import { ExpBanner, BannerTextContainer, BannerText, ExpText, FlagBox, PostFlag, FlagPole } from "../../../Styled/PostCard";
 
 //Helper
 import { determineExpiration } from "../../../../utils/Dates";
@@ -58,9 +54,10 @@ export const PreviewExpirationBanner = ({ props }) => {
 
     return (
         <ExpBanner>
-            <VectorBox square='25px'>
-                <Flag color={flagColor} />
-            </VectorBox>
+            <FlagBox>
+                <PostFlag gradient={flagColor === 'green' ? 'linear-gradient(#46a843, #a4dba3)' : flagColor === 'yellow' ? 'linear-gradient(#d49524, #e9c990) ' : 'linear-gradient(#c2462a, #e0a193)'}/>
+                <FlagPole gradient={flagColor === 'green' ? 'linear-gradient(#46a843, #a4dba3)' : flagColor === 'yellow' ? 'linear-gradient(#d49524, #e9c990) ' : 'linear-gradient(#c2462a, #e0a193)'}/>
+            </FlagBox>
             <BannerTextContainer>
                 <BannerText theme={theme}>Expires:</BannerText>
                 <ExpText theme={theme}>{date}</ExpText>

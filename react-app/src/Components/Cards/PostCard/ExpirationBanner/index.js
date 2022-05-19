@@ -26,25 +26,26 @@ export const ExpirationBanner = ({ post }) => {
         setDate(formattedDate)
     };
 
-    useEffect(() => {
-        if(post !== undefined) formatDateString(post.expDate);
-
-        if((post.isItem && post.status === 0) || (!post.isItem && post.status === 0)) {
-            const hoursLeft = determineExpiration(post?.expDate);
-            hoursLeft >= 168 ? setFlagColor('green') //Greater than or equal to one week?
-            :
-            hoursLeft < 168 && hoursLeft >= 72 ? setFlagColor('yellow') //In between a week and 3 days
-            :
-            setFlagColor('red') //less than 3 days
-        } else {
+    const handleColor = () => {
+        let hoursLeft = determineExpiration(post.expDate);
+        if(hoursLeft < 72) {
             setFlagColor('red')
+        } else if(hoursLeft > 168) {
+            setFlagColor('green')
+        } else {
+            setFlagColor('yellow')
         }
+    };
+
+    useEffect(() => {
+        formatDateString(post.expDate);
+        handleColor()
     },[post]);
 
     return (
         <ExpBanner>
             <VectorBox square='25px'>
-                <Flag color={flagColor} />
+                <Flag flagColor={flagColor} />
             </VectorBox>
             <BannerTextContainer>
                 <BannerText theme={theme}>Expires:</BannerText>

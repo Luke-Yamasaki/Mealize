@@ -22,15 +22,17 @@ import {
     DeliveryList,
     DeliveryPageWrapper,
     DeliverySideMenu,
-    DeliveryTime
+    DeliveryTime,
+    SelectDeliveryBox,
+    SelectDeliveryText
 } from '../../Components/Styled/Deliveries';
+import {  } from '../../Components/Styled/Messages';
 
 export const Deliveries = () => {
     const dispatch = useDispatch()
     const deliveries = useSelector(state => state.deliveries)
     const sessionUser = useSelector(state => state.session.user)
     const posts = useSelector(state => state.posts.all);
-    const [selected, setSelected] = useState('');
     const [loaded, setLoaded] = useState(false);
     const [deliveryId, setDeliveryId] = useState('')
     const {theme} = useTheme();
@@ -41,9 +43,6 @@ export const Deliveries = () => {
         setLoaded(true)
     },[dispatch])
 
-    useEffect(() => {
-        console.log(deliveryId)
-    },[deliveryId])
 
     const formatDateString = (someDate) => {
         // Only accepts strings
@@ -76,6 +75,13 @@ export const Deliveries = () => {
                 )}
             </DeliverySideMenu>
             <DeliveryField theme={theme}>
+                {!Object.values(deliveries).length &&
+                    <SelectDeliveryBox>
+                    <SelectDeliveryText theme={theme}>
+                        {sessionUser.isNonprofit && sessionUser.isManager ? "You do not have any deliveries scheduled. Please send requests to businesses to initiate a delivery." : sessionUser.isNonprofit && !sessionUser.isManager ? "You do not have any pick-ups or drop-offs scheduled. Hang tight or notify your manager about good posts." : 'You do not have any pick-ups scheduled. Hang tight and wait for a nonprofit to send you a request.'}
+                    </SelectDeliveryText>
+                    </SelectDeliveryBox>
+                }
                 {deliveryId &&
                     <PostCard post={posts[deliveries[deliveryId].postId]}/>
                 }

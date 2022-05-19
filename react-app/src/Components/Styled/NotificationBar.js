@@ -12,12 +12,13 @@ export const NotificationSection = styled.section`
 `;
 
 export const NotificationContainer = styled.div`
-    width: auto;
-    height: 40px;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    background-color: ${props => props.theme === 'light' ? '#9AF2C0' : '#76D97E'};
     gap: 5px;
 `;
 

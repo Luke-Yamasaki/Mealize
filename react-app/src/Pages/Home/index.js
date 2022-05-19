@@ -22,18 +22,13 @@ import {
 export const Home = () => {
     const sessionUser = useSelector(state => state.session.user);
     const categoriesObj = useSelector(state => state.categories);
-    // const organizationsObj = useSelector(state => state.organizations)
     const {theme} = useTheme();
 
     const categories = Object.values(categoriesObj);
-    // const businesses = Object.values(organizationsObj.businesses);
-    // const threeBusinesses = businesses.slice(0, 3);
-    // const nonprofits = Object.values(organizationsObj.nonprofits);
-    // const threeNonprofits = nonprofits.slice(0, 3);
 
     return(
         <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}>
-            <SideBarContainer>
+            <SideBarContainer height={sessionUser ? '870px' : '745px'}>
                 <FilterTitle theme={theme}>Filter</FilterTitle>
                 {sessionUser && (
                     <FavoritesFilter theme={theme}/>

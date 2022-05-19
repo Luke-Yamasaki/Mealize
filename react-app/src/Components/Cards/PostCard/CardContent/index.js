@@ -47,7 +47,7 @@ export const CardContent = ({ post }) => {
     // };
 
     const handleClick = () => {
-        return history.push(`/items/${post.id}`)
+        return history.push(`/posts/${post.id}`)
     };
 
     return (

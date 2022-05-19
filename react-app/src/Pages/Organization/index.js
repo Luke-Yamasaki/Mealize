@@ -1,12 +1,12 @@
 //Hooks
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
-import { setCurrentModal, showModal } from '../../store/modal';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
 //Components
 import { PostCard } from '../../Components/Cards/PostCard/index';
-import { MessageForm } from '../../Forms/Message';
+
 //Styled-components
 import {
     OrgWrapper,
@@ -23,28 +23,23 @@ import {
     ManagerInfoBox,
     ManagerName,
     ManagerInfoText,
-    ManagerButton,
-    OrgQuestionText,
-    OrgItems,
     OrgFilters,
     OrgFilterTitle,
     OrgFilterBox,
     OrgFilterText,
-    OrgItemsFeed,
     OrgSection,
     OrgPostFeed,
-    OrgFilterSlash
+    OrgFilterSlash,
+    OrgPinBox
 } from "../../Components/Styled/Organization";
-import { getAllPosts } from '../../store/posts';
-import { getBatchedOrganizations } from '../../store/organizations';
-import { PostsTitle, VectorBox } from '../../Components/Styled/Layout';
+import { VectorBox } from '../../Components/Styled/Layout';
+import { LocationPin } from '../../Assets/Icons/Location';
 
 //Main component
 
 export const OrganizationPage = () => {
     const { theme } = useTheme();
     const { id } = useParams();
-    const dispatch = useDispatch();
     const businesses = useSelector(state => state.organizations.businesses);
     const nonprofits = useSelector(state => state.organizations.nonprofits);
     const users = useSelector(state => state.users);
@@ -66,18 +61,10 @@ export const OrganizationPage = () => {
     //Only one manager for now
     manager = managerArr[0];
 
-    const handleMessage = (e) => {
-        e.preventDefault();
-        dispatch(setCurrentModal(() => <MessageForm />));
-        dispatch(showModal());
-    };
-
     const handleFilter = (e) => {
         e.preventDefault();
         setSelected(e.target.innerText);
     };
-
-
 
     return (
         <OrgWrapper>
@@ -86,10 +73,12 @@ export const OrganizationPage = () => {
                 <OrgBannerInfoBox theme={theme}>
                     <OrgProfileImage src={organization.logoUrl} alt='Organization profile.' />
                     <OrgName theme={theme}>{organization.name}</OrgName>
-                    <VectorBox square='20px'>
-
-                    </VectorBox>
-                    <OrgBannerText theme={theme}>{organization.street + ', ' + organization.city + ', ' + organization.state + ' ' + organization.zip}</OrgBannerText>
+                    <OrgPinBox>
+                        <VectorBox square='20px'>
+                            <LocationPin theme={theme} />
+                        </VectorBox>
+                        <OrgBannerText theme={theme}>{organization.street + ', ' + organization.city + ', ' + organization.state + ' ' + organization.zip}</OrgBannerText>
+                    </OrgPinBox>
                 </OrgBannerInfoBox>
             </OrgBannerBox>
             <OrgContentBox theme={theme}>
@@ -99,12 +88,6 @@ export const OrganizationPage = () => {
                             <ManagerInfoBox>
                                 <ManagerName>{manager.firstName + ' ' + manager.lastName}</ManagerName>
                                 <ManagerInfoText>{`Manager at ${organization.name}`}</ManagerInfoText>
-                            </ManagerInfoBox>
-                            <ManagerInfoBox>
-                                <ManagerInfoText>Quick responder</ManagerInfoText>
-                                <ManagerButton onClick={handleMessage}>
-                                    <OrgQuestionText>{`Ask ${manager.firstName} a question`}</OrgQuestionText>
-                                </ManagerButton>
                             </ManagerInfoBox>
                         </ManagerForeground>
                     </ManagerContainer>

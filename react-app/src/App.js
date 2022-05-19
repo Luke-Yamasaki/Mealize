@@ -19,6 +19,7 @@ import { FourOFour } from './Pages/FourOFour';
 import { Deliveries } from './Pages/Deliveries';
 import { MessagesPage } from './Pages/Messages';
 import { OrganizationPage } from './Pages/Organization';
+import { SinglePostPage } from './Pages/SinglePost';
 
 //Components
 import { Settings } from './Assets/Icons/Settings';
@@ -86,6 +87,9 @@ function App() {
           </Route>
           <Route exact path='/organizations/:id'>
             <OrganizationPage />
+          </Route>
+          <Route exact path='/posts/:id'>
+            <SinglePostPage />
           </Route>
           <Route>
             <FourOFour />

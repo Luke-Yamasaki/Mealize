@@ -57,6 +57,16 @@ export const OrgBannerText = styled(Medium)`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
+export const OrgPinBox = styled.div`
+    width: 600px;
+    height: 30px;
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+`;
+
 //Main content
 export const OrgContentBox = styled.section`
     width: 1440px;
@@ -97,7 +107,7 @@ export const ManagerForeground = styled.div`
     display: flex;
     flex-direction: column;
     align-items: left;
-    justify-content: space-between;
+    justify-content: flex-end;
     box-shadow: inset 0 0 125px black;
 `;
 
@@ -114,7 +124,6 @@ export const ManagerInfoBox = styled.div`
 
 export const ManagerName = styled(Bold)`
     color: white;
-    margin-top: -20px;
 `;
 
 export const ManagerInfoText = styled(Medium)`

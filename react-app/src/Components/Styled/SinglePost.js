@@ -3,8 +3,8 @@ import { Black, Bold, ExtraBold, Medium } from './Fonts';
 
 //Background
 export const OrgWrapper = styled.main`
-    width: 100%;
-    height: 100%;
+    width: 1600px;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,7 +13,7 @@ export const OrgWrapper = styled.main`
 
 //Banner
 export const OrgBannerBox = styled.div`
-    width: 100%;
+    width: 1600px;
     height: auto;
     max-height: 500px;
     display: flex;
@@ -24,15 +24,14 @@ export const OrgBannerBox = styled.div`
 `;
 
 export const OrgBannerImage = styled.img`
-    width: 100%;
-    height: auto;
-    max-height: 250px;
+    width: 1600px;
+    height: 250px;
     object-fit: cover;
     object-position: center;
 `;
 
 export const OrgBannerInfoBox = styled.div`
-    width: 100%;
+    width: 1600px;
     height: 100px;
     display: flex;
     flex-direction: row;
@@ -46,12 +45,11 @@ export const OrgProfileImage = styled.img`
     width: 200px;
     height: 200px;
     border-radius: 200px;
-    position: abolute;
     margin: -100px 0px 0px 50px;
+    background-color: black;
 `;
 
 export const OrgName = styled(Black)`
-    position: abolute;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
@@ -61,9 +59,9 @@ export const OrgBannerText = styled(Medium)`
 
 //Main content
 export const OrgContentBox = styled.section`
-    width: 90%;
+    width: 1440px;
     height: auto;
-    padding: 5%;
+    padding: 80px;
     background-color: ${props => props.theme === 'light' ? '#F1F1F1' : '#191919'};
     display: flex;
     flex-direction: row;
@@ -73,9 +71,8 @@ export const OrgContentBox = styled.section`
 
 //Manager picture section
 export const ManagerSection = styled.aside`
-    width: 10%;
+    width: 300px;
     height: auto;
-    padding: 1% 0% 1% 2.5%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -95,8 +92,8 @@ export const ManagerContainer = styled.div`
 `;
 
 export const ManagerForeground = styled.div`
-    width: 100%;
-    height: 100%;
+    width: 300px;
+    height: 500px;
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -105,10 +102,10 @@ export const ManagerForeground = styled.div`
 `;
 
 export const ManagerInfoBox = styled.div`
-    width: 98%;
-    height: 20%;
+    width: 290px;
+    height: 100px;
     display: flex;
-    padding-left: 2%;
+    padding-left: 10px;
     flex-direction: column;
     align-items: left;
     justify-content: center;
@@ -126,8 +123,8 @@ export const ManagerInfoText = styled(Medium)`
 `;
 
 export const ManagerButton = styled.div`
-    width: 77%;
-    height: 50%;
+    width: 200px;
+    height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -136,7 +133,7 @@ export const ManagerButton = styled.div`
     cursor: pointer;
 `;
 
-export const QuestionText = styled(Bold)`
+export const OrgQuestionText = styled(Bold)`
     color: #191919;
     font-size: 14px;
     font-weight: 700;
@@ -144,27 +141,80 @@ export const QuestionText = styled(Bold)`
 
 //Items section
 export const OrgSection = styled.section`
-
+    width: 1100px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+    gap: 20px;
 `;
 
 //Items filter
 export const OrgFilters = styled.div`
-
+    width: 1100px;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
 `;
 
-export const FilterTitle = styled(ExtraBold)`
-
+export const OrgFilterTitle = styled(ExtraBold)`
+    width: 100px;
+    height: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
-export const FilterBox = styled.div`
-
+export const OrgFilterBox = styled(OrgFilters)`
+    width: 1000px;
+    height: 30px;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
-export const FilterText = styled(Bold)`
+export const OrgFilterText = styled(Bold)`
+    width: ${props => props.width};
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: ${props =>
+        props.theme === 'light' && props.color === 'true' ?
+        '#191919'
+        : props.theme === 'light' && props.color === 'false' ?
+        'rgba(0, 0, 0, 0.25)'
+        : props.theme === 'dark' && props.color === 'true' ?
+        'white'
+        :
+        'rgba(255, 255, 255, 0.25)'
+    };
+`;
 
+export const OrgFilterSlash = styled(Bold)`
+    width: 10px;
+    height: 20px;
+    margin-right: -5px;
+    color: ${props =>
+        props.theme === 'light' && props.color === 'true' ?
+        '#191919'
+        : props.theme === 'light' && props.color === 'false' ?
+        'rgba(0, 0, 0, 0.25)'
+        : props.theme === 'dark' && props.color === 'true' ?
+        'white'
+        :
+        'rgba(255, 255, 255, 0.25)'
+    };
 `;
 
 //Items feed
 export const OrgPostFeed = styled.div`
-
+    width: 1100px;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
 `;

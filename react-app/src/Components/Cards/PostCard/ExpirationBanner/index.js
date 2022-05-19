@@ -27,17 +27,15 @@ export const ExpirationBanner = ({ post }) => {
     };
 
     useEffect(() => {
-        if(post !== undefined) formatDateString(post.expDate);
+        if(post !== undefined) {
+        formatDateString(post.expDate);
 
-        if((post.isItem && post.status === 0) || (!post.isItem && post.status === 0)) {
-            const hoursLeft = determineExpiration(post?.expDate);
-            hoursLeft >= 168 ? setFlagColor('green') //Greater than or equal to one week?
-            :
-            hoursLeft < 168 && hoursLeft >= 72 ? setFlagColor('yellow') //In between a week and 3 days
-            :
-            setFlagColor('red') //less than 3 days
-        } else {
-            setFlagColor('red')
+        const hoursLeft = determineExpiration(post?.expDate);
+        hoursLeft >= 168 ? setFlagColor('green') //Greater than or equal to one week?
+        :
+        hoursLeft < 168 && hoursLeft >= 72 ? setFlagColor('yellow') //In between a week and 3 days
+        :
+        setFlagColor('red') //less than 3 days
         }
     },[post]);
 

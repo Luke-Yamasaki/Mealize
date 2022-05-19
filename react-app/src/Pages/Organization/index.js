@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
 import { setCurrentModal, showModal } from '../../store/modal';
-
+import { useEffect, useState } from 'react';
 //Components
 import { PostCard } from '../../Components/Cards/PostCard/index';
 import { MessageForm } from '../../Forms/Message';
@@ -24,17 +24,20 @@ import {
     ManagerName,
     ManagerInfoText,
     ManagerButton,
-    QuestionText,
+    OrgQuestionText,
     OrgItems,
     OrgFilters,
-    FilterTitle,
-    FilterBox,
-    FilterText,
+    OrgFilterTitle,
+    OrgFilterBox,
+    OrgFilterText,
     OrgItemsFeed,
     OrgSection,
-    OrgPostFeed
+    OrgPostFeed,
+    OrgFilterSlash
 } from "../../Components/Styled/SinglePost";
-
+import { getAllPosts } from '../../store/posts';
+import { getBatchedOrganizations } from '../../store/organizations';
+import { PostsTitle, VectorBox } from '../../Components/Styled/Layout';
 
 //Main component
 
@@ -45,24 +48,36 @@ export const OrganizationPage = () => {
     const businesses = useSelector(state => state.organizations.businesses);
     const nonprofits = useSelector(state => state.organizations.nonprofits);
     const users = useSelector(state => state.users);
-    const posts = useSelector(state => state.posts);
+    const posts = useSelector(state => state.posts.all);
+    const [selected, setSelected] = useState('All items');
 
+    let postsArr = [];
+    postsArr = Object.values(posts).filter(post => post.organizationId.toString() === id);
+    const availableArr = postsArr.filter(post => post.status === 0);
+    const completedArr = postsArr.filter(post => post.status === 4);
+    const unavailableArr = postsArr.filter(post => post.status === 1 || post.status === 2);
     const allOrgs = {...nonprofits, ...businesses};
     const organization = allOrgs[id];
-    const employeeArr = Object.values(users).filter(user => user.organizationId === organization.id);
-    const managerArr = employeeArr.filter(employee => employee.isManager);
-
+    let manager;
+    let employeeArr = [];
+    let managerArr = [];
+    employeeArr = Object.values(users).filter(user => user.organizationId.toString() === id);
+    managerArr = employeeArr.filter(employee => employee.isManager);
     //Only one manager for now
-    const manager = managerArr[0];
-
-    //Posts
-    const postsArr = Object.values(posts).filter(post => post.organizationId === organization.id);
+    manager = managerArr[0];
 
     const handleMessage = (e) => {
         e.preventDefault();
         dispatch(setCurrentModal(() => <MessageForm />));
         dispatch(showModal());
-    }
+    };
+
+    const handleFilter = (e) => {
+        e.preventDefault();
+        setSelected(e.target.innerText);
+    };
+
+
 
     return (
         <OrgWrapper>
@@ -71,7 +86,10 @@ export const OrganizationPage = () => {
                 <OrgBannerInfoBox theme={theme}>
                     <OrgProfileImage src={organization.logoUrl} alt='Organization profile.' />
                     <OrgName theme={theme}>{organization.name}</OrgName>
-                    <OrgBannerText theme={theme}>Contributions calculations in year ...</OrgBannerText>
+                    <VectorBox square='20px'>
+
+                    </VectorBox>
+                    <OrgBannerText theme={theme}>{organization.street + ', ' + organization.city + ', ' + organization.state + ' ' + organization.zip}</OrgBannerText>
                 </OrgBannerInfoBox>
             </OrgBannerBox>
             <OrgContentBox theme={theme}>
@@ -79,13 +97,13 @@ export const OrganizationPage = () => {
                     <ManagerContainer image={manager.profileImageUrl}>
                         <ManagerForeground>
                             <ManagerInfoBox>
-                                <ManagerName>{manager.firstName + manager.lastName}</ManagerName>
+                                <ManagerName>{manager.firstName + ' ' + manager.lastName}</ManagerName>
                                 <ManagerInfoText>{`Manager at ${organization.name}`}</ManagerInfoText>
                             </ManagerInfoBox>
                             <ManagerInfoBox>
                                 <ManagerInfoText>Quick responder</ManagerInfoText>
                                 <ManagerButton onClick={handleMessage}>
-                                    <QuestionText>{`Ask ${manager.firstName} a question`}</QuestionText>
+                                    <OrgQuestionText>{`Ask ${manager.firstName} a question`}</OrgQuestionText>
                                 </ManagerButton>
                             </ManagerInfoBox>
                         </ManagerForeground>
@@ -93,15 +111,22 @@ export const OrganizationPage = () => {
                 </ManagerSection>
                 <OrgSection>
                     <OrgFilters>
-                        <FilterTitle theme={theme}></FilterTitle>
-                        <FilterBox>
-                            <FilterText theme={theme}>All items</FilterText>
-                            <FilterText theme={theme}>/ Available </FilterText>
-                            <FilterText theme={theme}>/ Completed</FilterText>
-                        </FilterBox>
+                        <OrgFilterTitle theme={theme}>Filters:</OrgFilterTitle>
+                        <OrgFilterBox theme={theme}>
+                            <OrgFilterText theme={theme} width='100px' color={selected === 'All items' ? 'true' : 'false'} onClick={handleFilter}>All items</OrgFilterText>
+                            <OrgFilterSlash theme={theme} color={selected === 'Available' ? 'true' : 'false'}>/</OrgFilterSlash>
+                            <OrgFilterText theme={theme} width='100px' color={selected === 'Available' ? 'true' : 'false'} onClick={handleFilter}>Available</OrgFilterText>
+                            <OrgFilterSlash theme={theme} color={selected === 'Unavailable' ? 'true' : 'false'}>/</OrgFilterSlash>
+                            <OrgFilterText theme={theme} width='125px' color={selected === 'Unavailable' ? 'true' : 'false'} onClick={handleFilter}>Unavailable</OrgFilterText>
+                            <OrgFilterSlash theme={theme} color={selected === 'Completed' ? 'true' : 'false'}>/</OrgFilterSlash>
+                            <OrgFilterText theme={theme} width='120px' color={selected === 'Completed' ? 'true' : 'false'} onClick={handleFilter}>Completed</OrgFilterText>
+                        </OrgFilterBox>
                     </OrgFilters>
                     <OrgPostFeed>
-                        {postsArr.length > 0 && postsArr.map((post) => <PostCard post={post} />)}
+                        {selected === 'All items' && postsArr.length > 0 && postsArr.map((post) => <PostCard post={post} />)}
+                        {selected === 'Available' && availableArr.length > 0 && availableArr.map((post) => <PostCard post={post} />)}
+                        {selected === 'Unavailable' && unavailableArr.length > 0 && unavailableArr.map((post) => <PostCard post={post} />)}
+                        {selected === 'Completed' && completedArr.length > 0 && completedArr.map((post) => <PostCard post={post} />)}
                     </OrgPostFeed>
                 </OrgSection>
             </OrgContentBox>

@@ -25,19 +25,18 @@ export const shrinkField = () =>
 
 
 export const AppBackGround = styled.div`
-    width: 100%;
-    min-height: 100vh;
+    width: 99.3vw;
     height: auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: top;
     background-image: ${
-    props => props.theme === 'light' && props.background === true ?
+    props => props.theme === 'light' && props.background === 'true' ?
     'linear-gradient(rgba(118, 217, 126, 0.75), rgba(40, 166, 144, 0.75)), url("https://mealize.s3.amazonaws.com/Pattern_10.png")'
-    : props.theme === 'light' && props.background === false ?
+    : props.theme === 'light' && props.background === 'false' ?
     'linear-gradient(rgba(118, 217, 126, 0.75), rgba(40, 166, 144, 0.75))'
-    : props.theme === 'dark' && props.background === true ?
+    : props.theme === 'dark' && props.background === 'true' ?
     'linear-gradient(rgba(25, 25, 25, 0.85), rgba(25, 25, 25, 0.85)), url("https://mealize.s3.amazonaws.com/Pattern_10.png")'
     : 'linear-gradient(rgba(25, 25, 25, 0.85), rgba(25, 25, 25, 0.85))'
     };
@@ -46,8 +45,7 @@ export const AppBackGround = styled.div`
 `;
 
 export const AppContentContainer = styled.div`
-    width: 57.1vw;
-    min-height: 100vh;
+    width: 1600px;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -56,34 +54,33 @@ export const AppContentContainer = styled.div`
 `;
 
 export const PageBackGround = styled.div`
-  max-width: 1548px;
-  width: 100em;
-  min-height: 80vh;
-  height: auto;
-  background: ${props => props.background};
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: top;
-  filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.35));
-  padding-top: 50px;
-  padding-left: 50px;
-  gap: 100px;
-  border: 1px solid;
-  border-color: ${props => props.bordercolor};
+    width: 1548px;
+    min-height: 80vh;
+    height: auto;
+    background: ${props => props.background};
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: top;
+    filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.35));
+    padding-top: 50px;
+    padding-left: 50px;
+    gap: 100px;
+    border: 1px solid;
+    border-color: ${props => props.bordercolor};
 `;
 
 export const BackGroundAside = styled.aside`
-    width: 25vw;
+    width: 600px;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: -webkit-sticky;
     position: sticky;
-    top: 0;
+    top: 0px;
     will-change: transform;
-    margin-top: - 1000px;
+    margin-top: -1000px;
 `;
 
 export const FilterTitle = styled(ExtraBold)`
@@ -186,8 +183,7 @@ export const SideBarInfoText = styled(Bold)`
 `;
 
 export const FeedContainer = styled.div`
-    max-width: 1100px;
-    width: 40vw;
+    width: 1100px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -202,7 +198,7 @@ export const PostsTitle = styled(ExtraBold)`
 `;
 
 export const PostsSection = styled.section`
-    width: 1000px;
+    width: 1100px;
     height: auto;
     display: flex;
     flex-direction: column;

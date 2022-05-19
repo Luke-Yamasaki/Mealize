@@ -29,24 +29,13 @@ export const NotificationBar = () => {
     // },[])
 
     if(!sessionUser) {
-        return (
-            <NotificationSection theme={theme}>
-                <NotificationContainer>
-                    <VectorBox square='15px'>
-                        <LocationPin theme={theme}/>
-                    </VectorBox>
-                    <NotificationText>
-                        Current location: {userLocation}
-                    </NotificationText>
-                </NotificationContainer>
-            </NotificationSection>
-        )
+        return null
     }
 
     return (
         <NotificationSection theme={theme}>
             <NotificationContainer theme={theme}>
-                <LocationPin color={theme === 'light' ? '#191919' : 'white'} />
+                <LocationPin theme={theme} />
                 {sessionUser.isNonprofit && sessionUser.isManager ?
                     <NotificationText theme={theme}>
                         Drop off at: {organization.street + ', ' + organization.city + ', ' + organization.state.slice(0, 2).toUpperCase() + ' ' + organization.zip}

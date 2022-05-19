@@ -34,7 +34,7 @@ import {
     OrgSection,
     OrgPostFeed,
     OrgFilterSlash
-} from "../../Components/Styled/SinglePost";
+} from "../../Components/Styled/Organization";
 import { getAllPosts } from '../../store/posts';
 import { getBatchedOrganizations } from '../../store/organizations';
 import { PostsTitle, VectorBox } from '../../Components/Styled/Layout';
@@ -123,10 +123,10 @@ export const OrganizationPage = () => {
                         </OrgFilterBox>
                     </OrgFilters>
                     <OrgPostFeed>
-                        {selected === 'All items' && postsArr.length > 0 && postsArr.map((post) => <PostCard post={post} />)}
-                        {selected === 'Available' && availableArr.length > 0 && availableArr.map((post) => <PostCard post={post} />)}
-                        {selected === 'Unavailable' && unavailableArr.length > 0 && unavailableArr.map((post) => <PostCard post={post} />)}
-                        {selected === 'Completed' && completedArr.length > 0 && completedArr.map((post) => <PostCard post={post} />)}
+                        {selected === 'All items' && postsArr.length > 0 && postsArr.map((post) => <PostCard key={post.id} post={post} />)}
+                        {selected === 'Available' && availableArr.length > 0 && availableArr.map((post) => <PostCard key={post.id} post={post} />)}
+                        {selected === 'Unavailable' && unavailableArr.length > 0 && unavailableArr.map((post) => <PostCard key={post.id} post={post} />)}
+                        {selected === 'Completed' && completedArr.length > 0 && completedArr.map((post) => <PostCard key={post.id} post={post} />)}
                     </OrgPostFeed>
                 </OrgSection>
             </OrgContentBox>

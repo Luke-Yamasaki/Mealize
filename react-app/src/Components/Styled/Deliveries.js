@@ -7,12 +7,12 @@ export const DeliveryPageWrapper = styled.main`
     justify-content: flex-start;
     align-items: top;
     width: 1600px;
-    height: 62%;
+    height: 900px;
 `;
 
 export const DeliverySideMenu = styled.section`
-    width: 30%;
-    height: 100%;
+    width: 400px;
+    height: 900px;
     overflow-x: hidden;
     overflow-y: scroll;
     display: flex;
@@ -255,20 +255,21 @@ export const MessageContent = styled.div`
 `;
 
 
-export const SelectMessageBox = styled.div`
-    width: 100%;
-    height: 50%;
+export const SelectDeliveryBox = styled.div`
+    width: 1200px;
+    height: 900px;
     display: flex;
     justify-content: center;
     align-items: center;
 `;
 
-export const SelectMessageText = styled(ExtraBold)`
+export const SelectDeliveryText = styled(ExtraBold)`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 700px;
     height: 200px;
+    line-height: 50px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 

@@ -1,7 +1,7 @@
 //Hooks
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from '../../../../Context/ThemeContext';
-import { Redirect } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 //Actions
 import { setCurrentModal, showModal } from '../../../../store/modal';
 import { removePost } from "../../../../store/posts";
@@ -20,6 +20,7 @@ export const ActionButtons = ({ post }) => {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const {theme} = useTheme();
+    const history = useHistory();
     const organization = useSelector(state => state.organizations.session);
 
     const handleQuestion = () => {
@@ -38,7 +39,7 @@ export const ActionButtons = ({ post }) => {
         managersArr.forEach(manager => {
             messages.push({
                 content: 'I found a good item!',
-                postId: post.id,
+                postId: post?.id,
                 imageUrl: '',
                 receiverId: manager.id
             })
@@ -47,6 +48,7 @@ export const ActionButtons = ({ post }) => {
         messages.forEach(message => {
             dispatch(sendMessage(message))
         })
+        return history.push('/messages')
     };
 
     const handleEdit = () => {
@@ -56,18 +58,22 @@ export const ActionButtons = ({ post }) => {
 
     const handleDelete = () => {
         dispatch(removePost(post.id))
-        return <Redirect to='/' />
+        return history.push('/')
     };
 
-    if(!sessionUser || post.status > 0) {
+    if(!sessionUser || post?.status > 0) {
+        return null
+    }
+
+    if(!post) {
         return null
     }
 
     return (
         <>
             {sessionUser.isNonprofit && sessionUser.isManager ?
-                <ButtonBox number={!post.isItem ? '1' : (sessionUser.organiztionId !== post.organizationId && (post.isItem && post.status === 0) ) ? '2' : '1'}>
-                    {(sessionUser.isManager && sessionUser.organizationId === post.organizationId) &&
+                <ButtonBox number={!post?.isItem ? '1' : (sessionUser.organiztionId !== post?.organizationId && (post?.isItem && post?.status === 0) ) ? '2' : '1'}>
+                    {(sessionUser.isManager && sessionUser.organizationId === post?.organizationId) &&
                     <>
                         <EditBtn theme={theme} onClick={handleEdit}>
                             <QuestionText theme={theme}>Edit Request</QuestionText>
@@ -77,12 +83,12 @@ export const ActionButtons = ({ post }) => {
                         </DeleteBtn>
                     </>
                     }
-                    {sessionUser.organizationId !== post.organizationId &&
+                    {sessionUser.organizationId !== post?.organizationId &&
                     <>
                         <QuestionBtn theme={theme} onClick={handleQuestion}>
                             <QuestionText theme={theme}>Ask a question</QuestionText>
                         </QuestionBtn>
-                        {(post.isItem && post.status === 0) &&
+                        {(post?.isItem && post?.status === 0) &&
                             <RequestBtn onClick={handleRequest}>
                                 <ButtonText>Send a request</ButtonText>
                             </RequestBtn>
@@ -92,8 +98,8 @@ export const ActionButtons = ({ post }) => {
                 </ButtonBox>
             :
             !sessionUser.isNonprofit && sessionUser.isManager ?
-            <ButtonBox number={sessionUser.organizationId === post.organizationId ? '2' : '1'}>
-               {(sessionUser.organizationId === post.organizationId && sessionUser.isManager) &&
+            <ButtonBox number={sessionUser.organizationId === post?.organizationId ? '2' : '1'}>
+               {(sessionUser.organizationId === post?.organizationId && sessionUser.isManager) &&
                     <>
                         <EditBtn theme={theme} onClick={handleEdit}>
                             <QuestionText theme={theme}>Edit Item</QuestionText>
@@ -103,7 +109,7 @@ export const ActionButtons = ({ post }) => {
                         </DeleteBtn>
                     </>
                 }
-                {sessionUser.organizationId !== post.organizationId &&
+                {sessionUser.organizationId !== post?.organizationId &&
                     <>
                         <QuestionBtn theme={theme} onClick={handleQuestion}>
                             <QuestionText theme={theme}>Ask a question</QuestionText>
@@ -112,11 +118,11 @@ export const ActionButtons = ({ post }) => {
                 }
             </ButtonBox>
             :
-            <ButtonBox number={post.isItem && post.status === 0 ? '2' : '1'}>
+            <ButtonBox number={post?.isItem && post?.status === 0 ? '2' : '1'}>
                 <QuestionBtn theme={theme} onClick={handleQuestion}>
                     <QuestionText theme={theme}>Ask a question</QuestionText>
                 </QuestionBtn>
-                {post.isItem && post.status === 0 &&
+                {post?.isItem && post?.status === 0 &&
                 <RequestBtn onClick={handleNotify}>
                     <ButtonText>Notify manager</ButtonText>
                 </RequestBtn>

@@ -231,7 +231,7 @@ export const MessagesPage = () => {
                                             <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.' square='40px'/>
                                             <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
                                         </UserAndTime>
-                                        {editMode === true ?
+                                        {editMode === true && message.senderId === sessionUser.id ?
                                             <EditMessageInput message={message} changeMode={changeMode} />
                                             :
                                             <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
@@ -290,7 +290,7 @@ export const MessagesPage = () => {
                                         }
                                     </>
                                     }
-                                    {(message.imageUrl && message.postId) &&
+                                    {(message.imageUrl && (message.postId && posts[message.postId])) &&
                                     <>
                                         <PostContainer theme={theme} marginTop='0px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                             <PostBox theme={theme}>
@@ -310,7 +310,7 @@ export const MessagesPage = () => {
                                         }
                                     </>
                                     }
-                                    {((!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) && posts[message.postId].status === 1) &&
+                                    {((!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) && (posts[message.postId]?.status === 1)) &&
                                         <MessageButtons>
                                             <MessageButtonsDiv>
                                                 <DeclineButton onClick={e => handleDecline(e, posts[message.postId], message)}>

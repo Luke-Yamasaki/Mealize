@@ -1,6 +1,6 @@
 //Hooks
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useTheme } from '../../Context/ThemeContext';
 import { Redirect } from 'react-router-dom';
 //Components
@@ -36,12 +36,13 @@ import { LocationPin } from '../../Assets/Icons/Location';
 //Main component
 
 export const SinglePostPage = () => {
-    const sessionUser = useSelector(state => state.session.user);
-    const users = useSelector(state => state.users);
+    // const sessionUser = useSelector(state => state.session.user);
+    // const users = useSelector(state => state.users);
     const posts = useSelector(state => state.posts.all);
     const businesses = useSelector(state => state.organizations.businesses);
     const nonprofits = useSelector(state => state.organizations.nonprofits);
     const { id } = useParams();
+    const history = useHistory();
     const { theme } = useTheme();
 
     //post
@@ -55,20 +56,22 @@ export const SinglePostPage = () => {
     const organizations = {...nonprofits, ...businesses};
     const organization = organizations[post.organizationId];
     //user
-    const user = users[post.userId];
+    // const user = users[post.userId];
 
     const style = colors[theme][post.categoryId];
-    console.log(style)
 
-
+    const handleRedirect = (e) => {
+        e.preventDefault();
+        history.push(`/organizations/${post.organizationId}`)
+    }
 
     return (
         <SinglePostWrapper>
             <SinglePostBannerBox>
                 <SinglePostBannerImage src={organization.imageUrl} alt='Organization banner.' />
                 <SinglePostBannerInfoBox theme={theme}>
-                    <SinglePostProfileImage src={organization.logoUrl} alt='Organization profile.' />
-                    <SinglePostName theme={theme}>{organization.name}</SinglePostName>
+                    <SinglePostProfileImage src={organization.logoUrl} alt='Organization profile.' onClick={handleRedirect}/>
+                    <SinglePostName theme={theme} onClick={handleRedirect}>{organization.name}</SinglePostName>
                     <SinglePostPinBox>
                         <VectorBox square='20px'>
                             <LocationPin theme={theme} />

@@ -237,3 +237,24 @@ export const QuestionText = styled(ButtonText)`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-weight: ${props => props.theme === 'light' ? '700' : '300'};
 `;
+
+export const FlagBox = styled.div`
+    width: 25px;
+    height: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+`;
+
+export const PostFlag = styled.div`
+    height: 13px;
+    width: 25px;
+    background: ${props => props.gradient};
+`;
+
+export const FlagPole = styled.div`
+    height: 12px;
+    width: 5px;
+    background: ${props => props.gradient};
+`;

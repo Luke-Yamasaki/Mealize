@@ -46,15 +46,16 @@ export const getOneOrganization = (id) => async dispatch => {
 
 
 export default function organizationsReducer(state = {}, action) {
-    let newState = { ...state };
     switch(action.type) {
         case GOT_BATCHED_ORGANIZATIONS:
-            newState = action.payload;
+            const newState = {businesses:{...state.businesses}, nonprofits:{...state.nonprofits}, session:{...state.session}};
+            newState.businesses = action.payload.businesses;
+            newState.nonprofits = action.payload.nonprofits;
             return newState;
         case GOT_ONE_ORGANIZATION:
-            newState.session = {};
-            newState.session = action.payload;
-            return newState;
+            const sessionState = {businesses:{...state.businesses}, nonprofits: {...state.nonprofits}, session: {...state.session}}
+            sessionState.session = action.payload;
+            return sessionState;
         default:
             return state;
     };

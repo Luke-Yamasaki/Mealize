@@ -250,3 +250,27 @@ export const SettingsField = styled.div`
     animation: ${props => props.animation};
     animation-delay: ${props => props.animation === expandField ? '0.3s' : '0s'};
 `;
+
+export const NoFavoritesBox = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1000px;
+    height: 300px;
+`;
+
+export const NoFavoritesMessage = styled(Bold)`
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1000px;
+`;
+
+export const MealizeItalic = styled.i`
+     font-family: motiva-sans, sans-serif;
+     font-weight: 800;
+     font-size: 19px;
+     margin: 0px 5px 0px 5px;
+     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+`;

@@ -70,10 +70,10 @@ export const SinglePostPinBox = styled.div`
 //Main content
 export const SinglePostContentBox = styled.section`
     width: 1600px;
-    height: 650px;
+    height: 600px;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding-top: 50px;
+    align-items: space-around;
+    padding-top: 100px;
     background: ${props => props.style};
 `;

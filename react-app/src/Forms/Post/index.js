@@ -208,40 +208,46 @@ const PostForm = () => {
         const expErrorsArr = [];
 
 
-        if(!sessionUser.isNonprofit && !image) {
-            imageErrorsArr.push("Please select a .jpg or .png image file to upload.")
-        }
-
-        if(title.length > 11 && !title.includes(' ')) {
-            titleErrorsArr.push("Please add a line break to your title.")
-        }
-
-        if(!title) {
-            titleErrorsArr.push("Please enter a title in 25 characters or less.")
-        }
-
-        if(!description) {
-            descriptionErrorsArr.push("Please enter a description in 120 characters or less.")
-        }
-
-        if(!sessionUser.isNonprofit && !number) {
-            numberErrorsArr.push("Please select a quantity for your post.")
-        }
-
-        if(!number) {
-            numberErrorsArr.push('Please select a desired quantity for your request.')
-        }
-
         if(!categoryId) {
           categoryIdErrorsArr.push("Please select a food category.")
-        }
-
-        if(sessionUser.isNonprofit && !expDate) {
+        }else if(title.length > 11 && !title.includes(' ')) {
+            titleErrorsArr.push("Please add a line break to your title.")
+        } else if(!title.length) {
+            titleErrorsArr.push("Please enter a title in 25 characters or less.")
+        } else if(!description.length) {
+            descriptionErrorsArr.push("Please enter a description in 120 characters or less.")
+        } else if(!sessionUser.isNonprofit && !number) {
+            numberErrorsArr.push("Please select a quantity for your post.")
+        } else if(!number) {
+            numberErrorsArr.push('Please select a desired quantity for your request.')
+        } else if(!sessionUser.isNonprofit && !image) {
+            imageErrorsArr.push("Please select a .jpg or .png image file to upload.")
+        } else if(sessionUser.isNonprofit && !expDate) {
             expErrorsArr.push('Please select an end date for your request.')
-        }
-
-        if(!expDate) {
+        } else if(!expDate) {
             expErrorsArr.push('Please select an expiration date for your item.')
+        } else if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+            setImageErrors([]);
+            setTitleErrors([]);
+            setDescriptionErrors([]);
+            setNumberErrors([]);
+            setCategoryIdErrors([]);
+            setExpDateErrors([]);
+            return handleSubmit(e)
+        } else if(sessionUser.isNonprofit && (!titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+            setTitleErrors([]);
+            setDescriptionErrors([]);
+            setNumberErrors([]);
+            setCategoryIdErrors([]);
+            setExpDateErrors([]);
+            return handleSubmit(e)
+        } else {
+            setImageErrors(imageErrorsArr);
+            setTitleErrors(titleErrorsArr);
+            setDescriptionErrors(descriptionErrorsArr);
+            setNumberErrors(numberErrorsArr);
+            setCategoryIdErrors(categoryIdErrorsArr);
+            setExpDateErrors(expErrorsArr);
         }
 
         setImageErrors(imageErrorsArr);
@@ -250,27 +256,7 @@ const PostForm = () => {
         setNumberErrors(numberErrorsArr);
         setCategoryIdErrors(categoryIdErrorsArr);
         setExpDateErrors(expErrorsArr);
-
-
-        if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
-            setImageErrors([]);
-            setTitleErrors([]);
-            setDescriptionErrors([]);
-            setNumberErrors([]);
-            setCategoryIdErrors([]);
-            setExpDateErrors([]);
-            handleSubmit(e)
-        }
-
-        if(sessionUser.isNonprofit && (!titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
-            setTitleErrors([]);
-            setDescriptionErrors([]);
-            setNumberErrors([]);
-            setCategoryIdErrors([]);
-            setExpDateErrors([]);
-            handleSubmit(e)
-        }
-    }
+    };
 
     const updateImage = (e) => {
         const file = e.target.files[0];

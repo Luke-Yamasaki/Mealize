@@ -134,6 +134,7 @@ export const EditPostForm = ({post}) => {
     const [categoryIdErrors, setCategoryIdErrors] = useState([]);
     const [imageErrors, setImageErrors] = useState(null);
     const [expDateErrors, setExpDateErrors] = useState([]);
+    const [noChange, setNoChange] = useState([]);
 
     const organizationId = sessionUser.organizationId;
     const userId = sessionUser.id;
@@ -256,6 +257,7 @@ export const EditPostForm = ({post}) => {
     const handleErrors = (e) => {
         e.preventDefault();
 
+        const noChangeArr = [];
         const imageErrorsArr = [];
         const titleErrorsArr = [];
         const descriptionErrorsArr = [];
@@ -263,41 +265,35 @@ export const EditPostForm = ({post}) => {
         const categoryIdErrorsArr = []
         const expErrorsArr = [];
 
-
-        if(!sessionUser.isNonprofit && !image) {
-            imageErrorsArr.push("Please select a .jpg or .png image file to upload.")
-        }
-
-        if(title.length > 11 && !title.includes(' ')) {
-            titleErrorsArr.push("Please add a line break to your title.")
-        }
-
-        if(!title) {
-            titleErrorsArr.push("Please enter a title in 25 characters or less.")
-        }
-
-        if(!description) {
-            descriptionErrorsArr.push("Please enter a description in 120 characters or less.")
-        }
-
-        if(!sessionUser.isNonprofit && !number) {
-            numberErrorsArr.push("Please select a quantity for your post.")
-        }
-
-        if(!number) {
-            numberErrorsArr.push('Please select a desired quantity for your request.')
-        }
-
-        if(!categoryId) {
+        if((!sessionUser.isNonprofit && !image.length) && (categoryId === post.categoryId.toString()) && (title === post.title) && (description === post.description) && (number === post.quantity.split(' ', 2)[0]) && (unit === post.quantity.split(' ', 2)[1]) && (expDate === `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`)) {
+            noChangeArr.push('Please change at least one field to submit')
+        } else if(!categoryId) {
           categoryIdErrorsArr.push("Please select a food category.")
-        }
-
-        if(sessionUser.isNonprofit && !expDate) {
-            expErrorsArr.push('Please select an end date for your request.')
-        }
-
-        if(!expDate) {
-            expErrorsArr.push('Please select an expiration date for your item.')
+        } else if(title.length > 11 && !title.includes(' ')) {
+            titleErrorsArr.push("Please add a line break to your title.")
+        } else if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+            setImageErrors([]);
+            setTitleErrors([]);
+            setDescriptionErrors([]);
+            setNumberErrors([]);
+            setCategoryIdErrors([]);
+            setExpDateErrors([]);
+            return handleEdit(e)
+        } else if(sessionUser.isNonprofit && (!titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+            setTitleErrors([]);
+            setDescriptionErrors([]);
+            setNumberErrors([]);
+            setCategoryIdErrors([]);
+            setExpDateErrors([]);
+            return handleEdit(e)
+        } else {
+            setImageErrors(imageErrorsArr);
+            setTitleErrors(titleErrorsArr);
+            setDescriptionErrors(descriptionErrorsArr);
+            setNumberErrors(numberErrorsArr);
+            setCategoryIdErrors(categoryIdErrorsArr);
+            setExpDateErrors(expErrorsArr);
+            setNoChange(noChangeArr);
         }
 
         setImageErrors(imageErrorsArr);
@@ -306,27 +302,8 @@ export const EditPostForm = ({post}) => {
         setNumberErrors(numberErrorsArr);
         setCategoryIdErrors(categoryIdErrorsArr);
         setExpDateErrors(expErrorsArr);
-
-
-        if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
-            setImageErrors([]);
-            setTitleErrors([]);
-            setDescriptionErrors([]);
-            setNumberErrors([]);
-            setCategoryIdErrors([]);
-            setExpDateErrors([]);
-            handleEdit(e);
-        }
-
-        if(sessionUser.isNonprofit && (!titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
-            setTitleErrors([]);
-            setDescriptionErrors([]);
-            setNumberErrors([]);
-            setCategoryIdErrors([]);
-            setExpDateErrors([]);
-            handleEdit(e);
-        }
-    }
+        setNoChange(noChangeArr);
+    };
 
     const updateImage = (e) => {
         const file = e.target.files[0];
@@ -405,7 +382,7 @@ export const EditPostForm = ({post}) => {
         setExpDateErrors([]);
         setNumberErrors([]);
 
-        setImage(null);
+        setImage('');
         setTitle(post.title);
         setDescription(post.description);
         setNumber(post.quantity.split(' ', 2)[0]);
@@ -429,7 +406,7 @@ export const EditPostForm = ({post}) => {
                             </div>
                             <div className={styles.formTitle}>{sessionUser.isNonprofit ? 'Edit request form' : 'Edit item form'}</div>
                         </div>
-                        <div style={{ width: '300px', height: '15px', marginBottom: '-10px', color: '#90311D', fontFamily: 'motiva-sans, sans-serif', fontSize: '12px'}}> * Change at least one field to submit </div>
+                        <div style={{ width: '300px', height: '15px', marginBottom: '-10px', color: '#90311D', fontFamily: 'motiva-sans, sans-serif', fontSize: '12px'}}>{ noChange.length ? noChange[0] : '* Change at least one field to submit' }</div>
                         {categoryIdErrors && (
                             <ErrorMessage>{categoryIdErrors[0]}</ErrorMessage>
                         )}
@@ -507,7 +484,7 @@ export const EditPostForm = ({post}) => {
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
                         <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
                         {!sessionUser.isNonprofit && (
-                            <div className={(title !== post.title) || (description !== post.description) || (number !== post.quantity.split(' ', 2)[0]) || (unit !== post.quantity.split(' ', 2)[1]) || (categoryId !== post.categoryId.toString()) || (expDate !== `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
+                            <div className={(image !== '') || (title !== post.title) || (description !== post.description) || (number !== post.quantity.split(' ', 2)[0]) || (unit !== post.quantity.split(' ', 2)[1]) || (categoryId !== post.categoryId.toString()) || (expDate !== `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
                         )}
                         {sessionUser.isNonprofit && (
                             <div className={(title !== post.title) || (description !== post.description) || (number !== post.quantity.split(' ', 2)[0]) || (unit !== post.quantity.split(' ', 2)[1]) || (categoryId !== post.categoryId.toString()) || (expDate !== `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>

@@ -1,6 +1,7 @@
 //Hooks
 import { useSelector, useDispatch } from "react-redux";
 import { useTheme } from '../../../../Context/ThemeContext';
+import { Redirect } from "react-router-dom";
 //Actions
 import { setCurrentModal, showModal } from '../../../../store/modal';
 import { removePost } from "../../../../store/posts";
@@ -13,9 +14,9 @@ import { QuestionText } from "../../../Styled/PostCard";
 import  { DeliveryForm } from '../../../../Forms/Delivery';
 import { MessageForm } from "../../../../Forms/Message";
 import  { EditPostForm } from '../../../../Forms/Post/EditPost';
-import { Redirect } from "react-router-dom";
 
-export const ActionButtons = ({post}) => {
+
+export const ActionButtons = ({ post }) => {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const {theme} = useTheme();

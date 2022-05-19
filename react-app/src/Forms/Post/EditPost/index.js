@@ -375,10 +375,9 @@ export const EditPostForm = ({post}) => {
                 if(desc.length > 20) {
                     descriptionErrArr.push('Please add a line break to your description');
                     return setDescriptionErrors(descriptionErrArr);
-                } else {
-                    return setDescriptionErrors(descriptionErrArr);
                 }
             })
+            return setDescriptionErrors(descriptionErrArr);
         };
     };
 

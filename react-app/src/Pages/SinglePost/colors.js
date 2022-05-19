@@ -27,7 +27,7 @@ export const colors = {
             'background': 'linear-gradient(#8F3676, #FB8DDB, #FB8DDB, #FB8DDB, #FB8DDB, #FB8DDB)'
         },
         4: {
-            'background': 'linear-gradient(#5F4E32, #F1BD60, #F1BD60, #F1BD60 #F1BD60 #F1BD60)'
+            'background': 'linear-gradient(#5F4E32, #F1BD60, #F1BD60, #F1BD60, #F1BD60, #F1BD60)'
         },
         5: {
             'background': 'linear-gradient(#90311D, #FF623E, #FF623E, #FF623E, #FF623E, #FF623E)'

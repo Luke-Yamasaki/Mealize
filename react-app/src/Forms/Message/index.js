@@ -155,12 +155,13 @@ export const MessageForm = ({ post }) => {
                         setContentError(contentErrArr);
                         setImageError(imageErrArr);
                         dispatch(hideModal());
-                        history.push('/messages');
+                        return history.push(`/messages/${resData.id}`);
                     }
                 }
         } else {
             const messageData = {content, imageUrl: image, receiverId: post.userId, postId: post.id}
             const data = await dispatch(sendMessage(messageData));
+            console.log(data)
             if(data && data.errors) {
                 data.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
                 setContentError(contentErrArr);
@@ -169,7 +170,7 @@ export const MessageForm = ({ post }) => {
                 setContentError(contentErrArr);
                 setImageError(imageErrArr);
                 dispatch(hideModal());
-                history.push('/messages');
+                return history.push(`/messages/${data.id}`);
             }
         }
     };

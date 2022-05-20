@@ -61,11 +61,10 @@ export const sendMessage = (messageData) => async (dispatch) => {
     });
     if(response.ok) {
         const sent = await response.json();
-        console.log(sent)
         dispatch(sentMessage(sent));
+        return sent
     } else if(response.status < 500) {
         const data = await response.json();
-        console.log(data)
         if(data.errors){
             return data.errors;
         };
@@ -167,7 +166,6 @@ export default function messageBoardsReducer(state = {}, action) {
             newState = action.payload;
             return newState;
         case SENT_MESSAGE:
-            console.log(action.payload)
             const sentState = {...state, ...state.messages};
             sentState[action.payload.id] = action.payload
             return sentState;

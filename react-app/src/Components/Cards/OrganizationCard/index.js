@@ -1,3 +1,7 @@
+//Hooks
+import { useHistory } from 'react-router-dom';
+
+//Packages
 import styled from 'styled-components';
 
 const Box = styled.div`
@@ -11,7 +15,7 @@ const Box = styled.div`
     border: 1px solid rgb(213, 213, 213);
     border-radius: 5px;
     gap: 15px;
-    overfrlow: hidden;
+    cursor: pointer;
 `;
 
 const Logo = styled.img`
@@ -82,16 +86,20 @@ const CityState = styled.div`
     justify-content: left;
 `
 
-
-
-
 export const OrganizationCard = ({organization}) => {
+    const history = useHistory();
     const name = organization ? organization.name : '';
     const phone = '(' + organization.phone.slice(0, 3) + ') ' + organization.phone.slice(3, 7) + '-' + organization.phone.slice(7, 10) ;
     const address = organization.city + ', ' + organization.state.slice(0, 2).toUpperCase() + ' ' + organization.zip;
 
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        return history.push(`/organizations/${organization.id}`)
+    }
+
     return (
-        <Box>
+        <Box onClick={handleClick}>
             <Logo src={organization.logoUrl} />
             <InfoBox>
                 <Name>{name}</Name>

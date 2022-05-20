@@ -1,6 +1,6 @@
 //Hooks
 import { useDispatch, useSelector} from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, useHistory, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTheme } from '../../Context/ThemeContext';
 //Actions
@@ -36,6 +36,7 @@ export const Deliveries = () => {
     const [loaded, setLoaded] = useState(false);
     const [deliveryId, setDeliveryId] = useState('')
     const {theme} = useTheme();
+    const history = useHistory();
 
     useEffect(() => {
         dispatch(getAllDeliveries());

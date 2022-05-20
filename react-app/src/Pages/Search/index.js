@@ -25,6 +25,12 @@ import {
     PostsSection
 } from '../../Components/Styled/Layout';
 
+import {
+    SearchTitle,
+    SearchSection,
+    SearchFeed,
+    SearchWord
+} from '../../Components/Styled/Search';
 
 export const SearchPage = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -118,28 +124,62 @@ export const SearchPage = () => {
                 {/* <BusinessFilter theme={theme} businesses={threeBusinesses} />
                 <NonprofitFilter theme={theme} nonprofits={threeNonprofits} /> */}
             </SideBarContainer>
-            <PostsSection>
-                <div>{`You searched for: ${searchword}`}</div>
-                <PostsTitle theme={theme}>Organizations</PostsTitle>
-                {searchFilter === 'business' && businessArr.map(business => <OrganizationCard organization={business} />)}
-                {searchFilter === 'nonprofit' && nonprofitsArr.map(nonprofit => <OrganizationCard organization={nonprofit} />)}
-                {searchFilter === 'items' && itemsArr.map(item => <PostCard post={item} />)}
-                {searchFilter === 'request' && requestsArr.map(request => <PostCard post={request} />)}
-                {searchFilter === 'dairy' && dairyArr.map(item => <PostCard post={item} />)}
-                {searchFilter === 'vegetables' && vegetablesArr.map(item => <PostCard post={item} />)}
-                {searchFilter === 'fruits' && fruitsArr.map(item => <PostCard post={item} />)}
-                {searchFilter === 'grains' && grainsArr.map(item => <PostCard post={item} />)}
-                {searchFilter === 'protein' && proteinArr.map(item => <PostCard post={item} />)}
-                {searchFilter === 'both' &&
-                <>
-                    {orgResultsArr.map(org => <OrganizationCard organization={org} />)}
-                    {postsResultsArr.map(post => <PostCard post={post} />)}
-                </>
-                }
-                {searchFilter === 'organization-search' && orgResultsArr.map(org => <OrganizationCard organization={org} />)}
-                {searchFilter === 'posts-search' && postsResultsArr.map(post => <PostCard post={post} />)}
-                {searchFilter === 'none' && <div>We couldn't find any search results.</div>}
-            </PostsSection>
+            <SearchSection>
+                <SearchTitle theme={theme}>Search results for:<SearchWord theme={theme}>{searchword}</SearchWord></SearchTitle>
+                <SearchFeed>
+                    {searchFilter === 'business' && businessArr.map(business =>
+                    <>
+                        <SearchTitle theme={theme}>Businesses</SearchTitle>
+                        <OrganizationCard organization={business} />
+                    </>
+                    )}
+                    {searchFilter === 'nonprofit' &&
+                        nonprofitsArr.map(nonprofit =>
+                            <OrganizationCard organization={nonprofit} />
+                        )
+                    }
+                    {searchFilter === 'items' && itemsArr.map(item =>
+                        <PostCard post={item} />
+                    )}
+                    {searchFilter === 'request' && requestsArr.map(request =>
+                        <PostCard post={request} />
+                    )}
+                    {searchFilter === 'dairy' && dairyArr.map(item =>
+                        <PostCard post={item} />
+                    )}
+                    {searchFilter === 'vegetables' && vegetablesArr.map(item =>
+                        <PostCard  post={item} />
+                    )}
+                    {searchFilter === 'fruits' && fruitsArr.map(item =>
+                        <PostCard post={item} />
+                    )}
+                    {searchFilter === 'grains' && grainsArr.map(item =>
+                        <PostCard post={item} />
+                    )}
+                    {searchFilter === 'protein' && proteinArr.map(item =>
+                        <PostCard post={item} />
+                    )}
+                    {searchFilter === 'both' &&
+                        <>
+                            {orgResultsArr.map(org =>
+                                <OrganizationCard organization={org} />
+                            )}
+                            {postsResultsArr.map(post =>
+                                <PostCard post={post} />
+                            )}
+                        </>
+                    }
+                    {searchFilter === 'organization-search' && orgResultsArr.map(org =>
+                        <OrganizationCard organization={org} />
+                    )}
+                    {searchFilter === 'posts-search' && postsResultsArr.map(post =>
+                        <PostCard post={post} />
+                    )}
+                    {searchFilter === 'none' &&
+                        <SearchTitle theme={theme}>We couldn't find any search results.</SearchTitle>
+                    }
+                </SearchFeed>
+            </SearchSection>
         </PageBackGround>
     )
 };

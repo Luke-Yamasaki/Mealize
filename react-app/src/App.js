@@ -80,10 +80,10 @@ function App() {
           <Route exact path='/'>
             <Home/>
           </Route>
-          <Route exact path='/deliveries'>
+          <Route exact path={['/deliveries', '/deliveries/:id']}>
             <Deliveries />
           </Route>
-          <Route exact path='/messages'>
+          <Route exact path={['/messages', '/messages/:id']}>
             <MessagesPage />
           </Route>
           <Route exact path='/organizations/:id'>

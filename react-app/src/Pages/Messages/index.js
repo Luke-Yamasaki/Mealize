@@ -1,6 +1,6 @@
 //Hooks
 import { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Route, useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import { useTheme } from "../../Context/ThemeContext";
 
@@ -62,14 +62,16 @@ import { TrashIcon } from '../../Assets/Icons/Trash';
 import { VectorBox } from "../../Components/Styled/Layout";
 
 export const MessagesPage = () => {
+    const dispatch = useDispatch();
+    const { id } = useParams();
+    const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
     const messageBoards = useSelector(state => state.messageBoards);
     const posts = useSelector(state => state.posts.all);
     const organizations = useSelector(state => state.organizations);
     const users = useSelector(state => state.users);
     const deliveries = useSelector(state => state.deliveries);
-    const dispatch = useDispatch();
-    const [messageBoardId, setMessageBoardId] = useState(false);
+
     const [editMode, setEditMode] = useState(false);
     const {theme} = useTheme();
 
@@ -83,13 +85,12 @@ export const MessagesPage = () => {
 
     const handleClick = (e, id) => {
         e.preventDefault();
-        setMessageBoardId(id)
+        return history.push(`/messages/${id}`)
     };
 
     const handleDelete = async(e, message) => {
         e.preventDefault();
         if(messageBoards[message.boardId].messages.length === 1) {
-            setMessageBoardId('')
             const data = await dispatch(deleteConversation(message.boardId))
         } else {
             const data = await dispatch(deleteMessage(message.id))
@@ -143,7 +144,7 @@ export const MessagesPage = () => {
                 <MessageList theme={theme}>
                     All messages
                     <MessageItem key='placeholderItem'/>
-                    { Object.values(messageBoards).reverse().map((messageBoard) =>
+                    {Object.values(messageBoards).reverse().map((messageBoard) =>
                        (<MessageItem key={messageBoard.id} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>
                             <MessageProfileIcon src={users[messageBoard.messages[messageBoard.messages.length - 1].senderId].profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>
@@ -162,198 +163,200 @@ export const MessagesPage = () => {
                 </MessageList>
             </MessageSideMenu>
             <MessageThreadField theme={theme}>
-                {(!messageBoardId && Object.values(messageBoards).length > 0) &&
+                {(!id && Object.values(messageBoards).length > 0) &&
                     <SelectMessageBox>
                         <SelectMessageText theme={theme}>
                             Please select a message from the left menu.
                         </SelectMessageText>
                     </SelectMessageBox>
                 }
-                {(!messageBoardId && !Object.values(messageBoards).length) &&
+                {(!id && !Object.values(messageBoards).length) &&
                     <SelectMessageBox>
                         <SelectMessageText theme={theme}>
                             {sessionUser.isManager ? "You can send messages by clicking on the 'Ask a question' button on items or request." : "You can send messages by clicking on the 'Ask a question' or 'Notify manager' button on items or request."}
                         </SelectMessageText>
                     </SelectMessageBox>
                 }
-                {(messageBoardId && Object.values(messageBoards).length > 0) &&
-                    <>
-                        <MessengerBanner theme={theme}>
-                            <MessageProfileIcon square='55px'
-                            src={sessionUser.id === messageBoards[messageBoardId].user_one ?
-                            users[messageBoards[messageBoardId].user_two].profileImageUrl
-                            :
-                            users[messageBoards[messageBoardId].user_one].profileImageUrl
-                            }
-                            alt='User profile.'
-                            />
-                            <MessageUserName theme={theme} size='18px'>
-                            {sessionUser.id === messageBoards[messageBoardId].user_one ?
-                                users[messageBoards[messageBoardId].user_two].firstName + ' ' + users[messageBoards[messageBoardId].user_two].lastName
+                <Route path='/messages/:id'>
+                    {(id && Object.values(messageBoards).length > 0) &&
+                        <>
+                            <MessengerBanner theme={theme}>
+                                <MessageProfileIcon square='55px'
+                                src={sessionUser.id === messageBoards[id].user_one ?
+                                users[messageBoards[id].user_two].profileImageUrl
                                 :
-                                users[messageBoards[messageBoardId].user_one].firstName + ' ' + users[messageBoards[messageBoardId].user_one].lastName
-                            }
-                            </MessageUserName>
-                            <BannerTextBox>
-                                <MessageUserName theme={theme} size='18px' width='120px'>
-                                    {
-                                        sessionUser.id === messageBoards[messageBoardId].user_one &&
-                                        users[messageBoards[messageBoardId].user_two].isManager ?
-                                        'Manager at -'
-                                        :
-                                        sessionUser.id === messageBoards[messageBoardId].user_one &&
-                                        !users[messageBoards[messageBoardId].user_two].isManager ?
-                                        'Volunteer at -'
-                                        :
-                                        sessionUser.id === messageBoards[messageBoardId].user_two &&
-                                        users[messageBoards[messageBoardId].user_one].isManager ?
-                                        'Manager at -'
-                                        :
-                                        'Volunteer at -'
-                                    }
+                                users[messageBoards[id].user_one].profileImageUrl
+                                }
+                                alt='User profile.'
+                                />
+                                <MessageUserName theme={theme} size='18px'>
+                                {sessionUser.id === messageBoards[id].user_one ?
+                                    users[messageBoards[id].user_two].firstName + ' ' + users[messageBoards[id].user_two].lastName
+                                    :
+                                    users[messageBoards[id].user_one].firstName + ' ' + users[messageBoards[id].user_one].lastName
+                                }
                                 </MessageUserName>
-                                <MessageUserName theme={theme} size='18px' font='italic'>
-                                    {sessionUser.id === messageBoards[messageBoardId].user_one && users[messageBoards[messageBoardId].user_two].isNonprofit ?
-                                        organizations.nonprofits[users[messageBoards[messageBoardId].user_two].organizationId].name
-                                        :
-                                        sessionUser.id === messageBoards[messageBoardId].user_one && !users[messageBoards[messageBoardId].user_two].isNonprofit ?
-                                        organizations.businesses[users[messageBoards[messageBoardId].user_two].organizationId].name
-                                        :
-                                        sessionUser.id === messageBoards[messageBoardId].user_two && users[messageBoards[messageBoardId].user_one].isNonprofit ?
-                                        organizations.nonprofits[users[messageBoards[messageBoardId].user_one].organizationId].name
-                                        :
-                                        organizations.businesses[users[messageBoards[messageBoardId].user_one].organizationId].name
-                                    }
-                                </MessageUserName>
-                            </BannerTextBox>
-                        </MessengerBanner>
-                        <MessageFeed>
-                            {Object.values(messageBoards[messageBoardId].messages).map((message) =>
-                                <MessageBox key={message.id}>
-                                    <SingleMessage theme={theme}>
-                                        <MessageContainer  direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                            <UserAndTime>
-                                                <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.' square='40px'/>
-                                                <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
-                                            </UserAndTime>
-                                            {message.id === editMode && message.senderId === sessionUser.id ?
-                                                <EditMessageInput message={message} changeMode={changeMode} />
-                                                :
-                                                <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                                    {message.content}
-                                                </MessageContent>
+                                <BannerTextBox>
+                                    <MessageUserName theme={theme} size='18px' width='120px'>
+                                        {
+                                            sessionUser.id === messageBoards[id].user_one &&
+                                            users[messageBoards[id].user_two].isManager ?
+                                            'Manager at -'
+                                            :
+                                            sessionUser.id === messageBoards[id].user_one &&
+                                            !users[messageBoards[id].user_two].isManager ?
+                                            'Volunteer at -'
+                                            :
+                                            sessionUser.id === messageBoards[id].user_two &&
+                                            users[messageBoards[id].user_one].isManager ?
+                                            'Manager at -'
+                                            :
+                                            'Volunteer at -'
+                                        }
+                                    </MessageUserName>
+                                    <MessageUserName theme={theme} size='18px' font='italic'>
+                                        {sessionUser.id === messageBoards[id].user_one && users[messageBoards[id].user_two].isNonprofit ?
+                                            organizations.nonprofits[users[messageBoards[id].user_two].organizationId].name
+                                            :
+                                            sessionUser.id === messageBoards[id].user_one && !users[messageBoards[id].user_two].isNonprofit ?
+                                            organizations.businesses[users[messageBoards[id].user_two].organizationId].name
+                                            :
+                                            sessionUser.id === messageBoards[id].user_two && users[messageBoards[id].user_one].isNonprofit ?
+                                            organizations.nonprofits[users[messageBoards[id].user_one].organizationId].name
+                                            :
+                                            organizations.businesses[users[messageBoards[id].user_one].organizationId].name
+                                        }
+                                    </MessageUserName>
+                                </BannerTextBox>
+                            </MessengerBanner>
+                            <MessageFeed>
+                                {Object.values(messageBoards[id].messages).map((message) =>
+                                    <MessageBox key={message.id}>
+                                        <SingleMessage theme={theme}>
+                                            <MessageContainer  direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                <UserAndTime>
+                                                    <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.' square='40px'/>
+                                                    <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
+                                                </UserAndTime>
+                                                {message.id === editMode && message.senderId === sessionUser.id ?
+                                                    <EditMessageInput message={message} changeMode={changeMode} />
+                                                    :
+                                                    <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                        {message.content}
+                                                    </MessageContent>
+                                                }
+                                            </MessageContainer>
+                                            {((!message.imageUrl && !message.postId) && message.senderId === sessionUser.id) &&
+                                                <MessageEditDelete>
+                                                    <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
+                                                        <EditIcon theme={theme} />
+                                                    </VectorBox>
+                                                    <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleDelete(e, message)}>
+                                                        <TrashIcon theme={theme} />
+                                                    </VectorBox>
+                                                </MessageEditDelete>
                                             }
-                                        </MessageContainer>
-                                        {((!message.imageUrl && !message.postId) && message.senderId === sessionUser.id) &&
-                                            <MessageEditDelete>
-                                                <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
-                                                    <EditIcon theme={theme} />
-                                                </VectorBox>
-                                                <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleDelete(e, message)}>
-                                                    <TrashIcon theme={theme} />
-                                                </VectorBox>
-                                            </MessageEditDelete>
-                                        }
-                                        {((message.content.includes('I would like to pick up this item') && message.postId === null) || (message.content.includes('I found a good item!') && message.postId === null)) &&
-                                        <MessageWithImages>
-                                            <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                                <PostBox theme={theme}>
-                                                    <div>The item you found has been deleted...</div>
-                                                </PostBox>
-                                            </PostContainer>
-                                            {message.senderId === sessionUser.id &&
-                                            <MessageEditDelete>
-                                                <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
-                                                    <EditIcon theme={theme} />
-                                                </VectorBox>
-                                                <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleDelete(e, message)}>
-                                                    <TrashIcon theme={theme} />
-                                                </VectorBox>
-                                            </MessageEditDelete>
+                                            {((message.content.includes('I would like to pick up this item') && message.postId === null) || (message.content.includes('I found a good item!') && message.postId === null)) &&
+                                            <MessageWithImages>
+                                                <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                    <PostBox theme={theme}>
+                                                        <div>The item you found has been deleted...</div>
+                                                    </PostBox>
+                                                </PostContainer>
+                                                {message.senderId === sessionUser.id &&
+                                                <MessageEditDelete>
+                                                    <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
+                                                        <EditIcon theme={theme} />
+                                                    </VectorBox>
+                                                    <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleDelete(e, message)}>
+                                                        <TrashIcon theme={theme} />
+                                                    </VectorBox>
+                                                </MessageEditDelete>
+                                                }
+                                            </MessageWithImages>
                                             }
-                                        </MessageWithImages>
-                                        }
-                                        {(message.postId && !message.imageUrl) &&
-                                        <MessageWithImages>
-                                            <PostContainer theme={theme} marginTop='0px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                                <PostBox theme={theme}>
-                                                    <PostCard post={posts[message.postId]} />
-                                                </PostBox>
-                                            </PostContainer>
-                                            {message.senderId === sessionUser.id &&
-                                            <MessageEditDelete>
-                                                <VectorBox resize='true' cursor='pointer' square='20px' onClick={e => handleEdit(e, message)}>
-                                                    <EditIcon  theme={theme} />
-                                                </VectorBox>
-                                                <VectorBox resize='true' cursor='pointer' square='20px' onClick={e => handleDelete(e, message)}>
-                                                    <TrashIcon  theme={theme} />
-                                                </VectorBox>
-                                            </MessageEditDelete>
+                                            {(message.postId && !message.imageUrl) &&
+                                            <MessageWithImages>
+                                                <PostContainer theme={theme} marginTop='0px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                    <PostBox theme={theme}>
+                                                        <PostCard post={posts[message.postId]} />
+                                                    </PostBox>
+                                                </PostContainer>
+                                                {message.senderId === sessionUser.id &&
+                                                <MessageEditDelete>
+                                                    <VectorBox resize='true' cursor='pointer' square='20px' onClick={e => handleEdit(e, message)}>
+                                                        <EditIcon  theme={theme} />
+                                                    </VectorBox>
+                                                    <VectorBox resize='true' cursor='pointer' square='20px' onClick={e => handleDelete(e, message)}>
+                                                        <TrashIcon  theme={theme} />
+                                                    </VectorBox>
+                                                </MessageEditDelete>
+                                                }
+                                            </MessageWithImages>
                                             }
-                                        </MessageWithImages>
-                                        }
-                                        {(message.imageUrl && !message.postId )&&
-                                        <MessageWithImages>
-                                            <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                                <PostBox theme={theme}>
-                                                    <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
-                                                </PostBox>
-                                            </PostContainer>
-                                            {message.senderId === sessionUser.id &&
-                                            <MessageEditDelete>
-                                                <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
-                                                    <EditIcon theme={theme}/>
-                                                </VectorBox>
-                                                <VectorBox square='20px' resize='true'cursor='pointer' onClick={e => handleDelete(e, message)}>
-                                                    <TrashIcon theme={theme}/>
-                                                </VectorBox>
-                                            </MessageEditDelete>
+                                            {(message.imageUrl && !message.postId )&&
+                                            <MessageWithImages>
+                                                <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                    <PostBox theme={theme}>
+                                                        <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
+                                                    </PostBox>
+                                                </PostContainer>
+                                                {message.senderId === sessionUser.id &&
+                                                <MessageEditDelete>
+                                                    <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
+                                                        <EditIcon theme={theme}/>
+                                                    </VectorBox>
+                                                    <VectorBox square='20px' resize='true'cursor='pointer' onClick={e => handleDelete(e, message)}>
+                                                        <TrashIcon theme={theme}/>
+                                                    </VectorBox>
+                                                </MessageEditDelete>
+                                                }
+                                            </MessageWithImages>
                                             }
-                                        </MessageWithImages>
-                                        }
-                                        {(message.imageUrl && (message.postId && posts[message.postId])) &&
-                                        <MessageWithImages>
-                                            <PostContainer theme={theme} marginTop='10px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                                <PostBox theme={theme}>
-                                                    <PostCard post={posts[message.postId]} />
-                                                </PostBox>
-                                            </PostContainer>
-                                            <PostContainer theme={theme} marginTop='15px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                                <PostBox theme={theme}>
-                                                    <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
-                                                </PostBox>
-                                            </PostContainer>
-                                            {message.senderId === sessionUser.id &&
-                                            <MessageEditDelete>
-                                                <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
-                                                    <EditIcon theme={theme} />
-                                                </VectorBox>
-                                                <VectorBox cursor='pointer' square='20px' onClick={e => handleDelete(e, message)}>
-                                                    <TrashIcon  theme={theme} />
-                                                </VectorBox>
-                                            </MessageEditDelete>
+                                            {(message.imageUrl && (message.postId && posts[message.postId])) &&
+                                            <MessageWithImages>
+                                                <PostContainer theme={theme} marginTop='10px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                    <PostBox theme={theme}>
+                                                        <PostCard post={posts[message.postId]} />
+                                                    </PostBox>
+                                                </PostContainer>
+                                                <PostContainer theme={theme} marginTop='15px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                    <PostBox theme={theme}>
+                                                        <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
+                                                    </PostBox>
+                                                </PostContainer>
+                                                {message.senderId === sessionUser.id &&
+                                                <MessageEditDelete>
+                                                    <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
+                                                        <EditIcon theme={theme} />
+                                                    </VectorBox>
+                                                    <VectorBox cursor='pointer' square='20px' onClick={e => handleDelete(e, message)}>
+                                                        <TrashIcon  theme={theme} />
+                                                    </VectorBox>
+                                                </MessageEditDelete>
+                                                }
+                                            </MessageWithImages>
                                             }
-                                        </MessageWithImages>
-                                        }
-                                        {((!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) && (posts[message.postId]?.status === 1)) &&
-                                            <MessageButtons>
-                                                <MessageButtonsDiv>
-                                                    <DeclineButton onClick={e => handleDecline(e, posts[message.postId], message)}>
-                                                        <ButtonText>Decline</ButtonText>
-                                                    </DeclineButton>
-                                                    <AcceptButton onClick={e => handleAccept(e, posts[message.postId], message)}>
-                                                        <ButtonText>Accept</ButtonText>
-                                                    </AcceptButton>
-                                                </MessageButtonsDiv>
-                                            </MessageButtons>
-                                        }
-                                    </SingleMessage>
-                                </MessageBox>
-                            )}
-                        </MessageFeed>
-                        <MessagePageInput boardId={messageBoardId}/>
-                    </>
-                }
+                                            {((!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) && (posts[message.postId]?.status === 1)) &&
+                                                <MessageButtons>
+                                                    <MessageButtonsDiv>
+                                                        <DeclineButton onClick={e => handleDecline(e, posts[message.postId], message)}>
+                                                            <ButtonText>Decline</ButtonText>
+                                                        </DeclineButton>
+                                                        <AcceptButton onClick={e => handleAccept(e, posts[message.postId], message)}>
+                                                            <ButtonText>Accept</ButtonText>
+                                                        </AcceptButton>
+                                                    </MessageButtonsDiv>
+                                                </MessageButtons>
+                                            }
+                                        </SingleMessage>
+                                    </MessageBox>
+                                )}
+                            </MessageFeed>
+                            <MessagePageInput boardId={id}/>
+                        </>
+                    }
+                </Route>
             </MessageThreadField>
         </MessagePageWrapper>
     )

@@ -92,8 +92,8 @@ export const SearchPage = () => {
             setSearchFilter('request')
         } else if(lowerSearch.includes('dairy') || lowerSearch.includes('dairies')) {
             setSearchFilter('dairy')
-        } else if(lowerSearch.includes('vegatebles') || lowerSearch.includes('vegateble') || lowerSearch.includes('veggies')) {
-            setSearchFilter('vegatebles')
+        } else if(lowerSearch.includes('vegetables') || lowerSearch.includes('vegetable') || lowerSearch.includes('veggies')) {
+            setSearchFilter('vegetables')
         } else if(lowerSearch.includes('fruits') || lowerSearch.includes('fruit')) {
             setSearchFilter('fruits')
         } else if(lowerSearch.includes('grains') || lowerSearch.includes('grain')) {

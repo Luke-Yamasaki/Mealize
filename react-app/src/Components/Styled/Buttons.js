@@ -201,7 +201,6 @@ export const ResetIcon = styled.p`
     font-size: 16px;
     cursor: pointer;
     height: 22.5px;
-
 `;
 
 export const ProfileButton = styled.img`

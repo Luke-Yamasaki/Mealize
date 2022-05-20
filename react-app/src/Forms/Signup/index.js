@@ -418,6 +418,19 @@ export const SignupForm = () => {
         return phoneErrArr
     };
 
+    const handlePhoneNum = (e) => {
+        e.preventDefault();
+        if(isNaN(e.target.value)) {
+            setPhoneError(['Please enter numbers only.'])
+            return setPhone('')
+        } else if(e.target.value.toString().length >= 15) {
+            setPhoneError(['The phone number is too long.'])
+            return setPhone(phone.slice(0, 16))
+        } else {
+            setPhone(e.target.value);
+        }
+    };
+
     const handlePassword = () => {
         setPasswordError([]);
         const pwrdErrArr = [];
@@ -605,7 +618,7 @@ export const SignupForm = () => {
                                 <Fieldset error={firstNameError.length > 0}>
                                     <Legend htmlFor='firstName' theme={theme} error={firstNameError.length > 0} width='85px'>First name
                                         <InputResetContainer>
-                                            <Input name="firstName" cursor='text' type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={(e)=> setFirstName(e.target.value)} required/>
+                                            <Input name="firstName" cursor='text' type="text" placeholder='First name' autoComplete="none" value={firstName} theme={theme} onChange={(e)=> setFirstName(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))} required/>
                                             <ResetIcon theme={theme} onClick={() => setFirstName('')} data={firstName}>&#10006;</ResetIcon>
                                         </InputResetContainer>
                                     </Legend>
@@ -618,7 +631,7 @@ export const SignupForm = () => {
                                 <Fieldset error={lastNameError.length > 0}>
                                     <Legend htmlFor="lastName" theme={theme} error={lastNameError.length > 0} width='85px'>Last name
                                         <InputResetContainer>
-                                            <Input name='lastName' cursor='text' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={(e) => setLastName(e.target.value)} required/>
+                                            <Input name='lastName' cursor='text' type='text' placeholder='Last name' autoComplete="none" value={lastName} theme={theme} onChange={(e) => setLastName(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))} required/>
                                             <ResetIcon theme={theme} onClick={() => setLastName('')} data={lastName}>&#10006;</ResetIcon>
                                         </InputResetContainer>
                                     </Legend>
@@ -676,12 +689,12 @@ export const SignupForm = () => {
                             </InputErrorBox>
                             <InputErrorBox>
                                 <ErrorBox theme={theme} height={phoneError.length > 0 ? '20px' : '0px'}>
-                                    <Error>{emailError[0]}</Error>
+                                    <Error>{phoneError[0]}</Error>
                                 </ErrorBox>
                                 <Fieldset error={phoneError.length > 0}>
                                     <Legend width='112px' htmlFor="phone" theme={theme} error={phoneError.length > 0}>Phone number
                                     <InputResetContainer>
-                                        <Input theme={theme} cursor='text' name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone number" value={phone} onChange={(e) => setPhone(e.target.value)} required/>
+                                        <Input theme={theme} cursor='text' name="phone" type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Phone number" value={phone} onChange={handlePhoneNum} required/>
                                         <ResetIcon theme={theme} onClick={() => setPhone('')} data={phone}>&#10006;</ResetIcon>
                                     </InputResetContainer>
                                     </Legend>

@@ -1,8 +1,8 @@
 //Hooks
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
-
+import { Redirect } from 'react-router-dom';
 //Packages
 import validator from 'validator';
 
@@ -13,6 +13,11 @@ import { hideModal, setCurrentModal } from '../../store/modal';
 //Components
 import { Logo } from '../../Assets/Logo';
 import { SignupForm } from '../Signup';
+import { VectorBox } from '../../Components/Styled/Layout';
+import { PasswordIcon } from '../../Assets/Icons/Password';
+import { ResetIcon } from '../../Components/Styled/Buttons';
+import { InputResetContainer } from '../../Components/Styled/AuthenticationForm';
+
 //Styled-components
 import { LogoBox } from '../../Components/Styled/Navbar';
 import {
@@ -47,7 +52,7 @@ import {
     ActionText,
     SignupText,
 } from '../../Components/Styled/Buttons';
-import { Redirect } from 'react-router-dom';
+
 
 
 export const LoginForm = () => {
@@ -56,7 +61,16 @@ export const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState([]);
     const [passwordError, setPasswordError] = useState([]);
+    const [passwordVisibility, setPasswordVisibility] = useState(false)
     const {theme} = useTheme();
+
+    useEffect(() => {
+        setPasswordError([])
+    },[password])
+
+    useEffect(() => {
+        setEmailError([])
+    },[email])
 
     const handleEmail = (e) => {
         e.preventDefault();
@@ -168,7 +182,10 @@ export const LoginForm = () => {
                             </ErrorBox>
                             <Fieldset error={emailError.length > 0}>
                                 <EmailLegend htmlFor='email' theme={theme} error={emailError.length > 0}>Email
-                                    <Input name="email" type="email" value={email} theme={theme} onChange={handleEmail}/>
+                                    <InputResetContainer>
+                                        <Input name="email" type="email" value={email} theme={theme} onChange={handleEmail}/>
+                                        <ResetIcon theme={theme} onClick={() => setEmail('')} data={email}>&#10006;</ResetIcon>
+                                    </InputResetContainer>
                                 </EmailLegend>
                             </Fieldset>
                         </InputErrorBox>
@@ -178,7 +195,13 @@ export const LoginForm = () => {
                             </ErrorBox>
                             <Fieldset error={passwordError.length > 0}>
                                 <PasswordLegend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
-                                    <Input name='password' type='password' autoComplete="none" value={password} theme={theme} onChange={handlePassword}/>
+                                    <InputResetContainer>
+                                        <Input theme={theme} cursor='text' name="password" type={passwordVisibility === false ? 'password' : 'text'} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                                        <VectorBox data={password} square='30px' onClick={() => setPasswordVisibility(!passwordVisibility)} cursor='pointer'>
+                                            <PasswordIcon theme={theme} />
+                                        </VectorBox>
+                                        <ResetIcon theme={theme} onClick={() => setPassword('')} data={password}>&#10006;</ResetIcon>
+                                    </InputResetContainer>
                                 </PasswordLegend>
                             </Fieldset>
                         </InputErrorBox>

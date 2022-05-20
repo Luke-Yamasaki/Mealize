@@ -125,10 +125,11 @@ export const ProfileName = styled(Bold)`
     height: 25px;
     padding-top: 5px;
     color: ${props => props.theme === 'light' ? '#FFFFFF' : '#191919'};
+    font-size: 14px;
 `;
 
 export const NavIconContainer = styled.div`
-    width: ${props => props.manager === 'true' ? '325px' : '250px'};
+    width: ${props => props.manager === 'true' ? '385px' : '250px'};
     height: 60px;
     display: flex;
     flex-direction: row;

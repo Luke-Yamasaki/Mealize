@@ -201,7 +201,7 @@ export const ResetIcon = styled.p`
     font-size: 16px;
     cursor: pointer;
     height: 22.5px;
-    opacity: ${props => props.data?.length > 0 ? '1' : '0.25' }
+
 `;
 
 export const ProfileButton = styled.img`
@@ -209,4 +209,5 @@ export const ProfileButton = styled.img`
     height: 30px;
     object-fit: cover;
     object-position: center;
+    border-radius: 30px;
 `;

@@ -85,23 +85,23 @@ export const LoginForm = () => {
         const passwordErrArr = [];
 
         if(!email.length) {
-            emailErrArr.push('Please enter your email.');
-        } else if(!password.length) {
-            passwordErrArr.push('Please enter you password.')
-        } else if(password.length < 6 ) {
-            passwordErrArr.push('Passwords must be at least 6 characters long.')
+            return setEmailError(['Please enter your email.'])
         } else if (validateEmail(email) === false) {
-            emailErrArr.push('Please enter a valid email address.')
+            return setEmailError(['Please enter a valid email address.'])
         } else if(emailError.length > 0) {
-            emailErrArr.push('Please resolve the following: ');
-        } else if (passwordError.length > 0) {
-            passwordErrArr.push('Please resolve the following: ')
+            return setEmailError(['Please enter a valid email.'])
+        } else if(!password.length) {
+            return setPasswordError(['Please enter you password.'])
+        } else if(password.length < 6 ) {
+            return setPasswordError(['Passwords must be at least 6 characters long.'])
+        }  else if (passwordError.length > 0) {
+            return setPasswordError(['Please resolve the following: '])
         } else {
             const data = await dispatch(login(email, password));
             if(data && data.errors) {
-                data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+                data.errors.forEach(error => (error.toLowerCase().includes('password') && !error.toLowerCase().includes('email')) ? passwordErrArr.push(error) : emailErrArr.push(error));
                 setEmailError(emailErrArr);
-                setPasswordError(passwordErrArr);
+                return setPasswordError(passwordErrArr);
             } else {
                 setEmailError(emailErrArr);
                 setPasswordError(passwordErrArr);

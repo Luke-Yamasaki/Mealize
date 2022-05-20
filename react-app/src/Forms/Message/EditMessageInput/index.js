@@ -114,8 +114,8 @@ export const EditMessageInput = ({message, changeMode}) => {
         if(!content.length) {
             contentErrArr.push('Please enter a message.');
             return setContentError(contentErrArr)
-        } else if(content.length > 1000) {
-            contentErrArr.push('Messages must be under 1000 characters.')
+        } else if(content.length > 500) {
+            contentErrArr.push('Messages must be under 500 characters.')
             return setContentError(contentErrArr)
         } else if(content.length < 2) {
             contentErrArr.push('Messages must be at least 2 characters long.')
@@ -193,13 +193,13 @@ export const EditMessageInput = ({message, changeMode}) => {
                         <Error>{contentError[0]}</Error>
                     </ErrorMessage>
                     <MessageInputBox theme={theme} edit='true'>
-                        <MessageInput placeholder='Enter a message...'  type='text' theme={theme} value={content} onChange={handleContent} required/>
+                        <MessageInput maxLength='500' placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
                     </MessageInputBox>
                 </MessageErrorBox>
                 }
                 {!contentError.length &&
                     <MessageInputBox theme={theme} edit='true'>
-                        <MessageInput type='text' theme={theme} edit='true' value={content} onChange={handleContent} required/>
+                        <MessageInput type='text' maxLength='500' theme={theme} edit='true' value={content} onChange={handleContent} required/>
                     </MessageInputBox>
                 }
             <MessageFileAndButtons edit='true'>

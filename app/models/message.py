@@ -8,7 +8,7 @@ class Message(db.Model):
     boardId = db.Column(db.Integer, db.ForeignKey('message_boards.id'), nullable=False)
     senderId = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     postId = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=True)
-    content = db.Column(db.String(1000), nullable=False)
+    content = db.Column(db.String(500), nullable=False)
     imageUrl = db.Column(db.String(2048), nullable=True)
     createdAt = db.Column(db.DateTime, default=db.func.now())
     updatedAt = db.Column(db.DateTime, default=db.func.now(), onupdate=db.func.now())

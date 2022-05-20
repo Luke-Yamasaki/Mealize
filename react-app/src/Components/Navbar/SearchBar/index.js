@@ -19,6 +19,7 @@ export const SearchBar = () => {
 
        if(searchword) {
             history.push(`/search/${searchword}`);
+            return setSearchword('')
         } else {
             alert('Please enter a search word.')
         }

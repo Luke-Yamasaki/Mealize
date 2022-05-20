@@ -3,9 +3,9 @@ import { useTheme } from '../../../Context/ThemeContext';
 import { CustomizationContainer, ContentContainer, Label } from '../../Styled/Customization';
 
 import { Theme } from './Theme';
-import { Color } from './Color';
-import { Contrast } from './Contrast';
-import { Saturation } from './Saturation';
+// import { Color } from './Color';
+// import { Contrast } from './Contrast';
+// import { Saturation } from './Saturation';
 import { BackGround } from './BackGround';
 
 export const CustomizationSection = ({animation}) => {
@@ -18,9 +18,9 @@ export const CustomizationSection = ({animation}) => {
                 <Label theme={theme}>Customization tools</Label>
             </ContentContainer>
             <Theme />
-            <Color />
+            {/* <Color />
             <Contrast />
-            <Saturation />
+            <Saturation /> */}
             <BackGround />
         </CustomizationContainer>
     )

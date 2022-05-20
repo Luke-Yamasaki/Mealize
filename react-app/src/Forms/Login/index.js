@@ -183,7 +183,7 @@ export const LoginForm = () => {
                             <Fieldset error={emailError.length > 0}>
                                 <EmailLegend htmlFor='email' theme={theme} error={emailError.length > 0}>Email
                                     <InputResetContainer>
-                                        <Input name="email" type="email" value={email} theme={theme} onChange={handleEmail}/>
+                                        <Input name="email" type="email" placeholder='Email' value={email} theme={theme} onChange={handleEmail}/>
                                         <ResetIcon theme={theme} onClick={() => setEmail('')} data={email}>&#10006;</ResetIcon>
                                     </InputResetContainer>
                                 </EmailLegend>

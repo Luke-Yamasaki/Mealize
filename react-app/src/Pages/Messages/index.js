@@ -44,7 +44,8 @@ import {
     DeclineButton,
     MessageWithImages,
     SingleMessage,
-    MessagesSpacer
+    MessagesSpacer,
+    MessageTitleBox
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
@@ -139,7 +140,8 @@ export const MessagesPage = () => {
     return (
         <MessagePageWrapper>
             <MessageSideMenu theme={theme}>
-                <MessageList theme={theme}> All messages
+                <MessageList theme={theme}>
+                    All messages
                     <MessageItem key='placeholderItem'/>
                     { Object.values(messageBoards).reverse().map((messageBoard) =>
                        (<MessageItem key={messageBoard.id} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>

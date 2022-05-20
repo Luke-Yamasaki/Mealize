@@ -110,14 +110,18 @@ export const MessagePageInput = ({boardId}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setImageError([]);
+        setContentError([]);
+        setImageUploading(false);
+        setImageValidating(false);
         const contentErrArr = [];
         const imageErrArr = [];
 
         if(!content.length) {
             contentErrArr.push('Please enter a message.');
             return setContentError(contentErrArr)
-        } else if(content.length > 1000) {
-            contentErrArr.push('Messages must be 1000 characters or less.')
+        } else if(content.length > 500) {
+            contentErrArr.push('Messages must be 500 characters or less.')
             return setContentError(contentErrArr)
         } else if(content.length < 2) {
             contentErrArr.push('Messages must be at least 2 characters long.')
@@ -145,6 +149,8 @@ export const MessagePageInput = ({boardId}) => {
                         resData.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
                         setContentError(contentErrArr);
                         setImageError(imageErrArr);
+                        setImageUploading(false);
+                        setImageValidating(false);
                     } else {
                         const fileInput = document.getElementById('image');
                         fileInput.value = '';
@@ -152,6 +158,8 @@ export const MessagePageInput = ({boardId}) => {
                         setContent('')
                         setContentError(contentErrArr);
                         setImageError(imageErrArr);
+                        setImageUploading(false);
+                        setImageValidating(false);
                     }
                 }
         } else {
@@ -162,6 +170,8 @@ export const MessagePageInput = ({boardId}) => {
                 data.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
                 setContentError(contentErrArr);
                 setImageError(imageErrArr);
+                setImageUploading(false);
+                setImageValidating(false);
             } else {
                 const fileInput = document.getElementById('image');
                 fileInput.value = '';
@@ -169,6 +179,8 @@ export const MessagePageInput = ({boardId}) => {
                 setContent('');
                 setContentError(contentErrArr);
                 setImageError(imageErrArr);
+                setImageUploading(false);
+                setImageValidating(false);
             }
         }
     };
@@ -193,13 +205,13 @@ export const MessagePageInput = ({boardId}) => {
                         <Error>{contentError[0]}</Error>
                     </ErrorBox>
                     <MessageInputBox theme={theme}>
-                        <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
+                        <MessageInput placeholder='Enter a message... (500 character limit)' maxLength='500' type='text' theme={theme} value={content} onChange={handleContent} required/>
                     </MessageInputBox>
                 </MessageErrorBox>
             }
             {!contentError.length &&
                 <MessageInputBox theme={theme}>
-                    <MessageInput placeholder='Enter a message...' type='text' theme={theme} value={content} onChange={handleContent} required/>
+                    <MessageInput placeholder='Enter a message... (500 character limit)' maxLength='500' type='text' theme={theme} value={content} onChange={handleContent} required/>
                 </MessageInputBox>
             }
             <MessageFileAndButtons>

@@ -126,8 +126,8 @@ export const MessageForm = ({ post }) => {
 
         if(!content.length) {
             contentErrArr.push('Please enter a message.');
-        } else if(content.length > 1000) {
-            contentErrArr.push('Messages must be under 1000 characters.')
+        } else if(content.length > 500) {
+            contentErrArr.push('Messages must be under 500 characters.')
             setContentError(contentErrArr);
         } else if(content.length < 10) {
             contentErrArr.push('Messages must be greater than 10 characters.')
@@ -204,7 +204,7 @@ export const MessageForm = ({ post }) => {
                             </ErrorBox>
                             <MessageFieldset error={contentError.length > 0} height='auto'>
                                 <Legend htmlFor='content' theme={theme} error={contentError.length > 0}>Message</Legend>
-                                    <MessageArea name="content" type="text" value={content} theme={theme} onChange={handleContent} required/>
+                                    <MessageArea name="content" type="text" placeholder='Enter a message... (500 character limit)' maxLength='500' value={content} theme={theme} onChange={handleContent} required/>
                             </MessageFieldset>
                         </InputErrorBox>
                         <InputErrorBox>

@@ -6,6 +6,14 @@ import { useState } from 'react';
 
 //Components
 import { PostCard } from '../../Components/Cards/PostCard/index';
+import { VectorBox } from '../../Components/Styled/Layout';
+
+//Icons
+import { LocationPin } from '../../Assets/Icons/Location';
+import { ClockIcon } from '../../Assets/Icons/Clock';
+
+//Times
+import { times } from '../../Forms/Delivery/times';
 
 //Styled-components
 import {
@@ -32,11 +40,8 @@ import {
     OrgFilterSlash,
     OrgPinBox
 } from "../../Components/Styled/Organization";
-import { VectorBox } from '../../Components/Styled/Layout';
-import { LocationPin } from '../../Assets/Icons/Location';
 
 //Main component
-
 export const OrganizationPage = () => {
     const sessionUser = useSelector(state => state.session.user);
     const { theme } = useTheme();
@@ -79,6 +84,12 @@ export const OrganizationPage = () => {
                             <LocationPin theme={theme} />
                         </VectorBox>
                         <OrgBannerText theme={theme}>{organization.street + ', ' + organization.city + ', ' + organization.state + ' ' + organization.zip}</OrgBannerText>
+                    </OrgPinBox>
+                    <OrgPinBox>
+                        <VectorBox square='20px'>
+                            <ClockIcon theme={theme} />
+                        </VectorBox>
+                        <OrgBannerText theme={theme}>{`Available time: ${times[organization.timeslot]}`}</OrgBannerText>
                     </OrgPinBox>
                 </OrgBannerInfoBox>
             </OrgBannerBox>

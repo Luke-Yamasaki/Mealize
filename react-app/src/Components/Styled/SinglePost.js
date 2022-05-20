@@ -63,7 +63,7 @@ export const SinglePostBannerText = styled(Medium)`
 `;
 
 export const SinglePostPinBox = styled.div`
-    width: 600px;
+    max-width: 600px;
     height: 30px;
     gap: 10px;
     display: flex;

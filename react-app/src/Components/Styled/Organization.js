@@ -63,7 +63,7 @@ export const OrgBannerText = styled(Medium)`
 `;
 
 export const OrgPinBox = styled.div`
-    width: 600px;
+    max-width: 600px;
     height: 30px;
     gap: 10px;
     display: flex;
@@ -96,7 +96,7 @@ export const ManagerSection = styled.aside`
 
 export const ManagerContainer = styled.div`
     width: 300px;
-    height: ${props => props.session === 'true' ? '490px' : '450px'};
+    height: ${props => props.session === 'true' ? '485px' : '450px'};
     display: flex;
     border-radius: 5px;
     background-image: url(${props => props.image});
@@ -108,12 +108,13 @@ export const ManagerContainer = styled.div`
 
 export const ManagerForeground = styled.div`
     width: 300px;
-    height: ${props => props.session === 'true' ? '490px' : '450px'};
+    height: ${props => props.session === 'true' ? '485px' : '450px'};
     display: flex;
     flex-direction: column;
     align-items: left;
     justify-content: flex-end;
     box-shadow: inset 0 0 125px black;
+    border-radius: 5px;
 `;
 
 export const ManagerInfoBox = styled.div`

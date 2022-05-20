@@ -92,6 +92,7 @@ export const MessagesPage = () => {
         e.preventDefault();
         if(messageBoards[message.boardId].messages.length === 1) {
             const data = await dispatch(deleteConversation(message.boardId))
+            return history.push('/')
         } else {
             const data = await dispatch(deleteMessage(message.id))
         }

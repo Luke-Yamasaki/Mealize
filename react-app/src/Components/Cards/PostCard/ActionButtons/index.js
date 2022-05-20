@@ -33,9 +33,11 @@ export const ActionButtons = ({ post }) => {
         dispatch(showModal());
     };
 
-    const handleNotify = () => {
-        const messages = [];
+    const handleNotify = async (e) => {
+        e.preventDefault();
         const managersArr = Object.values(organization.managers);
+        const messages = [];
+
         managersArr.forEach(manager => {
             messages.push({
                 content: 'I found a good item!',
@@ -47,8 +49,8 @@ export const ActionButtons = ({ post }) => {
 
         messages.forEach(message => {
             dispatch(sendMessage(message))
-        })
-        return history.push('/messages')
+            .then(res => history.push(`/messages/${res.id}`))
+        });
     };
 
     const handleEdit = () => {

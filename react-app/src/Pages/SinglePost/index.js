@@ -32,6 +32,7 @@ import {
  } from '../../Components/Styled/SinglePost';
 import { VectorBox } from '../../Components/Styled/Layout';
 import { LocationPin } from '../../Assets/Icons/Location';
+import { ClockIcon } from '../../Assets/Icons/Clock';
 
 //Main component
 
@@ -63,7 +64,15 @@ export const SinglePostPage = () => {
     const handleRedirect = (e) => {
         e.preventDefault();
         history.push(`/organizations/${post.organizationId}`)
-    }
+    };
+
+    const times = {
+        'Morning' : '9:00 - 10:30 AM',
+        'Noon' : '11:00 - 12:30PM',
+        'Early afternoon': '1:00 - 2:00 PM',
+        'Late afternoon': '2:30PM - 4:00PM'
+    };
+
 
     return (
         <SinglePostWrapper>
@@ -77,6 +86,12 @@ export const SinglePostPage = () => {
                             <LocationPin theme={theme} />
                         </VectorBox>
                         <SinglePostBannerText theme={theme}>{organization.street + ', ' + organization.city + ', ' + organization.state + ' ' + organization.zip}</SinglePostBannerText>
+                    </SinglePostPinBox>
+                    <SinglePostPinBox>
+                        <VectorBox square='20px'>
+                            <ClockIcon theme={theme} />
+                        </VectorBox>
+                        <SinglePostBannerText theme={theme}>{`Available time: ${times[organization.timeslot]}`}</SinglePostBannerText>
                     </SinglePostPinBox>
                 </SinglePostBannerInfoBox>
             </SinglePostBannerBox>

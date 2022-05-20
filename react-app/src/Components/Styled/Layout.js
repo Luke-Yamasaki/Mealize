@@ -1,5 +1,4 @@
 import styled, {css, keyframes} from 'styled-components';
-import image from '../../Assets/Images/Pattern_10.png';
 import { ExtraBold, Bold } from './Fonts';
 
 const expand = keyframes`

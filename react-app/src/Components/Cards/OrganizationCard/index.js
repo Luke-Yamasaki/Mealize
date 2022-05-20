@@ -1,6 +1,6 @@
 //Hooks
 import { useHistory } from 'react-router-dom';
-
+import { useTheme } from '../../../Context/ThemeContext';
 //Packages
 import styled from 'styled-components';
 
@@ -11,11 +11,12 @@ const Box = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    background-color: white;
-    border: 1px solid rgb(213, 213, 213);
+    background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+    border: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.2)'};
     border-radius: 5px;
     gap: 15px;
     cursor: pointer;
+
 `;
 
 const Logo = styled.img`
@@ -26,7 +27,7 @@ const Logo = styled.img`
     object-position: 50% 50%;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    border-right: 1px solid grey;
+    border-right: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.2)'};
     background-color: black;
 `;
 
@@ -35,15 +36,15 @@ const InfoBox = styled.div`
     flex-direction: column;
     width: 150px;
     height: 150px;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    font-weight: ${props => props.theme === 'light' ? '700' : '400'};
+    font-family: motiva-sans, sans-serif;
 `;
 
 const Name = styled.div`
     width: 200px;
     height: 50px;
-    font-family: motiva-sans, sans-serif;
-    font-weight: 900;
     font-size: 14px;
-    color: black;
     display: flex;
     align-items: center;
     justify-content: left;
@@ -52,10 +53,7 @@ const Name = styled.div`
 const Phone = styled.div`
     width: 200px;
     height: 50px;
-    font-family: motiva-sans, sans-serif;
-    font-weight: 700;
     font-size: 12px;
-    color: black;
     display: flex;
     align-items: center;
     justify-content: left;
@@ -65,10 +63,7 @@ const Phone = styled.div`
 const Street = styled.div`
     width: 200px;
     height: 25px;
-    font-family: motiva-sans, sans-serif;
-    font-weight: 700;
     font-size: 12px;
-    color: black;
     display: flex;
     align-items: center;
     justify-content: left;
@@ -77,10 +72,7 @@ const Street = styled.div`
 const CityState = styled.div`
     width: 200px;
     height: 25px;
-    font-family: motiva-sans, sans-serif;
-    font-weight: 700;
     font-size: 12px;
-    color: black;
     display: flex;
     align-items: center;
     justify-content: left;
@@ -88,6 +80,7 @@ const CityState = styled.div`
 
 export const OrganizationCard = ({organization}) => {
     const history = useHistory();
+    const { theme } = useTheme();
     const name = organization ? organization.name : '';
     const phone = '(' + organization.phone.slice(0, 3) + ') ' + organization.phone.slice(3, 7) + '-' + organization.phone.slice(7, 10) ;
     const address = organization.city + ', ' + organization.state.slice(0, 2).toUpperCase() + ' ' + organization.zip;
@@ -99,9 +92,9 @@ export const OrganizationCard = ({organization}) => {
     }
 
     return (
-        <Box onClick={handleClick}>
+        <Box onClick={handleClick} theme={theme}>
             <Logo src={organization.logoUrl} />
-            <InfoBox>
+            <InfoBox theme={theme}>
                 <Name>{name}</Name>
                 <Street>{organization.street}</Street>
                 <CityState>{address}</CityState>

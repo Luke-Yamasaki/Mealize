@@ -7,20 +7,18 @@ export const MessagePageWrapper = styled.main`
     justify-content: flex-start;
     align-items: top;
     width: 1600px;
-    height: 900px;
+    min-height: 900px;
+    height: auto;
 `;
 
 export const MessageSideMenu = styled.section`
     width: 400px;
-    height: 900px;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    min-height: 900px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
-    border: ${props => props.theme === 'light' ? '#B7B7B7' : 'white'};
 `;
 
 export const MessageList = styled.ul`
@@ -31,7 +29,7 @@ export const MessageList = styled.ul`
     list-style: none;
     margin-top: 20px;
     padding: 0px;
-    width: 395px;
+    width: 400px;
     height: 45px;
     font-family: motiva-sans, sans-serif;
     font-weight: 800;
@@ -55,9 +53,10 @@ export const MessageItem = styled.li`
     align-items: center;
     justify-content: flex-start;
     padding: 5px 5px 5px 15px;
-    width: 370px;
+    width: 380px;
     height: 100px;
-    border: ${props => props.theme === 'light' ? '0.1px solid #B7B7B7' : props.theme === 'dark' ? '0.1px solid rgba(255, 255, 255, 0.1)' : 'none'};
+    border-top: ${props => props.theme === 'light' ? '0.1px solid #E9E9E9' : props.theme === 'dark' ? '0.1px solid rgba(255, 255, 255, 0.1)' : 'none'};
+    border-bottom: ${props => props.theme === 'light' ? '0.1px solid #E9E9E9' : props.theme === 'dark' ? '0.1px solid rgba(255, 255, 255, 0.1)' : 'none'};
 `;
 
 export const BannerTextBox = styled.div`
@@ -148,40 +147,57 @@ export const MessageTime = styled(PreviewMessageTime)`
 `;
 
 export const MessageThreadField = styled.section`
-    width: 75%;
-    height: 100%;
+    width: 1200px;
+    height: auto;
     display: flex;
     flex-direction: column;
     algin-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-start;
     background-color: ${props => props.theme === 'light' ? '#F1F1F1' : '#191919'};
-    border-left: ${props => props.theme === 'light' ? '1px solid #B7B7B7' : '1px solid #F1F1F1'};
+    border-left: ${props => props.theme === 'light' ? '1px solid #E9E9E9' : '1px solid rgba(255, 255, 255, 0.1)'};
 `;
 
 export const MessageFeed = styled.div`
-    width: 100%;
-    height: 80%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding-top: 10px;
+    width: 1200px;
+    height: auto;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     gap: 5px;
 `;
 
 export const MessengerBanner = styled.header`
-    width: 98%;
-    padding-left: 2%;
+    width: 1162.5px;
+    padding-left: 37.5px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
     gap: 20px;
-    height: 100px;
+    height: 110px;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
-    border-bottom: ${props => props.theme === 'light' ? '1px solid #B7B7B7' : '1px solid white'};
+    border-bottom: ${props => props.theme === 'light' ? '2px solid rgba(0, 0, 0, 0.1)' : '2px solid rgba(255, 255, 255, 0.1)'};
+`;
+
+export const MessageWithImages = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: left;
+    gap: 10px;
+    width: 1200px;
+    height: auto;
+`;
+
+export const SingleMessage = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    height: auto;
+    width: 1200px;
+    background-color: ${props => props.theme === 'light' ? 'rgba(255, 255, 255, 0.75)' : 'none'};
 `;
 
 export const MessageContainer = styled.div`
@@ -189,10 +205,10 @@ export const MessageContainer = styled.div`
     flex-direction: row;
     flex-direction: ${props => props.direction};
     align-items: center;
-    width: 100%;
+    width: 1120px;
     gap: 10px;
-    padding: 20px;
-    min-height: 30px;
+    padding: ${props => props.direction === 'row' ? '0px 40px 0px 40px' : '0px 45px 0px 35px'};
+    min-height: 100px;
     height: auto;
 `;
 
@@ -200,8 +216,8 @@ export const MessageBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 98%;
-    padding: 20px;
+    justify-content: center;
+    width: 1200px;
     min-height: 50px;
     height: auto;
 `;
@@ -211,11 +227,9 @@ export const PostContainer = styled.div`
     flex-direction: ${props => props.direction};
     justify-content: flex-start;
     align-items: center;
-    width: 94%;
-    max-height: 450px;
-    height: auto;
-    margin-top: ${props => props.marginTop ? props.marginTop : '-35px'};
-    padding: ${props => props.direction === 'row' ? '0% 0% 0% 5%' : '0% 4.3% 0% 0%'};
+    width: ${props => props.direction === 'row' ? '1100px' : '1095px'};
+    height: 450px;
+    padding: ${props => props.direction === 'row' ? '0px 0px 0px 100px' : '0px 105px 0px 0px'};
 `;
 
 export const PostBox = styled.div`
@@ -232,8 +246,7 @@ export const PostBox = styled.div`
 `;
 
 export const MessageContent = styled.div`
-    width: 60%;
-    min-height: 25px;
+    width: 495px;
     line-height: 24px;
     letter-spacing: 0.15px;
     height: auto;
@@ -244,6 +257,7 @@ export const MessageContent = styled.div`
     align-items: center;
     font-family: motiva-sans, sans-serif;
     font-size: 14px;
+    word-break: break-all;
     font-weight: 700;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
@@ -267,21 +281,20 @@ export const SelectMessageText = styled(ExtraBold)`
 `;
 
 export const MessageInputForm = styled.form`
-    width: 99%;
-    height: ${props => props.height ? props.height : '15%'};
-    padding: 5px;
-    padding-top: 20px;
+    width: 1200px;
+    height: ${props => props.height ? props.height : '150px'};
+    padding-top: 25px;
     background-color: ${props => props.small === 'true' ? 'none' : props.theme === 'light' ? 'white' : '#191919'};
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: ${props => props.small === 'true' ? 'flex-end' : 'center'};
+    align-items: center;
 `;
 
 export const MessageInputBox = styled.div`
-    width: ${props => props.edit === 'true' ? '53%' : '86%'};
-    height: auto;
-    min-height: 30px;
+    width: ${props => props.edit === 'true' ? '610px' : '1000px'};
+    margin-left: ${props => props.edit === 'true' ? '450px' : '0px'};
+    height: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -291,8 +304,8 @@ export const MessageInputBox = styled.div`
 `;
 
 export const MessageInput = styled.input`
-    width: 97%;
-    height: 100%
+    width: ${props => props.edit === 'true' ? '575px' : '975px'};
+    height: 25px;
     outline: none;
     border: none;
     padding: 5px;
@@ -308,12 +321,13 @@ export const MessageInput = styled.input`
 
 
 export const MessageFileAndButtons = styled.div`
-    width: 86%;
-    height: 75px;
+    width: 1060px;
+    height: 30px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    padding: 10px 0px 20px 0px;
+    gap: 19px;
     justify-content: flex-end;
 `;
 
@@ -330,8 +344,10 @@ export const MessageFileLabel = styled.label`
 `;
 
 export const MessageErrorBox = styled.div`
-    width: 95%;
-    height: 65px;
+    width: 1000px;
+    height: 55px;
+    margin-top: -20px;
+    gap: 5px;
     display: flex;
     flex-direction: column;
     algin-items: center;
@@ -353,11 +369,10 @@ export const MessageEditDelete = styled.div`
     flex-direction: row;
     justify-content: flex-end;
     align-items: right;
-    width: 94.6%;
+    width: 1100px;
     height: 35px;
-    margin-top: 10px;
     gap: 10px;
-    padding: 0px 5% 0px 0px;
+    padding-right: 100px;
 `;
 
 const ItemButton = styled.div`
@@ -417,10 +432,11 @@ export const FileBox = styled.div`
 
 export const MessageFileInput = styled.input`
     height: 25px;
-    width: 220px;
+    width: 250px;
     background-color: none;
     font-family: motiva-sans, sans-serif;
     text-align: center;
     font-size: 16px;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     cursor: pointer;
 `;

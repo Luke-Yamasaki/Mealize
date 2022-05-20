@@ -69,7 +69,7 @@ export const MessageForm = ({ post }) => {
     const handleContent = (e) => {
         e.preventDefault();
         setContentError([])
-        setContent(e.target.value)
+        setContent(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))
     }
 
     const nsfwCheck = async(img) => {

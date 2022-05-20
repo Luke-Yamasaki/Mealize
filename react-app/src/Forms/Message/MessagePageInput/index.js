@@ -115,12 +115,16 @@ export const MessagePageInput = ({boardId}) => {
 
         if(!content.length) {
             contentErrArr.push('Please enter a message.');
+            return setContentError(contentErrArr)
         } else if(content.length > 1000) {
-            contentErrArr.push('Messages must be under 1000 characters.')
+            contentErrArr.push('Messages must be 1000 characters or less.')
+            return setContentError(contentErrArr)
         } else if(content.length < 2) {
             contentErrArr.push('Messages must be at least 2 characters long.')
+            return setContentError(contentErrArr)
         } else if(imageValidating) {
             contentErrArr.push('We are validating your image.')
+            return setContentError(contentErrArr)
         } else if(image && !imageError.length) {
             const formData = new FormData();
             formData.append("image", image);

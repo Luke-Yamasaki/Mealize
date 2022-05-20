@@ -321,7 +321,7 @@ export const MessageInput = styled.input`
 
 
 export const MessageFileAndButtons = styled.div`
-    width: 1060px;
+    width: ${props => props.edit === 'true' ? '1100px' : '1000px'};
     height: 30px;
     display: flex;
     flex-direction: row;
@@ -332,7 +332,7 @@ export const MessageFileAndButtons = styled.div`
 `;
 
 export const MessageFileLabel = styled.label`
-    width: 175px;
+    min-width: 175px;
     height: 25px;
     display: flex;
     justify-content: center;
@@ -340,7 +340,7 @@ export const MessageFileLabel = styled.label`
     font-family: motiva-sans, sans-serif;
     font-weight: 700;
     font-size: 16px;
-    color: #34AE8D;
+    color: ${props => props.error ? 'red' : '#34AE8D'};
 `;
 
 export const MessageErrorBox = styled.div`
@@ -352,6 +352,10 @@ export const MessageErrorBox = styled.div`
     flex-direction: column;
     algin-items: center;
     justify-content: center;
+`;
+
+export const EditErrorBox = styled(MessageErrorBox)`
+    width: 1200px;
 `;
 
 export const ImageMessage = styled.img`

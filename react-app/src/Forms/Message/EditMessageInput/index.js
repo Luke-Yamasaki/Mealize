@@ -1,6 +1,6 @@
 //Hooks
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTheme } from '../../../Context/ThemeContext';
 
 //Packages
@@ -16,14 +16,14 @@ import { editMessage } from '../../../store/messages';
 
 //Components
 import {
-    Input,
     Error,
-    ErrorBox
+    ErrorBox,
+    ErrorMessage,
+    MessageErrorBox
 } from '../../../Components/Styled/AuthenticationForm';
 
 
 import {
-    MessageErrorBox,
     MessageFileAndButtons,
     MessageFileLabel,
     MessageInput,
@@ -32,7 +32,7 @@ import {
     CancelMessageButton,
     SubmitMessageButton,
     MessageFileInput,
-    FileBox
+    FileBox,
 } from '../../../Components/Styled/Messages';
 
 
@@ -83,7 +83,7 @@ export const EditMessageInput = ({message, changeMode}) => {
         if(fileSize > 2 ) {
             e.target.value = '';
             setImage('');
-            setImageError(['The file size is too large. Images must be under 2MB.'])
+            return setImageError(['The file size is too large. Images must be under 2MB.']);
         } else {
             //Filter adult content
             const url = URL.createObjectURL(file);
@@ -188,12 +188,12 @@ export const EditMessageInput = ({message, changeMode}) => {
     return (
         <MessageInputForm theme={theme} height='auto' small='true' onSubmit={handleSubmit}>
             {contentError.length > 0 &&
-                <MessageErrorBox>
-                    <ErrorBox theme={theme} height='20px'>
+                 <MessageErrorBox>
+                    <ErrorMessage theme={theme}>
                         <Error>{contentError[0]}</Error>
-                    </ErrorBox>
+                    </ErrorMessage>
                     <MessageInputBox theme={theme} edit='true'>
-                        <MessageInput type='text' theme={theme} edit='true' value={content} onChange={handleContent} required/>
+                        <MessageInput placeholder='Enter a message...'  type='text' theme={theme} value={content} onChange={handleContent} required/>
                     </MessageInputBox>
                 </MessageErrorBox>
                 }
@@ -202,10 +202,10 @@ export const EditMessageInput = ({message, changeMode}) => {
                         <MessageInput type='text' theme={theme} edit='true' value={content} onChange={handleContent} required/>
                     </MessageInputBox>
                 }
-            <MessageFileAndButtons>
-                <MessageFileLabel htmlFor='image'>{imageUploading ? 'Image uploading...' : !image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
+            <MessageFileAndButtons edit='true'>
+                <MessageFileLabel htmlFor='image' error={imageError.length}>{imageUploading ? 'Image uploading...' : !image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
                 <FileBox>
-                    <MessageFileInput id='image' theme={theme} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
+                    <MessageFileInput id='image'  theme={theme} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                 </FileBox>
                 <CancelMessageButton theme={theme} onClick={cancel}>Cancel</CancelMessageButton>
                 <SubmitMessageButton theme={theme} onClick={handleSubmit}>Submit</SubmitMessageButton>

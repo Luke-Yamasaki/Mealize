@@ -85,7 +85,7 @@ export const MessagePageInput = ({boardId}) => {
         if(fileSize > 2 ) {
             e.target.value = '';
             setImage('');
-            setImageError(['The file size is too large. Images must be under 2MB.'])
+            return setImageError(['The file size is too large. Images must be under 2MB.']);
         } else {
             //Filter adult content
             const url = URL.createObjectURL(file);
@@ -203,7 +203,7 @@ export const MessagePageInput = ({boardId}) => {
                 </MessageInputBox>
             }
             <MessageFileAndButtons>
-                <MessageFileLabel htmlFor='image'>{imageUploading ? 'Image uploading...' : !image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
+                <MessageFileLabel htmlFor='image' error={imageError.length}>{imageUploading ? 'Image uploading...' : !image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
                 <FileBox>
                     <MessageFileInput id='image' theme={theme} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                 </FileBox>

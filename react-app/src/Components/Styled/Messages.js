@@ -198,17 +198,18 @@ export const SingleMessage = styled.div`
     height: auto;
     width: 1200px;
     background-color: ${props => props.theme === 'light' ? 'rgba(255, 255, 255, 0.75)' : 'none'};
+    padding: 15px 0px 5px 0px
 `;
 
 export const MessageContainer = styled.div`
     display: flex;
     flex-direction: row;
     flex-direction: ${props => props.direction};
-    align-items: center;
+    align-items: top;
     width: 1120px;
     gap: 10px;
     padding: ${props => props.direction === 'row' ? '0px 40px 0px 40px' : '0px 45px 0px 35px'};
-    min-height: 100px;
+    min-height: 50px;
     height: auto;
 `;
 
@@ -245,6 +246,11 @@ export const PostBox = styled.div`
     border-radius: 5px;
 `;
 
+export const MessagesSpacer = styled.div`
+    width: 1200px;
+    background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+`;
+
 export const MessageContent = styled.div`
     width: 495px;
     line-height: 24px;
@@ -254,7 +260,8 @@ export const MessageContent = styled.div`
     flex-direction: row;
     flex-direction: ${props => props.direction};
     justify-content: flex-start;
-    align-items: center;
+    align-items: top;
+    padding-top: 10px;
     font-family: motiva-sans, sans-serif;
     font-size: 14px;
     word-break: break-all;

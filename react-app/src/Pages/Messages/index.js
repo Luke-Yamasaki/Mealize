@@ -43,7 +43,8 @@ import {
     AcceptButton,
     DeclineButton,
     MessageWithImages,
-    SingleMessage
+    SingleMessage,
+    MessagesSpacer
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";

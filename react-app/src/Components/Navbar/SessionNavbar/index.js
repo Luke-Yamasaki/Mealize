@@ -7,7 +7,7 @@ import { useFilter } from '../../../Context/FilterContext';
 import { logout } from '../../../store/session';
 import { setCurrentModal, showModal } from '../../../store/modal';
 // Styled-components
-import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, NavIconContainer } from '../../Styled/Navbar';
+import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, NavIconContainer, ProfileName } from '../../Styled/Navbar';
 import { VectorBox } from '../../Styled/Layout';
 import { ButtonText, ProfileButton, PostButton, LogoutButton } from '../../Styled/Buttons';
 //Components
@@ -59,6 +59,7 @@ export const SessionNavbar = ({sessionUser}) => {
                     <SearchBar />
                     <NavIconContainer manager={sessionUser.isManager ? 'true' : 'false'}>
                         <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' />
+                        <ProfileName theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</ProfileName>
                         <VectorBox square='30px' resize='32px' cursor='pointer' onClick={handleDeliveries}>
                             <VolunteerIcon theme={theme}/>
                         </VectorBox>

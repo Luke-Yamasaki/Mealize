@@ -26,8 +26,9 @@ export const goDown = () =>
 
 export const CustomizationContainer = styled.div`
     margin-left: -25px;
+    margin-top: -250px;
     width: 300px;
-    height: 600px;
+    height: 300px;
     display: flex;
     flex-direction: column;
     align-items: space-around;

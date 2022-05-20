@@ -59,7 +59,7 @@ export const PageBackGround = styled.div`
     background: ${props => props.background};
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: ${props => props.position ? props.position : 'flex-start'};
     align-items: top;
     filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.35));
     padding-top: 50px;

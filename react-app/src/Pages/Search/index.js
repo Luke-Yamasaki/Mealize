@@ -112,18 +112,7 @@ export const SearchPage = () => {
     },[searchword])
 
     return(
-        <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}>
-            <SideBarContainer height={sessionUser ? '870px' : '745px'}>
-                <FilterTitle theme={theme}>Filter</FilterTitle>
-                {sessionUser && (
-                    <FavoritesFilter theme={theme}/>
-                )}
-                <AvailabilityFilter theme={theme}/>
-                <PostTypeFilter theme={theme} />
-                <CategoryFilter theme={theme} categories={categories} />
-                {/* <BusinessFilter theme={theme} businesses={threeBusinesses} />
-                <NonprofitFilter theme={theme} nonprofits={threeNonprofits} /> */}
-            </SideBarContainer>
+        <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} position='center' bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}>
             <SearchSection>
                 <SearchTitle theme={theme}>Search results for:<SearchWord theme={theme}>{searchword}</SearchWord></SearchTitle>
                 <SearchFeed>
@@ -183,3 +172,15 @@ export const SearchPage = () => {
         </PageBackGround>
     )
 };
+
+// /<SideBarContainer height={sessionUser ? '870px' : '745px'}>
+// <FilterTitle theme={theme}>Filter</FilterTitle>
+// {sessionUser && (
+//     <FavoritesFilter theme={theme}/>
+// )}
+// <AvailabilityFilter theme={theme}/>
+// <PostTypeFilter theme={theme} />
+// <CategoryFilter theme={theme} categories={categories} />
+// {/* <BusinessFilter theme={theme} businesses={threeBusinesses} />
+// <NonprofitFilter theme={theme} nonprofits={threeNonprofits} /> */}
+// </SideBarContainer>

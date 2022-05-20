@@ -253,12 +253,22 @@ export const EditPostForm = ({post}) => {
             return noChangeArr.push('Please resolve errors before submitting.')
         } else if((!sessionUser.isNonprofit && !image.length) && (categoryId === post.categoryId.toString()) && (title === post.title) && (description === post.description) && (number === post.quantity.split(' ', 2)[0]) && (unit === post.quantity.split(' ', 2)[1]) && (expDate === `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`)) {
             noChangeArr.push('Please change at least one field to submit')
+            return setNoChange(noChangeArr)
         } else if(!categoryId) {
           categoryIdErrorsArr.push("Please select a food category.")
+          return setCategoryIdErrors(categoryIdErrorsArr)
+        }  else if(!title.length) {
+            titleErrorsArr.push("Please add a title.")
+            return setTitleErrors(titleErrorsArr)
         } else if(title.length > 11 && !title.includes(' ')) {
             titleErrorsArr.push("Please add a line break to your title.")
-        } else if(number === '') {
+            return setTitleErrors(titleErrorsArr)
+        } else if(!description.length) {
+            descriptionErrorsArr.push("Please add a description.")
+            return setDescriptionErrors(descriptionErrorsArr);
+        }  else if(number === '') {
             numberErrorsArr.push("Please select a number.")
+            return setNumberErrors(numberErrorsArr)
         } else if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
             setImageErrors([]);
             setTitleErrors([]);
@@ -403,6 +413,11 @@ export const EditPostForm = ({post}) => {
         setClassName(categories[post.categoryId].category.toLowerCase())
     };
 
+    const handleCancel = (e) => {
+        e.preventDefault();
+        dispatch(hideModal());
+    }
+
     return (
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
             <PreviewBox>
@@ -493,7 +508,7 @@ export const EditPostForm = ({post}) => {
                         </Fieldset>
                     </FormContent>
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
-                        <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
+                        <div className={styles.reset} onClick={handleCancel} ><div>Cancel</div></div>
                         {!sessionUser.isNonprofit && (
                             <div className={
                                (

@@ -92,7 +92,7 @@ export const MessagesPage = () => {
         e.preventDefault();
         if(messageBoards[message.boardId].messages.length === 1) {
             const data = await dispatch(deleteConversation(message.boardId))
-            return history.push('/')
+            return history.push('/messages');
         } else {
             const data = await dispatch(deleteMessage(message.id))
         }
@@ -179,7 +179,7 @@ export const MessagesPage = () => {
                     </SelectMessageBox>
                 }
                 <Route path='/messages/:id'>
-                    {(id && Object.values(messageBoards).length > 0) &&
+                    {(id && (messageBoards[id] && Object.values(messageBoards).length > 0)) &&
                         <>
                             <MessengerBanner theme={theme}>
                                 <MessageProfileIcon square='55px'
@@ -231,7 +231,7 @@ export const MessagesPage = () => {
                                 </BannerTextBox>
                             </MessengerBanner>
                             <MessageFeed>
-                                {Object.values(messageBoards[id].messages).map((message) =>
+                                {Object.values(messageBoards[id]?.messages).map((message) =>
                                     <MessageBox key={message.id}>
                                         <SingleMessage theme={theme}>
                                             <MessageContainer  direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>

@@ -8,6 +8,7 @@ import { FeedContainer, MealizeItalic, NoFavoritesBox, NoFavoritesMessage } from
 
 //Helper
 import { determineExpiration } from "../../utils/Dates";
+import { useEffect } from "react";
 
 export const PostsFeed = () => {
     const allPosts = useSelector(state => state.posts.all);
@@ -30,12 +31,12 @@ export const PostsFeed = () => {
     //Availability filter
     posts.map(post => {
         const hoursLeft = determineExpiration(post.expDate);
-        post.status === 0 && hoursLeft > 1 ? availableArr.push(post) : unavailableArr.push(post)
+        post.status === 0 ? availableArr.push(post) : unavailableArr.push(post)
     })
     //Posts filter
     posts.map(post => post.isItem ? itemsArr.push(post) : requestsArr.push(post));
     //CategoriesFilter
-    posts.map(post => parseInt(post.categoryId) === 1 ? dairyArr.push(post) : parseInt(post.categoryId) === 2 ? vegetablesArr.push(post) : parseInt(post.categoryId) === 3 ? fruitsArr.push(post) : parseInt(post.categoryId) === 4 ? grainsArr.push(post) : proteinArr.push(post))
+    posts.map(post => parseInt(post.categoryId) === 1 ? dairyArr.push(post) : parseInt(post.categoryId) === 2 ? vegetablesArr.push(post) : parseInt(post.categoryId) === 3 ? fruitsArr.push(post) : parseInt(post.categoryId) === 4 ? grainsArr.push(post) : proteinArr.push(post));
 
     return (
         <FeedContainer>

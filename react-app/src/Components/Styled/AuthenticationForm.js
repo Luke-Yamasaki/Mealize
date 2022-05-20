@@ -200,6 +200,25 @@ export const ErrorBox = styled.div`
     font-weight: ${props => props.theme === 'light' ? '700' : '500'};
 `;
 
+export const MessageErrorBox = styled(ErrorBox)`
+    width: 1100px;
+    height: 75px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    background: none;
+`;
+
+export const ErrorMessage = styled.div`
+    width: 980px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: ${props => props.theme === 'light' ? '700' : '500'};
+`;
+
 export const Error = styled(Paragraph)`
     color: red;
     font-size: 12px;

@@ -216,7 +216,6 @@ export const VectorBox = styled.div`
        width: ${props => props.resize ? props.resize : props.square ? props.square : '30px'};
        height: ${props => props.resize ? props.resize : props.square ? props.square : '30px'};
        transform: ${props => props.resize ? 'scale(1.1)' : ''};
-       opacity: ${props => props.opacity ? props.opacity : '100%'};
     }
 `;
 

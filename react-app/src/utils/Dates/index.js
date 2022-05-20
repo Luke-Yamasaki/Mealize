@@ -7,18 +7,34 @@ export const determineExpiration = (expDate) => {
 };
 
 export const daysAgo = (post) => {
-    const today = new Date();
-    const postDate = new Date(post.updatedAt ? post.updatedAt : post.createdAt);
-    const milliseconds = today - postDate;
-    const daysPassed = Math.floor(milliseconds / 1000 / 60 / 60 / 24);
-    const hoursPassed = Math.floor(milliseconds / 1000 / 60 / 60);
-    if(daysPassed >= 1) {
-        return daysPassed.toString() + 'd';
-    } else if(daysPassed < 1 && hoursPassed >= 1) {
-        return hoursPassed.toString() + 'h';
+    if(post.updatedAt !== post.createdAt) {
+        const created = new Date(post.createdAt);
+        const updated = new Date(post.updatedAt);
+        const milliseconds = updated - created;
+        const daysPassed = Math.floor(milliseconds / 1000 / 60 / 60 / 24);
+        const hoursPassed = Math.floor(milliseconds / 1000 / 60 / 60);
+        if(daysPassed >= 1) {
+            return daysPassed.toString() + 'd';
+        } else if(daysPassed < 1 && hoursPassed >= 1) {
+            return hoursPassed.toString() + 'h';
+        } else {
+            return 'now';
+        }
     } else {
-        return 'now';
+        const today = new Date();
+        const postDate = new Date(post.updatedAt ? post.updatedAt : post.createdAt);
+        const milliseconds = today - postDate;
+        const daysPassed = Math.floor(milliseconds / 1000 / 60 / 60 / 24);
+        const hoursPassed = Math.floor(milliseconds / 1000 / 60 / 60);
+        if(daysPassed >= 1) {
+            return daysPassed.toString() + 'd';
+        } else if(daysPassed < 1 && hoursPassed >= 1) {
+            return hoursPassed.toString() + 'h';
+        } else {
+            return 'now';
+        }
     }
+
 }
 
 export const createdAtDaysAgo = (createdAt) => {

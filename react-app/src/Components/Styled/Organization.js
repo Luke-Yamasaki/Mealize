@@ -96,7 +96,7 @@ export const ManagerSection = styled.aside`
 
 export const ManagerContainer = styled.div`
     width: 300px;
-    height: 500px;
+    height: ${props => props.session === 'true' ? '490px' : '450px'};
     display: flex;
     border-radius: 5px;
     background-image: url(${props => props.image});
@@ -108,7 +108,7 @@ export const ManagerContainer = styled.div`
 
 export const ManagerForeground = styled.div`
     width: 300px;
-    height: 500px;
+    height: ${props => props.session === 'true' ? '490px' : '450px'};
     display: flex;
     flex-direction: column;
     align-items: left;

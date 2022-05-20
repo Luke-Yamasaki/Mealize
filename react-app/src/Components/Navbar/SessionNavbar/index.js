@@ -7,12 +7,11 @@ import { useFilter } from '../../../Context/FilterContext';
 import { logout } from '../../../store/session';
 import { setCurrentModal, showModal } from '../../../store/modal';
 // Styled-components
-import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, ProfileName } from '../../Styled/Navbar';
+import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, NavIconContainer } from '../../Styled/Navbar';
 import { VectorBox } from '../../Styled/Layout';
 import { ButtonText, ProfileButton, PostButton, LogoutButton } from '../../Styled/Buttons';
-import { ProfileBox } from '../../Styled/Navbar';
 //Components
-import { NotificationBar } from '../NotificationBar';
+// import { NotificationBar } from '../NotificationBar';
 import { SearchBar } from '../SearchBar';
 import PostForm from '../../../Forms/Post';
 //Icons
@@ -58,21 +57,23 @@ export const SessionNavbar = ({sessionUser}) => {
                         <LogoNavLink theme={theme} to='/' exact={true}>Mealize</LogoNavLink>
                     </LogoBox>
                     <SearchBar />
-                    <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' />
-                    <VectorBox square='30px' resize='32px' cursor='pointer' onClick={handleDeliveries}>
-                        <VolunteerIcon theme={theme}/>
-                    </VectorBox>
-                    <VectorBox square='30px' resize='32px' cursor='pointer' onClick={handleMessages}>
-                        <InboxIcon theme={theme}/>
-                    </VectorBox>
-                    {sessionUser.isManager &&
-                        <PostButton onClick={showPostForm}>
-                            <ButtonText>{sessionUser.isNonprofit && sessionUser.isManager ? 'New post' : 'Post item'}</ButtonText>
-                        </PostButton>
-                    }
-                    <LogoutButton onClick={logOut} type={sessionUser.isManager ? 'manager' : 'volunteer'}>
-                        <ButtonText color={sessionUser.isManager ? 'white' : 'black'} weight={sessionUser.isManager ? '400' : '700'}>Log out</ButtonText>
-                    </LogoutButton>
+                    <NavIconContainer manager={sessionUser.isManager ? 'true' : 'false'}>
+                        <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' />
+                        <VectorBox square='30px' resize='32px' cursor='pointer' onClick={handleDeliveries}>
+                            <VolunteerIcon theme={theme}/>
+                        </VectorBox>
+                        <VectorBox square='30px' resize='32px' cursor='pointer' onClick={handleMessages}>
+                            <InboxIcon theme={theme}/>
+                        </VectorBox>
+                        {sessionUser.isManager &&
+                            <PostButton onClick={showPostForm}>
+                                <ButtonText>{sessionUser.isNonprofit && sessionUser.isManager ? 'New post' : 'Post item'}</ButtonText>
+                            </PostButton>
+                        }
+                        <LogoutButton onClick={logOut} type={sessionUser.isManager ? 'manager' : 'volunteer'}>
+                            <ButtonText color={sessionUser.isManager ? 'white' : 'black'} weight={sessionUser.isManager ? '400' : '700'}>Log out</ButtonText>
+                        </LogoutButton>
+                    </NavIconContainer>
                 </NavList>
             </Navigation>
             {/* <NotificationBar theme={theme}/> */}

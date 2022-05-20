@@ -38,6 +38,7 @@ import { LocationPin } from '../../Assets/Icons/Location';
 //Main component
 
 export const OrganizationPage = () => {
+    const sessionUser = useSelector(state => state.session.user);
     const { theme } = useTheme();
     const { id } = useParams();
     const businesses = useSelector(state => state.organizations.businesses);
@@ -83,8 +84,8 @@ export const OrganizationPage = () => {
             </OrgBannerBox>
             <OrgContentBox theme={theme}>
                 <ManagerSection>
-                    <ManagerContainer image={manager.profileImageUrl}>
-                        <ManagerForeground>
+                    <ManagerContainer image={manager.profileImageUrl} session={sessionUser ? 'true' : 'false'}>
+                        <ManagerForeground session={sessionUser ? 'true' : 'false'}>
                             <ManagerInfoBox>
                                 <ManagerName>{manager.firstName + ' ' + manager.lastName}</ManagerName>
                                 <ManagerInfoText>{`Manager at ${organization.name}`}</ManagerInfoText>

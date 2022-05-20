@@ -1,8 +1,8 @@
 //Hooks
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
-
+import { Redirect } from 'react-router-dom';
 //Packages
 import validator from 'validator';
 
@@ -13,6 +13,11 @@ import { hideModal, setCurrentModal } from '../../store/modal';
 //Components
 import { Logo } from '../../Assets/Logo';
 import { SignupForm } from '../Signup';
+import { VectorBox } from '../../Components/Styled/Layout';
+import { PasswordIcon } from '../../Assets/Icons/Password';
+import { ResetIcon } from '../../Components/Styled/Buttons';
+import { InputResetContainer } from '../../Components/Styled/AuthenticationForm';
+
 //Styled-components
 import { LogoBox } from '../../Components/Styled/Navbar';
 import {
@@ -47,7 +52,7 @@ import {
     ActionText,
     SignupText,
 } from '../../Components/Styled/Buttons';
-import { Redirect } from 'react-router-dom';
+
 
 
 export const LoginForm = () => {
@@ -56,7 +61,16 @@ export const LoginForm = () => {
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState([]);
     const [passwordError, setPasswordError] = useState([]);
+    const [passwordVisibility, setPasswordVisibility] = useState(false)
     const {theme} = useTheme();
+
+    useEffect(() => {
+        setPasswordError([])
+    },[password])
+
+    useEffect(() => {
+        setEmailError([])
+    },[email])
 
     const handleEmail = (e) => {
         e.preventDefault();
@@ -85,23 +99,23 @@ export const LoginForm = () => {
         const passwordErrArr = [];
 
         if(!email.length) {
-            emailErrArr.push('Please enter your email.');
-        } else if(!password.length) {
-            passwordErrArr.push('Please enter you password.')
-        } else if(password.length < 6 ) {
-            passwordErrArr.push('Passwords must be at least 6 characters long.')
+            return setEmailError(['Please enter your email.'])
         } else if (validateEmail(email) === false) {
-            emailErrArr.push('Please enter a valid email address.')
+            return setEmailError(['Please enter a valid email address.'])
         } else if(emailError.length > 0) {
-            emailErrArr.push('Please resolve the following: ');
-        } else if (passwordError.length > 0) {
-            passwordErrArr.push('Please resolve the following: ')
+            return setEmailError(['Please enter a valid email.'])
+        } else if(!password.length) {
+            return setPasswordError(['Please enter you password.'])
+        } else if(password.length < 6 ) {
+            return setPasswordError(['Passwords must be at least 6 characters long.'])
+        }  else if (passwordError.length > 0) {
+            return setPasswordError(['Please resolve the following: '])
         } else {
             const data = await dispatch(login(email, password));
             if(data && data.errors) {
-                data.errors.forEach(error => error.toLowerCase().includes('password') ? passwordErrArr.push(error) : emailErrArr.push(error));
+                data.errors.forEach(error => (error.toLowerCase().includes('password') && !error.toLowerCase().includes('email')) ? passwordErrArr.push(error) : emailErrArr.push(error));
                 setEmailError(emailErrArr);
-                setPasswordError(passwordErrArr);
+                return setPasswordError(passwordErrArr);
             } else {
                 setEmailError(emailErrArr);
                 setPasswordError(passwordErrArr);
@@ -168,7 +182,10 @@ export const LoginForm = () => {
                             </ErrorBox>
                             <Fieldset error={emailError.length > 0}>
                                 <EmailLegend htmlFor='email' theme={theme} error={emailError.length > 0}>Email
-                                    <Input name="email" type="email" value={email} theme={theme} onChange={handleEmail}/>
+                                    <InputResetContainer>
+                                        <Input name="email" type="email" value={email} theme={theme} onChange={handleEmail}/>
+                                        <ResetIcon theme={theme} onClick={() => setEmail('')} data={email}>&#10006;</ResetIcon>
+                                    </InputResetContainer>
                                 </EmailLegend>
                             </Fieldset>
                         </InputErrorBox>
@@ -178,7 +195,13 @@ export const LoginForm = () => {
                             </ErrorBox>
                             <Fieldset error={passwordError.length > 0}>
                                 <PasswordLegend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
-                                    <Input name='password' type='password' autoComplete="none" value={password} theme={theme} onChange={handlePassword}/>
+                                    <InputResetContainer>
+                                        <Input theme={theme} cursor='text' name="password" type={passwordVisibility === false ? 'password' : 'text'} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                                        <VectorBox data={password} square='30px' onClick={() => setPasswordVisibility(!passwordVisibility)} cursor='pointer'>
+                                            <PasswordIcon theme={theme} />
+                                        </VectorBox>
+                                        <ResetIcon theme={theme} onClick={() => setPassword('')} data={password}>&#10006;</ResetIcon>
+                                    </InputResetContainer>
                                 </PasswordLegend>
                             </Fieldset>
                         </InputErrorBox>

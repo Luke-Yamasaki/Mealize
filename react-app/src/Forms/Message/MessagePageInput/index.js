@@ -85,7 +85,7 @@ export const MessagePageInput = ({boardId}) => {
         if(fileSize > 2 ) {
             e.target.value = '';
             setImage('');
-            setImageError(['The file size is too large. Images must be under 2MB.'])
+            return setImageError(['The file size is too large. Images must be under 2MB.']);
         } else {
             //Filter adult content
             const url = URL.createObjectURL(file);
@@ -115,12 +115,16 @@ export const MessagePageInput = ({boardId}) => {
 
         if(!content.length) {
             contentErrArr.push('Please enter a message.');
+            return setContentError(contentErrArr)
         } else if(content.length > 1000) {
-            contentErrArr.push('Messages must be under 1000 characters.')
+            contentErrArr.push('Messages must be 1000 characters or less.')
+            return setContentError(contentErrArr)
         } else if(content.length < 2) {
             contentErrArr.push('Messages must be at least 2 characters long.')
+            return setContentError(contentErrArr)
         } else if(imageValidating) {
             contentErrArr.push('We are validating your image.')
+            return setContentError(contentErrArr)
         } else if(image && !imageError.length) {
             const formData = new FormData();
             formData.append("image", image);
@@ -199,7 +203,7 @@ export const MessagePageInput = ({boardId}) => {
                 </MessageInputBox>
             }
             <MessageFileAndButtons>
-                <MessageFileLabel htmlFor='image'>{imageUploading ? 'Image uploading...' : !image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
+                <MessageFileLabel htmlFor='image' error={imageError.length}>{imageUploading ? 'Image uploading...' : !image && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : 'Image validated!'}</MessageFileLabel>
                 <FileBox>
                     <MessageFileInput id='image' theme={theme} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                 </FileBox>

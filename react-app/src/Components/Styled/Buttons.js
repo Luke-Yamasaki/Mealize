@@ -22,8 +22,9 @@ export const MessageButtonBox = styled.div`
 `;
 
 export const MessageButtons = styled(MessageButtonBox)`
-    width: 81%;
-    height: 40px;
+    width: 1050px;
+    height: 30px;
+    margin: 0px 0px 15px 0px;
     justify-content: flex-start;
 `;
 
@@ -201,7 +202,6 @@ export const ResetIcon = styled.p`
     font-size: 16px;
     cursor: pointer;
     height: 22.5px;
-    opacity: ${props => props.data?.length > 0 ? '1' : '0.25' }
 `;
 
 export const ProfileButton = styled.img`
@@ -209,4 +209,5 @@ export const ProfileButton = styled.img`
     height: 30px;
     object-fit: cover;
     object-position: center;
+    border-radius: 30px;
 `;

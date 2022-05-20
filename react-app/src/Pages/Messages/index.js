@@ -40,23 +40,25 @@ import {
     PreviewMessageTime,
     ImageMessage,
     MessageEditDelete,
-    EditMessageButton,
-    DeleteMessageButton,
     AcceptButton,
-    DeclineButton
+    DeclineButton,
+    MessageWithImages,
+    SingleMessage,
+    MessagesSpacer
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
 import {
     ButtonText,
-    CancelButton,
-    MessageButtonBox,
     MessageButtons,
-    MessageButtonsDiv,
-    SubmitButton
+    MessageButtonsDiv
 } from "../../Components/Styled/Buttons";
+
 import { EditMessageInput } from "../../Forms/Message/EditMessageInput";
 
+import { EditIcon } from '../../Assets/Icons/Edit';
+import { TrashIcon } from '../../Assets/Icons/Trash';
+import { VectorBox } from "../../Components/Styled/Layout";
 
 export const MessagesPage = () => {
     const sessionUser = useSelector(state => state.session.user);
@@ -121,9 +123,9 @@ export const MessagesPage = () => {
         }
     };
 
-    const handleEdit = (e) => {
+    const handleEdit = (e, message) => {
         e.preventDefault();
-        setEditMode(!editMode)
+        editMode !== message.id ? setEditMode(message.id) : setEditMode(false)
     };
 
     const changeMode = () => {
@@ -226,102 +228,124 @@ export const MessagesPage = () => {
                         <MessageFeed>
                             {Object.values(messageBoards[messageBoardId].messages).map((message) =>
                                 <MessageBox key={message.id}>
-                                    <MessageContainer  direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                        <UserAndTime>
-                                            <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.' square='40px'/>
-                                            <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
-                                        </UserAndTime>
-                                        {editMode === true && message.senderId === sessionUser.id ?
-                                            <EditMessageInput message={message} changeMode={changeMode} />
-                                            :
-                                            <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                                {message.content}
-                                            </MessageContent>
+                                    <SingleMessage theme={theme}>
+                                        <MessageContainer  direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                            <UserAndTime>
+                                                <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.' square='40px'/>
+                                                <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
+                                            </UserAndTime>
+                                            {message.id === editMode && message.senderId === sessionUser.id ?
+                                                <EditMessageInput message={message} changeMode={changeMode} />
+                                                :
+                                                <MessageContent theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                    {message.content}
+                                                </MessageContent>
+                                            }
+                                        </MessageContainer>
+                                        {((!message.imageUrl && !message.postId) && message.senderId === sessionUser.id) &&
+                                            <MessageEditDelete>
+                                                <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
+                                                    <EditIcon theme={theme} />
+                                                </VectorBox>
+                                                <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleDelete(e, message)}>
+                                                    <TrashIcon theme={theme} />
+                                                </VectorBox>
+                                            </MessageEditDelete>
                                         }
-                                    </MessageContainer>
-                                    {((!message.imageUrl && !message.postId) && message.senderId === sessionUser.id) &&
-                                        <MessageEditDelete>
-                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
-                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
-                                        </MessageEditDelete>
-                                    }
-                                    {((message.content.includes('I would like to pick up this item') && message.postId === null) || (message.content.includes('I found a good item!') && message.postId === null)) &&
-                                    <>
-                                        <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                            <PostBox theme={theme}>
-                                                <div>The item you found has been deleted...</div>
-                                            </PostBox>
-                                        </PostContainer>
-                                        {message.senderId === sessionUser.id &&
-                                        <MessageEditDelete>
-                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
-                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
-                                        </MessageEditDelete>
+                                        {((message.content.includes('I would like to pick up this item') && message.postId === null) || (message.content.includes('I found a good item!') && message.postId === null)) &&
+                                        <MessageWithImages>
+                                            <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                <PostBox theme={theme}>
+                                                    <div>The item you found has been deleted...</div>
+                                                </PostBox>
+                                            </PostContainer>
+                                            {message.senderId === sessionUser.id &&
+                                            <MessageEditDelete>
+                                                <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
+                                                    <EditIcon theme={theme} />
+                                                </VectorBox>
+                                                <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleDelete(e, message)}>
+                                                    <TrashIcon theme={theme} />
+                                                </VectorBox>
+                                            </MessageEditDelete>
+                                            }
+                                        </MessageWithImages>
                                         }
-                                    </>
-                                    }
-                                    {(message.postId && !message.imageUrl) &&
-                                    <>
-                                        <PostContainer theme={theme} marginTop='0px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                            <PostBox theme={theme}>
-                                                <PostCard post={posts[message.postId]} />
-                                            </PostBox>
-                                        </PostContainer>
-                                        {message.senderId === sessionUser.id &&
-                                        <MessageEditDelete>
-                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
-                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
-                                        </MessageEditDelete>
+                                        {(message.postId && !message.imageUrl) &&
+                                        <MessageWithImages>
+                                            <PostContainer theme={theme} marginTop='0px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                <PostBox theme={theme}>
+                                                    <PostCard post={posts[message.postId]} />
+                                                </PostBox>
+                                            </PostContainer>
+                                            {message.senderId === sessionUser.id &&
+                                            <MessageEditDelete>
+                                                <VectorBox resize='true' cursor='pointer' square='20px' onClick={e => handleEdit(e, message)}>
+                                                    <EditIcon  theme={theme} />
+                                                </VectorBox>
+                                                <VectorBox resize='true' cursor='pointer' square='20px' onClick={e => handleDelete(e, message)}>
+                                                    <TrashIcon  theme={theme} />
+                                                </VectorBox>
+                                            </MessageEditDelete>
+                                            }
+                                        </MessageWithImages>
                                         }
-                                    </>
-                                    }
-                                     {(message.imageUrl && !message.postId )&&
-                                    <>
-                                        <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                            <PostBox theme={theme}>
-                                                <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
-                                            </PostBox>
-                                        </PostContainer>
-                                        {message.senderId === sessionUser.id &&
-                                        <MessageEditDelete>
-                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
-                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
-                                        </MessageEditDelete>
+                                        {(message.imageUrl && !message.postId )&&
+                                        <MessageWithImages>
+                                            <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                <PostBox theme={theme}>
+                                                    <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
+                                                </PostBox>
+                                            </PostContainer>
+                                            {message.senderId === sessionUser.id &&
+                                            <MessageEditDelete>
+                                                <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
+                                                    <EditIcon theme={theme}/>
+                                                </VectorBox>
+                                                <VectorBox square='20px' resize='true'cursor='pointer' onClick={e => handleDelete(e, message)}>
+                                                    <TrashIcon theme={theme}/>
+                                                </VectorBox>
+                                            </MessageEditDelete>
+                                            }
+                                        </MessageWithImages>
                                         }
-                                    </>
-                                    }
-                                    {(message.imageUrl && (message.postId && posts[message.postId])) &&
-                                    <>
-                                        <PostContainer theme={theme} marginTop='0px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                            <PostBox theme={theme}>
-                                                <PostCard post={posts[message.postId]} />
-                                            </PostBox>
-                                        </PostContainer>
-                                        <PostContainer theme={theme} marginTop='15px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
-                                            <PostBox theme={theme}>
-                                                <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
-                                            </PostBox>
-                                        </PostContainer>
-                                        {message.senderId === sessionUser.id &&
-                                        <MessageEditDelete>
-                                            <EditMessageButton theme={theme} onClick={e => handleEdit(e, message)}>Edit</EditMessageButton>
-                                            <DeleteMessageButton theme={theme} onClick={e => handleDelete(e, message)}>Delete</DeleteMessageButton>
-                                        </MessageEditDelete>
+                                        {(message.imageUrl && (message.postId && posts[message.postId])) &&
+                                        <MessageWithImages>
+                                            <PostContainer theme={theme} marginTop='10px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                <PostBox theme={theme}>
+                                                    <PostCard post={posts[message.postId]} />
+                                                </PostBox>
+                                            </PostContainer>
+                                            <PostContainer theme={theme} marginTop='15px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                <PostBox theme={theme}>
+                                                    <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
+                                                </PostBox>
+                                            </PostContainer>
+                                            {message.senderId === sessionUser.id &&
+                                            <MessageEditDelete>
+                                                <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
+                                                    <EditIcon theme={theme} />
+                                                </VectorBox>
+                                                <VectorBox cursor='pointer' square='20px' onClick={e => handleDelete(e, message)}>
+                                                    <TrashIcon  theme={theme} />
+                                                </VectorBox>
+                                            </MessageEditDelete>
+                                            }
+                                        </MessageWithImages>
                                         }
-                                    </>
-                                    }
-                                    {((!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) && (posts[message.postId]?.status === 1)) &&
-                                        <MessageButtons>
-                                            <MessageButtonsDiv>
-                                                <DeclineButton onClick={e => handleDecline(e, posts[message.postId], message)}>
-                                                    <ButtonText>Decline</ButtonText>
-                                                </DeclineButton>
-                                                <AcceptButton onClick={e => handleAccept(e, posts[message.postId], message)}>
-                                                    <ButtonText>Accept</ButtonText>
-                                                </AcceptButton>
-                                            </MessageButtonsDiv>
-                                        </MessageButtons>
-                                    }
+                                        {((!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) && (posts[message.postId]?.status === 1)) &&
+                                            <MessageButtons>
+                                                <MessageButtonsDiv>
+                                                    <DeclineButton onClick={e => handleDecline(e, posts[message.postId], message)}>
+                                                        <ButtonText>Decline</ButtonText>
+                                                    </DeclineButton>
+                                                    <AcceptButton onClick={e => handleAccept(e, posts[message.postId], message)}>
+                                                        <ButtonText>Accept</ButtonText>
+                                                    </AcceptButton>
+                                                </MessageButtonsDiv>
+                                            </MessageButtons>
+                                        }
+                                    </SingleMessage>
                                 </MessageBox>
                             )}
                         </MessageFeed>

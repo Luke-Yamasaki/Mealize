@@ -45,7 +45,8 @@ import {
     MessageWithImages,
     SingleMessage,
     MessagesSpacer,
-    MessageTitleBox
+    MessageTitleBox,
+    PostDeletedText
 } from "../../Components/Styled/Messages";
 
 import { MessagePageInput } from "../../Forms/Message/MessagePageInput";
@@ -261,7 +262,7 @@ export const MessagesPage = () => {
                                             <MessageWithImages>
                                                 <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                                     <PostBox theme={theme}>
-                                                        <div>The item you found has been deleted...</div>
+                                                        <PostDeletedText>The item you found has been deleted...</PostDeletedText>
                                                     </PostBox>
                                                 </PostContainer>
                                                 {message.senderId === sessionUser.id &&

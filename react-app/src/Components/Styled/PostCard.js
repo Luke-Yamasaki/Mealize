@@ -271,4 +271,6 @@ export const ReservedBackGround = styled(ExtraBold)`
     width: 280px;
     height: 350px;
     border-radius: 5px;
+    letter-spacing: 1px;
+    font-weight: 500;
 `;

@@ -1,7 +1,7 @@
 //Hooks
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../../../Context/ThemeContext';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 //Styling for card colors
 import { category } from './category.js';
@@ -56,7 +56,7 @@ export const CardContent = ({ post, preview }) => {
     }
 
     return (
-        <Card status={post?.status > 0 && post?.userId !== sessionUser?.id} color={styleObj} height={!sessionUser ? '350px' : post?.status > 0 && post?.userId !== sessionUser?.id ? '350px' : '390px'}>
+        <Card status={post?.status > 0 && post?.userId !== sessionUser?.id} color={styleObj} height={!sessionUser ? '350px' : preview === 'true' ? '350px' : post?.status > 0 && post?.userId !== sessionUser?.id ? '350px' : '390px'}>
             {(post?.status > 0 && preview === 'false' && post?.userId !== sessionUser?.id) && <ReservedBackGround>{post?.status === 1 ? 'Reserved' : post?.status === 2 ? 'In transit...' : 'Completed'}</ReservedBackGround>}
             <TitleBox to={`/organizations/${organization.id}`}>
                 <VectorBox square='30px' resize='32px'>
@@ -82,7 +82,7 @@ export const CardContent = ({ post, preview }) => {
             <DescriptionBox>
                 <DescriptionText theme={theme}>{post?.description}</DescriptionText>
             </DescriptionBox>
-            {(post?.status === 0 || (post?.status === 1 && post?.userId === sessionUser?.id)) && <ActionButtons post={post} />}
+            {(preview === 'false' && post?.status === 0) && <ActionButtons post={post} />}
         </Card>
     )
 };

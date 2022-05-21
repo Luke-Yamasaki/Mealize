@@ -280,7 +280,7 @@ export const MessagesPage = () => {
                                             <MessageWithImages>
                                                 <PostContainer theme={theme} marginTop='0px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                                     <PostBox theme={theme}>
-                                                        <PostCard post={posts[message.postId]} />
+                                                        <PostCard post={posts[message.postId]} preview='true'/>
                                                     </PostBox>
                                                 </PostContainer>
                                                 {message.senderId === sessionUser.id &&

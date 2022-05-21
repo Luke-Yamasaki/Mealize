@@ -63,7 +63,7 @@ export const ActionButtons = ({ post }) => {
         return history.push('/')
     };
 
-    if(!sessionUser || post?.status > 0) {
+    if(!sessionUser || (post?.status > 0 && post?.userId !== sessionUser?.id)) {
         return null
     }
 
@@ -101,7 +101,7 @@ export const ActionButtons = ({ post }) => {
             :
             !sessionUser.isNonprofit && sessionUser.isManager ?
             <ButtonBox number={sessionUser.organizationId === post?.organizationId ? '2' : '1'}>
-               {(sessionUser.organizationId === post?.organizationId && sessionUser.isManager) &&
+               {(sessionUser.organizationId === post?.organizationId) &&
                     <>
                         <EditBtn theme={theme} onClick={handleEdit}>
                             <QuestionText theme={theme}>Edit Item</QuestionText>

@@ -26,12 +26,13 @@ import {
     ItemQuantity,
     DescriptionBox,
     DescriptionText,
+    ReservedBackGround,
 } from "../../../Styled/PostCard";
 
 //Helper function
 import { daysAgo } from '../../../../utils/Dates';
 
-export const CardContent = ({ post }) => {
+export const CardContent = ({ post, preview }) => {
     const { theme } = useTheme();
     const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
@@ -55,13 +56,14 @@ export const CardContent = ({ post }) => {
     }
 
     return (
-        <Card color={styleObj} height={(!sessionUser || post?.status > 0) ? '350px' : '390px'}>
+        <Card status={post?.status > 0 && post?.userId !== sessionUser?.id} color={styleObj} height={!sessionUser ? '350px' : post?.status > 0 && post?.userId !== sessionUser?.id ? '350px' : '390px'}>
+            {(post?.status > 0 && preview === 'false' && post?.userId !== sessionUser?.id) && <ReservedBackGround>{post?.status === 1 ? 'Reserved' : post?.status === 2 ? 'In transit...' : 'Completed'}</ReservedBackGround>}
             <TitleBox to={`/organizations/${organization.id}`}>
                 <VectorBox square='30px' resize='32px'>
-                    <CompanyLogo src={organization.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='#191919'/>
+                    <CompanyLogo src={organization?.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='#191919'/>
                 </VectorBox>
                 <TitleTextContainer>
-                    <CompanyName>{organization.name}</CompanyName>
+                    <CompanyName>{organization?.name}</CompanyName>
                 </TitleTextContainer>
                 <ItemDateText theme={theme}>{daysAgo(post)}</ItemDateText>
             </TitleBox>
@@ -80,7 +82,7 @@ export const CardContent = ({ post }) => {
             <DescriptionBox>
                 <DescriptionText theme={theme}>{post?.description}</DescriptionText>
             </DescriptionBox>
-            <ActionButtons post={post} />
+            {(post?.status === 0 || (post?.status === 1 && post?.userId === sessionUser?.id)) && <ActionButtons post={post} />}
         </Card>
     )
 };

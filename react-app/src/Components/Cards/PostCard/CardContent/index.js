@@ -84,7 +84,7 @@ export const CardContent = ({ post, preview }) => {
             <DescriptionBox>
                 <DescriptionText theme={theme}>{post?.description}</DescriptionText>
             </DescriptionBox>
-            {((preview === 'false' && post?.status === 0) || (preview === 'false' && post?.organizationId === sessionUser.organizationId) || (preview === 'false' && post?.organizationId === sessionUser.organizationId)) && <ActionButtons post={post} />}
+            {((preview === 'false' && post?.status === 0) || (preview === 'false' && post?.organizationId === sessionUser?.organizationId) || (preview === 'false' && post?.organizationId === sessionUser?.organizationId)) && <ActionButtons post={post} />}
         </Card>
     )
 };

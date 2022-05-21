@@ -264,7 +264,7 @@ export const ReservedBackGround = styled(ExtraBold)`
     align-items: center;
     justify-content: center;
     position: absolute;
-    z-index: 500;
+    z-index: 150;
     color: white;
     font-style: italic;
     background-color: rgba(0, 0, 0, 0.5);

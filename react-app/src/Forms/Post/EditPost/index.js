@@ -251,7 +251,7 @@ export const EditPostForm = ({post}) => {
 
         if(titleErrors.length || descriptionErrors.length || numberErrors.length || categoryIdErrors.length || imageErrors.length || expDateErrors.length || noChange.length) {
             return noChangeArr.push('Please resolve errors before submitting.')
-        } else if((!sessionUser.isNonprofit && !image.length) && (categoryId === post.categoryId.toString()) && (title === post.title) && (description === post.description) && (number === post.quantity.split(' ', 2)[0]) && (unit === post.quantity.split(' ', 2)[1]) && (expDate === `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`)) {
+        } else if((!sessionUser.isNonprofit && !image) && (categoryId === post.categoryId.toString()) && (title === post.title) && (description === post.description) && (number === post.quantity.split(' ', 2)[0]) && (unit === post.quantity.split(' ', 2)[1]) && (expDate === `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`)) {
             noChangeArr.push('Please change at least one field to submit')
             return setNoChange(noChangeArr)
         } else if(!categoryId) {
@@ -391,27 +391,27 @@ export const EditPostForm = ({post}) => {
         };
     };
 
-    const handleReset = (e) => {
-        e.preventDefault();
-        const imageInput = document.getElementById('imageUpload');
-        imageInput.value = '';
-        imageInput.style.color = '#C2462A';
-        setImageErrors([]);
-        setTitleErrors([]);
-        setCategoryIdErrors([]);
-        setDescriptionErrors([]);
-        setExpDateErrors([]);
-        setNumberErrors([]);
+    // const handleReset = (e) => {
+    //     e.preventDefault();
+    //     const imageInput = document.getElementById('imageUpload');
+    //     imageInput.value = '';
+    //     imageInput.style.color = '#C2462A';
+    //     setImageErrors([]);
+    //     setTitleErrors([]);
+    //     setCategoryIdErrors([]);
+    //     setDescriptionErrors([]);
+    //     setExpDateErrors([]);
+    //     setNumberErrors([]);
 
-        setImage('');
-        setTitle(post.title);
-        setDescription(post.description);
-        setNumber(post.quantity.split(' ', 2)[0]);
-        setUnit(post.quantity.split(' ', 2)[1]);
-        setExpDate(`${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`);
-        setCategoryId(post.categoryId.toString());
-        setClassName(categories[post.categoryId].category.toLowerCase())
-    };
+    //     setImage('');
+    //     setTitle(post.title);
+    //     setDescription(post.description);
+    //     setNumber(post.quantity.split(' ', 2)[0]);
+    //     setUnit(post.quantity.split(' ', 2)[1]);
+    //     setExpDate(`${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`);
+    //     setCategoryId(post.categoryId.toString());
+    //     setClassName(categories[post.categoryId].category.toLowerCase())
+    // };
 
     const handleCancel = (e) => {
         e.preventDefault();

@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { useTheme } from '../../Context/ThemeContext';
 //Actions
 import { getAllDeliveries, updateDelivery, deleteDelivery } from '../../store/deliveries';
-import { setCurrentModal } from '../../store/modal';
 import { getAllPosts } from '../../store/posts';
 
 //Components
@@ -26,7 +25,7 @@ import {
     SelectDeliveryBox,
     SelectDeliveryText
 } from '../../Components/Styled/Deliveries';
-import {  } from '../../Components/Styled/Messages';
+
 
 export const Deliveries = () => {
     const dispatch = useDispatch()
@@ -69,22 +68,37 @@ export const Deliveries = () => {
             <DeliverySideMenu theme={theme}>
                 <DeliveryList theme={theme}>Deliveries</DeliveryList>
                 {deliveries !== {} && Object.values(deliveries).map((delivery) =>
-                <DeliveryItem key={delivery.id} onClick={e => handleClick(e, delivery)}>
-                    <DeliveryTime theme={theme}>{`Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
-                    <OrganizationCard organization={delivery.location} />
-                </DeliveryItem>
+                    <DeliveryItem key={delivery.id} onClick={e => handleClick(e, delivery)}>
+                        <DeliveryTime theme={theme}>{`Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
+                        <OrganizationCard organization={delivery.location} preview='true'/>
+                    </DeliveryItem>
                 )}
             </DeliverySideMenu>
             <DeliveryField theme={theme}>
                 {!Object.values(deliveries).length &&
                     <SelectDeliveryBox>
-                    <SelectDeliveryText theme={theme}>
-                        {sessionUser.isNonprofit && sessionUser.isManager ? "You do not have any deliveries scheduled. Please send requests to businesses to initiate a delivery." : sessionUser.isNonprofit && !sessionUser.isManager ? "You do not have any pick-ups or drop-offs scheduled. Hang tight or notify your manager about good posts." : 'You do not have any pick-ups scheduled. Hang tight and wait for a nonprofit to send you a request.'}
-                    </SelectDeliveryText>
+                        <SelectDeliveryText theme={theme}>
+                            {
+                                sessionUser.isNonprofit && sessionUser.isManager ?
+                                "You do not have any deliveries scheduled. Please send requests to businesses to initiate a delivery."
+                                : sessionUser.isNonprofit && !sessionUser.isManager ?
+                                "You do not have any pick-ups or drop-offs scheduled. Hang tight or notify your manager about good posts."
+                                : 'You do not have any pick-ups scheduled. Hang tight and wait for a nonprofit to send you a request.'
+                            }
+                        </SelectDeliveryText>
                     </SelectDeliveryBox>
                 }
-                {deliveryId &&
-                    <PostCard post={posts[deliveries[deliveryId].postId]}/>
+                {(Object.values(deliveries).length && !deliveryId) &&
+                    <SelectDeliveryBox>
+                        <SelectDeliveryText theme={theme}>
+                          Please click on a delivery card in the left menu to see item details.
+                        </SelectDeliveryText>
+                    </SelectDeliveryBox>
+                }
+                {(Object.values(deliveries).length && deliveryId) &&
+                    <SelectDeliveryBox>
+                        <PostCard post={posts[deliveries[deliveryId].postId]} preview='true'/>
+                    </SelectDeliveryBox>
                 }
             </DeliveryField>
         </DeliveryPageWrapper>

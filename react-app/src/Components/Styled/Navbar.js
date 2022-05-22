@@ -129,7 +129,7 @@ export const ProfileName = styled(Bold)`
 `;
 
 export const NavIconContainer = styled.div`
-    width: ${props => props.manager === 'true' ? '385px' : '250px'};
+    width: ${props => props.manager === 'true' ? '385px' : '325px'};
     height: 60px;
     display: flex;
     flex-direction: row;

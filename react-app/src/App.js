@@ -63,7 +63,7 @@ function App() {
         dispatch(getOneOrganization(sessionUser.organizationId));
         dispatch(getAllDeliveries())
     }
-},[sessionUser])
+},[sessionUser, dispatch])
 
   if(!isLoaded) {
     return null;

@@ -57,22 +57,29 @@ export const ContentContainer = styled.div`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     border-bottom: ${props => props.theme === 'light' ? '1px solid #D5D5D5' : '1px solid #616161'};
 `;
 
 export const Label = styled.p`
     margin: 0px;
     padding: 0px;
-    font-size: 1em;
+    font-size: 16px;
+    margin-left: ${props => props.margin ? props.margin : '5px'};
     color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
-    margin-left: 3.4em;
 `;
 
 export const IconContainer = styled(VectorBox)`
-    width: 100px;
+    width: 50px;
     height: 50px;
-    margin-left: -50px;
+    border-radius: 5px;
+    margin-left: 10px;
+    background-color: ${props => props.background};
+    &:hover {
+        transform: none;
+        width: 50px;
+        height: 50px;
+    }
 `;
 
 export const SettingsBox = styled.div`
@@ -85,4 +92,33 @@ export const SettingsBox = styled.div`
     border-radius: 50px;
     background-color: ${props => props.theme === 'light' ? '#327647' : '#76D97E' };
     animation: ${props => props.animation};
+`;
+
+export const LabelToggleBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    width: 200px;
+`;
+
+export const ToggleBox = styled.div`
+    width: 50px;
+    height: 25px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: ${props => props.direction};
+    padding: 2px;
+    border: ${props => props.theme === 'light' ? '2px solid rgba(0, 0, 0, 0.5)' : '1px solid rgba(255, 255, 255, 0.25)'};
+    border-radius: 30px;
+    background-color: ${props => props.selected ? '#76D97E' : 'none'};
+`;
+
+export const ToggleCircle = styled.div`
+    width: 25px;
+    height: 25px;
+    border-radius: 30px;
+    background-color: ${props => props.type !== 'theme' && props.theme === 'dark' && !props.selected ? 'white' : '#191919'};
 `;

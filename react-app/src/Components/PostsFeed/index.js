@@ -8,7 +8,6 @@ import { FeedContainer, MealizeItalic, NoFavoritesBox, NoFavoritesMessage } from
 
 //Helper
 import { determineExpiration } from "../../utils/Dates";
-import { useEffect } from "react";
 
 export const PostsFeed = () => {
     const allPosts = useSelector(state => state.posts.all);
@@ -32,6 +31,7 @@ export const PostsFeed = () => {
     posts.map(post => {
         const hoursLeft = determineExpiration(post.expDate);
         post.status === 0 ? availableArr.push(post) : unavailableArr.push(post)
+        return hoursLeft
     })
     //Posts filter
     posts.map(post => post.isItem ? itemsArr.push(post) : requestsArr.push(post));

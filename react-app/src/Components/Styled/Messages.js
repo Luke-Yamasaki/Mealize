@@ -14,11 +14,27 @@ export const MessagePageWrapper = styled.main`
 export const MessageSideMenu = styled.section`
     width: 400px;
     min-height: 900px;
+    overflow-y: scroll;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+
+    &::-webkit-scrollbar {
+        width: 17px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: ${props => props.theme === 'light' ? 'white' : '#191919'};
+        border-radius: 15px;
+        border: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.2)' : '1px solid rgba(255, 255, 255, 0.25)'};
+    }
 `;
 
 export const MessageList = styled.ul`
@@ -199,7 +215,7 @@ export const SingleMessage = styled.div`
     height: auto;
     width: 1200px;
     background-color: ${props => props.theme === 'light' ? 'rgba(255, 255, 255, 0.75)' : 'none'};
-    padding: 15px 0px 5px 0px;
+    padding: 15px 0px 15px 0px;
     border-bottom: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.25)' : '1px solid rgba(255, 255, 255, 0.1)'};
 `;
 
@@ -231,8 +247,10 @@ export const PostContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
     width: ${props => props.direction === 'row' ? '1100px' : '1095px'};
-    height: 450px;
     padding: ${props => props.direction === 'row' ? '10px 0px 0px 100px' : '10px 105px 0px 0px'};
+    max-height: 400px;
+    min-height: 150px;
+    height: auto;
 `;
 
 export const PostBox = styled.div`
@@ -242,10 +260,11 @@ export const PostBox = styled.div`
     background-color: ${props => props.theme === 'light' ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)'};
     border: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.2)'};
     width: 310px;
-    max-height: 450px;
+    max-height: 410px;
     min-height: 150px;
     height: auto;
     border-radius: 5px;
+    margin-top: -10px;
 `;
 
 export const MessagesSpacer = styled.div`
@@ -452,4 +471,13 @@ export const MessageFileInput = styled.input`
     font-size: 16px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     cursor: pointer;
+`;
+
+export const PostDeletedText = styled(Bold)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    width: 350px;
+    font-size: 16px;
 `;

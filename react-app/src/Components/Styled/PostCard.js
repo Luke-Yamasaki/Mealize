@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Bold, Medium, Regular, Paragraph } from './Fonts';
+import { Bold, Medium, Paragraph, ExtraBold } from './Fonts';
 import { Link } from 'react-router-dom';
 
 //container
@@ -12,8 +12,8 @@ export const CardContainer = styled.div`
     align-items: center;
     transition: 0.1s linear;
     &:hover {
-        transform: scale(1.02);
-        margin-top: -4.5px;
+        transform: ${props => props.status ? '' : 'scale(1.02)'};
+        margin-top: ${props => props.status ? '' : '-4.5px'};
     }
 `;
 
@@ -64,7 +64,7 @@ export const Card = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    cursor: pointer;
+    cursor: ${props => props.status ? 'default' : 'pointer'};
     background: ${props => props.color['background']};
     border: ${props => props.color['border']};
 `;
@@ -257,4 +257,20 @@ export const FlagPole = styled.div`
     height: 12px;
     width: 5px;
     background: ${props => props.gradient};
+`;
+
+export const ReservedBackGround = styled(ExtraBold)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 150;
+    color: white;
+    font-style: italic;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 280px;
+    height: 350px;
+    border-radius: 5px;
+    letter-spacing: 1px;
+    font-weight: 500;
 `;

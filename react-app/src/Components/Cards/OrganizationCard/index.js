@@ -78,7 +78,7 @@ const CityState = styled.div`
     justify-content: left;
 `
 
-export const OrganizationCard = ({organization}) => {
+export const OrganizationCard = ({organization, preview}) => {
     const history = useHistory();
     const { theme } = useTheme();
     const name = organization ? organization.name : '';
@@ -91,8 +91,13 @@ export const OrganizationCard = ({organization}) => {
         return history.push(`/organizations/${organization.id}`)
     }
 
+    const handleNull = (e) => {
+        e.preventDefault();
+        return null;
+    }
+
     return (
-        <Box onClick={handleClick} theme={theme}>
+        <Box onClick={preview === 'true' ? handleNull : handleClick} theme={theme}>
             <Logo src={organization.logoUrl} />
             <InfoBox theme={theme}>
                 <Name>{name}</Name>

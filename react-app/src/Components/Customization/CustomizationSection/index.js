@@ -1,4 +1,6 @@
+//Hooks
 import { useTheme } from '../../../Context/ThemeContext';
+
 //Components
 import { CustomizationContainer, ContentContainer, Label } from '../../Styled/Customization';
 
@@ -11,11 +13,10 @@ import { BackGround } from './BackGround';
 export const CustomizationSection = ({animation}) => {
     const {theme} = useTheme();
 
-
     return (
         <CustomizationContainer theme={theme} animation={animation}>
             <ContentContainer theme={theme}>
-                <Label theme={theme}>Customization tools</Label>
+                <Label theme={theme} margin='75px'>Customization tools</Label>
             </ContentContainer>
             <Theme />
             {/* <Color />

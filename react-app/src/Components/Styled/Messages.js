@@ -14,11 +14,27 @@ export const MessagePageWrapper = styled.main`
 export const MessageSideMenu = styled.section`
     width: 400px;
     min-height: 900px;
+    overflow-y: scroll;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+
+    &::-webkit-scrollbar {
+        width: 17px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: linear-gradient(#76D97E, #28A690);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: ${props => props.theme === 'light' ? 'white' : '#191919'};
+        border-radius: 15px;
+        border: ${props => props.theme === 'light' ? '1px solid #28A690' : '1px solid #28A690'};
+    }
 `;
 
 export const MessageList = styled.ul`

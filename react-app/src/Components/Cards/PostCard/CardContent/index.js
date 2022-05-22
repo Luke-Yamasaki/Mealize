@@ -65,7 +65,7 @@ export const CardContent = ({ post, preview }) => {
                     <CompanyLogo src={organization?.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='#191919'/>
                 </VectorBox>
                 <TitleTextContainer>
-                    <CompanyName>{organization?.name}</CompanyName>
+                    <CompanyName>{organization?.name.length <= 25 ? organization?.name : organization?.name.slice(0, 25) + '...'}</CompanyName>
                 </TitleTextContainer>
                 <ItemDateText theme={theme}>{daysAgo(post)}</ItemDateText>
             </TitleBox>

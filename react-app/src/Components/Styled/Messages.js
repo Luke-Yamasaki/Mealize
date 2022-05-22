@@ -27,13 +27,13 @@ export const MessageSideMenu = styled.section`
     }
 
     &::-webkit-scrollbar-track {
-        background: linear-gradient(#76D97E, #28A690);
+        background: rgba(0, 0, 0, 0.1);
     }
 
     &::-webkit-scrollbar-thumb {
         background: ${props => props.theme === 'light' ? 'white' : '#191919'};
         border-radius: 15px;
-        border: ${props => props.theme === 'light' ? '1px solid #28A690' : '1px solid #28A690'};
+        border: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.2)' : '1px solid rgba(255, 255, 255, 0.25)'};
     }
 `;
 
@@ -215,7 +215,7 @@ export const SingleMessage = styled.div`
     height: auto;
     width: 1200px;
     background-color: ${props => props.theme === 'light' ? 'rgba(255, 255, 255, 0.75)' : 'none'};
-    padding: 15px 0px 5px 0px;
+    padding: 15px 0px 15px 0px;
     border-bottom: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.25)' : '1px solid rgba(255, 255, 255, 0.1)'};
 `;
 

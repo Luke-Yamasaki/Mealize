@@ -65,7 +65,8 @@ export const MessageForm = ({ post }) => {
 
     const handleContent = (e) => {
         e.preventDefault();
-        setContentError([])
+        setContentError([]);
+        setImageError([]);
         setContent(e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1))
     }
 
@@ -215,11 +216,11 @@ export const MessageForm = ({ post }) => {
                         </InputErrorBox>
                         <InputErrorBox>
                             <ErrorBox theme={theme} height={imageError.length > 0 ? '20px' : '0px'}>
-                                <Error>{imageError[0]}</Error>
+                                <Error>{imageValidating ? 'Validating image' : imageError[0]}</Error>
                             </ErrorBox>
                             <Fieldset error={imageError.length > 0}>
                                 <Legend htmlFor="image" theme={theme} width={imageValidating ? '145px' : imageUploading ? '150px' : '130px'} error={imageError.length > 0}>
-                                    {image === null && !imageValidating ? '(Optional image)' : imageError.length > 0 ? imageError[0] : imageValidating ? 'Validating image...' : imageUploading ? 'Image Uploading...' : 'Image validated!'}
+                                    (Optional image)
                                     <Input id='image' theme={theme} lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                                 </Legend>
                             </Fieldset>

@@ -243,7 +243,7 @@ export const EditPostForm = ({post}) => {
     const handleErrors = (e) => {
         e.preventDefault();
 
-        if(titleErrors.length || descriptionErrors.length || numberErrors.length || categoryIdErrors.length || imageErrors.length || expDateErrors.length || noChange.length) {
+        if(titleErrors.length > 0 || descriptionErrors.length > 0 || numberErrors.length > 0 || categoryIdErrors.length > 0 || imageErrors.length > 0 || expDateErrors.length > 0 || noChange.length > 0) {
             return setErrors('Please resolve errors before submitting.')
         } else if((!sessionUser.isNonprofit && !image) && (categoryId === post.categoryId.toString()) && (title === post.title) && (description === post.description) && (number === post.quantity.split(' ', 2)[0]) && (unit === post.quantity.split(' ', 2)[1]) && (expDate === `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`)) {
             return setNoChange(['Please change at least one field to submit'])
@@ -352,12 +352,21 @@ export const EditPostForm = ({post}) => {
 
     const handleExp = (e) => {
         e.preventDefault();
-        setErrors([]);
         setExpDate(e.target.value);
-        setExpDateErrors([]);
+
         if(parseInt(e.target.value.slice(0, 2)) !== 20 || parseInt(e.target.value.slice(0, 4)) < parseInt(new Date().getFullYear())) {
             e.target.value = '';
             return setExpDateErrors(['Please select a valid date between this year and the year 2099.']);
+        } else if(parseInt(e.target.value.slice(0, 4)) >= parseInt(new Date().getFullYear()) && parseInt(e.target.value.slice(5, 7)) < (new Date().getMonth() + 1)) {
+            e.target.value = '';
+            return setExpDateErrors(['Please select a future date.'])
+        } else if(parseInt(e.target.value.slice(0, 4)) === parseInt(new Date().getFullYear()) && (parseInt(e.target.value.slice(5, 7)) === (new Date().getMonth() + 1) && parseInt(e.target.value.slice(8, 10)) < parseInt(new Date().getDate()))) {
+            e.target.value = '';
+            return setExpDateErrors(['Please select a future date.'])
+        } else {
+            setErrors([]);
+            setExpDateErrors([]);
+            return setExpDate(e.target.value)
         }
     }
 

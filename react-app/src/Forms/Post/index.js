@@ -39,6 +39,7 @@ const Fieldset = styled.fieldset`
     border: none;
     width: 300px;
     height: 40px;
+    font-family: motiva-sans, sans-serif;
 `;
 
 const TextareaFieldset = styled.fieldset`
@@ -47,6 +48,7 @@ const TextareaFieldset = styled.fieldset`
     border: none;
     width: 300px;
     height: 100px;
+    font-family: motiva-sans, sans-serif;
 `;
 
 const Textarea = styled.textarea`
@@ -56,6 +58,7 @@ const Textarea = styled.textarea`
     border: none;
     border-radius: 5px;
     hyphens: auto;
+    font-family: motiva-sans, sans-serif;
 `;
 
 const TitleTextArea = styled.textarea`
@@ -65,6 +68,7 @@ const TitleTextArea = styled.textarea`
     border: none;
     border-radius: 5px;
     hyphens: auto;
+    font-family: motiva-sans, sans-serif;
 `;
 
 const FormContent = styled.div`
@@ -74,6 +78,7 @@ const FormContent = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    font-family: motiva-sans, sans-serif;
 `;
 
 const ErrorMessage = styled.div`
@@ -82,6 +87,7 @@ const ErrorMessage = styled.div`
     text-justify: center;
     width: 300px;
     height: 10px;
+    font-family: motiva-sans, sans-serif;
 `;
 
 
@@ -371,14 +377,14 @@ const PostForm = () => {
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
             <PreviewBox>
                 <PreviewSection type='item' props={props} />
-            </PreviewBox>
-            {imageUploading &&
+                {imageUploading &&
                 <UploadingBox>
                     <UploadingMessage>
                         Uploading image...
                     </UploadingMessage>
                 </UploadingBox>
                }
+            </PreviewBox>
             <FormSection>
                 <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '675px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
                     <FormContent>
@@ -421,21 +427,21 @@ const PostForm = () => {
                         )}
                         <Fieldset>
                         <legend className={(title.length >= 3 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
-                                <TitleTextArea placeholder='Title' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={handleTitle} />
+                                <TitleTextArea placeholder='Enter a title... (25 character limit)' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={handleTitle} />
                         </Fieldset>
                         {descriptionErrors && (
                             <ErrorMessage>{descriptionErrors[0]}</ErrorMessage>
                         )}
                         <TextareaFieldset>
                         <legend className={(description.length >= 3 && description.length <= 17) || (description.length > 17 && description.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
-                            <Textarea placeholder='Description' type='text' minLength='3' maxLength='100' value={description} onChange={handleDescription} />
+                            <Textarea placeholder='Enter a description... (100 character limit)' type='text' minLength='3' maxLength='100' value={description} onChange={handleDescription} />
                         </TextareaFieldset>
                         {numberErrors && (
                             <ErrorMessage>{numberErrors[0]}</ErrorMessage>
                         )}
                         <Fieldset>
                         <legend className={number && unit ? styles.completed : styles.incomplete}>Item quantity</legend>
-                            <input style={{width: '175px', height: '20px', border: 'none', borderRadius: '5px', paddingLeft: '5px'}} id='amount' placeholder='Enter a number: (1-1000)' type='number' value={number} onChange={handleNumber} />
+                            <input style={{fontFamily: 'motiva-sans, sans-serif', width: '175px', height: '20px', border: 'none', borderRadius: '5px', paddingLeft: '5px'}} id='amount' placeholder='Enter a number: (1-1000)' type='number' value={number} onChange={handleNumber} />
                             <select value={unit} onChange={(e) => setUnit(e.target.value)}>
                                 <optgroup label='General'>
                                     <option>count</option>

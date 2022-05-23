@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import patternTen from '../../Assets/Images/Pattern_10.png';
-import patternFive from '../../Assets/Images/Pattern_5.png';
+import { ExtraBold } from "./Fonts";
+
 export const PreviewWrapper = styled.div`
     display: flex;
     flex-direction: row;
@@ -18,8 +18,10 @@ export const PreviewBox = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 10px;
     width: 600px;
     height: 900px;
+    cursor: default;
 `;
 
 export const PrintId = styled.div`
@@ -48,4 +50,31 @@ export const UploadingMessage = styled.div`
     font-style: normal;
     font-weight: 900;
     color: black;
+`;
+
+export const PreviewMessageBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+    width: 300px;
+`;
+
+export const PreviewMessageText = styled(ExtraBold)`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    width: 300px;
+    height: 100px;
+    font-size: 18px;
+    letter-spacing: 0.25px;
+    line-height: 28px;
+    color: black;
+`;
+
+export const PreviewSmallText = styled(PreviewMessageText)`
+font-size: 14px;
+margin-top: -15px;
 `;

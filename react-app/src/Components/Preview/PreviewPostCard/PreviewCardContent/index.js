@@ -10,7 +10,6 @@ import { previewCategory } from './category.js';
 import { PreviewFavoritesIcon } from '../PreviewFavoritesIcon';
 import { QuestionBtn, RequestBtn } from '../../../Styled/Buttons';
 import { VectorBox } from '../../../Styled/Layout';
-import five from '../../../../Assets/Images/Pattern_5.png'
 import ten from '../../../../Assets/Images/Pattern_10.png'
 
 import {

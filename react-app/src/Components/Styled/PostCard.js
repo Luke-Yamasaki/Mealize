@@ -203,7 +203,8 @@ export const DescriptionBox = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    line-height: 1em;
+    line-height: 16px;
+    word-break: break-all;
 `;
 
 export const DescriptionText = styled(Medium)`

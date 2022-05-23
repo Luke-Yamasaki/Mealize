@@ -114,8 +114,6 @@ export const DeliveryForm = ({ post }) => {
 	const [time, setTime] = useState("");
     const [dateErrors, setDateErrors] = useState([]);
     const [timeErrors, setTimeErrors] = useState([]);
-    console.log(post)
-
 
     const timeObj = new Date();
 	// convert local time zone offset from minutes to milliseconds
@@ -139,15 +137,21 @@ export const DeliveryForm = ({ post }) => {
         const dateErrArr = [];
         const timeErrArr = [];
 
-        if(!date) {
+        if(!date && !time) {
             dateErrArr.push('Please select a date for your delivery.');
-        }
-
-        if (!time) {
             timeErrArr.push('Please select a timeslot for your delivery.');
-        }
-
-        if(date && time) {
+            setDateErrors(dateErrArr);
+            return setTimeErrors(timeErrArr);
+        }else if(!date && time) {
+            dateErrArr.push('Please select a date for your delivery.');
+            return setDateErrors(dateErrArr);
+        } else if (date && !time) {
+            timeErrArr.push('Please select a timeslot for your delivery.');
+            return setTimeErrors(timeErrArr);
+        } else if(parseInt(date.slice(0, 2)) !== 20 || parseInt(date.slice(0, 4)) < parseInt(new Date().getFullYear())) {
+            dateErrArr.push('Please select a valid date between this year and the year 2099.');
+            return setDateErrors(dateErrArr);
+        } else {
 
             const deliveryData = {
                 postId: post.id,
@@ -170,20 +174,20 @@ export const DeliveryForm = ({ post }) => {
                     imageUrl: ''
                 }
                 const newMessage = await dispatch(sendMessage(requestMessage))
-                console.log(newMessage);
                 setDateErrors(dateErrArr);
                 setTimeErrors(timeErrArr);
                 dispatch(hideModal());
-                history.push(`/messages`);
+                return history.push(`/messages/${newMessage.id}`);
             } else {
                 newDelivery.error?.map(err => {
                     if(err.includes('date')) {
                         dateErrArr.push('Invalid date.')
+                        return setDateErrors(dateErrArr)
+
                     } else {
                         timeErrArr.push('Invalid time.')
+                        return setTimeErrors(timeErrArr)
                     }
-                    setDateErrors(dateErrArr);
-                    setTimeErrors(timeErrArr);
                 })
             }
         }
@@ -208,10 +212,10 @@ export const DeliveryForm = ({ post }) => {
                         <div style={{color: '#C2462A', width: '400px', height: '35px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', fontSize: '12px', fontFamily: 'motiva-sans, sans-serif', fontWeight: '700'}}>
                             * Both fields required
                         </div>
-                        <DateTimeBox>
-                            {dateErrors && (
+                        {dateErrors && (
                                 <ErrorMessage>{dateErrors[0]}</ErrorMessage>
                             )}
+                        <DateTimeBox>
                             <fieldset style={{width: '200px', height: '50px'}} className={styles.fieldsets}>
                                 <legend className={date && !dateErrors.length ? `${styles.legends} ${styles.confirmed}` : `${styles.legends} ${styles.error}`}>Select a date</legend>
                                 <input required type="date" name="date" style={{width: '170px', padding: '0px'}} className={styles.date} min={today} value={date} onChange={(e) => setDate(e.target.value)}/>
@@ -220,7 +224,7 @@ export const DeliveryForm = ({ post }) => {
                                 <ErrorMessage>{timeErrors[0]}</ErrorMessage>
                             )}
                             <fieldset style={{width: '200px', height: '50px'}} className={styles.fieldsets}>
-                                <legend className={time && !timeErrors.length ? `${styles.legends} ${styles.confirmed}` : `${styles.legends} ${styles.error}`}>Select a time</legend>
+                                <legend className={time && !timeErrors.length ? `${styles.legends} ${styles.confirmed}` : `${styles.legends} ${styles.error}`}>Select a timeslot</legend>
                                 <select required value={time} style={{width: '170px', height: '20px', padding: '0px'}} className={styles.time} onChange={(e) => setTime(e.target.value) }>
                                     <option value="">{!date ? '<-- Select a date first' : '--Select a time--'}</option>
                                     {date &&

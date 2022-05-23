@@ -74,8 +74,8 @@ export const ActionButtons = ({ post }) => {
     return (
         <>
             {sessionUser.isNonprofit && sessionUser.isManager ?
-                <ButtonBox number={!post?.isItem ? '1' : (sessionUser.organiztionId !== post?.organizationId && (post?.isItem && post?.status === 0) ) ? '2' : '1'}>
-                    {(sessionUser.isManager && sessionUser.organizationId === post?.organizationId) &&
+                <ButtonBox number={!post?.isItem ? '1' : (sessionUser.id !== post?.userId && (post?.isItem && post?.status === 0) ) ? '2' : '1'}>
+                    {(sessionUser.isManager && sessionUser.id === post?.userId) &&
                     <>
                         <EditBtn theme={theme} onClick={handleEdit}>
                             <QuestionText theme={theme}>Edit Request</QuestionText>
@@ -85,7 +85,7 @@ export const ActionButtons = ({ post }) => {
                         </DeleteBtn>
                     </>
                     }
-                    {sessionUser.organizationId !== post?.organizationId &&
+                    {(sessionUser.id !== post?.userId && sessionUser.organizationId !== post?.organizationId) &&
                     <>
                         <QuestionBtn theme={theme} onClick={handleQuestion}>
                             <QuestionText theme={theme}>Ask a question</QuestionText>
@@ -99,27 +99,24 @@ export const ActionButtons = ({ post }) => {
                     }
                 </ButtonBox>
             :
-            !sessionUser.isNonprofit && sessionUser.isManager ?
-            <ButtonBox number={sessionUser.organizationId === post?.organizationId ? '2' : '1'}>
-               {(sessionUser.organizationId === post?.organizationId) &&
-                    <>
-                        <EditBtn theme={theme} onClick={handleEdit}>
-                            <QuestionText theme={theme}>Edit Item</QuestionText>
-                        </EditBtn>
-                        <DeleteBtn onClick={handleDelete}>
-                            <ButtonText>Delete Item</ButtonText>
-                        </DeleteBtn>
-                    </>
-                }
-                {sessionUser.organizationId !== post?.organizationId &&
-                    <>
-                        <QuestionBtn theme={theme} onClick={handleQuestion}>
-                            <QuestionText theme={theme}>Ask a question</QuestionText>
-                        </QuestionBtn>
-                    </>
-                }
+            (!sessionUser.isNonprofit && sessionUser.isManager) && sessionUser.id === post.userId ?
+            <ButtonBox number='2'>
+                <EditBtn theme={theme} onClick={handleEdit}>
+                    <QuestionText theme={theme}>Edit Item</QuestionText>
+                </EditBtn>
+                <DeleteBtn onClick={handleDelete}>
+                    <ButtonText>Delete Item</ButtonText>
+                </DeleteBtn>
             </ButtonBox>
             :
+            sessionUser.organizationId !== post?.organizationId ?
+                <ButtonBox number='1'>
+                    <QuestionBtn theme={theme} onClick={handleQuestion}>
+                        <QuestionText theme={theme}>Ask a question</QuestionText>
+                    </QuestionBtn>
+                </ButtonBox>
+            :
+            ((sessionUser.isNonprofit && !sessionUser.isManager) && sessionUser.organizationId !== post?.organizationId) ?
             <ButtonBox number={post?.isItem && post?.status === 0 ? '2' : '1'}>
                 <QuestionBtn theme={theme} onClick={handleQuestion}>
                     <QuestionText theme={theme}>Ask a question</QuestionText>
@@ -130,10 +127,9 @@ export const ActionButtons = ({ post }) => {
                 </RequestBtn>
                 }
             </ButtonBox>
+            :
+            <div style={{display: 'none'}}></div>
             }
         </>
-
-
-
     )
 }

@@ -50,7 +50,6 @@ import {
 
 export const MessageForm = ({ post }) => {
     const dispatch = useDispatch();
-    const users = useSelector(state => state.users);
     const [content, setContent] = useState('');
     const [image, setImage] = useState(null);
     const [imageValidating, setImageValidating] = useState(false);
@@ -59,8 +58,6 @@ export const MessageForm = ({ post }) => {
     const [imageError, setImageError] = useState([]);
     const {theme} = useTheme();
     const history = useHistory();
-
-    const user = users[post.userId];
 
     const filter = new Filter();
 
@@ -126,13 +123,16 @@ export const MessageForm = ({ post }) => {
 
         if(!content.length) {
             contentErrArr.push('Please enter a message.');
+            return setContentError(contentErrArr)
         } else if(content.length > 500) {
             contentErrArr.push('Messages must be under 500 characters.')
-            setContentError(contentErrArr);
+            return setContentError(contentErrArr);
         } else if(content.length < 10) {
             contentErrArr.push('Messages must be greater than 10 characters.')
-            setContentError(contentErrArr);
-        }else if(image && !imageError.length) {
+            return setContentError(contentErrArr);
+        } else if(imageValidating) {
+            return setImageError(['We are still validating your image.'])
+        } else if(image && !imageError.length) {
             const formData = new FormData();
             formData.append("image", image);
 
@@ -185,6 +185,11 @@ export const MessageForm = ({ post }) => {
         dispatch(hideModal());
     };
 
+    const handleNull = (e) => {
+        e.preventDefault();
+        return null
+    }
+
     return (
         <FormContainer>
             <FormLegend>
@@ -225,7 +230,7 @@ export const MessageForm = ({ post }) => {
                             <CancelButton onClick={cancel}>
                                 <ButtonText>Cancel</ButtonText>
                             </CancelButton>
-                            <SubmitButton onClick={handleSubmit}>
+                            <SubmitButton onClick={imageValidating ? handleNull : handleSubmit}>
                                 <ButtonText>Submit</ButtonText>
                             </SubmitButton>
                         </InputButtonBox>

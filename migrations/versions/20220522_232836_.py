@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 52cec71d0478
+Revision ID: 95a59f6cc530
 Revises: 
-Create Date: 2022-05-20 09:32:02.592180
+Create Date: 2022-05-22 23:28:36.198834
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '52cec71d0478'
+revision = '95a59f6cc530'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -139,14 +139,16 @@ def upgrade():
     sa.Column('isDropoff', sa.Boolean(), nullable=False),
     sa.Column('postId', sa.Integer(), nullable=False),
     sa.Column('userId', sa.Integer(), nullable=False),
-    sa.Column('organizationId', sa.Integer(), nullable=False),
+    sa.Column('businessId', sa.Integer(), nullable=False),
+    sa.Column('nonprofitId', sa.Integer(), nullable=False),
     sa.Column('date', sa.Date(), nullable=False),
     sa.Column('time', sa.String(), nullable=False),
     sa.Column('completed', sa.Integer(), nullable=False),
     sa.Column('cancellationReason', sa.String(length=255), nullable=True),
     sa.Column('createdAt', sa.DateTime(), nullable=True),
     sa.Column('updatedAt', sa.DateTime(), nullable=True),
-    sa.ForeignKeyConstraint(['organizationId'], ['organizations.id'], ),
+    sa.ForeignKeyConstraint(['businessId'], ['organizations.id'], ),
+    sa.ForeignKeyConstraint(['nonprofitId'], ['organizations.id'], ),
     sa.ForeignKeyConstraint(['postId'], ['posts.id'], ),
     sa.ForeignKeyConstraint(['userId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')

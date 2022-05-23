@@ -11,10 +11,10 @@ delivery_routes = Blueprint('deliveries', __name__)
 @login_required
 def all_deliveries():
     if current_user.isNonprofit:
-        deliveries = Delivery.query.filter(Delivery.userId == current_user.id)
+        deliveries = Delivery.query.filter(Delivery.nonprofitId == current_user.organizationId)
         return {delivery.id:delivery.to_dict() for delivery in deliveries}
     else:
-        deliveries = Delivery.query.filter(Delivery.organizationId == current_user.organizationId)
+        deliveries = Delivery.query.filter(Delivery.businessId == current_user.businessId)
         return {delivery.id:delivery.to_dict() for delivery in deliveries}
 
 @delivery_routes.route('/<int:id>')
@@ -61,7 +61,8 @@ def new_delivery():
             isDropoff = False,
             postId = request.json['postId'],
             userId = current_user.id,
-            organizationId = post.organizationId,
+            businessId = post.organizationId,
+            nonprofitId = current_user.organizationId,
             date = request.json['date'],
             time = form.data['time'],
             completed = 0 # 0=not approved yet 1=approved 2=accepted 3=picked up/droped off 4=cancelled

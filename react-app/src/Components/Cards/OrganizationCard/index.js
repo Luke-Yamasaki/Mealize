@@ -5,7 +5,7 @@ import { useTheme } from '../../../Context/ThemeContext';
 import styled from 'styled-components';
 
 const Box = styled.div`
-    width: 400px;
+    width: ${props => props.preview === 'true' ? '350px' : '400px'};
     height: 150px;
     display: flex;
     flex-direction: row;
@@ -19,16 +19,24 @@ const Box = styled.div`
 
 `;
 
-const Logo = styled.img`
+const LogoBox = styled.div`
     width: 150px;
     height: 150px;
-    object-fit: contain;
-    padding: 1px
-    object-position: 50% 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #191919;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border-right: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.2)'};
-    background-color: black;
+`
+
+const Logo = styled.img`
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    padding: 1px
+    object-position: center;
 `;
 
 const InfoBox = styled.div`
@@ -78,7 +86,7 @@ const CityState = styled.div`
     justify-content: left;
 `
 
-export const OrganizationCard = ({organization, preview}) => {
+export const OrganizationCard = ({organization,  preview}) => {
     const history = useHistory();
     const { theme } = useTheme();
     const name = organization ? organization.name : '';
@@ -97,8 +105,10 @@ export const OrganizationCard = ({organization, preview}) => {
     }
 
     return (
-        <Box onClick={preview === 'true' ? handleNull : handleClick} theme={theme}>
-            <Logo src={organization.logoUrl} />
+        <Box onClick={preview === 'true' ? handleNull : handleClick} theme={theme} preview={preview ? 'true' : 'false'}>
+            <LogoBox>
+                <Logo src={organization.logoUrl} />
+            </LogoBox>
             <InfoBox theme={theme}>
                 <Name>{name}</Name>
                 <Street>{organization.street}</Street>

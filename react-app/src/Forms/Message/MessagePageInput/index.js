@@ -197,6 +197,11 @@ export const MessagePageInput = ({boardId}) => {
         input.value = '';
     };
 
+    const handleNull = (e) => {
+        e.preventDefault();
+        return null
+    }
+
     return (
         <MessageInputForm theme={theme} onSubmit={handleSubmit}>
             {contentError.length > 0 &&
@@ -220,7 +225,7 @@ export const MessagePageInput = ({boardId}) => {
                     <MessageFileInput id='image' theme={theme} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                 </FileBox>
                 <CancelMessageButton theme={theme} onClick={cancel}>Cancel</CancelMessageButton>
-                <SubmitMessageButton theme={theme} onClick={handleSubmit}>Submit</SubmitMessageButton>
+                <SubmitMessageButton theme={theme} onClick={imageValidating ? handleNull : handleSubmit}>Submit</SubmitMessageButton>
             </MessageFileAndButtons>
         </MessageInputForm>
     )

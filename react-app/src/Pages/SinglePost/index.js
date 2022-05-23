@@ -10,14 +10,6 @@ import { PostCard } from '../../Components/Cards/PostCard';
 import { colors } from './colors';
 
 //Styled-components
-import {
-    ManagerSection,
-    ManagerContainer,
-    ManagerForeground,
-    ManagerInfoBox,
-    ManagerName,
-    ManagerInfoText
-} from "../../Components/Styled/Organization";
 
 import {
     SinglePostWrapper,

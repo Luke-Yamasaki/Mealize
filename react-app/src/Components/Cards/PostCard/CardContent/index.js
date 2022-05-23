@@ -56,7 +56,7 @@ export const CardContent = ({ post, preview }) => {
     }
 
     return (
-        <Card status={post?.status > 0 && post?.userId !== sessionUser?.id} color={styleObj} height={!sessionUser ? '350px' : preview === 'true' ? '350px' : post?.status > 0 ? '350px' : '390px'}>
+        <Card status={post?.status > 0 && post?.userId !== sessionUser?.id} color={styleObj} height={!sessionUser ? '350px' : preview === 'true' ? '350px' : post?.status > 0 ? '350px' : sessionUser.id !== post?.userId && sessionUser.organizationId === post?.organizationId ? '350px' : '390px'}>
             {(post?.status > 0 && preview === 'false') &&
             <ReservedBackGround>
                 {post?.status === 1 && post?.isItem ? 'Reserved' : post?.status === 2 && post?.isItem ? 'In transit...' : 'Completed'}

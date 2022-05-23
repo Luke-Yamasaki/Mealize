@@ -14,7 +14,7 @@ def all_deliveries():
         deliveries = Delivery.query.filter(Delivery.nonprofitId == current_user.organizationId)
         return {delivery.id:delivery.to_dict() for delivery in deliveries}
     else:
-        deliveries = Delivery.query.filter(Delivery.businessId == current_user.businessId)
+        deliveries = Delivery.query.filter(Delivery.businessId == current_user.organizationId)
         return {delivery.id:delivery.to_dict() for delivery in deliveries}
 
 @delivery_routes.route('/<int:id>')

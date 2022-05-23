@@ -208,7 +208,7 @@ const PostForm = () => {
     const handleErrors = (e) => {
         e.preventDefault();
 
-        if(!sessionUser.isNonprofit && (!imageErrors.length || !titleErrors.length || !descriptionErrors.length || !categoryIdErrors.length || !expDateErrors.length)) {
+        if(!sessionUser.isNonprofit && ((image && !imageErrors.length) && (title && !titleErrors.length) && (description && !descriptionErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length))) {
             setImageErrors([]);
             setTitleErrors([]);
             setDescriptionErrors([]);
@@ -216,7 +216,7 @@ const PostForm = () => {
             setCategoryIdErrors([]);
             setExpDateErrors([]);
             return handleSubmit(e)
-        } else if(sessionUser.isNonprofit && (!titleErrors.length || !descriptionErrors.length || !categoryIdErrors.length || !expDateErrors.length)) {
+        } else if(sessionUser.isNonprofit && ((title && !titleErrors.length) && (description && !descriptionErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length))) {
             setTitleErrors([]);
             setDescriptionErrors([]);
             setNumberErrors([]);
@@ -224,7 +224,7 @@ const PostForm = () => {
             setExpDateErrors([]);
             return handleSubmit(e)
         } else {
-            if(titleErrors?.length || descriptionErrors?.length || numberErrors?.length || categoryIdErrors?.length || imageErrors?.length || expDateErrors?.length) {
+            if(titleErrors?.length > 0 || descriptionErrors?.length > 0 || numberErrors?.length > 0 || categoryIdErrors?.length > 0 || imageErrors?.length > 0 || expDateErrors?.length > 0) {
                 return setErrors(['Please resolve errors before submitting.'])
             }
         }
@@ -311,12 +311,21 @@ const PostForm = () => {
 
     const handleExp = (e) => {
         e.preventDefault();
-        setErrors([]);
         setExpDate(e.target.value);
-        setExpDateErrors([]);
+
         if(parseInt(e.target.value.slice(0, 2)) !== 20 || parseInt(e.target.value.slice(0, 4)) < parseInt(new Date().getFullYear())) {
             e.target.value = '';
             return setExpDateErrors(['Please select a valid date between this year and the year 2099.']);
+        } else if(parseInt(e.target.value.slice(0, 4)) >= parseInt(new Date().getFullYear()) && parseInt(e.target.value.slice(5, 7)) < (new Date().getMonth() + 1)) {
+            e.target.value = '';
+            return setExpDateErrors(['Please select a future date.'])
+        } else if(parseInt(e.target.value.slice(0, 4)) === parseInt(new Date().getFullYear()) && (parseInt(e.target.value.slice(5, 7)) === (new Date().getMonth() + 1) && parseInt(e.target.value.slice(8, 10)) < parseInt(new Date().getDate()))) {
+            e.target.value = '';
+            return setExpDateErrors(['Please select a future date.'])
+        } else {
+            setErrors([]);
+            setExpDateErrors([]);
+            return setExpDate(e.target.value)
         }
     }
 
@@ -351,9 +360,11 @@ const PostForm = () => {
 
     const handleReset = (e) => {
         e.preventDefault();
-        const imageInput = document.getElementById('imageUpload');
-        imageInput.value = '';
-        imageInput.style.color = '#C2462A';
+        if(!sessionUser.isNonprofit) {
+            const imageInput = document.getElementById('imageUpload');
+            imageInput.value = '';
+            imageInput.style.color = '#C2462A';
+        }
         setErrors([]);
         setImageErrors([]);
         setTitleErrors([]);

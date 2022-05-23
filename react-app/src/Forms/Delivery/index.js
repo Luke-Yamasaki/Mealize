@@ -131,9 +131,27 @@ export const DeliveryForm = ({ post }) => {
 
     const hour = new Date().getHours();
 
+    const handleDate = (e) => {
+        e.preventDefault();
+        setDate(e.target.value);
+
+        if(parseInt(e.target.value.slice(0, 2)) !== 20 || parseInt(e.target.value.slice(0, 4)) < parseInt(new Date().getFullYear())) {
+            e.target.value = '';
+            return setDateErrors(['Please select a valid date between this year and the year 2099.']);
+        } else if(parseInt(e.target.value.slice(0, 4)) >= parseInt(new Date().getFullYear()) && parseInt(e.target.value.slice(5, 7)) < (new Date().getMonth() + 1)) {
+            e.target.value = '';
+            return setDateErrors(['Please select a future date.'])
+        } else if(parseInt(e.target.value.slice(0, 4)) === parseInt(new Date().getFullYear()) && (parseInt(e.target.value.slice(5, 7)) === (new Date().getMonth() + 1) && parseInt(e.target.value.slice(8, 10)) < parseInt(new Date().getDate()))) {
+            e.target.value = '';
+            return setDateErrors(['Please select a future date.'])
+        } else {
+            setDateErrors([]);
+            return setDate(e.target.value)
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const dateErrArr = [];
         const timeErrArr = [];
 
@@ -148,11 +166,9 @@ export const DeliveryForm = ({ post }) => {
         } else if (date && !time) {
             timeErrArr.push('Please select a timeslot for your delivery.');
             return setTimeErrors(timeErrArr);
-        } else if(parseInt(date.slice(0, 2)) !== 20 || parseInt(date.slice(0, 4)) < parseInt(new Date().getFullYear())) {
-            dateErrArr.push('Please select a valid date between this year and the year 2099.');
-            return setDateErrors(dateErrArr);
+        } else if(dateErrors.length > 0) {
+            return setDateErrors(['Please select a valid date.'])
         } else {
-
             const deliveryData = {
                 postId: post.id,
                 postImageUrl: post.imageUrl,
@@ -218,7 +234,7 @@ export const DeliveryForm = ({ post }) => {
                         <DateTimeBox>
                             <fieldset style={{width: '200px', height: '50px'}} className={styles.fieldsets}>
                                 <legend className={date && !dateErrors.length ? `${styles.legends} ${styles.confirmed}` : `${styles.legends} ${styles.error}`}>Select a date</legend>
-                                <input required type="date" name="date" style={{width: '170px', padding: '0px'}} className={styles.date} min={today} value={date} onChange={(e) => setDate(e.target.value)}/>
+                                <input required type="date" name="date" style={{width: '170px', padding: '0px'}} className={styles.date} min={today} value={date} onChange={handleDate}/>
                             </fieldset>
                             {timeErrors && (
                                 <ErrorMessage>{timeErrors[0]}</ErrorMessage>

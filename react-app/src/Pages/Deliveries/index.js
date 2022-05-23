@@ -76,7 +76,7 @@ export const Deliveries = () => {
                 <DeliveryList theme={theme}>Pending Deliveries</DeliveryList>
                 {deliveries !== {} && pending.map((delivery) =>
                     <DeliveryItem key={delivery.id} onClick={e => handleClick(e, delivery)}>
-                        <DeliveryTime theme={theme}>{`- Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
+                        <DeliveryTime theme={theme}>{sessionUser.isNonprofit ? `- Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}` : `- Donating on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
                         <OrganizationCard organization={!sessionUser.isNonprofit ? organizations.nonprofits[delivery.nonprofitId] : organizations.businesses[delivery.businessId]} preview='true'/>
                     </DeliveryItem>
 
@@ -84,7 +84,7 @@ export const Deliveries = () => {
                 <DeliveryList theme={theme}>Accepted Deliveries</DeliveryList>
                 {deliveries !== {} && accepted.map((delivery) =>
                     <DeliveryItem key={delivery.id} onClick={e => handleClick(e, delivery)}>
-                        <DeliveryTime theme={theme}>{`- Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
+                        <DeliveryTime theme={theme}>{sessionUser.isNonprofit ? `- Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}` : `- Donating on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
                         <OrganizationCard organization={!sessionUser.isNonprofit ? organizations.nonprofits[delivery.nonprofitId] : organizations.businesses[delivery.businessId]} preview='true'/>
                     </DeliveryItem>
 

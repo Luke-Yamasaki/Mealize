@@ -248,33 +248,33 @@ export const DeliveryForm = ({ post }) => {
                                         {business.timeslot === 'Morning' ?
                                             <optgroup label="Morning">
                                                 {(today === date && 10.5 - hour < 1) && <option value=''>No more slots today</option>}
-                                                <option value={"9"} disabled={today === date && (9 - hour < 1)}> 9:00 AM </option>
-                                                <option value={"9.5"} disabled={today === date && 9.5- hour < 1}> 9:30 AM</option>
-                                                <option value={"10"} disabled={today === date &&  10 - hour < 1}>10:00 AM</option>
-                                                <option value={"10.5"} disabled={today === date && 10.5 - hour < 1}>10:30 AM</option>
+                                                <option value={"9"} disabled={today === date && (9 - hour < 3)}> 9:00 AM </option>
+                                                <option value={"9.5"} disabled={today === date && 9.5- hour < 3}> 9:30 AM</option>
+                                                <option value={"10"} disabled={today === date &&  10 - hour < 3}>10:00 AM</option>
+                                                <option value={"10.5"} disabled={today === date && 10.5 - hour < 3}>10:30 AM</option>
                                             </optgroup>
                                         :business.timeslot === 'Noon' ?
                                             <optgroup label="Noon">
                                                 {(today === date && 12.5 - hour < 1) && <option value=''>No more slots today</option>}
-                                                <option value={"11"} disabled={today === date && 11 - hour < 1}>11:00 AM</option>
-                                                <option value={"11.5"} disabled={today === date && 11.5 - hour < 1}>11:30 AM</option>
-                                                <option value={"12"} disabled={today === date && 12 - hour < 1}>12:00 PM</option>
-                                                <option value={"12.5"} disabled={today === date && 12.5 - hour < 1}>12:30 PM</option>
+                                                <option value={"11"} disabled={today === date && 11 - hour < 3}>11:00 AM</option>
+                                                <option value={"11.5"} disabled={today === date && 11.5 - hour < 3}>11:30 AM</option>
+                                                <option value={"12"} disabled={today === date && 12 - hour < 3}>12:00 PM</option>
+                                                <option value={"12.5"} disabled={today === date && 12.5 - hour < 3}>12:30 PM</option>
                                             </optgroup>
                                         :business.timeslot === 'Early afternoon' ?
                                             <optgroup label="Early afternoon">
                                                 {(today === date && 14 - hour < 1) && <option value=''>No more slots today</option>}
-                                                <option value={"13"} disabled={today === date && 13 - hour < 1}>1:00 PM</option>
-                                                <option value={"13.5"} disabled={today === date && 13.5 - hour < 1}>1:30 PM</option>
-                                                <option value={"14"} disabled={today === date && 14 - hour < 1}>2:00 PM</option>
+                                                <option value={"13"} disabled={today === date && 13 - hour < 3}>1:00 PM</option>
+                                                <option value={"13.5"} disabled={today === date && 13.5 - hour < 3}>1:30 PM</option>
+                                                <option value={"14"} disabled={today === date && 14 - hour < 3}>2:00 PM</option>
                                             </optgroup>
                                         :
                                             <optgroup label="Late afternoon">
                                                 {(today === date && 16 - hour < 1) && <option value=''>No more slots today</option>}
-                                                <option value={"14.5"} disabled={today === date && 14.5 - hour < 1}>2:30 PM</option>
-                                                <option value={"15"} disabled={today === date && 15 - hour < 1}>3:00 PM</option>
-                                                <option value={"15.5"} disabled={today === date && 15.5 - hour < 1}>3:30 PM</option>
-                                                <option value={"16"} disabled={today === date && 16 - hour < 1}>4:00 PM</option>
+                                                <option value={"14.5"} disabled={today === date && 14.5 - hour < 3}>2:30 PM</option>
+                                                <option value={"15"} disabled={today === date && 15 - hour < 3}>3:00 PM</option>
+                                                <option value={"15.5"} disabled={today === date && 15.5 - hour < 3}>3:30 PM</option>
+                                                <option value={"16"} disabled={today === date && 16 - hour < 3}>4:00 PM</option>
                                             </optgroup>
                                         }
                                     </>

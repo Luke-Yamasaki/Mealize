@@ -169,10 +169,12 @@ export const SignupForm = () => {
 
     const specialCharacters = '(){}[]|`¬¦! "£$%^&*"<>:;#~_-';
 
+    let managerStatus = isNonprofit === true ? isManager : true;
+
     let props = {
         organizationId,
         isNonprofit,
-        isManager,
+        isManager: managerStatus,
         firstName,
         lastName,
         dob,
@@ -191,7 +193,9 @@ export const SignupForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const inputData = { organizationId, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager, email, phone, password, confirm}
+        const managerState = isNonprofit === true ? isManager : true;
+
+        const inputData = { organizationId, firstName, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager: managerState, email, phone, password, confirm}
 
         const stagedPost = await validateSignup(inputData);
         if(stagedPost.message === 'success') {
@@ -203,7 +207,7 @@ export const SignupForm = () => {
             if(response.ok) {
                 const data = await response.json();
                 const profileImageUrl = await data.imageUrl
-                const userDataObj = { organizationId, firstName, profileImageUrl, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager, email, phone, password, confirm };
+                const userDataObj = { organizationId, firstName, profileImageUrl, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager: managerState, email, phone, password, confirm };
 
                 const newUser = await dispatch(signup(userDataObj))
                 if(newUser && !newUser.errors || !newUser.error) {
@@ -555,7 +559,7 @@ export const SignupForm = () => {
                 </FormTitleBox>
                 {formSection === 'first' &&
                     <FormContent>
-                        <InputContainer height='200px' margin='50px 0px 0px 0px'>
+                        <InputContainer height={isNonprofit ? '200px' : '130px'} margin='50px 0px 0px 0px'>
                             <Fieldset>
                                 <Legend theme={theme} width='223px'> Do you work for a nonprofit?
                                 <CheckBoxContainer>
@@ -591,20 +595,22 @@ export const SignupForm = () => {
                                     </OrganizationSelect>
                                 </Legend>
                             </Fieldset>
-                            <Fieldset>
-                                <Legend theme={theme} width='160px'> Are you a manager?
-                                <CheckBoxContainer>
-                                    <OptInfoLabel htmlFor='isManager'>
-                                    <Input name="isManager" type="checkbox" width='20px' height='20px' onChange={() => isManager === false ? setIsManager(true) : setIsManager(false)} checked={isManager === true}/>
-                                    <InfoLabelText theme={theme}>Yes</InfoLabelText>
-                                    </OptInfoLabel>
-                                    <OptInfoLabel htmlFor='isvolunteer'>
-                                    <Input name="isVolunteer" type="checkbox" width='20px' height='20px' onChange={() => isManager === true ? setIsManager(false) : setIsManager(true)} checked={isManager === false}/>
-                                    <InfoLabelText theme={theme}>No</InfoLabelText>
-                                    </OptInfoLabel>
-                                </CheckBoxContainer>
-                                </Legend>
-                            </Fieldset>
+                            {isNonprofit === true &&
+                                <Fieldset>
+                                    <Legend theme={theme} width='160px'> Are you a manager?
+                                    <CheckBoxContainer>
+                                        <OptInfoLabel htmlFor='isManager'>
+                                        <Input name="isManager" type="checkbox" width='20px' height='20px' onChange={() => isManager === false ? setIsManager(true) : setIsManager(false)} checked={isManager === true}/>
+                                        <InfoLabelText theme={theme}>Yes</InfoLabelText>
+                                        </OptInfoLabel>
+                                        <OptInfoLabel htmlFor='isvolunteer'>
+                                        <Input name="isVolunteer" type="checkbox" width='20px' height='20px' onChange={() => isManager === true ? setIsManager(false) : setIsManager(true)} checked={isManager === false}/>
+                                        <InfoLabelText theme={theme}>No</InfoLabelText>
+                                        </OptInfoLabel>
+                                    </CheckBoxContainer>
+                                    </Legend>
+                                </Fieldset>
+                            }
                         </InputContainer>
                     </FormContent>
                 }

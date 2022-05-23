@@ -8,6 +8,8 @@ import { postItem } from '../../store/posts';
 import { hideModal } from '../../store/modal';
 //Helpers
 import { validatePost, uploadImage } from '../../utils/Forms/items';
+import { getIp } from '../../utils/Forms/signup';
+import * as nsfwjs from 'nsfwjs';
 
 //backgrounds
 import { requestBackgrounds } from './backgrounds';
@@ -94,7 +96,6 @@ const ErrorMessage = styled.div`
 
 const PostForm = () => {
     const sessionUser = useSelector(state => state.session.user);
-    const categories = useSelector(state => state.categories)
     const dispatch = useDispatch();
     const history = useHistory();
     const [title, setTitle] = useState('');
@@ -104,6 +105,7 @@ const PostForm = () => {
     const [categoryId, setCategoryId] = useState('');
     const [image, setImage] = useState(null);
     const [expDate, setExpDate] = useState('');
+    const [imageValidating, setImageValidating] = useState(false);
     const [imageUploading, setImageUploading] = useState(false);
     const [errors, setErrors] = useState([]);
 
@@ -228,21 +230,56 @@ const PostForm = () => {
         }
     };
 
-    const updateImage = (e) => {
+    const nsfwCheck = async(img) => {
+        const nsfwArr = [];
+        const model = await nsfwjs.load();
+        const predictions = await model.classify(img);
+        for(let i = 0; i < predictions.length; i++) {
+            if(predictions[i].className === 'Neutral' || predictions[i].className === 'Drawing' || predictions[i].className === 'Sexy') {
+                i++
+            } else {
+                if(predictions[i].probability > 0.7) {
+                    nsfwArr.push("Adult content violates Mealize's community standards.");
+                    const user = getIp();
+                    return user
+                }
+            }
+        }
+        return nsfwArr;
+    };
+
+    const repaint = (file) => {
+        setImage(file)
+    };
+
+    const updateImage = async (e) => {
         e.preventDefault();
         setErrors([]);
+        setImageValidating(true);
+        setImageErrors([]);
         const file = e.target.files[0];
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
         if(fileSize > 2 ) {
             e.target.value = '';
             setImage('');
             return setImageErrors(['The file size is too large. Images must be under 2MB.'])
+        } else {
+            //Filter adult content
+            const url = URL.createObjectURL(file);
+            const img = new Image();
+            img.src = url;
+            const nsfwArr = await nsfwCheck(img);
+            if(nsfwArr.length > 0) {
+                window.location.href = 'https://www.google.com';
+            } else {
+                e.target.style.color = '#608F41'
+                setImageErrors([])
+                setImage(file)
+                //If good, preview the image
+                repaint(file);
+            }
         }
-        else {
-            e.target.style.color = '#608F41'
-            setImageErrors([])
-            setImage(file)
-        }
+        setImageValidating(false);
     }
 
     const handleCategory = async (e) => {
@@ -436,7 +473,7 @@ const PostForm = () => {
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
                         <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
                         {!sessionUser.isNonprofit && (
-                            <div className={((image && !imageErrors.length) && (title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length)) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
+                            <div className={(((image && !imageErrors.length) && !imageValidating) && (title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length)) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
                         )}
                         {sessionUser.isNonprofit && (
                             <div className={((title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length)) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>

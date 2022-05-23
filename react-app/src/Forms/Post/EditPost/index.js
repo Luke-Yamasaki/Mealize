@@ -9,7 +9,8 @@ import { hideModal } from '../../../store/modal';
 
 //Helpers
 import { validatePost, uploadImage } from '../../../utils/Forms/items';
-import { Nonprofit } from '../../../Assets/Icons/Nonprofit';
+import { getIp } from '../../../utils/Forms/signup';
+import * as nsfwjs from 'nsfwjs';
 
 //Styling
 //backgrounds
@@ -21,6 +22,7 @@ import { PreviewBox, UploadingBox, UploadingMessage } from "../../../Components/
 import styles from './EditItem.module.css';
 import styled from 'styled-components';
 import { MaxLengthMessage } from "../../../Components/Styled/PostCard";
+import { Nonprofit } from '../../../Assets/Icons/Nonprofit';
 
 const monthNames = {
     '01': 'Jan',
@@ -101,7 +103,6 @@ const ErrorMessage = styled.div`
 
 export const EditPostForm = ({post}) => {
     const sessionUser = useSelector(state => state.session.user);
-    const categories = useSelector(state => state.categories)
     const dispatch = useDispatch();
     const history = useHistory();
     const [title, setTitle] = useState(post.title);
@@ -111,8 +112,8 @@ export const EditPostForm = ({post}) => {
     const [categoryId, setCategoryId] = useState(post.categoryId.toString());
     const [image, setImage] = useState('');
     const [expDate, setExpDate] = useState(`${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`);
+    const [imageValidating, setImageValidating] = useState(false);
     const [imageUploading, setImageUploading] = useState(false);
-    const [className, setClassName] = useState(categories[post.categoryId].category.toLowerCase())
     const [errors, setErrors] = useState([]);
 
     // errors
@@ -270,26 +271,63 @@ export const EditPostForm = ({post}) => {
         }
     };
 
-    const updateImage = (e) => {
+    const nsfwCheck = async(img) => {
+        const nsfwArr = [];
+        const model = await nsfwjs.load();
+        const predictions = await model.classify(img);
+        for(let i = 0; i < predictions.length; i++) {
+            if(predictions[i].className === 'Neutral' || predictions[i].className === 'Drawing' || predictions[i].className === 'Sexy') {
+                i++
+            } else {
+                if(predictions[i].probability > 0.7) {
+                    nsfwArr.push("Adult content violates Mealize's community standards.");
+                    const user = getIp();
+                    return user
+                }
+            }
+        }
+        return nsfwArr;
+    };
+
+    const repaint = (file) => {
+        setImage(file)
+    };
+
+    const updateImage = async (e) => {
         e.preventDefault();
         setErrors([]);
+        setImageValidating(true);
+        setImageErrors([]);
         const file = e.target.files[0];
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
         if(fileSize > 2 ) {
+            e.target.value = '';
             setImage('');
             return setImageErrors(['The file size is too large. Images must be under 2MB.'])
+        } else {
+            //Filter adult content
+            const url = URL.createObjectURL(file);
+            const img = new Image();
+            img.src = url;
+            const nsfwArr = await nsfwCheck(img);
+            if(nsfwArr.length > 0) {
+                window.location.href = 'https://www.google.com';
+            } else {
+                e.target.style.color = '#608F41'
+                setImageErrors([])
+                setImage(file)
+                //If good, preview the image
+                repaint(file);
+            }
         }
-        else {
-            e.target.style.color = '#608F41'
-            setImageErrors([])
-            setImage(file)
-        }
+        setImageValidating(false);
     };
+
+
 
     const handleCategory = async (e) => {
         e.preventDefault()
         setCategoryId(e.target.value);
-        setClassName(categories[e.target.value].category.toLowerCase())
         setCategoryIdErrors([])
     };
 
@@ -460,6 +498,8 @@ export const EditPostForm = ({post}) => {
                             <div className={
                                (
                                 (image !== '')
+                                ||
+                                (!imageValidating)
                                 ||
                                 (title.length && title !== post.title)
                                 ||

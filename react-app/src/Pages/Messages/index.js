@@ -92,10 +92,10 @@ export const MessagesPage = () => {
     const handleDelete = async(e, message) => {
         e.preventDefault();
         if(messageBoards[message.boardId].messages.length === 1) {
-            const data = await dispatch(deleteConversation(message.boardId))
+            await dispatch(deleteConversation(message.boardId))
             return history.push('/messages');
         } else {
-            const data = await dispatch(deleteMessage(message.id))
+            await dispatch(deleteMessage(message.id))
         }
     };
 

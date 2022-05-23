@@ -30,12 +30,16 @@ export const DeliveryList = styled.ul`
     justify-content: flex-start;
     list-style: none;
     margin-top: 20px;
-    padding: 0px;
+    margin-left: ${props => props.border ? '-40px' : '-200px'};
     width: 100%;
     height: 45px;
     font-family: motiva-sans, sans-serif;
-    font-weight: 800;
-    font-size: 18px;
+    font-weight: ${props => props.border ? '900' : '800'};
+    font-size: ${props => props.border ? '21px' : '18px'};
+    font-style: ${props => props.border ? 'normal' : 'italic'};
+    text-decoration: ${props => props.border ? 'none' : 'underline'};
+    padding-top: 10px;
+    border-bottom: ${props => props.border ? props.border : 'none'};
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
@@ -67,8 +71,8 @@ export const DeliveryTime = styled(Bold)`
 `;
 
 export const DeliveryField = styled.section`
-    width: 75%;
-    height: 100%;
+    width: 1200px;
+    height: 900px;
     display: flex;
     flex-direction: column;
     algin-items: flex-start;
@@ -83,6 +87,8 @@ export const SelectDeliveryBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    background: ${props => props.style ? props.style : 'none'};
+    border-bottom: ${props => props.theme === 'light' ? '1px solid white' : '1px solid #191919'}
 `;
 
 export const SelectDeliveryText = styled(ExtraBold)`

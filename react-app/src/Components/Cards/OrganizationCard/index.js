@@ -5,7 +5,7 @@ import { useTheme } from '../../../Context/ThemeContext';
 import styled from 'styled-components';
 
 const Box = styled.div`
-    width: 400px;
+    width: ${props => props.preview === 'true' ? '350px' : '400px'};
     height: 150px;
     display: flex;
     flex-direction: row;
@@ -78,7 +78,7 @@ const CityState = styled.div`
     justify-content: left;
 `
 
-export const OrganizationCard = ({organization, preview}) => {
+export const OrganizationCard = ({organization,  preview}) => {
     const history = useHistory();
     const { theme } = useTheme();
     const name = organization ? organization.name : '';
@@ -97,7 +97,7 @@ export const OrganizationCard = ({organization, preview}) => {
     }
 
     return (
-        <Box onClick={preview === 'true' ? handleNull : handleClick} theme={theme}>
+        <Box onClick={preview === 'true' ? handleNull : handleClick} theme={theme} preview={preview ? 'true' : 'false'}>
             <Logo src={organization.logoUrl} />
             <InfoBox theme={theme}>
                 <Name>{name}</Name>

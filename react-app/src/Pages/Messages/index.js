@@ -148,17 +148,17 @@ export const MessagesPage = () => {
                     <MessageItem key='placeholderItem'/>
                     {Object.values(messageBoards).reverse().map((messageBoard) =>
                        (<MessageItem key={messageBoard.id} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>
-                            <MessageProfileIcon src={users[messageBoard.messages[messageBoard.messages.length - 1].senderId].profileImageUrl} alt='User profile.'/>
+                            <MessageProfileIcon src={users[Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].senderId].profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>
                                 <MessagePreviewBox>
                                     <MessageUserName theme={theme} size='14px' width='250px'>
-                                        {sessionUser.id === messageBoard.messages[messageBoard.messages.length - 1].senderId ?
+                                        {sessionUser.id === Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].senderId ?
                                         'You' :
-                                        users[messageBoard.messages[messageBoard.messages.length - 1].senderId].firstName + ' ' + users[messageBoard.messages[messageBoard.messages.length - 1].senderId].lastName}
+                                        users[Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1]?.senderId].firstName + ' ' + users[Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].senderId].lastName}
                                     </MessageUserName>
-                                    <MessageContentPreview theme={theme}>{messageBoard.messages[messageBoard.messages.length - 1].content.length > 30 ? messageBoard.messages[messageBoard.messages.length - 1].content.slice(0, 30) + '...' : messageBoard.messages[messageBoard.messages.length - 1].content}</MessageContentPreview>
+                                    <MessageContentPreview theme={theme}>{Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].content.length > 30 ? Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].content.slice(0, 30) + '...' : Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].content}</MessageContentPreview>
                                 </MessagePreviewBox>
-                                <PreviewMessageTime theme={theme}>{createdAtDaysAgo(new Date(messageBoard.messages[messageBoard.messages.length - 1].createdAt))}</PreviewMessageTime>
+                                <PreviewMessageTime theme={theme}>{createdAtDaysAgo(new Date(Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].createdAt))}</PreviewMessageTime>
                             </MessageUserBox>
                         </MessageItem>)
                     )}

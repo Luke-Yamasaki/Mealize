@@ -63,15 +63,29 @@ export const Deliveries = () => {
         return <Redirect to='/' />
     };
 
+    const pending = Object.values(deliveries).filter(delivery => delivery.completed === 0);
+    const accepted = Object.values(deliveries).filter(delivery => delivery.completed === 1);
+
+    // delivery.completed 0=not approved yet 1=approved 2=accepted 3=picked up/droped off 4=cancelled
+
     return loaded && (
         <DeliveryPageWrapper theme={theme}>
             <DeliverySideMenu theme={theme}>
-                <DeliveryList theme={theme}>Deliveries</DeliveryList>
-                {deliveries !== {} && Object.values(deliveries).map((delivery) =>
+                <DeliveryList theme={theme}>Pending Deliveries</DeliveryList>
+                {deliveries !== {} && pending.map((delivery) =>
                     <DeliveryItem key={delivery.id} onClick={e => handleClick(e, delivery)}>
                         <DeliveryTime theme={theme}>{`Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
                         <OrganizationCard organization={delivery.location} preview='true'/>
                     </DeliveryItem>
+
+                )}
+                <DeliveryList theme={theme}>Accepted Deliveries</DeliveryList>
+                {deliveries !== {} && accepted.map((delivery) =>
+                    <DeliveryItem key={delivery.id} onClick={e => handleClick(e, delivery)}>
+                        <DeliveryTime theme={theme}>{`Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
+                        <OrganizationCard organization={delivery.location} preview='true'/>
+                    </DeliveryItem>
+
                 )}
             </DeliverySideMenu>
             <DeliveryField theme={theme}>
@@ -88,14 +102,14 @@ export const Deliveries = () => {
                         </SelectDeliveryText>
                     </SelectDeliveryBox>
                 }
-                {(Object.values(deliveries).length && !deliveryId) &&
+                {(Object.values(deliveries)?.length > 0 && !deliveryId) &&
                     <SelectDeliveryBox>
                         <SelectDeliveryText theme={theme}>
                           Please click on a delivery card in the left menu to see item details.
                         </SelectDeliveryText>
                     </SelectDeliveryBox>
                 }
-                {(Object.values(deliveries).length && deliveryId) &&
+                {(Object.values(deliveries)?.length > 0 && deliveryId) &&
                     <SelectDeliveryBox>
                         <PostCard post={posts[deliveries[deliveryId].postId]} preview='true'/>
                     </SelectDeliveryBox>

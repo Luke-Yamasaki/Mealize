@@ -109,7 +109,7 @@ export const ActionButtons = ({ post }) => {
                 </DeleteBtn>
             </ButtonBox>
             :
-            sessionUser.organizationId !== post?.organizationId ?
+            (!sessionUser.isNonprofit && sessionUser.isManager) && sessionUser.organizationId !== post?.organizationId ?
                 <ButtonBox number='1'>
                     <QuestionBtn theme={theme} onClick={handleQuestion}>
                         <QuestionText theme={theme}>Ask a question</QuestionText>

@@ -32,6 +32,7 @@ export const Deliveries = () => {
     const deliveries = useSelector(state => state.deliveries)
     const sessionUser = useSelector(state => state.session.user)
     const posts = useSelector(state => state.posts.all);
+    const organizations = useSelector(state => state.organizations);
     const [loaded, setLoaded] = useState(false);
     const [deliveryId, setDeliveryId] = useState('')
     const {theme} = useTheme();
@@ -75,7 +76,7 @@ export const Deliveries = () => {
                 {deliveries !== {} && pending.map((delivery) =>
                     <DeliveryItem key={delivery.id} onClick={e => handleClick(e, delivery)}>
                         <DeliveryTime theme={theme}>{`Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
-                        <OrganizationCard organization={delivery.location} preview='true'/>
+                        <OrganizationCard organization={sessionUser.isNonprofit ? organizations.nonprofits[delivery.nonprofitId] : organizations.businesses[delivery.businessId]} preview='true'/>
                     </DeliveryItem>
 
                 )}
@@ -83,7 +84,7 @@ export const Deliveries = () => {
                 {deliveries !== {} && accepted.map((delivery) =>
                     <DeliveryItem key={delivery.id} onClick={e => handleClick(e, delivery)}>
                         <DeliveryTime theme={theme}>{`Picking up on: ${formatDateString(delivery.date)} at ${timesObj[delivery.time]}`}</DeliveryTime>
-                        <OrganizationCard organization={delivery.location} preview='true'/>
+                        <OrganizationCard organization={sessionUser.isNonprofit ? organizations.nonprofits[delivery.nonprofitId] : organizations.businesses[delivery.businessId]} preview='true'/>
                     </DeliveryItem>
 
                 )}

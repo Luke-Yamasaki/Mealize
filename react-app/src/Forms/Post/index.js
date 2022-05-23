@@ -415,6 +415,7 @@ const PostForm = () => {
                                 {imageErrors && (
                                 <ErrorMessage>{imageErrors[0]}</ErrorMessage>
                                 )}
+                                {imageValidating && <ErrorMessage>Validating your image...</ErrorMessage>}
                                 <Fieldset>
                                     <legend className={image ? styles.completed : styles.incomplete }>Image upload</legend>
                                     <input id='imageUpload' style={{borderRadius: '3px', color: '#C2462A'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>

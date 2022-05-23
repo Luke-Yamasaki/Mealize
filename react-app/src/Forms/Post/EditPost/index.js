@@ -438,8 +438,9 @@ export const EditPostForm = ({post}) => {
                                 {imageErrors && (
                                 <ErrorMessage>{imageErrors[0]}</ErrorMessage>
                                 )}
+                                {imageValidating && <ErrorMessage>Validating your image...</ErrorMessage>}
                                 <Fieldset>
-                                    <legend className={image || post.imageUrl ? styles.completed : styles.incomplete }>Image upload</legend>
+                                    <legend className={((image && !imageErrors.length) && !imageValidating) || ((post.imageUrl && !imageErrors.length) && !imageValidating) ? styles.completed : styles.incomplete }>Image upload</legend>
                                     <input id='imageUpload' style={{borderRadius: '3px', color: 'rgb(40, 166, 144)'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} />
                                 </Fieldset>
                             </>

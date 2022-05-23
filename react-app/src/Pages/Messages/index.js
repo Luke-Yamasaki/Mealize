@@ -42,6 +42,8 @@ import {
     DeclineButton,
     MessageWithImages,
     SingleMessage,
+    MessagesSpacer,
+    MessageTitleBox,
     PostDeletedText
 } from "../../Components/Styled/Messages";
 
@@ -91,8 +93,8 @@ export const MessagesPage = () => {
 
     const handleDelete = async(e, message) => {
         e.preventDefault();
-        if(messageBoards[message.boardId].messages.length === 1) {
-            await dispatch(deleteConversation(message.boardId))
+        if(Object.values(messageBoards[id].messages).length === 1) {
+            await dispatch(deleteConversation(id))
             return history.push('/messages');
         } else {
             await dispatch(deleteMessage(message.id))
@@ -142,7 +144,7 @@ export const MessagesPage = () => {
                 <MessageList theme={theme}>
                     All messages
                     <MessageItem key='placeholderItem'/>
-                    {messageBoardsArr.length > 0 && messageBoardsArr.reverse().map((messageBoard) =>
+                    {(messageBoards !== {} && messageBoardsArr.length > 0) && messageBoardsArr.reverse().map((messageBoard) =>
                        (<MessageItem key={messageBoard.id} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>
                             <MessageProfileIcon src={Object.values(messageBoard.messages).at(-1).senderId === sessionUser.id ? sessionUser.profileImageUrl : users[Object.values(messageBoard.messages).at(-1).senderId]?.profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>

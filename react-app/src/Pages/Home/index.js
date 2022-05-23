@@ -1,5 +1,5 @@
 //Hooks
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
 
 //Components

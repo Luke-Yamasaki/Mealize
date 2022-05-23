@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { Black, Bold, ExtraBold } from './Fonts';
+import { Black, Bold } from './Fonts';
 
 export const NavBar = styled.div`
     width: 1600px;

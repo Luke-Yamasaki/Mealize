@@ -2,7 +2,7 @@
 // import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../../Context/ThemeContext';
-import { useUserLocation } from '../../../Context/LocationContext';
+// import { useUserLocation } from '../../../Context/LocationContext';
 
 //helpers
 // import { getGeoLocation } from '../../../utils/geo_location';
@@ -11,15 +11,15 @@ import { useUserLocation } from '../../../Context/LocationContext';
 import { LocationPin } from '../../../Assets/Icons/Location';
 
 //styled-components
-import {NotificationSection, NotificationContainer, NotificationText, NotificationTextBox } from '../../../Components/Styled/NotificationBar';
-import { VectorBox } from '../../Styled/Layout';
+import {NotificationSection, NotificationContainer, NotificationText } from '../../../Components/Styled/NotificationBar';
+
 
 export const NotificationBar = () => {
     const sessionUser = useSelector(state => state.session.user);
     const businesses = useSelector(state => state.organizations.businesses);
     const nonProfits = useSelector(state => state.organizations.nonprofits);
     const organization = !sessionUser ? '' : sessionUser.isNonprofit ? nonProfits[sessionUser.organizationId] : businesses[sessionUser.organizationId];
-    const { userLocation, setUserLocation } = useUserLocation();
+    // const { userLocation, setUserLocation } = useUserLocation();
     const { theme } = useTheme();
 
 

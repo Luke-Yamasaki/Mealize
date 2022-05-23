@@ -1,5 +1,5 @@
 import styled, {css, keyframes} from 'styled-components';
-import { Black, Bold, ExtraBold, Paragraph, Regular } from './Fonts';
+import { Black, Bold, ExtraBold, Paragraph } from './Fonts';
 import { DemoBox } from './Buttons';
 
 const left = keyframes`

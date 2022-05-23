@@ -1,6 +1,6 @@
 //Hooks
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
 import { useHistory } from 'react-router-dom';
 //Packages
@@ -39,7 +39,6 @@ import {
 } from '../../Components/Styled/AuthenticationForm';
 
 import {
-    ButtonBox,
     SubmitButton,
     ButtonText,
     CancelButton,
@@ -162,7 +161,6 @@ export const MessageForm = ({ post }) => {
         } else {
             const messageData = {content, imageUrl: image, receiverId: post.userId, postId: post.id}
             const data = await dispatch(sendMessage(messageData));
-            console.log(data)
             if(data && data.errors) {
                 data.errors.forEach(error => error.toLowerCase().includes('message') ? contentErrArr.push(error) : imageErrArr.push(error));
                 setContentError(contentErrArr);

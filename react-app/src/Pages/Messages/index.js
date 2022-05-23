@@ -10,7 +10,7 @@ import { getAllDeliveries, reviewRequest } from "../../store/deliveries";
 import { getAllPosts } from "../../store/posts";
 
 //Helpers
-import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
+// import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
 
 //Components
 import { PostCard } from "../../Components/Cards/PostCard";
@@ -20,7 +20,6 @@ import {
     MessagePreviewBox,
     MessageProfileIcon,
     MessageSideMenu,
-    MessageTime,
     MessageUserBox,
     MessageUserName,
     MessageContentPreview,
@@ -37,7 +36,6 @@ import {
     BannerTextBox,
     MessageFeed,
     MessageBox,
-    PreviewMessageTime,
     ImageMessage,
     MessageEditDelete,
     AcceptButton,
@@ -95,8 +93,8 @@ export const MessagesPage = () => {
 
     const handleDelete = async(e, message) => {
         e.preventDefault();
-        if(messageBoards[message.boardId].messages.length === 1) {
-            await dispatch(deleteConversation(message.boardId))
+        if(Object.values(messageBoards[id].messages).length === 1) {
+            await dispatch(deleteConversation(id))
             return history.push('/messages');
         } else {
             await dispatch(deleteMessage(message.id))
@@ -112,8 +110,6 @@ export const MessagesPage = () => {
             const messageData = {content: 'Your request has been declined.', imageUrl: '', receiverId: message.senderId, postId: post.id, boardId: message.boardId };
             dispatch(sendReply(messageData))
             dispatch(getAllPosts());
-        } else {
-            console.log(data)
         }
     };
 
@@ -126,8 +122,6 @@ export const MessagesPage = () => {
             const messageData = {content: 'Your request has been approved!', imageUrl: '', receiverId: message.senderId, postId: post.id, boardId: message.boardId };
             dispatch(sendReply(messageData))
             dispatch(getAllPosts());
-        } else {
-            console.log(data)
         }
     };
 
@@ -150,7 +144,7 @@ export const MessagesPage = () => {
                 <MessageList theme={theme}>
                     All messages
                     <MessageItem key='placeholderItem'/>
-                    {messageBoardsArr.length > 0 && messageBoardsArr.reverse().map((messageBoard) =>
+                    {(messageBoards !== {} && messageBoardsArr.length > 0) && messageBoardsArr.reverse().map((messageBoard) =>
                        (<MessageItem key={messageBoard.id} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>
                             <MessageProfileIcon src={Object.values(messageBoard.messages).at(-1).senderId === sessionUser.id ? sessionUser.profileImageUrl : users[Object.values(messageBoard.messages).at(-1).senderId]?.profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>

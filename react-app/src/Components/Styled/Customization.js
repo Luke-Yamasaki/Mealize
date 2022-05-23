@@ -1,6 +1,6 @@
 import styled, { css, keyframes } from 'styled-components';
 import { VectorBox } from './Layout';
-import { expandField, shrinkField } from './Layout';
+import { expandField } from './Layout';
 
 const up = keyframes`
     0% { opacity: 35%; transform: rotate(0deg);}

@@ -8,21 +8,17 @@ import { useState, useEffect } from 'react';
 import { getAllPosts } from '../../store/posts';
 
 //Components
-import { PostsFeed } from '../../Components/PostsFeed';
-import { CategoryFilter } from '../../Components/Filter/category';
-import { FavoritesFilter } from '../../Components/Filter/favorite';
-import { AvailabilityFilter } from '../../Components/Filter/availability';
-import { PostTypeFilter } from '../../Components/Filter/postType';
+// import { PostsFeed } from '../../Components/PostsFeed';
+// import { CategoryFilter } from '../../Components/Filter/category';
+// import { FavoritesFilter } from '../../Components/Filter/favorite';
+// import { AvailabilityFilter } from '../../Components/Filter/availability';
+// import { PostTypeFilter } from '../../Components/Filter/postType';
 import { OrganizationCard } from '../../Components/Cards/OrganizationCard';
 import { PostCard } from '../../Components/Cards/PostCard';
 
 //styled-components
 import {
     PageBackGround,
-    SideBarContainer,
-    FilterTitle,
-    PostsTitle,
-    PostsSection
 } from '../../Components/Styled/Layout';
 
 import {
@@ -33,8 +29,6 @@ import {
 } from '../../Components/Styled/Search';
 
 export const SearchPage = () => {
-    const sessionUser = useSelector(state => state.session.user);
-    const categoriesObj = useSelector(state => state.categories);
     const businesses = useSelector(state => state.organizations.businesses);
     const nonprofits = useSelector(state => state.organizations.nonprofits);
     const posts = useSelector(state => state.posts.all);
@@ -67,8 +61,8 @@ export const SearchPage = () => {
     const allPosts = Object.values(posts);
     const postsResultsArr = allPosts.filter(post => post.title.toLowerCase().includes(lowerSearch) || post.description.toLowerCase().includes(lowerSearch))
 
-    const availableArr = Object.values(posts).filter(post => post.status === 0);
-    const unavailableArr = Object.values(posts).filter(post => post.status > 0);
+    // const availableArr = Object.values(posts).filter(post => post.status === 0);
+    // const unavailableArr = Object.values(posts).filter(post => post.status > 0);
 
     const itemsArr = Object.values(posts).filter(post => post.isItem);
     const requestsArr = Object.values(posts).filter(post => !post.isItem);
@@ -79,7 +73,7 @@ export const SearchPage = () => {
     const grainsArr = Object.values(posts).filter(post => post.categoryId === 4);
     const proteinArr = Object.values(posts).filter(post => post.categoryId === 5);
 
-    const categories = Object.values(categoriesObj);
+    // const categories = Object.values(categoriesObj);
 
     useEffect(() => {
         if(businessSearch.includes(lowerSearch)) {

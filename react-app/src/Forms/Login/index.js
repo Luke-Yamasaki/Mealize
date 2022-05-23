@@ -78,16 +78,6 @@ export const LoginForm = () => {
         setEmail(e.target.value)
     }
 
-    const handlePassword = (e) => {
-        e.preventDefault();
-        if (e.target.value.length > 6) {
-            setPasswordError([]);
-            setPassword(e.target.value)
-        } else {
-            setPassword(e.target.value)
-        }
-    }
-
     const validateEmail = (email) => {
         const validation = validator.isEmail(email);
         return validation

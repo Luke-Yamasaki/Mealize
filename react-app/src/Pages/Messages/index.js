@@ -74,13 +74,17 @@ export const MessagesPage = () => {
     const deliveries = useSelector(state => state.deliveries);
 
     const [editMode, setEditMode] = useState(false);
+    const [loaded, setLoaded] = useState(false);
     const {theme} = useTheme();
+
+    const messageBoardsArr = Object.values(messageBoards);
 
     useEffect(() => {
         if(sessionUser) {
             dispatch(getBoards());
             dispatch(getAllPosts());
             dispatch(getAllDeliveries());
+            setLoaded(true)
         }
     },[dispatch])
 
@@ -140,15 +144,15 @@ export const MessagesPage = () => {
         return <Redirect to='/' />
     }
 
-    return (
+    return loaded && (
         <MessagePageWrapper>
             <MessageSideMenu theme={theme}>
                 <MessageList theme={theme}>
                     All messages
                     <MessageItem key='placeholderItem'/>
-                    {Object.values(messageBoards).reverse().map((messageBoard) =>
+                    {messageBoardsArr.length > 0 && messageBoardsArr.reverse().map((messageBoard) =>
                        (<MessageItem key={messageBoard.id} theme={theme} onClick={(e) => handleClick(e, messageBoard.id)}>
-                            <MessageProfileIcon src={users[Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].senderId].profileImageUrl} alt='User profile.'/>
+                            <MessageProfileIcon src={Object.values(messageBoard.messages).at(-1).senderId === sessionUser.id ? sessionUser.profileImageUrl : users[Object.values(messageBoard.messages).at(-1).senderId]?.profileImageUrl} alt='User profile.'/>
                             <MessageUserBox>
                                 <MessagePreviewBox>
                                     <MessageUserName theme={theme} size='14px' width='250px'>
@@ -158,21 +162,21 @@ export const MessagesPage = () => {
                                     </MessageUserName>
                                     <MessageContentPreview theme={theme}>{Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].content.length > 30 ? Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].content.slice(0, 30) + '...' : Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].content}</MessageContentPreview>
                                 </MessagePreviewBox>
-                                <PreviewMessageTime theme={theme}>{createdAtDaysAgo(new Date(Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].createdAt))}</PreviewMessageTime>
+                                {/* <PreviewMessageTime theme={theme}>{createdAtDaysAgo(new Date(Object.values(messageBoard.messages)[Object.values(messageBoard.messages).length - 1].createdAt))}</PreviewMessageTime> */}
                             </MessageUserBox>
                         </MessageItem>)
                     )}
                 </MessageList>
             </MessageSideMenu>
             <MessageThreadField theme={theme}>
-                {(!id && Object.values(messageBoards).length > 0) &&
+                {(!id && messageBoardsArr.length > 0) &&
                     <SelectMessageBox>
                         <SelectMessageText theme={theme}>
                             Please select a message from the left menu.
                         </SelectMessageText>
                     </SelectMessageBox>
                 }
-                {(!id && !Object.values(messageBoards).length) &&
+                {(!id && !messageBoardsArr.length) &&
                     <SelectMessageBox>
                         <SelectMessageText theme={theme}>
                             {sessionUser.isManager ? "You can send messages by clicking on the 'Ask a question' button on items or request." : "You can send messages by clicking on the 'Ask a question' or 'Notify manager' button on items or request."}
@@ -180,7 +184,7 @@ export const MessagesPage = () => {
                     </SelectMessageBox>
                 }
                 <Route path='/messages/:id'>
-                    {(id && (messageBoards[id] && Object.values(messageBoards).length > 0)) &&
+                    {(id && (messageBoards[id] && messageBoardsArr.length > 0)) &&
                         <>
                             <MessengerBanner theme={theme}>
                                 <MessageProfileIcon square='55px'
@@ -232,13 +236,13 @@ export const MessagesPage = () => {
                                 </BannerTextBox>
                             </MessengerBanner>
                             <MessageFeed>
-                                {Object.values(messageBoards[id]?.messages).map((message) =>
+                                {Object.values(messageBoards[id].messages).map((message) =>
                                     <MessageBox key={message.id}>
                                         <SingleMessage theme={theme}>
                                             <MessageContainer  direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                                 <UserAndTime>
-                                                    <MessageProfileIcon src={users[message.senderId].profileImageUrl} alt='User profile.' square='40px'/>
-                                                    <MessageTime theme={theme}>{daysAgo(message)}</MessageTime>
+                                                    <MessageProfileIcon src={message.senderId === sessionUser.id ? sessionUser.profileImageUrl : users[message.senderId]?.profileImageUrl} alt='User profile.' square='40px'/>
+                                                    {/* <MessageTime theme={theme}>{daysAgo(message)}</MessageTime> */}
                                                 </UserAndTime>
                                                 {message.id === editMode && message.senderId === sessionUser.id ?
                                                     <EditMessageInput message={message} changeMode={changeMode} />
@@ -260,7 +264,7 @@ export const MessagesPage = () => {
                                             }
                                             {((message.content.includes('I would like to pick up this item') && message.postId === null) || (message.content.includes('I found a good item!') && message.postId === null)) &&
                                             <MessageWithImages>
-                                                <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                <PostContainer theme={theme} direction={message?.senderId === sessionUser?.id ? 'row-reverse' : 'row'}>
                                                     <PostBox theme={theme}>
                                                         <PostDeletedText>The item you found has been deleted...</PostDeletedText>
                                                     </PostBox>
@@ -281,7 +285,7 @@ export const MessagesPage = () => {
                                             <MessageWithImages>
                                                 <PostContainer theme={theme} marginTop='0px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                                     <PostBox theme={theme}>
-                                                        <PostCard post={posts[message.postId]} preview='true'/>
+                                                        <PostCard post={posts[message?.postId]} preview='true'/>
                                                     </PostBox>
                                                 </PostContainer>
                                                 {message.senderId === sessionUser.id &&
@@ -298,12 +302,12 @@ export const MessagesPage = () => {
                                             }
                                             {(message.imageUrl && !message.postId )&&
                                             <MessageWithImages>
-                                                <PostContainer theme={theme} direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
+                                                <PostContainer theme={theme} direction={message?.senderId === sessionUser?.id ? 'row-reverse' : 'row'}>
                                                     <PostBox theme={theme}>
-                                                        <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
+                                                        <ImageMessage src={message?.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
                                                     </PostBox>
                                                 </PostContainer>
-                                                {message.senderId === sessionUser.id &&
+                                                {message?.senderId === sessionUser.id &&
                                                 <MessageEditDelete>
                                                     <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
                                                         <EditIcon theme={theme}/>
@@ -319,7 +323,7 @@ export const MessagesPage = () => {
                                             <MessageWithImages>
                                                 <PostContainer theme={theme} marginTop='10px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
                                                     <PostBox theme={theme}>
-                                                        <PostCard post={posts[message.postId]} preview='true'/>
+                                                        <PostCard post={posts[message?.postId]} preview='true'/>
                                                     </PostBox>
                                                 </PostContainer>
                                                 <PostContainer theme={theme} marginTop='15px' direction={message.senderId === sessionUser.id ? 'row-reverse' : 'row'}>
@@ -327,7 +331,7 @@ export const MessagesPage = () => {
                                                         <ImageMessage src={message.imageUrl} alt='User upload' style={{width:'300px', height:'300px'}}/>
                                                     </PostBox>
                                                 </PostContainer>
-                                                {message.senderId === sessionUser.id &&
+                                                {message?.senderId === sessionUser.id &&
                                                 <MessageEditDelete>
                                                     <VectorBox square='20px' resize='true' cursor='pointer' onClick={e => handleEdit(e, message)}>
                                                         <EditIcon theme={theme} />
@@ -339,13 +343,13 @@ export const MessagesPage = () => {
                                                 }
                                             </MessageWithImages>
                                             }
-                                            {((!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) && (posts[message.postId]?.status === 1)) &&
+                                            {((!sessionUser.isNonprofit && message.content.includes('I would like to pick up this item')) && (posts[message.postId].status === 1)) &&
                                                 <MessageButtons>
                                                     <MessageButtonsDiv>
-                                                        <DeclineButton onClick={e => handleDecline(e, posts[message.postId], message)}>
+                                                        <DeclineButton onClick={e => handleDecline(e, posts[message?.postId], message)}>
                                                             <ButtonText>Decline</ButtonText>
                                                         </DeclineButton>
-                                                        <AcceptButton onClick={e => handleAccept(e, posts[message.postId], message)}>
+                                                        <AcceptButton onClick={e => handleAccept(e, posts[message?.postId], message)}>
                                                             <ButtonText>Accept</ButtonText>
                                                         </AcceptButton>
                                                     </MessageButtonsDiv>

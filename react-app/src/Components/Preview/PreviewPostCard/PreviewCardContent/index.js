@@ -51,10 +51,10 @@ export const PreviewCardContent = ({ props }) => {
         <Card color={styleObj} height='390px'>
             <PreviewTitleBox>
                 <VectorBox square='30px' resize='32px'>
-                    <CompanyLogo src={organization.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='#191919'/>
+                    <CompanyLogo src={organization?.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='#191919'/>
                 </VectorBox>
                 <TitleTextContainer>
-                    <CompanyName>{organization.name}</CompanyName>
+                    <CompanyName>{organization?.name}</CompanyName>
                 </TitleTextContainer>
                 <ItemDateText theme={theme}>now</ItemDateText>
             </PreviewTitleBox>

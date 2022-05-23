@@ -114,7 +114,7 @@ export const MessagePreviewBox = styled(MessageUserBox)`
 
 export const UserAndTime = styled.div`
     width: 50px;
-    height: 60px;
+    height: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;

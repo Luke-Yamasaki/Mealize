@@ -296,8 +296,10 @@ export const EditPostForm = ({post}) => {
     const updateImage = async (e) => {
         e.preventDefault();
         setErrors([]);
-        setImageValidating(true);
+        setNoChange([]);
         setImageErrors([]);
+        setImageValidating(true);
+
         const file = e.target.files[0];
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
         if(fileSize > 2 ) {
@@ -327,12 +329,16 @@ export const EditPostForm = ({post}) => {
 
     const handleCategory = async (e) => {
         e.preventDefault()
+        setErrors([]);
+        setNoChange([]);
+        setCategoryIdErrors([]);
         setCategoryId(e.target.value);
-        setCategoryIdErrors([])
     };
 
     const handleNumber = (e) => {
         e.preventDefault();
+        setErrors([]);
+        setNoChange([]);
         if(e.target.value.length > 3 && e.target.value > 1000) {
             setNumber('');
             setNumberErrors(['Please select a number between 1 and 1,000.'])
@@ -352,6 +358,8 @@ export const EditPostForm = ({post}) => {
 
     const handleExp = (e) => {
         e.preventDefault();
+        setErrors([]);
+        setNoChange([]);
         setExpDate(e.target.value);
 
         if(parseInt(e.target.value.slice(0, 2)) !== 20 || parseInt(e.target.value.slice(0, 4)) < parseInt(new Date().getFullYear())) {
@@ -378,6 +386,7 @@ export const EditPostForm = ({post}) => {
     const handleTitle = (e) => {
         e.preventDefault();
         setErrors([]);
+        setNoChange([]);
         setTitleErrors([]);
         const titleInput = e.target.value.slice(0, 1).toUpperCase().concat(e.target.value.slice(1, e.target.value.length))
         setTitle(titleInput);
@@ -390,6 +399,7 @@ export const EditPostForm = ({post}) => {
     const handleDescription = (e) => {
         e.preventDefault();
         setErrors([]);
+        setNoChange([]);
         setDescriptionErrors([]);
         const descriptionInput = e.target.value.slice(0, 1).toUpperCase().concat(e.target.value.slice(1, e.target.value.length));
         setDescription(descriptionInput);

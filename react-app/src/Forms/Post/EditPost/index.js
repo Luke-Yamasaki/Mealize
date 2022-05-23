@@ -411,7 +411,7 @@ export const EditPostForm = ({post}) => {
                         )}
                         {(!titleErrors && title.length === 25) && <MaxLengthMessage>You have reached the character limit.</MaxLengthMessage>}
                         <Fieldset>
-                        <legend className={(title.length >= 3 && title.length < 15) || (title.length >= 15 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
+                        <legend className={(title.length >= 3 && title.length < 16) || (title.length >= 16 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
                                 <TitleTextArea placeholder='Enter a title... (25 character limit)' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={handleTitle} />
                         </Fieldset>
                         {descriptionErrors && (

@@ -59,7 +59,7 @@ export const CardContent = ({ post, preview }) => {
         <Card status={post?.status > 0 && post?.userId !== sessionUser?.id} color={styleObj} height={!sessionUser ? '350px' : preview === 'true' ? '350px' : post?.status > 0 ? '350px' : '390px'}>
             {(post?.status > 0 && preview === 'false') &&
             <ReservedBackGround>
-                {post?.status === 1 && post?.isItem ? 'Reserved' : post?.status === 2 && post?.isItem ? 'In transit...' : 'Completed'}
+                {post?.status === 1 && post?.isItem ? 'Reserved' : post?.status === 2 && post?.isItem ? 'Confirmed' : 'Completed'}
             </ReservedBackGround>}
             <TitleBox to={`/organizations/${organization.id}`}>
                 <VectorBox square='30px' resize='32px'>

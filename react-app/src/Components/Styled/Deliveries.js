@@ -21,6 +21,20 @@ export const DeliverySideMenu = styled.section`
     justify-content: flex-start;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     border: ${props => props.theme === 'light' ? '#B7B7B7' : 'white'};
+
+    &::-webkit-scrollbar {
+        width: 17px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: ${props => props.theme === 'light' ? 'white' : '#191919'};
+        border-radius: 15px;
+        border: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.2)' : '1px solid rgba(255, 255, 255, 0.25)'};
+    }
 `;
 
 export const DeliveryList = styled.ul`
@@ -78,7 +92,7 @@ export const DeliveryField = styled.section`
     algin-items: flex-start;
     justify-content: space-between;
     background-color: ${props => props.theme === 'light' ? '#F1F1F1' : '#191919'};
-    border-left: ${props => props.theme === 'light' ? '1px solid #B7B7B7' : '1px solid #F1F1F1'};
+    border-left: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.1)' : '1px solid rgba(255, 255, 255, 0.1)'};
 `;
 
 export const SelectDeliveryBox = styled.div`
@@ -88,7 +102,7 @@ export const SelectDeliveryBox = styled.div`
     justify-content: center;
     align-items: center;
     background: ${props => props.style ? props.style : 'none'};
-    border-bottom: ${props => props.theme === 'light' ? '1px solid white' : '1px solid #191919'}
+    border-bottom: ${props => props.theme === 'light' ? '1px solid rgba(255, 255, 255, 0.1)' : '1px solid rgba(0, 0, 0, 0.1)'}
 `;
 
 export const SelectDeliveryText = styled(ExtraBold)`

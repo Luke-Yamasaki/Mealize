@@ -108,7 +108,7 @@ export const Deliveries = () => {
                 }
                 {(Object.values(deliveries)?.length > 0 && !deliveryId) &&
                     <DeliveryField theme={theme}>
-                        <SelectDeliveryBox>
+                        <SelectDeliveryBox theme={theme}>
                             <SelectDeliveryText theme={theme}>
                             Please click on a delivery card in the left menu to see item details.
                             </SelectDeliveryText>

@@ -8,6 +8,8 @@ import { postItem } from '../../store/posts';
 import { hideModal } from '../../store/modal';
 //Helpers
 import { validatePost, uploadImage } from '../../utils/Forms/items';
+import { getIp } from '../../utils/Forms/signup';
+import * as nsfwjs from 'nsfwjs';
 
 //backgrounds
 import { requestBackgrounds } from './backgrounds';
@@ -19,6 +21,7 @@ import { UploadingBox, UploadingMessage } from "../../Components/Styled/PreviewS
 import styles from './Item.module.css';
 import styled from 'styled-components';
 import { PreviewBox } from "../../Components/Styled/PreviewSection";
+import { MaxLengthMessage } from "../../Components/Styled/PostCard";
 // import * as preview from '../../Components/PostCard';
 
 
@@ -39,6 +42,7 @@ const Fieldset = styled.fieldset`
     border: none;
     width: 300px;
     height: 40px;
+    font-family: motiva-sans, sans-serif;
 `;
 
 const TextareaFieldset = styled.fieldset`
@@ -47,6 +51,7 @@ const TextareaFieldset = styled.fieldset`
     border: none;
     width: 300px;
     height: 100px;
+    font-family: motiva-sans, sans-serif;
 `;
 
 const Textarea = styled.textarea`
@@ -56,6 +61,7 @@ const Textarea = styled.textarea`
     border: none;
     border-radius: 5px;
     hyphens: auto;
+    font-family: motiva-sans, sans-serif;
 `;
 
 const TitleTextArea = styled.textarea`
@@ -65,6 +71,7 @@ const TitleTextArea = styled.textarea`
     border: none;
     border-radius: 5px;
     hyphens: auto;
+    font-family: motiva-sans, sans-serif;
 `;
 
 const FormContent = styled.div`
@@ -74,6 +81,7 @@ const FormContent = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    font-family: motiva-sans, sans-serif;
 `;
 
 const ErrorMessage = styled.div`
@@ -82,12 +90,12 @@ const ErrorMessage = styled.div`
     text-justify: center;
     width: 300px;
     height: 10px;
+    font-family: motiva-sans, sans-serif;
 `;
 
 
 const PostForm = () => {
     const sessionUser = useSelector(state => state.session.user);
-    const categories = useSelector(state => state.categories)
     const dispatch = useDispatch();
     const history = useHistory();
     const [title, setTitle] = useState('');
@@ -97,8 +105,8 @@ const PostForm = () => {
     const [categoryId, setCategoryId] = useState('');
     const [image, setImage] = useState(null);
     const [expDate, setExpDate] = useState('');
+    const [imageValidating, setImageValidating] = useState(false);
     const [imageUploading, setImageUploading] = useState(false);
-    const [className, setClassName] = useState('dairy')
     const [errors, setErrors] = useState([]);
 
     // errors
@@ -200,34 +208,7 @@ const PostForm = () => {
     const handleErrors = (e) => {
         e.preventDefault();
 
-        const imageErrorsArr = [];
-        const titleErrorsArr = [];
-        const descriptionErrorsArr = [];
-        const numberErrorsArr = [];
-        const categoryIdErrorsArr = []
-        const expErrorsArr = [];
-
-        if(titleErrors?.length || descriptionErrors?.length || numberErrors?.length || categoryIdErrors?.length || imageErrors?.length || expDateErrors?.length) {
-            return setErrors(['Please resolve errors before submitting.'])
-        } else if(!categoryId) {
-          categoryIdErrorsArr.push("Please select a food category.")
-        } else if(!sessionUser.isNonprofit && !image) {
-            imageErrorsArr.push("Please select a .jpg or .png image file to upload.")
-        } else if(title.length > 11 && !title.includes(' ')) {
-            titleErrorsArr.push("Please add a line break to your title.")
-        } else if(!title.length) {
-            titleErrorsArr.push("Please enter a title in 25 characters or less.")
-        } else if(!description.length) {
-            descriptionErrorsArr.push("Please enter a description in 120 characters or less.")
-        } else if(!sessionUser.isNonprofit && !number) {
-            numberErrorsArr.push("Please select a quantity for your post.")
-        } else if(!number) {
-            numberErrorsArr.push('Please select a desired quantity for your request.')
-        } else if(sessionUser.isNonprofit && !expDate) {
-            expErrorsArr.push('Please select an end date for your request.')
-        } else if(!expDate) {
-            expErrorsArr.push('Please select an expiration date for your item.')
-        } else if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+        if(!sessionUser.isNonprofit && (!imageErrors.length || !titleErrors.length || !descriptionErrors.length || !categoryIdErrors.length || !expDateErrors.length)) {
             setImageErrors([]);
             setTitleErrors([]);
             setDescriptionErrors([]);
@@ -235,7 +216,7 @@ const PostForm = () => {
             setCategoryIdErrors([]);
             setExpDateErrors([]);
             return handleSubmit(e)
-        } else if(sessionUser.isNonprofit && (!titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+        } else if(sessionUser.isNonprofit && (!titleErrors.length || !descriptionErrors.length || !categoryIdErrors.length || !expDateErrors.length)) {
             setTitleErrors([]);
             setDescriptionErrors([]);
             setNumberErrors([]);
@@ -243,54 +224,85 @@ const PostForm = () => {
             setExpDateErrors([]);
             return handleSubmit(e)
         } else {
-            setImageErrors(imageErrorsArr);
-            setTitleErrors(titleErrorsArr);
-            setDescriptionErrors(descriptionErrorsArr);
-            setNumberErrors(numberErrorsArr);
-            setCategoryIdErrors(categoryIdErrorsArr);
-            setExpDateErrors(expErrorsArr);
+            if(titleErrors?.length || descriptionErrors?.length || numberErrors?.length || categoryIdErrors?.length || imageErrors?.length || expDateErrors?.length) {
+                return setErrors(['Please resolve errors before submitting.'])
+            }
         }
-
-        setImageErrors(imageErrorsArr);
-        setTitleErrors(titleErrorsArr);
-        setDescriptionErrors(descriptionErrorsArr);
-        setNumberErrors(numberErrorsArr);
-        setCategoryIdErrors(categoryIdErrorsArr);
-        setExpDateErrors(expErrorsArr);
     };
 
-    const updateImage = (e) => {
+    const nsfwCheck = async(img) => {
+        const nsfwArr = [];
+        const model = await nsfwjs.load();
+        const predictions = await model.classify(img);
+        for(let i = 0; i < predictions.length; i++) {
+            if(predictions[i].className === 'Neutral' || predictions[i].className === 'Drawing' || predictions[i].className === 'Sexy') {
+                i++
+            } else {
+                if(predictions[i].probability > 0.7) {
+                    nsfwArr.push("Adult content violates Mealize's community standards.");
+                    const user = getIp();
+                    return user
+                }
+            }
+        }
+        return nsfwArr;
+    };
+
+    const repaint = (file) => {
+        setImage(file)
+    };
+
+    const updateImage = async (e) => {
+        e.preventDefault();
+        setErrors([]);
+        setImageValidating(true);
+        setImageErrors([]);
         const file = e.target.files[0];
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
         if(fileSize > 2 ) {
             e.target.value = '';
             setImage('');
-            setImageErrors(['The file size is too large. Images must be under 2MB.'])
+            return setImageErrors(['The file size is too large. Images must be under 2MB.'])
+        } else {
+            //Filter adult content
+            const url = URL.createObjectURL(file);
+            const img = new Image();
+            img.src = url;
+            const nsfwArr = await nsfwCheck(img);
+            if(nsfwArr.length > 0) {
+                window.location.href = 'https://www.google.com';
+            } else {
+                e.target.style.color = '#608F41'
+                setImageErrors([])
+                setImage(file)
+                //If good, preview the image
+                repaint(file);
+            }
         }
-        else {
-            e.target.style.color = '#608F41'
-            setImageErrors([])
-            setImage(file)
-        }
+        setImageValidating(false);
     }
 
     const handleCategory = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setErrors([]);
         setCategoryId(e.target.value);
-        setClassName(categories[e.target.value].category.toLowerCase())
         setCategoryIdErrors([])
     };
 
     const handleNumber = (e) => {
         e.preventDefault();
+        setErrors([]);
         if(e.target.value.length > 3 && e.target.value > 1000) {
             setNumber('');
             e.target.value = '';
-            setNumberErrors(['Please select a number between 1 and 1,000.'])
+            return setNumberErrors(['Please select a number between 1 and 1,000.'])
         } else if (e.target.value <= 0) {
             setNumber('');
             e.target.value='';
-            setNumberErrors(['Please select a number greater than zero.'])
+            return setNumberErrors(['Please select a number greater than zero.'])
+        } else if (isNaN(e.target.value)) {
+            e.target.value='';
+            return setNumberErrors(['Please only enter numbers.'])
         } else {
             setNumberErrors([])
             setNumber(e.target.value)
@@ -299,8 +311,13 @@ const PostForm = () => {
 
     const handleExp = (e) => {
         e.preventDefault();
+        setErrors([]);
         setExpDate(e.target.value);
         setExpDateErrors([]);
+        if(parseInt(e.target.value.slice(0, 2)) !== 20 || parseInt(e.target.value.slice(0, 4)) < parseInt(new Date().getFullYear())) {
+            e.target.value = '';
+            return setExpDateErrors(['Please select a valid date between this year and the year 2099.']);
+        }
     }
 
     const handleNull = (e) => {
@@ -310,38 +327,26 @@ const PostForm = () => {
 
     const handleTitle = (e) => {
         e.preventDefault();
-        setTitleErrors([])
-        const titleErrorsArr = [];
+        setErrors([]);
+        setTitleErrors([]);
         const titleInput = e.target.value.slice(0, 1).toUpperCase().concat(e.target.value.slice(1, e.target.value.length))
-        setTitle(titleInput)
-
-        if(title.length > 11 && !title.includes(' ')) {
-            titleErrorsArr.push("Please add a line break to your title.")
-            return setTitleErrors(titleErrorsArr)
+        setTitle(titleInput);
+        if(title.length >= 15 && !title.includes(' ')) {
+            setTitle(titleInput.slice(0, 15));
+            return setTitleErrors(['Please delete one letter and enter a space between words.'])
         }
-        setTitleErrors(titleErrorsArr)
     };
 
     const handleDescription = (e) => {
         e.preventDefault();
+        setErrors([]);
         setDescriptionErrors([]);
-        const descriptionErrArr = [];
         const descriptionInput = e.target.value.slice(0, 1).toUpperCase().concat(e.target.value.slice(1, e.target.value.length));
-        const descriptionArr = descriptionInput.split(' ')
         setDescription(descriptionInput);
-
-        if(descriptionInput.length > 11 && !descriptionInput.includes(' ')) {
-            descriptionErrArr.push("Please add a line break to your description.");
-            return setDescriptionErrors(descriptionErrArr);
-        } else {
-            descriptionArr.forEach(desc => {
-                if(desc.length > 20) {
-                    descriptionErrArr.push('Please add a line break to your description');
-                    return setDescriptionErrors(descriptionErrArr);
-                }
-            })
-            return setDescriptionErrors(descriptionErrArr);
-        };
+        if(description.length >= 30 && !description.includes(' ')) {
+            setDescription(descriptionInput.slice(0, 30));
+            return setDescriptionErrors(['Please delete one letter and enter a space between words.'])
+        }
     };
 
     const handleReset = (e) => {
@@ -349,6 +354,7 @@ const PostForm = () => {
         const imageInput = document.getElementById('imageUpload');
         imageInput.value = '';
         imageInput.style.color = '#C2462A';
+        setErrors([]);
         setImageErrors([]);
         setTitleErrors([]);
         setCategoryIdErrors([]);
@@ -363,7 +369,6 @@ const PostForm = () => {
         setUnit('lbs.');
         setExpDate('');
         setCategoryId('');
-        setClassName('dairy')
     };
 
 
@@ -371,14 +376,14 @@ const PostForm = () => {
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
             <PreviewBox>
                 <PreviewSection type='item' props={props} />
+                {imageUploading &&
+                    <UploadingBox>
+                        <UploadingMessage>
+                            Uploading image...
+                        </UploadingMessage>
+                    </UploadingBox>
+                }
             </PreviewBox>
-            {imageUploading &&
-                <UploadingBox>
-                    <UploadingMessage>
-                        Uploading image...
-                    </UploadingMessage>
-                </UploadingBox>
-               }
             <FormSection>
                 <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '675px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
                     <FormContent>
@@ -410,6 +415,7 @@ const PostForm = () => {
                                 {imageErrors && (
                                 <ErrorMessage>{imageErrors[0]}</ErrorMessage>
                                 )}
+                                {imageValidating && <ErrorMessage>Validating your image...</ErrorMessage>}
                                 <Fieldset>
                                     <legend className={image ? styles.completed : styles.incomplete }>Image upload</legend>
                                     <input id='imageUpload' style={{borderRadius: '3px', color: '#C2462A'}} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
@@ -419,23 +425,25 @@ const PostForm = () => {
                         {titleErrors && (
                             <ErrorMessage>{titleErrors[0]}</ErrorMessage>
                         )}
+                        {(!titleErrors && title.length === 25) && <MaxLengthMessage>You have reached the character limit.</MaxLengthMessage>}
                         <Fieldset>
-                        <legend className={(title.length >= 3 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
-                                <TitleTextArea placeholder='Title' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={handleTitle} />
+                        <legend className={(title.length >= 3 && title.length < 15) || (title.length >= 15 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
+                                <TitleTextArea placeholder='Enter a title... (25 character limit)' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={handleTitle} />
                         </Fieldset>
                         {descriptionErrors && (
                             <ErrorMessage>{descriptionErrors[0]}</ErrorMessage>
                         )}
+                        {(description.length === 100) && <MaxLengthMessage>You have reached the character limit.</MaxLengthMessage>}
                         <TextareaFieldset>
-                        <legend className={(description.length >= 3 && description.length <= 17) || (description.length > 17 && description.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
-                            <Textarea placeholder='Description' type='text' minLength='3' maxLength='100' value={description} onChange={handleDescription} />
+                        <legend className={(description.length >= 3 && !descriptionErrors.length) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
+                            <Textarea placeholder='Enter a description... (100 character limit)' type='text' minLength='3' maxLength='100' value={description} onChange={handleDescription} />
                         </TextareaFieldset>
                         {numberErrors && (
                             <ErrorMessage>{numberErrors[0]}</ErrorMessage>
                         )}
                         <Fieldset>
                         <legend className={number && unit ? styles.completed : styles.incomplete}>Item quantity</legend>
-                            <input style={{width: '175px', height: '20px', border: 'none', borderRadius: '5px', paddingLeft: '5px'}} id='amount' placeholder='Enter a number: (1-1000)' type='number' value={number} onChange={handleNumber} />
+                            <input style={{fontFamily: 'motiva-sans, sans-serif', width: '175px', height: '20px', border: 'none', borderRadius: '5px', paddingLeft: '5px'}} id='amount' placeholder='Enter a number: (1-1000)' type='number' value={number} onChange={handleNumber} />
                             <select value={unit} onChange={(e) => setUnit(e.target.value)}>
                                 <optgroup label='General'>
                                     <option>count</option>
@@ -459,14 +467,14 @@ const PostForm = () => {
                             <ErrorMessage>{expDateErrors[0]}</ErrorMessage>
                         )}
                         <Fieldset>
-                            <legend className={expDate ? styles.completed : styles.incomplete}>Expiration date</legend>
+                            <legend className={expDate && !expDateErrors.length ? styles.completed : styles.incomplete}>Expiration date</legend>
                             <input style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} type='date' min={new Date().toISOString().split('T')[0]} value={expDate} onChange={handleExp} />
                         </Fieldset>
                     </FormContent>
                     <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '10px', justifyContent: 'flex-end', width: '325px', height: '50px'}}>
                         <div className={styles.reset} onClick={handleReset} ><div>Reset</div></div>
                         {!sessionUser.isNonprofit && (
-                            <div className={((image && !imageErrors.length) && (title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length)) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
+                            <div className={(((image && !imageErrors.length) && !imageValidating) && (title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length)) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>
                         )}
                         {sessionUser.isNonprofit && (
                             <div className={((title && !titleErrors.length) && (description && !descriptionErrors.length) && (number && !numberErrors.length) && (categoryId && !categoryIdErrors.length) && (expDate && !expDateErrors.length)) ? styles.submit : styles.hold} onClick={(e) => e.target.className === 'hold' ? handleNull(e) :  handleErrors(e)}>Submit</div>

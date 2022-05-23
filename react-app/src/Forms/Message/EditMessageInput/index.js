@@ -185,6 +185,11 @@ export const EditMessageInput = ({message, changeMode}) => {
         changeMode(false);
     };
 
+    const handleNull = (e) => {
+        e.preventDefault();
+        return null
+    }
+
     return (
         <MessageInputForm theme={theme} height='auto' small='true' onSubmit={handleSubmit}>
             {contentError.length > 0 &&
@@ -208,7 +213,7 @@ export const EditMessageInput = ({message, changeMode}) => {
                     <MessageFileInput id='image'  theme={theme} type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage}/>
                 </FileBox>
                 <CancelMessageButton theme={theme} onClick={cancel}>Cancel</CancelMessageButton>
-                <SubmitMessageButton theme={theme} onClick={handleSubmit}>Submit</SubmitMessageButton>
+                <SubmitMessageButton theme={theme} onClick={imageValidating ? handleNull : handleSubmit}>Submit</SubmitMessageButton>
             </MessageFileAndButtons>
         </MessageInputForm>
     )

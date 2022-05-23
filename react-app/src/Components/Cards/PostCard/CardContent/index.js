@@ -55,11 +55,12 @@ export const CardContent = ({ post, preview }) => {
         return null
     }
 
-    console.log(preview);
-
     return (
-        <Card status={post?.status > 0 && post?.userId !== sessionUser?.id} color={styleObj} height={!sessionUser ? '350px' : preview === 'true' ? '350px' : post?.status > 0 && post?.userId !== sessionUser?.id ? '350px' : '390px'}>
-            {(post?.status > 0 && preview === 'false' && post?.userId !== sessionUser?.id) && <ReservedBackGround>{post?.status === 1 ? 'Reserved' : post?.status === 2 ? 'In transit...' : 'Completed'}</ReservedBackGround>}
+        <Card status={post?.status > 0 && post?.userId !== sessionUser?.id} color={styleObj} height={!sessionUser ? '350px' : preview === 'true' ? '350px' : post?.status > 0 ? '350px' : '390px'}>
+            {(post?.status > 0 && preview === 'false') &&
+            <ReservedBackGround>
+                {post?.status === 1 && post?.isItem ? 'Reserved' : post?.status === 2 && post?.isItem ? 'In transit...' : 'Completed'}
+            </ReservedBackGround>}
             <TitleBox to={`/organizations/${organization.id}`}>
                 <VectorBox square='30px' resize='32px'>
                     <CompanyLogo src={organization?.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='#191919'/>
@@ -84,7 +85,7 @@ export const CardContent = ({ post, preview }) => {
             <DescriptionBox>
                 <DescriptionText theme={theme}>{post?.description}</DescriptionText>
             </DescriptionBox>
-            {((preview === 'false' && post?.status === 0) || (preview === 'false' && post?.organizationId === sessionUser?.organizationId) || (preview === 'false' && post?.organizationId === sessionUser?.organizationId)) && <ActionButtons post={post} />}
+            {((preview === 'false' && post?.status === 0) || (preview === 'false' && post?.status === 0 && post?.organizationId === sessionUser?.organizationId)) && <ActionButtons post={post} />}
         </Card>
     )
 };

@@ -26,9 +26,8 @@ class Organization(db.Model):
     posts = db.relationship('Post', back_populates='organization', cascade='all, delete-orphan')
     calendar = db.relationship('Calendar', back_populates='organization', cascade='all, delete-orphan')
     events = db.relationship('Event', back_populates='organization', cascade='all, delete-orphan')
-    delivery = db.relationship('Delivery', back_populates='location')
     watchlist = db.relationship('Watchlist', back_populates='organization')
-    
+
     def to_dict(self):
         return {
             'id': self.id,

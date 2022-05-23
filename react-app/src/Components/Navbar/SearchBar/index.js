@@ -30,7 +30,7 @@ export const SearchBar = () => {
             <VectorBox square='20px'>
                 <MagnifyingGlass theme={theme}/>
             </VectorBox>
-            <SearchInput theme={theme} type='text' placeholder="Search" value={searchword} onChange={(e) => setSearchword(e.target.value)}/>
+            <SearchInput theme={theme} type='text' maxLength='40' placeholder="Search" value={searchword} onChange={(e) => setSearchword(e.target.value)}/>
             <GradientLogoType entering={searchword.length > 0}>Mealize</GradientLogoType>
             <SearchSubmitInput type="submit" style={{display: 'none'}}/>
             <ResetSearchBox entering={searchword.length > 0}>

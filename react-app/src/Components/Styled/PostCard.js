@@ -179,17 +179,17 @@ export const InfoContainer = styled(BannerTextContainer)`
 `;
 
 export const ItemTitle = styled(Bold)`
-    max-width: 200px;
-    font-size: 0.85em;
+    width: 142.5px;
+    word-break: break-all;
+    font-size: 13px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
     font-weight: ${props => props.theme === 'light' ? '700' : '500'};
 `;
 
 export const ItemQuantity = styled(Medium)`
-    max-width: 75px;
     font-size: 0.65em;
-    max-width: 75px;
+    width: 72.5px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
     font-weight: ${props => props.theme === 'light' ? '700' : '400'};
@@ -212,11 +212,12 @@ export const DescriptionText = styled(Medium)`
     font-weight: ${props => props.theme === 'light' ? '700' : '300'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
     font-size: 0.65em;
-    width: 260px;
+    width: 240px;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
+    word-break: break-all;
 `;
 
 export const ButtonBox = styled(ExpBanner)`
@@ -274,4 +275,12 @@ export const ReservedBackGround = styled(ExtraBold)`
     border-radius: 5px;
     letter-spacing: 1px;
     font-weight: 500;
+`;
+
+export const MaxLengthMessage = styled.div`
+    width: 300px;
+    height: 20px;
+    color: rgba(255, 0, 0, 0.85);
+    font-family: motiva-sans, sans-serif;
+    font-size: 10px;
 `;

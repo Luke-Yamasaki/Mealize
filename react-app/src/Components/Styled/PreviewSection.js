@@ -20,7 +20,7 @@ export const PreviewBox = styled.div`
     justify-content: center;
     gap: 10px;
     width: 600px;
-    height: 900px;
+    height: 600px;
     cursor: default;
 `;
 
@@ -35,8 +35,8 @@ export const PrintId = styled.div`
 `;
 
 export const UploadingBox = styled.div`
-    width: 400px;
-    height: 100px;
+    width: 280px;
+    height: 75px;
     background-color: white;
     border-radius: 5px;
     display: flex;

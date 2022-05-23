@@ -19,6 +19,7 @@ import { UploadingBox, UploadingMessage } from "../../Components/Styled/PreviewS
 import styles from './Item.module.css';
 import styled from 'styled-components';
 import { PreviewBox } from "../../Components/Styled/PreviewSection";
+import { MaxLengthMessage } from "../../Components/Styled/PostCard";
 // import * as preview from '../../Components/PostCard';
 
 
@@ -104,7 +105,6 @@ const PostForm = () => {
     const [image, setImage] = useState(null);
     const [expDate, setExpDate] = useState('');
     const [imageUploading, setImageUploading] = useState(false);
-    const [className, setClassName] = useState('dairy')
     const [errors, setErrors] = useState([]);
 
     // errors
@@ -206,34 +206,7 @@ const PostForm = () => {
     const handleErrors = (e) => {
         e.preventDefault();
 
-        const imageErrorsArr = [];
-        const titleErrorsArr = [];
-        const descriptionErrorsArr = [];
-        const numberErrorsArr = [];
-        const categoryIdErrorsArr = []
-        const expErrorsArr = [];
-
-        if(titleErrors?.length || descriptionErrors?.length || numberErrors?.length || categoryIdErrors?.length || imageErrors?.length || expDateErrors?.length) {
-            return setErrors(['Please resolve errors before submitting.'])
-        } else if(!categoryId) {
-          categoryIdErrorsArr.push("Please select a food category.")
-        } else if(!sessionUser.isNonprofit && !image) {
-            imageErrorsArr.push("Please select a .jpg or .png image file to upload.")
-        } else if(title.length > 11 && !title.includes(' ')) {
-            titleErrorsArr.push("Please add a line break to your title.")
-        } else if(!title.length) {
-            titleErrorsArr.push("Please enter a title in 25 characters or less.")
-        } else if(!description.length) {
-            descriptionErrorsArr.push("Please enter a description in 120 characters or less.")
-        } else if(!sessionUser.isNonprofit && !number) {
-            numberErrorsArr.push("Please select a quantity for your post.")
-        } else if(!number) {
-            numberErrorsArr.push('Please select a desired quantity for your request.')
-        } else if(sessionUser.isNonprofit && !expDate) {
-            expErrorsArr.push('Please select an end date for your request.')
-        } else if(!expDate) {
-            expErrorsArr.push('Please select an expiration date for your item.')
-        } else if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+        if(!sessionUser.isNonprofit && (!imageErrors.length || !titleErrors.length || !descriptionErrors.length || !categoryIdErrors.length || !expDateErrors.length)) {
             setImageErrors([]);
             setTitleErrors([]);
             setDescriptionErrors([]);
@@ -241,7 +214,7 @@ const PostForm = () => {
             setCategoryIdErrors([]);
             setExpDateErrors([]);
             return handleSubmit(e)
-        } else if(sessionUser.isNonprofit && (!titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+        } else if(sessionUser.isNonprofit && (!titleErrors.length || !descriptionErrors.length || !categoryIdErrors.length || !expDateErrors.length)) {
             setTitleErrors([]);
             setDescriptionErrors([]);
             setNumberErrors([]);
@@ -249,29 +222,21 @@ const PostForm = () => {
             setExpDateErrors([]);
             return handleSubmit(e)
         } else {
-            setImageErrors(imageErrorsArr);
-            setTitleErrors(titleErrorsArr);
-            setDescriptionErrors(descriptionErrorsArr);
-            setNumberErrors(numberErrorsArr);
-            setCategoryIdErrors(categoryIdErrorsArr);
-            setExpDateErrors(expErrorsArr);
+            if(titleErrors?.length || descriptionErrors?.length || numberErrors?.length || categoryIdErrors?.length || imageErrors?.length || expDateErrors?.length) {
+                return setErrors(['Please resolve errors before submitting.'])
+            }
         }
-
-        setImageErrors(imageErrorsArr);
-        setTitleErrors(titleErrorsArr);
-        setDescriptionErrors(descriptionErrorsArr);
-        setNumberErrors(numberErrorsArr);
-        setCategoryIdErrors(categoryIdErrorsArr);
-        setExpDateErrors(expErrorsArr);
     };
 
     const updateImage = (e) => {
+        e.preventDefault();
+        setErrors([]);
         const file = e.target.files[0];
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
         if(fileSize > 2 ) {
             e.target.value = '';
             setImage('');
-            setImageErrors(['The file size is too large. Images must be under 2MB.'])
+            return setImageErrors(['The file size is too large. Images must be under 2MB.'])
         }
         else {
             e.target.style.color = '#608F41'
@@ -281,22 +246,26 @@ const PostForm = () => {
     }
 
     const handleCategory = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setErrors([]);
         setCategoryId(e.target.value);
-        setClassName(categories[e.target.value].category.toLowerCase())
         setCategoryIdErrors([])
     };
 
     const handleNumber = (e) => {
         e.preventDefault();
+        setErrors([]);
         if(e.target.value.length > 3 && e.target.value > 1000) {
             setNumber('');
             e.target.value = '';
-            setNumberErrors(['Please select a number between 1 and 1,000.'])
+            return setNumberErrors(['Please select a number between 1 and 1,000.'])
         } else if (e.target.value <= 0) {
             setNumber('');
             e.target.value='';
-            setNumberErrors(['Please select a number greater than zero.'])
+            return setNumberErrors(['Please select a number greater than zero.'])
+        } else if (isNaN(e.target.value)) {
+            e.target.value='';
+            return setNumberErrors(['Please only enter numbers.'])
         } else {
             setNumberErrors([])
             setNumber(e.target.value)
@@ -305,8 +274,13 @@ const PostForm = () => {
 
     const handleExp = (e) => {
         e.preventDefault();
+        setErrors([]);
         setExpDate(e.target.value);
         setExpDateErrors([]);
+        if(parseInt(e.target.value.slice(0, 2)) !== 20 || parseInt(e.target.value.slice(0, 4)) < parseInt(new Date().getFullYear())) {
+            e.target.value = '';
+            return setExpDateErrors(['Please select a valid date between this year and the year 2099.']);
+        }
     }
 
     const handleNull = (e) => {
@@ -316,38 +290,26 @@ const PostForm = () => {
 
     const handleTitle = (e) => {
         e.preventDefault();
-        setTitleErrors([])
-        const titleErrorsArr = [];
+        setErrors([]);
+        setTitleErrors([]);
         const titleInput = e.target.value.slice(0, 1).toUpperCase().concat(e.target.value.slice(1, e.target.value.length))
-        setTitle(titleInput)
-
-        if(title.length > 11 && !title.includes(' ')) {
-            titleErrorsArr.push("Please add a line break to your title.")
-            return setTitleErrors(titleErrorsArr)
+        setTitle(titleInput);
+        if(title.length >= 15 && !title.includes(' ')) {
+            setTitle(titleInput.slice(0, 15));
+            return setTitleErrors(['Please delete one letter and enter a space between words.'])
         }
-        setTitleErrors(titleErrorsArr)
     };
 
     const handleDescription = (e) => {
         e.preventDefault();
+        setErrors([]);
         setDescriptionErrors([]);
-        const descriptionErrArr = [];
         const descriptionInput = e.target.value.slice(0, 1).toUpperCase().concat(e.target.value.slice(1, e.target.value.length));
-        const descriptionArr = descriptionInput.split(' ')
         setDescription(descriptionInput);
-
-        if(descriptionInput.length > 11 && !descriptionInput.includes(' ')) {
-            descriptionErrArr.push("Please add a line break to your description.");
-            return setDescriptionErrors(descriptionErrArr);
-        } else {
-            descriptionArr.forEach(desc => {
-                if(desc.length > 20) {
-                    descriptionErrArr.push('Please add a line break to your description');
-                    return setDescriptionErrors(descriptionErrArr);
-                }
-            })
-            return setDescriptionErrors(descriptionErrArr);
-        };
+        if(description.length >= 30 && !description.includes(' ')) {
+            setDescription(descriptionInput.slice(0, 30));
+            return setDescriptionErrors(['Please delete one letter and enter a space between words.'])
+        }
     };
 
     const handleReset = (e) => {
@@ -355,6 +317,7 @@ const PostForm = () => {
         const imageInput = document.getElementById('imageUpload');
         imageInput.value = '';
         imageInput.style.color = '#C2462A';
+        setErrors([]);
         setImageErrors([]);
         setTitleErrors([]);
         setCategoryIdErrors([]);
@@ -369,7 +332,6 @@ const PostForm = () => {
         setUnit('lbs.');
         setExpDate('');
         setCategoryId('');
-        setClassName('dairy')
     };
 
 
@@ -378,12 +340,12 @@ const PostForm = () => {
             <PreviewBox>
                 <PreviewSection type='item' props={props} />
                 {imageUploading &&
-                <UploadingBox>
-                    <UploadingMessage>
-                        Uploading image...
-                    </UploadingMessage>
-                </UploadingBox>
-               }
+                    <UploadingBox>
+                        <UploadingMessage>
+                            Uploading image...
+                        </UploadingMessage>
+                    </UploadingBox>
+                }
             </PreviewBox>
             <FormSection>
                 <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '675px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleSubmit}>
@@ -425,15 +387,17 @@ const PostForm = () => {
                         {titleErrors && (
                             <ErrorMessage>{titleErrors[0]}</ErrorMessage>
                         )}
+                        {(!titleErrors && title.length === 25) && <MaxLengthMessage>You have reached the character limit.</MaxLengthMessage>}
                         <Fieldset>
-                        <legend className={(title.length >= 3 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
+                        <legend className={(title.length >= 3 && title.length < 15) || (title.length >= 15 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
                                 <TitleTextArea placeholder='Enter a title... (25 character limit)' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={handleTitle} />
                         </Fieldset>
                         {descriptionErrors && (
                             <ErrorMessage>{descriptionErrors[0]}</ErrorMessage>
                         )}
+                        {(description.length === 100) && <MaxLengthMessage>You have reached the character limit.</MaxLengthMessage>}
                         <TextareaFieldset>
-                        <legend className={(description.length >= 3 && description.length <= 17) || (description.length > 17 && description.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
+                        <legend className={(description.length >= 3 && !descriptionErrors.length) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
                             <Textarea placeholder='Enter a description... (100 character limit)' type='text' minLength='3' maxLength='100' value={description} onChange={handleDescription} />
                         </TextareaFieldset>
                         {numberErrors && (
@@ -465,7 +429,7 @@ const PostForm = () => {
                             <ErrorMessage>{expDateErrors[0]}</ErrorMessage>
                         )}
                         <Fieldset>
-                            <legend className={expDate ? styles.completed : styles.incomplete}>Expiration date</legend>
+                            <legend className={expDate && !expDateErrors.length ? styles.completed : styles.incomplete}>Expiration date</legend>
                             <input style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} type='date' min={new Date().toISOString().split('T')[0]} value={expDate} onChange={handleExp} />
                         </Fieldset>
                     </FormContent>

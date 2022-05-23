@@ -17,9 +17,10 @@ import { requestBackgrounds } from '../backgrounds';
 
 //Components
 import { PreviewSection } from "../../../Components/Preview";
-import { PreviewBox } from "../../../Components/Styled/PreviewSection";
+import { PreviewBox, UploadingBox, UploadingMessage } from "../../../Components/Styled/PreviewSection";
 import styles from './EditItem.module.css';
 import styled from 'styled-components';
+import { MaxLengthMessage } from "../../../Components/Styled/PostCard";
 
 const monthNames = {
     '01': 'Jan',
@@ -241,35 +242,13 @@ export const EditPostForm = ({post}) => {
     const handleErrors = (e) => {
         e.preventDefault();
 
-        const noChangeArr = [];
-        const imageErrorsArr = [];
-        const titleErrorsArr = [];
-        const descriptionErrorsArr = [];
-        const numberErrorsArr = [];
-        const categoryIdErrorsArr = []
-        const expErrorsArr = [];
-
         if(titleErrors.length || descriptionErrors.length || numberErrors.length || categoryIdErrors.length || imageErrors.length || expDateErrors.length || noChange.length) {
-            return noChangeArr.push('Please resolve errors before submitting.')
+            return setErrors('Please resolve errors before submitting.')
         } else if((!sessionUser.isNonprofit && !image) && (categoryId === post.categoryId.toString()) && (title === post.title) && (description === post.description) && (number === post.quantity.split(' ', 2)[0]) && (unit === post.quantity.split(' ', 2)[1]) && (expDate === `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`)) {
-            noChangeArr.push('Please change at least one field to submit')
-            return setNoChange(noChangeArr)
-        } else if(!categoryId) {
-          categoryIdErrorsArr.push("Please select a food category.")
-          return setCategoryIdErrors(categoryIdErrorsArr)
-        }  else if(!title.length) {
-            titleErrorsArr.push("Please add a title.")
-            return setTitleErrors(titleErrorsArr)
-        } else if(title.length > 11 && !title.includes(' ')) {
-            titleErrorsArr.push("Please add a line break to your title.")
-            return setTitleErrors(titleErrorsArr)
-        } else if(!description.length) {
-            descriptionErrorsArr.push("Please add a description.")
-            return setDescriptionErrors(descriptionErrorsArr);
-        }  else if(number === '') {
-            numberErrorsArr.push("Please select a number.")
-            return setNumberErrors(numberErrorsArr)
-        } else if(!sessionUser.isNonprofit && (!imageErrorsArr.length || !titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+            return setNoChange(['Please change at least one field to submit'])
+        } else if(sessionUser.isNonprofit && (categoryId === post.categoryId.toString()) && (title === post.title) && (description === post.description) && (number === post.quantity.split(' ', 2)[0]) && (unit === post.quantity.split(' ', 2)[1]) && (expDate === `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`)) {
+            return setNoChange(['Please change at least one field to submit'])
+        } else if(!sessionUser.isNonprofit && (!imageErrors.length || !titleErrors.length || !descriptionErrors.length || !categoryIdErrors.length || !expDateErrors.length)) {
             setImageErrors([]);
             setTitleErrors([]);
             setDescriptionErrors([]);
@@ -277,7 +256,7 @@ export const EditPostForm = ({post}) => {
             setCategoryIdErrors([]);
             setExpDateErrors([]);
             return handleEdit(e)
-        } else if(sessionUser.isNonprofit && (!titleErrorsArr.length || !descriptionErrorsArr.length || !categoryIdErrorsArr.length || !expErrorsArr.length)) {
+        } else if(sessionUser.isNonprofit && (!titleErrors.length || !descriptionErrors.length || !categoryIdErrors.length || !expDateErrors.length)) {
             setTitleErrors([]);
             setDescriptionErrors([]);
             setNumberErrors([]);
@@ -285,30 +264,20 @@ export const EditPostForm = ({post}) => {
             setExpDateErrors([]);
             return handleEdit(e)
         } else {
-            setImageErrors(imageErrorsArr);
-            setTitleErrors(titleErrorsArr);
-            setDescriptionErrors(descriptionErrorsArr);
-            setNumberErrors(numberErrorsArr);
-            setCategoryIdErrors(categoryIdErrorsArr);
-            setExpDateErrors(expErrorsArr);
-            setNoChange(noChangeArr);
+            if(titleErrors?.length || descriptionErrors?.length || numberErrors?.length || categoryIdErrors?.length || imageErrors?.length || expDateErrors?.length) {
+                return setErrors(['Please resolve errors before submitting.'])
+            }
         }
-
-        setImageErrors(imageErrorsArr);
-        setTitleErrors(titleErrorsArr);
-        setDescriptionErrors(descriptionErrorsArr);
-        setNumberErrors(numberErrorsArr);
-        setCategoryIdErrors(categoryIdErrorsArr);
-        setExpDateErrors(expErrorsArr);
-        setNoChange(noChangeArr);
     };
 
     const updateImage = (e) => {
+        e.preventDefault();
+        setErrors([]);
         const file = e.target.files[0];
         const fileSize = file.size / 1024 / 1024; //convert to megabytes
         if(fileSize > 2 ) {
             setImage('');
-            setImageErrors(['The file size is too large. Images must be under 2MB.'])
+            return setImageErrors(['The file size is too large. Images must be under 2MB.'])
         }
         else {
             e.target.style.color = '#608F41'
@@ -345,9 +314,14 @@ export const EditPostForm = ({post}) => {
 
     const handleExp = (e) => {
         e.preventDefault();
+        setErrors([]);
         setExpDate(e.target.value);
         setExpDateErrors([]);
-    };
+        if(parseInt(e.target.value.slice(0, 2)) !== 20 || parseInt(e.target.value.slice(0, 4)) < parseInt(new Date().getFullYear())) {
+            e.target.value = '';
+            return setExpDateErrors(['Please select a valid date between this year and the year 2099.']);
+        }
+    }
 
     const handleNull = (e) => {
         e.preventDefault();
@@ -356,62 +330,27 @@ export const EditPostForm = ({post}) => {
 
     const handleTitle = (e) => {
         e.preventDefault();
-        setTitleErrors([])
-        const titleErrorsArr = [];
-
+        setErrors([]);
+        setTitleErrors([]);
         const titleInput = e.target.value.slice(0, 1).toUpperCase().concat(e.target.value.slice(1, e.target.value.length))
-        setTitle(titleInput)
-
-        if(title.length > 11 && !title.includes(' ')) {
-            titleErrorsArr.push("Please add a line break to your title.")
-            return setTitleErrors(titleErrorsArr)
+        setTitle(titleInput);
+        if(title.length >= 15 && !title.includes(' ')) {
+            setTitle(titleInput.slice(0, 16));
+            return setTitleErrors(['Please delete one letter and enter a space between words.'])
         }
-        setTitleErrors(titleErrorsArr)
     };
 
     const handleDescription = (e) => {
         e.preventDefault();
+        setErrors([]);
         setDescriptionErrors([]);
-        const descriptionErrArr =[];
         const descriptionInput = e.target.value.slice(0, 1).toUpperCase().concat(e.target.value.slice(1, e.target.value.length));
-        const descriptionArr = descriptionInput.split(' ')
         setDescription(descriptionInput);
-
-        if(descriptionInput.length > 11 && !descriptionInput.includes(' ')) {
-            descriptionErrArr.push("Please add a line break to your description.");
-            return setDescriptionErrors(descriptionErrArr);
-        } else {
-            descriptionArr.forEach(desc => {
-                if(desc.length > 20) {
-                    descriptionErrArr.push('Please add a line break to your description');
-                    return setDescriptionErrors(descriptionErrArr);
-                }
-            })
-            return setDescriptionErrors(descriptionErrArr);
-        };
+        if(description.length >= 30 && !description.includes(' ')) {
+            setDescription(descriptionInput.slice(0, 30));
+            return setDescriptionErrors(['Please delete one letter and enter a space between words.'])
+        }
     };
-
-    // const handleReset = (e) => {
-    //     e.preventDefault();
-    //     const imageInput = document.getElementById('imageUpload');
-    //     imageInput.value = '';
-    //     imageInput.style.color = '#C2462A';
-    //     setImageErrors([]);
-    //     setTitleErrors([]);
-    //     setCategoryIdErrors([]);
-    //     setDescriptionErrors([]);
-    //     setExpDateErrors([]);
-    //     setNumberErrors([]);
-
-    //     setImage('');
-    //     setTitle(post.title);
-    //     setDescription(post.description);
-    //     setNumber(post.quantity.split(' ', 2)[0]);
-    //     setUnit(post.quantity.split(' ', 2)[1]);
-    //     setExpDate(`${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`);
-    //     setCategoryId(post.categoryId.toString());
-    //     setClassName(categories[post.categoryId].category.toLowerCase())
-    // };
 
     const handleCancel = (e) => {
         e.preventDefault();
@@ -422,6 +361,13 @@ export const EditPostForm = ({post}) => {
         <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '1000px', height: '700px', background: 'linear-gradient(#28A690,#76D97E)', borderRadius: '5px'}}>
             <PreviewBox>
                 <PreviewSection type='item' props={props} />
+                {imageUploading &&
+                    <UploadingBox>
+                        <UploadingMessage>
+                            Uploading image...
+                        </UploadingMessage>
+                    </UploadingBox>
+                }
             </PreviewBox>
             <FormSection>
                 <form style={{borderRadius: '5px', backgroundColor: 'white', border: '1px solid #D5D5D5', width: '475px', height: '675px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center'}} encType="multipart/form-data" onSubmit={handleEdit}>
@@ -463,16 +409,17 @@ export const EditPostForm = ({post}) => {
                         {titleErrors && (
                             <ErrorMessage>{titleErrors[0]}</ErrorMessage>
                         )}
+                        {(!titleErrors && title.length === 25) && <MaxLengthMessage>You have reached the character limit.</MaxLengthMessage>}
                         <Fieldset>
-                        <legend className={(title.length >= 3 && title.length <= 11) || (title.length > 11 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
-                                <TitleTextArea placeholder='Title' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={handleTitle} />
+                        <legend className={(title.length >= 3 && title.length < 15) || (title.length >= 15 && title.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request title' : 'Item title'}</legend>
+                                <TitleTextArea placeholder='Enter a title... (25 character limit)' type='text' minLength='4' maxLength='25' cols='11' rows='3' required value={title} onChange={handleTitle} />
                         </Fieldset>
                         {descriptionErrors && (
                             <ErrorMessage>{descriptionErrors[0]}</ErrorMessage>
                         )}
                         <TextareaFieldset>
-                        <legend className={(description.length >= 3 && description.length <= 17) || (description.length > 17 && description.includes(' ')) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
-                            <Textarea placeholder='Description' type='text' minLength='3' maxLength='100' value={description} onChange={handleDescription} />
+                        <legend className={(description.length >= 3 && !descriptionErrors.length) ? styles.completed : styles.incomplete}>{sessionUser.isNonprofit ? 'Request details' : 'Item description'}</legend>
+                            <Textarea placeholder='Enter a description... (100 character limit)' type='text' minLength='3' maxLength='100' value={description} onChange={handleDescription} />
                         </TextareaFieldset>
                         {numberErrors && (
                             <ErrorMessage>{numberErrors[0]}</ErrorMessage>
@@ -503,7 +450,7 @@ export const EditPostForm = ({post}) => {
                             <ErrorMessage>{expDateErrors[0]}</ErrorMessage>
                         )}
                         <Fieldset>
-                            <legend className={expDate ? styles.completed : styles.incomplete}>Expiration date</legend>
+                            <legend className={expDate && !expDateErrors.length ? styles.completed : styles.incomplete}>Expiration date</legend>
                             <input style={{height: '25px', width: '131px', borderRadius: '3px', border: 'none'}} type='date' min={new Date().toISOString().split('T')[0]} value={expDate} onChange={handleExp} />
                         </Fieldset>
                     </FormContent>
@@ -524,7 +471,8 @@ export const EditPostForm = ({post}) => {
                                 ||
                                 (categoryId !== post.categoryId.toString())
                                 ||
-                                (expDate !== `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`))
+                                (expDate !== `${post.expDate.toString().slice(12, 16)}-${Object.keys(monthNames).find(key => monthNames[key] === post.expDate.toString().slice(8, 11))}-${post.expDate.toString().slice(5, 7)}`)
+                                )
                                 &&
                                 (!titleErrors.length)
                                 &&

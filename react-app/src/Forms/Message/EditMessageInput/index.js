@@ -17,7 +17,6 @@ import { editMessage } from '../../../store/messages';
 //Components
 import {
     Error,
-    ErrorBox,
     ErrorMessage,
     MessageErrorBox
 } from '../../../Components/Styled/AuthenticationForm';

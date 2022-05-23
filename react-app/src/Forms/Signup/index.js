@@ -210,7 +210,7 @@ export const SignupForm = () => {
                 const userDataObj = { organizationId, firstName, profileImageUrl, lastName, dob, deaf, wheelchair, learningDisabled, lgbtq, isNonprofit, isManager: managerState, email, phone, password, confirm };
 
                 const newUser = await dispatch(signup(userDataObj))
-                if(newUser && !newUser.errors || !newUser.error) {
+                if(newUser && (!newUser.errors || !newUser.error)) {
                     setImageUploading(false);
                     history.push('/')
                     dispatch(hideModal())

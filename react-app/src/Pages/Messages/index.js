@@ -10,7 +10,7 @@ import { getAllDeliveries, reviewRequest } from "../../store/deliveries";
 import { getAllPosts } from "../../store/posts";
 
 //Helpers
-import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
+// import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
 
 //Components
 import { PostCard } from "../../Components/Cards/PostCard";
@@ -20,7 +20,6 @@ import {
     MessagePreviewBox,
     MessageProfileIcon,
     MessageSideMenu,
-    MessageTime,
     MessageUserBox,
     MessageUserName,
     MessageContentPreview,
@@ -37,15 +36,12 @@ import {
     BannerTextBox,
     MessageFeed,
     MessageBox,
-    PreviewMessageTime,
     ImageMessage,
     MessageEditDelete,
     AcceptButton,
     DeclineButton,
     MessageWithImages,
     SingleMessage,
-    MessagesSpacer,
-    MessageTitleBox,
     PostDeletedText
 } from "../../Components/Styled/Messages";
 
@@ -112,8 +108,6 @@ export const MessagesPage = () => {
             const messageData = {content: 'Your request has been declined.', imageUrl: '', receiverId: message.senderId, postId: post.id, boardId: message.boardId };
             dispatch(sendReply(messageData))
             dispatch(getAllPosts());
-        } else {
-            console.log(data)
         }
     };
 
@@ -126,8 +120,6 @@ export const MessagesPage = () => {
             const messageData = {content: 'Your request has been approved!', imageUrl: '', receiverId: message.senderId, postId: post.id, boardId: message.boardId };
             dispatch(sendReply(messageData))
             dispatch(getAllPosts());
-        } else {
-            console.log(data)
         }
     };
 

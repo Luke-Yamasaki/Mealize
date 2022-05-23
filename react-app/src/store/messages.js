@@ -51,7 +51,6 @@ export const getBoards = () => async (dispatch) => {
 };
 
 export const sendMessage = (messageData) => async (dispatch) => {
-    console.log(messageData)
     const response = await fetch('/api/messages/', {
         method: 'POST',
         headers: {
@@ -95,7 +94,6 @@ export const sendReply= (messageData) => async (dispatch) => {
 };
 
 export const editMessage = (message) => async (dispatch) => {
-    console.log(message)
     const response = await fetch(`/api/messages/${message.id}`, {
         method: 'PUT',
         headers: {

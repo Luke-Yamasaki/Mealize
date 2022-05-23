@@ -244,7 +244,7 @@ const deliveriesReducer = (state = {}, action) => {
           return newState
         case REQUEST_REVIEWED:
           const approved = parseInt(action.payload);
-          if(approved === NaN) {
+          if(isNaN(approved)) {
             newState[action.payload.id] = action.payload
           } else {
             delete newState[action.payload]

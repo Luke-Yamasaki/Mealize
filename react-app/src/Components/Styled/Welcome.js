@@ -1,5 +1,5 @@
 import styled, {css, keyframes} from "styled-components";
-import { Black } from "./Fonts";
+import { Black, Bold, ExtraBold } from "./Fonts";
 
 const lockin = keyframes`
     0% {
@@ -166,8 +166,10 @@ export const WelcomeContent = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+    padding-top: 100px;
+    gap: 50px;
 `;
 
 const changeOpacity = keyframes`
@@ -204,4 +206,89 @@ export const GreetingText = styled(Black)`
     animation: ${props => props.animation ? reveal : ''};
     animation-delay: ${props => props.animation ? '3.5s' : '0s'};
     opacity: ${props => props.animation ? '0%' : '100%'};
+`;
+
+export const Group = styled.section`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+`;
+
+export const SectionTitle = styled(Black)`
+    width: 900px;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+`;
+
+export const SectionText = styled(ExtraBold)`
+    width: 600px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0.1px;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+`;
+
+const scale = keyframes`
+    from{
+        opacity: 0%;
+        margin-top: -50px;
+    }
+    to {
+        opacity: 100%;
+        margin-top: 50px;
+    }
+`;
+
+const scroll = css`${scale} 2s ease-in-out 3 normal forwards`;
+
+export const AnimationBox = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 400px;
+`;
+
+export const ArrowBox = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: ${scroll};
+    animation-delay: ${props => props.delay ? '3.5s' : 'none'};
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    opacity: 0%;
+`;
+
+export const WelcomeList = styled.ul`
+    width: 900px;
+    margin: 0px;
+    padding: 0px;
+`;
+
+export const WelcomeItems = styled.li`
+    width: 900px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+`;
+
+export const WelcomeLink = styled.a`
+    width: 600px;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 700;
+    font-size: 18px;
 `;

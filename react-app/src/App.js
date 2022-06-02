@@ -75,7 +75,7 @@ function App() {
       <AppBackGround theme={theme} background={backGround}>
         <BackGroundAside />
         <AppContentContainer>
-          {sessionUser && <SessionNavbar sessionUser={sessionUser} />}
+          {sessionUser ? <SessionNavbar sessionUser={sessionUser} /> : <Navbar theme={theme} />}
           <Modal />
           <Switch>
           <Route exact path='/welcome'>

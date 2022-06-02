@@ -2,9 +2,6 @@
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
 
-//Components
-import { Navbar } from '../../Components/Navbar';
-
 //Styled-components
 import { LogoType, LogoVectorBox, WelcomeAnimation, WelcomeContent, HandVectorBox, GreetingText } from '../../Components/Styled/Welcome';
 
@@ -31,7 +28,6 @@ export const Welcome = () => {
                     <LogoType theme={theme}>Mealize</LogoType>
                 </WelcomeAnimation>
             }
-            <Navbar theme={theme} />
             <WelcomeContent theme={theme} >
                 <GreetingText theme={theme} animation={localStorage.getItem('visited') ? false : true}>Welcome to Mealize!</GreetingText>
                 <HandVectorBox square='550px' animation={localStorage.getItem('visited') ? false : true}>

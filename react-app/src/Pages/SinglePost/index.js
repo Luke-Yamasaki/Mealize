@@ -29,8 +29,6 @@ import { ClockIcon } from '../../Assets/Icons/Clock';
 //Main component
 
 export const SinglePostPage = () => {
-    // const sessionUser = useSelector(state => state.session.user);
-    // const users = useSelector(state => state.users);
     const posts = useSelector(state => state.posts.all);
     const businesses = useSelector(state => state.organizations.businesses);
     const nonprofits = useSelector(state => state.organizations.nonprofits);

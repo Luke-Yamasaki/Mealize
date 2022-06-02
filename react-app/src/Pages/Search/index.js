@@ -15,6 +15,7 @@ import { getAllPosts } from '../../store/posts';
 // import { PostTypeFilter } from '../../Components/Filter/postType';
 import { OrganizationCard } from '../../Components/Cards/OrganizationCard';
 import { PostCard } from '../../Components/Cards/PostCard';
+import { Navbar } from '../../Components/Navbar';
 
 //styled-components
 import {
@@ -29,6 +30,7 @@ import {
 } from '../../Components/Styled/Search';
 
 export const SearchPage = () => {
+    const sessionUser = useSelector(state => state.session.user);
     const businesses = useSelector(state => state.organizations.businesses);
     const nonprofits = useSelector(state => state.organizations.nonprofits);
     const posts = useSelector(state => state.posts.all);

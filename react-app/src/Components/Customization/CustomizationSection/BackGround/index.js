@@ -19,12 +19,13 @@ import { ImageIcon } from '../../../../Assets/Icons/Image';
 export const BackGround = () => {
     const {backGround, setBackGround} = useBackGround();
     const {theme} = useTheme();
-    const [selected, setSelected] = useState(false);
+    const [selected, setSelected] = useState(backGround === 'true' ? false : true);
 
     const handleSelect = (e) => {
         e.preventDefault();
         setBackGround(backGround === 'true' ? 'false' : 'true')
         setSelected(!selected);
+        localStorage.setItem('background', backGround === 'true' ? 'false' : 'true')
     };
 
     return (

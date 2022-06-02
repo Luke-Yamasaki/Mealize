@@ -186,11 +186,11 @@ export const HandVectorBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: ${reveal};
-    animation-delay: 4s;
+    animation: ${props => props.animation ? reveal : ''};
+    animation-delay: ${props => props.animation ? '3.5s' : '0s'};
     width: ${props => props.square};
     height: ${props => props.square};
-    opacity: 0%;
+    opacity: ${props => props.animation ? '0%' : '100%'};
 `;
 
 export const GreetingText = styled(Black)`
@@ -201,7 +201,7 @@ export const GreetingText = styled(Black)`
     align-items: center;
     justify-content: center;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
-    animation: ${reveal};
-    animation-delay: 4s;
-    opacity: 0%;
+    animation: ${props => props.animation ? reveal : ''};
+    animation-delay: ${props => props.animation ? '3.5s' : '0s'};
+    opacity: ${props => props.animation ? '0%' : '100%'};
 `;

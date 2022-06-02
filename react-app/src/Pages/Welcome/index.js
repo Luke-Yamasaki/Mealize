@@ -23,16 +23,18 @@ export const Welcome = () => {
 
     return (
         <>
-            <WelcomeAnimation>
-                <LogoVectorBox>
-                    <XLLogo theme={theme} />
-                </LogoVectorBox>
-                <LogoType theme={theme}>Mealize</LogoType>
-            </WelcomeAnimation>
+            {!localStorage.getItem('visited') &&
+                <WelcomeAnimation>
+                    <LogoVectorBox>
+                        <XLLogo theme={theme} />
+                    </LogoVectorBox>
+                    <LogoType theme={theme}>Mealize</LogoType>
+                </WelcomeAnimation>
+            }
             <Navbar theme={theme} />
             <WelcomeContent theme={theme} >
-                <GreetingText theme={theme}>Welcome to Mealize!</GreetingText>
-                <HandVectorBox square='550px'>
+                <GreetingText theme={theme} animation={localStorage.getItem('visited') ? false : true}>Welcome to Mealize!</GreetingText>
+                <HandVectorBox square='550px' animation={localStorage.getItem('visited') ? false : true}>
                     <Hand theme={theme} />
                 </HandVectorBox>
             </WelcomeContent>

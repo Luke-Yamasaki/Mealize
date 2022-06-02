@@ -15,13 +15,13 @@ import { getAllPosts } from '../../store/posts';
 // import { PostTypeFilter } from '../../Components/Filter/postType';
 import { OrganizationCard } from '../../Components/Cards/OrganizationCard';
 import { PostCard } from '../../Components/Cards/PostCard';
-import { Navbar } from '../../Components/Navbar';
+
+//Image
+import brockLee from './Brock-Lee.png';
 
 //styled-components
-import {
-    PageBackGround,
-} from '../../Components/Styled/Layout';
-
+import { PageBackGround } from '../../Components/Styled/Layout';
+import { FourOFourImage } from '../../Components/Styled/404';
 import {
     SearchTitle,
     SearchSection,
@@ -30,7 +30,6 @@ import {
 } from '../../Components/Styled/Search';
 
 export const SearchPage = () => {
-    const sessionUser = useSelector(state => state.session.user);
     const businesses = useSelector(state => state.organizations.businesses);
     const nonprofits = useSelector(state => state.organizations.nonprofits);
     const posts = useSelector(state => state.posts.all);
@@ -161,7 +160,11 @@ export const SearchPage = () => {
                         <PostCard post={post} />
                     )}
                     {searchFilter === 'none' &&
+                    <>
                         <SearchTitle theme={theme}>We couldn't find any search results.</SearchTitle>
+                        <FourOFourImage theme={theme} src={brockLee} margin='285px'/>
+                    </>
+
                     }
                 </SearchFeed>
             </SearchSection>

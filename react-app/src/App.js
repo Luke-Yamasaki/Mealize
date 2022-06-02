@@ -14,6 +14,7 @@ import { getAllPosts } from './store/posts';
 import { getAllDeliveries } from './store/deliveries';
 
 //Pages
+import { Welcome } from './Pages/Welcome';
 import { Home } from './Pages/Home';
 import { FourOFour } from './Pages/FourOFour';
 import { Deliveries } from './Pages/Deliveries';
@@ -74,11 +75,14 @@ function App() {
       <AppBackGround theme={theme} background={backGround}>
         <BackGroundAside />
         <AppContentContainer>
-          {sessionUser ? <SessionNavbar sessionUser={sessionUser} /> : <Navbar />}
+          {sessionUser && <SessionNavbar sessionUser={sessionUser} />}
           <Modal />
           <Switch>
+          <Route exact path='/welcome'>
+            <Welcome/>
+          </Route>
           <Route exact path='/'>
-            <Home/>
+            <Home />
           </Route>
           <Route exact path={['/deliveries', '/deliveries/:id']}>
             <Deliveries />

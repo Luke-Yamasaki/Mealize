@@ -272,3 +272,12 @@ export const MealizeItalic = styled.i`
      margin: 0px 5px 0px 5px;
      color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
+
+export const ExampleImages = styled.img`
+    object-fit: ${props => props.fit ? props.fit : 'contain'};
+    object-position: center;
+    width: 350px;
+    height: ${props => props.height ? props.height : '400px'};
+    border-radius: 5px;
+    margin: -110px 0px 0px 275px;
+`;

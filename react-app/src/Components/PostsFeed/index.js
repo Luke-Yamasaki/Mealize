@@ -4,10 +4,13 @@ import { useTheme } from "../../Context/ThemeContext";
 import { useFilter } from "../../Context/FilterContext";
 //Components
 import { PostCard } from "../Cards/PostCard";
-import { FeedContainer, MealizeItalic, NoFavoritesBox, NoFavoritesMessage } from "../Styled/Layout"
+import { FeedContainer, MealizeItalic, NoFavoritesBox, NoFavoritesMessage, ExampleImages } from "../Styled/Layout"
 
 //Helper
 import { determineExpiration } from "../../utils/Dates";
+
+//Images
+import favoritesPic from './Images/favorites.png';
 
 export const PostsFeed = () => {
     const allPosts = useSelector(state => state.posts.all);
@@ -41,9 +44,12 @@ export const PostsFeed = () => {
     return (
         <FeedContainer>
             {(filter === 'favorites' && !favorites.length) &&
+            <>
                 <NoFavoritesBox>
                     <NoFavoritesMessage theme={theme}>You do not have any favorites. Add them by clicking the <MealizeItalic theme={theme}>Mealize</MealizeItalic> logo on item and request cards!</NoFavoritesMessage>
                 </NoFavoritesBox>
+                <ExampleImages src={favoritesPic} alt='example' />
+            </>
             }
             {(filter === 'favorites' && favorites.length > 0) && favorites.map((obj) => <PostCard key={obj.id} post={allPosts[obj.postId]}/>)}
             {filter === 'available' && availableArr.reverse().map((post) => <PostCard key={post.id} post={post} />)}

@@ -11,6 +11,7 @@ import { getAllPosts } from '../../store/posts';
 import { PostCard } from '../../Components/Cards/PostCard';
 // import { DeliveryForm } from '../../Forms/Delivery';
 import { OrganizationCard } from '../../Components/Cards/OrganizationCard';
+import { ExampleBox, ExampleImages } from '../../Components/Styled/Layout';
 
 //Helpers
 import { timesObj } from '../../Forms/Delivery/times';
@@ -27,6 +28,9 @@ import {
     SelectDeliveryText
 } from '../../Components/Styled/Deliveries';
 
+//Images
+import deliveryImg from './delivery.png';
+import pickupForm from './pickupform.png';
 
 export const Deliveries = () => {
     const dispatch = useDispatch()
@@ -97,13 +101,20 @@ export const Deliveries = () => {
                             <SelectDeliveryText theme={theme}>
                                 {
                                     sessionUser.isNonprofit && sessionUser.isManager ?
-                                    "You do not have any deliveries scheduled. Please send requests to businesses to initiate a delivery."
+                                    "You do not have any deliveries scheduled. Please click on the 'Send a request' button on items and select a date and timeslot to initiate a delivery."
                                     : sessionUser.isNonprofit && !sessionUser.isManager ?
                                     "You do not have any pick-ups or drop-offs scheduled. Hang tight or notify your manager about good posts."
                                     : 'You do not have any pick-ups scheduled. Hang tight and wait for a nonprofit to send you a request.'
                                 }
                             </SelectDeliveryText>
                         </SelectDeliveryBox>
+                        {(sessionUser.isNonprofit && sessionUser.isManager) &&
+                        <ExampleBox>
+                            <ExampleImages src={deliveryImg} width='280px'/>
+                            <ExampleImages src={pickupForm} width='550px'/>
+                        </ExampleBox>
+
+                        }
                     </DeliveryField>
                 }
                 {(Object.values(deliveries)?.length > 0 && !deliveryId) &&

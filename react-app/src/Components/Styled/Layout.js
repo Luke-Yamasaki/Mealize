@@ -276,8 +276,17 @@ export const MealizeItalic = styled.i`
 export const ExampleImages = styled.img`
     object-fit: ${props => props.fit ? props.fit : 'contain'};
     object-position: center;
-    width: 350px;
+    width: ${props => props.width ? props.width : '350px'};
     height: ${props => props.height ? props.height : '400px'};
     border-radius: 5px;
-    margin: -110px 0px 0px 275px;
+`;
+
+export const ExampleBox = styled.div`
+     display: flex;
+     flex-direction: row;
+     align-items: center;
+     justify-content: space-between;
+     width: 900px;
+     height: 500px;
+     margin: -100px 0px 100px 150px;
 `;

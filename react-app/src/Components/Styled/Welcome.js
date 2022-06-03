@@ -216,13 +216,24 @@ export const Group = styled.section`
     gap: 15px;
 `;
 
-export const SectionTitle = styled(Black)`
-    width: 900px;
+export const MealizeTitle = styled(Black)`
+    width: 600px;
     height: auto;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    font-size: 48px;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+`;
+
+export const SectionTitle = styled(Black)`
+    width: 600px;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
     font-size: 48px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
@@ -236,6 +247,7 @@ export const SectionText = styled(ExtraBold)`
     font-size: 24px;
     line-height: 30px;
     letter-spacing: 0.1px;
+    margin-bottom: 20px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
@@ -300,7 +312,12 @@ export const WelcomeLink = styled.a`
 export const WelcomeImages = styled.img`
     object-fit: contain;
     object-position: center;
-    width: 900px;
-    height: 600px;
+    width: 600px;
+    height: ${props => props.height ? props.height : '400px'};
     border-radius: 5px;
+`;
+
+export const WelcomeDiagram = styled(WelcomeImages)`
+    height: 600px;
+    margin: 30px 0px 30px 0px;
 `;

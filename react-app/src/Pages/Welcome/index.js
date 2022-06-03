@@ -18,7 +18,9 @@ import {
     WelcomeLink,
     WelcomeList,
     WelcomeItem,
-    WelcomeImages
+    WelcomeImages,
+    WelcomeDiagram,
+    MealizeTitle
 } from '../../Components/Styled/Welcome';
 
 import { VectorBox } from '../../Components/Styled/Layout';
@@ -30,7 +32,20 @@ import { Redirect } from 'react-router-dom';
 import { ScrollArrow } from '../../Assets/Icons/ScrollArrow';
 
 //Images
-import volunteer from './Images'
+import volunteer from './Images/volunteer.jpg';
+import hungry from './Images/hungry.jpg';
+import lightDiagram from './Images/lightdiagram.png';
+import darkDiagram from './Images/darkdiagram.png';
+import request from './Images/request.png';
+import item from './Images/item.png';
+import organization from './Images/organization.png';
+import notify from './Images/notify.png';
+import notifyMessage from './Images/notifymessage.png';
+import singleItem from './Images/singleitem.png';
+import pickupForm from './Images/pickupform.png';
+import pickupMessage from './Images/pickupmessage.png';
+
+
 export const Welcome = () => {
     const sessionUser = useSelector(state => state.session.user);
     const { theme } = useTheme();
@@ -64,9 +79,9 @@ export const Welcome = () => {
                     </AnimationBox>
                 </Group>
                 <Group>
-                    <SectionTitle theme={theme}>
+                    <MealizeTitle theme={theme}>
                         What is Mealize?
-                    </SectionTitle>
+                    </MealizeTitle>
                     <VectorBox square='200px'>
                         <MediumLogo />
                     </VectorBox>
@@ -74,6 +89,7 @@ export const Welcome = () => {
                         Mealize is an app that aims to reduce food
                         scarcity and waste by connecting businesses to nonprofits.
                     </SectionText>
+                    <WelcomeImages src={volunteer} />
                 </Group>
                 <Group>
                     <SectionTitle theme={theme}>
@@ -87,16 +103,16 @@ export const Welcome = () => {
                         href='https://www.ers.usda.gov/data-products/ag-and-food-statistics-charting-the-essentials/food-security-and-nutrition-assistance/#:~:text=In%202020%2C%2089.5%20percent%20of,from%2010.5%20percent%20in%202019.'>
                         Economic Research Service - U.S. Department Of Agriculture
                     </WelcomeLink>
-                    <WelcomeImages src={}
+                    <WelcomeImages src={hungry} />
                     <WelcomeList>
                         <WelcomeItem>
                             <SectionText theme={theme}>
-                                However, each year in the USA, an estimated 30-40% of food supply gets wasted. (Source: U.S. Department Of Agriculture)
+                                The Covid-19 pandemic caused 22 million job losses in the USA from February 2020 to April 2020, and the entire supply chain was disrupted. (Source: US Bureau of Labor Statistics)
                             </SectionText>
                         </WelcomeItem>
                         <WelcomeItem>
                             <SectionText theme={theme}>
-                                The Covid-19 pandemic caused 22 million job losses in the USA from February 2020 to April 2020, and the entire supply chain was disrupted. (Source: US Bureau of Labor Statistics)
+                                However, each year in the USA, an estimated 30-40% of food supply gets wasted. (Source: U.S. Department Of Agriculture)
                             </SectionText>
                         </WelcomeItem>
                     </WelcomeList>
@@ -112,18 +128,58 @@ export const Welcome = () => {
                     <SectionText theme={theme}>
                         Create a centralized location where businesses and nonprofits can connect, communicate and set up pickup times for surplus food.
                     </SectionText>
-                    <SectionText theme={theme}>
-                    - Nonprofit managers can post requests for items that are in high demand.
-                    - Nonprofit managers can filter through their feed by category and find exactly what they need.
-
-                    Business managers can post pictures of surplus food.
-                    Business managers will not waste time attempting to deliver food to nonprofits, only to find out that the nonprofit will not accept their items such as bread, pasta, or refrigerated/frozen foods.
-                    </SectionText>
+                    <WelcomeDiagram src={theme === 'light' ? lightDiagram : darkDiagram} />
                 </Group>
                 <Group>
                     <SectionTitle theme={theme}>
-                        How does it work?
+                        How does Mealize work?
                     </SectionTitle>
+                    <SectionText theme={theme}>
+                        Nonprofit managers can fill out a form and post request to let businesses know what they need.
+                    </SectionText>
+                    <WelcomeImages src={request} />
+                    <SectionText theme={theme}>
+                        Businesses can read through requests and see if they have items that are in demand. If they do, they can take a picture of surplus food, fill out a form and post their items.
+                    </SectionText>
+                    <WelcomeImages src={item} />
+                    <SectionText theme={theme}>
+                        Nonprofit volunteers can browse through their feed, and if they find an item that their organization needs, they can add the post to their favorites, ask the user a question, or notify their manager.
+                    </SectionText>
+                    <WelcomeImages src={notify} height='300px'/>
+                    <SectionText theme={theme}>
+                        Nonprofit managers can sort through messages and see if an ideal item pops up.
+                    </SectionText>
+                    <WelcomeImages src={notifyMessage} height='380px' />
+                    <SectionText theme={theme}>
+                        Users can click on a post to get the organization's location and availabile time slot.
+                    </SectionText>
+                    <WelcomeImages src={singleItem} />
+                    <SectionText theme={theme}>
+                        Users can also click on the title of the organization to get redirected to the organization's page.
+                    </SectionText>
+                    <WelcomeImages src={organization} height='500px' />
+                    <SectionText theme={theme}>
+                        They can also click on the 'Send a request' button to send a pick up request. Once the form is submitted, an item gets reserved and other users cannot click on any buttons.
+                    </SectionText>
+                    <WelcomeImages src={pickupForm} />
+                    <SectionText theme={theme}>
+                        Once a business manager accepts a pick up request, an item becomes confirmed and a volunteer will get dispatched to the business location. All that's left is for the volunteer to return to their organization.
+                    </SectionText>
+                    <WelcomeImages src={pickupMessage} />
+                </Group>
+                <Group>
+                    <SectionTitle theme={theme}>
+                        This completes a Mealize delivery.
+                    </SectionTitle>
+                    <SectionTitle theme={theme}>
+                        ---------------------------
+                    </SectionTitle>
+                    <SectionTitle theme={theme}>
+                        Ready to get started?
+                    </SectionTitle>
+                    <SectionText theme={theme}>
+                        Click on the 'Sign up' button in the navigation bar to register an account, or click on one of three demo buttons in the sign up for login forms to continue.
+                    </SectionText>
                 </Group>
             </WelcomeContent>
         </>

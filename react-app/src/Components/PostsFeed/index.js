@@ -48,7 +48,7 @@ export const PostsFeed = () => {
                 <NoFavoritesBox>
                     <NoFavoritesMessage theme={theme}>You do not have any favorites. Add them by clicking the <MealizeItalic theme={theme}>Mealize</MealizeItalic> logo on item and request cards!</NoFavoritesMessage>
                 </NoFavoritesBox>
-                <ExampleImages src={favoritesPic} alt='example' />
+                <ExampleImages src={favoritesPic} alt='example' margin='-100px 0px 0px 275px'/>
             </>
             }
             {(filter === 'favorites' && favorites.length > 0) && favorites.map((obj) => <PostCard key={obj.id} post={allPosts[obj.postId]}/>)}

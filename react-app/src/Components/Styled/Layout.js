@@ -279,6 +279,7 @@ export const ExampleImages = styled.img`
     width: ${props => props.width ? props.width : '350px'};
     height: ${props => props.height ? props.height : '400px'};
     border-radius: 5px;
+    margin: ${props => props.margin ? props.margin : 'none'};
 `;
 
 export const ExampleBox = styled.div`
@@ -286,7 +287,7 @@ export const ExampleBox = styled.div`
      flex-direction: row;
      align-items: center;
      justify-content: space-between;
-     width: 900px;
+     width: 890px;
      height: 500px;
      margin: -100px 0px 100px 150px;
 `;

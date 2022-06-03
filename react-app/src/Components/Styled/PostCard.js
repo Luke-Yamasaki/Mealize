@@ -240,6 +240,16 @@ export const QuestionText = styled(ButtonText)`
     font-weight: ${props => props.theme === 'light' ? '700' : '300'};
 `;
 
+export const EditText = styled(ButtonText)`
+    color: #191919;
+    font-weight: 700;
+`;
+
+export const DeleteText = styled(ButtonText)`
+    color: white;
+    font-weight: 300;
+`;
+
 export const FlagBox = styled.div`
     width: 25px;
     height: 25px;

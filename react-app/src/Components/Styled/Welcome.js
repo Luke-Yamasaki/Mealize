@@ -1,5 +1,5 @@
 import styled, {css, keyframes} from "styled-components";
-import { Black, Bold, ExtraBold } from "./Fonts";
+import { Black, Bold, ExtraBold, Medium } from "./Fonts";
 
 const lockin = keyframes`
     0% {
@@ -227,6 +227,19 @@ export const MealizeTitle = styled(Black)`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
+export const MealizeText = styled(ExtraBold)`
+    width: 600px;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    line-height: 30px;
+    letter-spacing: 0.1px;
+    margin-bottom: 20px;
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+`;
+
 export const SectionTitle = styled(Black)`
     width: 600px;
     height: auto;
@@ -238,16 +251,22 @@ export const SectionTitle = styled(Black)`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
-export const SectionText = styled(ExtraBold)`
-    width: 600px;
+export const LinkText = styled(Medium)`
+    width: ${props => props.list ? '570px' : '600px'};
     height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
+    font-size: 21px;
     line-height: 30px;
     letter-spacing: 0.1px;
     margin-bottom: 20px;
+    display: ${props => props.list ? 'list-item' : 'block'};
+    list-style-position: ${props => props.list ? 'outside' : 'none'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+`;
+
+export const SectionText = styled(LinkText)`
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 
@@ -303,18 +322,19 @@ export const WelcomeItem = styled.li`
 `;
 
 export const WelcomeLink = styled.a`
-    width: 600px;
     font-family: motiva-sans, sans-serif;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 21px;
+    margin: 0px 5px 0px 5px;
 `;
 
 export const WelcomeImages = styled.img`
-    object-fit: contain;
+    object-fit: ${props => props.fit ? props.fit : 'contain'};
     object-position: center;
     width: 600px;
     height: ${props => props.height ? props.height : '400px'};
     border-radius: 5px;
+    margin-bottom: 25px;
 `;
 
 export const WelcomeDiagram = styled(WelcomeImages)`

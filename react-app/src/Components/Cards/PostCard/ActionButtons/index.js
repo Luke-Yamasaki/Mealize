@@ -7,7 +7,7 @@ import { setCurrentModal, showModal } from '../../../../store/modal';
 import { removePost } from "../../../../store/posts";
 import { sendMessage } from "../../../../store/messages";
 //Components
-import { ButtonBox } from "../../../Styled/PostCard";
+import { ButtonBox, DeleteText, EditText } from "../../../Styled/PostCard";
 
 import { QuestionBtn, RequestBtn, ButtonText, EditBtn, DeleteBtn } from "../../../Styled/Buttons";
 import { QuestionText } from "../../../Styled/PostCard";
@@ -74,14 +74,14 @@ export const ActionButtons = ({ post }) => {
     return (
         <>
             {sessionUser.isNonprofit && sessionUser.isManager ?
-                <ButtonBox number={!post?.isItem ? '1' : (sessionUser.id !== post?.userId && (post?.isItem && post?.status === 0) ) ? '2' : '1'}>
+                <ButtonBox number={!post?.isItem ? '2' : (sessionUser.id !== post?.userId && (post?.isItem && post?.status === 0) ) ? '2' : '1'}>
                     {(sessionUser.isManager && sessionUser.id === post?.userId) &&
                     <>
                         <EditBtn theme={theme} onClick={handleEdit}>
-                            <QuestionText theme={theme}>Edit Request</QuestionText>
+                            <EditText theme={theme}>Edit Item</EditText>
                         </EditBtn>
                         <DeleteBtn onClick={handleDelete}>
-                            <ButtonText>Delete Item</ButtonText>
+                            <DeleteText>Delete Item</DeleteText>
                         </DeleteBtn>
                     </>
                     }
@@ -102,10 +102,10 @@ export const ActionButtons = ({ post }) => {
             (!sessionUser.isNonprofit && sessionUser.isManager) && sessionUser.id === post.userId ?
             <ButtonBox number='2'>
                 <EditBtn theme={theme} onClick={handleEdit}>
-                    <QuestionText theme={theme}>Edit Item</QuestionText>
+                    <EditText theme={theme}>Edit Item</EditText>
                 </EditBtn>
                 <DeleteBtn onClick={handleDelete}>
-                    <ButtonText>Delete Item</ButtonText>
+                    <DeleteText>Delete Item</DeleteText>
                 </DeleteBtn>
             </ButtonBox>
             :

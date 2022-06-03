@@ -4,7 +4,7 @@ export const ThemeContext = createContext();
 export const useTheme = () => useContext(ThemeContext);
 
 export default function ThemeProvider(props) {
-    const [theme, setTheme] = useState('light');
+    const [theme, setTheme] = useState(localStorage.getItem('theme') ? localStorage.getItem('theme') : 'light');
 
     return (
         <ThemeContext.Provider value={{ theme, setTheme }}>

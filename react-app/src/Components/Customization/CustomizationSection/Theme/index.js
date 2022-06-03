@@ -17,12 +17,13 @@ import { MoonIcon } from '../../../../Assets/Icons/Moon';
 
 export const Theme = () => {
     const {theme, setTheme} = useTheme();
-    const [selected, setSelected] = useState(false);
+    const [selected, setSelected] = useState(theme === 'light' ? false : true);
 
     const handleSelect = (e) => {
         e.preventDefault();
         setTheme(theme === 'light' ? 'dark' : 'light')
         setSelected(!selected);
+        localStorage.setItem("theme", theme === 'light' ? 'dark' : 'light');
     };
 
     return (

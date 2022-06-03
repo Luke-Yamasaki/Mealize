@@ -297,6 +297,7 @@ export const SelectMessageBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: ${props => props.marginTop ? props.marginTop : '0px'};
 `;
 
 export const SelectMessageText = styled(ExtraBold)`

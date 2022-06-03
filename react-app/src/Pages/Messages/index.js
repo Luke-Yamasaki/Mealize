@@ -12,6 +12,9 @@ import { getAllPosts } from "../../store/posts";
 //Helpers
 // import { createdAtDaysAgo, daysAgo } from "../../utils/Dates";
 
+//Images
+import question from './question.png';
+
 //Components
 import { PostCard } from "../../Components/Cards/PostCard";
 import {
@@ -42,8 +45,6 @@ import {
     DeclineButton,
     MessageWithImages,
     SingleMessage,
-    MessagesSpacer,
-    MessageTitleBox,
     PostDeletedText
 } from "../../Components/Styled/Messages";
 
@@ -58,7 +59,7 @@ import { EditMessageInput } from "../../Forms/Message/EditMessageInput";
 
 import { EditIcon } from '../../Assets/Icons/Edit';
 import { TrashIcon } from '../../Assets/Icons/Trash';
-import { VectorBox } from "../../Components/Styled/Layout";
+import { ExampleImages, VectorBox } from "../../Components/Styled/Layout";
 
 export const MessagesPage = () => {
     const dispatch = useDispatch();
@@ -171,11 +172,16 @@ export const MessagesPage = () => {
                     </SelectMessageBox>
                 }
                 {(!id && !messageBoardsArr.length) &&
-                    <SelectMessageBox>
+                <>
+                    <SelectMessageBox marginTop='-225px'>
                         <SelectMessageText theme={theme}>
                             {sessionUser.isManager ? "You can send messages by clicking on the 'Ask a question' button on items or request." : "You can send messages by clicking on the 'Ask a question' or 'Notify manager' button on items or request."}
                         </SelectMessageText>
+
                     </SelectMessageBox>
+                    <ExampleImages src={question} margin='-400px 0px 0px 250px' width='660px' height='500px'/>
+                </>
+
                 }
                 <Route path='/messages/:id'>
                     {(id && (messageBoards[id] && messageBoardsArr.length > 0)) &&

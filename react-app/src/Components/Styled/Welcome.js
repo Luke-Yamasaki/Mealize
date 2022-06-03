@@ -273,17 +273,21 @@ export const ArrowBox = styled.div`
 `;
 
 export const WelcomeList = styled.ul`
-    width: 900px;
+    width: 600px;
     margin: 0px;
     padding: 0px;
 `;
 
-export const WelcomeItems = styled.li`
-    width: 900px;
+export const WelcomeItem = styled.li`
+    width: 600px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    list-style-type: disc;
+    font-family: motiva-sans, sans-serif;
+    font-weight: 700;
+    font-size: 18px;
 `;
 
 export const WelcomeLink = styled.a`
@@ -291,4 +295,12 @@ export const WelcomeLink = styled.a`
     font-family: motiva-sans, sans-serif;
     font-weight: 700;
     font-size: 18px;
+`;
+
+export const WelcomeImages = styled.img`
+    object-fit: contain;
+    object-position: center;
+    width: 900px;
+    height: 600px;
+    border-radius: 5px;
 `;

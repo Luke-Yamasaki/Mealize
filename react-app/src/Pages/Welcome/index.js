@@ -15,7 +15,10 @@ import {
     SectionText,
     ArrowBox,
     AnimationBox,
-    WelcomeLink
+    WelcomeLink,
+    WelcomeList,
+    WelcomeItem,
+    WelcomeImages
 } from '../../Components/Styled/Welcome';
 
 import { VectorBox } from '../../Components/Styled/Layout';
@@ -26,6 +29,8 @@ import { Logo, MediumLogo, XLLogo } from '../../Assets/Logo';
 import { Redirect } from 'react-router-dom';
 import { ScrollArrow } from '../../Assets/Icons/ScrollArrow';
 
+//Images
+import volunteer from './Images'
 export const Welcome = () => {
     const sessionUser = useSelector(state => state.session.user);
     const { theme } = useTheme();
@@ -82,11 +87,20 @@ export const Welcome = () => {
                         href='https://www.ers.usda.gov/data-products/ag-and-food-statistics-charting-the-essentials/food-security-and-nutrition-assistance/#:~:text=In%202020%2C%2089.5%20percent%20of,from%2010.5%20percent%20in%202019.'>
                         Economic Research Service - U.S. Department Of Agriculture
                     </WelcomeLink>
-                    <SectionText theme={theme}>
-                        However, each year in the USA, an estimated 30-40% of food supply gets wasted. (Source: U.S. Department Of Agriculture)
-                    </SectionText>
-                    <SectionText theme={theme}>
-                        The Covid-19 pandemic caused 22 million job losses in the USA from February 2020 to April 2020, and the entire supply chain was disrupted. (Source: US Bureau of Labor Statistics)                    </SectionText>
+                    <WelcomeImages src={}
+                    <WelcomeList>
+                        <WelcomeItem>
+                            <SectionText theme={theme}>
+                                However, each year in the USA, an estimated 30-40% of food supply gets wasted. (Source: U.S. Department Of Agriculture)
+                            </SectionText>
+                        </WelcomeItem>
+                        <WelcomeItem>
+                            <SectionText theme={theme}>
+                                The Covid-19 pandemic caused 22 million job losses in the USA from February 2020 to April 2020, and the entire supply chain was disrupted. (Source: US Bureau of Labor Statistics)
+                            </SectionText>
+                        </WelcomeItem>
+                    </WelcomeList>
+
                     <SectionText theme={theme}>
                         As a result, feeding at-risk populations in the USA has become an extremely pressing issue.
                     </SectionText>

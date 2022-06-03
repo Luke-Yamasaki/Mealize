@@ -1,6 +1,7 @@
 //Hooks
 import { useSelector } from 'react-redux';
 import { useTheme } from '../../Context/ThemeContext';
+import { Redirect } from 'react-router-dom';
 
 //Components
 import { PostsFeed } from '../../Components/PostsFeed';
@@ -25,6 +26,12 @@ export const Home = () => {
     const {theme} = useTheme();
 
     const categories = Object.values(categoriesObj);
+
+    localStorage.setItem('visited', 'true');
+
+    if(!sessionUser) {
+        return <Redirect to='/welcome' />
+    }
 
     return(
         <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}>

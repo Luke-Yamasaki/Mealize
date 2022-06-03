@@ -109,7 +109,7 @@ export const SelectDeliveryText = styled(ExtraBold)`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 700px;
+    width: 900px;
     height: 200px;
     line-height: 50px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};

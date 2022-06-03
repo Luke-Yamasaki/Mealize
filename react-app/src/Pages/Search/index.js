@@ -16,11 +16,12 @@ import { getAllPosts } from '../../store/posts';
 import { OrganizationCard } from '../../Components/Cards/OrganizationCard';
 import { PostCard } from '../../Components/Cards/PostCard';
 
-//styled-components
-import {
-    PageBackGround,
-} from '../../Components/Styled/Layout';
+//Image
+import brockLee from './Brock-Lee.png';
 
+//styled-components
+import { PageBackGround } from '../../Components/Styled/Layout';
+import { FourOFourImage } from '../../Components/Styled/404';
 import {
     SearchTitle,
     SearchSection,
@@ -159,7 +160,11 @@ export const SearchPage = () => {
                         <PostCard post={post} />
                     )}
                     {searchFilter === 'none' &&
+                    <>
                         <SearchTitle theme={theme}>We couldn't find any search results.</SearchTitle>
+                        <FourOFourImage theme={theme} src={brockLee} margin='285px'/>
+                    </>
+
                     }
                 </SearchFeed>
             </SearchSection>

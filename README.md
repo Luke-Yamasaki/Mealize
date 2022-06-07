@@ -1,14 +1,48 @@
-#  <img src="./react-app/public/Mealize-banner.png"/>   &nbsp;
+<img src="./react-app/public/Mealize-banner.png"/>   &nbsp;
+# Mealize is a React and Flask app that aims to reduce food scarcity and waste by connecting businesses to nonprofits.
+![home](https://user-images.githubusercontent.com/89368363/172500968-3b3ac765-2c9f-42ae-8ba7-529f1294664e.png)
 
 ## Link to Live Site
 
-[Mealize Live Site](https://mealize.herokuapp.com/)
+[https://mealize.herokuapp.com](https://mealize.herokuapp.com/)
 
+## Features
+
+### - Light mode, dark mode and background customization
+![dark mode](https://user-images.githubusercontent.com/89368363/172501703-5bb7eba2-025c-42bd-b553-459344914014.png)
 <br>
 
-## Description
+### - Post a request as a nonprofit manager.
+![request](https://user-images.githubusercontent.com/89368363/172500624-66a3949e-bf92-4e9c-a49e-929bba504e70.png)
+<br>
 
-Mealize is a React and Flask app that aims to reduce food scarcity and waste by connecting businesses to nonprofits.
+### - Post surplus food as a business manager.
+![item](https://user-images.githubusercontent.com/89368363/172500706-96ac7d6d-74f0-492a-87d5-fe7a6a8bee69.png)
+<br>
+
+### - Add posts to favorites list.
+![favorites](https://user-images.githubusercontent.com/89368363/172501469-8b97ea15-d6c2-44ac-8e96-ba73c55ba06e.png)
+<br>
+
+### - Notify managers about good items you find.
+![notify](https://user-images.githubusercontent.com/89368363/172501491-9dedb0e0-6804-434a-a2b6-c3b1cba9d4e0.png)
+<br>
+
+### - Send pick up request to business owners (limited to nonprofit managers).
+![requestForm](https://user-images.githubusercontent.com/89368363/172501581-885299bd-f8a1-40e6-be37-2b2d2e7a846f.png)
+<br>
+
+### - Accept or decline pick up requests (limited to business managers).
+![validate](https://user-images.githubusercontent.com/89368363/172501589-a996fc67-569e-4ee1-8ae0-2007a4f04a30.png)
+<br>
+
+### - Check pending and accepted deliveries.
+![pending](https://user-images.githubusercontent.com/89368363/172501609-3b5e7349-c17d-4929-95e1-52d4f31e5b43.png)
+<br>
+
+### - Filter by category and search items by keywords!
+![filter](https://user-images.githubusercontent.com/89368363/172502192-dd145fb9-88bc-4ead-bba2-19b9e4e05e9f.png)
+![search](https://user-images.githubusercontent.com/89368363/172502081-ce828236-6441-42f1-9a75-b556c10c6df2.png)
 <br>
 
 ## Getting Started
@@ -46,7 +80,6 @@ If you do not know how to do so, here are the commands in JavaScript:
 
     Then, type CREATE DATABASE (your chosen database name) WITH OWNER (the username from above);
 <br></br>
-    ## Do not forget to wrap your password in quotes and ignore any parentheses you see in my examples. Also, don't forget to add semi-colons at the end of each line and you are good to go!
 <br></br>
 5. Enter your shell environment, upgrade and seed your database, and run your flask app
 

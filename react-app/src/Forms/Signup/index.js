@@ -214,6 +214,7 @@ export const SignupForm = () => {
                     setImageUploading(false);
                     history.push('/')
                     dispatch(hideModal())
+                    localStorage.setItem('visited', 'true');
                 } else {
                     const responseErrArr = []
                     responseErrArr.push(newUser)
@@ -245,6 +246,7 @@ export const SignupForm = () => {
             setEmailError(emailErrArr);
             setPasswordError(passwordErrArr)
         }
+        localStorage.setItem('visited', 'true');
         dispatch(hideModal())
     };
 

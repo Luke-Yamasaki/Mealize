@@ -59,7 +59,7 @@ export const Welcome = () => {
 
     return (
         <>
-            {!localStorage.getItem('visited') &&
+            {localStorage.getItem('visited') === 'false' &&
                 <WelcomeAnimation>
                     <LogoVectorBox>
                         <XLLogo theme={theme} />

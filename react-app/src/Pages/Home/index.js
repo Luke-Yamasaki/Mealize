@@ -27,8 +27,6 @@ export const Home = () => {
 
     const categories = Object.values(categoriesObj);
 
-    localStorage.setItem('visited', 'true');
-
     if(!sessionUser) {
         return <Redirect to='/welcome' />
     }

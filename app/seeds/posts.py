@@ -4,81 +4,471 @@ from faker import Faker
 fake = Faker(locale='en-US')
 
 def seed_posts():
-    # for requests
-    for i in range(1, 6):
-        dairy_requests = Post(
-            isItem=False,
-            organizationId=i,
-            userId=i,
-            title=choice(('Need milk', 'Need blocks of cheese', 'Looking for butter', '1kg yogurt', 'Milk or chocolate milk', 'Cheddar cheese')),
-            description=choice(('Our food bank needs milk! We would appreciate it if you have 1kg unopened cartons to spare.', "We're looking for blocks of cheddar cheese. If you kept them properly stored, we would love to pick them up. Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for butter.', "Hello! We're looking for yogurt for lunch boxes! 1kg unopened containers would be much appreciated!", "If you have 1kg unopened dairy or plant based milk, we would love to reserve a pick up time!", 'Looking for blocks of cheese for boxed meals. Thanks!')),
-            quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
-            categoryId=1,
-            imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
-            expDate='2022-06-18',
-            status = randint(0, 2)
-        )
-        db.session.add(dairy_requests)
+    # dairy
+    dairy_request1 = Post(
+        isItem=False,
+        organizationId=1,
+        userId=1,
+        title='Need milk',
+        description='Our food bank needs milk! We would appreciate it if you have at least 50 unopened cartons to spare.',
+        quantity='50 count',
+        categoryId=1,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
+        expDate='2022-08-18',
+        status = 0
+    )
+    db.session.add(dairy_request1)
 
-    for j in range(6, 11):
-        vegetable_requests = Post(
-            isItem=False,
-            organizationId=j,
-            userId=j,
-            title=choice(('Need carrots', 'Need lettuce and cabbage', 'Looking for potatoes', '1kg greens', 'Cucumbers or squash', 'Leftover salad?')),
-            description=choice(('Our food bank needs carrots! We would appreciate it if you have 1kg to spare.', "We're looking for heads of lettuce and cabbage. If you kept them properly stored, we would love to pick them up. Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for 1kg lefover salad you may have.', "Hello! We're looking for cucumbers and squash for lunch boxes! 1kg amount would be much appreciated!", "If you have 1kg potatoes, we would love to reserve a pick up time!", 'Looking for 1kg fresh greens. Thanks!')),
-            quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
-            categoryId=2,
-            imageUrl='https://mealizeaa.s3.amazonaws.com/vegetables_request.png',
-            expDate='2022-07-18',
-            status = randint(0, 2)
-        )
-        db.session.add(vegetable_requests)
+    dairy_request2 = Post(
+        isItem=False,
+        organizationId=2,
+        userId=2,
+        title='Need blocks of cheese',
+        description="We're looking for blocks of cheddar cheese. If you kept them properly stored, we would love to pick them up. Thanks!",
+        quantity='10 lbs',
+        categoryId=1,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
+        expDate='2022-07-18',
+        status = 0
+    )
+    db.session.add(dairy_request2)
 
-    for k in range(11, 16):
-        fruits_requests = Post(
-            isItem=False,
-            organizationId=k,
-            userId=k,
-            title=choice(('Need bananas', 'Need berries', 'Looking for apples', '1kg citrus fruit', 'Oranges', 'Fresh grapes', 'Pears or peaches')),
-            description=choice(('Our food bank needs bananas! We would appreciate it if you have 1kg fresh ones to spare.', "We're looking for packaged berries. Even if they are chopped and stored in containers, we are interested! Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for apples.', "Hello! We're looking for lemons or limes! Either fruit would be much appreciated!", "If you have 1kg unopened canned peaches or pears, we would love to reserve a pick up time!", 'Looking for oranges for boxed meals. Sliced or whole, we do not mind at all! Thanks!', 'Looking for fresh grapes! We need fruit for our after school programs. Thank you!')),
-            quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
-            categoryId=3,
-            imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
-            expDate='2022-08-18',
-            status = randint(0, 2)
-        )
-        db.session.add(fruits_requests)
+    dairy_request3 = Post(
+        isItem=False,
+        organizationId=3,
+        userId=3,
+        title='Looking for butter',
+        description='Our organization is hosting a temporary soup kitchen and we are looking for butter.',
+        quantity='10 lbs',
+        categoryId=1,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
+        expDate='2022-07-18',
+        status = 1
+    )
+    db.session.add(dairy_request3)
 
-    for l in range(16, 21):
-        grains_requests = Post(
-            isItem=False,
-            organizationId=l,
-            userId=l,
-            title=choice(('Need dry pasta noodles', 'Need boxes of macaroni', 'Looking for bags of rice', '1kg bread', 'Sandwhich bread', 'Looking for oatmeal')),
-            description=choice(('Our food bank needs dry pasta noodles! We would appreciate it if you have 1kg boxes to spare.', "We're looking for boxes of macaroni. We would love to pick them up. Thanks!", 'We are looking to make rice balls for the homeless shelter and we need bags of rice.', "Hello! We're looking for yogurt for lunch boxes! 1kg unopened containers would be much appreciated!", "If you have 1kg bread, we would love to reserve a pick up time!", 'Looking for sandwhich bread, tortillas or wraps. Thanks!', 'Looking for oatmeal!')),
-            quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
-            categoryId=4,
-            imageUrl='https://mealizeaa.s3.amazonaws.com/grains_request.png',
-            expDate='2022-09-18',
-            status = randint(0, 2)
-        )
-        db.session.add(grains_requests)
+    dairy_request4 = Post(
+        isItem=False,
+        organizationId=4,
+        userId=4,
+        title='Looking for yogurt',
+        description="Hello! We're looking for yogurt for lunch boxes! 1kg unopened containers would be much appreciated!",
+        quantity='250 count',
+        categoryId=1,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
+        expDate='2022-07-18',
+        status = 1
+    )
+    db.session.add(dairy_request4)
 
-    for m in range(21, 26):
-        protein_requests = Post(
-            isItem=False,
-            organizationId=m,
-            userId=m,
-            title=choice(('Need chicken breast', 'Need fish', 'Looking for canned tuna', '1kg eggs', 'Tofu or beans', 'Pork chops', 'Burger patties', 'Canned almonds')),
-            description=choice(('Our food bank needs chicken breast! We would appreciate it if you have 1kg amount to spare.', "We're looking for fish, we aren't picky. If you kept them properly stored, we would love to pick them up. Thanks!", 'Our organization is hosting a temporary soup kitchen and we are looking for canned tuna.', "Hello! We're looking for eggs for lunch boxes! 1kg amount would be much appreciated!", "If you have 1kg unopened canned almonds, we would love to reserve a pick up time!", 'Looking for pork, ideally pork chops for boxed meals. Thanks!', 'Looking for burger patties. If you have beef or vegan patties, we would love to pick them up. Thanks!', 'We need tofu and black beans. If you have 1kg we would love to pick them up!')),
-            quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
-            categoryId=5,
-            imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
-            expDate='2022-10-18',
-            status = randint(0, 2)
-        )
-        db.session.add(protein_requests)
+    dairy_request5 = Post(
+        isItem=False,
+        organizationId=5,
+        userId=5,
+        title='Cheddar cheese',
+        description='Looking for blocks of cheese for boxed meals. Thanks!',
+        quantity='30 lbs',
+        categoryId=1,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
+        expDate='2022-06-18',
+        status = 2
+    )
+    db.session.add(dairy_request5)
+
+    dairy_request6 = Post(
+        isItem=False,
+        organizationId=6,
+        userId=6,
+        title='Milk or chocolate milk',
+        description="If you have unopened dairy or plant based regular or chocolate milk, we would love to pick up!",
+        quantity='100 count',
+        categoryId=1,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
+        expDate='2022-07-18',
+        status = 2
+    )
+    db.session.add(dairy_request6)
+
+    #vegetables
+    vegetable_request1 = Post(
+        isItem=False,
+        organizationId=7,
+        userId=7,
+        title='Need carrots',
+        description='Our food bank needs carrots! We would appreciate it if you have at least 100 to spare.',
+        quantity='100 count',
+        categoryId=2,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/vegetables_request.png',
+        expDate='2022-07-18',
+        status = 0
+    )
+    db.session.add(vegetable_request1)
+
+    vegetable_request2 = Post(
+        isItem=False,
+        organizationId=8,
+        userId=8,
+        title='Need lettuce and cabbage',
+        description="We're looking for heads of lettuce and cabbage. If you kept them properly stored, we would love to pick them up. Thanks!",
+        categoryId=2,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/vegetables_request.png',
+        expDate='2022-07-18',
+        status = 0
+    )
+    db.session.add(vegetable_request2)
+
+    vegetable_request3 = Post(
+        isItem=False,
+        organizationId=9,
+        userId=9,
+        title='Looking for potatoes',
+        description="If you have 20 lbs potatoes, we would love to reserve a pick up time!",
+        quantity='20 lbs',
+        categoryId=2,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/vegetables_request.png',
+        expDate='2022-07-18',
+        status = 0
+    )
+    db.session.add(vegetable_request3)
+
+    vegetable_request4 = Post(
+        isItem=False,
+        organizationId=10,
+        userId=10,
+        title='1kg greens',
+        description='Looking for 50 lbs of fresh greens. Lettuce, cabbage, spinach, kale, or any leafs will be appreciated.',
+        quantity='50 lbs',
+        categoryId=2,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/vegetables_request.png',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(vegetable_request4)
+
+    vegetable_request5 = Post(
+        isItem=False,
+        organizationId=4,
+        userId=4,
+        title='Cucumbers or squash',
+        description="We're looking for cucumbers and squash for lunch boxes! If you have more than 50, that would be much appreciated!",
+        quantity='50 count',
+        categoryId=2,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/vegetables_request.png',
+        expDate='2022-08-30',
+        status = 0
+    )
+    db.session.add(vegetable_request5)
+
+    vegetable_request6 = Post(
+        isItem=False,
+        organizationId=11,
+        userId=11,
+        title='Leftover salad?',
+        description='Our organization is hosting a temporary soup kitchen and we are looking for any lefover salad you may have.',
+        quantity='10 lbs',
+        categoryId=2,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/vegetables_request.png',
+        expDate='2022-06-18',
+        status = 0
+    )
+    db.session.add(vegetable_request6)
+
+    #fruits
+    fruits_request1 = Post(
+        isItem=False,
+        organizationId=10,
+        userId=10,
+        title='Need bananas',
+        description='Our food bank needs bananas! We would appreciate it if you have 1kg fresh ones to spare.',
+        quantity='30 lbs',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(fruits_request1)
+
+    fruits_request2 = Post(
+        isItem=False,
+        organizationId=9,
+        userId=9,
+        title='Need berries',
+        description="We're looking for packaged berries. Even if they are chopped and stored in containers, we are interested! Thanks!",
+        quantity='200 count',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
+        expDate='2022-06-18',
+        status = 0
+    )
+    db.session.add(fruits_request2)
+
+    fruits_request3 = Post(
+        isItem=False,
+        organizationId=8,
+        userId=8,
+        title='Looking for apples',
+        description='Our organization is hosting a temporary soup kitchen and we are looking for apples.',
+        quantity='10 lbs',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
+        expDate='2022-07-10',
+        status = 0
+    )
+    db.session.add(fruits_request3)
+
+    fruits_request4 = Post(
+        isItem=False,
+        organizationId=7,
+        userId=7,
+        title='Citrus fruit',
+        description="Hello! We're looking for lemons or limes! Either fruit would be much appreciated!",
+        quantity='5 lbs',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
+        expDate='2022-06-18',
+        status = 0
+    )
+    db.session.add(fruits_request4)
+
+    fruits_request5 = Post(
+        isItem=False,
+        organizationId=6,
+        userId=6,
+        title='Oranges',
+        description='Looking for oranges for boxed meals. Sliced or whole, we do not mind at all! Thanks!',
+        quantity='50 lbs',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
+        expDate='2022-08-18',
+        status = 0
+    )
+    db.session.add(fruits_request5)
+
+    fruits_request6 = Post(
+        isItem=False,
+        organizationId=5,
+        userId=5,
+        title='Fresh grapes',
+        description='Looking for fresh grapes! We need fruit for our summer school programs. Thank you!',
+        quantity='100 lbs',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
+        expDate='2022-09-01',
+        status = 0
+    )
+    db.session.add(fruits_request6)
+
+    fruits_request7 = Post(
+        isItem=False,
+        organizationId=4,
+        userId=4,
+        title='Pears or peaches',
+        description="If you have 1kg unopened canned peaches or pears, we would love to reserve a pick up time!",
+        quantity='100 count',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
+        expDate='2022-08-18',
+        status = 0
+    )
+    db.session.add(fruits_request7)
+
+    #grains
+    grains_request1 = Post(
+        isItem=False,
+        organizationId=3,
+        userId=3,
+        title='Need dry pasta noodles',
+        description='Our food bank needs dry pasta noodles! We would appreciate it if you have 50 boxes to spare.',
+        quantity='50 count',
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/grains_request.png',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(grains_request1)
+
+    grains_request2 = Post(
+        isItem=False,
+        organizationId=2,
+        userId=2,
+        title='Need boxes of macaroni',
+        description="We're looking for boxes of macaroni. We would love to pick them up. Thanks!",
+        quantity='200 count',
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/grains_request.png',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(grains_request2)
+
+    grains_request3 = Post(
+        isItem=False,
+        organizationId=1,
+        userId=1,
+        title='Looking for bags of rice',
+        description='We are looking to make rice balls for the homeless shelter and we need bags of rice.',
+        quantity='20 count',
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/grains_request.png',
+        expDate='2022-07-05',
+        status = 0
+    )
+    db.session.add(grains_request3)
+
+    grains_request4 = Post(
+        isItem=False,
+        organizationId=11,
+        userId=11,
+        title='10kg bread',
+        description="If you have 10kgs of bread we would love to reserve a pick up time!",
+        quantity='10 kg',
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/grains_request.png',
+        expDate='2022-06-24',
+        status = 0
+    )
+    db.session.add(grains_request4)
+
+    grains_request5 = Post(
+        isItem=False,
+        organizationId=10,
+        userId=10,
+        title='Sandwhich bread',
+        description='Looking for sandwhich bread, tortillas or wraps. Thanks!',
+        quantity='100 count',
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/grains_request.png',
+        expDate='2022-08-30',
+        status = 0
+    )
+    db.session.add(grains_request5)
+
+    grains_request6 = Post(
+        isItem=False,
+        organizationId=9,
+        userId=9,
+        title='Looking for oatmeal',
+        description='Looking for oatmeal!',
+        quantity='200 count',
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/grains_request.png',
+        expDate='2022-08-12',
+        status = 0
+    )
+    db.session.add(grains_request6)
+
+    #protein
+    protein_request1 = Post(
+        isItem=False,
+        organizationId=8,
+        userId=8,
+        title='Need chicken breast',
+        description='Our food bank needs chicken breast! We would appreciate it if you have 10 lbs to spare.',
+        quantity='10 lbs',
+        categoryId=5,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
+        expDate='2022-06-22',
+        status = 0
+    )
+    db.session.add(protein_request1)
+
+    protein_request2 = Post(
+        isItem=False,
+        organizationId=7,
+        userId=7,
+        title='Need fish',
+        description="We're looking for fish, we aren't picky. If you kept them properly stored, we would love to pick them up. Thanks!",
+        quantity='10 lbs',
+        categoryId=5,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
+        expDate='2022-08-08',
+        status = 0
+    )
+    db.session.add(protein_request2)
+
+    protein_request3 = Post(
+        isItem=False,
+        organizationId=6,
+        userId=6,
+        title='Looking for canned tuna',
+        description='Our organization is hosting a temporary soup kitchen and we are looking for canned tuna.',
+        categoryId=5,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
+        expDate='2022-10-18',
+        status=0
+    )
+    db.session.add(protein_request3)
+
+    protein_request4 = Post(
+        isItem=False,
+        organizationId=5,
+        userId=5,
+        title='Looking for canned tuna',
+        description='Our organization is hosting a temporary soup kitchen and we are looking for canned tuna.',
+        quantity='200 count',
+        categoryId=5,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
+        expDate='2022-07-06',
+        status = 0
+    )
+    db.session.add(protein_request4)
+
+    protein_request5 = Post(
+        isItem=False,
+        organizationId=4,
+        userId=4,
+        title='Looking for eggs',
+        description="Hello! We're looking for eggs for lunch boxes, ideally 200 eggs. Thanks!",
+        quantity='200 count',
+        categoryId=5,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
+        expDate='2022-07-21',
+        status = 0
+    )
+    db.session.add(protein_request5)
+
+    protein_request6 = Post(
+        isItem=False,
+        organizationId=3,
+        userId=3,
+        title='Canned almonds',
+        description="If you have unopened canned almonds, we would love to reserve a pick up time!",
+        quantity='100 count',
+        categoryId=5,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
+        expDate='2022-07-08',
+        status = 0
+    )
+    db.session.add(protein_request6)
+
+    protein_request7 = Post(
+        isItem=False,
+        organizationId=2,
+        userId=2,
+        title='Looking for pork.',
+        description='Looking for pork, ideally pork chops for boxed meals. Thanks!',
+        quantity='20 lbs',
+        categoryId=5,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
+        expDate='2022-08-18',
+        status = 0
+    )
+    db.session.add(protein_request7)
+
+    protein_request8 = Post(
+        isItem=False,
+        organizationId=1,
+        userId=1,
+        title='Looking for burger patties.',
+        description='Looking for burger patties. If you have beef or vegan patties, we would love to pick them up. Thanks!',
+        quantity='300 count',
+        categoryId=5,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
+        expDate='2022-08-20',
+        status = 0
+    )
+    db.session.add(protein_request8)
+
 
     # for items
     for i in range(26, 31):

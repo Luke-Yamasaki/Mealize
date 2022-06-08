@@ -240,8 +240,8 @@ def seed_organizations():
     mealize_market = Organization(
         federalId='88-8888888',
         isNonprofit=False,
-        logoUrl='https://mealize.s3.amazonaws.com/Mealize-circle.png',
-        imageUrl='https://mealize.s3.amazonaws.com/Mealize-banner.png',
+        logoUrl='https://mealizeaa.s3.amazonaws.com/mealize-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/mealize-b.png',
         open='8:00',
         close='6:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),

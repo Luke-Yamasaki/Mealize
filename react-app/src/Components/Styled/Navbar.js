@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import { Black, Bold } from './Fonts';
 
 export const NavBar = styled.div`
-    width: 1600px;
-    height: 60px;
+    background: linear-gradient(#76D97E, #28A690);
+    max-width: 1125px;
+    width: 100vw;
+    height: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,9 +30,8 @@ export const LogoNavLink = styled(NavLink)`
 `;
 
 export const Navigation = styled.nav`
-    width: 1600px;
-    height: 60px;
-    background: linear-gradient(#76D97E, #28A690);
+    max-width: 1125px;
+    width: 100vw;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -38,9 +39,9 @@ export const Navigation = styled.nav`
 `;
 
 export const NavList = styled.div`
-    width: 1500px;
-    max-width: 1700px;
-    height: 60px;
+    max-width: 1125px;
+    width: 100vw;
+    height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -53,19 +54,21 @@ export const Searchbar = styled.form`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    width: ${props => props.mic === 'true' ? '695px' : '700px'};
+    max-width: 500px;
+    width: 30vw;
+    min-width: 300px;
     height: 30px;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     border-radius: 50px;
     padding-left: 5px;
     padding-right: ${props => props.mic === 'true' ? '10px' : '0px'};
-    margin-left: 400px;
-    position: absolute;
     gap: 5px;
 `;
 
 export const SearchInput = styled.input`
-    width: 625px;
+    max-width: 400px;
+    width: 26vw;
+    min-width: 235px;
     font-family: motiva-sans,sans-serif;
     font-weight: 700;
     font-style: normal;
@@ -138,7 +141,7 @@ export const NavIconContainer = styled.div`
 `;
 
 export const GradientLogoType = styled(Black)`
-    width: 200px;
+    width: 100px;
     height: 30px;
     font-size: 18px;
     background: -webkit-linear-gradient(#28A690,#76D97E);
@@ -148,5 +151,8 @@ export const GradientLogoType = styled(Black)`
     display: ${props => props.entering ? 'none' : 'flex'};
     align-items: center;
     position: absolute;
-    margin-left: 240px;
+    margin-left: calc(27% - 100px);
+    @media only screen and (max-width: 1650px) {
+        margin-left: 11.5vw;
+    }
 `;

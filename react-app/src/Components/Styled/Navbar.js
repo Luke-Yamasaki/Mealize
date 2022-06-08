@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import { Black, Bold } from './Fonts';
 
 export const NavBar = styled.div`
-    width: 1600px;
-    height: 60px;
+    background: linear-gradient(#76D97E, #28A690);
+    max-width: 1125px;
+    width: 100vw;
+    height: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,9 +30,8 @@ export const LogoNavLink = styled(NavLink)`
 `;
 
 export const Navigation = styled.nav`
-    width: 1600px;
-    height: 60px;
-    background: linear-gradient(#76D97E, #28A690);
+    max-width: 1125px;
+    width: 100vw;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -38,9 +39,9 @@ export const Navigation = styled.nav`
 `;
 
 export const NavList = styled.div`
-    width: 1500px;
-    max-width: 1700px;
-    height: 60px;
+    max-width: 1125px;
+    width: 100vw;
+    height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -53,7 +54,9 @@ export const Searchbar = styled.form`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    width: ${props => props.mic === 'true' ? '695px' : '700px'};
+    max-width: 500px;
+    width: 30vw;
+    min-width: 300px;
     height: 30px;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     border-radius: 50px;
@@ -65,7 +68,9 @@ export const Searchbar = styled.form`
 `;
 
 export const SearchInput = styled.input`
-    width: 625px;
+    max-width: 430px;
+    width: 29vw;
+    min-width: 235px;
     font-family: motiva-sans,sans-serif;
     font-weight: 700;
     font-style: normal;

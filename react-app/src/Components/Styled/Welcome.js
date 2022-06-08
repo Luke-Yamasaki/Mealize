@@ -161,8 +161,9 @@ export const LogoType = styled(Black)`
 `;
 
 export const WelcomeContent = styled.div`
-    width: 1600px;
-    min-height: 900px;
+    max-width: 1125px;
+    width: 100vw;
+    min-height: calc(100vh - 60px);
     display: flex;
     flex-direction: column;
     align-items: center;

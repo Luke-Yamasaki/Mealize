@@ -44,7 +44,8 @@ export const AppBackGround = styled.div`
 `;
 
 export const AppContentContainer = styled.div`
-    width: 1600px;
+    max-width: 1125px;
+    width: 100vw;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -53,24 +54,23 @@ export const AppContentContainer = styled.div`
 `;
 
 export const PageBackGround = styled.div`
-    width: 1548px;
-    min-height: 80vh;
-    height: auto;
+    max-width: 1125px;
+    width: 100vw;
+    min-height: calc(100vh - 50px);
     background: ${props => props.background};
     display: flex;
     flex-direction: row;
-    justify-content: ${props => props.position ? props.position : 'flex-start'};
+    justify-content: ${props => props.position ? props.position : 'space-around'};
     align-items: top;
     filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.35));
-    padding-top: 50px;
-    padding-left: 50px;
-    gap: 100px;
+    padding-top: 25px;
+    gap: 25px;
     border: 1px solid;
     border-color: ${props => props.bordercolor};
 `;
 
 export const BackGroundAside = styled.aside`
-    width: 600px;
+    max-width: calc(100vw - 562.5px);
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -182,11 +182,12 @@ export const SideBarInfoText = styled(Bold)`
 `;
 
 export const FeedContainer = styled.div`
-    width: 1100px;
+    max-width: 1125px;
+    width: calc(100vw - 150px);
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    gap: 25px;
+    gap: 15px;
     row-gap: 0px;
     flex-wrap: wrap;
 `;
@@ -197,7 +198,8 @@ export const PostsTitle = styled(ExtraBold)`
 `;
 
 export const PostsSection = styled.section`
-    width: 1100px;
+    max-width: 900px;
+    width: calc(100vw - 125px);
     height: auto;
     display: flex;
     flex-direction: column;

@@ -2,19 +2,19 @@ import styled, {css, keyframes} from 'styled-components';
 import { ExtraBold, Bold } from './Fonts';
 
 const expand = keyframes`
-    from { opacity: 0%; width: 0px; visibility: hidden;}
-    to { opacity: 100%; width: 300px; visibility: visible;}
+    from { opacity: 0%; width: 0px; visibility: hidden; margin-right: 0px}
+    to { opacity: 100%; width: 425px; visibility: visible; margin-right: 160px}
 `;
 
 export const expandField = () =>
     css`
     ${expand} 0.6s forwards;
-    `
+`
 
 const shrink = keyframes`
-    0% { width: 300px; visibility: visible; margin-right: 0px;}
+    0% { width: 300px; visibility: visible; margin-right: 120px;}
     99% { visibility: visible; margin-right: 20px;}
-    100% { width: 0px; visibility: hidden; margin-right: 30px;}
+    100% { width: 0px; visibility: hidden; margin-right: 0px;}
 `;
 
 export const shrinkField = () =>
@@ -24,7 +24,7 @@ export const shrinkField = () =>
 
 
 export const AppBackGround = styled.div`
-    width: 99.3vw;
+    width: 100vw;
     height: auto;
     display: flex;
     flex-direction: row;
@@ -44,7 +44,8 @@ export const AppBackGround = styled.div`
 `;
 
 export const AppContentContainer = styled.div`
-    width: 1600px;
+    max-width: 1125px;
+    width: 100vw;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -53,26 +54,26 @@ export const AppContentContainer = styled.div`
 `;
 
 export const PageBackGround = styled.div`
-    width: 1548px;
-    min-height: 80vh;
-    height: auto;
+    max-width: 1125px;
+    width: 100vw;
+    min-height: calc(100vh - 50px);
     background: ${props => props.background};
     display: flex;
     flex-direction: row;
-    justify-content: ${props => props.position ? props.position : 'flex-start'};
+    justify-content: ${props => props.position ? props.position : 'space-around'};
     align-items: top;
     filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.35));
-    padding-top: 50px;
-    padding-left: 50px;
-    gap: 100px;
+    padding-top: 25px;
+    gap: 25px;
     border: 1px solid;
     border-color: ${props => props.bordercolor};
 `;
 
 export const BackGroundAside = styled.aside`
-    width: 600px;
+    width: 0px;
     height: 100vh;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     position: -webkit-sticky;
@@ -80,6 +81,11 @@ export const BackGroundAside = styled.aside`
     top: 0px;
     will-change: transform;
     margin-top: -1000px;
+    gap: 10px;
+    margin-left: -40px;
+    @media only screen and (max-width: 1190px) {
+        margin-left: -100px;
+    }
 `;
 
 export const FilterTitle = styled(ExtraBold)`
@@ -182,11 +188,13 @@ export const SideBarInfoText = styled(Bold)`
 `;
 
 export const FeedContainer = styled.div`
-    width: 1100px;
+    max-width: 820px;
+    width: calc(100vw - 350px);
+    min-width: 350px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    gap: 25px;
+    gap: 35px;
     row-gap: 0px;
     flex-wrap: wrap;
 `;
@@ -197,7 +205,8 @@ export const PostsTitle = styled(ExtraBold)`
 `;
 
 export const PostsSection = styled.section`
-    width: 1100px;
+    max-width: 900px;
+    width: calc(100vw - 125px);
     height: auto;
     display: flex;
     flex-direction: column;
@@ -242,6 +251,7 @@ export const SettingsField = styled.div`
     height: 650px;
     visibility: hidden;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     cursor: pointer;

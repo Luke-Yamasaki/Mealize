@@ -29,7 +29,7 @@ export const BackGround = () => {
     };
 
     return (
-        <ContentContainer  theme={theme}>
+        <ContentContainer  theme={theme} border='none'>
             <IconContainer theme={theme} background={theme === 'light' ? '#76D97E' : '#327647'}>
                 <ImageIcon theme={theme}/>
             </IconContainer>

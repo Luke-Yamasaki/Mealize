@@ -70,7 +70,7 @@ export const Welcome = () => {
             <WelcomeContent theme={theme} >
                 <Group>
                     <GreetingText theme={theme} animation={localStorage.getItem('visited') ? false : true}>Welcome to Mealize!</GreetingText>
-                    <HandVectorBox square='550px' animation={localStorage.getItem('visited') ? false : true}>
+                    <HandVectorBox animation={localStorage.getItem('visited') ? false : true}>
                         <Hand theme={theme} />
                     </HandVectorBox>
                 </Group>

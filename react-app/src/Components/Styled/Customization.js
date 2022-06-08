@@ -4,8 +4,8 @@ import { expandField } from './Layout';
 
 const up = keyframes`
     0% { opacity: 35%; transform: rotate(0deg);}
-    50% { opcaity: 75%; margin-top: -500px; margin-left: 0px;}
-    100% { opacity: 100%; transform: rotate(360deg); margin-top: -500px; margin-left: 350px;}
+    50% { opcaity: 75%; margin-top: -500px;}
+    100% { opacity: 100%; transform: rotate(360deg); margin-top: -500px;}
 `;
 
 export const goUp = () =>
@@ -14,9 +14,9 @@ export const goUp = () =>
     `
 
 const down = keyframes`
-    0% { opacity: 35%; transform: rotate(0deg); margin-top: -500px; margin-left: 400px;}
+    0% { opacity: 35%; transform: rotate(0deg); margin-top: -500px;}
     50% { opcaity: 75%; margin-top: -500px; margin-left: 0px;}
-    100% { opacity: 100%; margin-top: 0px; transform: rotate(360deg); margin-left: 0px;}
+    100% { opacity: 100%; margin-top: 0px; transform: rotate(360deg);}
 `;
 
 export const goDown = () =>
@@ -25,7 +25,7 @@ export const goDown = () =>
 `
 
 export const CustomizationContainer = styled.div`
-    margin-left: -25px;
+    margin-left: -35px;
     margin-top: -250px;
     width: 300px;
     height: 300px;
@@ -34,7 +34,7 @@ export const CustomizationContainer = styled.div`
     align-items: space-around;
     justify-content: center;
     border: 1px solid;
-    border-color: ${props => props.theme === 'light' ? '#D5D5D5' :  '#616161'};
+    border-color: ${props => props.theme === 'light' ? 'grey' :  '#616161'};
     border-radius: 5px;
     background-color: ${props => props.theme === 'light' ? '#FFFFFF' : '#191919'};
     font-family: motiva-sans, sans-serif;
@@ -58,7 +58,7 @@ export const ContentContainer = styled.div`
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
-    border-bottom: ${props => props.theme === 'light' ? '1px solid #D5D5D5' : '1px solid #616161'};
+    border-bottom: ${props => props.border === 'none' ? 'none' : props.theme === 'light' ? '1px solid grey' : '1px solid #616161'};
 `;
 
 export const Label = styled.p`

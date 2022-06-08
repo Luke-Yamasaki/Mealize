@@ -73,7 +73,6 @@ function App() {
   return (
     <BrowserRouter>
       <AppBackGround theme={theme} background={backGround}>
-        <BackGroundAside />
         <AppContentContainer>
           {sessionUser ? <SessionNavbar sessionUser={sessionUser} /> : <Navbar theme={theme} />}
           <Modal />

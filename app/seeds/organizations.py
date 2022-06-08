@@ -11,8 +11,8 @@ def seed_organizations():
     mealize = Organization(
         federalId='77-7777777',
         isNonprofit=True,
-        logoUrl='https://mealize.s3.amazonaws.com/Mealize-circle.png',
-        imageUrl='https://mealize.s3.amazonaws.com/Mealize-banner.png',
+        logoUrl='https://mealizeaa.s3.amazonaws.com/mealize-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/mealize-b.png',
         open='5:00',
         close='22:30',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
@@ -30,8 +30,8 @@ def seed_organizations():
     food_bank_of_the_rockies = Organization(
         federalId='84-0772672',
         isNonprofit=True,
-        logoUrl='https://media.9news.com/assets/KUSA/images/b75b0ffc-d633-46b1-83e7-36fb5bc9e4a3/b75b0ffc-d633-46b1-83e7-36fb5bc9e4a3_1140x641.png',
-        imageUrl='https://media.9news.com/assets/KUSA/images/dc308017-8594-40d0-93c8-e2808c9b9ed5/dc308017-8594-40d0-93c8-e2808c9b9ed5_1140x641.jpg',
+        logoUrl='https://mealizeaa.s3.amazonaws.com/rockies-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/rockies-b.jpg',
         open='8:00',
         close='16:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
@@ -49,11 +49,11 @@ def seed_organizations():
     bienvenidos_food_bank = Organization(
         federalId='84-0772672',
         isNonprofit=True,
-        logoUrl='https://mealize.s3.amazonaws.com/FGCyguIWUAcQOoY.png',
-        imageUrl='https://media.9news.com/assets/KUSA/images/dc308017-8594-40d0-93c8-e2808c9b9ed5/dc308017-8594-40d0-93c8-e2808c9b9ed5_1140x641.jpg',
+        logoUrl='https://mealizeaa.s3.amazonaws.com/bienvenidos-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/bienvenidos-b.jpg',
         open='11:00',
         close='17:30',
-        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        timeslot=choice(('Noon', 'Early afternoon', 'Late afternoon')),
         name='Bienvenidos Food Bank',
         description="For more than 40 years, the Bienvenidos Food Bank has offered emergency food assistance to people in need. If a family is in crisis and needs food we are available no matter where they come from.",
         street='3810 N Pecos St',
@@ -68,11 +68,11 @@ def seed_organizations():
     denver_inner_city_parish = Organization(
         federalId='84-0525768',
         isNonprofit=True,
-        logoUrl='https://static.wixstatic.com/media/0198fd_29758a36fd2a4afda85e6abfb73e7a56~mv2.png/v1/fill/w_159,h_145,al_c,usm_0.66_1.00_0.01,enc_auto/DICP_logo_White%20Bird_White%20Logo_edited_p.png',
-        imageUrl='https://static.wixstatic.com/media/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg/v1/fill/w_2543,h_787,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg',
+        logoUrl='https://mealizeaa.s3.amazonaws.com/inner-city-parish-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/inner-city-parish-b.jpg',
         open='9:00',
         close='13:00',
-        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        timeslot=choice(('Morning', 'Noon')),
         name='The Denver Inner City Parish',
         description="The Denver Inner City Parish loves and supports individuals and families in our community, empowering them to break the cycle of poverty. The word parish means “community” and the DICP is committed to community. We are a human services nonprofit. The Parish elevates community through its community programs.",
         street='1212 Mariposa Street',
@@ -84,17 +84,150 @@ def seed_organizations():
     )
     db.session.add(denver_inner_city_parish)
 
-    for i in range(5, 26):
+    north_denver_cares = Organization(
+        federalId='84-0123143',
+        isNonprofit=True,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/north-denver-cares-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/north-denver-cares-b.jpg',
+        open='10:00',
+        close='16:00',
+        timeslot=choice(('Noon', 'Early afternoon')),
+        name='North Denver Cares Food Pantry',
+        description="The North Denver Cares Food Pantry is located in Broomfield, CO. We provide short-term, stop-gap help by providing food for the hungry and needy people of the North Denver area. Our mission is to model the love and compassion of Jesus Christ by providing this help.",
+        street='6900 W. 117th Ave, #700W',
+        zip='80020',
+        city='Broomfield',
+        state='Colorado',
+        phone='3034662115',
+        email=' info@NorthDenverCares.org'
+    )
+    db.session.add(north_denver_cares)
+
+    cu_denver_food_pantry = Organization(
+        federalId='84-0224164',
+        isNonprofit=True,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/cu-denver-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/cu-denver-b.jpg',
+        open='8:00',
+        close='17:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='CU Denver Food Pantry',
+        description="The Lynx Food Pantry is a direct response to the need of the CU Denver student body for more resources to fight food and insecurity and the lack of nutritious food.",
+        street='1355 12th Street',
+        zip='80204',
+        city='Denver',
+        state='Colorado',
+        phone='3033159355',
+        email=' lynxwellness@ucdenver.edu'
+    )
+    db.session.add(cu_denver_food_pantry)
+
+    road_runner_food_pantry = Organization(
+        federalId='84-1329264',
+        isNonprofit=True,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/msu-denver-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/msu-denver-b.jpg',
+        open='8:00',
+        close='17:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='MSU Food Pantry',
+        description="The Road Runner Food Pantry is a direct response to the need of the MSU student body for more resources to fight food and insecurity and the lack of nutritious food.",
+        street='890 Auraria Pkwy',
+        zip='80204',
+        city='Denver',
+        state='Colorado',
+        phone='3035565740',
+        email=' annualfund@msudenver.edu'
+    )
+    db.session.add(road_runner_food_pantry)
+
+    benefits_in_action = Organization(
+        federalId='84-3322779',
+        isNonprofit=True,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/benefits-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/benefits-b.jpg',
+        open='10:00',
+        close='17:00',
+        timeslot=choice(('Noon', 'Early afternoon', 'Late afternoon')),
+        name='Benefits in Action',
+        description="Benefits in Action is a nonprofit organization located in Lakewood, Colorado that serves individuals throughout the state. We strive to increase understanding, access, and utilization of healthcare resources. Our team of navigators works with constituents to help them recognize the health-related benefits they qualify for, apply to those benefits, and utilize them as effectively as possible.",
+        street='8725 W 14th Ave Suite 210',
+        zip='80215',
+        city='Lakewood',
+        state='Colorado',
+        phone='7202218354',
+        email='info@benefitsinaction.org'
+    )
+    db.session.add(benefits_in_action)
+
+    denver_dream_center = Organization(
+        federalId='84-3942629',
+        isNonprofit=True,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/dream-center-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/dream-center-b.jpg',
+        open='10:00',
+        close='17:00',
+        timeslot=choice(('Noon', 'Early afternoon', 'Late afternoon')),
+        name='Denver Dream Center',
+        description="Denver Dream Center works to restore hope to single mothers, children, former inmates, gang members, as well as neighbors and business owners they interact with by sharing donated food and providing healthcare resources.",
+        street='2839 West 44th Avenue',
+        zip='80211',
+        city='Denver',
+        state='Colorado',
+        phone='7205109113',
+        email='info@denverdc.org'
+    )
+    db.session.add(denver_dream_center)
+
+    we_dont_waste = Organization(
+        federalId='84-3071629',
+        isNonprofit=True,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/we-dont-waste-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/we-dont-waste-b.jpg',
+        open='10:00',
+        close='17:00',
+        timeslot=choice(('Noon', 'Early afternoon', 'Late afternoon')),
+        name="We Don't Waste",
+        description="We envision a future where good food will not be wasted and negatively impact the environment. Where food-insecure families and individuals can thrive without worrying about where their next meal will come from. And where excess food has an easy and direct line to communities in need.",
+        street='5971 Broadway',
+        zip='80216',
+        city='Denver',
+        state='Colorado',
+        phone='7204436113',
+        email='info@wedontwaste.org'
+    )
+    db.session.add(we_dont_waste)
+
+    re_vision = Organization(
+        federalId='84-3071629',
+        isNonprofit=True,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/revision-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/revision-b.jpg',
+        open='9:00',
+        close='16:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon')),
+        name="Re:Vision",
+        description="The purpose of Re:Vision is to cultivate thriving, resilient communities. Our Mission is to work with people in economically marginalized neighborhoods to develop resident leaders, cultivate community food systems, and create an economy owned by the community.",
+        street='3738 Morrison Road ',
+        zip='80219',
+        city='Denver',
+        state='Colorado',
+        phone='7204659605',
+        email='hello@revision.coop'
+    )
+    db.session.add(re_vision)
+
+    for i in range(12, 26):
         nonprofits = Organization(
             federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
             isNonprofit=True,
-            logoUrl='https://static.wixstatic.com/media/0198fd_29758a36fd2a4afda85e6abfb73e7a56~mv2.png/v1/fill/w_159,h_145,al_c,usm_0.66_1.00_0.01,enc_auto/DICP_logo_White%20Bird_White%20Logo_edited_p.png',
-            imageUrl='https://static.wixstatic.com/media/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg/v1/fill/w_2543,h_787,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg',
+            logoUrl='https://mealizeaa.s3.amazonaws.com/mealize-l.png',
+            imageUrl='https://mealizeaa.s3.amazonaws.com/mealize-b.png',
             open='10:00',
             close='22:00',
             timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
             name=fake.company(),
-            description=fake.catch_phrase(),
+            description='Hello! Our food bank is located in Denver, CO. We provide short-term support for hungry and needy individuals and families in Denver. We hope to enrich our community through compassion.',
             street=fake.street_address(),
             zip=choice(zipcodes),
             city='Denver',

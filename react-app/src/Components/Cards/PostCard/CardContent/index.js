@@ -62,7 +62,7 @@ export const CardContent = ({ post, preview }) => {
                 {post?.status === 1 && post?.isItem ? 'Reserved' : post?.status === 2 && post?.isItem ? 'Confirmed' : 'Completed'}
             </ReservedBackGround>}
             <TitleBox to={`/organizations/${organization.id}`}>
-                <VectorBox square='30px' resize='32px'>
+                <VectorBox square='25px' resize='27px'>
                     <CompanyLogo src={organization?.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='#191919'/>
                 </VectorBox>
                 <TitleTextContainer>

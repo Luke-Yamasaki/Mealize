@@ -82,7 +82,10 @@ export const BackGroundAside = styled.aside`
     will-change: transform;
     margin-top: -1000px;
     gap: 10px;
-    margin-left: -50px;
+    margin-left: -40px;
+    @media only screen and (max-width: 1190px) {
+        margin-left: -100px;
+    }
 `;
 
 export const FilterTitle = styled(ExtraBold)`
@@ -185,12 +188,13 @@ export const SideBarInfoText = styled(Bold)`
 `;
 
 export const FeedContainer = styled.div`
-    max-width: 1125px;
-    width: calc(100vw - 150px);
+    max-width: 820px;
+    width: calc(100vw - 350px);
+    min-width: 350px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    gap: 15px;
+    gap: 35px;
     row-gap: 0px;
     flex-wrap: wrap;
 `;

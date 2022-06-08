@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 //container
 export const CardContainer = styled.div`
-    width: 285px;
+    max-width: 250px;
     height: ${props => props.height};
     display: flex;
     flex-direction: column;
@@ -19,7 +19,7 @@ export const CardContainer = styled.div`
 
 //exp banner
 export const ExpBanner = styled.div`
-    width: 280px;
+    width: 250px;
     height: 30px;
     display: flex;
     flex-direction: row;
@@ -57,8 +57,8 @@ export const ExpText = styled(Paragraph)`
 
 //card
 export const Card = styled.div`
-    width: 280px;
-    height: ${props => props.height};
+    width: 250px;
+    height: 360px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -71,19 +71,20 @@ export const Card = styled.div`
 
 //title
 export const TitleBox = styled(Link)`
-    width: 280px;
-    height: 30px;
+    width: 235px;
+    height: 25px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-left: 10px;
+    margin-left: 5px;
     text-decoration: none;
+    padding: 5px 10px 0px 0px;
 `;
 
 export const PreviewTitleBox = styled.div`
-    width: 280px;
-    height: 30px;
+    width: 250px;
+    height: 25px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -94,26 +95,25 @@ export const PreviewTitleBox = styled.div`
 export const TitleTextContainer = styled(BannerTextContainer)`
     justify-content: flex-start;
     align-items: center;
-    height: 30px;
-    width: 220px;
+    height: 25px;
+    width: 190px;
 `;
 
 export const CompanyLogo = styled.img`
-    width: ${props => props.width};
-    height: ${props => props.height};
+    width: 25px;
+    height: 25px;
     background-color: ${props => props.backgroundColor};
     object-fit: cover;
     object-position: center;
     border-radius: 100%;
     border: 1px solid #E8E8E8;
-    margin-top: -3px;
 `;
 
 export const CompanyName = styled(Bold)`
     color: #191919;
     width: 220px;
-    height: 30px;
-    font-size: 0.9em;
+    height: 25px;
+    font-size: 0.8em;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -148,24 +148,20 @@ export const ItemDateText = styled(Medium)`
 
 //image
 export const ItemImage = styled.img`
-    width: 278px;
-    height: 210px;
+    width: 250px;
+    height: 180px;
     object-fit: cover;
     object-position: center;
-    margin-top: 5px;
-    & :hover {
-        width: 40px;
-        height: 40px;
-    }
+    margin-top: 10px;
 `;
 
 
 //Info
 export const InfoBox = styled(ExpBanner)`
-    width: 260px;
+    width: 240px;
     height: 35px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
     gap: 5px;
     margin-top: 5px;
 `;
@@ -179,8 +175,9 @@ export const InfoContainer = styled(BannerTextContainer)`
 `;
 
 export const ItemTitle = styled(Bold)`
-    width: 142.5px;
-    word-break: break-all;
+    min-width: 100px;
+    max-width: 140px;
+    word-break: auto;
     font-size: 13px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
@@ -189,7 +186,7 @@ export const ItemTitle = styled(Bold)`
 
 export const ItemQuantity = styled(Medium)`
     font-size: 0.65em;
-    width: 72.5px;
+    max-width: 75px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
     font-weight: ${props => props.theme === 'light' ? '700' : '400'};
@@ -197,14 +194,14 @@ export const ItemQuantity = styled(Medium)`
 
 export const DescriptionBox = styled.div`
     margin-top: 5px;
-    width: 260px;
+    width: 240px;
     height: 50px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
     line-height: 16px;
-    word-break: break-all;
+    word-break: auto;
 `;
 
 export const DescriptionText = styled(Medium)`
@@ -217,14 +214,14 @@ export const DescriptionText = styled(Medium)`
     -moz-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
-    word-break: break-all;
+    word-break: auto;
 `;
 
 export const ButtonBox = styled(ExpBanner)`
-    width: 260px;
-    height: 35px;
-    padding-left: 10px;
-    padding-right: 10px;
+    width: 230px;
+    height: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
     justify-content: ${props => props.number === '1' ? 'flex-end' : 'space-between'};
 `;
 

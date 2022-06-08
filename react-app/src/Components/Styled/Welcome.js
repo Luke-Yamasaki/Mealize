@@ -19,18 +19,18 @@ const lockin = keyframes`
         height: 100vh;
     }
     70% {
-        width: 1600px;
-        height: 60px;
+        width: 1125px;
+        height: 50px;
         opacity: 100%;
     }
     85%{
-        width: 1600px;
-        height: 60px;
+        width: 1125px;
+        height: 50px;
         opacity: 0%;
     }
     100% {
         opacity: 0%;
-        width: 1600px;
+        width: 1125px;
         height: 0px;
     }
 `;
@@ -59,14 +59,14 @@ const shrink = keyframes`
         width: 45px;
         height: 45px;
         display: none;
-        margin-left: -1455px;
+        margin-left: -980px;
         opacity: 100%;
     }
     85%{
         width: 45px;
         height: 45px;
         display: none;
-        margin-left: -1455px;
+        margin-left: -980px;
         opacity: 0%;
     }
     100% {
@@ -74,7 +74,7 @@ const shrink = keyframes`
         width: 0px;
         height: 0px;
         display: none;
-        margin: 0px 0px 0px -1455px;
+        margin: 0px 0px 0px -980px;
     }
 `;
 
@@ -113,14 +113,14 @@ const shrinkTitle = keyframes`
         width: 100px;
         height: 30px;
         font-size: 28px;
-        margin: 10px 0px 0px -1278px;
+        margin: 10px 0px 0px -803px;
         opacity: 100%;
     }
     85%{
         width: 100px;
         height: 30px;
         font-size: 28px;
-        margin: 10px 0px 0px -1278px;
+        margin: 10px 0px 0px -803px;
         opacity: 0%;
     }
     100% {
@@ -128,7 +128,7 @@ const shrinkTitle = keyframes`
         width: 0px;
         height: 0px;
         font-size: 0px;
-        margin: 10px 0px 0px -1278px;
+        margin: 10px 0px 0px -803px;
     }
 `;
 
@@ -169,8 +169,8 @@ export const WelcomeContent = styled.div`
     align-items: center;
     justify-content: flex-start;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
-    padding-top: 100px;
-    gap: 50px;
+    padding-top: 50px;
+    gap: 25px;
 `;
 
 const changeOpacity = keyframes`
@@ -191,13 +191,16 @@ export const HandVectorBox = styled.div`
     align-items: center;
     animation: ${props => props.animation ? reveal : ''};
     animation-delay: ${props => props.animation ? '3.5s' : '0s'};
-    width: ${props => props.square};
-    height: ${props => props.square};
+    max-width: 550px;
+    width: 90vw;
+    max-height: 550px;
+    height: 90vw;
     opacity: ${props => props.animation ? '0%' : '100%'};
 `;
 
 export const GreetingText = styled(Black)`
-    width: 900px;
+    max-width: 900px;
+    width: 90vw;
     height: 100px;
     font-size: 75px;
     display: flex;
@@ -207,6 +210,13 @@ export const GreetingText = styled(Black)`
     animation: ${props => props.animation ? reveal : ''};
     animation-delay: ${props => props.animation ? '3.5s' : '0s'};
     opacity: ${props => props.animation ? '0%' : '100%'};
+    @media only screen and (max-width: 841px) {
+        font-size: 60px;
+    }
+    @media only screen and (max-width: 671px) {
+        font-size: 40px;
+        margin-bottom: 50px;
+    }
 `;
 
 export const Group = styled.section`

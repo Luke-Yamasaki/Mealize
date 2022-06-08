@@ -2,19 +2,19 @@ import styled, {css, keyframes} from 'styled-components';
 import { ExtraBold, Bold } from './Fonts';
 
 const expand = keyframes`
-    from { opacity: 0%; width: 0px; visibility: hidden;}
-    to { opacity: 100%; width: 300px; visibility: visible;}
+    from { opacity: 0%; width: 0px; visibility: hidden; margin-right: 0px}
+    to { opacity: 100%; width: 425px; visibility: visible; margin-right: 160px}
 `;
 
 export const expandField = () =>
     css`
     ${expand} 0.6s forwards;
-    `
+`
 
 const shrink = keyframes`
-    0% { width: 300px; visibility: visible; margin-right: 0px;}
+    0% { width: 300px; visibility: visible; margin-right: 120px;}
     99% { visibility: visible; margin-right: 20px;}
-    100% { width: 0px; visibility: hidden; margin-right: 30px;}
+    100% { width: 0px; visibility: hidden; margin-right: 0px;}
 `;
 
 export const shrinkField = () =>
@@ -24,7 +24,7 @@ export const shrinkField = () =>
 
 
 export const AppBackGround = styled.div`
-    width: 99.3vw;
+    width: 100vw;
     height: auto;
     display: flex;
     flex-direction: row;
@@ -70,9 +70,10 @@ export const PageBackGround = styled.div`
 `;
 
 export const BackGroundAside = styled.aside`
-    max-width: calc(100vw - 562.5px);
+    width: 0px;
     height: 100vh;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     position: -webkit-sticky;
@@ -80,6 +81,8 @@ export const BackGroundAside = styled.aside`
     top: 0px;
     will-change: transform;
     margin-top: -1000px;
+    gap: 10px;
+    margin-left: -50px;
 `;
 
 export const FilterTitle = styled(ExtraBold)`
@@ -244,6 +247,7 @@ export const SettingsField = styled.div`
     height: 650px;
     visibility: hidden;
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     cursor: pointer;

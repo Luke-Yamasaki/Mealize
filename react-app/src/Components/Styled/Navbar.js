@@ -62,14 +62,12 @@ export const Searchbar = styled.form`
     border-radius: 50px;
     padding-left: 5px;
     padding-right: ${props => props.mic === 'true' ? '10px' : '0px'};
-    margin-left: 400px;
-    position: absolute;
     gap: 5px;
 `;
 
 export const SearchInput = styled.input`
-    max-width: 430px;
-    width: 29vw;
+    max-width: 400px;
+    width: 26vw;
     min-width: 235px;
     font-family: motiva-sans,sans-serif;
     font-weight: 700;
@@ -143,7 +141,7 @@ export const NavIconContainer = styled.div`
 `;
 
 export const GradientLogoType = styled(Black)`
-    width: 200px;
+    width: 100px;
     height: 30px;
     font-size: 18px;
     background: -webkit-linear-gradient(#28A690,#76D97E);
@@ -153,5 +151,8 @@ export const GradientLogoType = styled(Black)`
     display: ${props => props.entering ? 'none' : 'flex'};
     align-items: center;
     position: absolute;
-    margin-left: 240px;
+    margin-left: calc(27% - 100px);
+    @media only screen and (max-width: 1650px) {
+        margin-left: 11.5vw;
+    }
 `;

@@ -32,7 +32,7 @@ export const SearchBar = () => {
             </VectorBox>
             <SearchInput theme={theme} type='text' maxLength='40' placeholder="Search" value={searchword} onChange={(e) => setSearchword(e.target.value)}/>
             <GradientLogoType entering={searchword.length > 0}>Mealize</GradientLogoType>
-            <SearchSubmitInput type="submit" style={{display: 'none'}}/>
+            <SearchSubmitInput type="submit" />
             <ResetSearchBox entering={searchword.length > 0}>
                 <ResetIcon theme={theme} onClick={() => setSearchword('')}>&#10006;</ResetIcon>
             </ResetSearchBox>

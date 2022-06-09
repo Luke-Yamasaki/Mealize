@@ -24,7 +24,7 @@ def seed_users():
     )
     db.session.add(nonprofit_demo)
 
-    for i in range(2, 13):
+    for i in range(2, 7):
         nonprofit_male_managers = User(
             organizationId=i,
             isNonprofit=True,
@@ -43,7 +43,7 @@ def seed_users():
         )
         db.session.add(nonprofit_male_managers)
 
-    for j in range(13, 26):
+    for j in range(7, 12):
         nonprofit_female_managers = User(
             organizationId=j,
             isNonprofit=True,

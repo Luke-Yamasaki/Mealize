@@ -1,7 +1,4 @@
-from app.models import db, User, Post
-from random import choice, randint
-from faker import Faker
-fake = Faker(locale='en-US')
+from app.models import db, Post
 
 def seed_posts():
     # dairy

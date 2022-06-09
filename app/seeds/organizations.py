@@ -1,11 +1,5 @@
 from app.models import db, Organization
-from .zipcodes import zipcodes
-from werkzeug.security import generate_password_hash
-import phonenumbers
-from random import choice, randint
-from faker import Faker
-fake = Faker(locale='en-US')
-
+from random import choice
 
 def seed_organizations():
     mealize = Organization(
@@ -216,27 +210,9 @@ def seed_organizations():
         email='hello@revision.coop'
     )
     db.session.add(re_vision)
+    #11 businesses
 
-    for i in range(12, 26):
-        nonprofits = Organization(
-            federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
-            isNonprofit=True,
-            logoUrl='https://mealizeaa.s3.amazonaws.com/mealize-l.png',
-            imageUrl='https://mealizeaa.s3.amazonaws.com/mealize-b.png',
-            open='10:00',
-            close='22:00',
-            timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
-            name=fake.company(),
-            description='Hello! Our food bank is located in Denver, CO. We provide short-term support for hungry and needy individuals and families in Denver. We hope to enrich our community through compassion.',
-            street=fake.street_address(),
-            zip=choice(zipcodes),
-            city='Denver',
-            state='Colorado',
-            phone=choice(('303', '720','719', '970', '983'))+str(randint(100, 999))+str(randint(1000, 9999)),
-            email=fake.unique.email()
-        )
-        db.session.add(nonprofits)
-
+    #12
     mealize_market = Organization(
         federalId='88-8888888',
         isNonprofit=False,
@@ -599,26 +575,8 @@ def seed_organizations():
         email='info@detourbakery.com'
     )
     db.session.add(detour_bakery)
-
-    for i in range(45, 51):
-        businesses = Organization(
-            federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
-            isNonprofit=False,
-            logoUrl='https://static.wixstatic.com/media/0198fd_29758a36fd2a4afda85e6abfb73e7a56~mv2.png/v1/fill/w_159,h_145,al_c,usm_0.66_1.00_0.01,enc_auto/DICP_logo_White%20Bird_White%20Logo_edited_p.png',
-            imageUrl='https://static.wixstatic.com/media/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg/v1/fill/w_2543,h_787,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg',
-            open='10:00',
-            close='22:00',
-            timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
-            name=fake.company(),
-            description=fake.catch_phrase(),
-            street=fake.street_address(),
-            zip=choice(zipcodes),
-            city='Denver',
-            state='Colorado',
-            phone=choice(('303', '720','719', '970', '983'))+str(randint(100, 999))+str(randint(1000, 9999)),
-            email=fake.unique.email()
-        )
-        db.session.add(businesses)
+    #30 total
+    #19 businesses
 
     db.session.commit()
 

@@ -108,7 +108,7 @@ def seed_posts():
         isItem=False,
         organizationId=8,
         userId=8,
-        title='Need lettuce and cabbage',
+        title='Lettuce and cabbage',
         description="We're looking for heads of lettuce and cabbage. If you kept them properly stored, we would love to pick them up. Thanks!",
         quantity='50 lbs',
         categoryId=2,
@@ -278,7 +278,7 @@ def seed_posts():
         isItem=False,
         organizationId=3,
         userId=3,
-        title='Need dry pasta noodles',
+        title='Need dry pasta',
         description='Our food bank needs dry pasta noodles! We would appreciate it if you have 50 boxes to spare.',
         quantity='50 count',
         categoryId=4,
@@ -292,7 +292,7 @@ def seed_posts():
         isItem=False,
         organizationId=2,
         userId=2,
-        title='Need boxes of macaroni',
+        title='Macaroni boxes',
         description="We're looking for boxes of macaroni. We would love to pick them up. Thanks!",
         quantity='200 count',
         categoryId=4,
@@ -306,7 +306,7 @@ def seed_posts():
         isItem=False,
         organizationId=1,
         userId=1,
-        title='Looking for bags of rice',
+        title='Looking for rice',
         description='We are looking to make rice balls for the homeless shelter and we need bags of rice.',
         quantity='20 count',
         categoryId=4,
@@ -461,7 +461,7 @@ def seed_posts():
         isItem=False,
         organizationId=1,
         userId=1,
-        title='Looking for beef patties.',
+        title='Looking for burgers.',
         description='Looking for burger patties. If you have beef or vegan patties, we would love to pick them up. Thanks!',
         quantity='300 count',
         categoryId=5,
@@ -551,7 +551,7 @@ def seed_posts():
         description='We have two boxes full of blocks of cheddar cheese. About 75 lbs.',
         quantity='75 lbs',
         categoryId=1,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/Dairy-6.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Dairy-6.png',
         expDate='2022-09-18',
         status = 0
     )
@@ -749,7 +749,7 @@ def seed_posts():
         description='We have about 100 fruit cups left from an event. Good for the rest of the week.',
         quantity='100 count',
         categoryId=3,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-2.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-2.png',
         expDate='2022-06-15',
         status = 0
     )
@@ -763,7 +763,7 @@ def seed_posts():
         description='We have about 20 lbs of apples, oranges, bananas, pineapples and pears.',
         quantity='20 lbs',
         categoryId=3,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-3.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-3.png',
         expDate='2022-07-18',
         status = 0
     )
@@ -791,7 +791,7 @@ def seed_posts():
         description='We have about 50 Palisade peaches. Should be good for 3 weeks.',
         quantity='50 count',
         categoryId=3,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-5.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-5.png',
         expDate='2022-06-29',
         status = 0
     )
@@ -1073,7 +1073,7 @@ def seed_posts():
         description="I have about 60 pounds of frozen tuna. They won't expire for at least 3 months",
         quantity='60 lbs',
         categoryId=5,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-2.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-2.png',
         expDate='2022-9-08',
         status = 0
     )
@@ -1087,7 +1087,7 @@ def seed_posts():
         description='We have about 10 lbs of yellowtail sashimi. They have been frozen and will last for another week.',
         quantity='10 lbs',
         categoryId=5,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-2.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-3.jpg',
         expDate='2022-06-15',
         status = 0
     )
@@ -1129,7 +1129,7 @@ def seed_posts():
         description='We have about 30 lbs of ribeye steak. They have been refrigerated and have about 3 days left.',
         quantity='30 lbs',
         categoryId=5,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-6.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-6.png',
         expDate='2022-06-11',
         status = 0
     )
@@ -1155,7 +1155,7 @@ def seed_posts():
         userId=32,
         title='Vienna sausage',
         description='We have about 100 cans of Vienna sausage that expires in 2 months. Thanks!',
-        quantity='100 cans',
+        quantity='100 count',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-8.jpg',
         expDate='2022-08-18',
@@ -1171,7 +1171,7 @@ def seed_posts():
         description='We have about 20 lbs of fresh tuna that has been properly stored in a refrigerator.',
         quantity='20 lbs',
         categoryId=5,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-9.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-9.png',
         expDate='2022-06-28',
         status = 0
     )
@@ -1211,7 +1211,7 @@ def seed_posts():
         userId=36,
         title='Pork loin',
         description='Hi! We have 30 packages of pork loin, each weighing 1 pound. They expire in one week.',
-        quantity='30 pounds.',
+        quantity='30 lbs',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-12.jpg',
         expDate='2022-06-15',

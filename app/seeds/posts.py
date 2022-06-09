@@ -726,21 +726,76 @@ def seed_posts():
     )
     db.session.add(vegetable_item12)
 
+    #fruits
+    fruits_item1 = Post(
+        isItem=True,
+        organizationId=44,
+        userId=44,
+        title='Fresh apples',
+        description='We have a lot of fresh apples! About 5 boxes, so around 500 of them.',
+        quantity='500 count',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-1.jpg',
+        expDate='2022-07-18',
+        status = 0
+    )
+    db.session.add(fruits_item1)
 
-    for k in range(45, 51):
-        fruits_items = Post(
-            isItem=True,
-            organizationId=k,
-            userId=k,
-            title=choice(('Got bananas', 'Got berries', 'We have apples', 'Plenty of citrus fruit', 'Oranges', 'Fresh grapes', 'Pears and peaches')),
-            description=choice(('We have leftover bananas!', "We've got packaged berries.They were chopped and stored in containers!", 'We have a lot of apples!', "Hello! We've got lemonsand limes!", "We have unopened canned peaches and pears!", 'We have twenty whole oranges and about ten worth of sliced ones.', 'Got about five pounds of fresh grapes!')),
-            quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
-            categoryId=3,
-            imageUrl=choice(('https://mealizeaa.s3.amazonaws.com/Fruits-1.jpg', 'https://mealizeaa.s3.amazonaws.com/Fruits-2.png', 'https://mealizeaa.s3.amazonaws.com/Fruits-3.png', 'https://mealizeaa.s3.amazonaws.com/Fruits-4.jpg', 'https://mealizeaa.s3.amazonaws.com/Fruits-5.png' )),
-            expDate='2022-08-18',
-            status = randint(0, 2)
-        )
-        db.session.add(fruits_items)
+    fruits_item2 = Post(
+        isItem=True,
+        organizationId=45,
+        userId=45,
+        title='Fruit cups',
+        description='We have about 100 fruit cups left from an event. Good for the rest of the week.',
+        quantity='100 count',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-2.jpg',
+        expDate='2022-06-15',
+        status = 0
+    )
+    db.session.add(fruits_item2)
+
+    fruits_item3 = Post(
+        isItem=True,
+        organizationId=46,
+        userId=46,
+        title='Mixed fruit',
+        description='We have about 20 lbs of apples, oranges, bananas, pineapples and pears.',
+        quantity='20 lbs',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-3.jpg',
+        expDate='2022-07-18',
+        status = 0
+    )
+    db.session.add(fruits_item3)
+
+    fruits_item4 = Post(
+        isItem=True,
+        organizationId=47,
+        userId=47,
+        title='Fresh fruit',
+        description='We have four boxes of fresh apples, oranges and bananas! Good for at least 2 weeks.',
+        quantity='150 lbs',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-4.jpg',
+        expDate='2022-06-28',
+        status = 0
+    )
+    db.session.add(fruits_item4)
+
+    fruits_item5 = Post(
+        isItem=True,
+        organizationId=48,
+        userId=48,
+        title='Palisade peaches',
+        description='We have about 50 Palisade peaches. Should be good for 3 weeks.',
+        quantity='50 count',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-5.jpg',
+        expDate='2022-06-29',
+        status = 0
+    )
+    db.session.add(fruits_item5)
 
     for l in range(51, 65):
         grains_items = Post(
@@ -753,7 +808,7 @@ def seed_posts():
             categoryId=4,
             imageUrl='https://mealizeaa.s3.amazonaws.com/'+'Grains-'+str(randint(1, 13))+'.jpg',
             expDate='2022-09-18',
-            status = randint(0, 2)
+            status = 0
         )
         db.session.add(grains_items)
 
@@ -768,7 +823,7 @@ def seed_posts():
             categoryId=5,
             imageUrl=choice(('https://mealizeaa.s3.amazonaws.com/Protein-1.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-2.png', 'https://mealizeaa.s3.amazonaws.com/Protein-3.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-4.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-5.jpg')),
             expDate='2022-10-18',
-            status = randint(0, 2)
+            status = 0
         )
         db.session.add(protein_items)
 

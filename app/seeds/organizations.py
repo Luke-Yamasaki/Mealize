@@ -364,7 +364,7 @@ def seed_organizations():
         email='media@naturalgrocers.com'
     )
     db.session.add(natural_grocers)
-
+#20
     costco = Organization(
         federalId='91-1223280',
         isNonprofit=False,
@@ -539,7 +539,7 @@ def seed_organizations():
     db.session.add(edible_arrangements)
 
     switch_gears_farm = Organization(
-        federalId='20-208081930',
+        federalId='20-20808193',
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
@@ -566,7 +566,7 @@ def seed_organizations():
         close='16:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon')),
         name='Detour Bakery',
-        description="Detour Bakery has a dedicated, hard-working staff that produce consistently delicious breads and pastries while you sleep, so that our fresh-faced daytime staff can proudly serve you during the day.",
+        description="Detour Bakery has a dedicated, hard-working staff that produce delicious breads and pastries while you sleep, so that our fresh-faced daytime staff can proudly serve you during the day.",
         street='1479 S Holly St',
         zip='80222',
         city='Denver',

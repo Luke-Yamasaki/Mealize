@@ -472,8 +472,8 @@ def seed_posts():
     #dairy
     dairy_item1 = Post(
         isItem=True,
-        organizationId=26,
-        userId=26,
+        organizationId=12,
+        userId=12,
         title='Fresh milk',
         description='Unopened low fat and whole milk.',
         quantity='30 count',
@@ -486,8 +486,8 @@ def seed_posts():
 
     dairy_item2 = Post(
         isItem=True,
-        organizationId=27,
-        userId=27,
+        organizationId=23,
+        userId=23,
         title='Assorted cheese',
         description='100 lbs of assorted cheese. Good for two weeks.',
         quantity='100 lbs',
@@ -500,8 +500,8 @@ def seed_posts():
 
     dairy_item3 = Post(
         isItem=True,
-        organizationId=28,
-        userId=28,
+        organizationId=24,
+        userId=24,
         title='Diced cheese',
         description='We have 30 lbs of diced parmesean cheese. Good for 10 days.',
         quantity='30 lbs',
@@ -514,8 +514,8 @@ def seed_posts():
 
     dairy_item4 = Post(
         isItem=True,
-        organizationId=29,
-        userId=29,
+        organizationId=13,
+        userId=13,
         title='1% Milk',
         description='We have about 100 cartons of one percent fat milk. Expires in 3 weeks',
         quantity='100 count',
@@ -528,8 +528,8 @@ def seed_posts():
 
     dairy_item5 = Post(
         isItem=True,
-        organizationId=30,
-        userId=30,
+        organizationId=25,
+        userId=25,
         title='Mozzarella cheese',
         description='We have about 30 lbs of fresh mozzarella cheese. Thanks!',
         quantity='30 lbs',
@@ -542,8 +542,8 @@ def seed_posts():
 
     dairy_item6 = Post(
         isItem=True,
-        organizationId=31,
-        userId=31,
+        organizationId=14,
+        userId=14,
         title='Blocks of cheese',
         description='We have two boxes full of blocks of cheddar cheese. About 75 lbs.',
         quantity='75 lbs',
@@ -557,22 +557,22 @@ def seed_posts():
     #vegetables
     vegetable_item1 = Post(
         isItem=True,
-        organizationId=32,
-        userId=32,
+        organizationId=29,
+        userId=29,
         title='Assorted vegetables',
         description='We have five boxes of fresh zucchini, squash and potatoes.',
         quantity='100 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-1.jpg',
-        expDate='2022-07-18',
+        expDate='2022-06-18',
         status = 0
     )
     db.session.add(vegetable_item1)
 
     vegetable_item2 = Post(
         isItem=True,
-        organizationId=33,
-        userId=33,
+        organizationId=15,
+        userId=15,
         title='Mixed vegetables',
         description='We have about 150 lbs of potatoes, carrots, tomatoes, peppers and cabbage.',
         quantity='150 lbs',
@@ -585,8 +585,8 @@ def seed_posts():
 
     vegetable_item3 = Post(
         isItem=True,
-        organizationId=34,
-        userId=34,
+        organizationId=29,
+        userId=29,
         title='Boxes of veggies',
         description='We have ten boxes of peppers, spinach, squash and celery. About 150 lbs',
         quantity='150 lbs',
@@ -599,8 +599,8 @@ def seed_posts():
 
     vegetable_item4 = Post(
         isItem=True,
-        organizationId=35,
-        userId=35,
+        organizationId=24,
+        userId=24,
         title='Leftover salad',
         description='Our cafe has about 30 packaged salads. Good for one week.',
         quantity='30 count',
@@ -613,8 +613,8 @@ def seed_posts():
 
     vegetable_item5 = Post(
         isItem=True,
-        organizationId=36,
-        userId=36,
+        organizationId=16,
+        userId=16,
         title='Tomatoes',
         description="We've got frest tomatoes, they have about a week left!",
         quantity='50 lbs',
@@ -627,10 +627,10 @@ def seed_posts():
 
     vegetable_item6 = Post(
         isItem=True,
-        organizationId=37,
-        userId=37,
+        organizationId=24,
+        userId=24,
         title='Roasted veggies',
-        description='My restaurant has leftover roasted brocolli and carrots from a catering event. About 10 trays.',
+        description='We haveleftover roasted brocolli and carrots from a catering event. About 10 trays.',
         quantity='15 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-6.jpg',
@@ -641,8 +641,8 @@ def seed_posts():
 
     vegetable_item7 = Post(
         isItem=True,
-        organizationId=38,
-        userId=38,
+        organizationId=28,
+        userId=28,
         title='Sliced avocados',
         description='We have about 30 sliced avocados left over from an event. They have been refrigerated.',
         quantity='30 count',
@@ -655,8 +655,8 @@ def seed_posts():
 
     vegetable_item8 = Post(
         isItem=True,
-        organizationId=39,
-        userId=39,
+        organizationId=18,
+        userId=18,
         title='Fresh artichokes',
         description='We have about 50 whole artichokes. Should be good for a month and a half.',
         quantity='50 count',
@@ -669,8 +669,8 @@ def seed_posts():
 
     vegetable_item9 = Post(
         isItem=True,
-        organizationId=26,
-        userId=26,
+        organizationId=19,
+        userId=19,
         title='Mixed vegetables',
         description="I have romanesco brocolli, beets, raddishes, carrots and sweet potatoes.",
         quantity='50 lbs',
@@ -683,8 +683,8 @@ def seed_posts():
 
     vegetable_item10 = Post(
         isItem=True,
-        organizationId=27,
-        userId=27,
+        organizationId=17,
+        userId=17,
         title='Root vegetables',
         description='We have mixed colored carrots, raddishes, beets and cauliflower.',
         quantity='30 lbs',
@@ -726,8 +726,8 @@ def seed_posts():
     #fruits
     fruits_item1 = Post(
         isItem=True,
-        organizationId=30,
-        userId=30,
+        organizationId=22,
+        userId=22,
         title='Fresh apples',
         description='We have a lot of fresh apples! About 5 boxes, so around 500 of them.',
         quantity='500 count',
@@ -740,8 +740,8 @@ def seed_posts():
 
     fruits_item2 = Post(
         isItem=True,
-        organizationId=31,
-        userId=31,
+        organizationId=28,
+        userId=28,
         title='Fruit cups',
         description='We have about 100 fruit cups left from an event. Good for the rest of the week.',
         quantity='100 count',
@@ -754,8 +754,8 @@ def seed_posts():
 
     fruits_item3 = Post(
         isItem=True,
-        organizationId=32,
-        userId=32,
+        organizationId=21,
+        userId=21,
         title='Mixed fruit',
         description='We have about 20 lbs of apples, oranges, bananas, pineapples and pears.',
         quantity='20 lbs',
@@ -768,8 +768,8 @@ def seed_posts():
 
     fruits_item4 = Post(
         isItem=True,
-        organizationId=33,
-        userId=33,
+        organizationId=20,
+        userId=20,
         title='Fresh fruit',
         description='We have four boxes of fresh apples, oranges and bananas! Good for at least 2 weeks.',
         quantity='150 lbs',
@@ -782,8 +782,8 @@ def seed_posts():
 
     fruits_item5 = Post(
         isItem=True,
-        organizationId=34,
-        userId=34,
+        organizationId=19,
+        userId=19,
         title='Palisade peaches',
         description='We have about 50 Palisade peaches. Should be good for 3 weeks.',
         quantity='50 count',
@@ -796,8 +796,8 @@ def seed_posts():
 
     fruits_item6 = Post(
         isItem=True,
-        organizationId=35,
-        userId=35,
+        organizationId=17,
+        userId=17,
         title='Boxes of apples',
         description='We have ten boxes of fresh apples! There are about 350 apples.',
         quantity='350 count',
@@ -810,8 +810,8 @@ def seed_posts():
 
     fruits_item7 = Post(
         isItem=True,
-        organizationId=36,
-        userId=36,
+        organizationId=16,
+        userId=16,
         title='Fresh grapes',
         description='We have about 5 crates of fresh grapes. They weigh about 20 lbs per crate.',
         quantity='100 lbs',
@@ -824,8 +824,8 @@ def seed_posts():
 
     fruits_item8 = Post(
         isItem=True,
-        organizationId=37,
-        userId=37,
+        organizationId=15,
+        userId=15,
         title='Packaged fruit',
         description='We have about 100 packaged cups of berries, grapes, oranges, pineapples, apples and kiwi.',
         quantity='100 count',
@@ -838,8 +838,8 @@ def seed_posts():
 
     fruits_item9 = Post(
         isItem=True,
-        organizationId=38,
-        userId=38,
+        organizationId=16,
+        userId=16,
         title='Limes',
         description='We have about 200 fresh limes.',
         quantity='200 count',
@@ -852,8 +852,8 @@ def seed_posts():
 
     fruits_item10 = Post(
         isItem=True,
-        organizationId=39,
-        userId=39,
+        organizationId=17,
+        userId=17,
         title='Lemons',
         description='We have about 300 fresh lemons.',
         quantity='300 count',
@@ -867,8 +867,8 @@ def seed_posts():
     #grains
     grains_item1 = Post(
         isItem=True,
-        organizationId=26,
-        userId=26,
+        organizationId=30,
+        userId=30,
         title='Assorted bread',
         description='We have about 200 count of assorted bread that was baked two days ago.',
         quantity='200 xount',
@@ -881,8 +881,8 @@ def seed_posts():
 
     grains_item2 = Post(
         isItem=True,
-        organizationId=27,
-        userId=27,
+        organizationId=20,
+        userId=20,
         title='Bags of rice',
         description='We have about 100 bags of long grain rice.',
         quantity='100 count',
@@ -895,8 +895,8 @@ def seed_posts():
 
     grains_item3 = Post(
         isItem=True,
-        organizationId=28,
-        userId=28,
+        organizationId=30,
+        userId=30,
         title='Loaves of bread',
         description='Hello! We have about 50 loaves of white bread that were baked 3 days ago.',
         quantity='50 count',
@@ -909,8 +909,8 @@ def seed_posts():
 
     grains_item4 = Post(
         isItem=True,
-        organizationId=29,
-        userId=29,
+        organizationId=16,
+        userId=16,
         title='Baked goods',
         description='We have about 10 different types of baked goods, weighing around 50 lbs.',
         quantity='50 lbs',
@@ -923,8 +923,8 @@ def seed_posts():
 
     grains_item5 = Post(
         isItem=True,
-        organizationId=30,
-        userId=30,
+        organizationId=20,
+        userId=20,
         title='Got dry pasta noodles',
         description='We have 100 boxes of dry pasta noodles!',
         quantity='100 count',
@@ -937,8 +937,8 @@ def seed_posts():
 
     grains_item6 = Post(
         isItem=True,
-        organizationId=31,
-        userId=31,
+        organizationId=16,
+        userId=16,
         title='Macaroni boxes',
         description='We have David Pastrňák macaroni boxes! We were fortunate enough to receive surplus cases.',
         quantity='300 count',
@@ -951,8 +951,8 @@ def seed_posts():
 
     grains_item7 = Post(
         isItem=True,
-        organizationId=32,
-        userId=32,
+        organizationId=30,
+        userId=30,
         title='Sourdough bread',
         description='We have 50 loaves of sourdough bread. They are good for one week.',
         quantity='50 count',
@@ -965,8 +965,8 @@ def seed_posts():
 
     grains_item8 = Post(
         isItem=True,
-        organizationId=33,
-        userId=33,
+        organizationId=19,
+        userId=19,
         title='Assorted package',
         description="We have a mix of rice, couscous, chickpeas, nuts and seeds. There are four boxes and they are good for several months.",
         quantity='60 lbs',
@@ -979,8 +979,8 @@ def seed_posts():
 
     grains_item9 = Post(
         isItem=True,
-        organizationId=34,
-        userId=34,
+        organizationId=20,
+        userId=20,
         title='Jasmine rice',
         description='We have 30 bags of jasmine rice. Good for one month.',
         quantity='30 count',
@@ -993,8 +993,8 @@ def seed_posts():
 
     grains_item10 = Post(
         isItem=True,
-        organizationId=35,
-        userId=35,
+        organizationId=16,
+        userId=16,
         title='Basmati rice',
         description='I have about 20 bags of basmati rice that will expire at the end of the month.',
         quantity='20 count',
@@ -1007,8 +1007,8 @@ def seed_posts():
 
     grains_item11 = Post(
         isItem=True,
-        organizationId=36,
-        userId=36,
+        organizationId=27,
+        userId=27,
         title='White rice',
         description='I have 50 bags of white rice.',
         quantity='50 count',
@@ -1021,8 +1021,8 @@ def seed_posts():
 
     grains_item12 = Post(
         isItem=True,
-        organizationId=37,
-        userId=37,
+        organizationId=23,
+        userId=23,
         title='Cookies',
         description='We have about 300 ginger bread cookies left from an event. They should be good for at least one week.',
         quantity='300 count',
@@ -1035,8 +1035,8 @@ def seed_posts():
 
     grains_item13 = Post(
         isItem=True,
-        organizationId=38,
-        userId=38,
+        organizationId=15,
+        userId=15,
         title='Packaged bread',
         description="Hello! I have about 50 packages of bread like you see here. Everything was baked 2 days ago. Thanks!",
         quantity='50 count',
@@ -1050,8 +1050,8 @@ def seed_posts():
     #protein
     protein_item1 = Post(
         isItem=True,
-        organizationId=39,
-        userId=39,
+        organizationId=15,
+        userId=15,
         title='Frozen salmon',
         description='We have 40 pounds of frozen Alaskan salmon.',
         quantity='40 lbs',
@@ -1064,8 +1064,8 @@ def seed_posts():
 
     protein_item2 = Post(
         isItem=True,
-        organizationId=26,
-        userId=26,
+        organizationId=16,
+        userId=16,
         title='Frozen tuna',
         description="I have about 60 pounds of frozen tuna. They won't expire for at least 3 months",
         quantity='60 lbs',
@@ -1092,8 +1092,8 @@ def seed_posts():
 
     protein_item4 = Post(
         isItem=True,
-        organizationId=28,
-        userId=28,
+        organizationId=27,
+        userId=27,
         title='Fresh fish',
         description='We have 50 pounds of red snapper and horse mackerel.',
         quantity='50 lbs',
@@ -1106,8 +1106,8 @@ def seed_posts():
 
     protein_item5 = Post(
         isItem=True,
-        organizationId=29,
-        userId=29,
+        organizationId=24,
+        userId=24,
         title='Roast beef',
         description='We have about 10 containers of roast beef left over from a catering event. The weight is about 50 lbs.',
         quantity='50 lbs',
@@ -1120,8 +1120,8 @@ def seed_posts():
 
     protein_item6 = Post(
         isItem=True,
-        organizationId=30,
-        userId=30,
+        organizationId=25,
+        userId=25,
         title='Ribeye steak',
         description='We have about 30 lbs of ribeye steak. They have been refrigerated and have about 3 days left.',
         quantity='30 lbs',
@@ -1134,8 +1134,8 @@ def seed_posts():
 
     protein_item7 = Post(
         isItem=True,
-        organizationId=31,
-        userId=31,
+        organizationId=23,
+        userId=23,
         title='Mixed protein',
         description='I have leftover chicken, shrimp, salmon and steak. They have all been refrigerated and should last another week.',
         quantity='20 lbs',
@@ -1148,8 +1148,8 @@ def seed_posts():
 
     protein_item8 = Post(
         isItem=True,
-        organizationId=32,
-        userId=32,
+        organizationId=13,
+        userId=13,
         title='Vienna sausage',
         description='We have about 100 cans of Vienna sausage that expires in 2 months. Thanks!',
         quantity='100 count',
@@ -1162,8 +1162,8 @@ def seed_posts():
 
     protein_item9 = Post(
         isItem=True,
-        organizationId=33,
-        userId=33,
+        organizationId=27,
+        userId=27,
         title='Fresh tuna',
         description='We have about 20 lbs of fresh tuna that has been properly stored in a refrigerator.',
         quantity='20 lbs',
@@ -1176,8 +1176,8 @@ def seed_posts():
 
     protein_item10 = Post(
         isItem=True,
-        organizationId=34,
-        userId=34,
+        organizationId=20,
+        userId=20,
         title='Rotisserie chicken',
         description='I have six whole rotisserie chicken. They were prepared two days ago and have been frozen now.',
         quantity='6 count',
@@ -1190,8 +1190,8 @@ def seed_posts():
 
     protein_item11 = Post(
         isItem=True,
-        organizationId=35,
-        userId=35,
+        organizationId=26,
+        userId=26,
         title='Burger patties',
         description='Hello! I have 100 burger patties that were prepared three days ago. They have been properly refrigerated.',
         quantity='100 count',
@@ -1204,8 +1204,8 @@ def seed_posts():
 
     protein_item12 = Post(
         isItem=True,
-        organizationId=36,
-        userId=36,
+        organizationId=16,
+        userId=16,
         title='Pork loin',
         description='Hi! We have 30 packages of pork loin, each weighing 1 pound. They expire in one week.',
         quantity='30 lbs',
@@ -1218,8 +1218,8 @@ def seed_posts():
 
     protein_item13 = Post(
         isItem=True,
-        organizationId=37,
-        userId=37,
+        organizationId=15,
+        userId=15,
         title='Beyond burger',
         description='We have 25 packages of Beyond brand plant-based burger patties. Each package has 2 patties.',
         quantity='25 count',
@@ -1232,8 +1232,8 @@ def seed_posts():
 
     protein_item14 = Post(
         isItem=True,
-        organizationId=26,
-        userId=26,
+        organizationId=12,
+        userId=12,
         title='Canned tuna',
         description='Our market has about 100 cans of tuna that will expire in two weeks.',
         quantity='100 count',
@@ -1246,8 +1246,8 @@ def seed_posts():
 
     protein_item15 = Post(
         isItem=True,
-        organizationId=28,
-        userId=28,
+        organizationId=14,
+        userId=14,
         title='Cinnamon almonds',
         description='We have 30 bags of unopened cinnamon praline almonds. They will expire in three weeks. Thanks!',
         quantity='30 count',
@@ -1260,8 +1260,8 @@ def seed_posts():
 
     protein_item16 = Post(
         isItem=True,
-        organizationId=26,
-        userId=26,
+        organizationId=14,
+        userId=14,
         title='Bags of almonds',
         description='Hello, we have 20 bags of whole, unsalted almonds. They will expire in two weeks. Thanks!',
         quantity='20 count',

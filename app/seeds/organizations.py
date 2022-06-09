@@ -408,43 +408,43 @@ def seed_organizations():
     )
     db.session.add(costco)
 
-    amazon = Organization(
-        federalId='71-0415188',
+    trader_joes = Organization(
+        federalId='95-1987958',
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
         open='24:00',
         close='24:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
-        name='Amazon Fresh',
-        description="Amazon is guided by four principles: customer obsession rather than competitor focus, passion for invention, commitment to operational excellence, and long-term thinking. Amazon strives to be Earth's most customer-centric company, Earth's best employer, and Earth's safest place to work. Customer reviews, 1-Click shopping, personalized recommendations, Prime, Fulfillment by Amazon, AWS, Kindle Direct Publishing, Kindle, Career Choice, Fire tablets, Fire TV, Amazon Echo, Alexa, Just Walk Out technology, Amazon Studios, and The Climate Pledge are some of the things pioneered by Amazon",
-        street='480 E 55th Ave STE 100,',
-        zip='80216',
+        name="Trader Joe's Company",
+        description="Trader Joe's is a national chain of neighborhood grocery stores. We are committed to providing our customers outstanding value in the form of the best quality products at the best everyday prices. Through our rewarding products and knowledgeable, friendly Crew Members, we have been transforming grocery shopping into a welcoming journey full of discovery and fun since 1967.",
+        street='750 N Colorado Blvd',
+        zip='80206',
         city='Denver',
         state='Colorado',
-        phone='2062661000',
-        email='jeff@amazon.com'
+        phone='3033211003',
+        email='nhigh@traderjoes.com'
     )
-    db.session.add(amazon)
+    db.session.add(trader_joes)
 
-    amazon = Organization(
+    whole_foods = Organization(
         federalId='71-0415188',
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
-        open='24:00',
-        close='24:00',
+        open='07:00',
+        close='22:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
-        name='Amazon Fresh',
-        description="Amazon is guided by four principles: customer obsession rather than competitor focus, passion for invention, commitment to operational excellence, and long-term thinking. Amazon strives to be Earth's most customer-centric company, Earth's best employer, and Earth's safest place to work. Customer reviews, 1-Click shopping, personalized recommendations, Prime, Fulfillment by Amazon, AWS, Kindle Direct Publishing, Kindle, Career Choice, Fire tablets, Fire TV, Amazon Echo, Alexa, Just Walk Out technology, Amazon Studios, and The Climate Pledge are some of the things pioneered by Amazon",
-        street='480 E 55th Ave STE 100,',
-        zip='80216',
+        name='Whole Foods Market',
+        description="Who are we? Well, we seek out the finest natural and organic foods available, maintain the strictest quality standards in the industry, and have an unshakeable commitment to sustainable agriculture. Add to that the excitement and fun we bring to shopping for groceries, and you start to get a sense of what we’re all about.",
+        street='2375 E 1st Ave',
+        zip='80206',
         city='Denver',
         state='Colorado',
-        phone='2062661000',
-        email='jeff@amazon.com'
+        phone='15124774455',
+        email='customer.questions@wholefoods.com'
     )
-    db.session.add(amazon)
+    db.session.add(whole_foods)
 
     for i in range(37, 51):
         businesses = Organization(

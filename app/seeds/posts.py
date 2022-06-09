@@ -1163,117 +1163,117 @@ def seed_posts():
     )
     db.session.add(protein_item8)
 
-    protein_item1 = Post(
+    protein_item9 = Post(
         isItem=True,
-        organizationId=39,
-        userId=39,
-        title=choice(('Got chicken breast', 'Got fish', 'Plenty of canned tuna', 'Got eggs', 'Tofu and soy beans', 'Pork chops', 'Burger patties', 'Canned almonds')),
-        description=choice(('We have five 2 lb. frozen packs of chicken breast!', "We have frozen fish. We kept them properly stored.", 'Our market has about 50 cans of tuna that is past the shelf life by a week.', "Hello! We have 120 eggs (10 packs).", "We have fifteen unopened canned almonds.", 'We have five pork chops and ten pounds of minced pork.', 'We have ten beef and ten vegan patties.', 'We have tofu and soy beans.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=33,
+        userId=33,
+        title='Fresh tuna',
+        description='We have about 20 lbs of fresh tuna that has been properly stored in a refrigerator.',
+        quantity='20 lbs',
         categoryId=5,
-        imageUrl=choice(('https://mealizeaa.s3.amazonaws.com/Protein-1.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-2.png', 'https://mealizeaa.s3.amazonaws.com/Protein-3.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-4.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-5.jpg')),
-        expDate='2022-10-18',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-9.jpg',
+        expDate='2022-06-28',
         status = 0
     )
-    db.session.add(protein_item1)
+    db.session.add(protein_item9)
 
-    protein_item1 = Post(
+    protein_item10 = Post(
         isItem=True,
-        organizationId=39,
-        userId=39,
-        title=choice(('Got chicken breast', 'Got fish', 'Plenty of canned tuna', 'Got eggs', 'Tofu and soy beans', 'Pork chops', 'Burger patties', 'Canned almonds')),
-        description=choice(('We have five 2 lb. frozen packs of chicken breast!', "We have frozen fish. We kept them properly stored.", 'Our market has about 50 cans of tuna that is past the shelf life by a week.', "Hello! We have 120 eggs (10 packs).", "We have fifteen unopened canned almonds.", 'We have five pork chops and ten pounds of minced pork.', 'We have ten beef and ten vegan patties.', 'We have tofu and soy beans.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=34,
+        userId=34,
+        title='Rotisserie chicken',
+        description='I have six whole rotisserie chicken. They were prepared two days ago and have been frozen now.',
+        quantity='6 count',
         categoryId=5,
-        imageUrl=choice(('https://mealizeaa.s3.amazonaws.com/Protein-1.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-2.png', 'https://mealizeaa.s3.amazonaws.com/Protein-3.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-4.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-5.jpg')),
-        expDate='2022-10-18',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-10.jpg',
+        expDate='2022-06-18',
         status = 0
     )
-    db.session.add(protein_item1)
+    db.session.add(protein_item10)
 
-    protein_item1 = Post(
+    protein_item11 = Post(
         isItem=True,
-        organizationId=39,
-        userId=39,
-        title=choice(('Got chicken breast', 'Got fish', 'Plenty of canned tuna', 'Got eggs', 'Tofu and soy beans', 'Pork chops', 'Burger patties', 'Canned almonds')),
-        description=choice(('We have five 2 lb. frozen packs of chicken breast!', "We have frozen fish. We kept them properly stored.", 'Our market has about 50 cans of tuna that is past the shelf life by a week.', "Hello! We have 120 eggs (10 packs).", "We have fifteen unopened canned almonds.", 'We have five pork chops and ten pounds of minced pork.', 'We have ten beef and ten vegan patties.', 'We have tofu and soy beans.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=35,
+        userId=35,
+        title='Burger patties',
+        description='Hello! I have 100 burger patties that were prepared three days ago. They have been properly refrigerated.',
+        quantity='100 count',
         categoryId=5,
-        imageUrl=choice(('https://mealizeaa.s3.amazonaws.com/Protein-1.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-2.png', 'https://mealizeaa.s3.amazonaws.com/Protein-3.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-4.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-5.jpg')),
-        expDate='2022-10-18',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-11.jpg',
+        expDate='2022-06-21',
         status = 0
     )
-    db.session.add(protein_item1)
+    db.session.add(protein_item11)
 
-    protein_item1 = Post(
+    protein_item12 = Post(
         isItem=True,
-        organizationId=39,
-        userId=39,
-        title=choice(('Got chicken breast', 'Got fish', 'Plenty of canned tuna', 'Got eggs', 'Tofu and soy beans', 'Pork chops', 'Burger patties', 'Canned almonds')),
-        description=choice(('We have five 2 lb. frozen packs of chicken breast!', "We have frozen fish. We kept them properly stored.", 'Our market has about 50 cans of tuna that is past the shelf life by a week.', "Hello! We have 120 eggs (10 packs).", "We have fifteen unopened canned almonds.", 'We have five pork chops and ten pounds of minced pork.', 'We have ten beef and ten vegan patties.', 'We have tofu and soy beans.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=36,
+        userId=36,
+        title='Pork loin',
+        description='Hi! We have 30 packages of pork loin, each weighing 1 pound. They expire in one week.',
+        quantity='30 pounds.',
         categoryId=5,
-        imageUrl=choice(('https://mealizeaa.s3.amazonaws.com/Protein-1.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-2.png', 'https://mealizeaa.s3.amazonaws.com/Protein-3.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-4.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-5.jpg')),
-        expDate='2022-10-18',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-12.jpg',
+        expDate='2022-06-15',
         status = 0
     )
-    db.session.add(protein_item1)
+    db.session.add(protein_item12)
 
-    protein_item1 = Post(
+    protein_item13 = Post(
         isItem=True,
-        organizationId=39,
-        userId=39,
-        title=choice(('Got chicken breast', 'Got fish', 'Plenty of canned tuna', 'Got eggs', 'Tofu and soy beans', 'Pork chops', 'Burger patties', 'Canned almonds')),
-        description=choice(('We have five 2 lb. frozen packs of chicken breast!', "We have frozen fish. We kept them properly stored.", 'Our market has about 50 cans of tuna that is past the shelf life by a week.', "Hello! We have 120 eggs (10 packs).", "We have fifteen unopened canned almonds.", 'We have five pork chops and ten pounds of minced pork.', 'We have ten beef and ten vegan patties.', 'We have tofu and soy beans.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=37,
+        userId=37,
+        title='Beyond burger',
+        description='We have 25 packages of Beyond brand plant-based burger patties. Each package has 2 patties.',
+        quantity='25 count',
         categoryId=5,
-        imageUrl=choice(('https://mealizeaa.s3.amazonaws.com/Protein-1.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-2.png', 'https://mealizeaa.s3.amazonaws.com/Protein-3.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-4.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-5.jpg')),
-        expDate='2022-10-18',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-13.jpg',
+        expDate='2022-06-26',
         status = 0
     )
-    db.session.add(protein_item1)
+    db.session.add(protein_item13)
 
-    protein_item1 = Post(
+    protein_item14 = Post(
         isItem=True,
-        organizationId=39,
-        userId=39,
-        title=choice(('Got chicken breast', 'Got fish', 'Plenty of canned tuna', 'Got eggs', 'Tofu and soy beans', 'Pork chops', 'Burger patties', 'Canned almonds')),
-        description=choice(('We have five 2 lb. frozen packs of chicken breast!', "We have frozen fish. We kept them properly stored.", 'Our market has about 50 cans of tuna that is past the shelf life by a week.', "Hello! We have 120 eggs (10 packs).", "We have fifteen unopened canned almonds.", 'We have five pork chops and ten pounds of minced pork.', 'We have ten beef and ten vegan patties.', 'We have tofu and soy beans.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=26,
+        userId=26,
+        title='Canned tuna',
+        description='Our market has about 100 cans of tuna that will expire in two weeks.',
+        quantity='100 count',
         categoryId=5,
-        imageUrl=choice(('https://mealizeaa.s3.amazonaws.com/Protein-1.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-2.png', 'https://mealizeaa.s3.amazonaws.com/Protein-3.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-4.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-5.jpg')),
-        expDate='2022-10-18',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-14.jpg',
+        expDate='2022-06-23',
         status = 0
     )
-    db.session.add(protein_item1)
+    db.session.add(protein_item14)
 
-    protein_item1 = Post(
+    protein_item15 = Post(
         isItem=True,
-        organizationId=39,
-        userId=39,
-        title=choice(('Got chicken breast', 'Got fish', 'Plenty of canned tuna', 'Got eggs', 'Tofu and soy beans', 'Pork chops', 'Burger patties', 'Canned almonds')),
-        description=choice(('We have five 2 lb. frozen packs of chicken breast!', "We have frozen fish. We kept them properly stored.", 'Our market has about 50 cans of tuna that is past the shelf life by a week.', "Hello! We have 120 eggs (10 packs).", "We have fifteen unopened canned almonds.", 'We have five pork chops and ten pounds of minced pork.', 'We have ten beef and ten vegan patties.', 'We have tofu and soy beans.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=28,
+        userId=28,
+        title='Cinnamon almonds',
+        description='We have 30 bags of unopened cinnamon praline almonds. They will expire in three weeks. Thanks!',
+        quantity='30 count',
         categoryId=5,
-        imageUrl=choice(('https://mealizeaa.s3.amazonaws.com/Protein-1.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-2.png', 'https://mealizeaa.s3.amazonaws.com/Protein-3.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-4.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-5.jpg')),
-        expDate='2022-10-18',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-15.jpg',
+        expDate='2022-06-29',
         status = 0
     )
-    db.session.add(protein_item1)
+    db.session.add(protein_item15)
 
-    protein_item1 = Post(
+    protein_item16 = Post(
         isItem=True,
-        organizationId=39,
-        userId=39,
-        title=choice(('Got chicken breast', 'Got fish', 'Plenty of canned tuna', 'Got eggs', 'Tofu and soy beans', 'Pork chops', 'Burger patties', 'Canned almonds')),
-        description=choice(('We have five 2 lb. frozen packs of chicken breast!', "We have frozen fish. We kept them properly stored.", 'Our market has about 50 cans of tuna that is past the shelf life by a week.', "Hello! We have 120 eggs (10 packs).", "We have fifteen unopened canned almonds.", 'We have five pork chops and ten pounds of minced pork.', 'We have ten beef and ten vegan patties.', 'We have tofu and soy beans.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=26,
+        userId=26,
+        title='Bags of almonds',
+        description='Hello, we have 20 bags of whole, unsalted almonds. They will expire in two weeks. Thanks!',
+        quantity='20 count',
         categoryId=5,
-        imageUrl=choice(('https://mealizeaa.s3.amazonaws.com/Protein-1.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-2.png', 'https://mealizeaa.s3.amazonaws.com/Protein-3.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-4.jpg', 'https://mealizeaa.s3.amazonaws.com/Protein-5.jpg')),
-        expDate='2022-10-18',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-16.jpg',
+        expDate='2022-06-22',
         status = 0
     )
-    db.session.add(protein_item1)
+    db.session.add(protein_item16)
 
     db.session.commit()
 

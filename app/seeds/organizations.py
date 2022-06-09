@@ -524,82 +524,81 @@ def seed_organizations():
     )
     db.session.add(snarf_burger)
 
-    snarf_burger = Organization(
+    sushi_katsu = Organization(
+        federalId='82-0051188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='11:00',
+        close='21:30',
+        timeslot=choice(('Early afternoon', 'Late afternoon')),
+        name='Sushi Katsu',
+        description="At Sushi Katsu, you can enjoy a variety of fish, quality sushi and Japanese dishes. Our customers say that we offer a sushi experience like no other.",
+        street='2222 S Havana St',
+        zip='80014',
+        city='Aurora',
+        state='Colorado',
+        phone='3033688778',
+        email='info@sushikatsudenver.com'
+    )
+    db.session.add(sushi_katsu)
+
+    edible_arrangements = Organization(
         federalId='71-0415188',
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
-        open='10:00',
-        close='22:00',
-        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
-        name='Snarfburger',
-        description="Sink your teeth into a Snarfburger, and let the shack take you all the way back to its retro roots of the All-American classic hamburger joint. Each burger is made-to-order using the highest-quality beef and topped with premium ingredients including our fresh-sliced cheeses, crisp veggies, and signature blend giardiniera hot peppers.",
-        street='1001 E 11th Ave',
-        zip='80218',
+        open='09:00',
+        close='17:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon')),
+        name='Edible Arrangements',
+        description="At Edible®, our passion, heritage, and future are rooted in helping people all over the world celebrate life's most special moments with a gift or treat that's carefully crafted to WOW. Whether it's a birthday, a work milestone, a get-together with friends and family, or even just because, our assortment of freshly made gifts is just what you need to create spontaneous moments of goodness filled with extra sweet memories and lots of smiles!",
+        street='5066 S Wadsworth Blvd Unit 104',
+        zip='80123',
+        city='Littleton',
+        state='Colorado',
+        phone='3039041353',
+        email='info@ediblearrangements.com'
+    )
+    db.session.add(edible_arrangements)
+
+    switch_gears_farm = Organization(
+        federalId='20-208081930',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='08:00',
+        close='13:00',
+        timeslot='Noon',
+        name='Switch Gears Farm',
+        description="Switch Gears Farm is an ideology that we strive to achieve, both in our personal lives and as a business. This means to constantly be willing to learn about new and innovate ways to grow healthy food for the local community while also maintaining healthy soil on the land we farm.",
+        street='2551 E Colfax Ave',
+        zip='80206',
         city='Denver',
         state='Colorado',
-        phone='7205739134',
-        email='info@relishcateringco.com'
+        phone='7203033333',
+        email='yourfarmer@switchgearsfarm.com'
     )
-    db.session.add(snarf_burger)
+    db.session.add(switch_gears_farm)
 
-    snarf_burger = Organization(
+    detour_bakery = Organization(
         federalId='71-0415188',
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
-        open='10:00',
-        close='22:00',
-        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
-        name='Snarfburger',
-        description="Sink your teeth into a Snarfburger, and let the shack take you all the way back to its retro roots of the All-American classic hamburger joint. Each burger is made-to-order using the highest-quality beef and topped with premium ingredients including our fresh-sliced cheeses, crisp veggies, and signature blend giardiniera hot peppers.",
-        street='1001 E 11th Ave',
-        zip='80218',
+        open='07:30',
+        close='16:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon')),
+        name='Detour Bakery',
+        description="Detour Bakery has a dedicated, hard-working staff that produce consistently delicious breads and pastries while you sleep, so that our fresh-faced daytime staff can proudly serve you during the day.",
+        street='1479 S Holly St',
+        zip='80222',
         city='Denver',
         state='Colorado',
-        phone='7205739134',
-        email='info@relishcateringco.com'
+        phone='3037562020',
+        email='info@detourbakery.com'
     )
-    db.session.add(snarf_burger)
-
-    snarf_burger = Organization(
-        federalId='71-0415188',
-        isNonprofit=False,
-        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
-        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
-        open='10:00',
-        close='22:00',
-        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
-        name='Snarfburger',
-        description="Sink your teeth into a Snarfburger, and let the shack take you all the way back to its retro roots of the All-American classic hamburger joint. Each burger is made-to-order using the highest-quality beef and topped with premium ingredients including our fresh-sliced cheeses, crisp veggies, and signature blend giardiniera hot peppers.",
-        street='1001 E 11th Ave',
-        zip='80218',
-        city='Denver',
-        state='Colorado',
-        phone='7205739134',
-        email='info@relishcateringco.com'
-    )
-    db.session.add(snarf_burger)
-
-    snarf_burger = Organization(
-        federalId='71-0415188',
-        isNonprofit=False,
-        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
-        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
-        open='10:00',
-        close='22:00',
-        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
-        name='Snarfburger',
-        description="Sink your teeth into a Snarfburger, and let the shack take you all the way back to its retro roots of the All-American classic hamburger joint. Each burger is made-to-order using the highest-quality beef and topped with premium ingredients including our fresh-sliced cheeses, crisp veggies, and signature blend giardiniera hot peppers.",
-        street='1001 E 11th Ave',
-        zip='80218',
-        city='Denver',
-        state='Colorado',
-        phone='7205739134',
-        email='info@relishcateringco.com'
-    )
-    db.session.add(snarf_burger)
-
+    db.session.add(detour_bakery)
 
     for i in range(37, 51):
         businesses = Organization(

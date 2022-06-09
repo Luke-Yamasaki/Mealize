@@ -47,7 +47,7 @@ def seed_organizations():
     db.session.add(food_bank_of_the_rockies)
 
     bienvenidos_food_bank = Organization(
-        federalId='84-0772672',
+        federalId='74-2543251',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/bienvenidos-l.png',
         imageUrl='https://mealizeaa.s3.amazonaws.com/bienvenidos-b.jpg',
@@ -85,7 +85,7 @@ def seed_organizations():
     db.session.add(denver_inner_city_parish)
 
     north_denver_cares = Organization(
-        federalId='84-0123143',
+        federalId='27-2622785',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/north-denver-cares-l.png',
         imageUrl='https://mealizeaa.s3.amazonaws.com/north-denver-cares-b.jpg',
@@ -104,7 +104,7 @@ def seed_organizations():
     db.session.add(north_denver_cares)
 
     cu_denver_food_pantry = Organization(
-        federalId='84-0224164',
+        federalId='84-6000555',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/cu-denver-l.png',
         imageUrl='https://mealizeaa.s3.amazonaws.com/cu-denver-b.jpg',
@@ -123,7 +123,7 @@ def seed_organizations():
     db.session.add(cu_denver_food_pantry)
 
     road_runner_food_pantry = Organization(
-        federalId='84-1329264',
+        federalId='23-7296162',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/msu-denver-l.png',
         imageUrl='https://mealizeaa.s3.amazonaws.com/msu-denver-b.jpg',
@@ -142,7 +142,7 @@ def seed_organizations():
     db.session.add(road_runner_food_pantry)
 
     benefits_in_action = Organization(
-        federalId='84-3322779',
+        federalId='87-3774775 ',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/benefits-l.png',
         imageUrl='https://mealizeaa.s3.amazonaws.com/benefits-b.jpg',
@@ -161,7 +161,7 @@ def seed_organizations():
     db.session.add(benefits_in_action)
 
     denver_dream_center = Organization(
-        federalId='84-3942629',
+        federalId='46-5337404',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/dream-center-l.png',
         imageUrl='https://mealizeaa.s3.amazonaws.com/dream-center-b.jpg',
@@ -180,7 +180,7 @@ def seed_organizations():
     db.session.add(denver_dream_center)
 
     we_dont_waste = Organization(
-        federalId='84-3071629',
+        federalId='27-0585966',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/we-dont-waste-l.png',
         imageUrl='https://mealizeaa.s3.amazonaws.com/we-dont-waste-b.jpg',
@@ -199,7 +199,7 @@ def seed_organizations():
     db.session.add(we_dont_waste)
 
     re_vision = Organization(
-        federalId='84-3071629',
+        federalId='26-1204343',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/revision-l.png',
         imageUrl='https://mealizeaa.s3.amazonaws.com/revision-b.jpg',
@@ -276,7 +276,7 @@ def seed_organizations():
     db.session.add(walmart)
 
     target = Organization(
-        federalId='	41-0215170',
+        federalId='41-0215170',
         isNonprofit=False,
         logoUrl='https://corporate.target.com/_media/TargetCorp/Press/B-roll%20and%20Press%20Materials/Logos/Target_Bullseye-Logo_Red.jpg',
         imageUrl='https://corporate.target.com/_media/TargetCorp/news/2020/08/reach/ABV_REACH_Header.jpg',
@@ -314,7 +314,7 @@ def seed_organizations():
     db.session.add(amazon_fresh)
 
     safeway = Organization(
-        federalId='71-0412088',
+        federalId='36-7394926',
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
@@ -333,7 +333,7 @@ def seed_organizations():
     db.session.add(safeway)
 
     king_soopers = Organization(
-        federalId='71-9615188',
+        federalId='31-0345740',
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
@@ -352,7 +352,7 @@ def seed_organizations():
     db.session.add(king_soopers)
 
     sprouts = Organization(
-        federalId='71-0410371',
+        federalId='32-0331600',
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
@@ -371,7 +371,7 @@ def seed_organizations():
     db.session.add(sprouts)
 
     natural_grocers = Organization(
-        federalId='71-0415188',
+        federalId='84-1444517',
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
@@ -379,7 +379,7 @@ def seed_organizations():
         close='24:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
         name='Natural Grocers',
-        description="Amazon is guided by four principles: customer obsession rather than competitor focus, passion for invention, commitment to operational excellence, and long-term thinking. Amazon strives to be Earth's most customer-centric company, Earth's best employer, and Earth's safest place to work. Customer reviews, 1-Click shopping, personalized recommendations, Prime, Fulfillment by Amazon, AWS, Kindle Direct Publishing, Kindle, Career Choice, Fire tablets, Fire TV, Amazon Echo, Alexa, Just Walk Out technology, Amazon Studios, and The Climate Pledge are some of the things pioneered by Amazon",
+        description="From the smallest detail to the largest, whether it's refrigerating our nuts and seeds for freshness or only selling 100% organic and GMO-free produce, pasture-based dairy, and antibiotic and hormone-free meats… we are, and have always been, your original good4uSM Grocers.",
         street='368 S Broadway',
         zip='80209',
         city='Denver',
@@ -389,8 +389,8 @@ def seed_organizations():
     )
     db.session.add(natural_grocers)
 
-    amazon = Organization(
-        federalId='71-0415188',
+    costco = Organization(
+        federalId='91-1223280',
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
@@ -398,15 +398,15 @@ def seed_organizations():
         close='24:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
         name='Amazon Fresh',
-        description="Amazon is guided by four principles: customer obsession rather than competitor focus, passion for invention, commitment to operational excellence, and long-term thinking. Amazon strives to be Earth's most customer-centric company, Earth's best employer, and Earth's safest place to work. Customer reviews, 1-Click shopping, personalized recommendations, Prime, Fulfillment by Amazon, AWS, Kindle Direct Publishing, Kindle, Career Choice, Fire tablets, Fire TV, Amazon Echo, Alexa, Just Walk Out technology, Amazon Studios, and The Climate Pledge are some of the things pioneered by Amazon",
-        street='480 E 55th Ave STE 100,',
-        zip='80216',
+        description="Costco Wholesale is a multi-billion dollar global retailer with warehouse club operations in eight countries. We are the recognized leader in our field, dedicated to quality in every area of our business and respected for our outstanding business ethics. Despite our large size and explosive international expansion, we continue to provide a family atmosphere in which our employees thrive and succeed.",
+        street='1471 S Havana St',
+        zip='80012',
         city='Denver',
         state='Colorado',
-        phone='2062661000',
-        email='jeff@amazon.com'
+        phone='18007742678',
+        email='customerservice@costco.com'
     )
-    db.session.add(amazon)
+    db.session.add(costco)
 
     amazon = Organization(
         federalId='71-0415188',

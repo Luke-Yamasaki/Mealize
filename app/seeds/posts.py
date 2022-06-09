@@ -855,8 +855,8 @@ def seed_posts():
 
     fruits_item10 = Post(
         isItem=True,
-        organizationId=53,
-        userId=53,
+        organizationId=39,
+        userId=39,
         title='Lemons',
         description='We have about 300 fresh lemons.',
         quantity='300 count',
@@ -867,26 +867,194 @@ def seed_posts():
     )
     db.session.add(fruits_item10)
 
-    for l in range(51, 65):
-        grains_items = Post(
-            isItem=True,
-            organizationId=l-26,
-            userId=l-26,
-            title=choice(('Got dry pasta noodles', 'Got boxes of macaroni', 'Stocked on bags of rice', 'Got bread', 'Sandwhich bread', 'Got tortillas and wraps', 'Got oatmeal')),
-            description=choice(('We have boxed of dry pasta noodles!', "We have boxes of macaroni.", 'We have about thirty rice balls and we have bags of rice!', "Hello! We have ten bags of sandwhich bread that have several days left.", "We have a lot of flour and corn tortillas!", 'we have about 3 pounds of tortillas and wraps.', 'We have ten boxes of oatmeal!')),
-            quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
-            categoryId=4,
-            imageUrl='https://mealizeaa.s3.amazonaws.com/'+'Grains-'+str(randint(1, 13))+'.jpg',
-            expDate='2022-09-18',
-            status = 0
-        )
-        db.session.add(grains_items)
+    #grains
+    grains_item1 = Post(
+        isItem=True,
+        organizationId=26,
+        userId=26,
+        title='Assorted bread',
+        description='We have about 200 count of assorted bread that was baked two days ago.',
+        quantity='200 xount',
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-1.jpg',
+        expDate='2022-06-18',
+        status = 0
+    )
+    db.session.add(grains_item1)
+
+    grains_item2 = Post(
+        isItem=True,
+        organizationId=27,
+        userId=27,
+        title='Bags of rice',
+        description='We have about 100 bags of long grain rice.',
+        quantity='100 count',
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-2.jpg',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(grains_item2)
+
+    grains_item3 = Post(
+        isItem=True,
+        organizationId=28,
+        userId=28,
+        title='Loaves of bread',
+        description='Hello! We have about 50 loaves of white bread that were baked 3 days ago.',
+        quantity='50 count',
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-3.jpg',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(grains_item3)
+
+    grains_item4 = Post(
+        isItem=True,
+        organizationId=29,
+        userId=29,
+        title='Baked goods',
+        description='We have about 10 different types of baked goods, weighing around 50 lbs.',
+        quantity='50 lbs',
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-4.jpg',
+        expDate='2022-06-18',
+        status = 0
+    )
+    db.session.add(grains_item4)
+
+    grains_item5 = Post(
+        isItem=True,
+        organizationId=30,
+        userId=30,
+        title='Got dry pasta noodles',
+        description='We have 100 boxes of dry pasta noodles!',
+        quantity='100 count',
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-5.jpg',
+        expDate='2023-01-18',
+        status = 0
+    )
+    db.session.add(grains_item5)
+
+    grains_item6 = Post(
+        isItem=True,
+        organizationId=31,
+        userId=31,
+        title='David Pastrňák macaroni',
+        description='We have David Pastrňák macaroni boxes! We were fortunate enough to receive surplus cases.',
+        quantity='300 count',
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-6.jpg',
+        expDate='2023-02-18',
+        status = 0
+    )
+    db.session.add(grains_item6)
+
+    grains_item7 = Post(
+        isItem=True,
+        organizationId=26,
+        userId=26,
+        title=choice(('Got dry pasta noodles', 'Got boxes of macaroni', 'Stocked on bags of rice', 'Got bread', 'Sandwhich bread', 'Got tortillas and wraps', 'Got oatmeal')),
+        description=choice(('We have boxed of dry pasta noodles!', "We have boxes of macaroni.", 'We have about thirty rice balls and we have bags of rice!', "Hello! We have ten bags of sandwhich bread that have several days left.", "We have a lot of flour and corn tortillas!", 'we have about 3 pounds of tortillas and wraps.', 'We have ten boxes of oatmeal!')),
+        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-3.jpg',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(grains_item7)
+
+    grains_item1 = Post(
+        isItem=True,
+        organizationId=26,
+        userId=26,
+        title=choice(('Got dry pasta noodles', 'Got boxes of macaroni', 'Stocked on bags of rice', 'Got bread', 'Sandwhich bread', 'Got tortillas and wraps', 'Got oatmeal')),
+        description=choice(('We have boxed of dry pasta noodles!', "We have boxes of macaroni.", 'We have about thirty rice balls and we have bags of rice!', "Hello! We have ten bags of sandwhich bread that have several days left.", "We have a lot of flour and corn tortillas!", 'we have about 3 pounds of tortillas and wraps.', 'We have ten boxes of oatmeal!')),
+        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-3.jpg',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(grains_item1)
+
+    grains_item1 = Post(
+        isItem=True,
+        organizationId=26,
+        userId=26,
+        title=choice(('Got dry pasta noodles', 'Got boxes of macaroni', 'Stocked on bags of rice', 'Got bread', 'Sandwhich bread', 'Got tortillas and wraps', 'Got oatmeal')),
+        description=choice(('We have boxed of dry pasta noodles!', "We have boxes of macaroni.", 'We have about thirty rice balls and we have bags of rice!', "Hello! We have ten bags of sandwhich bread that have several days left.", "We have a lot of flour and corn tortillas!", 'we have about 3 pounds of tortillas and wraps.', 'We have ten boxes of oatmeal!')),
+        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-3.jpg',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(grains_item1)
+
+    grains_item1 = Post(
+        isItem=True,
+        organizationId=26,
+        userId=26,
+        title=choice(('Got dry pasta noodles', 'Got boxes of macaroni', 'Stocked on bags of rice', 'Got bread', 'Sandwhich bread', 'Got tortillas and wraps', 'Got oatmeal')),
+        description=choice(('We have boxed of dry pasta noodles!', "We have boxes of macaroni.", 'We have about thirty rice balls and we have bags of rice!', "Hello! We have ten bags of sandwhich bread that have several days left.", "We have a lot of flour and corn tortillas!", 'we have about 3 pounds of tortillas and wraps.', 'We have ten boxes of oatmeal!')),
+        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-3.jpg',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(grains_item1)
+
+    grains_item1 = Post(
+        isItem=True,
+        organizationId=26,
+        userId=26,
+        title=choice(('Got dry pasta noodles', 'Got boxes of macaroni', 'Stocked on bags of rice', 'Got bread', 'Sandwhich bread', 'Got tortillas and wraps', 'Got oatmeal')),
+        description=choice(('We have boxed of dry pasta noodles!', "We have boxes of macaroni.", 'We have about thirty rice balls and we have bags of rice!', "Hello! We have ten bags of sandwhich bread that have several days left.", "We have a lot of flour and corn tortillas!", 'we have about 3 pounds of tortillas and wraps.', 'We have ten boxes of oatmeal!')),
+        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-3.jpg',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(grains_item1)
+
+    grains_item1 = Post(
+        isItem=True,
+        organizationId=26,
+        userId=26,
+        title=choice(('Got dry pasta noodles', 'Got boxes of macaroni', 'Stocked on bags of rice', 'Got bread', 'Sandwhich bread', 'Got tortillas and wraps', 'Got oatmeal')),
+        description=choice(('We have boxed of dry pasta noodles!', "We have boxes of macaroni.", 'We have about thirty rice balls and we have bags of rice!', "Hello! We have ten bags of sandwhich bread that have several days left.", "We have a lot of flour and corn tortillas!", 'we have about 3 pounds of tortillas and wraps.', 'We have ten boxes of oatmeal!')),
+        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-3.jpg',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(grains_item1)
+
+    grains_item1 = Post(
+        isItem=True,
+        organizationId=26,
+        userId=26,
+        title=choice(('Got dry pasta noodles', 'Got boxes of macaroni', 'Stocked on bags of rice', 'Got bread', 'Sandwhich bread', 'Got tortillas and wraps', 'Got oatmeal')),
+        description=choice(('We have boxed of dry pasta noodles!', "We have boxes of macaroni.", 'We have about thirty rice balls and we have bags of rice!', "Hello! We have ten bags of sandwhich bread that have several days left.", "We have a lot of flour and corn tortillas!", 'we have about 3 pounds of tortillas and wraps.', 'We have ten boxes of oatmeal!')),
+        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        categoryId=4,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-3.jpg',
+        expDate='2022-09-18',
+        status = 0
+    )
+    db.session.add(grains_item1)
 
     for m in range(65, 76):
         protein_items = Post(
             isItem=True,
-            organizationId=m-26,
-            userId=m-26,
+            organizationId=26,
+            userId=26,
             title=choice(('Got chicken breast', 'Got fish', 'Plenty of canned tuna', 'Got eggs', 'Tofu and soy beans', 'Pork chops', 'Burger patties', 'Canned almonds')),
             description=choice(('We have five 2 lb. frozen packs of chicken breast!', "We have frozen fish. We kept them properly stored.", 'Our market has about 50 cans of tuna that is past the shelf life by a week.', "Hello! We have 120 eggs (10 packs).", "We have fifteen unopened canned almonds.", 'We have five pork chops and ten pounds of minced pork.', 'We have ten beef and ten vegan patties.', 'We have tofu and soy beans.')),
             quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),

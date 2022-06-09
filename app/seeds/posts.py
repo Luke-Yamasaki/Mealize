@@ -716,7 +716,7 @@ def seed_posts():
         isItem=True,
         organizationId=29,
         userId=29,
-        title="Farmer's market",
+        title="Farmers market",
         description='We have about 200 lbs of leftover veggies. Cucumbers, squash, pumkin, eggplants, tomatoes, etc.',
         quantity='200 lbs',
         categoryId=2,

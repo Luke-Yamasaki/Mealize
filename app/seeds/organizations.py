@@ -294,6 +294,101 @@ def seed_organizations():
     )
     db.session.add(target)
 
+    amazon_fresh = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='24:00',
+        close='24:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Amazon Fresh',
+        description="Amazon is guided by four principles: customer obsession rather than competitor focus, passion for invention, commitment to operational excellence, and long-term thinking. Amazon strives to be Earth's most customer-centric company, Earth's best employer, and Earth's safest place to work. Customer reviews, 1-Click shopping, personalized recommendations, Prime, Fulfillment by Amazon, AWS, Kindle Direct Publishing, Kindle, Career Choice, Fire tablets, Fire TV, Amazon Echo, Alexa, Just Walk Out technology, Amazon Studios, and The Climate Pledge are some of the things pioneered by Amazon.",
+        street='480 E 55th Ave STE 100',
+        zip='80216',
+        city='Denver',
+        state='Colorado',
+        phone='2062661000',
+        email='jeff@amazon.com'
+    )
+    db.session.add(amazon_fresh)
+
+    safeway = Organization(
+        federalId='71-0412088',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='08:00',
+        close='21:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Safeway',
+        description="Today, Safeway operates as a banner of Albertsons Companies, one of the largest food and drug retailers in the United States. With both a strong local presence and national scale, the company operates stores across 35 states and the District of Columbia under 20 well-known banners.",
+        street='1653 S Colorado Blvd',
+        zip='80222',
+        city='Denver',
+        state='Colorado',
+        phone='8775054040',
+        email='AlbertsonsCustomerInquiries@albertsons.com'
+    )
+    db.session.add(safeway)
+
+    king_soopers = Organization(
+        federalId='71-9615188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='24:00',
+        close='24:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='King Soopers',
+        description="King Soopers is a supermarket brand of Kroger located in the Rocky Mountains of the United States. It started as its own brand and, today, is headquartered in Denver, Colorado.",
+        street='1155 E 9th Ave',
+        zip='80218',
+        city='Denver',
+        state='Colorado',
+        phone='3038325262',
+        email='corpvps@kroger.com'
+    )
+    db.session.add(king_soopers)
+
+    sprouts = Organization(
+        federalId='71-0410371',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='07:00',
+        close='22:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Sprouts Farmers Market',
+        description="Each Sprouts store participates in our Food Rescue program that provides food to those in need, feed for animals and nutrients for agricultural soil.",
+        street='197 E Mississippi Ave',
+        zip='80209',
+        city='Denver',
+        state='Colorado',
+        phone='4808148016',
+        email='customerrelations@sprouts.com'
+    )
+    db.session.add(sprouts)
+
+    natural_grocers = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='24:00',
+        close='24:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Natural Grocers',
+        description="Amazon is guided by four principles: customer obsession rather than competitor focus, passion for invention, commitment to operational excellence, and long-term thinking. Amazon strives to be Earth's most customer-centric company, Earth's best employer, and Earth's safest place to work. Customer reviews, 1-Click shopping, personalized recommendations, Prime, Fulfillment by Amazon, AWS, Kindle Direct Publishing, Kindle, Career Choice, Fire tablets, Fire TV, Amazon Echo, Alexa, Just Walk Out technology, Amazon Studios, and The Climate Pledge are some of the things pioneered by Amazon",
+        street='368 S Broadway',
+        zip='80209',
+        city='Denver',
+        state='Colorado',
+        phone='3039864600',
+        email='media@naturalgrocers.com'
+    )
+    db.session.add(natural_grocers)
+
     amazon = Organization(
         federalId='71-0415188',
         isNonprofit=False,
@@ -313,7 +408,45 @@ def seed_organizations():
     )
     db.session.add(amazon)
 
-    for i in range(30, 51):
+    amazon = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='24:00',
+        close='24:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Amazon Fresh',
+        description="Amazon is guided by four principles: customer obsession rather than competitor focus, passion for invention, commitment to operational excellence, and long-term thinking. Amazon strives to be Earth's most customer-centric company, Earth's best employer, and Earth's safest place to work. Customer reviews, 1-Click shopping, personalized recommendations, Prime, Fulfillment by Amazon, AWS, Kindle Direct Publishing, Kindle, Career Choice, Fire tablets, Fire TV, Amazon Echo, Alexa, Just Walk Out technology, Amazon Studios, and The Climate Pledge are some of the things pioneered by Amazon",
+        street='480 E 55th Ave STE 100,',
+        zip='80216',
+        city='Denver',
+        state='Colorado',
+        phone='2062661000',
+        email='jeff@amazon.com'
+    )
+    db.session.add(amazon)
+
+    amazon = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='24:00',
+        close='24:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Amazon Fresh',
+        description="Amazon is guided by four principles: customer obsession rather than competitor focus, passion for invention, commitment to operational excellence, and long-term thinking. Amazon strives to be Earth's most customer-centric company, Earth's best employer, and Earth's safest place to work. Customer reviews, 1-Click shopping, personalized recommendations, Prime, Fulfillment by Amazon, AWS, Kindle Direct Publishing, Kindle, Career Choice, Fire tablets, Fire TV, Amazon Echo, Alexa, Just Walk Out technology, Amazon Studios, and The Climate Pledge are some of the things pioneered by Amazon",
+        street='480 E 55th Ave STE 100,',
+        zip='80216',
+        city='Denver',
+        state='Colorado',
+        phone='2062661000',
+        email='jeff@amazon.com'
+    )
+    db.session.add(amazon)
+
+    for i in range(37, 51):
         businesses = Organization(
             federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
             isNonprofit=False,

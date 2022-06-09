@@ -337,8 +337,8 @@ def seed_organizations():
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
-        open='24:00',
-        close='24:00',
+        open='06:00',
+        close='23:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
         name='King Soopers',
         description="King Soopers is a supermarket brand of Kroger located in the Rocky Mountains of the United States. It started as its own brand and, today, is headquartered in Denver, Colorado.",
@@ -375,8 +375,8 @@ def seed_organizations():
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
-        open='24:00',
-        close='24:00',
+        open='08:30',
+        close='20:30',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
         name='Natural Grocers',
         description="From the smallest detail to the largest, whether it's refrigerating our nuts and seeds for freshness or only selling 100% organic and GMO-free produce, pasture-based dairy, and antibiotic and hormone-free meats… we are, and have always been, your original good4uSM Grocers.",
@@ -394,8 +394,8 @@ def seed_organizations():
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
-        open='24:00',
-        close='24:00',
+        open='10:00',
+        close='20:30',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
         name='Amazon Fresh',
         description="Costco Wholesale is a multi-billion dollar global retailer with warehouse club operations in eight countries. We are the recognized leader in our field, dedicated to quality in every area of our business and respected for our outstanding business ethics. Despite our large size and explosive international expansion, we continue to provide a family atmosphere in which our employees thrive and succeed.",
@@ -413,8 +413,8 @@ def seed_organizations():
         isNonprofit=False,
         logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
         imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
-        open='24:00',
-        close='24:00',
+        open='09:00',
+        close='21:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
         name="Trader Joe's Company",
         description="Trader Joe's is a national chain of neighborhood grocery stores. We are committed to providing our customers outstanding value in the form of the best quality products at the best everyday prices. Through our rewarding products and knowledgeable, friendly Crew Members, we have been transforming grocery shopping into a welcoming journey full of discovery and fun since 1967.",
@@ -436,7 +436,7 @@ def seed_organizations():
         close='22:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
         name='Whole Foods Market',
-        description="Who are we? Well, we seek out the finest natural and organic foods available, maintain the strictest quality standards in the industry, and have an unshakeable commitment to sustainable agriculture. Add to that the excitement and fun we bring to shopping for groceries, and you start to get a sense of what we’re all about.",
+        description="Who are we? Well, we seek out the finest natural and organic foods available, maintain the strictest quality standards in the industry, and have an unshakeable commitment to sustainable agriculture. Add to that the excitement and fun we bring to shopping for groceries, and you start to get a sense of what we're all about.",
         street='2375 E 1st Ave',
         zip='80206',
         city='Denver',
@@ -445,6 +445,161 @@ def seed_organizations():
         email='customer.questions@wholefoods.com'
     )
     db.session.add(whole_foods)
+
+    #catering
+    catering_by_design = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='09:00',
+        close='17:00',
+        timeslot=choice(('Morning', 'Noon')),
+        name='Catering By Design',
+        description="We have put our stake in the ground that we are passionate about creativity. Every menu and look is carefully curated to ensure our events are unique to our clients. Our hallmark: we are constantly creative, and experiences are always reimagined. You won't find another company that can create such customized experiences.",
+        street='11095 E 45th Ave',
+        zip='80239',
+        city='Denver',
+        state='Colorado',
+        phone='3037815335',
+        email='info@cateringbydesignco.com'
+    )
+    db.session.add(catering_by_design)
+
+    colorado_catering_co = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='08:00',
+        close='17:00',
+        timeslot=choice(('Morning', 'Noon')),
+        name='Colorado Catering Co',
+        description="At Colorado Catering, we deliver superb food with a side of high quality customer service. We care about you and your event, and work with you to bring your vision to life. Colorado Catering serves all occasions, from corporate meetings to social events and weddings.",
+        street='10607 E Dartmouth Ave',
+        zip='80014',
+        city='Aurora',
+        state='Colorado',
+        phone='3037500707',
+        email='sales@coloradocatering.net'
+    )
+    db.session.add(colorado_catering_co)
+
+    relish_catering = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='09:00',
+        close='17:00',
+        timeslot=choice(('Morning', 'Noon')),
+        name='Relish Catering & Events',
+        description="We've been providing catering services in the Denver area and all over Colorado for 20 years. In 2012, we launched our new brand Relish Catering and Events because we're all about creating a full experience for our guests.",
+        street='7860 West 16th Ave #100',
+        zip='80214',
+        city='Lakewood',
+        state='Colorado',
+        phone='3037279200',
+        email='info@relishcateringco.com'
+    )
+    db.session.add(relish_catering)
+
+    #restaurants
+    snarf_burger = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='10:00',
+        close='22:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Snarfburger',
+        description="Sink your teeth into a Snarfburger, and let the shack take you all the way back to its retro roots of the All-American classic hamburger joint. Each burger is made-to-order using the highest-quality beef and topped with premium ingredients including our fresh-sliced cheeses, crisp veggies, and signature blend giardiniera hot peppers.",
+        street='1001 E 11th Ave',
+        zip='80218',
+        city='Denver',
+        state='Colorado',
+        phone='7205739134',
+        email='info@relishcateringco.com'
+    )
+    db.session.add(snarf_burger)
+
+    snarf_burger = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='10:00',
+        close='22:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Snarfburger',
+        description="Sink your teeth into a Snarfburger, and let the shack take you all the way back to its retro roots of the All-American classic hamburger joint. Each burger is made-to-order using the highest-quality beef and topped with premium ingredients including our fresh-sliced cheeses, crisp veggies, and signature blend giardiniera hot peppers.",
+        street='1001 E 11th Ave',
+        zip='80218',
+        city='Denver',
+        state='Colorado',
+        phone='7205739134',
+        email='info@relishcateringco.com'
+    )
+    db.session.add(snarf_burger)
+
+    snarf_burger = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='10:00',
+        close='22:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Snarfburger',
+        description="Sink your teeth into a Snarfburger, and let the shack take you all the way back to its retro roots of the All-American classic hamburger joint. Each burger is made-to-order using the highest-quality beef and topped with premium ingredients including our fresh-sliced cheeses, crisp veggies, and signature blend giardiniera hot peppers.",
+        street='1001 E 11th Ave',
+        zip='80218',
+        city='Denver',
+        state='Colorado',
+        phone='7205739134',
+        email='info@relishcateringco.com'
+    )
+    db.session.add(snarf_burger)
+
+    snarf_burger = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='10:00',
+        close='22:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Snarfburger',
+        description="Sink your teeth into a Snarfburger, and let the shack take you all the way back to its retro roots of the All-American classic hamburger joint. Each burger is made-to-order using the highest-quality beef and topped with premium ingredients including our fresh-sliced cheeses, crisp veggies, and signature blend giardiniera hot peppers.",
+        street='1001 E 11th Ave',
+        zip='80218',
+        city='Denver',
+        state='Colorado',
+        phone='7205739134',
+        email='info@relishcateringco.com'
+    )
+    db.session.add(snarf_burger)
+
+    snarf_burger = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
+        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        open='10:00',
+        close='22:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Snarfburger',
+        description="Sink your teeth into a Snarfburger, and let the shack take you all the way back to its retro roots of the All-American classic hamburger joint. Each burger is made-to-order using the highest-quality beef and topped with premium ingredients including our fresh-sliced cheeses, crisp veggies, and signature blend giardiniera hot peppers.",
+        street='1001 E 11th Ave',
+        zip='80218',
+        city='Denver',
+        state='Colorado',
+        phone='7205739134',
+        email='info@relishcateringco.com'
+    )
+    db.session.add(snarf_burger)
+
 
     for i in range(37, 51):
         businesses = Organization(

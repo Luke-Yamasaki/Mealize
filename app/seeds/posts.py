@@ -797,6 +797,76 @@ def seed_posts():
     )
     db.session.add(fruits_item5)
 
+    fruits_item6 = Post(
+        isItem=True,
+        organizationId=49,
+        userId=49,
+        title='Boxes of apples',
+        description='We have ten boxes of fresh apples! There are about 350 apples.',
+        quantity='350 count',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-6.jpg',
+        expDate='2022-07-22',
+        status = 0
+    )
+    db.session.add(fruits_item6)
+
+    fruits_item7 = Post(
+        isItem=True,
+        organizationId=50,
+        userId=50,
+        title='Fresh grapes',
+        description='We have about 5 crates of fresh grapes. They weigh about 20 lbs per crate.',
+        quantity='100 lbs',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-7.jpg',
+        expDate='2022-06-25',
+        status = 0
+    )
+    db.session.add(fruits_item7)
+
+    fruits_item8 = Post(
+        isItem=True,
+        organizationId=51,
+        userId=51,
+        title='Packaged fruit',
+        description='We have about 100 packaged cups of berries, grapes, oranges, pineapples, apples and kiwi.',
+        quantity='100 count',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-8.jpg',
+        expDate='2022-07-18',
+        status = 0
+    )
+    db.session.add(fruits_item8)
+
+    fruits_item9 = Post(
+        isItem=True,
+        organizationId=52,
+        userId=52,
+        title='Limes',
+        description='We have about 200 fresh limes.',
+        quantity='200 count',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-9.jpg',
+        expDate='2022-07-24',
+        status = 0
+    )
+    db.session.add(fruits_item9)
+
+    fruits_item10 = Post(
+        isItem=True,
+        organizationId=53,
+        userId=53,
+        title='Lemons',
+        description='We have about 300 fresh lemons.',
+        quantity='300 count',
+        categoryId=3,
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-10.jpg',
+        expDate='2022-08-09',
+        status = 0
+    )
+    db.session.add(fruits_item10)
+
     for l in range(51, 65):
         grains_items = Post(
             isItem=True,

@@ -94,7 +94,7 @@ def seed_users():
             wheelchair=random() > 0.9,
             learningDisabled=random() > 0.9,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+            profileImageUrl="https://mealizeaa.s3.amazonaws.com/managers-m-" + str(k-6) + ".jpg",
             hashedPassword=generate_password_hash(fake.password())
         )
         db.session.add(business_male_managers)
@@ -113,7 +113,7 @@ def seed_users():
             wheelchair=random() > 0.9,
             learningDisabled=random() > 0.9,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+            profileImageUrl="https://mealizeaa.s3.amazonaws.com/managers-f-" + str(l-16) + ".jpg",
             hashedPassword=generate_password_hash(fake.password())
         )
         db.session.add(business_female_managers)
@@ -131,12 +131,12 @@ def seed_users():
         wheelchair=False,
         learningDisabled=False,
         lgbtq=False,
-        profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+        profileImageUrl="https://mealizeaa.s3.amazonaws.com/nonprofit-volunteer.jpg",
         hashedPassword=generate_password_hash('064324651d0-72fe-49c5-aa1-0ba223f4fcmv3')
     )
     db.session.add(volunteer_demo)
 
-    for m in range(45, 76):
+    for m in range(45, 75):
         volunteers_male = User(
             organizationId=randint(2, 25),
             isNonprofit=True,
@@ -150,12 +150,12 @@ def seed_users():
             wheelchair=random() > 0.5,
             learningDisabled=random() > 0.5,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+            profileImageUrl="https://mealizeaa.s3.amazonaws.com/volunteers-m-" + str(m-44) + ".jpg",
             hashedPassword=generate_password_hash(fake.password())
         )
         db.session.add(volunteers_male)
 
-    for n in range(76, 107):
+    for n in range(75, 106):
         volunteers_female = User(
             organizationId=randint(2, 25),
             isNonprofit=True,
@@ -169,7 +169,7 @@ def seed_users():
             wheelchair=random() > 0.5,
             learningDisabled=random() > 0.5,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+            profileImageUrl="https://mealizeaa.s3.amazonaws.com/volunteers-f-" + str(n-74) + ".jpg",
             hashedPassword=generate_password_hash(fake.password())
         )
         db.session.add(volunteers_female)

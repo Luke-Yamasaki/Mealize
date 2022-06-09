@@ -600,7 +600,7 @@ def seed_organizations():
     )
     db.session.add(detour_bakery)
 
-    for i in range(37, 51):
+    for i in range(45, 51):
         businesses = Organization(
             federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
             isNonprofit=False,

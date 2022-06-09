@@ -616,115 +616,115 @@ def seed_posts():
 
     vegetable_item5 = Post(
         isItem=True,
-        organizationId=32,
-        userId=32,
+        organizationId=36,
+        userId=36,
         title='Tomatoes',
         description="We've got frest tomatoes, they have about a week left!",
         quantity='50 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-5.jpg',
-        expDate='2022-06-15',
-        status = randint(0, 2)
+        expDate='2022-06-25',
+        status = 0
     )
     db.session.add(vegetable_item5)
 
     vegetable_item6 = Post(
         isItem=True,
-        organizationId=32,
-        userId=32,
-        title=choice(('Got carrots', 'Got lettuce and cabbage', 'Tomatoes', 'Some greens', 'Cucumbers and squash', 'Leftover salad')),
-        description=choice(('My restaurant has carrots!', "We'be got heads of lettuce and cabbage.", 'Our cafe has lefover salad.', "Hello! We've got cucumbers and squash!", "We've got frest tomatoes, they have about a week left!", 'Got three pounds of fresh greens.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=37,
+        userId=37,
+        title='Roasted veggies',
+        description='My restaurant has leftover roasted brocolli and carrots from a catering event. About 10 trays.',
+        quantity='15 lbs',
         categoryId=2,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/'+'Vegetables-'+str(randint(1, 12))+'.jpg',
-        expDate='2022-07-18',
-        status = randint(0, 2)
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-6.jpg',
+        expDate='2022-06-12',
+        status = 0
     )
     db.session.add(vegetable_item6)
 
-    vegetable_item1 = Post(
+    vegetable_item7 = Post(
         isItem=True,
-        organizationId=32,
-        userId=32,
-        title=choice(('Got carrots', 'Got lettuce and cabbage', 'Tomatoes', 'Some greens', 'Cucumbers and squash', 'Leftover salad')),
-        description=choice(('My restaurant has carrots!', "We'be got heads of lettuce and cabbage.", 'Our cafe has lefover salad.', "Hello! We've got cucumbers and squash!", "We've got frest tomatoes, they have about a week left!", 'Got three pounds of fresh greens.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=38,
+        userId=38,
+        title='Sliced avocados',
+        description='We have about 30 sliced avocados left over from an event. They have been refrigerated.',
+        quantity='30 count',
         categoryId=2,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/'+'Vegetables-'+str(randint(1, 12))+'.jpg',
-        expDate='2022-07-18',
-        status = randint(0, 2)
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-7.jpg',
+        expDate='2022-06-23',
+        status = 0
     )
-    db.session.add(vegetable_item1)
+    db.session.add(vegetable_item7)
 
-    vegetable_item1 = Post(
+    vegetable_item8 = Post(
         isItem=True,
-        organizationId=32,
-        userId=32,
-        title=choice(('Got carrots', 'Got lettuce and cabbage', 'Tomatoes', 'Some greens', 'Cucumbers and squash', 'Leftover salad')),
-        description=choice(('My restaurant has carrots!', "We'be got heads of lettuce and cabbage.", 'Our cafe has lefover salad.', "Hello! We've got cucumbers and squash!", "We've got frest tomatoes, they have about a week left!", 'Got three pounds of fresh greens.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=39,
+        userId=39,
+        title='Fresh artichokes',
+        description='We have about 50 whole artichokes. Should be good for a month and a half.',
+        quantity='50 count',
         categoryId=2,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/'+'Vegetables-'+str(randint(1, 12))+'.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-8.jpg',
         expDate='2022-07-18',
-        status = randint(0, 2)
+        status = 0
     )
-    db.session.add(vegetable_item1)
+    db.session.add(vegetable_item8)
 
-    vegetable_item1 = Post(
+    vegetable_item9 = Post(
         isItem=True,
-        organizationId=32,
-        userId=32,
-        title=choice(('Got carrots', 'Got lettuce and cabbage', 'Tomatoes', 'Some greens', 'Cucumbers and squash', 'Leftover salad')),
-        description=choice(('My restaurant has carrots!', "We'be got heads of lettuce and cabbage.", 'Our cafe has lefover salad.', "Hello! We've got cucumbers and squash!", "We've got frest tomatoes, they have about a week left!", 'Got three pounds of fresh greens.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=40,
+        userId=40,
+        title='Mixed vegetables',
+        description="I have romanesco brocolli, beets, raddishes, carrots and sweet potatoes.",
+        quantity='50 lbs',
         categoryId=2,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/'+'Vegetables-'+str(randint(1, 12))+'.jpg',
-        expDate='2022-07-18',
-        status = randint(0, 2)
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-9.jpg',
+        expDate='2022-07-01',
+        status = 0
     )
-    db.session.add(vegetable_item1)
+    db.session.add(vegetable_item9)
 
-    vegetable_item1 = Post(
+    vegetable_item10 = Post(
         isItem=True,
-        organizationId=32,
-        userId=32,
-        title=choice(('Got carrots', 'Got lettuce and cabbage', 'Tomatoes', 'Some greens', 'Cucumbers and squash', 'Leftover salad')),
-        description=choice(('My restaurant has carrots!', "We'be got heads of lettuce and cabbage.", 'Our cafe has lefover salad.', "Hello! We've got cucumbers and squash!", "We've got frest tomatoes, they have about a week left!", 'Got three pounds of fresh greens.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=41,
+        userId=41,
+        title='Root vegetables',
+        description='We have mixed colored carrots, raddishes, beets and cauliflower.',
+        quantity='30 lbs',
         categoryId=2,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/'+'Vegetables-'+str(randint(1, 12))+'.jpg',
-        expDate='2022-07-18',
-        status = randint(0, 2)
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-10.jpg',
+        expDate='2022-06-26',
+        status = 0
     )
-    db.session.add(vegetable_item1)
+    db.session.add(vegetable_item10)
 
-    vegetable_item1 = Post(
+    vegetable_item11 = Post(
         isItem=True,
-        organizationId=32,
-        userId=32,
-        title=choice(('Got carrots', 'Got lettuce and cabbage', 'Tomatoes', 'Some greens', 'Cucumbers and squash', 'Leftover salad')),
-        description=choice(('My restaurant has carrots!', "We'be got heads of lettuce and cabbage.", 'Our cafe has lefover salad.', "Hello! We've got cucumbers and squash!", "We've got frest tomatoes, they have about a week left!", 'Got three pounds of fresh greens.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=42,
+        userId=42,
+        title='Got carrots',
+        description='My restaurant has carrots, about 100 of them!',
+        quantity='100 count',
         categoryId=2,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/'+'Vegetables-'+str(randint(1, 12))+'.jpg',
-        expDate='2022-07-18',
-        status = randint(0, 2)
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-11.jpg',
+        expDate='2022-07-28',
+        status = 0
     )
-    db.session.add(vegetable_item1)
+    db.session.add(vegetable_item11)
 
-    vegetable_item1 = Post(
+    vegetable_item12 = Post(
         isItem=True,
-        organizationId=32,
-        userId=32,
-        title=choice(('Got carrots', 'Got lettuce and cabbage', 'Tomatoes', 'Some greens', 'Cucumbers and squash', 'Leftover salad')),
-        description=choice(('My restaurant has carrots!', "We'be got heads of lettuce and cabbage.", 'Our cafe has lefover salad.', "Hello! We've got cucumbers and squash!", "We've got frest tomatoes, they have about a week left!", 'Got three pounds of fresh greens.')),
-        quantity=choice(('5 lbs', '1kg', '5kg', '10 lbs', '3 kgs', '3 lbs')),
+        organizationId=43,
+        userId=43,
+        title="Farmer's market",
+        description='We have about 200 lbs of leftover veggies. Cucumbers, squash, pumkin, eggplants, tomatoes, etc.',
+        quantity='200 lbs',
         categoryId=2,
-        imageUrl='https://mealizeaa.s3.amazonaws.com/'+'Vegetables-'+str(randint(1, 12))+'.jpg',
-        expDate='2022-07-18',
-        status = randint(0, 2)
+        imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-12.jpg',
+        expDate='2022-07-11',
+        status = 0
     )
-    db.session.add(vegetable_item1)
+    db.session.add(vegetable_item12)
 
 
     for k in range(45, 51):

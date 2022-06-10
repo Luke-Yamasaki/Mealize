@@ -44,7 +44,7 @@ export const AppBackGround = styled.div`
 `;
 
 export const AppContentContainer = styled.div`
-    max-width: 1125px;
+    max-width: 1336px;
     width: 100vw;
     height: auto;
     display: flex;
@@ -54,7 +54,7 @@ export const AppContentContainer = styled.div`
 `;
 
 export const PageBackGround = styled.div`
-    max-width: 1125px;
+    max-width: 1336px;
     width: 100vw;
     min-height: calc(100vh - 50px);
     background: ${props => props.background};

@@ -19,18 +19,18 @@ const lockin = keyframes`
         height: 100vh;
     }
     70% {
-        width: 1125px;
+        width: 1336px;
         height: 50px;
         opacity: 100%;
     }
     85%{
-        width: 1125px;
+        width: 1336px;
         height: 50px;
         opacity: 0%;
     }
     100% {
         opacity: 0%;
-        width: 1125px;
+        width: 1336px;
         height: 0px;
     }
 `;
@@ -161,7 +161,7 @@ export const LogoType = styled(Black)`
 `;
 
 export const WelcomeContent = styled.div`
-    max-width: 1125px;
+    max-width: 1336px;
     width: 100vw;
     min-height: calc(100vh - 60px);
     display: flex;

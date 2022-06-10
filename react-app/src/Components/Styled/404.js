@@ -6,7 +6,8 @@ export const FourOFourContainer = styled.div`
     padding-top: 20px;
     font-size: 3em;
     color: ${props => props.theme === 'light' ?'#191919' : 'white'};
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: 900px;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     display: flex;

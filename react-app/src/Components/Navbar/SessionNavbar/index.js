@@ -58,15 +58,15 @@ export const SessionNavbar = ({sessionUser}) => {
                         </VectorBox>
                         <LogoNavLink theme={theme} to='/' exact={true}>Mealize</LogoNavLink>
                     </LogoBox>
-                    <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleMessages}>
-                        <HomeIcon theme={theme} />
-                    </VectorBox>
                     <SearchBar />
                     <NavIconContainer>
                         <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' />
                         {/* <ProfileName theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</ProfileName> */}
                         <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleDeliveries}>
                             <VolunteerIcon theme={theme}/>
+                        </VectorBox>
+                        <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleMessages}>
+                            <HomeIcon theme={theme} />
                         </VectorBox>
                         <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleMessages}>
                             <InboxIcon theme={theme} />

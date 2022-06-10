@@ -881,8 +881,8 @@ def seed_posts():
 
     grains_item2 = Post(
         isItem=True,
-        organizationId=20,
-        userId=20,
+        organizationId=21,
+        userId=21,
         title='Bags of rice',
         description='We have about 100 bags of long grain rice.',
         quantity='100 count',
@@ -979,8 +979,8 @@ def seed_posts():
 
     grains_item9 = Post(
         isItem=True,
-        organizationId=20,
-        userId=20,
+        organizationId=21,
+        userId=21,
         title='Jasmine rice',
         description='We have 30 bags of jasmine rice. Good for one month.',
         quantity='30 count',
@@ -1176,8 +1176,8 @@ def seed_posts():
 
     protein_item10 = Post(
         isItem=True,
-        organizationId=20,
-        userId=20,
+        organizationId=21,
+        userId=21,
         title='Rotisserie chicken',
         description='I have six whole rotisserie chicken. They were prepared two days ago and have been frozen now.',
         quantity='6 count',

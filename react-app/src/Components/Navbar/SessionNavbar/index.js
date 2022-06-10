@@ -17,7 +17,9 @@ import PostForm from '../../../Forms/Post';
 //Icons
 import { Logo } from '../../../Assets/Logo';
 import { InboxIcon } from '../../../Assets/Icons/Inbox';
+import { HomeIcon } from '../../../Assets/Icons/Home';
 import { VolunteerIcon } from '../../../Assets/Icons/Volunteers';
+import { Settings } from '../../../Assets/Icons/Settings';
 
 export const SessionNavbar = ({sessionUser}) => {
     const dispatch = useDispatch();
@@ -51,24 +53,30 @@ export const SessionNavbar = ({sessionUser}) => {
             <Navigation>
                 <NavList>
                     <LogoBox>
-                        <VectorBox square='45px' resize='47px'>
+                        <VectorBox square='40px' resize='41px' cursor='pointer'>
                             <Logo theme={theme} />
                         </VectorBox>
                         <LogoNavLink theme={theme} to='/' exact={true}>Mealize</LogoNavLink>
                     </LogoBox>
+                    <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleMessages}>
+                        <HomeIcon theme={theme} />
+                    </VectorBox>
                     <SearchBar />
-                    <NavIconContainer manager={sessionUser.isManager ? 'true' : 'false'}>
+                    <NavIconContainer>
                         <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' />
-                        <ProfileName theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</ProfileName>
-                        <VectorBox square='30px' resize='32px' cursor='pointer' onClick={handleDeliveries}>
+                        {/* <ProfileName theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</ProfileName> */}
+                        <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleDeliveries}>
                             <VolunteerIcon theme={theme}/>
                         </VectorBox>
-                        <VectorBox square='30px' resize='32px' cursor='pointer' onClick={handleMessages}>
-                            <InboxIcon theme={theme}/>
+                        <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleMessages}>
+                            <InboxIcon theme={theme} />
+                        </VectorBox>
+                        <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleMessages}>
+                            <Settings theme={theme}/>
                         </VectorBox>
                         {sessionUser.isManager &&
                             <PostButton onClick={showPostForm}>
-                                <ButtonText>{sessionUser.isNonprofit && sessionUser.isManager ? 'New post' : 'Post item'}</ButtonText>
+                                <ButtonText>{sessionUser.isNonprofit && sessionUser.isManager ? 'Post a request' : 'Post an item'}</ButtonText>
                             </PostButton>
                         }
                         <LogoutButton onClick={logOut} type={sessionUser.isManager ? 'manager' : 'volunteer'}>

@@ -14,7 +14,6 @@ export const NavBar = styled.div`
     position: -webkit-sticky;
     position: sticky;
     top: 0px;
-    margin-top: -1px;
     will-change: transform;
     z-index: 200;
 `;
@@ -26,27 +25,24 @@ export const LogoNavLink = styled(NavLink)`
     font-weight: 900;
     font-style: normal;
     font-size: 28px;
-    margin-top: 7px;
+    margin-top: 2px;
 `;
 
 export const Navigation = styled.nav`
-    max-width: 1336px;
-    width: 100vw;
+    width: 100%;
+    height: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
 `;
 
 export const NavList = styled.div`
-    max-width: 1336px;
-    width: 100vw;
-    height: 50px;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    padding: 0px 50px 0px 50px;
+    padding: 0px 25px 0px 25px;
+    gap: 10px;
 `;
 
 export const Searchbar = styled.form`
@@ -97,8 +93,8 @@ export const ResetSearchBox = styled.div`
 `;
 
 export const LogoBox = styled.div`
-    width: ${props => props.width ? props.width : '165px'};
-    height: 60px;
+    width: ${props => props.width ? props.width : '150px'};
+    height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -132,8 +128,8 @@ export const ProfileName = styled(Bold)`
 `;
 
 export const NavIconContainer = styled.div`
-    width: ${props => props.manager === 'true' ? '385px' : '325px'};
-    height: 60px;
+    width: 275px;
+    height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

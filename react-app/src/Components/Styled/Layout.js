@@ -54,8 +54,8 @@ export const AppContentContainer = styled.div`
 `;
 
 export const PageBackGround = styled.div`
-    max-width: 1286px;
-    width: 100vw;
+    max-width: 1284px;
+    width: calc(100vw - 50px);
     min-height: calc(100vh - 50px);
     background: ${props => props.background};
     display: flex;
@@ -63,8 +63,7 @@ export const PageBackGround = styled.div`
     justify-content: ${props => props.position ? props.position : 'space-around'};
     align-items: top;
     filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.35));
-    padding-left: 50px;
-    padding-top: 20px;
+    padding: 20px 25px 50px 25px;
     gap: 75px;
     border: 1px solid;
     border-color: ${props => props.bordercolor};

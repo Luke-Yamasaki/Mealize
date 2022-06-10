@@ -110,7 +110,6 @@ export const LoginForm = () => {
                 setEmailError(emailErrArr);
                 setPasswordError(passwordErrArr);
                 dispatch(hideModal());
-                localStorage.setItem('visited', 'true');
                 return <Redirect to='/' />
             }
         }
@@ -145,7 +144,6 @@ export const LoginForm = () => {
             setEmailError(emailErrArr);
             setPasswordError(passwordErrArr)
         }
-        localStorage.setItem('visited', 'true');
         dispatch(hideModal())
     };
 

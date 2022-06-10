@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const NotificationSection = styled.section`
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: 40px;
     display: flex;
     flex-direction: row;

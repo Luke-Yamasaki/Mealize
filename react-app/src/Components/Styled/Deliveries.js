@@ -6,7 +6,8 @@ export const DeliveryPageWrapper = styled.main`
     flex-direction: row;
     justify-content: flex-start;
     align-items: top;
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: 900px;
 `;
 

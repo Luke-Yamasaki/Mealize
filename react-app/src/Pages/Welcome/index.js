@@ -59,14 +59,12 @@ export const Welcome = () => {
 
     return (
         <>
-            {localStorage.getItem('visited') === 'false' &&
-                <WelcomeAnimation>
-                    <LogoVectorBox>
-                        <XLLogo theme={theme} />
-                    </LogoVectorBox>
-                    <LogoType theme={theme}>Mealize</LogoType>
-                </WelcomeAnimation>
-            }
+            <WelcomeAnimation>
+                <LogoVectorBox>
+                    <XLLogo theme={theme} />
+                </LogoVectorBox>
+                <LogoType theme={theme}>Mealize</LogoType>
+            </WelcomeAnimation>
             <WelcomeContent theme={theme} >
                 <Group>
                     <GreetingText theme={theme} animation={localStorage.getItem('visited') ? false : true}>Welcome to Mealize!</GreetingText>

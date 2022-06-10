@@ -6,13 +6,14 @@ export const MessagePageWrapper = styled.main`
     flex-direction: row;
     justify-content: flex-start;
     align-items: top;
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     min-height: 900px;
     height: auto;
 `;
 
 export const MessageSideMenu = styled.section`
-    width: 400px;
+    width: 30%;
     min-height: 900px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -164,7 +165,8 @@ export const MessageTime = styled(PreviewMessageTime)`
 `;
 
 export const MessageThreadField = styled.section`
-    width: 1200px;
+    max-width: 936px;
+    width: 70%;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -175,7 +177,7 @@ export const MessageThreadField = styled.section`
 `;
 
 export const MessageFeed = styled.div`
-    width: 1200px;
+    width: 100%;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -185,7 +187,7 @@ export const MessageFeed = styled.div`
 `;
 
 export const MessengerBanner = styled.header`
-    width: 1162.5px;
+    width: calc(100% - 37.5px);
     padding-left: 37.5px;
     display: flex;
     flex-direction: row;
@@ -203,7 +205,7 @@ export const MessageWithImages = styled.div`
     justify-content: flex-start;
     align-items: left;
     gap: 10px;
-    width: 1200px;
+    width: 100%;
     height: auto;
 `;
 
@@ -213,7 +215,7 @@ export const SingleMessage = styled.div`
     align-items: flex-end;
     justify-content: flex-end;
     height: auto;
-    width: 1200px;
+    width: 100%;
     background-color: ${props => props.theme === 'light' ? 'rgba(255, 255, 255, 0.75)' : 'none'};
     padding: 15px 0px 15px 0px;
     border-bottom: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.25)' : '1px solid rgba(255, 255, 255, 0.1)'};
@@ -224,7 +226,7 @@ export const MessageContainer = styled.div`
     flex-direction: row;
     flex-direction: ${props => props.direction};
     align-items: top;
-    width: 1120px;
+    width: 100%;
     gap: 10px;
     padding: ${props => props.direction === 'row' ? '0px 40px 0px 40px' : '0px 45px 0px 35px'};
     min-height: 50px;
@@ -236,7 +238,7 @@ export const MessageBox = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 1200px;
+    width: 100%;
     min-height: 50px;
     height: auto;
 `;
@@ -246,7 +248,7 @@ export const PostContainer = styled.div`
     flex-direction: ${props => props.direction};
     justify-content: flex-start;
     align-items: center;
-    width: ${props => props.direction === 'row' ? '1100px' : '1095px'};
+    width: ${props => props.direction === 'row' ? 'calc(100% - 100px)' : 'calc(100% - 105px)'};
     padding: ${props => props.direction === 'row' ? '10px 0px 0px 100px' : '10px 105px 0px 0px'};
     max-height: 400px;
     min-height: 150px;
@@ -268,7 +270,7 @@ export const PostBox = styled.div`
 `;
 
 export const MessagesSpacer = styled.div`
-    width: 1200px;
+    width: 100%;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
 `;
 
@@ -292,7 +294,7 @@ export const MessageContent = styled.div`
 
 
 export const SelectMessageBox = styled.div`
-    width: 1200px;
+    width: 100%;
     height: 900px;
     display: flex;
     justify-content: center;
@@ -310,7 +312,7 @@ export const SelectMessageText = styled(ExtraBold)`
 `;
 
 export const MessageInputForm = styled.form`
-    width: 1200px;
+    width: 100%;
     height: ${props => props.height ? props.height : '150px'};
     padding-top: 25px;
     background-color: ${props => props.small === 'true' ? 'none' : props.theme === 'light' ? 'white' : '#191919'};
@@ -321,8 +323,8 @@ export const MessageInputForm = styled.form`
 `;
 
 export const MessageInputBox = styled.div`
-    width: ${props => props.edit === 'true' ? '610px' : '1000px'};
-    margin-left: ${props => props.edit === 'true' ? '450px' : '0px'};
+    width: ${props => props.edit === 'true' ? '70%' : '90%'};
+    margin-left: ${props => props.edit === 'true' ? '265px' : '0px'};
     height: 35px;
     display: flex;
     justify-content: center;
@@ -333,7 +335,7 @@ export const MessageInputBox = styled.div`
 `;
 
 export const MessageInput = styled.input`
-    width: ${props => props.edit === 'true' ? '575px' : '975px'};
+    width: 97%;
     height: 25px;
     outline: none;
     border: none;
@@ -350,7 +352,7 @@ export const MessageInput = styled.input`
 
 
 export const MessageFileAndButtons = styled.div`
-    width: ${props => props.edit === 'true' ? '1100px' : '1000px'};
+    width: ${props => props.edit === 'true' ? '100%' : '90%'};
     height: 30px;
     display: flex;
     flex-direction: row;
@@ -373,7 +375,7 @@ export const MessageFileLabel = styled.label`
 `;
 
 export const MessageErrorBox = styled.div`
-    width: 1000px;
+    width: 90%;
     height: 55px;
     margin-top: -20px;
     gap: 5px;
@@ -384,7 +386,7 @@ export const MessageErrorBox = styled.div`
 `;
 
 export const EditErrorBox = styled(MessageErrorBox)`
-    width: 1200px;
+    width: 90%;
 `;
 
 export const ImageMessage = styled.img`
@@ -402,7 +404,7 @@ export const MessageEditDelete = styled.div`
     flex-direction: row;
     justify-content: flex-end;
     align-items: right;
-    width: 1100px;
+    width: calc(100% - 100px);
     height: 35px;
     gap: 10px;
     padding-right: 100px;

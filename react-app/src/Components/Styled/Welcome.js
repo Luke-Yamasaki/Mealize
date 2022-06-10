@@ -1,5 +1,5 @@
 import styled, {css, keyframes} from "styled-components";
-import { Black, Bold, ExtraBold, Medium } from "./Fonts";
+import { Black, ExtraBold, Medium } from "./Fonts";
 
 const lockin = keyframes`
     0% {
@@ -19,18 +19,18 @@ const lockin = keyframes`
         height: 100vh;
     }
     70% {
-        width: 1125px;
+        width: 1336px;
         height: 50px;
         opacity: 100%;
     }
     85%{
-        width: 1125px;
+        width: 1336px;
         height: 50px;
         opacity: 0%;
     }
     100% {
         opacity: 0%;
-        width: 1125px;
+        width: 1336px;
         height: 0px;
     }
 `;
@@ -59,14 +59,14 @@ const shrink = keyframes`
         width: 45px;
         height: 45px;
         display: none;
-        margin-left: -980px;
+        margin-left: -1190px;
         opacity: 100%;
     }
     85%{
         width: 45px;
         height: 45px;
         display: none;
-        margin-left: -980px;
+        margin-left: -1190px;
         opacity: 0%;
     }
     100% {
@@ -74,7 +74,7 @@ const shrink = keyframes`
         width: 0px;
         height: 0px;
         display: none;
-        margin: 0px 0px 0px -980px;
+        margin: 0px 0px 0px -1190px;
     }
 `;
 
@@ -113,14 +113,14 @@ const shrinkTitle = keyframes`
         width: 100px;
         height: 30px;
         font-size: 28px;
-        margin: 10px 0px 0px -803px;
+        margin: 10px 0px 0px -1013px;
         opacity: 100%;
     }
     85%{
         width: 100px;
         height: 30px;
         font-size: 28px;
-        margin: 10px 0px 0px -803px;
+        margin: 10px 0px 0px -1013px;
         opacity: 0%;
     }
     100% {
@@ -128,7 +128,7 @@ const shrinkTitle = keyframes`
         width: 0px;
         height: 0px;
         font-size: 0px;
-        margin: 10px 0px 0px -803px;
+        margin: 10px 0px 0px -1013px;
     }
 `;
 
@@ -161,7 +161,7 @@ export const LogoType = styled(Black)`
 `;
 
 export const WelcomeContent = styled.div`
-    max-width: 1125px;
+    max-width: 1336px;
     width: 100vw;
     min-height: calc(100vh - 60px);
     display: flex;
@@ -189,13 +189,13 @@ export const HandVectorBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: ${props => props.animation ? reveal : ''};
-    animation-delay: ${props => props.animation ? '3.5s' : '0s'};
+    animation: ${reveal};
+    animation-delay: 3.5s;
     max-width: 550px;
     width: 90vw;
     max-height: 550px;
     height: 90vw;
-    opacity: ${props => props.animation ? '0%' : '100%'};
+    opacity: 0%;
 `;
 
 export const GreetingText = styled(Black)`
@@ -207,9 +207,9 @@ export const GreetingText = styled(Black)`
     align-items: center;
     justify-content: center;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
-    animation: ${props => props.animation ? reveal : ''};
-    animation-delay: ${props => props.animation ? '3.5s' : '0s'};
-    opacity: ${props => props.animation ? '0%' : '100%'};
+    animation: ${reveal};
+    animation-delay: 3.5s;
+    opacity: 0%;
     @media only screen and (max-width: 841px) {
         font-size: 60px;
     }
@@ -307,7 +307,7 @@ export const ArrowBox = styled.div`
     justify-content: center;
     align-items: center;
     animation: ${scroll};
-    animation-delay: ${props => props.delay ? '3.5s' : 'none'};
+    animation-delay: 3.5s;
     width: 200px;
     height: 200px;
     position: absolute;

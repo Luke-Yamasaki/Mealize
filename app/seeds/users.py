@@ -19,17 +19,17 @@ def seed_users():
         wheelchair=False,
         learningDisabled=False,
         lgbtq=False,
-        profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+        profileImageUrl="https://mealizeaa.s3.amazonaws.com/nonprofit-manager.jpg",
         hashedPassword=generate_password_hash('062651d0-01fe-49c5-aaa1-0829ba3f4ff3')
     )
     db.session.add(nonprofit_demo)
 
-    for i in range(2, 26):
-        nonprofit_managers = User(
+    for i in range(2, 7):
+        nonprofit_male_managers = User(
             organizationId=i,
             isNonprofit=True,
             isManager=True,
-            firstName=fake.first_name(),
+            firstName=fake.first_name_male(),
             lastName=fake.last_name(),
             email=fake.unique.email(),
             phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
@@ -38,13 +38,32 @@ def seed_users():
             wheelchair=random() > 0.9,
             learningDisabled=random() > 0.9,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+            profileImageUrl="https://mealizeaa.s3.amazonaws.com/managers-m-" + str(i) + ".jpg",
             hashedPassword=generate_password_hash(fake.password())
         )
-        db.session.add(nonprofit_managers)
+        db.session.add(nonprofit_male_managers)
+
+    for j in range(7, 12):
+        nonprofit_female_managers = User(
+            organizationId=j,
+            isNonprofit=True,
+            isManager=True,
+            firstName=fake.first_name_female(),
+            lastName=fake.last_name(),
+            email=fake.unique.email(),
+            phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
+            dob=fake.date_of_birth(minimum_age=18, maximum_age=90),
+            deaf=random() > 0.9,
+            wheelchair=random() > 0.9,
+            learningDisabled=random() > 0.9,
+            lgbtq=random() > 0.5,
+            profileImageUrl="https://mealizeaa.s3.amazonaws.com/managers-f-" + str(j-6) + ".jpg",
+            hashedPassword=generate_password_hash(fake.password())
+        )
+        db.session.add(nonprofit_female_managers)
 
     business_demo = User(
-        organizationId=26,
+        organizationId=12,
         isNonprofit=False,
         isManager=True,
         firstName='Business',
@@ -56,17 +75,17 @@ def seed_users():
         wheelchair=False,
         learningDisabled=False,
         lgbtq=False,
-        profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+        profileImageUrl="https://mealizeaa.s3.amazonaws.com/business-manager.jpg",
         hashedPassword=generate_password_hash('8f08d594-2275-4c8f-93f3-4cb6dbed4b70')
     )
     db.session.add(business_demo)
 
-    for j in range(27, 51):
-        business_managers = User(
-            organizationId=j,
+    for k in range(13, 22):
+        business_male_managers = User(
+            organizationId=k,
             isNonprofit=False,
             isManager=True,
-            firstName=fake.first_name(),
+            firstName=fake.first_name_male(),
             lastName=fake.last_name(),
             email=fake.unique.email(),
             phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
@@ -75,10 +94,29 @@ def seed_users():
             wheelchair=random() > 0.9,
             learningDisabled=random() > 0.9,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+            profileImageUrl="https://mealizeaa.s3.amazonaws.com/managers-m-" + str(k-6) + ".jpg",
             hashedPassword=generate_password_hash(fake.password())
         )
-        db.session.add(business_managers)
+        db.session.add(business_male_managers)
+
+    for l in range(22, 31):
+        business_female_managers = User(
+            organizationId=l,
+            isNonprofit=False,
+            isManager=True,
+            firstName=fake.first_name_female(),
+            lastName=fake.last_name(),
+            email=fake.unique.email(),
+            phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
+            dob=fake.date_of_birth(minimum_age=18, maximum_age=90),
+            deaf=random() > 0.9,
+            wheelchair=random() > 0.9,
+            learningDisabled=random() > 0.9,
+            lgbtq=random() > 0.5,
+            profileImageUrl="https://mealizeaa.s3.amazonaws.com/managers-f-" + str(l-16) + ".jpg",
+            hashedPassword=generate_password_hash(fake.password())
+        )
+        db.session.add(business_female_managers)
 
     volunteer_demo = User(
         organizationId=1,
@@ -93,17 +131,17 @@ def seed_users():
         wheelchair=False,
         learningDisabled=False,
         lgbtq=False,
-        profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+        profileImageUrl="https://mealizeaa.s3.amazonaws.com/nonprofit-volunteer.jpg",
         hashedPassword=generate_password_hash('064324651d0-72fe-49c5-aa1-0ba223f4fcmv3')
     )
     db.session.add(volunteer_demo)
 
-    for k in range(52, 76):
-        volunteers = User(
-            organizationId=k-51,
+    for m in range(45, 75):
+        volunteers_male = User(
+            organizationId=randint(2, 25),
             isNonprofit=True,
             isManager=False,
-            firstName=fake.first_name(),
+            firstName=fake.first_name_male(),
             lastName=fake.last_name(),
             email=fake.unique.email(),
             phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
@@ -112,10 +150,29 @@ def seed_users():
             wheelchair=random() > 0.5,
             learningDisabled=random() > 0.5,
             lgbtq=random() > 0.5,
-            profileImageUrl="https://mealize.s3.amazonaws.com/user-" + str(randint(1, 29)) + '.png',
+            profileImageUrl="https://mealizeaa.s3.amazonaws.com/volunteers-m-" + str(m-44) + ".jpg",
             hashedPassword=generate_password_hash(fake.password())
         )
-        db.session.add(volunteers)
+        db.session.add(volunteers_male)
+
+    for n in range(75, 106):
+        volunteers_female = User(
+            organizationId=randint(2, 25),
+            isNonprofit=True,
+            isManager=False,
+            firstName=fake.first_name_female(),
+            lastName=fake.last_name(),
+            email=fake.unique.email(),
+            phone=phonenumbers.parse(fake.unique.phone_number(), 'US').national_number,
+            dob=fake.date_of_birth(minimum_age=18, maximum_age=90),
+            deaf=random() > 0.5,
+            wheelchair=random() > 0.5,
+            learningDisabled=random() > 0.5,
+            lgbtq=random() > 0.5,
+            profileImageUrl="https://mealizeaa.s3.amazonaws.com/volunteers-f-" + str(n-74) + ".jpg",
+            hashedPassword=generate_password_hash(fake.password())
+        )
+        db.session.add(volunteers_female)
 
     db.session.commit()
 

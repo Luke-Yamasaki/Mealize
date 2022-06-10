@@ -1,11 +1,5 @@
 from app.models import db, Organization
-from .zipcodes import zipcodes
-from werkzeug.security import generate_password_hash
-import phonenumbers
-from random import choice, randint
-from faker import Faker
-fake = Faker(locale='en-US')
-
+from random import choice
 
 def seed_organizations():
     mealize = Organization(
@@ -30,8 +24,8 @@ def seed_organizations():
     food_bank_of_the_rockies = Organization(
         federalId='84-0772672',
         isNonprofit=True,
-        logoUrl='https://mealizeaa.s3.amazonaws.com/rockies-l.png',
-        imageUrl='https://mealizeaa.s3.amazonaws.com/rockies-b.jpg',
+        logoUrl='https://mealizeaa.s3.amazonaws.com/food-bank-of-the-rockies-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/food-bank-of-the-rockies-b.png',
         open='8:00',
         close='16:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
@@ -47,10 +41,10 @@ def seed_organizations():
     db.session.add(food_bank_of_the_rockies)
 
     bienvenidos_food_bank = Organization(
-        federalId='84-0772672',
+        federalId='74-2543251',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/bienvenidos-l.png',
-        imageUrl='https://mealizeaa.s3.amazonaws.com/bienvenidos-b.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/bienvenidos-b.png',
         open='11:00',
         close='17:30',
         timeslot=choice(('Noon', 'Early afternoon', 'Late afternoon')),
@@ -69,7 +63,7 @@ def seed_organizations():
         federalId='84-0525768',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/inner-city-parish-l.png',
-        imageUrl='https://mealizeaa.s3.amazonaws.com/inner-city-parish-b.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/inner-city-parish-b.png',
         open='9:00',
         close='13:00',
         timeslot=choice(('Morning', 'Noon')),
@@ -85,10 +79,10 @@ def seed_organizations():
     db.session.add(denver_inner_city_parish)
 
     north_denver_cares = Organization(
-        federalId='84-0123143',
+        federalId='27-2622785',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/north-denver-cares-l.png',
-        imageUrl='https://mealizeaa.s3.amazonaws.com/north-denver-cares-b.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/north-denver-cares-b.png',
         open='10:00',
         close='16:00',
         timeslot=choice(('Noon', 'Early afternoon')),
@@ -104,10 +98,10 @@ def seed_organizations():
     db.session.add(north_denver_cares)
 
     cu_denver_food_pantry = Organization(
-        federalId='84-0224164',
+        federalId='84-6000555',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/cu-denver-l.png',
-        imageUrl='https://mealizeaa.s3.amazonaws.com/cu-denver-b.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/cu-denver-b.png',
         open='8:00',
         close='17:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
@@ -123,10 +117,10 @@ def seed_organizations():
     db.session.add(cu_denver_food_pantry)
 
     road_runner_food_pantry = Organization(
-        federalId='84-1329264',
+        federalId='23-7296162',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/msu-denver-l.png',
-        imageUrl='https://mealizeaa.s3.amazonaws.com/msu-denver-b.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/msu-denver-b.png',
         open='8:00',
         close='17:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
@@ -142,10 +136,10 @@ def seed_organizations():
     db.session.add(road_runner_food_pantry)
 
     benefits_in_action = Organization(
-        federalId='84-3322779',
+        federalId='87-3774775 ',
         isNonprofit=True,
-        logoUrl='https://mealizeaa.s3.amazonaws.com/benefits-l.png',
-        imageUrl='https://mealizeaa.s3.amazonaws.com/benefits-b.jpg',
+        logoUrl='https://mealizeaa.s3.amazonaws.com/benefits-in-action-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/benefits-in-action-b.png',
         open='10:00',
         close='17:00',
         timeslot=choice(('Noon', 'Early afternoon', 'Late afternoon')),
@@ -161,10 +155,10 @@ def seed_organizations():
     db.session.add(benefits_in_action)
 
     denver_dream_center = Organization(
-        federalId='84-3942629',
+        federalId='46-5337404',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/dream-center-l.png',
-        imageUrl='https://mealizeaa.s3.amazonaws.com/dream-center-b.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/dream-center-b.png',
         open='10:00',
         close='17:00',
         timeslot=choice(('Noon', 'Early afternoon', 'Late afternoon')),
@@ -180,10 +174,10 @@ def seed_organizations():
     db.session.add(denver_dream_center)
 
     we_dont_waste = Organization(
-        federalId='84-3071629',
+        federalId='27-0585966',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/we-dont-waste-l.png',
-        imageUrl='https://mealizeaa.s3.amazonaws.com/we-dont-waste-b.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/we-dont-waste-b.png',
         open='10:00',
         close='17:00',
         timeslot=choice(('Noon', 'Early afternoon', 'Late afternoon')),
@@ -199,10 +193,10 @@ def seed_organizations():
     db.session.add(we_dont_waste)
 
     re_vision = Organization(
-        federalId='84-3071629',
+        federalId='26-1204343',
         isNonprofit=True,
         logoUrl='https://mealizeaa.s3.amazonaws.com/revision-l.png',
-        imageUrl='https://mealizeaa.s3.amazonaws.com/revision-b.jpg',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/revision-b.png',
         open='9:00',
         close='16:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon')),
@@ -216,27 +210,9 @@ def seed_organizations():
         email='hello@revision.coop'
     )
     db.session.add(re_vision)
+    #11 businesses
 
-    for i in range(12, 26):
-        nonprofits = Organization(
-            federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
-            isNonprofit=True,
-            logoUrl='https://mealizeaa.s3.amazonaws.com/mealize-l.png',
-            imageUrl='https://mealizeaa.s3.amazonaws.com/mealize-b.png',
-            open='10:00',
-            close='22:00',
-            timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
-            name=fake.company(),
-            description='Hello! Our food bank is located in Denver, CO. We provide short-term support for hungry and needy individuals and families in Denver. We hope to enrich our community through compassion.',
-            street=fake.street_address(),
-            zip=choice(zipcodes),
-            city='Denver',
-            state='Colorado',
-            phone=choice(('303', '720','719', '970', '983'))+str(randint(100, 999))+str(randint(1000, 9999)),
-            email=fake.unique.email()
-        )
-        db.session.add(nonprofits)
-
+    #12
     mealize_market = Organization(
         federalId='88-8888888',
         isNonprofit=False,
@@ -259,8 +235,8 @@ def seed_organizations():
     walmart = Organization(
         federalId='71-0415188',
         isNonprofit=False,
-        logoUrl='https://latn.com/wp-content/uploads/2014/12/walmart-logo-vector.png',
-        imageUrl='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Walmart_Home_Office_sign.jpg/1024px-Walmart_Home_Office_sign.jpg',
+        logoUrl='https://mealizeaa.s3.amazonaws.com/walmart-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/walmart-b.png',
         open='5:00',
         close='22:30',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
@@ -276,10 +252,10 @@ def seed_organizations():
     db.session.add(walmart)
 
     target = Organization(
-        federalId='	41-0215170',
+        federalId='41-0215170',
         isNonprofit=False,
-        logoUrl='https://corporate.target.com/_media/TargetCorp/Press/B-roll%20and%20Press%20Materials/Logos/Target_Bullseye-Logo_Red.jpg',
-        imageUrl='https://corporate.target.com/_media/TargetCorp/news/2020/08/reach/ABV_REACH_Header.jpg',
+        logoUrl='https://mealizeaa.s3.amazonaws.com/target-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/target-b.png',
         open='8:00',
         close='22:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
@@ -294,44 +270,311 @@ def seed_organizations():
     )
     db.session.add(target)
 
-    amazon = Organization(
+    amazon_fresh = Organization(
         federalId='71-0415188',
         isNonprofit=False,
-        logoUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon-logo.jpg',
-        imageUrl='https://press.aboutamazon.com/system/files-encrypted/nasdaq_kms/inline-images/Amazon%20Fresh%20Produce%20_0.jpg',
+        logoUrl='https://mealizeaa.s3.amazonaws.com/amazon-fresh-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/amazon-fresh-b.png',
         open='24:00',
         close='24:00',
         timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
         name='Amazon Fresh',
-        description="Amazon is guided by four principles: customer obsession rather than competitor focus, passion for invention, commitment to operational excellence, and long-term thinking. Amazon strives to be Earth's most customer-centric company, Earth's best employer, and Earth's safest place to work. Customer reviews, 1-Click shopping, personalized recommendations, Prime, Fulfillment by Amazon, AWS, Kindle Direct Publishing, Kindle, Career Choice, Fire tablets, Fire TV, Amazon Echo, Alexa, Just Walk Out technology, Amazon Studios, and The Climate Pledge are some of the things pioneered by Amazon",
-        street='480 E 55th Ave STE 100,',
+        description="Amazon is guided by four principles: customer obsession rather than competitor focus, passion for invention, commitment to operational excellence, and long-term thinking. Amazon strives to be Earth's most customer-centric company, Earth's best employer, and Earth's safest place to work. Customer reviews, 1-Click shopping, personalized recommendations, Prime, Fulfillment by Amazon, AWS, Kindle Direct Publishing, Kindle, Career Choice, Fire tablets, Fire TV, Amazon Echo, Alexa, Just Walk Out technology, Amazon Studios, and The Climate Pledge are some of the things pioneered by Amazon.",
+        street='480 E 55th Ave STE 100',
         zip='80216',
         city='Denver',
         state='Colorado',
         phone='2062661000',
         email='jeff@amazon.com'
     )
-    db.session.add(amazon)
+    db.session.add(amazon_fresh)
 
-    for i in range(30, 51):
-        businesses = Organization(
-            federalId=str(randint(10,99))+'-'+str(randint(1000000, 9999999)),
-            isNonprofit=False,
-            logoUrl='https://static.wixstatic.com/media/0198fd_29758a36fd2a4afda85e6abfb73e7a56~mv2.png/v1/fill/w_159,h_145,al_c,usm_0.66_1.00_0.01,enc_auto/DICP_logo_White%20Bird_White%20Logo_edited_p.png',
-            imageUrl='https://static.wixstatic.com/media/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg/v1/fill/w_2543,h_787,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/0198fd_3303f729b95c46bd80066fac7d0e3940~mv2.jpg',
-            open='10:00',
-            close='22:00',
-            timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
-            name=fake.company(),
-            description=fake.catch_phrase(),
-            street=fake.street_address(),
-            zip=choice(zipcodes),
-            city='Denver',
-            state='Colorado',
-            phone=choice(('303', '720','719', '970', '983'))+str(randint(100, 999))+str(randint(1000, 9999)),
-            email=fake.unique.email()
-        )
-        db.session.add(businesses)
+    safeway = Organization(
+        federalId='36-7394926',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/safeway-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/safeway-b.png',
+        open='08:00',
+        close='21:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Safeway',
+        description="Today, Safeway operates as a banner of Albertsons Companies, one of the largest food and drug retailers in the United States. With both a strong local presence and national scale, the company operates stores across 35 states and the District of Columbia under 20 well-known banners.",
+        street='1653 S Colorado Blvd',
+        zip='80222',
+        city='Denver',
+        state='Colorado',
+        phone='8775054040',
+        email='AlbertsonsCustomerInquiries@albertsons.com'
+    )
+    db.session.add(safeway)
+
+    king_soopers = Organization(
+        federalId='31-0345740',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/king-soopers-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/king-soopers-b.png',
+        open='06:00',
+        close='23:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='King Soopers',
+        description="King Soopers is a supermarket brand of Kroger located in the Rocky Mountains of the United States. It started as its own brand and, today, is headquartered in Denver, Colorado.",
+        street='1155 E 9th Ave',
+        zip='80218',
+        city='Denver',
+        state='Colorado',
+        phone='3038325262',
+        email='corpvps@kroger.com'
+    )
+    db.session.add(king_soopers)
+
+    sprouts = Organization(
+        federalId='32-0331600',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/sprouts-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/sprouts-b.png',
+        open='07:00',
+        close='22:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Sprouts Farmers Market',
+        description="Each Sprouts store participates in our Food Rescue program that provides food to those in need, feed for animals and nutrients for agricultural soil.",
+        street='197 E Mississippi Ave',
+        zip='80209',
+        city='Denver',
+        state='Colorado',
+        phone='4808148016',
+        email='customerrelations@sprouts.com'
+    )
+    db.session.add(sprouts)
+
+    natural_grocers = Organization(
+        federalId='84-1444517',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/natural-grocers-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/natural-grocers-b.png',
+        open='08:30',
+        close='20:30',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Natural Grocers',
+        description="From the smallest detail to the largest, whether it's refrigerating our nuts and seeds for freshness or only selling 100% organic and GMO-free produce, pasture-based dairy, and antibiotic and hormone-free meats… we are, and have always been, your original good4uSM Grocers.",
+        street='368 S Broadway',
+        zip='80209',
+        city='Denver',
+        state='Colorado',
+        phone='3039864600',
+        email='media@naturalgrocers.com'
+    )
+    db.session.add(natural_grocers)
+#20
+    costco = Organization(
+        federalId='91-1223280',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/costco-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/costco-b.png',
+        open='10:00',
+        close='20:30',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Costco',
+        description="Costco Wholesale is a multi-billion dollar global retailer with warehouse club operations in eight countries. We are the recognized leader in our field, dedicated to quality in every area of our business and respected for our outstanding business ethics. Despite our large size and explosive international expansion, we continue to provide a family atmosphere in which our employees thrive and succeed.",
+        street='1471 S Havana St',
+        zip='80012',
+        city='Denver',
+        state='Colorado',
+        phone='18007742678',
+        email='customerservice@costco.com'
+    )
+    db.session.add(costco)
+
+    trader_joes = Organization(
+        federalId='95-1987958',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/trader-joes-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/trader-joes-b.png',
+        open='09:00',
+        close='21:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name="Trader Joe's Company",
+        description="Trader Joe's is a national chain of neighborhood grocery stores. We are committed to providing our customers outstanding value in the form of the best quality products at the best everyday prices. Through our rewarding products and knowledgeable, friendly Crew Members, we have been transforming grocery shopping into a welcoming journey full of discovery and fun since 1967.",
+        street='750 N Colorado Blvd',
+        zip='80206',
+        city='Denver',
+        state='Colorado',
+        phone='3033211003',
+        email='nhigh@traderjoes.com'
+    )
+    db.session.add(trader_joes)
+
+    whole_foods = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/whole-foods-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/whole-foods-b.png',
+        open='07:00',
+        close='22:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Whole Foods Market',
+        description="Who are we? Well, we seek out the finest natural and organic foods available, maintain the strictest quality standards in the industry, and have an unshakeable commitment to sustainable agriculture. Add to that the excitement and fun we bring to shopping for groceries, and you start to get a sense of what we're all about.",
+        street='2375 E 1st Ave',
+        zip='80206',
+        city='Denver',
+        state='Colorado',
+        phone='15124774455',
+        email='customer.questions@wholefoods.com'
+    )
+    db.session.add(whole_foods)
+
+    #catering
+    catering_by_design = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/catering-by-design-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/catering-by-design-b.png',
+        open='09:00',
+        close='17:00',
+        timeslot=choice(('Morning', 'Noon')),
+        name='Catering By Design',
+        description="We have put our stake in the ground that we are passionate about creativity. Every menu and look is carefully curated to ensure our events are unique to our clients. Our hallmark: we are constantly creative, and experiences are always reimagined. You won't find another company that can create such customized experiences.",
+        street='11095 E 45th Ave',
+        zip='80239',
+        city='Denver',
+        state='Colorado',
+        phone='3037815335',
+        email='info@cateringbydesignco.com'
+    )
+    db.session.add(catering_by_design)
+
+    colorado_catering_co = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/colorado-catering-co-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/colorado-catering-co-b.png',
+        open='08:00',
+        close='17:00',
+        timeslot=choice(('Morning', 'Noon')),
+        name='Colorado Catering Co',
+        description="At Colorado Catering, we deliver superb food with a side of high quality customer service. We care about you and your event, and work with you to bring your vision to life. Colorado Catering serves all occasions, from corporate meetings to social events and weddings.",
+        street='10607 E Dartmouth Ave',
+        zip='80014',
+        city='Aurora',
+        state='Colorado',
+        phone='3037500707',
+        email='sales@coloradocatering.net'
+    )
+    db.session.add(colorado_catering_co)
+
+    relish_catering = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/relish-catering-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/relish-catering-b.png',
+        open='09:00',
+        close='17:00',
+        timeslot=choice(('Morning', 'Noon')),
+        name='Relish Catering & Events',
+        description="We've been providing catering services in the Denver area and all over Colorado for 20 years. In 2012, we launched our new brand Relish Catering and Events because we're all about creating a full experience for our guests.",
+        street='7860 West 16th Ave #100',
+        zip='80214',
+        city='Lakewood',
+        state='Colorado',
+        phone='3037279200',
+        email='info@relishcateringco.com'
+    )
+    db.session.add(relish_catering)
+
+    #restaurants
+    snarf_burger = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/snarfburger-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/snarfburger-b.png',
+        open='10:00',
+        close='22:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon', 'Late afternoon')),
+        name='Snarfburger',
+        description="Sink your teeth into a Snarfburger, and let the shack take you all the way back to its retro roots of the All-American classic hamburger joint. Each burger is made-to-order using the highest-quality beef and topped with premium ingredients including our fresh-sliced cheeses, crisp veggies, and signature blend giardiniera hot peppers.",
+        street='1001 E 11th Ave',
+        zip='80218',
+        city='Denver',
+        state='Colorado',
+        phone='7205739134',
+        email='info@relishcateringco.com'
+    )
+    db.session.add(snarf_burger)
+
+    sushi_katsu = Organization(
+        federalId='82-0051188',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/sushi-katsu-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/sushi-katsu-b.png',
+        open='11:00',
+        close='21:30',
+        timeslot=choice(('Early afternoon', 'Late afternoon')),
+        name='Sushi Katsu',
+        description="At Sushi Katsu, you can enjoy a variety of fish, quality sushi and Japanese dishes. Our customers say that we offer a sushi experience like no other.",
+        street='2222 S Havana St',
+        zip='80014',
+        city='Aurora',
+        state='Colorado',
+        phone='3033688778',
+        email='info@sushikatsudenver.com'
+    )
+    db.session.add(sushi_katsu)
+
+    edible_arrangements = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/edible-arrangements-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/edible-arrangements-b.png',
+        open='09:00',
+        close='17:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon')),
+        name='Edible Arrangements',
+        description="At Edible®, our passion, heritage, and future are rooted in helping people all over the world celebrate life's most special moments with a gift or treat that's carefully crafted to WOW. Whether it's a birthday, a work milestone, a get-together with friends and family, or even just because, our assortment of freshly made gifts is just what you need to create spontaneous moments of goodness filled with extra sweet memories and lots of smiles!",
+        street='5066 S Wadsworth Blvd Unit 104',
+        zip='80123',
+        city='Littleton',
+        state='Colorado',
+        phone='3039041353',
+        email='info@ediblearrangements.com'
+    )
+    db.session.add(edible_arrangements)
+
+    switch_gears_farm = Organization(
+        federalId='20-20808193',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/switch-gears-farm-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/switch-gears-farm-b.png',
+        open='08:00',
+        close='13:00',
+        timeslot='Noon',
+        name='Switch Gears Farm',
+        description="Switch Gears Farm is an ideology that we strive to achieve, both in our personal lives and as a business. This means to constantly be willing to learn about new and innovate ways to grow healthy food for the local community while also maintaining healthy soil on the land we farm.",
+        street='2551 E Colfax Ave',
+        zip='80206',
+        city='Denver',
+        state='Colorado',
+        phone='7203033333',
+        email='yourfarmer@switchgearsfarm.com'
+    )
+    db.session.add(switch_gears_farm)
+
+    detour_bakery = Organization(
+        federalId='71-0415188',
+        isNonprofit=False,
+        logoUrl='https://mealizeaa.s3.amazonaws.com/detour-bakery-l.png',
+        imageUrl='https://mealizeaa.s3.amazonaws.com/detour-bakery-b.png',
+        open='07:30',
+        close='16:00',
+        timeslot=choice(('Morning', 'Noon', 'Early afternoon')),
+        name='Detour Bakery',
+        description="Detour Bakery has a dedicated, hard-working staff that produce delicious breads and pastries while you sleep, so that our fresh-faced daytime staff can proudly serve you during the day.",
+        street='1479 S Holly St',
+        zip='80222',
+        city='Denver',
+        state='Colorado',
+        phone='3037562020',
+        email='info@detourbakery.com'
+    )
+    db.session.add(detour_bakery)
 
     db.session.commit()
 

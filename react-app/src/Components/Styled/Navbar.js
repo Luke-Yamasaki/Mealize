@@ -4,7 +4,7 @@ import { Black, Bold } from './Fonts';
 
 export const NavBar = styled.div`
     background: linear-gradient(#76D97E, #28A690);
-    max-width: 1125px;
+    max-width: 1336px;
     width: 100vw;
     height: 50px;
     display: flex;
@@ -30,7 +30,7 @@ export const LogoNavLink = styled(NavLink)`
 `;
 
 export const Navigation = styled.nav`
-    max-width: 1125px;
+    max-width: 1336px;
     width: 100vw;
     display: flex;
     flex-direction: row;
@@ -39,7 +39,7 @@ export const Navigation = styled.nav`
 `;
 
 export const NavList = styled.div`
-    max-width: 1125px;
+    max-width: 1336px;
     width: 100vw;
     height: 50px;
     display: flex;

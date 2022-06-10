@@ -33,7 +33,6 @@ export const SessionNavbar = ({sessionUser}) => {
     const logOut = () => {
         setFilter('available')
         dispatch(logout())
-        localStorage.setItem('visited', 'false');
         return <Redirect to='/' />
     };
 

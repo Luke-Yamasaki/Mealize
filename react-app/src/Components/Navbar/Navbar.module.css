@@ -1,5 +1,6 @@
 .navbar {
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: 60px;
     background: linear-gradient(#76D97E, #28A690);
     display:flex;

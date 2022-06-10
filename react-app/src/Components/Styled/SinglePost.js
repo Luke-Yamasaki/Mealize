@@ -3,7 +3,8 @@ import { Black, Medium } from './Fonts';
 
 //Background
 export const SinglePostWrapper = styled.main`
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -13,7 +14,8 @@ export const SinglePostWrapper = styled.main`
 
 //Banner
 export const SinglePostBannerBox = styled.div`
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: auto;
     max-height: 400px;
     display: flex;
@@ -24,14 +26,16 @@ export const SinglePostBannerBox = styled.div`
 `;
 
 export const SinglePostBannerImage = styled.img`
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: 250px;
     object-fit: cover;
     object-position: center;
 `;
 
 export const SinglePostBannerInfoBox = styled.div`
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: 100px;
     display: flex;
     flex-direction: row;
@@ -74,7 +78,8 @@ export const SinglePostPinBox = styled.div`
 
 //Main content
 export const SinglePostContentBox = styled.section`
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: 600px;
     display: flex;
     justify-content: center;

@@ -3,7 +3,8 @@ import { Black, Bold, ExtraBold, Medium } from './Fonts';
 
 //Background
 export const OrgWrapper = styled.main`
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -13,7 +14,8 @@ export const OrgWrapper = styled.main`
 
 //Banner
 export const OrgBannerBox = styled.div`
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: auto;
     max-height: 500px;
     display: flex;
@@ -24,14 +26,16 @@ export const OrgBannerBox = styled.div`
 `;
 
 export const OrgBannerImage = styled.img`
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: 250px;
     object-fit: cover;
     object-position: center;
 `;
 
 export const OrgBannerInfoBox = styled.div`
-    width: 1600px;
+    max-width: 1336px;
+    width: 100vw;
     height: 100px;
     display: flex;
     flex-direction: row;
@@ -74,9 +78,10 @@ export const OrgPinBox = styled.div`
 
 //Main content
 export const OrgContentBox = styled.section`
-    width: 1440px;
+    max-width: 1256px;
+    width: 100vw;
     height: auto;
-    padding: 80px;
+    padding: 40px;
     background-color: ${props => props.theme === 'light' ? '#F1F1F1' : '#191919'};
     display: flex;
     flex-direction: row;

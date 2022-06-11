@@ -83,21 +83,20 @@ export const SessionNavbar = ({sessionUser}) => {
                         <LogoNavLink theme={theme} to='/' exact={true}>Mealize</LogoNavLink>
                     </LogoBox>
                     <NavIconContainer>
-                        <NavIconBoxes onClick={handleHome} content='H'>
+                        <NavIconBoxes theme={theme} onClick={handleHome} content='H'>
                             <HomeIcon theme={theme} />
-                            {selected === 'home' && <div style={{marginTop:'85px', position:'absolute', background:'red', width:'65px', height:'20px',borderRadius:'30px'}}>Home</div>}
                         </NavIconBoxes>
-                        <NavIconBoxes onClick={handleDeliveries} content="D">
+                        <NavIconBoxes theme={theme} onClick={handleDeliveries} content="D">
                             <VolunteerIcon theme={theme}/>
                         </NavIconBoxes>
-                        <NavIconBoxes onClick={handleMessages} content="M">
+                        <NavIconBoxes theme={theme} onClick={handleMessages} content="M">
                             <InboxIcon theme={theme} />
                         </NavIconBoxes>
                     </NavIconContainer>
                     <SearchBar />
                     <SmallNavIconContainer>
                         <DropDownContainer>
-                            <NavIconBoxes onClick={handleUser} content="Y">
+                            <NavIconBoxes theme={theme} onClick={handleUser} content="Y">
                                 <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button'/>
                             </NavIconBoxes>
                             {selected === 'user' &&
@@ -115,7 +114,7 @@ export const SessionNavbar = ({sessionUser}) => {
                             }
                         </DropDownContainer>
                         <DropDownContainer>
-                            <NavIconBoxes onClick={handleSettings} content="C">
+                            <NavIconBoxes theme={theme} onClick={handleSettings} content="C">
                                 <Settings theme={theme}/>
                             </NavIconBoxes>
                             {selected === 'settings' &&

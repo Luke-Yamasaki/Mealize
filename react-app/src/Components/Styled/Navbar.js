@@ -165,6 +165,9 @@ export const NavIconBoxes = styled.div`
     align-items: center;
     background-color: ${props => props.isSelected ? 'rgba(0, 0, 0, 0.1)' : 'none'};
     cursor: pointer;
+    font-family: motiva-sans, sans-serif;
+    font-size: 14px;
+    color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     &:hover {
         background-color: rgba(0, 0, 0, 0.3);
     };
@@ -177,16 +180,16 @@ export const NavIconBoxes = styled.div`
         "'Messages'" :
         props.content === 'Y' ?
         "'Your info'" :
-        "'Customization'"
+        "'Settings'"
         };
         position: absolute;
-        margin-top: 90px;
+        margin-top: 80px;
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 65px;
+        width: ${props => props.content === 'H' ? '65px' : props.content === 'D' || props.content === 'M' ? '80px' : '75px'};
         height: 20px;
-        background-color: rgba(255, 0, 0, 0.3);
+        background-color: ${props => props.theme === 'light' ? '#191919' : 'white'};
         border-radius: 30px;
     };
 `;
@@ -198,8 +201,4 @@ export const DropDownContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: ${props => props.selected ? 'rgba(0, 0, 0, 0.3)' : 'none'};
-    &:hover {
-        background-color: rgba(0, 0, 0, 0.3);
-    }
 `;

@@ -10,7 +10,7 @@ import { logout } from '../../../store/session';
 import { setCurrentModal, showModal } from '../../../store/modal';
 
 // Styled-components
-import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, NavIconContainer, NavIconBoxes, DropDownContainer, SmallNavIconContainer } from '../../Styled/Navbar';
+import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, NavIconContainer, NavIconBoxes, DropDownContainer, SmallNavIconContainer, HomeIconBox } from '../../Styled/Navbar';
 import { VectorBox } from '../../Styled/Layout';
 import { ButtonText, ProfileButton, PostButton, LogoutButton } from '../../Styled/Buttons';
 
@@ -83,20 +83,21 @@ export const SessionNavbar = ({sessionUser}) => {
                         <LogoNavLink theme={theme} to='/' exact={true}>Mealize</LogoNavLink>
                     </LogoBox>
                     <NavIconContainer>
-                        <NavIconBoxes onClick={handleHome}>
+                        <NavIconBoxes onClick={handleHome} content='H'>
                             <HomeIcon theme={theme} />
+                            {selected === 'home' && <div style={{marginTop:'85px', position:'absolute', background:'red', width:'65px', height:'20px',borderRadius:'30px'}}>Home</div>}
                         </NavIconBoxes>
-                        <NavIconBoxes onClick={handleDeliveries}>
+                        <NavIconBoxes onClick={handleDeliveries} content="D">
                             <VolunteerIcon theme={theme}/>
                         </NavIconBoxes>
-                        <NavIconBoxes onClick={handleMessages}>
+                        <NavIconBoxes onClick={handleMessages} content="M">
                             <InboxIcon theme={theme} />
                         </NavIconBoxes>
                     </NavIconContainer>
                     <SearchBar />
                     <SmallNavIconContainer>
                         <DropDownContainer>
-                            <NavIconBoxes onClick={handleUser}>
+                            <NavIconBoxes onClick={handleUser} content="Y">
                                 <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button'/>
                             </NavIconBoxes>
                             {selected === 'user' &&
@@ -114,7 +115,7 @@ export const SessionNavbar = ({sessionUser}) => {
                             }
                         </DropDownContainer>
                         <DropDownContainer>
-                            <NavIconBoxes onClick={handleSettings}>
+                            <NavIconBoxes onClick={handleSettings} content="C">
                                 <Settings theme={theme}/>
                             </NavIconBoxes>
                             {selected === 'settings' &&
@@ -132,9 +133,13 @@ export const SessionNavbar = ({sessionUser}) => {
                             }
                         </DropDownContainer>
                     </SmallNavIconContainer>
-                    {sessionUser.isManager &&
+                    {sessionUser.isManager ?
                         <PostButton onClick={showPostForm}>
                             <ButtonText>{sessionUser.isNonprofit ? 'New post' : 'New post'}</ButtonText>
+                        </PostButton>
+                        :
+                        <PostButton onClick={logout}>
+                            <ButtonText>Log out</ButtonText>
                         </PostButton>
                     }
                 </NavList>

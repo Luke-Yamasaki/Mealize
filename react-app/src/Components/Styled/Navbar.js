@@ -167,7 +167,28 @@ export const NavIconBoxes = styled.div`
     cursor: pointer;
     &:hover {
         background-color: rgba(0, 0, 0, 0.3);
-    }
+    };
+    &:hover:after {
+        content: ${props => props.content === 'H' ?
+        "'Home'" :
+        props.content === 'D' ?
+        "'Deliveries'" :
+        props.content === 'M' ?
+        "'Messages'" :
+        props.content === 'Y' ?
+        "'Your info'" :
+        "'Customization'"
+        };
+        position: absolute;
+        margin-top: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 65px;
+        height: 20px;
+        background-color: rgba(255, 0, 0, 0.3);
+        border-radius: 30px;
+    };
 `;
 
 export const DropDownContainer = styled.div`

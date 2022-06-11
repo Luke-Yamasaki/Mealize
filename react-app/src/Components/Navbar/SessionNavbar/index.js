@@ -10,7 +10,7 @@ import { logout } from '../../../store/session';
 import { setCurrentModal, showModal } from '../../../store/modal';
 
 // Styled-components
-import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, NavIconContainer, NavIconBoxes, DropDownContainer, SmallNavIconContainer, HomeIconBox } from '../../Styled/Navbar';
+import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, NavIconContainer, NavIconBoxes, DropDownContainer, SmallNavIconContainer, DropDownMenu, DropDownItem } from '../../Styled/Navbar';
 import { VectorBox } from '../../Styled/Layout';
 import { ButtonText, ProfileButton, PostButton, LogoutButton } from '../../Styled/Buttons';
 
@@ -29,16 +29,24 @@ import { Settings } from '../../../Assets/Icons/Settings';
 export const SessionNavbar = ({sessionUser}) => {
     const dispatch = useDispatch();
     const [selected, setSelected] = useState('');
+    const [showUser, setShowUser] = useState(false);
+    const [showSettings, setShowSettings] = useState(false);
     const {theme} = useTheme();
     const {setFilter} = useFilter();
     const history = useHistory();
 
     const showPostForm = () => {
+        setShowSettings(false);
+        setShowUser(false);
+        setSelected('');
         dispatch(setCurrentModal(PostForm));
         dispatch(showModal());
     };
 
     const logOut = () => {
+        setShowSettings(false);
+        setShowUser(false);
+        setSelected('');
         setFilter('available')
         dispatch(logout())
         return <Redirect to='/' />
@@ -46,30 +54,38 @@ export const SessionNavbar = ({sessionUser}) => {
 
     const handleHome = (e) => {
         e.preventDefault();
+        setShowSettings(false);
+        setShowUser(false);
         selected !== 'home' ? setSelected('home') : setSelected('');
         history.push('/')
     };
 
     const handleDeliveries = (e) => {
         e.preventDefault();
+        setShowSettings(false);
+        setShowUser(false);
         selected !== 'deliveries' ? setSelected('deliveries') : setSelected('');
         history.push('/deliveries');
     };
 
     const handleMessages = (e) => {
         e.preventDefault();
+        setShowSettings(false);
+        setShowUser(false);
         selected !== 'messages' ? setSelected('messages') : setSelected('');
         history.push('/messages')
     };
 
     const handleUser = (e) => {
         e.preventDefault();
-        selected !== 'user' ? setSelected('user') : setSelected('');
+        setShowSettings(false);
+        setShowUser(!showUser);
     };
 
     const handleSettings = (e) => {
         e.preventDefault();
-        selected !== 'settings' ? setSelected('settings') : setSelected('');
+        setShowUser(false);
+        setShowSettings(!showSettings);
     };
 
     return (
@@ -98,31 +114,31 @@ export const SessionNavbar = ({sessionUser}) => {
                         <NavIconBoxes theme={theme} onClick={handleUser} content="Y">
                             <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button'/>
                         </NavIconBoxes>
-                        {selected === 'user' &&
-                            <DropDownContainer theme={theme}>
-                                <menu>
+                        {showUser &&
+                            <DropDownContainer theme={theme} type='user'>
+                                <DropDownMenu>
                                     <li>
                                         <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
                                     </li>
                                     <li>
                                         <div onClick={logOut}>Log out</div>
                                     </li>
-                                </menu>
+                                </DropDownMenu>
                             </DropDownContainer>
                         }
                         <NavIconBoxes theme={theme} onClick={handleSettings} content="C">
                             <Settings theme={theme}/>
                         </NavIconBoxes>
-                        {selected === 'settings' &&
-                            <DropDownContainer theme={theme}>
-                                <menu>
-                                    <li>
-                                        <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
-                                    </li>
-                                    <li>
-                                        <div onClick={logOut}>Log out</div>
-                                    </li>
-                                </menu>
+                        {showSettings &&
+                            <DropDownContainer theme={theme} type='settings'>
+                                <DropDownMenu>Customization
+                                    <DropDownItem theme={theme}>
+                                        {sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}
+                                    </DropDownItem>
+                                    <DropDownItem onClick={logOut}>
+                                        Log out
+                                    </DropDownItem>
+                                </DropDownMenu>
                             </DropDownContainer>
                         }
                     </SmallNavIconContainer>

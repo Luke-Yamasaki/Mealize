@@ -198,7 +198,7 @@ export const DropDownContainer = styled.div`
     width: 190px;
     height: 340px;
     position: absolute;
-    margin: 400px 0px 0px -75px;
+    margin: ${props => props.type === 'user' ? '400px 0px 0px -75px' : '400px 0px 0px -25.1px'};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -222,4 +222,25 @@ export const DropDownContainer = styled.div`
         top: -22px;
         z-index: 90;
         filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 0.1px #191919)' : 'drop-shadow(0px 0px 0.1px white)'};    }
+`;
+
+export const DropDownMenu = styled.menu`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+`;
+
+export const DropDownItem = styled.li`
+    list-style: none;
+    width: calc(100% - 10px);
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px 5px 0px 5px;
 `;

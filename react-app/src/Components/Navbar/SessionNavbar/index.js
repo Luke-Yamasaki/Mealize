@@ -95,42 +95,36 @@ export const SessionNavbar = ({sessionUser}) => {
                     </NavIconContainer>
                     <SearchBar />
                     <SmallNavIconContainer>
-                        <DropDownContainer>
-                            <NavIconBoxes theme={theme} onClick={handleUser} content="Y">
-                                <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button'/>
-                            </NavIconBoxes>
-                            {selected === 'user' &&
-                                <div>
-                                    Dropdown
-                                    <menu>
-                                        <li>
-                                            <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
-                                        </li>
-                                        <li>
-                                            <div onClick={logOut}>Log out</div>
-                                        </li>
-                                    </menu>
-                                </div>
-                            }
-                        </DropDownContainer>
-                        <DropDownContainer>
-                            <NavIconBoxes theme={theme} onClick={handleSettings} content="C">
-                                <Settings theme={theme}/>
-                            </NavIconBoxes>
-                            {selected === 'settings' &&
-                                <div>
-                                    Dropdown
-                                    <menu>
-                                        <li>
-                                            <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
-                                        </li>
-                                        <li>
-                                            <div onClick={logOut}>Log out</div>
-                                        </li>
-                                    </menu>
-                                </div>
-                            }
-                        </DropDownContainer>
+                        <NavIconBoxes theme={theme} onClick={handleUser} content="Y">
+                            <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button'/>
+                        </NavIconBoxes>
+                        {selected === 'user' &&
+                            <DropDownContainer theme={theme}>
+                                <menu>
+                                    <li>
+                                        <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
+                                    </li>
+                                    <li>
+                                        <div onClick={logOut}>Log out</div>
+                                    </li>
+                                </menu>
+                            </DropDownContainer>
+                        }
+                        <NavIconBoxes theme={theme} onClick={handleSettings} content="C">
+                            <Settings theme={theme}/>
+                        </NavIconBoxes>
+                        {selected === 'settings' &&
+                            <DropDownContainer theme={theme}>
+                                <menu>
+                                    <li>
+                                        <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
+                                    </li>
+                                    <li>
+                                        <div onClick={logOut}>Log out</div>
+                                    </li>
+                                </menu>
+                            </DropDownContainer>
+                        }
                     </SmallNavIconContainer>
                     {sessionUser.isManager ?
                         <PostButton onClick={showPostForm}>

@@ -195,10 +195,31 @@ export const NavIconBoxes = styled.div`
 `;
 
 export const DropDownContainer = styled.div`
-    width: 50px;
-    height: 350px;
+    width: 190px;
+    height: 340px;
+    position: absolute;
+    margin: 400px 0px 0px -75px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 91;
+    filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 1px #191919)' : 'drop-shadow(0px 0px 1px white)'};
+    background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    font-family: motiva-sans, sans-serif;
+    &:before {
+        content: "";
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid transparent;
+        border-bottom: ${props => props.theme === 'light' ? "12px solid white" : "12px solid white"};
+        top: -22px;
+        z-index: 90;
+        filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 0.1px #191919)' : 'drop-shadow(0px 0px 0.1px white)'};    }
 `;

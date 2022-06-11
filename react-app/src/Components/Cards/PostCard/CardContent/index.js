@@ -62,7 +62,7 @@ export const CardContent = ({ post, preview }) => {
                 {post?.status === 1 && post?.isItem ? 'Reserved' : post?.status === 2 && post?.isItem ? 'Confirmed' : 'Completed'}
             </ReservedBackGround>}
             <TitleBox to={`/organizations/${organization.id}`}>
-                <VectorBox square='25px' resize='27px'>
+                <VectorBox square='25px' resize='26px' cursor='pointer'>
                     <CompanyLogo src={organization?.logoUrl} alt='Business logo.' width='30px' height='30px' backgroundColor='#191919'/>
                 </VectorBox>
                 <TitleTextContainer>
@@ -76,7 +76,7 @@ export const CardContent = ({ post, preview }) => {
                     <ItemTitle theme={theme}>{post?.title}</ItemTitle>
                     <ItemQuantity theme={theme}>({post?.quantity})</ItemQuantity>
                 </InfoContainer>
-                <VectorBox square='30px' cursor='pointer'>
+                <VectorBox square='25px' resize='26px' cursor='pointer'>
                     {(sessionUser && post) && (
                         <FavoritesIcon post={post} />
                     )}

@@ -14,7 +14,6 @@ export const NavBar = styled.div`
     position: -webkit-sticky;
     position: sticky;
     top: 0px;
-    margin-top: -1px;
     will-change: transform;
     z-index: 200;
 `;
@@ -26,27 +25,24 @@ export const LogoNavLink = styled(NavLink)`
     font-weight: 900;
     font-style: normal;
     font-size: 28px;
-    margin-top: 7px;
+    margin-top: 2px;
 `;
 
 export const Navigation = styled.nav`
-    max-width: 1336px;
-    width: 100vw;
+    width: 100%;
+    height: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
 `;
 
 export const NavList = styled.div`
-    max-width: 1336px;
-    width: 100vw;
-    height: 50px;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    padding: 0px 50px 0px 50px;
+    padding: 0px 25px 0px 25px;
+    gap: 10px;
 `;
 
 export const Searchbar = styled.form`
@@ -97,8 +93,8 @@ export const ResetSearchBox = styled.div`
 `;
 
 export const LogoBox = styled.div`
-    width: ${props => props.width ? props.width : '165px'};
-    height: 60px;
+    width: ${props => props.width ? props.width : '150px'};
+    height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -132,12 +128,16 @@ export const ProfileName = styled(Bold)`
 `;
 
 export const NavIconContainer = styled.div`
-    width: ${props => props.manager === 'true' ? '385px' : '325px'};
-    height: 60px;
+    width: 150px;
+    height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+`;
+
+export const SmallNavIconContainer = styled(NavIconContainer)`
+    width: 100px;
 `;
 
 export const GradientLogoType = styled(Black)`
@@ -155,4 +155,92 @@ export const GradientLogoType = styled(Black)`
     @media only screen and (max-width: 1650px) {
         margin-left: 11.5vw;
     }
+`;
+
+export const NavIconBoxes = styled.div`
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${props => props.isSelected ? 'rgba(0, 0, 0, 0.1)' : 'none'};
+    cursor: pointer;
+    font-family: motiva-sans, sans-serif;
+    font-size: 14px;
+    color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+    };
+    &:hover:after {
+        content: ${props => props.content === 'H' ?
+        "'Home'" :
+        props.content === 'D' ?
+        "'Deliveries'" :
+        props.content === 'M' ?
+        "'Messages'" :
+        props.content === 'Y' ?
+        "'Your info'" :
+        "'Settings'"
+        };
+        position: absolute;
+        margin-top: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: ${props => props.content === 'H' ? '65px' : props.content === 'D' || props.content === 'M' ? '80px' : '75px'};
+        height: 20px;
+        background-color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+        border-radius: 30px;
+    };
+`;
+
+export const DropDownContainer = styled.div`
+    width: 190px;
+    height: 340px;
+    position: absolute;
+    margin: ${props => props.type === 'user' ? '400px 0px 0px -75px' : '400px 0px 0px -25.1px'};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 91;
+    filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 1px #191919)' : 'drop-shadow(0px 0px 1px white)'};
+    background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
+    color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    font-family: motiva-sans, sans-serif;
+    &:before {
+        content: "";
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid transparent;
+        border-bottom: ${props => props.theme === 'light' ? "12px solid white" : "12px solid white"};
+        top: -22px;
+        z-index: 90;
+        filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 0.1px #191919)' : 'drop-shadow(0px 0px 0.1px white)'};    }
+`;
+
+export const DropDownMenu = styled.menu`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+`;
+
+export const DropDownItem = styled.li`
+    list-style: none;
+    width: calc(100% - 10px);
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px 5px 0px 5px;
 `;

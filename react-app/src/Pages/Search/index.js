@@ -107,7 +107,11 @@ export const SearchPage = () => {
     },[searchword])
 
     return(
-        <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} position='center' bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}>
+        <PageBackGround
+            background={theme === 'light' ? '#E8E8E8' : '#232323'}
+            position='center'
+            bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}
+        >
             <SearchSection>
                 <SearchTitle theme={theme}>Search results for:<SearchWord theme={theme}>{searchword}</SearchWord></SearchTitle>
                 <SearchFeed>

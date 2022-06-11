@@ -54,8 +54,8 @@ export const AppContentContainer = styled.div`
 `;
 
 export const PageBackGround = styled.div`
-    max-width: 1336px;
-    width: 100vw;
+    max-width: 1284px;
+    width: calc(100vw - 50px);
     min-height: calc(100vh - 50px);
     background: ${props => props.background};
     display: flex;
@@ -63,14 +63,14 @@ export const PageBackGround = styled.div`
     justify-content: ${props => props.position ? props.position : 'space-around'};
     align-items: top;
     filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.35));
-    padding-top: 25px;
-    gap: 25px;
+    padding: 20px 25px 50px 25px;
+    gap: 75px;
     border: 1px solid;
     border-color: ${props => props.bordercolor};
 `;
 
 export const BackGroundAside = styled.aside`
-    width: 0px;
+    width: 100px;
     height: 100vh;
     display: flex;
     flex-direction: row;
@@ -79,13 +79,8 @@ export const BackGroundAside = styled.aside`
     position: -webkit-sticky;
     position: sticky;
     top: 0px;
+    margin-left: -100px;
     will-change: transform;
-    margin-top: -1000px;
-    gap: 10px;
-    margin-left: -40px;
-    @media only screen and (max-width: 1190px) {
-        margin-left: -100px;
-    }
 `;
 
 export const FilterTitle = styled(ExtraBold)`
@@ -97,14 +92,15 @@ export const SideBarContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: left;
-    justify-content: space-around;
-    width: 200px;
-    height: ${props => props.height};
-    gap: 5px;
+    justify-content: flex-start;
+    width: 150px;
+    height: 870px;
+    padding-top: 10px;
+    gap: 25px;
 `;
 
 export const SideField = styled.fieldset`
-    width: 150px;
+    width: 120px;
     height: auto;
     border-radius: 5px;
     border: ${props => props.theme === 'light' ? '1px solid rgba(0, 0, 0, 0.2)' : '1px solid #616161'};
@@ -113,8 +109,8 @@ export const SideField = styled.fieldset`
     flex-direction: column;
     align-items: left;
     justify-content: space-around;
-    font-size: 1em;
-    padding: 10px 0px 10px 10px;
+    font-size: 16px;
+    padding: 10px;
 `;
 
 export const SideLegend = styled.legend`
@@ -168,7 +164,7 @@ export const SideBarInfoBox = styled.div`
     justify-content: flex-start;
     gap: 10px;
     align-items: center;
-    width: 150px;
+    width: 125px;
     height: 50px;
     cursor: pointer;
 `;
@@ -194,13 +190,13 @@ export const FeedContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    gap: 35px;
-    row-gap: 0px;
+    gap: 25px;
+    row-gap: 20px;
     flex-wrap: wrap;
 `;
 
 export const PostsTitle = styled(ExtraBold)`
-    margin-top: 10px;
+    margin: 8px 0px 15px 0px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;
 

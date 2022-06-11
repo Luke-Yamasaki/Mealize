@@ -32,12 +32,13 @@ export const Home = () => {
     }
 
     return(
-        <PageBackGround background={theme === 'light' ? '#E8E8E8' : '#232323'} bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}>
-            <SideBarContainer height={sessionUser ? '870px' : '745px'}>
-                <FilterTitle theme={theme}>Filter</FilterTitle>
-                {sessionUser && (
-                    <FavoritesFilter theme={theme}/>
-                )}
+        <PageBackGround
+            background={theme === 'light' ? '#E8E8E8' : '#232323'}
+            bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}
+            position='flex-start'>
+            <SideBarContainer>
+                <FilterTitle theme={theme}>Filters</FilterTitle>
+                <FavoritesFilter theme={theme}/>
                 <AvailabilityFilter theme={theme}/>
                 <PostTypeFilter theme={theme} />
                 <CategoryFilter theme={theme} categories={categories} />

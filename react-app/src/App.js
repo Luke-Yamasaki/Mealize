@@ -24,27 +24,18 @@ import { SinglePostPage } from './Pages/SinglePost';
 import { SearchPage } from './Pages/Search';
 
 //Components
-import { Settings } from './Assets/Icons/Settings';
-import { SettingsBox } from './Components/Styled/Customization';
 import Modal from './Components/Modal';
-import { AppBackGround, AppContentContainer, BackGroundAside } from './Components/Styled/Layout';
+import { AppBackGround, AppContentContainer } from './Components/Styled/Layout';
 
 //layouts
 import { Navbar } from './Components/Navbar';
 import { SessionNavbar } from './Components/Navbar/SessionNavbar';
 import { Footer } from './Components/Footer';
-import { CustomizationBox } from './Components/Customization/CustomizationField';
-
-//Animation
-import { goUp, goDown } from './Components/Styled/Customization';
-import { expandField, shrinkField} from './Components/Styled/Layout';
-
 
 function App() {
   const { theme } = useTheme();
   const { backGround } = useBackGround();
   const [isLoaded, setIsLoaded] = useState(false);
-  const [count, setCount] = useState(0);
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
 
@@ -104,12 +95,6 @@ function App() {
           </Switch>
           <Footer />
         </AppContentContainer>
-        <BackGroundAside>
-            <CustomizationBox animation={count > 0 && count % 2 === 1 ? expandField : count > 0 && count % 2 === 0 ? shrinkField : ''}/>
-            <SettingsBox animation={count > 0 && count % 2 === 1 ? goUp : count > 0 && count % 2 === 0 ? goDown : ''} theme={theme} onClick={() => setCount(count + 1)}>
-              <Settings theme={theme} />
-            </SettingsBox>
-        </BackGroundAside>
       </AppBackGround>
     </BrowserRouter>
   )

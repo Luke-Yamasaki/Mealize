@@ -20,12 +20,13 @@ export const CardContainer = styled.div`
 //exp banner
 export const ExpBanner = styled.div`
     width: 250px;
-    height: 30px;
+    height: 35px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     gap: 10px;
+    margin-bottom: -3px;
 `;
 
 export const BannerTextContainer = styled.div`
@@ -58,15 +59,17 @@ export const ExpText = styled(Paragraph)`
 //card
 export const Card = styled.div`
     width: 250px;
-    height: 360px;
+    height: 340px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 5px;
     align-items: center;
     border-radius: 5px;
     cursor: ${props => props.status ? 'default' : 'pointer'};
     background: ${props => props.color['background']};
     border: ${props => props.color['border']};
+    padding: 5px 0px 5px 0px;
 `;
 
 //title
@@ -77,9 +80,8 @@ export const TitleBox = styled(Link)`
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-left: 5px;
     text-decoration: none;
-    padding: 5px 10px 0px 0px;
+    gap: 5px;
 `;
 
 export const PreviewTitleBox = styled.div`
@@ -102,22 +104,19 @@ export const TitleTextContainer = styled(BannerTextContainer)`
 export const CompanyLogo = styled.img`
     width: 25px;
     height: 25px;
-    background-color: ${props => props.backgroundColor};
     object-fit: cover;
     object-position: center;
-    border-radius: 100%;
-    border: 1px solid #E8E8E8;
+    border-radius: 25px;
 `;
 
 export const CompanyName = styled(Bold)`
     color: #191919;
-    width: 220px;
+    width: 180px;
     height: 25px;
     font-size: 0.8em;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-left: 10px;
     &:hover {
         text-decoration: underline;
     }
@@ -142,17 +141,17 @@ export const CompanyAddress = styled(Paragraph)`
 
 export const ItemDateText = styled(Medium)`
     color: #191919;
-    font-size: 0.65em;
+    font-size: 10px;
     max-width: 60px;
 `;
 
 //image
 export const ItemImage = styled.img`
     width: 250px;
-    height: 180px;
+    min-height: 180px;
+    max-height: 180px;
     object-fit: cover;
     object-position: center;
-    margin-top: 10px;
 `;
 
 
@@ -160,40 +159,36 @@ export const ItemImage = styled.img`
 export const InfoBox = styled(ExpBanner)`
     width: 240px;
     height: 35px;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding: 0px 5px 0px 5px;
     gap: 5px;
-    margin-top: 5px;
 `;
 
 export const InfoContainer = styled(BannerTextContainer)`
     width: 230px;
-    height: 27px;
-    padding-top: 3px;
+    height: 30px;
     justify-content: flex-start;
     gap: 5px;
 `;
 
 export const ItemTitle = styled(Bold)`
-    min-width: 100px;
     max-width: 140px;
     word-break: auto;
     font-size: 13px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
-    font-weight: ${props => props.theme === 'light' ? '700' : '500'};
+    font-weight: ${props => props.theme === 'light' ? '700' : '400'};
 `;
 
 export const ItemQuantity = styled(Medium)`
-    font-size: 0.65em;
+    font-size: 9px;
     max-width: 75px;
+    margin-top: 1px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
     font-weight: ${props => props.theme === 'light' ? '700' : '400'};
 `;
 
 export const DescriptionBox = styled.div`
-    margin-top: 5px;
     width: 240px;
     height: 50px;
     display: flex;
@@ -208,7 +203,7 @@ export const DescriptionText = styled(Medium)`
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-weight: ${props => props.theme === 'light' ? '700' : '300'};
     letter-spacing: ${props => props.theme === 'light' ? '0px' : '0.5px'};
-    font-size: 0.65em;
+    font-size: 10px;
     width: 240px;
     -webkit-hyphens: auto;
     -moz-hyphens: auto;
@@ -218,10 +213,9 @@ export const DescriptionText = styled(Medium)`
 `;
 
 export const ButtonBox = styled(ExpBanner)`
-    width: 230px;
+    width: 240px;
     height: 30px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 0px 5px 0px 5px;
     justify-content: ${props => props.number === '1' ? 'flex-end' : 'space-between'};
 `;
 
@@ -277,11 +271,12 @@ export const ReservedBackGround = styled(ExtraBold)`
     color: white;
     font-style: italic;
     background-color: rgba(0, 0, 0, 0.5);
-    width: 280px;
+    width: 250px;
     height: 350px;
     border-radius: 5px;
     letter-spacing: 1px;
     font-weight: 500;
+    margin-top: -5px;
 `;
 
 export const MaxLengthMessage = styled.div`

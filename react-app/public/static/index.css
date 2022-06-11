@@ -1,3 +1,9 @@
+html {
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
 body {
   top: 0px;
   bottom: 0px;
@@ -11,7 +17,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 17px;
+  width: 15px;
 }
 
 ::-webkit-scrollbar-track {

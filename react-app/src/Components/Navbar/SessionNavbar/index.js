@@ -10,7 +10,7 @@ import { logout } from '../../../store/session';
 import { setCurrentModal, showModal } from '../../../store/modal';
 
 // Styled-components
-import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, NavIconContainer, NavIconBoxes, DropDownContainer } from '../../Styled/Navbar';
+import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, NavIconContainer, NavIconBoxes, DropDownContainer, SmallNavIconContainer } from '../../Styled/Navbar';
 import { VectorBox } from '../../Styled/Layout';
 import { ButtonText, ProfileButton, PostButton, LogoutButton } from '../../Styled/Buttons';
 
@@ -28,8 +28,7 @@ import { Settings } from '../../../Assets/Icons/Settings';
 
 export const SessionNavbar = ({sessionUser}) => {
     const dispatch = useDispatch();
-    const [showUserMenu, setShowUserMenu] = useState(false);
-    const [showCustomizationMenu, setShowCustomizationMenu] = useState(false);
+    const [selected, setSelected] = useState('');
     const {theme} = useTheme();
     const {setFilter} = useFilter();
     const history = useHistory();
@@ -45,14 +44,32 @@ export const SessionNavbar = ({sessionUser}) => {
         return <Redirect to='/' />
     };
 
-    const handleMessages = (e) => {
+    const handleHome = (e) => {
         e.preventDefault();
-        history.push('/messages')
+        selected !== 'home' ? setSelected('home') : setSelected('');
+        history.push('/')
     };
 
     const handleDeliveries = (e) => {
         e.preventDefault();
+        selected !== 'deliveries' ? setSelected('deliveries') : setSelected('');
         history.push('/deliveries');
+    };
+
+    const handleMessages = (e) => {
+        e.preventDefault();
+        selected !== 'messages' ? setSelected('messages') : setSelected('');
+        history.push('/messages')
+    };
+
+    const handleUser = (e) => {
+        e.preventDefault();
+        selected !== 'user' ? setSelected('user') : setSelected('');
+    };
+
+    const handleSettings = (e) => {
+        e.preventDefault();
+        selected !== 'settings' ? setSelected('settings') : setSelected('');
     };
 
     return (
@@ -65,60 +82,56 @@ export const SessionNavbar = ({sessionUser}) => {
                         </VectorBox>
                         <LogoNavLink theme={theme} to='/' exact={true}>Mealize</LogoNavLink>
                     </LogoBox>
-                    <NavIconBoxes>
-                        <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleMessages}>
+                    <NavIconContainer>
+                        <NavIconBoxes onClick={handleHome}>
                             <HomeIcon theme={theme} />
-                        </VectorBox>
-                    </NavIconBoxes>
-                    <NavIconBoxes>
-                        <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleDeliveries}>
+                        </NavIconBoxes>
+                        <NavIconBoxes onClick={handleDeliveries}>
                             <VolunteerIcon theme={theme}/>
-                        </VectorBox>
-                    </NavIconBoxes>
-                    <NavIconBoxes>
-                        <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleMessages}>
+                        </NavIconBoxes>
+                        <NavIconBoxes onClick={handleMessages}>
                             <InboxIcon theme={theme} />
-                        </VectorBox>
-                    </NavIconBoxes>
+                        </NavIconBoxes>
+                    </NavIconContainer>
                     <SearchBar />
-                    <DropDownContainer>
-                        <NavIconBoxes>
-                            <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' onClick={() => setShowUserMenu(!showUserMenu)}/>
-                        </NavIconBoxes>
-                        {showUserMenu &&
-                            <div>
-                                Dropdown
-                                <menu>
-                                    <li>
-                                        <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
-                                    </li>
-                                    <li>
-                                        <div onClick={logOut}>Log out</div>
-                                    </li>
-                                </menu>
-                            </div>
-                        }
-                    </DropDownContainer>
-                    <DropDownContainer>
-                        <NavIconBoxes>
-                            <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={() => setShowCustomizationMenu(!showCustomizationMenu)}>
+                    <SmallNavIconContainer>
+                        <DropDownContainer>
+                            <NavIconBoxes onClick={handleUser}>
+                                <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button'/>
+                            </NavIconBoxes>
+                            {selected === 'user' &&
+                                <div>
+                                    Dropdown
+                                    <menu>
+                                        <li>
+                                            <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
+                                        </li>
+                                        <li>
+                                            <div onClick={logOut}>Log out</div>
+                                        </li>
+                                    </menu>
+                                </div>
+                            }
+                        </DropDownContainer>
+                        <DropDownContainer>
+                            <NavIconBoxes onClick={handleSettings}>
                                 <Settings theme={theme}/>
-                            </VectorBox>
-                        </NavIconBoxes>
-                        {showCustomizationMenu &&
-                            <div>
-                                Dropdown
-                                <menu>
-                                    <li>
-                                        <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
-                                    </li>
-                                    <li>
-                                        <div onClick={logOut}>Log out</div>
-                                    </li>
-                                </menu>
-                            </div>
-                        }
-                    </DropDownContainer>
+                            </NavIconBoxes>
+                            {selected === 'settings' &&
+                                <div>
+                                    Dropdown
+                                    <menu>
+                                        <li>
+                                            <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
+                                        </li>
+                                        <li>
+                                            <div onClick={logOut}>Log out</div>
+                                        </li>
+                                    </menu>
+                                </div>
+                            }
+                        </DropDownContainer>
+                    </SmallNavIconContainer>
                     {sessionUser.isManager &&
                         <PostButton onClick={showPostForm}>
                             <ButtonText>{sessionUser.isNonprofit ? 'New post' : 'New post'}</ButtonText>

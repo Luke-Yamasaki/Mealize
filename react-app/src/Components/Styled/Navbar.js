@@ -128,12 +128,16 @@ export const ProfileName = styled(Bold)`
 `;
 
 export const NavIconContainer = styled.div`
-    width: 250px;
+    width: 150px;
     height: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+`;
+
+export const SmallNavIconContainer = styled(NavIconContainer)`
+    width: 100px;
 `;
 
 export const GradientLogoType = styled(Black)`
@@ -159,7 +163,8 @@ export const NavIconBoxes = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${props => props.selected ? 'rgba(0, 0, 0, 0.1)' : 'none'};
+    background-color: ${props => props.isSelected ? 'rgba(0, 0, 0, 0.1)' : 'none'};
+    cursor: pointer;
     &:hover {
         background-color: rgba(0, 0, 0, 0.3);
     }

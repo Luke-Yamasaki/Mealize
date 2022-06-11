@@ -35,13 +35,13 @@ export const Navigation = styled.nav`
 `;
 
 export const NavList = styled.div`
-    width: 100%;
+    width: ${props => props.guest ? 'calc(100% - 100px)' : '100%'};
     height: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: ${props => props.guest ? 'space-around' : 'flex-start'};
+    justify-content: ${props => props.guest ? 'space-between' : 'flex-start'};
     align-items: center;
-    padding: ${props => props.guest ? '0px' : '0px 25px 0px 25px'};
+    padding: ${props => props.guest ? '0px 50px 0px 50px' : '0px 25px 0px 25px' };
     gap: 10px;
 `;
 

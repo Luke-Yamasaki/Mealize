@@ -5,7 +5,13 @@ import { useTheme } from '../../../Context/ThemeContext';
 
 //Components
 import { MagnifyingGlass } from '../../../Assets/Icons/MagnifyingGlass';
-import { Searchbar, SearchInput, SearchSubmitInput, ResetSearchBox, GradientLogoType} from '../../Styled/Navbar';
+import {
+    Searchbar,
+    SearchInput,
+    SearchSubmitInput,
+    ResetSearchBox,
+    GradientLogoType
+} from '../../Styled/Navbar';
 import { ResetIcon } from '../../Styled/Buttons';
 import { VectorBox } from '../../Styled/Layout';
 
@@ -30,7 +36,7 @@ export const SearchBar = () => {
             <VectorBox square='20px'>
                 <MagnifyingGlass theme={theme}/>
             </VectorBox>
-            <SearchInput theme={theme} type='text' maxLength='40' placeholder="Search" value={searchword} onChange={(e) => setSearchword(e.target.value)}/>
+            <SearchInput theme={theme} type='text' maxLength='50' placeholder="Search" value={searchword} onChange={(e) => setSearchword(e.target.value)}/>
             <GradientLogoType entering={searchword.length > 0}>Mealize</GradientLogoType>
             <SearchSubmitInput type="submit" />
             <ResetSearchBox entering={searchword.length > 0}>

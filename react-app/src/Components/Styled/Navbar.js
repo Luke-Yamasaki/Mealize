@@ -39,9 +39,9 @@ export const NavList = styled.div`
     height: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: ${props => props.guest ? 'space-around' : 'flex-start'};
     align-items: center;
-    padding: 0px 25px 0px 25px;
+    padding: ${props => props.guest ? '0px' : '0px 25px 0px 25px'};
     gap: 10px;
 `;
 
@@ -52,19 +52,21 @@ export const Searchbar = styled.form`
     align-items: center;
     max-width: 500px;
     width: 30vw;
-    min-width: 300px;
+    min-width: 225px;
     height: 30px;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     border-radius: 50px;
     padding-left: 5px;
     padding-right: ${props => props.mic === 'true' ? '10px' : '0px'};
     gap: 5px;
+    @media only screen and (max-width: 500px) {
+        display: none;
+    }
 `;
 
 export const SearchInput = styled.input`
-    max-width: 400px;
-    width: 26vw;
-    min-width: 235px;
+    max-width: 430px;
+    width: 90%;
     font-family: motiva-sans,sans-serif;
     font-weight: 700;
     font-style: normal;
@@ -77,6 +79,27 @@ export const SearchInput = styled.input`
     padding-left: 10px;
     background-color: ${props => props.theme === 'light' ? '#FFFFFF' : '#191919'};
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
+    @media only screen and (max-width: 1780px) {
+        width: 85%;
+    }
+    @media only screen and (max-width: 1500px) {
+        width: 83%;
+    }
+    @media only screen and (max-width: 1336px) {
+        width: 80%;
+    }
+    @media only screen and (max-width: 1150px) {
+        width: 78%;
+    }
+    @media only screen and (max-width: 1000px) {
+        width: 76%;
+    }
+    @media only screen and (max-width: 900px) {
+        width: 72%;
+    }
+    @media only screen and (max-width: 750px) {
+        width: 70%;
+    }
 `;
 
 export const SearchSubmitInput = styled.input`
@@ -93,7 +116,7 @@ export const ResetSearchBox = styled.div`
 `;
 
 export const LogoBox = styled.div`
-    width: ${props => props.width ? props.width : '150px'};
+    width: ${props => props.width ? props.width : '160px'};
     height: 50px;
     display: flex;
     flex-direction: row;
@@ -147,14 +170,16 @@ export const GradientLogoType = styled(Black)`
     background: -webkit-linear-gradient(#28A690,#76D97E);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    justify-content: center;
     display: ${props => props.entering ? 'none' : 'flex'};
     align-items: center;
+    justify-content: center;
     position: absolute;
-    margin-left: calc(27% - 100px);
-    @media only screen and (max-width: 1650px) {
-        margin-left: 11.5vw;
-    }
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
 `;
 
 export const NavIconBoxes = styled.div`

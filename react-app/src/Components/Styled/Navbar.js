@@ -128,7 +128,7 @@ export const ProfileName = styled(Bold)`
 `;
 
 export const NavIconContainer = styled.div`
-    width: 275px;
+    width: 250px;
     height: 50px;
     display: flex;
     flex-direction: row;
@@ -150,5 +150,30 @@ export const GradientLogoType = styled(Black)`
     margin-left: calc(27% - 100px);
     @media only screen and (max-width: 1650px) {
         margin-left: 11.5vw;
+    }
+`;
+
+export const NavIconBoxes = styled.div`
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${props => props.selected ? 'rgba(0, 0, 0, 0.1)' : 'none'};
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+`;
+
+export const DropDownContainer = styled.div`
+    width: 50px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: ${props => props.selected ? 'rgba(0, 0, 0, 0.3)' : 'none'};
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.3);
     }
 `;

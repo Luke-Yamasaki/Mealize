@@ -1,19 +1,24 @@
 //Hooks
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import { useTheme } from '../../../Context/ThemeContext';
 import { useFilter } from '../../../Context/FilterContext';
+
 // Actions
 import { logout } from '../../../store/session';
 import { setCurrentModal, showModal } from '../../../store/modal';
+
 // Styled-components
-import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, NavIconContainer, ProfileName } from '../../Styled/Navbar';
+import { NavBar, Navigation, NavList, LogoBox, LogoNavLink, NavIconContainer, NavIconBoxes, DropDownContainer } from '../../Styled/Navbar';
 import { VectorBox } from '../../Styled/Layout';
 import { ButtonText, ProfileButton, PostButton, LogoutButton } from '../../Styled/Buttons';
+
 //Components
 // import { NotificationBar } from '../NotificationBar';
 import { SearchBar } from '../SearchBar';
 import PostForm from '../../../Forms/Post';
+
 //Icons
 import { Logo } from '../../../Assets/Logo';
 import { InboxIcon } from '../../../Assets/Icons/Inbox';
@@ -23,6 +28,8 @@ import { Settings } from '../../../Assets/Icons/Settings';
 
 export const SessionNavbar = ({sessionUser}) => {
     const dispatch = useDispatch();
+    const [showUserMenu, setShowUserMenu] = useState(false);
+    const [showCustomizationMenu, setShowCustomizationMenu] = useState(false);
     const {theme} = useTheme();
     const {setFilter} = useFilter();
     const history = useHistory();
@@ -58,31 +65,65 @@ export const SessionNavbar = ({sessionUser}) => {
                         </VectorBox>
                         <LogoNavLink theme={theme} to='/' exact={true}>Mealize</LogoNavLink>
                     </LogoBox>
-                    <SearchBar />
-                    <NavIconContainer>
-                        <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' />
-                        {/* <ProfileName theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</ProfileName> */}
-                        <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleDeliveries}>
-                            <VolunteerIcon theme={theme}/>
-                        </VectorBox>
+                    <NavIconBoxes>
                         <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleMessages}>
                             <HomeIcon theme={theme} />
                         </VectorBox>
+                    </NavIconBoxes>
+                    <NavIconBoxes>
+                        <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleDeliveries}>
+                            <VolunteerIcon theme={theme}/>
+                        </VectorBox>
+                    </NavIconBoxes>
+                    <NavIconBoxes>
                         <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleMessages}>
                             <InboxIcon theme={theme} />
                         </VectorBox>
-                        <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={handleMessages}>
-                            <Settings theme={theme}/>
-                        </VectorBox>
-                        {sessionUser.isManager &&
-                            <PostButton onClick={showPostForm}>
-                                <ButtonText>{sessionUser.isNonprofit && sessionUser.isManager ? 'Post a request' : 'Post an item'}</ButtonText>
-                            </PostButton>
+                    </NavIconBoxes>
+                    <SearchBar />
+                    <DropDownContainer>
+                        <NavIconBoxes>
+                            <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button' onClick={() => setShowUserMenu(!showUserMenu)}/>
+                        </NavIconBoxes>
+                        {showUserMenu &&
+                            <div>
+                                Dropdown
+                                <menu>
+                                    <li>
+                                        <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
+                                    </li>
+                                    <li>
+                                        <div onClick={logOut}>Log out</div>
+                                    </li>
+                                </menu>
+                            </div>
                         }
-                        <LogoutButton onClick={logOut} type={sessionUser.isManager ? 'manager' : 'volunteer'}>
-                            <ButtonText color={sessionUser.isManager ? 'white' : 'black'} weight={sessionUser.isManager ? '400' : '700'}>Log out</ButtonText>
-                        </LogoutButton>
-                    </NavIconContainer>
+                    </DropDownContainer>
+                    <DropDownContainer>
+                        <NavIconBoxes>
+                            <VectorBox square='30px' resize='30.5px' cursor='pointer' onClick={() => setShowCustomizationMenu(!showCustomizationMenu)}>
+                                <Settings theme={theme}/>
+                            </VectorBox>
+                        </NavIconBoxes>
+                        {showCustomizationMenu &&
+                            <div>
+                                Dropdown
+                                <menu>
+                                    <li>
+                                        <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
+                                    </li>
+                                    <li>
+                                        <div onClick={logOut}>Log out</div>
+                                    </li>
+                                </menu>
+                            </div>
+                        }
+                    </DropDownContainer>
+                    {sessionUser.isManager &&
+                        <PostButton onClick={showPostForm}>
+                            <ButtonText>{sessionUser.isNonprofit ? 'New post' : 'New post'}</ButtonText>
+                        </PostButton>
+                    }
                 </NavList>
             </Navigation>
             {/* <NotificationBar theme={theme}/> */}

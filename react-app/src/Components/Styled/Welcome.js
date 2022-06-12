@@ -29,49 +29,6 @@ const lockin = (width) => keyframes`
 
 const lockinBG = (width) => css`${lockin(width)} 5s ease-in-out 1 normal forwards`;
 
-// const shrink = keyframes`
-//     0% {
-//         width: 8357.219px;
-//         height: 7133.676px;
-//     }
-//     20%{
-//         width: 592.167px;
-//         height: 505.471px;
-//     }
-//     30% {
-//         width: 592.167px;
-//         height: 505.471px;
-//     }
-//     40% {
-//         width: 592.167px;
-//         height: 505.471px;
-//         margin-left: 0px;
-//     }
-//     70% {
-//         width: 45px;
-//         height: 45px;
-//         display: none;
-//         margin-left: -1190px;
-//         opacity: 100%;
-//     }
-//     85%{
-//         width: 45px;
-//         height: 45px;
-//         display: none;
-//         margin-left: -1190px;
-//         opacity: 0%;
-//     }
-//     100% {
-//         opacity: 0%;
-//         width: 0px;
-//         height: 0px;
-//         display: none;
-//         margin: 0px 0px 0px -1190px;
-//     }
-// `;
-
-// const shrinkLogo = () => css`${shrink} 5s ease-in-out 1 normal forwards`;
-
 const shrink = (startW, endW, startH, endH, margin) => keyframes`
     0% {
         width: ${startW};
@@ -123,47 +80,40 @@ const shrink = (startW, endW, startH, endH, margin) => keyframes`
 
 const shrinkLogo = (startW, endW, startH, endH, margin) => css`${shrink(startW, endW, startH, endH, margin)} 5s ease-in-out 1 normal forwards`;
 
-const shrinkTitle = keyframes`
+const shrinkTitle = (startW, endW, startH, endH, startF, endF, startM, endM) => keyframes`
     0% {
         opacity: 0%;
-        width: 500px;
-        height: 300px;
-        font-size: 150px;
-        margin: 900px 0px 0px -25px;
+        width: ${startW};
+        height: ${startH};
+        font-size: ${startF};
+        margin: ${startM};
     }
-    20% {
+    20%{
         opacity: 0%;
-        width: 500px;
-        height: 300px;
-        font-size: 150px;
-        margin: 900px 0px 0px -25px;
-    }
-    30%{
-        opacity: 100%;
-        width: 500px;
-        height: 300px;
-        font-size: 150px;
-        margin: 900px 0px 0px -25px;
+        width: ${startW};
+        height: ${startH};
+        font-size: ${startF};
+        margin: ${startM};
     }
     40%{
         opacity: 100%;
-        width: 500px;
-        height: 300px;
-        font-size: 150px;
-        margin: 900px 0px 0px -25px;
+        width: ${startW};
+        height: ${startH};
+        font-size: ${startF};
+        margin: ${startM};
     }
     70% {
-        width: 100px;
-        height: 30px;
-        font-size: 28px;
-        margin: 10px 0px 0px -1013px;
+        width: ${endW};
+        height: ${endH};
+        font-size: ${endF};
+        margin: ${endM};
         opacity: 100%;
     }
     85%{
-        width: 100px;
-        height: 30px;
-        font-size: 28px;
-        margin: 10px 0px 0px -1013px;
+        width: ${endW};
+        height: ${endH};
+        font-size: ${endF};
+        margin: ${endM};
         opacity: 0%;
     }
     100% {
@@ -171,11 +121,11 @@ const shrinkTitle = keyframes`
         width: 0px;
         height: 0px;
         font-size: 0px;
-        margin: 10px 0px 0px -1013px;
+        margin: ${endM};
     }
 `;
 
-const shrinkLogotype = () => css`${shrinkTitle} 5s ease-in-out 1 normal forwards`;
+const shrinkLogotype = (startW, endW, startH, endH, startF, endF, startM, endM) => css`${shrinkTitle(startW, endW, startH, endH, startF, endF, startM, endM)} 5s ease-in-out 1 normal forwards`;
 
 export const WelcomeAnimation = styled.div`
     background: linear-gradient(#76D97E, #28A690);
@@ -203,7 +153,7 @@ export const LogoVectorBox = styled.div`
         animation: ${shrinkLogo('326.45vw', '23.13vw', '495.39vh', '35.1vh', '-1190px')};
     }
     @media only screen and (max-width: 1335px) {
-        animation: ${shrinkLogo('326.45vw', '23.13vw', '495.39vh', '35.1vh', 'calc(-100vw + 145px)')};
+        animation: ${shrinkLogo('326.45vw', '23.13vw', '495.39vh', '35.1vh', 'calc(-100vw + 146px)')};
     }
 `;
 
@@ -211,10 +161,10 @@ export const LogoType = styled(Black)`
     color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     position: absolute;
     @media only screen and (min-width: 1336px) {
-        animation: ${shrinkLogotype};
+        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '150px', '28px', '900px 0px 0px -25px', '10px 0px 0px -1013px')};
     }
     @media only screen and (max-width: 1335px) {
-        animation: ${shrinkLogotype};
+        animation: ${shrinkLogotype()};
     }
 `;
 

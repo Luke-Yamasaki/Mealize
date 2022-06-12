@@ -20,7 +20,8 @@ export const FourOFourContainer = styled.div`
 export const FourOFourImage = styled.img`
     object-fit: contain;
     object-position: center;
-    width: 600px;
-    height: 700px;
-    margin-left: ${props => props.margin ? props.margin : '150px'};
+    max-width: 600px;
+    width: 70vw;
+    max-height: 700px;
+    height: 45vh;
 `;

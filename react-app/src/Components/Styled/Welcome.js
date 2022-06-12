@@ -3,12 +3,12 @@ import { Black, ExtraBold, Medium } from "./Fonts";
 
 const lockin = (width) => keyframes`
     0% {
-        width: 100vw;
-        height: 100vh;
+        width: 115vw;
+        height: 110vh;
     }
     40% {
-        width: 100vw;
-        height: 100vh;
+        width: 115vw;
+        height: 110vh;
     }
     70% {
         width: ${width};
@@ -29,28 +29,28 @@ const lockin = (width) => keyframes`
 
 const lockinBG = (width) => css`${lockin(width)} 5s ease-in-out 1 normal forwards`;
 
-const shrink = (startW, endW, startH, endH, margin) => keyframes`
+const shrink = (margin) => keyframes`
     0% {
-        width: ${startW};
-        height: ${startH};
+        width: 326.45vw;
+        height: '495.39vh';
         max-width: 8357.219px;
         max-height: 7133.676px;
     }
     20%{
-        width: ${endW};
-        height: ${endH};
+        width: 23.13vw;
+        height: 35.1vh;
         max-width: 592.167px;
         max-height: 505.471px;
     }
     30% {
-        width: ${endW};
-        height: ${endH};
+        width: 23.13vw;
+        height: 35.1vh;
         max-width: 592.167px;
         max-height: 505.471px;
     }
     40% {
-        width: ${endW};
-        height: ${endH};
+        width: 23.13vw;
+        height: 35.1vh;
         max-width: 592.167px;
         max-height: 505.471px;
         margin-left: 0px;
@@ -78,7 +78,7 @@ const shrink = (startW, endW, startH, endH, margin) => keyframes`
     }
 `;
 
-const shrinkLogo = (startW, endW, startH, endH, margin) => css`${shrink(startW, endW, startH, endH, margin)} 5s ease-in-out 1 normal forwards`;
+const shrinkLogo = (margin) => css`${shrink(margin)} 5s ease-in-out 1 normal forwards`;
 
 const shrinkTitle = (startW, endW, startH, endH, startF, endF, startM, endM) => keyframes`
     0% {
@@ -150,21 +150,21 @@ export const LogoVectorBox = styled.div`
     align-items: center;
     position: absolute;
     @media only screen and (min-width: 1336px) {
-        animation: ${shrinkLogo('326.45vw', '23.13vw', '495.39vh', '35.1vh', '-1190px')};
+        animation: ${shrinkLogo('-1190px')};
     }
     @media only screen and (max-width: 1335px) {
-        animation: ${shrinkLogo('326.45vw', '23.13vw', '495.39vh', '35.1vh', 'calc(-100vw + 146px)')};
+        animation: ${shrinkLogo('calc(-100vw + 145px)')};
     }
 `;
 
 export const LogoType = styled(Black)`
     color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     position: absolute;
-    @media only screen and (min-width: 1336px) {
-        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '150px', '28px', '900px 0px 0px -25px', '10px 0px 0px -1013px')};
+    @media only screen and (min-width: 1337px) {
+        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '150px', '28px', '900px 0px 0px -25px', '4px 0px 0px -1023px')};
     }
-    @media only screen and (max-width: 1335px) {
-        animation: ${shrinkLogotype()};
+    @media only screen and (max-width: 1336px) {
+        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '100px', '21px', '900px 0px 0px -25px', '4px 0px 0px -142px')};
     }
 `;
 

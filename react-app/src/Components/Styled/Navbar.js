@@ -59,7 +59,7 @@ export const Searchbar = styled.form`
     padding-left: 5px;
     padding-right: ${props => props.mic === 'true' ? '10px' : '0px'};
     gap: 5px;
-    @media only screen and (max-width: 500px) {
+    @media only screen and (max-width: 700px) {
         display: none;
     }
 `;
@@ -180,6 +180,9 @@ export const GradientLogoType = styled(Black)`
     left: 0;
     right: 0;
     text-align: center;
+    @media only screen and (max-width: 750px) {
+        display: none;
+    }
 `;
 
 export const NavIconBoxes = styled.div`

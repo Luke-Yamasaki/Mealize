@@ -1,16 +1,8 @@
 import styled, {css, keyframes} from "styled-components";
 import { Black, ExtraBold, Medium } from "./Fonts";
 
-const lockin = keyframes`
+const lockin = (width) => keyframes`
     0% {
-        width: 100vw;
-        height: 100vh;
-    }
-    20% {
-        width: 100vw;
-        height: 100vh;
-    }
-    30% {
         width: 100vw;
         height: 100vh;
     }
@@ -19,54 +11,105 @@ const lockin = keyframes`
         height: 100vh;
     }
     70% {
-        width: 1336px;
+        width: ${width};
         height: 50px;
         opacity: 100%;
     }
     85%{
-        width: 1336px;
+        width: ${width};
         height: 50px;
         opacity: 0%;
     }
     100% {
         opacity: 0%;
-        width: 1336px;
+        width: ${width};
         height: 0px;
     }
 `;
 
-const lockinBG = () => css`${lockin} 5s ease-in-out 1 normal forwards`;
+const lockinBG = (width) => css`${lockin(width)} 5s ease-in-out 1 normal forwards`;
 
-const shrink = keyframes`
+// const shrink = keyframes`
+//     0% {
+//         width: 8357.219px;
+//         height: 7133.676px;
+//     }
+//     20%{
+//         width: 592.167px;
+//         height: 505.471px;
+//     }
+//     30% {
+//         width: 592.167px;
+//         height: 505.471px;
+//     }
+//     40% {
+//         width: 592.167px;
+//         height: 505.471px;
+//         margin-left: 0px;
+//     }
+//     70% {
+//         width: 45px;
+//         height: 45px;
+//         display: none;
+//         margin-left: -1190px;
+//         opacity: 100%;
+//     }
+//     85%{
+//         width: 45px;
+//         height: 45px;
+//         display: none;
+//         margin-left: -1190px;
+//         opacity: 0%;
+//     }
+//     100% {
+//         opacity: 0%;
+//         width: 0px;
+//         height: 0px;
+//         display: none;
+//         margin: 0px 0px 0px -1190px;
+//     }
+// `;
+
+// const shrinkLogo = () => css`${shrink} 5s ease-in-out 1 normal forwards`;
+
+const shrink = (startW, endW, startH, endH, margin) => keyframes`
     0% {
-        width: 8357.219px;
-        height: 7133.676px;
+        width: ${startW};
+        height: ${startH};
+        max-width: 8357.219px;
+        max-height: 7133.676px;
     }
     20%{
-        width: 592.167px;
-        height: 505.471px;
+        width: ${endW};
+        height: ${endH};
+        max-width: 592.167px;
+        max-height: 505.471px;
     }
     30% {
-        width: 592.167px;
-        height: 505.471px;
+        width: ${endW};
+        height: ${endH};
+        max-width: 592.167px;
+        max-height: 505.471px;
     }
     40% {
-        width: 592.167px;
-        height: 505.471px;
+        width: ${endW};
+        height: ${endH};
+        max-width: 592.167px;
+        max-height: 505.471px;
         margin-left: 0px;
     }
     70% {
         width: 45px;
         height: 45px;
         display: none;
-        margin-left: -1190px;
+        margin-left: ${margin};
         opacity: 100%;
     }
     85%{
         width: 45px;
         height: 45px;
         display: none;
-        margin-left: -1190px;
+        margin-left: ${margin};
         opacity: 0%;
     }
     100% {
@@ -74,11 +117,11 @@ const shrink = keyframes`
         width: 0px;
         height: 0px;
         display: none;
-        margin: 0px 0px 0px -1190px;
+        margin-left: ${margin};
     }
 `;
 
-const shrinkLogo = () => css`${shrink} 5s ease-in-out 1 normal forwards`;
+const shrinkLogo = (startW, endW, startH, endH, margin) => css`${shrink(startW, endW, startH, endH, margin)} 5s ease-in-out 1 normal forwards`;
 
 const shrinkTitle = keyframes`
     0% {
@@ -141,23 +184,38 @@ export const WelcomeAnimation = styled.div`
     justify-content: center;
     align-items: center;
     gap: 50px;
-    animation: ${lockinBG};
     position: absolute;
     z-index: 500;
+    @media only screen and (min-width: 1336px) {
+        animation: ${lockinBG('1336px')};
+    }
+    @media only screen and (max-width: 1335px) {
+        animation: ${lockinBG('100vw')};
+    }
 `;
 
 export const LogoVectorBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: ${shrinkLogo};
     position: absolute;
+    @media only screen and (min-width: 1336px) {
+        animation: ${shrinkLogo('326.45vw', '23.13vw', '495.39vh', '35.1vh', '-1190px')};
+    }
+    @media only screen and (max-width: 1335px) {
+        animation: ${shrinkLogo('326.45vw', '23.13vw', '495.39vh', '35.1vh', 'calc(-100vw + 145px)')};
+    }
 `;
 
 export const LogoType = styled(Black)`
-    animation: ${shrinkLogotype};
     color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     position: absolute;
+    @media only screen and (min-width: 1336px) {
+        animation: ${shrinkLogotype};
+    }
+    @media only screen and (max-width: 1335px) {
+        animation: ${shrinkLogotype};
+    }
 `;
 
 export const WelcomeContent = styled.div`

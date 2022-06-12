@@ -3,12 +3,12 @@ import { Black, ExtraBold, Medium } from "./Fonts";
 
 const lockin = (width) => keyframes`
     0% {
-        width: 115vw;
-        height: 110vh;
+        width: 100vw;
+        height: 100vh;
     }
     40% {
-        width: 115vw;
-        height: 110vh;
+        width: 100vw;
+        height: 100vh;
     }
     70% {
         width: ${width};
@@ -98,40 +98,45 @@ const shrink = (margin) => keyframes`
 
 const shrinkLogo = (margin) => css`${shrink(margin)} 5s ease-in-out 1 normal forwards`;
 
-const shrinkTitle = (startW, endW, startH, endH, startF, endF, startM, endM) => keyframes`
+const shrinkTitle = (startW, endW, startH, endH, startF, endF, startMT, endMT, startML, endML) => keyframes`
     0% {
         opacity: 0%;
         width: ${startW};
         height: ${startH};
         font-size: ${startF};
-        margin: ${startM};
+        margin-top: ${startMT};
+        margin-left: ${startML};
     }
     20%{
         opacity: 0%;
         width: ${startW};
         height: ${startH};
         font-size: ${startF};
-        margin: ${startM};
+        margin-top: ${startMT};
+        margin-left: ${startML};
     }
     40%{
         opacity: 100%;
         width: ${startW};
         height: ${startH};
         font-size: ${startF};
-        margin: ${startM};
+        margin-top: ${startMT};
+        margin-left: ${startML};
     }
     70% {
         width: ${endW};
         height: ${endH};
         font-size: ${endF};
-        margin: ${endM};
+        margin-top: ${endMT};
+        margin-left: ${endML};
         opacity: 100%;
     }
     85%{
         width: ${endW};
         height: ${endH};
         font-size: ${endF};
-        margin: ${endM};
+        margin-top: ${endMT};
+        margin-left: ${endML};
         opacity: 0%;
     }
     100% {
@@ -139,11 +144,12 @@ const shrinkTitle = (startW, endW, startH, endH, startF, endF, startM, endM) => 
         width: 0px;
         height: 0px;
         font-size: 0px;
-        margin: ${endM};
+        margin-top: ${endMT};
+        margin-left: ${endML};
     }
 `;
 
-const shrinkLogotype = (startW, endW, startH, endH, startF, endF, startM, endM) => css`${shrinkTitle(startW, endW, startH, endH, startF, endF, startM, endM)} 5s ease-in-out 1 normal forwards`;
+const shrinkLogotype = (startW, endW, startH, endH, startF, endF, startMT, endMT, startML, endML) => css`${shrinkTitle(startW, endW, startH, endH, startF, endF, startMT, endMT, startML, endML)} 5s ease-in-out 1 normal forwards`;
 
 export const WelcomeAnimation = styled.div`
     background: linear-gradient(#76D97E, #28A690);
@@ -179,10 +185,10 @@ export const LogoType = styled(Black)`
     color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     position: absolute;
     @media only screen and (min-width: 1337px) {
-        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '150px', '28px', '900px 0px 0px -25px', '4px 0px 0px -1023px')};
+        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '150px', '28px', '900px', '4px', '-25px', '-1023px')};
     }
     @media only screen and (max-width: 1336px) {
-        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '100px', '28px', '900px 0px 0px 325px', '4px 0px 0px -1023px')};
+        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '75px', '28px', '77vh', '4px', 'calc(50vw - 450px)', 'calc(-100vw + 312px)')};
     }
 `;
 

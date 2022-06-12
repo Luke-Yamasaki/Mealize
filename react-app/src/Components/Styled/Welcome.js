@@ -32,25 +32,31 @@ const lockinBG = (width) => css`${lockin(width)} 5s ease-in-out 1 normal forward
 const shrink = (margin) => keyframes`
     0% {
         width: 326.45vw;
-        height: '495.39vh';
+        height: 495.39vh;
         max-width: 8357.219px;
         max-height: 7133.676px;
     }
     20%{
         width: 23.13vw;
         height: 35.1vh;
+        min-width: 200px;
+        min-height: 200px;
         max-width: 592.167px;
         max-height: 505.471px;
     }
     30% {
         width: 23.13vw;
         height: 35.1vh;
+        min-width: 200px;
+        min-height: 200px;
         max-width: 592.167px;
         max-height: 505.471px;
     }
     40% {
         width: 23.13vw;
         height: 35.1vh;
+        min-width: 200px;
+        min-height: 200px;
         max-width: 592.167px;
         max-height: 505.471px;
         margin-left: 0px;
@@ -58,6 +64,10 @@ const shrink = (margin) => keyframes`
     70% {
         width: 45px;
         height: 45px;
+        min-width: 45px;
+        min-height: 45px;
+        max-width: 45px;
+        max-height: 45px;
         display: none;
         margin-left: ${margin};
         opacity: 100%;
@@ -65,6 +75,10 @@ const shrink = (margin) => keyframes`
     85%{
         width: 45px;
         height: 45px;
+        min-width: 45px;
+        min-height: 45px;
+        max-width: 45px;
+        max-height: 45px;
         display: none;
         margin-left: ${margin};
         opacity: 0%;
@@ -73,6 +87,10 @@ const shrink = (margin) => keyframes`
         opacity: 0%;
         width: 0px;
         height: 0px;
+        min-width: 0px;
+        min-height: 0px;
+        max-width: 0px;
+        max-height: 0px;
         display: none;
         margin-left: ${margin};
     }
@@ -136,10 +154,10 @@ export const WelcomeAnimation = styled.div`
     gap: 50px;
     position: absolute;
     z-index: 500;
-    @media only screen and (min-width: 1336px) {
+    @media only screen and (min-width: 1337px) {
         animation: ${lockinBG('1336px')};
     }
-    @media only screen and (max-width: 1335px) {
+    @media only screen and (max-width: 1336px) {
         animation: ${lockinBG('100vw')};
     }
 `;
@@ -149,10 +167,10 @@ export const LogoVectorBox = styled.div`
     justify-content: center;
     align-items: center;
     position: absolute;
-    @media only screen and (min-width: 1336px) {
+    @media only screen and (min-width: 1337px) {
         animation: ${shrinkLogo('-1190px')};
     }
-    @media only screen and (max-width: 1335px) {
+    @media only screen and (max-width: 1336px) {
         animation: ${shrinkLogo('calc(-100vw + 145px)')};
     }
 `;
@@ -164,7 +182,7 @@ export const LogoType = styled(Black)`
         animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '150px', '28px', '900px 0px 0px -25px', '4px 0px 0px -1023px')};
     }
     @media only screen and (max-width: 1336px) {
-        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '100px', '21px', '900px 0px 0px -25px', '4px 0px 0px -142px')};
+        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '100px', '28px', '900px 0px 0px 325px', '4px 0px 0px -1023px')};
     }
 `;
 

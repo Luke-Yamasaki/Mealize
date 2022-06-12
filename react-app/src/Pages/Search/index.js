@@ -21,12 +21,14 @@ import brockLee from './Brock-Lee.png';
 
 //styled-components
 import { PageBackGround } from '../../Components/Styled/Layout';
-import { FourOFourImage } from '../../Components/Styled/404';
 import {
     SearchTitle,
     SearchSection,
     SearchFeed,
-    SearchWord
+    SearchWord,
+    NoResults,
+    NoResultsImage,
+    NoSearchTitle
 } from '../../Components/Styled/Search';
 
 export const SearchPage = () => {
@@ -113,7 +115,7 @@ export const SearchPage = () => {
             bordercolor={theme === 'light' ? '#B2B2B2' : '#616161'}
         >
             <SearchSection>
-                <SearchTitle theme={theme}>Search results for:<SearchWord theme={theme}>{searchword}</SearchWord></SearchTitle>
+                <SearchTitle theme={theme} filter={searchFilter === 'none'}>Search results for:<SearchWord theme={theme}>{searchword}</SearchWord></SearchTitle>
                 <SearchFeed>
                     {searchFilter === 'business' && businessArr.map(business =>
                     <>
@@ -164,10 +166,10 @@ export const SearchPage = () => {
                         <PostCard post={post} />
                     )}
                     {searchFilter === 'none' &&
-                    <>
-                        <SearchTitle theme={theme}>We couldn't find any search results.</SearchTitle>
-                        <FourOFourImage theme={theme} src={brockLee} margin='285px'/>
-                    </>
+                    <NoResults>
+                        <NoSearchTitle theme={theme}>We couldn't find any search results.</NoSearchTitle>
+                        <NoResultsImage theme={theme} src={brockLee}/>
+                    </NoResults>
 
                     }
                 </SearchFeed>

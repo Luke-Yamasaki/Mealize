@@ -1,16 +1,8 @@
 import styled, {css, keyframes} from "styled-components";
 import { Black, ExtraBold, Medium } from "./Fonts";
 
-const lockin = keyframes`
+const lockin = (width) => keyframes`
     0% {
-        width: 100vw;
-        height: 100vh;
-    }
-    20% {
-        width: 100vw;
-        height: 100vh;
-    }
-    30% {
         width: 100vw;
         height: 100vh;
     }
@@ -19,108 +11,132 @@ const lockin = keyframes`
         height: 100vh;
     }
     70% {
-        width: 1336px;
+        width: ${width};
         height: 50px;
         opacity: 100%;
     }
     85%{
-        width: 1336px;
+        width: ${width};
         height: 50px;
         opacity: 0%;
     }
     100% {
         opacity: 0%;
-        width: 1336px;
+        width: ${width};
         height: 0px;
     }
 `;
 
-const lockinBG = () => css`${lockin} 5s ease-in-out 1 normal forwards`;
+const lockinBG = (width) => css`${lockin(width)} 5s ease-in-out 1 normal forwards`;
 
-const shrink = keyframes`
+const shrink = (margin) => keyframes`
     0% {
-        width: 8357.219px;
-        height: 7133.676px;
+        width: 326.45vw;
+        height: 495.39vh;
+        max-width: 8357.219px;
+        max-height: 7133.676px;
     }
     20%{
-        width: 592.167px;
-        height: 505.471px;
+        width: 23.13vw;
+        height: 35.1vh;
+        min-width: 200px;
+        min-height: 200px;
+        max-width: 592.167px;
+        max-height: 505.471px;
     }
     30% {
-        width: 592.167px;
-        height: 505.471px;
+        width: 23.13vw;
+        height: 35.1vh;
+        min-width: 200px;
+        min-height: 200px;
+        max-width: 592.167px;
+        max-height: 505.471px;
     }
     40% {
-        width: 592.167px;
-        height: 505.471px;
+        width: 23.13vw;
+        height: 35.1vh;
+        min-width: 200px;
+        min-height: 200px;
+        max-width: 592.167px;
+        max-height: 505.471px;
         margin-left: 0px;
     }
     70% {
         width: 45px;
         height: 45px;
+        min-width: 45px;
+        min-height: 45px;
+        max-width: 45px;
+        max-height: 45px;
         display: none;
-        margin-left: -1190px;
+        margin-left: ${margin};
         opacity: 100%;
     }
     85%{
         width: 45px;
         height: 45px;
+        min-width: 45px;
+        min-height: 45px;
+        max-width: 45px;
+        max-height: 45px;
         display: none;
-        margin-left: -1190px;
+        margin-left: ${margin};
         opacity: 0%;
     }
     100% {
         opacity: 0%;
         width: 0px;
         height: 0px;
+        min-width: 0px;
+        min-height: 0px;
+        max-width: 0px;
+        max-height: 0px;
         display: none;
-        margin: 0px 0px 0px -1190px;
+        margin-left: ${margin};
     }
 `;
 
-const shrinkLogo = () => css`${shrink} 5s ease-in-out 1 normal forwards`;
+const shrinkLogo = (margin) => css`${shrink(margin)} 5s ease-in-out 1 normal forwards`;
 
-const shrinkTitle = keyframes`
+const shrinkTitle = (startW, endW, startH, endH, startF, endF, startMT, endMT, startML, endML) => keyframes`
     0% {
         opacity: 0%;
-        width: 500px;
-        height: 300px;
-        font-size: 150px;
-        margin: 900px 0px 0px -25px;
+        width: ${startW};
+        height: ${startH};
+        font-size: ${startF};
+        margin-top: ${startMT};
+        margin-left: ${startML};
     }
-    20% {
+    20%{
         opacity: 0%;
-        width: 500px;
-        height: 300px;
-        font-size: 150px;
-        margin: 900px 0px 0px -25px;
-    }
-    30%{
-        opacity: 100%;
-        width: 500px;
-        height: 300px;
-        font-size: 150px;
-        margin: 900px 0px 0px -25px;
+        width: ${startW};
+        height: ${startH};
+        font-size: ${startF};
+        margin-top: ${startMT};
+        margin-left: ${startML};
     }
     40%{
         opacity: 100%;
-        width: 500px;
-        height: 300px;
-        font-size: 150px;
-        margin: 900px 0px 0px -25px;
+        width: ${startW};
+        height: ${startH};
+        font-size: ${startF};
+        margin-top: ${startMT};
+        margin-left: ${startML};
     }
     70% {
-        width: 100px;
-        height: 30px;
-        font-size: 28px;
-        margin: 10px 0px 0px -1013px;
+        width: ${endW};
+        height: ${endH};
+        font-size: ${endF};
+        margin-top: ${endMT};
+        margin-left: ${endML};
         opacity: 100%;
     }
     85%{
-        width: 100px;
-        height: 30px;
-        font-size: 28px;
-        margin: 10px 0px 0px -1013px;
+        width: ${endW};
+        height: ${endH};
+        font-size: ${endF};
+        margin-top: ${endMT};
+        margin-left: ${endML};
         opacity: 0%;
     }
     100% {
@@ -128,11 +144,12 @@ const shrinkTitle = keyframes`
         width: 0px;
         height: 0px;
         font-size: 0px;
-        margin: 10px 0px 0px -1013px;
+        margin-top: ${endMT};
+        margin-left: ${endML};
     }
 `;
 
-const shrinkLogotype = () => css`${shrinkTitle} 5s ease-in-out 1 normal forwards`;
+const shrinkLogotype = (startW, endW, startH, endH, startF, endF, startMT, endMT, startML, endML) => css`${shrinkTitle(startW, endW, startH, endH, startF, endF, startMT, endMT, startML, endML)} 5s ease-in-out 1 normal forwards`;
 
 export const WelcomeAnimation = styled.div`
     background: linear-gradient(#76D97E, #28A690);
@@ -141,23 +158,38 @@ export const WelcomeAnimation = styled.div`
     justify-content: center;
     align-items: center;
     gap: 50px;
-    animation: ${lockinBG};
     position: absolute;
     z-index: 500;
+    @media only screen and (min-width: 1337px) {
+        animation: ${lockinBG('1336px')};
+    }
+    @media only screen and (max-width: 1336px) {
+        animation: ${lockinBG('100vw')};
+    }
 `;
 
 export const LogoVectorBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    animation: ${shrinkLogo};
     position: absolute;
+    @media only screen and (min-width: 1337px) {
+        animation: ${shrinkLogo('-1190px')};
+    }
+    @media only screen and (max-width: 1336px) {
+        animation: ${shrinkLogo('calc(-100vw + 145px)')};
+    }
 `;
 
 export const LogoType = styled(Black)`
-    animation: ${shrinkLogotype};
     color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     position: absolute;
+    @media only screen and (min-width: 1337px) {
+        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '150px', '28px', '900px', '4px', '-25px', '-1023px')};
+    }
+    @media only screen and (max-width: 1336px) {
+        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '75px', '28px', '77vh', '4px', 'calc(50vw - 450px)', 'calc(-100vw + 312px)')};
+    }
 `;
 
 export const WelcomeContent = styled.div`

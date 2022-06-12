@@ -16,6 +16,10 @@ body {
     sans-serif;
 }
 
+#body {
+  margin: 0px;
+}
+
 ::-webkit-scrollbar {
   width: 15px;
 }

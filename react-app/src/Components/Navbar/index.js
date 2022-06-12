@@ -9,7 +9,7 @@ import { showModal, setCurrentModal } from '../../store/modal';
 import { Logo } from '../../Assets/Logo';
 
 //Components
-import { NotificationBar } from './NotificationBar';
+// import { NotificationBar } from './NotificationBar';
 import { SearchBar } from './SearchBar';
 import { LoginForm } from '../../Forms/Login';
 import { SignupForm } from '../../Forms/Signup';
@@ -34,7 +34,7 @@ export const Navbar = () => {
     return (
         <NavBar>
             <Navigation>
-                <NavList>
+                <NavList guest='true'>
                     <LogoBox>
                         <MealizeLogoBox square='45px'>
                             <Logo theme={theme}/>
@@ -52,7 +52,7 @@ export const Navbar = () => {
                     </AuthBox>
                 </NavList>
             </Navigation>
-            <NotificationBar/>
+            {/* <NotificationBar/> */}
         </NavBar>
     )
 };

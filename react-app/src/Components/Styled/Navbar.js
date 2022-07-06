@@ -272,3 +272,9 @@ export const DropDownItem = styled.li`
     justify-content: flex-start;
     padding: 0px 5px 0px 5px;
 `;
+
+export const UserNameBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    
+`;

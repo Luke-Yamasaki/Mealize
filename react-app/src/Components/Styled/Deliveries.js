@@ -8,11 +8,12 @@ export const DeliveryPageWrapper = styled.main`
     align-items: top;
     max-width: 1336px;
     width: 100vw;
-    height: 900px;
+    min-height: 900px;
+    height: auto;
 `;
 
 export const DeliverySideMenu = styled.section`
-    width: 400px;
+    width: 25%;
     height: 900px;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -86,8 +87,8 @@ export const DeliveryTime = styled(Bold)`
 `;
 
 export const DeliveryField = styled.section`
-    width: 1200px;
-    height: 900px;
+    width: 75%;
+    height: auto;
     display: flex;
     flex-direction: column;
     algin-items: flex-start;
@@ -97,8 +98,8 @@ export const DeliveryField = styled.section`
 `;
 
 export const SelectDeliveryBox = styled.div`
-    width: 1200px;
-    height: 900px;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,8 +111,8 @@ export const SelectDeliveryText = styled(ExtraBold)`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 900px;
-    height: 200px;
+    width: 85%;
+    height: 300px;
     line-height: 50px;
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
 `;

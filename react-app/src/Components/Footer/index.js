@@ -19,7 +19,7 @@ export const Footer = () => {
             </div>
             <section style={{maxWidth: '1336px', width: '100vw', height: '100px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                 <div style={{width: '750px', height: '40px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', gap: '10px', alignItems: 'center', paddingLeft: '50px'}}>
-                    <p style={{fontSize: '16px', fontWeight: '900'}}>Mealize was designed and developed by Luke Yamasaki</p>
+                    <p style={{fontSize: '14px', fontWeight: '900'}}>Mealize was designed and developed by Luke Yamasaki</p>
                     <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700', textDecoration: 'none'}}>
                         <div>
                             <a style={{color: 'black', cursor: 'pointer'}} href='https://github.com/Luke-Yamasaki' target='_blank' rel="noreferrer noopener">
@@ -49,7 +49,7 @@ export const Footer = () => {
                     </li>
                 </div>
                 <div style={{width: '800px', height: '40px', display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', gap: '10px'}}>
-                    <p style={{fontSize: '16px', fontWeight: '900' }}>Huge thanks to App Academy and the Rocky Mountain College of Art + Design</p>
+                    <p style={{fontSize: '14px', fontWeight: '900' }}>Huge thanks to App Academy and the Rocky Mountain College of Art + Design</p>
                     <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700', textDecoration: 'none'}}>
                         <div>
                             <a style={{color: 'black', cursor: 'pointer'}} href='https://www.appacademy.io/' target='_blank' rel="noreferrer noopener">

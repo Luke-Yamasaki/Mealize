@@ -94,7 +94,6 @@ export const Deliveries = () => {
 
                 )}
             </DeliverySideMenu>
-
                 {!Object.values(deliveries).length &&
                     <DeliveryField theme={theme}>
                         <SelectDeliveryBox>

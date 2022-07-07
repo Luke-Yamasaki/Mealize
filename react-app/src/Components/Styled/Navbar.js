@@ -46,12 +46,17 @@ export const NavList = styled.div`
 `;
 
 export const Searchbar = styled.form`
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    max-width: 500px;
-    width: 30vw;
+    max-width: 600px;
+    width: 40vw;
     min-width: 225px;
     height: 30px;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
@@ -174,7 +179,6 @@ export const GradientLogoType = styled(Black)`
     align-items: center;
     justify-content: center;
     position: absolute;
-    position: absolute;
     margin-left: auto;
     margin-right: auto;
     left: 0;
@@ -271,4 +275,10 @@ export const DropDownItem = styled.li`
     align-items: center;
     justify-content: flex-start;
     padding: 0px 5px 0px 5px;
+`;
+
+export const UserNameBox = styled.div`
+    display: flex;
+    flex-direction: row;
+
 `;

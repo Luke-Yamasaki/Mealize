@@ -264,7 +264,7 @@ export const PostBox = styled.div`
     width: 310px;
     max-height: 410px;
     min-height: 150px;
-    height: auto;
+    height: 410px;
     border-radius: 5px;
     margin-top: -10px;
 `;

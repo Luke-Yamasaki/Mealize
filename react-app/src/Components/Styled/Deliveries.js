@@ -13,8 +13,8 @@ export const DeliveryPageWrapper = styled.main`
 `;
 
 export const DeliverySideMenu = styled.section`
-    width: 25%;
-    height: 900px;
+    width: 30%;
+    min-height: 900px;
     overflow-x: hidden;
     overflow-y: scroll;
     display: flex;

@@ -228,9 +228,9 @@ export const NavIconBoxes = styled.div`
 
 export const DropDownContainer = styled.div`
     width: 190px;
-    height: 340px;
+    height: 240px;
     position: absolute;
-    margin: ${props => props.type === 'user' ? '400px 0px 0px -75px' : '400px 0px 0px -25.1px'};
+    margin: ${props => props.type === 'user' ? '310px 0px 0px -75px' : '310px 0px 0px -25.1px'};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -275,10 +275,28 @@ export const DropDownItem = styled.li`
     align-items: center;
     justify-content: flex-start;
     padding: 0px 5px 0px 5px;
+    cursor: pointer;
 `;
 
-export const UserNameBox = styled.div`
+export const MenuItemBox = styled.div`
     display: flex;
     flex-direction: row;
+    width: 100%;
+    height: 25px;
+    text-decoration: ${props => props.underline ? 'underline' : ''};
+`;
 
+export const LogOutButton = styled.div`
+    width: 75px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: darkgreen;
+    border-color: lightgreen;
+    color: white;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.1px;
 `;

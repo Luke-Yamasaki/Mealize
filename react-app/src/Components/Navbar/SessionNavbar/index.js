@@ -50,7 +50,7 @@ export const SessionNavbar = ({sessionUser}) => {
         setSelected('');
         setFilter('available')
         dispatch(logout())
-        return <Redirect to='/' />
+        return <Redirect to='/'/>
     };
 
     const handleHome = (e) => {
@@ -89,6 +89,13 @@ export const SessionNavbar = ({sessionUser}) => {
         setShowSettings(!showSettings);
     };
 
+    const handleRedirect = (e, sessionUser) => {
+        e.preventDefault();
+        setShowSettings(false);
+        setShowUser(!showUser);
+        return history.push(`/organizations/${sessionUser.organizationId}`);
+    }
+
     return (
         <NavBar>
             <Navigation>
@@ -115,7 +122,7 @@ export const SessionNavbar = ({sessionUser}) => {
                         <NavIconBoxes theme={theme} onClick={handleUser} content="Y">
                             <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button'/>
                         </NavIconBoxes>
-                        {showUser && <NavMenu type={'userInfo'} sessionUser={sessionUser} logOut={logOut} />}
+                        {showUser && <NavMenu type={'userInfo'} sessionUser={sessionUser} logOut={logOut} handleRedirect={handleRedirect}/>}
                         <NavIconBoxes theme={theme} onClick={handleSettings} content="C">
                             <Settings theme={theme}/>
                         </NavIconBoxes>

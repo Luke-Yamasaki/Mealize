@@ -227,10 +227,10 @@ export const NavIconBoxes = styled.div`
 `;
 
 export const DropDownContainer = styled.div`
-    width: 160px;
-    height: 160px;
+    width: ${props => props.type === 'settings' ? '200px' : '160px'};
+    height: ${props => props.type === 'settings' ? '180px' : '160px'};
     position: absolute;
-    margin: ${props => props.type === 'user' ? '220px 0px 0px -60px' : '220px 0px 0px -25.1px'};
+    margin: ${props => props.type === 'settings' ? '240px 0px 0px -30px' : '220px 0px 0px -60px'};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -257,14 +257,14 @@ export const DropDownContainer = styled.div`
 `;
 
 export const DropDownMenu = styled.menu`
-    width: 140px;
-    height: 160px;
+    width: ${props => props.type === 'settings' ? '200px' : '140px'};
+    height: ${props => props.type === 'settings' ? '200px' : '160px'};
+    margin-top: ${props => props.type === 'settings' ? '25px' : '0px'};
     padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 15px;
 `;
 
 export const DropDownItem = styled.li`

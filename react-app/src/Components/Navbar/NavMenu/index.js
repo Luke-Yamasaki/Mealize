@@ -37,7 +37,7 @@ export const NavMenu = ({ type, sessionUser, logOut, handleRedirect }) => {
             </DropDownContainer>
         :
             <DropDownContainer theme={theme} type='settings'>
-                <DropDownMenu type='settings'>Customization
+                <DropDownMenu type='settings'> Customization
                     <Theme />
                     <BackGround />
                 </DropDownMenu>

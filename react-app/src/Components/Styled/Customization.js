@@ -51,11 +51,11 @@ export const CustomizationContainer = styled.div`
 `;
 
 export const ContentContainer = styled.div`
-    width: 160px;
-    height: 75px;
+    width: 200px;
+    height: 65px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     border-bottom: ${props => props.border === 'none' ? 'none' : props.theme === 'light' ? '1px solid grey' : '1px solid #616161'};
 `;
@@ -64,7 +64,7 @@ export const Label = styled.p`
     margin: 0px;
     padding: 0px;
     font-size: 12px;
-    margin-left: ${props => props.margin ? props.margin : '5px'};
+    margin-left: ${props => props.margin ? props.margin : '10px'};
     color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
 `;
 
@@ -76,7 +76,6 @@ export const IconContainer = styled(VectorBox)`
     height: 35px;
     border-radius: 5px;
     background-color: ${props => props.background};
-    background-color: red;
 `;
 
 export const LabelToggleBox = styled.div`
@@ -85,7 +84,7 @@ export const LabelToggleBox = styled.div`
     align-items: center;
     justify-content: space-between;
     height: 35px;
-    width: 125px;
+    width: 145px;
 `;
 
 export const ToggleBox = styled.div`

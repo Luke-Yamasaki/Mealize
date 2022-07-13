@@ -109,10 +109,9 @@ export const Deliveries = () => {
                         </SelectDeliveryBox>
                         {(sessionUser.isNonprofit && sessionUser.isManager) &&
                         <ExampleBox>
-                            <ExampleImages src={deliveryImg} width='275px'/>
-                            <ExampleImages src={pickupForm} width='590px'/>
+                            <ExampleImages src={deliveryImg} width='245px'/>
+                            <ExampleImages src={pickupForm} width='565px'/>
                         </ExampleBox>
-
                         }
                     </DeliveryField>
                 }

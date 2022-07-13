@@ -70,7 +70,7 @@ export const Searchbar = styled.form`
 `;
 
 export const SearchInput = styled.input`
-    max-width: 430px;
+    max-width: 530px;
     width: 90%;
     font-family: motiva-sans,sans-serif;
     font-weight: 700;
@@ -227,10 +227,10 @@ export const NavIconBoxes = styled.div`
 `;
 
 export const DropDownContainer = styled.div`
-    width: 190px;
-    height: 340px;
+    width: ${props => props.type === 'settings' ? '200px' : '160px'};
+    height: ${props => props.type === 'settings' ? '180px' : '160px'};
     position: absolute;
-    margin: ${props => props.type === 'user' ? '400px 0px 0px -75px' : '400px 0px 0px -25.1px'};
+    margin: ${props => props.type === 'settings' ? '240px 0px 0px -30px' : '220px 0px 0px -60px'};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -250,23 +250,26 @@ export const DropDownContainer = styled.div`
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
         border-top: 10px solid transparent;
-        border-bottom: ${props => props.theme === 'light' ? "12px solid white" : "12px solid white"};
+        border-bottom: ${props => props.theme === 'light' ? "12px solid white" : "12px solid #191919"};
         top: -22px;
         z-index: 90;
         filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 0.1px #191919)' : 'drop-shadow(0px 0px 0.1px white)'};    }
 `;
 
 export const DropDownMenu = styled.menu`
-    width: 100%;
-    height: 100%;
+    width: ${props => props.type === 'settings' ? '200px' : '140px'};
+    height: ${props => props.type === 'settings' ? '200px' : '160px'};
+    margin-top: ${props => props.type === 'settings' ? '25px' : '0px'};
+    gap: ${props => props.type === 'settings' ? '0px' : '15px'};
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 10px;
 `;
 
 export const DropDownItem = styled.li`
+    margin: 0px;
     list-style: none;
     width: calc(100% - 10px);
     height: 20px;
@@ -275,10 +278,31 @@ export const DropDownItem = styled.li`
     align-items: center;
     justify-content: flex-start;
     padding: 0px 5px 0px 5px;
+    cursor: pointer;
 `;
 
-export const UserNameBox = styled.div`
+export const MenuItemBox = styled.div`
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 25px;
+    text-decoration: ${props => props.underline ? 'underline' : ''};
+`;
 
+export const LogOutButton = styled.div`
+    width: 75px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: darkgreen;
+    border-color: lightgreen;
+    color: white;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.1px;
+    margin-top: 15px;
 `;

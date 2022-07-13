@@ -179,7 +179,7 @@ export const MessagesPage = () => {
                         </SelectMessageText>
 
                     </SelectMessageBox>
-                    <ExampleImages src={question} margin='-400px 0px 0px 250px' width='660px' height='500px'/>
+                    <ExampleImages src={question} margin='-400px 0px 0px 118px' width='660px' height='500px'/>
                 </>
 
                 }

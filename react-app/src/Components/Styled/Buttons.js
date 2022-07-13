@@ -22,7 +22,7 @@ export const MessageButtonBox = styled.div`
 `;
 
 export const MessageButtons = styled(MessageButtonBox)`
-    width: 1050px;
+    width: 84%;
     height: 40px;
     margin: 0px 0px 15px 0px;
     justify-content: flex-start;

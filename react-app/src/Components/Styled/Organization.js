@@ -10,6 +10,7 @@ export const OrgWrapper = styled.main`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    margin-top: -5px;
 `;
 
 //Banner
@@ -161,7 +162,7 @@ export const OrgQuestionText = styled(Bold)`
 
 //Items section
 export const OrgSection = styled.section`
-    width: 1100px;
+    width: 915px;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -172,7 +173,7 @@ export const OrgSection = styled.section`
 
 //Items filter
 export const OrgFilters = styled.div`
-    width: 1100px;
+    width: 915;
     height: 30px;
     display: flex;
     flex-direction: row;
@@ -232,7 +233,7 @@ export const OrgFilterSlash = styled(Bold)`
 
 //Items feed
 export const OrgPostFeed = styled.div`
-    width: 1100px;
+    width: 915;
     height: auto;
     display: flex;
     flex-wrap: wrap;

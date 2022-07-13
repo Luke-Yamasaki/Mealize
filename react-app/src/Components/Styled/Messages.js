@@ -177,7 +177,7 @@ export const MessageThreadField = styled.section`
 `;
 
 export const MessageFeed = styled.div`
-    width: 100%;
+    max-width: 936px;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -223,10 +223,9 @@ export const SingleMessage = styled.div`
 
 export const MessageContainer = styled.div`
     display: flex;
-    flex-direction: row;
     flex-direction: ${props => props.direction};
     align-items: top;
-    width: 100%;
+    width: calc(100% - 80px);
     gap: 10px;
     padding: ${props => props.direction === 'row' ? '0px 40px 0px 40px' : '0px 45px 0px 35px'};
     min-height: 50px;

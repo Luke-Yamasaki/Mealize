@@ -260,6 +260,7 @@ export const DropDownMenu = styled.menu`
     width: ${props => props.type === 'settings' ? '200px' : '140px'};
     height: ${props => props.type === 'settings' ? '200px' : '160px'};
     margin-top: ${props => props.type === 'settings' ? '25px' : '0px'};
+    gap: ${props => props.type === 'settings' ? '0px' : '15px'};
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -278,7 +279,6 @@ export const DropDownItem = styled.li`
     justify-content: flex-start;
     padding: 0px 5px 0px 5px;
     cursor: pointer;
-    background-color: blue;
 `;
 
 export const MenuItemBox = styled.div`
@@ -304,4 +304,5 @@ export const LogOutButton = styled.div`
     font-weight: 400;
     font-size: 12px;
     letter-spacing: 0.1px;
+    margin-top: 15px;
 `;

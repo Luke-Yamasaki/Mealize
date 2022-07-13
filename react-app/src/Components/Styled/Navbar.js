@@ -70,7 +70,7 @@ export const Searchbar = styled.form`
 `;
 
 export const SearchInput = styled.input`
-    max-width: 430px;
+    max-width: 530px;
     width: 90%;
     font-family: motiva-sans,sans-serif;
     font-weight: 700;

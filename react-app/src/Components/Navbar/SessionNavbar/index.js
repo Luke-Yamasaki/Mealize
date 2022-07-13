@@ -18,6 +18,7 @@ import { ButtonText, ProfileButton, PostButton, LogoutButton } from '../../Style
 // import { NotificationBar } from '../NotificationBar';
 import { SearchBar } from '../SearchBar';
 import PostForm from '../../../Forms/Post';
+import { NavMenu } from '../NavMenu';
 
 //Icons
 import { Logo } from '../../../Assets/Logo';
@@ -114,33 +115,11 @@ export const SessionNavbar = ({sessionUser}) => {
                         <NavIconBoxes theme={theme} onClick={handleUser} content="Y">
                             <ProfileButton src={sessionUser.profileImageUrl} alt='Profile Button'/>
                         </NavIconBoxes>
-                        {showUser &&
-                            <DropDownContainer theme={theme} type='user'>
-                                <DropDownMenu>
-                                    <li>
-                                        <div theme={theme}>{sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}</div>
-                                    </li>
-                                    <li>
-                                        <div onClick={logOut}>Log out</div>
-                                    </li>
-                                </DropDownMenu>
-                            </DropDownContainer>
-                        }
+                        {showUser && <NavMenu type={'userInfo'} sessionUser={sessionUser} logOut={logOut} />}
                         <NavIconBoxes theme={theme} onClick={handleSettings} content="C">
                             <Settings theme={theme}/>
                         </NavIconBoxes>
-                        {showSettings &&
-                            <DropDownContainer theme={theme} type='settings'>
-                                <DropDownMenu>Customization
-                                    <DropDownItem theme={theme}>
-                                        {sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}
-                                    </DropDownItem>
-                                    <DropDownItem onClick={logOut}>
-                                        Log out
-                                    </DropDownItem>
-                                </DropDownMenu>
-                            </DropDownContainer>
-                        }
+                        {showSettings && <NavMenu type={'settings'} sessionUser={sessionUser}/>}
                     </SmallNavIconContainer>
                     {sessionUser.isManager ?
                         <PostButton onClick={showPostForm}>

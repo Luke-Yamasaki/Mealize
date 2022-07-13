@@ -100,7 +100,7 @@ export const SessionNavbar = ({sessionUser}) => {
         <NavBar>
             <Navigation>
                 <NavList>
-                    <LogoBox>
+                    <LogoBox onClick={handleHome}>
                         <VectorBox square='40px' resize='41px' cursor='pointer'>
                             <Logo theme={theme} />
                         </VectorBox>

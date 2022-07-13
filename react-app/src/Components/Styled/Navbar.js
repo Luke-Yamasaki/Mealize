@@ -238,7 +238,7 @@ export const DropDownContainer = styled.div`
     padding: 5px;
     border-radius: 5px;
     z-index: 91;
-    filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 1px #191919)' : 'drop-shadow(0px 0px 1px #191919)'};
+    filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 1px #191919)' : 'drop-shadow(0px 0px 1px white)'};
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-family: motiva-sans, sans-serif;
@@ -253,7 +253,7 @@ export const DropDownContainer = styled.div`
         border-bottom: ${props => props.theme === 'light' ? "12px solid white" : "12px solid #191919"};
         top: -22px;
         z-index: 90;
-        filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 0.1px #191919)' : 'drop-shadow(0px 0px 0.1px #191919)'};    }
+        filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 0.1px #191919)' : 'drop-shadow(0px 0px 0.1px white)'};    }
 `;
 
 export const DropDownMenu = styled.menu`

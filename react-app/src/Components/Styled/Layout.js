@@ -293,7 +293,7 @@ export const ExampleBox = styled.div`
      flex-direction: row;
      align-items: center;
      justify-content: space-between;
-     width: 890px;
+     width: 810px;
      height: 500px;
-     margin: -100px 0px 100px 150px;
+     margin: -100px 0px 100px 72px;
 `;

@@ -51,47 +51,32 @@ export const CustomizationContainer = styled.div`
 `;
 
 export const ContentContainer = styled.div`
-    width: 300px;
-    height: 100px;
+    width: 160px;
+    height: 75px;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap: 10px;
     border-bottom: ${props => props.border === 'none' ? 'none' : props.theme === 'light' ? '1px solid grey' : '1px solid #616161'};
 `;
 
 export const Label = styled.p`
     margin: 0px;
     padding: 0px;
-    font-size: 16px;
+    font-size: 12px;
     margin-left: ${props => props.margin ? props.margin : '5px'};
     color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
 `;
 
 export const IconContainer = styled(VectorBox)`
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
-    margin-left: 10px;
-    background-color: ${props => props.background};
-    &:hover {
-        transform: none;
-        width: 50px;
-        height: 50px;
-    }
-`;
-
-export const SettingsBox = styled.div`
-    width: 50px;
-    height: 50px;
     display: flex;
-    position: fixed;
-    justify-content: center;
     align-items: center;
-    border-radius: 50px;
-    background-color: ${props => props.theme === 'light' ? '#327647' : '#76D97E' };
-    animation: ${props => props.animation};
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    background-color: ${props => props.background};
+    background-color: red;
 `;
 
 export const LabelToggleBox = styled.div`
@@ -99,8 +84,8 @@ export const LabelToggleBox = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: 50px;
-    width: 200px;
+    height: 35px;
+    width: 125px;
 `;
 
 export const ToggleBox = styled.div`
@@ -122,3 +107,77 @@ export const ToggleCircle = styled.div`
     border-radius: 30px;
     background-color: ${props => props.type !== 'theme' && props.theme === 'dark' && !props.selected ? 'white' : '#191919'};
 `;
+
+
+// export const ContentContainer = styled.div`
+//     width: 300px;
+//     height: 100px;
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: flex-start;
+//     align-items: center;
+//     gap: 10px;
+//     border-bottom: ${props => props.border === 'none' ? 'none' : props.theme === 'light' ? '1px solid grey' : '1px solid #616161'};
+// `;
+
+// export const Label = styled.p`
+//     margin: 0px;
+//     padding: 0px;
+//     font-size: 16px;
+//     margin-left: ${props => props.margin ? props.margin : '5px'};
+//     color: ${props => props.theme === 'light' ? '#000000' : '#FFFFFF'};
+// `;
+
+// export const IconContainer = styled(VectorBox)`
+//     width: 50px;
+//     height: 50px;
+//     border-radius: 5px;
+//     margin-left: 10px;
+//     background-color: ${props => props.background};
+//     &:hover {
+//         transform: none;
+//         width: 50px;
+//         height: 50px;
+//     }
+// `;
+
+// export const SettingsBox = styled.div`
+//     width: 50px;
+//     height: 50px;
+//     display: flex;
+//     position: fixed;
+//     justify-content: center;
+//     align-items: center;
+//     border-radius: 50px;
+//     background-color: ${props => props.theme === 'light' ? '#327647' : '#76D97E' };
+//     animation: ${props => props.animation};
+// `;
+
+// export const LabelToggleBox = styled.div`
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     justify-content: space-between;
+//     height: 50px;
+//     width: 200px;
+// `;
+
+// export const ToggleBox = styled.div`
+//     width: 50px;
+//     height: 25px;
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     justify-content: ${props => props.direction};
+//     padding: 2px;
+//     border: ${props => props.theme === 'light' ? '2px solid rgba(0, 0, 0, 0.5)' : '1px solid rgba(255, 255, 255, 0.25)'};
+//     border-radius: 30px;
+//     background-color: ${props => props.selected ? '#76D97E' : 'none'};
+// `;
+
+// export const ToggleCircle = styled.div`
+//     width: 25px;
+//     height: 25px;
+//     border-radius: 30px;
+//     background-color: ${props => props.type !== 'theme' && props.theme === 'dark' && !props.selected ? 'white' : '#191919'};
+// `;

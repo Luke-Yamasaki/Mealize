@@ -227,10 +227,10 @@ export const NavIconBoxes = styled.div`
 `;
 
 export const DropDownContainer = styled.div`
-    width: 190px;
-    height: 240px;
+    width: 160px;
+    height: 160px;
     position: absolute;
-    margin: ${props => props.type === 'user' ? '310px 0px 0px -75px' : '310px 0px 0px -25.1px'};
+    margin: ${props => props.type === 'user' ? '220px 0px 0px -60px' : '220px 0px 0px -25.1px'};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -238,7 +238,7 @@ export const DropDownContainer = styled.div`
     padding: 5px;
     border-radius: 5px;
     z-index: 91;
-    filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 1px #191919)' : 'drop-shadow(0px 0px 1px white)'};
+    filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 1px #191919)' : 'drop-shadow(0px 0px 1px #191919)'};
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     color: ${props => props.theme === 'light' ? '#191919' : 'white'};
     font-family: motiva-sans, sans-serif;
@@ -250,23 +250,25 @@ export const DropDownContainer = styled.div`
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
         border-top: 10px solid transparent;
-        border-bottom: ${props => props.theme === 'light' ? "12px solid white" : "12px solid white"};
+        border-bottom: ${props => props.theme === 'light' ? "12px solid white" : "12px solid #191919"};
         top: -22px;
         z-index: 90;
-        filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 0.1px #191919)' : 'drop-shadow(0px 0px 0.1px white)'};    }
+        filter: ${props => props.theme === 'light' ? 'drop-shadow(0px 0px 0.1px #191919)' : 'drop-shadow(0px 0px 0.1px #191919)'};    }
 `;
 
 export const DropDownMenu = styled.menu`
-    width: 100%;
-    height: 100%;
+    width: 140px;
+    height: 160px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 10px;
+    gap: 15px;
 `;
 
 export const DropDownItem = styled.li`
+    margin: 0px;
     list-style: none;
     width: calc(100% - 10px);
     height: 20px;
@@ -276,11 +278,14 @@ export const DropDownItem = styled.li`
     justify-content: flex-start;
     padding: 0px 5px 0px 5px;
     cursor: pointer;
+    background-color: blue;
 `;
 
 export const MenuItemBox = styled.div`
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
     width: 100%;
     height: 25px;
     text-decoration: ${props => props.underline ? 'underline' : ''};

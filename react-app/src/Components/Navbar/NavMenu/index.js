@@ -8,6 +8,9 @@ import {
     LogOutButton
 } from "../../Styled/Navbar";
 
+import { Theme } from '../../../Components/Customization/CustomizationSection/Theme';
+import { BackGround } from '../../../Components/Customization/CustomizationSection/BackGround';
+
 export const NavMenu = ({ type, sessionUser, logOut, handleRedirect }) => {
     const { theme, setTheme } = useTheme();
     const organization = sessionUser.organizationId;
@@ -34,13 +37,9 @@ export const NavMenu = ({ type, sessionUser, logOut, handleRedirect }) => {
             </DropDownContainer>
         :
             <DropDownContainer theme={theme} type='settings'>
-                <DropDownMenu>Customization
-                    <DropDownItem theme={theme}>
-                        {sessionUser.firstName.length <= 8 ? `Hello ${sessionUser.firstName}!` : `Hello ${sessionUser.firstName.slice(0, 7)}...!`}
-                    </DropDownItem>
-                    <DropDownItem onClick={logOut}>
-                        <LogOutButton>Log out</LogOutButton>
-                    </DropDownItem>
+                <DropDownMenu type='settings'>Customization
+                    <Theme />
+                    <BackGround />
                 </DropDownMenu>
             </DropDownContainer>
         }

@@ -23,7 +23,6 @@ markupsafe==2.0.1
 python-dateutil==2.8.1
 python-dotenv==0.14.0
 python-editor==1.0.4
-python-stdnum==1.17
 setuptools==62.1.0; python_version >= '3.7'
 six==1.15.0
 sqlalchemy-utils==0.38.2; python_version ~= '3.4'

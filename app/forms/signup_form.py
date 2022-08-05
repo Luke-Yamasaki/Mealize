@@ -2,8 +2,6 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, IntegerField, BooleanField, DateField
 from wtforms.validators import InputRequired, Length, Email, ValidationError, EqualTo
 
-# from app.stdnum.us.ein import *
-
 from app.models import User
 
 def existing_user(form, field):

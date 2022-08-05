@@ -356,14 +356,6 @@
             "index": "pypi",
             "version": "==1.0.4"
         },
-        "python-stdnum": {
-            "hashes": [
-                "sha256:374e2b5e13912ccdbf50b0b23fca2c3e0531174805c32d74e145f37756328340",
-                "sha256:a46e6cf9652807314d369b654b255c86a59f93d18be2834f3d567ed1a346c547"
-            ],
-            "index": "pypi",
-            "version": "==1.17"
-        },
         "s3transfer": {
             "hashes": [
                 "sha256:7a6f4c4d1fdb9a2b640244008e142cbc2cd3ae34b386584ef044dd0f27101971",

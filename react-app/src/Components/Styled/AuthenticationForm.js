@@ -314,7 +314,7 @@ export const InputResetContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 330px;
-    height: 15px;
+    height: 10px;
     padding: 5px;
     padding-right: 20px;
 `;

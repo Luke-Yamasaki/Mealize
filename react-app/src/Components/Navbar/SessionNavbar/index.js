@@ -133,7 +133,7 @@ export const SessionNavbar = ({sessionUser}) => {
                             <ButtonText>{sessionUser.isNonprofit ? 'New post' : 'New post'}</ButtonText>
                         </PostButton>
                         :
-                        <PostButton onClick={logout}>
+                        <PostButton onClick={logOut}>
                             <ButtonText>Log out</ButtonText>
                         </PostButton>
                     }

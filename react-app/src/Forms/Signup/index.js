@@ -743,8 +743,8 @@ export const SignupForm = () => {
                 }
                 {formSection === 'optional' &&
                     <FormContent>
-                        <InputContainer height='275px' margin='50px 0px 0px 0px'>
-                            <InputErrorBox height='200px'>
+                        <InputContainer height='275px' margin='30px 0px 0px 0px'>
+                            <InputErrorBox height='250px'>
                                 <Fieldset height='200px'>
                                     <Legend htmlFor='datails' theme={theme} width='125px'>Optional details
                                         <CheckBoxContainer long='long'>

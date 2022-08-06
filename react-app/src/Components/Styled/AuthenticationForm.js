@@ -83,7 +83,7 @@ export const FormContent = styled.div`
     display: flex;
     flex-direction: column;
     align-items: ${props => props.align ? props.align : 'center'};
-    justify-content: space-between;
+    justify-content: ${props => props.align};
     margin-bottom: ${props => props.margin ? props.margin: '0px'};
 `;
 

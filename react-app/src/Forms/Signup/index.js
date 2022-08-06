@@ -667,7 +667,7 @@ export const SignupForm = () => {
                                 </ErrorBox>
                                 <Fieldset error={imageError.length > 0} height='275px'>
                                     <Legend htmlFor='imageBox' theme={theme} error={imageError.length > 0} width='105px'>Profile image
-                                            <DragNDrop onDrop={droppedImage} onDragOver={e => e.preventDefault()} width='355px' height={imageError.length > 0 ? '215px' : '230px'} margin='0px 0px 0px -5px'>
+                                            <DragNDrop onDrop={droppedImage} onDragOver={e => e.preventDefault()} width='355px' height={imageError.length > 0 ? '213px' : '227px'} margin='0px 0px 0px -5px'>
                                             Darg and drop your profile image or
                                             <Input id='imageBox' theme={theme} bg='none' lineHeight='10px' width='300px' type="file" accept="image/png, image/jpeg, image/jpg" onChange={updateImage} required/>
                                         </DragNDrop>
@@ -678,8 +678,8 @@ export const SignupForm = () => {
                     </FormContent>
                 }
                 {formSection === 'fourth' &&
-                    <FormContent align='flex-end'>
-                            <InputContainer height='350px' margin={emailError.length || phoneError.length || passwordError.length || confirmError.length ? '20px 0px -40px 0px': '10px 0px -30px 0px'}>
+                        <FormContent>
+                            <InputContainer height='350px' margin={emailError.length || phoneError.length || passwordError.length || confirmError.length ? '0px 0px -40px 0px': '0px 0px -20px 0px'}>
                             <InputErrorBox>
                                 <ErrorBox theme={theme} height={emailError.length > 0 ? '10px' : '0px'}>
                                     <Error>{emailError[0]}</Error>
@@ -777,7 +777,7 @@ export const SignupForm = () => {
                         </InputContainer>
                     </FormContent>
                 }
-                <ButtonBox margin={emailError.length || phoneError.length || passwordError.length || confirmError.length ? '-50px' : '0px'}>
+                <ButtonBox>
                     <InputButtonBox>
                         <CancelButton onClick={cancel}>
                             <ButtonText>Cancel</ButtonText>

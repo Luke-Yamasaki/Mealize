@@ -559,7 +559,7 @@ export const SignupForm = () => {
                 </FormTitleBox>
                 {formSection === 'first' &&
                     <FormContent>
-                        <InputContainer height={isNonprofit ? '200px' : '130px'} margin='50px 0px 0px 0px'>
+                        <InputContainer height={isNonprofit ? '250px' : '160px'} margin='50px 0px 0px 0px'>
                             <Fieldset>
                                 <Legend theme={theme} width='223px'> Do you work for a nonprofit?
                                 <CheckBoxContainer>

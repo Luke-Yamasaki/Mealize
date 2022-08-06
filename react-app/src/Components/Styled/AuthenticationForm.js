@@ -82,8 +82,9 @@ export const FormContent = styled.div`
     height: 350px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: ${props => props.align ? props.align : 'center'};
     justify-content: space-between;
+    margin-bottom: ${props => props.margin ? props.margin: '0px'};
 `;
 
 export const MessageFormContent = styled(FormContent)`
@@ -96,14 +97,17 @@ export const MessageFormContent = styled(FormContent)`
 export const InputContainer = styled(FormContent)`
     height: ${props => props.height};
     margin: ${props => props.margin ? props.margin : '0px'};
+    justify-content: flex-end;
 `;
 
 export const InputErrorBox = styled(FormContent)`
     min-height: 70px;
-    height: ${props => props.height ? props.height : 'auto'};
+    height: ${props => props.height ? props.height : '80px'};
+    display: flex;
+    flex-direction: column;
     justify-content: flex-end;
     align-items: left;
-    gap: 5px;
+    gap: 7px;
 `;
 
 export const Fieldset = styled.fieldset`
@@ -310,7 +314,7 @@ export const InputResetContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 330px;
-    height: 20px;
+    height: 15px;
     padding: 5px;
     padding-right: 20px;
 `;

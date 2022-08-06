@@ -151,6 +151,68 @@ const shrinkTitle = (startW, endW, startH, endH, startF, endF, startMT, endMT, s
 
 const shrinkLogotype = (startW, endW, startH, endH, startF, endF, startMT, endMT, startML, endML) => css`${shrinkTitle(startW, endW, startH, endH, startF, endF, startMT, endMT, startML, endML)} 5s ease-in-out 1 normal forwards`;
 
+const shrinkMobileTitle = (startW, endW, startH, endH, startF, endF, startMT, endMT, startML, endML) => keyframes`
+    0% {
+        opacity: 0%;
+        top: 50%;
+        left: 50%;
+        width: ${startW};
+        height: ${startH};
+        font-size: ${startF};
+        margin-top: ${startMT};
+        margin-left: ${startML};
+    }
+    20%{
+        opacity: 0%;
+        top: 50%;
+        left: 50%;
+        width: ${startW};
+        height: ${startH};
+        font-size: ${startF};
+        margin-top: ${startMT};
+        margin-left: ${startML};
+    }
+    40%{
+        opacity: 100%;
+        top: 50%;
+        left: 50%;
+        width: ${startW};
+        height: ${startH};
+        font-size: ${startF};
+        margin-top: ${startMT};
+        margin-left: ${startML};
+    }
+    70% {
+        top: 0%;
+        left: 0%;
+        width: ${endW};
+        height: ${endH};
+        font-size: ${endF};
+        margin-top: ${endMT};
+        margin-left: ${endML};
+        opacity: 100%;
+    }
+    85%{
+        top: 0%;
+        opacity: 0%;
+        width: ${endW};
+        height: ${endH};
+        font-size: ${endF};
+        margin-top: ${endMT};
+        margin-left: ${endML};
+    }
+    100% {
+        opacity: 0%;
+        width: 0px;
+        height: 0px;
+        font-size: 0px;
+        margin-top: ${endMT};
+        margin-left: ${endML};
+    }
+`;
+
+const shrinkMobileLogotype = (startW, endW, startH, endH, startF, endF, startMT, endMT, startML, endML) => css`${shrinkMobileTitle(startW, endW, startH, endH, startF, endF, startMT, endMT, startML, endML)} 5s ease-in-out 1 normal forwards`;
+
 export const WelcomeAnimation = styled.div`
     background: linear-gradient(#76D97E, #28A690);
     display:flex;
@@ -180,15 +242,18 @@ export const LogoVectorBox = styled.div`
         animation: ${shrinkLogo('calc(-100vw + 145px)')};
     }
 `;
-
+//const shrinkTitle = (startW, endW, startH, endH, startF, endF, startMT, endMT, startML, endML) => keyframes`
 export const LogoType = styled(Black)`
     color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     position: absolute;
     @media only screen and (min-width: 1337px) {
-        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '150px', '28px', '900px', '4px', '-25px', '-1023px')};
+        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '110px', '28px', '650px', '-8px', '100px', '-1023px')};
     }
     @media only screen and (max-width: 1336px) {
-        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '75px', '28px', '77vh', '4px', 'calc(50vw - 450px)', 'calc(-100vw + 312px)')};
+        animation: ${shrinkMobileLogotype('500px', '100px', '300px', '30px', '75px', '28px', '130px', '6px', '-140px', '106.5px')};
+    }
+    @media only screen and (max-width: 960px) {
+        animation: ${shrinkMobileLogotype('400px', '100px', '200px', '30px', '60px', '28px', '100px', '6px', '-110px', '106.5px')};
     }
 `;
 

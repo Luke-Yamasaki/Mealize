@@ -8,6 +8,7 @@ export const ButtonBox = styled.div`
     align-items: right;
     width: 400px;
     height: 100px;
+    margin-bottom: ${props => props.margin ? props.margin : '0px'}
 `;
 
 export const MessageButtonBox = styled.div`
@@ -45,6 +46,7 @@ export const InputButtonBox = styled(ButtonBox)`
     padding-right: 20px;
     flex-direction: row;
     justify-content: flex-end;
+    align-items: flex-end;
 `;
 
 export const DemoBox = styled(ButtonBox)`
@@ -53,6 +55,7 @@ export const DemoBox = styled(ButtonBox)`
     flex-direction: row;
     justify-content: flex-end;
     gap: 10px;
+    align-items: flex-end;
 `;
 
 export const FormButton = styled.div`

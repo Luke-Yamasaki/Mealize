@@ -11,7 +11,7 @@ def seed_posts():
         quantity='50 count',
         categoryId=1,
         imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
-        expDate='2022-08-18',
+        expDate='2022-09-18',
         status = 0
     )
     db.session.add(dairy_request1)
@@ -25,7 +25,7 @@ def seed_posts():
         quantity='10 lbs',
         categoryId=1,
         imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 0
     )
     db.session.add(dairy_request2)
@@ -39,7 +39,7 @@ def seed_posts():
         quantity='10 lbs',
         categoryId=1,
         imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 1
     )
     db.session.add(dairy_request3)
@@ -53,7 +53,7 @@ def seed_posts():
         quantity='250 count',
         categoryId=1,
         imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 1
     )
     db.session.add(dairy_request4)
@@ -67,7 +67,7 @@ def seed_posts():
         quantity='30 lbs',
         categoryId=1,
         imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
-        expDate='2022-06-18',
+        expDate='2022-10-18',
         status = 2
     )
     db.session.add(dairy_request5)
@@ -81,7 +81,7 @@ def seed_posts():
         quantity='100 count',
         categoryId=1,
         imageUrl='https://mealizeaa.s3.amazonaws.com/dairy_request.png',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 2
     )
     db.session.add(dairy_request6)
@@ -96,7 +96,7 @@ def seed_posts():
         quantity='100 count',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/vegetables_request.png',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 0
     )
     db.session.add(vegetable_request1)
@@ -110,7 +110,7 @@ def seed_posts():
         quantity='50 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/vegetables_request.png',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 0
     )
     db.session.add(vegetable_request2)
@@ -124,7 +124,7 @@ def seed_posts():
         quantity='20 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/vegetables_request.png',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 0
     )
     db.session.add(vegetable_request3)
@@ -152,7 +152,7 @@ def seed_posts():
         quantity='50 count',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/vegetables_request.png',
-        expDate='2022-08-30',
+        expDate='2022-09-30',
         status = 0
     )
     db.session.add(vegetable_request5)
@@ -166,7 +166,7 @@ def seed_posts():
         quantity='10 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/vegetables_request.png',
-        expDate='2022-06-18',
+        expDate='2022-10-18',
         status = 0
     )
     db.session.add(vegetable_request6)
@@ -195,7 +195,7 @@ def seed_posts():
         quantity='200 count',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
-        expDate='2022-06-18',
+        expDate='2022-10-18',
         status = 0
     )
     db.session.add(fruits_request2)
@@ -209,7 +209,7 @@ def seed_posts():
         quantity='10 lbs',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
-        expDate='2022-07-10',
+        expDate='2022-11-10',
         status = 2
     )
     db.session.add(fruits_request3)
@@ -223,7 +223,7 @@ def seed_posts():
         quantity='5 lbs',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
-        expDate='2022-06-18',
+        expDate='2022-10-18',
         status = 0
     )
     db.session.add(fruits_request4)
@@ -237,7 +237,7 @@ def seed_posts():
         quantity='50 lbs',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
-        expDate='2022-08-18',
+        expDate='2022-09-18',
         status = 0
     )
     db.session.add(fruits_request5)
@@ -265,7 +265,7 @@ def seed_posts():
         quantity='100 count',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/fruits_request.png',
-        expDate='2022-08-18',
+        expDate='2022-09-18',
         status = 2
     )
     db.session.add(fruits_request7)
@@ -308,7 +308,7 @@ def seed_posts():
         quantity='20 count',
         categoryId=4,
         imageUrl='https://mealizeaa.s3.amazonaws.com/grains_request.png',
-        expDate='2022-07-05',
+        expDate='2022-11-05',
         status = 0
     )
     db.session.add(grains_request3)
@@ -322,7 +322,7 @@ def seed_posts():
         quantity='10 kg',
         categoryId=4,
         imageUrl='https://mealizeaa.s3.amazonaws.com/grains_request.png',
-        expDate='2022-06-24',
+        expDate='2022-10-24',
         status = 0
     )
     db.session.add(grains_request4)
@@ -336,7 +336,7 @@ def seed_posts():
         quantity='100 count',
         categoryId=4,
         imageUrl='https://mealizeaa.s3.amazonaws.com/grains_request.png',
-        expDate='2022-08-30',
+        expDate='2022-09-30',
         status = 2
     )
     db.session.add(grains_request5)
@@ -350,7 +350,7 @@ def seed_posts():
         quantity='200 count',
         categoryId=4,
         imageUrl='https://mealizeaa.s3.amazonaws.com/grains_request.png',
-        expDate='2022-08-12',
+        expDate='2022-09-12',
         status = 0
     )
     db.session.add(grains_request6)
@@ -365,7 +365,7 @@ def seed_posts():
         quantity='10 lbs',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
-        expDate='2022-06-22',
+        expDate='2022-10-22',
         status = 2
     )
     db.session.add(protein_request1)
@@ -379,7 +379,7 @@ def seed_posts():
         quantity='10 lbs',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
-        expDate='2022-08-08',
+        expDate='2022-09-08',
         status = 0
     )
     db.session.add(protein_request2)
@@ -407,7 +407,7 @@ def seed_posts():
         quantity='200 count',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
-        expDate='2022-07-06',
+        expDate='2022-11-06',
         status = 0
     )
     db.session.add(protein_request4)
@@ -421,7 +421,7 @@ def seed_posts():
         quantity='200 count',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
-        expDate='2022-07-21',
+        expDate='2022-11-21',
         status = 0
     )
     db.session.add(protein_request5)
@@ -435,7 +435,7 @@ def seed_posts():
         quantity='100 count',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
-        expDate='2022-07-08',
+        expDate='2022-11-08',
         status = 0
     )
     db.session.add(protein_request6)
@@ -449,7 +449,7 @@ def seed_posts():
         quantity='20 lbs',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
-        expDate='2022-08-18',
+        expDate='2022-09-18',
         status = 0
     )
     db.session.add(protein_request7)
@@ -463,7 +463,7 @@ def seed_posts():
         quantity='300 count',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/protein_request.png',
-        expDate='2022-08-20',
+        expDate='2022-09-20',
         status = 0
     )
     db.session.add(protein_request8)
@@ -479,7 +479,7 @@ def seed_posts():
         quantity='30 count',
         categoryId=1,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Dairy-1.jpg',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 0
     )
     db.session.add(dairy_item1)
@@ -493,7 +493,7 @@ def seed_posts():
         quantity='100 lbs',
         categoryId=1,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Dairy-2.jpg',
-        expDate='2022-06-22',
+        expDate='2022-10-22',
         status = 0
     )
     db.session.add(dairy_item2)
@@ -507,7 +507,7 @@ def seed_posts():
         quantity='30 lbs',
         categoryId=1,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Dairy-3.jpg',
-        expDate='2022-06-18',
+        expDate='2022-10-18',
         status = 0
     )
     db.session.add(dairy_item3)
@@ -521,7 +521,7 @@ def seed_posts():
         quantity='100 count',
         categoryId=1,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Dairy-4.jpg',
-        expDate='2022-06-29',
+        expDate='2022-10-29',
         status = 0
     )
     db.session.add(dairy_item4)
@@ -535,7 +535,7 @@ def seed_posts():
         quantity='30 lbs',
         categoryId=1,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Dairy-5.jpg',
-        expDate='2022-06-18',
+        expDate='2022-10-18',
         status = 0
     )
     db.session.add(dairy_item5)
@@ -564,7 +564,7 @@ def seed_posts():
         quantity='100 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-1.jpg',
-        expDate='2022-06-18',
+        expDate='2022-10-18',
         status = 0
     )
     db.session.add(vegetable_item1)
@@ -578,7 +578,7 @@ def seed_posts():
         quantity='150 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-2.jpg',
-        expDate='2022-07-05',
+        expDate='2022-11-05',
         status = 0
     )
     db.session.add(vegetable_item2)
@@ -592,7 +592,7 @@ def seed_posts():
         quantity='150 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-3.jpg',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 0
     )
     db.session.add(vegetable_item3)
@@ -606,7 +606,7 @@ def seed_posts():
         quantity='30 count',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-4.jpg',
-        expDate='2022-06-15',
+        expDate='2022-10-15',
         status = 0
     )
     db.session.add(vegetable_item4)
@@ -620,7 +620,7 @@ def seed_posts():
         quantity='50 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-5.jpg',
-        expDate='2022-06-25',
+        expDate='2022-10-25',
         status = 0
     )
     db.session.add(vegetable_item5)
@@ -634,7 +634,7 @@ def seed_posts():
         quantity='15 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-6.jpg',
-        expDate='2022-06-12',
+        expDate='2022-10-12',
         status = 0
     )
     db.session.add(vegetable_item6)
@@ -648,7 +648,7 @@ def seed_posts():
         quantity='30 count',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-7.jpg',
-        expDate='2022-06-23',
+        expDate='2022-10-23',
         status = 0
     )
     db.session.add(vegetable_item7)
@@ -662,7 +662,7 @@ def seed_posts():
         quantity='50 count',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-8.jpg',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 0
     )
     db.session.add(vegetable_item8)
@@ -676,7 +676,7 @@ def seed_posts():
         quantity='50 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-9.jpg',
-        expDate='2022-07-01',
+        expDate='2022-11-01',
         status = 0
     )
     db.session.add(vegetable_item9)
@@ -690,7 +690,7 @@ def seed_posts():
         quantity='30 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-10.jpg',
-        expDate='2022-06-26',
+        expDate='2022-10-26',
         status = 0
     )
     db.session.add(vegetable_item10)
@@ -704,7 +704,7 @@ def seed_posts():
         quantity='100 count',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-11.jpg',
-        expDate='2022-07-28',
+        expDate='2022-11-28',
         status = 0
     )
     db.session.add(vegetable_item11)
@@ -718,7 +718,7 @@ def seed_posts():
         quantity='200 lbs',
         categoryId=2,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Vegetables-12.jpg',
-        expDate='2022-07-11',
+        expDate='2022-11-11',
         status = 0
     )
     db.session.add(vegetable_item12)
@@ -733,7 +733,7 @@ def seed_posts():
         quantity='500 count',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-1.jpg',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 0
     )
     db.session.add(fruits_item1)
@@ -747,7 +747,7 @@ def seed_posts():
         quantity='100 count',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-2.png',
-        expDate='2022-06-15',
+        expDate='2022-10-15',
         status = 0
     )
     db.session.add(fruits_item2)
@@ -761,7 +761,7 @@ def seed_posts():
         quantity='20 lbs',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-3.png',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 0
     )
     db.session.add(fruits_item3)
@@ -775,7 +775,7 @@ def seed_posts():
         quantity='150 lbs',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-4.jpg',
-        expDate='2022-06-28',
+        expDate='2022-10-28',
         status = 0
     )
     db.session.add(fruits_item4)
@@ -789,7 +789,7 @@ def seed_posts():
         quantity='50 count',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-5.png',
-        expDate='2022-06-29',
+        expDate='2022-10-29',
         status = 0
     )
     db.session.add(fruits_item5)
@@ -803,7 +803,7 @@ def seed_posts():
         quantity='350 count',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-6.jpg',
-        expDate='2022-07-22',
+        expDate='2022-11-22',
         status = 0
     )
     db.session.add(fruits_item6)
@@ -817,7 +817,7 @@ def seed_posts():
         quantity='100 lbs',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-7.jpg',
-        expDate='2022-06-25',
+        expDate='2022-10-25',
         status = 0
     )
     db.session.add(fruits_item7)
@@ -831,7 +831,7 @@ def seed_posts():
         quantity='100 count',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-8.jpg',
-        expDate='2022-07-18',
+        expDate='2022-11-18',
         status = 0
     )
     db.session.add(fruits_item8)
@@ -845,7 +845,7 @@ def seed_posts():
         quantity='200 count',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-9.jpg',
-        expDate='2022-07-24',
+        expDate='2022-11-24',
         status = 0
     )
     db.session.add(fruits_item9)
@@ -859,7 +859,7 @@ def seed_posts():
         quantity='300 count',
         categoryId=3,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Fruits-10.jpg',
-        expDate='2022-08-09',
+        expDate='2022-09-09',
         status = 0
     )
     db.session.add(fruits_item10)
@@ -874,7 +874,7 @@ def seed_posts():
         quantity='200 xount',
         categoryId=4,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-1.jpg',
-        expDate='2022-06-18',
+        expDate='2022-10-18',
         status = 0
     )
     db.session.add(grains_item1)
@@ -916,7 +916,7 @@ def seed_posts():
         quantity='50 lbs',
         categoryId=4,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-4.jpg',
-        expDate='2022-06-18',
+        expDate='2022-10-18',
         status = 0
     )
     db.session.add(grains_item4)
@@ -958,7 +958,7 @@ def seed_posts():
         quantity='50 count',
         categoryId=4,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-7.jpg',
-        expDate='2022-06-15',
+        expDate='2022-10-15',
         status = 0
     )
     db.session.add(grains_item7)
@@ -986,7 +986,7 @@ def seed_posts():
         quantity='30 count',
         categoryId=4,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-9.jpg',
-        expDate='2022-07-08',
+        expDate='2022-11-08',
         status = 0
     )
     db.session.add(grains_item9)
@@ -1000,7 +1000,7 @@ def seed_posts():
         quantity='20 count',
         categoryId=4,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-10.jpg',
-        expDate='2022-06-30',
+        expDate='2022-10-30',
         status = 0
     )
     db.session.add(grains_item10)
@@ -1028,7 +1028,7 @@ def seed_posts():
         quantity='300 count',
         categoryId=4,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-12.jpg',
-        expDate='2022-06-15',
+        expDate='2022-10-15',
         status = 0
     )
     db.session.add(grains_item12)
@@ -1042,7 +1042,7 @@ def seed_posts():
         quantity='50 count',
         categoryId=4,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Grains-13.jpg',
-        expDate='2022-06-22',
+        expDate='2022-10-22',
         status = 0
     )
     db.session.add(grains_item13)
@@ -1085,7 +1085,7 @@ def seed_posts():
         quantity='10 lbs',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-3.jpg',
-        expDate='2022-06-15',
+        expDate='2022-10-15',
         status = 0
     )
     db.session.add(protein_item3)
@@ -1113,7 +1113,7 @@ def seed_posts():
         quantity='50 lbs',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-5.jpg',
-        expDate='2022-06-14',
+        expDate='2022-10-14',
         status = 0
     )
     db.session.add(protein_item5)
@@ -1127,7 +1127,7 @@ def seed_posts():
         quantity='30 lbs',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-6.png',
-        expDate='2022-06-11',
+        expDate='2022-10-11',
         status = 0
     )
     db.session.add(protein_item6)
@@ -1141,7 +1141,7 @@ def seed_posts():
         quantity='20 lbs',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-7.jpg',
-        expDate='2022-06-15',
+        expDate='2022-10-15',
         status = 0
     )
     db.session.add(protein_item7)
@@ -1155,7 +1155,7 @@ def seed_posts():
         quantity='100 count',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-8.jpg',
-        expDate='2022-08-18',
+        expDate='2022-09-18',
         status = 0
     )
     db.session.add(protein_item8)
@@ -1169,7 +1169,7 @@ def seed_posts():
         quantity='20 lbs',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-9.png',
-        expDate='2022-06-28',
+        expDate='2022-10-28',
         status = 0
     )
     db.session.add(protein_item9)
@@ -1183,7 +1183,7 @@ def seed_posts():
         quantity='6 count',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-10.jpg',
-        expDate='2022-06-18',
+        expDate='2022-10-18',
         status = 0
     )
     db.session.add(protein_item10)
@@ -1197,7 +1197,7 @@ def seed_posts():
         quantity='100 count',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-11.jpg',
-        expDate='2022-06-21',
+        expDate='2022-10-21',
         status = 0
     )
     db.session.add(protein_item11)
@@ -1211,7 +1211,7 @@ def seed_posts():
         quantity='30 lbs',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-12.jpg',
-        expDate='2022-06-15',
+        expDate='2022-10-15',
         status = 0
     )
     db.session.add(protein_item12)
@@ -1225,7 +1225,7 @@ def seed_posts():
         quantity='25 count',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-13.jpg',
-        expDate='2022-06-26',
+        expDate='2022-10-26',
         status = 0
     )
     db.session.add(protein_item13)
@@ -1239,7 +1239,7 @@ def seed_posts():
         quantity='100 count',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-14.jpg',
-        expDate='2022-06-23',
+        expDate='2022-10-23',
         status = 0
     )
     db.session.add(protein_item14)
@@ -1253,7 +1253,7 @@ def seed_posts():
         quantity='30 count',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-15.jpg',
-        expDate='2022-06-29',
+        expDate='2022-10-29',
         status = 0
     )
     db.session.add(protein_item15)
@@ -1267,7 +1267,7 @@ def seed_posts():
         quantity='20 count',
         categoryId=5,
         imageUrl='https://mealizeaa.s3.amazonaws.com/Protein-16.jpg',
-        expDate='2022-06-22',
+        expDate='2022-10-22',
         status = 0
     )
     db.session.add(protein_item16)

@@ -82,8 +82,9 @@ export const FormContent = styled.div`
     height: 350px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
+    align-items: ${props => props.align ? props.align : 'center'};
+    justify-content: ${props => props.align};
+    margin-bottom: ${props => props.margin ? props.margin: '0px'};
 `;
 
 export const MessageFormContent = styled(FormContent)`
@@ -96,19 +97,22 @@ export const MessageFormContent = styled(FormContent)`
 export const InputContainer = styled(FormContent)`
     height: ${props => props.height};
     margin: ${props => props.margin ? props.margin : '0px'};
+    justify-content: flex-end;
 `;
 
 export const InputErrorBox = styled(FormContent)`
     min-height: 70px;
-    height: ${props => props.height ? props.height : 'auto'};
+    height: ${props => props.height ? props.height : '80px'};
+    display: flex;
+    flex-direction: column;
     justify-content: flex-end;
     align-items: left;
-    gap: 5px;
+    gap: 7px;
 `;
 
 export const Fieldset = styled.fieldset`
     width: 340px;
-    height: ${props => props.height ? props.height : '35px'};
+    height: ${props => props.height ? props.height : '45px'};
     border: ${props => props.error ? '1px solid rgba(255, 0, 0, 0.75)' : '1px solid #28A690'};
     border-radius: 3px;
     font-size: 16px;
@@ -116,7 +120,7 @@ export const Fieldset = styled.fieldset`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 0px;
+    margin: 0px 0px 15px 0px;
     padding-left: 5px;
 `;
 
@@ -126,8 +130,10 @@ export const Legend = styled.legend`
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     font-size: 16px;
     width: ${props => props.width ? props.width : '70px'};
-    height: 15px;
+    height: 20px;
     font-weight: 600;
+    margin: 0px;
+    padding: 0px;
 `;
 
 export const MessageFieldset = styled.fieldset`
@@ -194,9 +200,12 @@ export const MessageArea = styled.textarea`
 export const ErrorBox = styled.div`
     width: 350px;
     height: ${props => props.height};
+    margin: 0px;
+    padding: 0px;
     display: flex;
-    justify-content: left;
-    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
     background-color: ${props => props.theme === 'light' ? 'white' : '#191919'};
     font-weight: ${props => props.theme === 'light' ? '700' : '500'};
 `;
@@ -225,8 +234,6 @@ export const Error = styled(Paragraph)`
     font-size: 12px;
     text-align: center;
     height: 12px;
-    margin-left: 5px;
-    margin-top: 5px;
 `;
 
 export const ActionBox = styled(DemoBox)`
@@ -307,7 +314,7 @@ export const InputResetContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     width: 330px;
-    height: 20px;
+    height: 10px;
     padding: 5px;
     padding-right: 20px;
 `;

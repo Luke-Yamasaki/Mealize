@@ -165,28 +165,28 @@ export const LoginForm = () => {
                     <FormTitle theme={theme}>Welcome back!</FormTitle>
                 </FormTitleBox>
                 <FormContent>
-                    <InputContainer height={emailError.length > 0 ? '170px' : '150px'}>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={emailError.length > 0 ? '20px' : '0px'}>
+                    <InputContainer height={emailError.length > 0 ? '180px' : '150px'}>
+                        <InputErrorBox height={emailError.length ? '90px' : '75px'}>
+                            <ErrorBox theme={theme} height={emailError.length > 0 ? '10px' : '0px'}>
                                 <Error>{emailError[0]}</Error>
                             </ErrorBox>
                             <Fieldset error={emailError.length > 0}>
                                 <EmailLegend htmlFor='email' theme={theme} error={emailError.length > 0}>Email
                                     <InputResetContainer>
-                                        <Input name="email" type="email" placeholder='Email' value={email} theme={theme} onChange={handleEmail}/>
+                                        <Input name="email" height='20px' type="email" placeholder='Email' value={email} theme={theme} onChange={handleEmail}/>
                                         <ResetIcon theme={theme} onClick={() => setEmail('')} data={email}>&#10006;</ResetIcon>
                                     </InputResetContainer>
                                 </EmailLegend>
                             </Fieldset>
                         </InputErrorBox>
-                        <InputErrorBox>
-                            <ErrorBox theme={theme} height={passwordError.length > 0 ? '20px' : '0px'}>
+                        <InputErrorBox height={passwordError.length ? '90px' : '75px'}>
+                            <ErrorBox theme={theme} height={passwordError.length > 0 ? '10px' : '0px'}>
                                 <Error>{passwordError[0]}</Error>
                             </ErrorBox>
                             <Fieldset error={passwordError.length > 0}>
                                 <PasswordLegend htmlFor="password" theme={theme} error={passwordError.length > 0}>Password
                                     <InputResetContainer>
-                                        <Input theme={theme} cursor='text' name="password" type={passwordVisibility === false ? 'password' : 'text'} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                                        <Input theme={theme} height='20px' cursor='text' name="password" type={passwordVisibility === false ? 'password' : 'text'} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                                         <VectorBox data={password} square='30px' onClick={() => setPasswordVisibility(!passwordVisibility)} cursor='pointer'>
                                             <PasswordIcon theme={theme} />
                                         </VectorBox>

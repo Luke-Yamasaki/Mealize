@@ -1,6 +1,7 @@
+heroku pg:rest
 heroku pg:push mealize DATABASE_URL --app mealize
 
 //changing the database
 
-//alembic db 
+//alembic db
 file_template = %%(year)d%%(month).2d%%(day).2d_%%(hour).2d%%(minute).2d%%(second).2d_%%(slug)s

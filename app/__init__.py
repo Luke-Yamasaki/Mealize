@@ -14,7 +14,6 @@ from .api.posts import post_routes
 from .api.messages import message_routes
 from .api.deliveries import delivery_routes
 from .api.favorites import favorites_routes
-from .api.events import event_routes
 from .api.watchlist import watchlist_routes
 
 from .seeds import seed_group
@@ -40,7 +39,6 @@ app.register_blueprint(category_routes, url_prefix='/api/categories')
 app.register_blueprint(post_routes, url_prefix='/api/posts')
 app.register_blueprint(message_routes, url_prefix='/api/messages')
 app.register_blueprint(delivery_routes, url_prefix='/api/deliveries')
-app.register_blueprint(event_routes, url_prefix='/api/events')
 app.register_blueprint(favorites_routes, url_prefix='/api/favorites')
 app.register_blueprint(watchlist_routes, url_prefix='/api/watchlist')
 

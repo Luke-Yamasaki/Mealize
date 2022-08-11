@@ -250,13 +250,13 @@ export const LogoType = styled(Black)`
         animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '150px', '28px', '950px', '3px', '-30px', '-1023px')};
     }
     @media only screen and (min-width: 1337px) and (max-width: 1919px) {
-        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '100px', '28px', '650px', '3px', '135px', '-1023px')};
+        animation: ${shrinkLogotype('500px', '100px', '300px', '30px', '100px', '28px', '650px', '-7px', '135px', '-1023px')};
     }
     @media only screen and (max-width: 1336px) {
-        animation: ${shrinkMobileLogotype('500px', '100px', '300px', '30px', '75px', '28px', '150px', '12px', '-140px', '106.5px')};
+        animation: ${shrinkMobileLogotype('500px', '100px', '300px', '30px', '75px', '28px', '150px', '6px', '-140px', '106.5px')};
     }
     @media only screen and (max-width: 960px) {
-        animation: ${shrinkMobileLogotype('400px', '100px', '200px', '30px', '60px', '28px', '100px', '12px', '-110px', '106.5px')};
+        animation: ${shrinkMobileLogotype('400px', '100px', '200px', '30px', '60px', '28px', '100px', '6px', '-110px', '106.5px')};
     }
 `;
 

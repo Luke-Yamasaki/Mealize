@@ -2,10 +2,6 @@
 # Mealize is a React and Flask app that aims to reduce food scarcity and waste by connecting businesses to nonprofits.
 ![home](https://user-images.githubusercontent.com/89368363/172500968-3b3ac765-2c9f-42ae-8ba7-529f1294664e.png)
 
-## Link to Live Site
-
-[https://mealize.herokuapp.com](https://mealize.herokuapp.com/)
-
 ## Getting Started
 
 1. Clone this repository

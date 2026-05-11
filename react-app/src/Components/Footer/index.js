@@ -5,9 +5,9 @@ export const Footer = () => {
             <div style={{maxWidth: '1326px', width: 'calc(100vw - 10px)', height: '300px', display: 'flex', flexDirection: 'row', alignItems: 'top', justifyContent: 'flex-start', gap: '10px', paddingLeft: '10px'}}>
                 <ul style={{fontSize: '21px', fontWeight: '900'}}>
                     <p style={{fontSize: '21px', fontWeight: '900', textDecoration: 'underline'}}>Technology</p>
-                    <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700', textDecoration: 'none'}}><p>React / Redux</p></li>
-                    <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700', textDecoration: 'none'}}><p>Flask</p></li>
-                    <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700', textDecoration: 'none'}}><p>SQLAlchemy</p></li>
+                    <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700', textDecoration: 'none'}}><p>Next.js / React</p></li>
+                    <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700', textDecoration: 'none'}}><p>tRPC</p></li>
+                    <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700', textDecoration: 'none'}}><p>Prisma / PostgreSQL</p></li>
                     <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700', textDecoration: 'none'}}><p>AWS / S3</p></li>
                     <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700', textDecoration: 'none'}}><p>Adobe Illustrator</p></li>
                     <li style={{listStyle: 'none', fontSize: '14px', fontWeight: '700', textDecoration: 'none'}}><p>Adobe XD</p></li>

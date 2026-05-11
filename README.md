@@ -13,8 +13,12 @@ The original **Create React App** UI lives in [`react-app/`](react-app/) and is 
 2. Install, migrate, seed, and dev:
 
    ```bash
-   cd web && npm install && npx prisma migrate deploy && npm run db:seed && npm run dev
+   cd web && npm install && npm run db:setup && npm run dev
    ```
+
+   (`db:setup` runs `prisma migrate deploy` then `db:seed`. Seeds require tables created by migrations.)
+
+   **`npm run db:seed`** rebuilds demo data from the historical Python seed files still readable via **`git show main:`** (`app/seeds/organizations.py`, `app/seeds/posts.py`). You need **`main`** in your local clone; the script clears existing rows in those tables first.
 
 3. Open [http://localhost:3000](http://localhost:3000).
 

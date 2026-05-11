@@ -11,7 +11,7 @@ const gotOneOrganization = payload => ({
     payload
 })
 
-// Do I need page number of some integer to send to Python for pagination?
+// Do I need page number of some integer to send to the API for pagination?
 export const getBatchedOrganizations = () => async dispatch => {
     const response = await fetch('/api/organizations/');
 

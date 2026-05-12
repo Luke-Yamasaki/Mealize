@@ -1,40 +1,36 @@
 # Mealize
 
-PoC that connects food businesses and nonprofits to reduce waste. The **runtime** app is the Next.js project in [`web/`](web/) (TypeScript, Clerk, tRPC, Zod, Prisma, Postgres/Neon, S3 presigned uploads).
+PoC that connects food businesses and nonprofits to reduce waste. Built with Next.js, TypeScript, Clerk, tRPC, Zod, Prisma, Postgres/Neon, and S3 presigned uploads.
 
-The original **Vite + React** reference UI lives in [`react-app/`](react-app/) (React 17, Redux, styled-components) and is kept for UX parity while screens live in `web/`. It is not wired to CI or production deploys in this branch.
+### Auth
 
-### Auth migration (legacy vs `web/`)
+Clerk handles sign-in and sign-up ([`app/sign-in`](app/sign-in), [`app/sign-up`](app/sign-up)). Domain users live in Postgres with `User.clerkId` and are created or updated via [`user.ensureProfile`](server/routers/userRouter.ts) (onboarding at `/onboarding`) and optionally the Clerk webhook at [`app/api/webhooks/clerk/route.ts`](app/api/webhooks/clerk/route.ts).
 
-The legacy SPA used cookie sessions against a Flask-style `/api/auth/*` API. The Next app uses **Clerk** for sign-in and sign-up ([`web/app/sign-in`](web/app/sign-in), [`web/app/sign-up`](web/app/sign-up)). Domain users live in Postgres with `User.clerkId` and are created or updated via [`user.ensureProfile`](web/server/routers/userRouter.ts) (onboarding at `/onboarding`) and optionally the Clerk webhook at [`web/app/api/webhooks/clerk/route.ts`](web/app/api/webhooks/clerk/route.ts). “One-to-one” behavior means equivalent flows (protected routes, profile, org membership), not identical HTTP endpoints.
+### Routes
 
-### Route parity (legacy SPA → Next `app/`)
-
-| Legacy path | `web` route |
-|-------------|-------------|
-| `/` | `/` |
-| `/welcome` | `/welcome` |
-| `/deliveries`, `/deliveries/:id` | `/deliveries`, `/deliveries/[id]` |
-| `/messages`, `/messages/:id` | `/messages`, `/messages/[id]` |
-| `/organizations/:id` | `/organizations/[id]` |
-| `/posts/:id` | `/posts/[id]` |
-| `/search/:q` | `/search/[searchword]` |
-| (catch-all 404) | `app/not-found.tsx` |
-| Onboarding (Clerk-era) | `/onboarding` |
-| New post (managers) | `/posts/new` |
-
-Optional: from `react-app/`, run `npm install && npm run dev` on [http://localhost:5173](http://localhost:5173) with a legacy API on port 5000 (see `react-app/vite.config.mjs` proxy). The production app remains **Next.js only** in [`web/`](web/).
+| Path | Handler |
+|------|---------|
+| `/` | `app/(mealize)/page.tsx` |
+| `/welcome` | `app/(mealize)/welcome/page.tsx` |
+| `/deliveries`, `/deliveries/[id]` | `app/(mealize)/deliveries/` |
+| `/messages`, `/messages/[id]` | `app/(mealize)/messages/` |
+| `/organizations/[id]` | `app/(mealize)/organizations/[id]` |
+| `/posts/[id]` | `app/(mealize)/posts/[id]` |
+| `/search/[searchword]` | `app/(mealize)/search/[searchword]` |
+| `/onboarding` | `app/(mealize)/onboarding/page.tsx` |
+| `/posts/new` (managers) | `app/(mealize)/posts/new/page.tsx` |
+| catch-all 404 | `app/not-found.tsx` |
 
 ![home](https://user-images.githubusercontent.com/89368363/172500968-3b3ac765-2c9f-42ae-8ba7-529f1294664e.png)
 
 ## Run locally
 
-1. Copy [`web/.env.example`](web/.env.example) to `web/.env.local` and set at least `DATABASE_URL`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, and `CLERK_SECRET_KEY`.
+1. Copy [`.env.example`](.env.example) to `.env.local` and set at least `DATABASE_URL`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`, and `CLERK_SECRET_KEY`.
 
 2. Install, migrate, seed, and dev:
 
    ```bash
-   cd web && npm install && npm run db:setup && npm run dev
+   npm install && npm run db:setup && npm run dev
    ```
 
    (`db:setup` runs `prisma migrate deploy` then `db:seed`. Seeds require tables created by migrations.)
@@ -43,9 +39,9 @@ Optional: from `react-app/`, run `npm install && npm run dev` on [http://localho
 
 3. Open [http://localhost:3000](http://localhost:3000).
 
-Optional: configure a Clerk webhook to `https://<your-host>/api/webhooks/clerk` and set `CLERK_WEBHOOK_SECRET` in `web/.env.local` (see `web/.env.example`).
+Optional: configure a Clerk webhook to `https://<your-host>/api/webhooks/clerk` and set `CLERK_WEBHOOK_SECRET` in `.env.local`.
 
-Optional: set `DISABLE_LEGACY_MEDIA_PLACEHOLDER=true` in `web/.env.local` when your own S3 or CDN URLs are stored and you no longer want Picsum fallbacks for old `mealizeaa` demo URLs.
+Optional: set `DISABLE_LEGACY_MEDIA_PLACEHOLDER=true` in `.env.local` when your own S3 or CDN URLs are stored and you no longer want Picsum fallbacks for old `mealizeaa` demo URLs.
 
 ## Docker (optional)
 

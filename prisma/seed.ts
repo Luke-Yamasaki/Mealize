@@ -14,9 +14,9 @@ const prisma = new PrismaClient();
 
 const CATEGORY_NAMES = ["Dairy", "Vegetables", "Fruits", "Grains", "Protein"];
 
-/** Loads text from `git show main:<path>` (repo root = parent of `web/`). */
+/** Loads text from `git show main:<path>` (runs at repo root). */
 function loadSeedSourceFromGit(relPath: string): string {
-  const repoRoot = path.join(process.cwd(), "..");
+  const repoRoot = process.cwd();
   try {
     return execSync(`git show main:${relPath}`, {
       cwd: repoRoot,
@@ -59,7 +59,7 @@ async function clearDomainTables() {
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2021") {
       throw new Error(
-        "Database tables are missing. From the web/ directory run:\n" +
+        "Database tables are missing. From the repo root run:\n" +
           "  npx prisma migrate deploy\n" +
           "Then run npm run db:seed again.\n" +
           "(Or use: npm run db:setup — applies migrations then seeds.)",

@@ -25,13 +25,16 @@
     "@trpc/client": "^11.17.0",
     "@trpc/react-query": "^11.17.0",
     "@trpc/server": "^11.17.0",
+    "clsx": "^2.1.1",
     "dotenv": "^17.4.2",
+    "lucide-react": "^0.468.0",
     "next": "16.2.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "superjson": "^2.2.6",
     "svix": "^1.93.0",
-    "zod": "3.23.8"
+    "zod": "3.23.8",
+    "zustand": "^5.0.13"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

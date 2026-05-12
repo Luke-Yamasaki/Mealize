@@ -8,6 +8,7 @@ import {
   parseOrganizationSeedSource,
   parsePostSeedSource,
 } from "./seedSourceParser";
+import { withPublicImageFallback } from "../lib/demoMediaUrl";
 
 const prisma = new PrismaClient();
 
@@ -93,8 +94,10 @@ async function seedUsersForOrganizations(orgCount: number) {
         wheelchair: false,
         learningDisabled: false,
         lgbtq: false,
-        profileImageUrl:
+        profileImageUrl: withPublicImageFallback(
           "https://mealizeaa.s3.amazonaws.com/nonprofit-manager.jpg",
+          `seed-user-${id}`,
+        ),
       },
     });
   }
@@ -118,8 +121,8 @@ async function main() {
       data: {
         federalId: o.federalId,
         isNonprofit: o.isNonprofit,
-        logoUrl: o.logoUrl,
-        imageUrl: o.imageUrl,
+        logoUrl: withPublicImageFallback(o.logoUrl, `seed-org-${o.phone}-logo`),
+        imageUrl: withPublicImageFallback(o.imageUrl, `seed-org-${o.phone}-hero`),
         hoursOpen: o.hoursOpen,
         hoursClose: o.hoursClose,
         timeslot: o.timeslot,
@@ -147,7 +150,7 @@ async function main() {
         description: p.description,
         quantity: p.quantity,
         categoryId: p.categoryId,
-        imageUrl: p.imageUrl,
+        imageUrl: withPublicImageFallback(p.imageUrl, `seed-post-${p.title}-${p.organizationId}`),
         expDate: normalizeExpDate(p.expDate),
         status: p.status,
       },

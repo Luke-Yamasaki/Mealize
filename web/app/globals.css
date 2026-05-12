@@ -1,5 +1,21 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: OpenDyslexic3;
+  src: url("/fonts/OpenDyslexic3-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: OpenDyslexic3;
+  src: url("/fonts/OpenDyslexic3-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -20,7 +36,69 @@
 }
 
 body {
-  background: var(--background);
+  margin: 0;
+  background: transparent;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Mealize prefixed surfaces (404, etc.) */
+.mealize-notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 65vh;
+  max-width: 1336px;
+  width: 100%;
+  padding-top: 20px;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 2.5rem;
+  color: #191919;
+  background-color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .mealize-notFound {
+    color: #ffffff;
+    background-color: #191919;
+  }
+}
+
+.mealize-notFound__title {
+  margin: 0;
+  font-size: inherit;
+}
+
+.mealize-notFound__hint {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.mealize-notFound__link {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #28a690;
+  text-decoration: underline;
+}
+
+.mealize-notFound__link:hover {
+  opacity: 0.9;
+}
+
+.mealize-root[data-mealize-dyslexic="true"] {
+  font-family: "OpenDyslexic3", "OpenDyslexic", Lexend, Verdana, system-ui, sans-serif;
+}
+
+.mealize-root[data-mealize-contrast="high"] {
+  font-weight: 600;
+}
+
+.mealize-root[data-mealize-contrast="high"] a {
+  text-decoration-thickness: 2px;
 }

@@ -1,17 +1,26 @@
 import { z } from "zod";
 
+import { mapUserWithDemoMedia } from "@/server/lib/mapUserMedia";
 import { router, protectedProcedure } from "@/server/trpc";
 
+const userInclude = {
+  organization: true,
+  favorites: {
+    include: {
+      post: true,
+    },
+  },
+} as const;
+
 export const userRouter = router({
-  me: protectedProcedure.query(({ ctx }) =>
-    ctx.prisma.user.findUnique({
+  me: protectedProcedure.query(async ({ ctx }) => {
+    const user = await ctx.prisma.user.findUnique({
       where: { clerkId: ctx.userId },
-      include: {
-        organization: true,
-        favorites: true,
-      },
-    }),
-  ),
+      include: userInclude,
+    });
+    if (!user) return null;
+    return mapUserWithDemoMedia(user);
+  }),
 
   /** Creates the domain user row after Clerk sign-up (until a dedicated onboarding flow exists). */
   ensureProfile: protectedProcedure
@@ -32,8 +41,8 @@ export const userRouter = router({
         lgbtq: z.boolean().optional(),
       }),
     )
-    .mutation(async ({ ctx, input }) =>
-      ctx.prisma.user.upsert({
+    .mutation(async ({ ctx, input }) => {
+      const saved = await ctx.prisma.user.upsert({
         where: { clerkId: ctx.userId },
         create: {
           clerkId: ctx.userId,
@@ -54,7 +63,21 @@ export const userRouter = router({
           learningDisabled: input.learningDisabled,
           lgbtq: input.lgbtq,
         },
-        include: { organization: true, favorites: true },
-      }),
-    ),
+        include: userInclude,
+      });
+      return mapUserWithDemoMedia(saved);
+    }),
+
+  /** Batch lookup for message UI and org cards (legacy batched users). */
+  listByIds: protectedProcedure
+    .input(z.object({ ids: z.array(z.number().int()).max(200) }))
+    .query(async ({ ctx, input }) => {
+      const unique = [...new Set(input.ids)];
+      if (unique.length === 0) return [];
+      const rows = await ctx.prisma.user.findMany({
+        where: { id: { in: unique } },
+        include: userInclude,
+      });
+      return rows.map((u) => mapUserWithDemoMedia(u));
+    }),
 });

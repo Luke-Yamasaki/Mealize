@@ -2,6 +2,7 @@ import { headers } from "next/headers";
 import { Webhook } from "svix";
 
 import { prisma } from "@/lib/prisma";
+import { withPublicImageFallback } from "@/lib/demoMediaUrl";
 
 export const runtime = "nodejs";
 
@@ -85,7 +86,10 @@ export async function POST(req: Request) {
       email: primary,
       phone,
       dob: new Date("1990-01-01"),
-      profileImageUrl: evt.data.image_url || "https://placehold.co/256x256/png?text=Mealize",
+      profileImageUrl: withPublicImageFallback(
+        evt.data.image_url || "",
+        `clerk-webhook-${evt.data.id}`,
+      ),
       deaf: null,
       wheelchair: null,
       learningDisabled: null,
@@ -95,7 +99,9 @@ export async function POST(req: Request) {
       email: primary,
       firstName: evt.data.first_name?.trim() || undefined,
       lastName: evt.data.last_name?.trim() || undefined,
-      profileImageUrl: evt.data.image_url || undefined,
+      profileImageUrl: evt.data.image_url
+        ? withPublicImageFallback(evt.data.image_url, `clerk-webhook-${evt.data.id}`)
+        : undefined,
     },
   });
 

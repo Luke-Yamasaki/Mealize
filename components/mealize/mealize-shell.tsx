@@ -18,6 +18,7 @@ export function MealizeShell({ children }: { children: ReactNode }) {
         "mealize-root scheme-light relative flex min-h-screen w-full flex-col bg-background text-foreground dark:scheme-dark",
         theme === "dark" && "dark",
       )}
+      data-mode="default"
       data-mealize-theme={theme}
       data-mealize-contrast={contrast}
       data-mealize-dyslexic={dyslexicFont ? "true" : "false"}

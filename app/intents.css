@@ -1,0 +1,64 @@
+/*
+ * Mise-en-mode intents (Donnie D'Amato — https://donnie.damato.design).
+ *
+ * Components author against `var(--mz-<intent>_<property>)`, never literal colors.
+ * Modes set values on `[data-mode~="..."]` ancestors; deeper mode wins via cascade,
+ * and modes stack via space-separated `data-mode="x y"` matched by `~=`.
+ *
+ * The 33 canonical intents below (9 surface + 9 action + 3 control + 12 text) are
+ * declared at `:root` with safe fall-throughs. Modes override what they need; the
+ * rest inherits. Once the YAML pipeline lands, this file becomes generator output.
+ */
+
+:root {
+  /* Surfaces — non-interactive containers (9) */
+  --mz-surface_primary_backgroundColor: transparent;
+  --mz-surface_primary_foregroundColor: currentColor;
+  --mz-surface_primary_borderColor: transparent;
+  --mz-surface_secondary_backgroundColor: transparent;
+  --mz-surface_secondary_foregroundColor: currentColor;
+  --mz-surface_secondary_borderColor: transparent;
+  --mz-surface_auxiliary_backgroundColor: transparent;
+  --mz-surface_auxiliary_foregroundColor: currentColor;
+  --mz-surface_auxiliary_borderColor: transparent;
+
+  /* Actions — buttons and links (9) */
+  --mz-action_primary_backgroundColor: transparent;
+  --mz-action_primary_foregroundColor: currentColor;
+  --mz-action_primary_borderColor: transparent;
+  --mz-action_secondary_backgroundColor: transparent;
+  --mz-action_secondary_foregroundColor: currentColor;
+  --mz-action_secondary_borderColor: transparent;
+  --mz-action_auxiliary_backgroundColor: transparent;
+  --mz-action_auxiliary_foregroundColor: currentColor;
+  --mz-action_auxiliary_borderColor: transparent;
+
+  /* Controls — form inputs (3) */
+  --mz-control_backgroundColor: transparent;
+  --mz-control_foregroundColor: currentColor;
+  --mz-control_borderColor: transparent;
+
+  /* Text — font metrics (12) */
+  --mz-text_primary_fontFamily: inherit;
+  --mz-text_primary_fontWeight: inherit;
+  --mz-text_primary_fontSize: inherit;
+  --mz-text_primary_lineHeight: inherit;
+  --mz-text_secondary_fontFamily: inherit;
+  --mz-text_secondary_fontWeight: inherit;
+  --mz-text_secondary_fontSize: inherit;
+  --mz-text_secondary_lineHeight: inherit;
+  --mz-text_secondary_scaleFactor: 1;
+  --mz-text_auxiliary_fontFamily: inherit;
+  --mz-text_auxiliary_fontWeight: inherit;
+  --mz-text_auxiliary_fontSize: inherit;
+  --mz-text_auxiliary_lineHeight: inherit;
+}
+
+/*
+ * Mode: default — Mealize's brand look. Applied at `MealizeShell` root.
+ * Bite 1 only sets what NavPrimaryCta needs; other intents fall through.
+ */
+[data-mode~="default"] {
+  --mz-action_primary_backgroundColor: #9af2c0;
+  --mz-action_primary_foregroundColor: #000000;
+}

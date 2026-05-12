@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "./intents.css";
 
 /*
  * Mealize theme is stored on `.mealize-root` (see `MealizeShell`), not on OS preference.

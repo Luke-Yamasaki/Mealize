@@ -18,55 +18,18 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { trpc } from "@/lib/trpc/react";
-import { mealizeAuthBrand as authBrand } from "@/lib/mealize-auth-brand-colors";
 import { cn } from "@/lib/utils";
 
 import { useMealizeAccessibility, useMealizeTheme, type MealizeTheme } from "@/stores/mealize-ui-store";
 
 import { MealizeLocationSettings } from "./mealize-location-settings";
-import { MealizeNavLogo } from "./mealize-nav-logo";
 import { MealizeNavbarWelcomeMenus } from "./mealize-navbar-welcome-menus";
-
-const NAV_BAR_SURFACE = "bg-gradient-to-b from-[#76D97E] to-[#28A690]";
-
-const NAV_HEADER_CLASS = cn(
-  "sticky top-0 z-200 w-full min-w-0 overflow-visible shadow-none",
-  NAV_BAR_SURFACE,
-);
-
-const NAV_LOGO_LINK_CLASS =
-  "flex min-w-0 shrink-0 flex-row items-center gap-2 font-black text-white no-underline dark:text-black";
-
-function NavIconLink({
-  href,
-  title,
-  children,
-}: {
-  href: string;
-  title: string;
-  children: ReactNode;
-}) {
-  const pathname = usePathname();
-  const active =
-    href === "/"
-      ? pathname === "/"
-      : pathname === href || pathname.startsWith(`${href}/`);
-
-  return (
-    <Link
-      href={href}
-      prefetch={false}
-      title={title}
-      className={cn(
-        "flex size-9 shrink-0 items-center justify-center rounded-full text-white transition hover:bg-white/15",
-        "dark:text-black dark:hover:bg-black/10",
-        active && "bg-white/20 ring-1 ring-white/35 dark:bg-black/12 dark:ring-black/20",
-      )}
-    >
-      {children}
-    </Link>
-  );
-}
+import { AppHeader, AppHeaderPlaceholder } from "./ui/app-header";
+import { AppHeaderRow } from "./ui/app-header-row";
+import { BrandLogo } from "./ui/brand-logo";
+import { NavAuthButton } from "./ui/nav-auth-button";
+import { NavIconLink } from "./ui/nav-icon-link";
+import { NavPrimaryCtaButton, NavPrimaryCtaLink } from "./ui/nav-primary-cta";
 
 function SearchShell() {
   const router = useRouter();
@@ -243,116 +206,95 @@ function SettingsMenu() {
   );
 }
 
+function GuestDrawerAuth() {
+  return (
+    <div className="flex flex-col gap-2">
+      <NavAuthButton variant="signup" size="drawer" href="/sign-up">
+        Sign up
+      </NavAuthButton>
+      <NavAuthButton variant="signin" size="drawer" href="/sign-in">
+        Log in
+      </NavAuthButton>
+    </div>
+  );
+}
+
+function GuestAuthActions() {
+  return (
+    <>
+      <NavAuthButton variant="signup" href="/sign-up">
+        Sign up
+      </NavAuthButton>
+      <NavAuthButton variant="signin" href="/sign-in">
+        Log in
+      </NavAuthButton>
+    </>
+  );
+}
+
 export function MealizeNavbarGuest() {
-  const { theme } = useMealizeTheme();
   const pathname = usePathname();
   /** Signed-out home (`/`) shows the same About/Docs/… mega nav as `/welcome` and wiki routes — not search. */
   const isWelcome =
     pathname === "/" || pathname === "/welcome" || pathname.startsWith("/work/mealize/wiki");
 
-  const guestDrawerAuth: ReactNode = (
-    <div className="flex flex-col gap-2">
-      <Link
-        href="/sign-up"
-        prefetch={false}
-        className={`flex h-11 cursor-pointer items-center justify-center rounded-lg border-0 bg-[${authBrand.signUp.fillLight}] px-4 text-sm font-extrabold text-white no-underline shadow-sm transition hover:bg-[${authBrand.signUp.fillLightHover}] dark:border dark:border-[${authBrand.signUp.fillDark}]/50 dark:bg-[${authBrand.signUp.fillDark}] dark:text-black dark:shadow-none dark:hover:bg-[${authBrand.signUp.fillDarkHover}]`}
-      >
-        Sign up
-      </Link>
-      <Link
-        href="/sign-in"
-        prefetch={false}
-        className={`flex h-11 cursor-pointer items-center justify-center rounded-lg border-0 bg-[${authBrand.signIn.fillLight}] px-4 text-sm font-semibold text-white no-underline shadow-sm transition hover:bg-[${authBrand.signIn.fillLightHover}] dark:bg-[${authBrand.signIn.fillDark}] dark:text-black dark:hover:bg-[${authBrand.signIn.fillDarkHover}]`}
-      >
-        Log in
-      </Link>
-    </div>
-  );
-
   return (
-    <header className={NAV_HEADER_CLASS}>
-      <nav className="w-full min-w-0">
-        <div
-          className={
-            isWelcome
-              ? "flex h-[50px] w-full min-w-0 flex-row items-center justify-between gap-2 px-4 sm:px-6 lg:px-10"
-              : "grid w-full min-w-0 grid-cols-2 items-center gap-x-2 gap-y-2 px-4 py-2 sm:px-6 lg:h-[50px] lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-x-3 lg:gap-y-0 lg:py-0"
-          }
-        >
-          <Link
-            href="/"
-            aria-label="Mealize home"
-            className={cn(
-              NAV_LOGO_LINK_CLASS,
-              !isWelcome &&
-                "col-start-1 row-start-1 max-w-[min(100%,14rem)] sm:max-w-none",
-            )}
-            style={{
-              fontFamily: "motiva-sans, sans-serif",
-              fontWeight: 900,
-              fontStyle: "normal",
-              fontSize: "28px",
-              marginTop: "2px",
-            }}
-          >
-            <span
-              id="mealize-splash-logo-target"
-              className="flex size-[40px] shrink-0 items-center justify-center sm:size-[45px]"
-              aria-hidden
-              data-mealize-splash-logo-target
-            >
-              <MealizeNavLogo theme={theme} className="block" />
-            </span>
-            <span className="truncate leading-none max-[380px]:hidden sm:inline">Mealize</span>
-          </Link>
-          {isWelcome ? (
-            <>
-              <div className="flex min-w-0 flex-1 items-center justify-center">
-                <MealizeNavbarWelcomeMenus mobileDrawerFooter={guestDrawerAuth} />
-              </div>
-              <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-                <Link
-                  href="/sign-up"
-                  prefetch={false}
-                  className={`flex cursor-pointer items-center justify-center rounded-md border-0 bg-[${authBrand.signUp.fillLight}] px-2.5 py-1.5 text-xs font-extrabold text-white no-underline shadow-sm sm:px-3 sm:text-sm dark:border dark:border-[${authBrand.signUp.fillDark}]/50 dark:bg-[${authBrand.signUp.fillDark}] dark:text-black dark:shadow-none dark:hover:bg-[${authBrand.signUp.fillDarkHover}]`}
-                >
-                  Sign up
-                </Link>
-                <Link
-                  href="/sign-in"
-                  prefetch={false}
-                  className={`flex cursor-pointer items-center justify-center rounded-md border-0 bg-[${authBrand.signIn.fillLight}] px-2.5 py-1.5 text-xs font-semibold text-white no-underline shadow-sm sm:px-3 sm:text-sm dark:bg-[${authBrand.signIn.fillDark}] dark:text-black dark:hover:bg-[${authBrand.signIn.fillDarkHover}]`}
-                >
-                  Log in
-                </Link>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="col-span-2 row-start-2 flex min-w-0 items-center gap-2 lg:col-span-1 lg:row-start-1 lg:col-start-2 lg:col-end-3">
-                <SearchShell />
-              </div>
-              <div className="col-start-2 row-start-1 flex shrink-0 items-center justify-end gap-2 justify-self-end lg:col-start-3 lg:row-start-1">
-                <Link
-                  href="/sign-up"
-                  prefetch={false}
-                  className={`flex cursor-pointer items-center justify-center rounded-md border-0 bg-[${authBrand.signUp.fillLight}] px-2.5 py-1.5 text-xs font-extrabold text-white no-underline shadow-sm sm:px-3 sm:text-sm dark:border dark:border-[${authBrand.signUp.fillDark}]/50 dark:bg-[${authBrand.signUp.fillDark}] dark:text-black dark:shadow-none dark:hover:bg-[${authBrand.signUp.fillDarkHover}]`}
-                >
-                  Sign up
-                </Link>
-                <Link
-                  href="/sign-in"
-                  prefetch={false}
-                  className={`flex cursor-pointer items-center justify-center rounded-md border-0 bg-[${authBrand.signIn.fillLight}] px-2.5 py-1.5 text-xs font-semibold text-white no-underline shadow-sm sm:px-3 sm:text-sm dark:bg-[${authBrand.signIn.fillDark}] dark:text-black dark:hover:bg-[${authBrand.signIn.fillDarkHover}]`}
-                >
-                  Log in
-                </Link>
-              </div>
-            </>
+    <AppHeader>
+      <AppHeaderRow variant={isWelcome ? "welcome" : "default"}>
+        <BrandLogo
+          className={cn(
+            !isWelcome &&
+              "col-start-1 row-start-1 max-w-[min(100%,14rem)] sm:max-w-none",
           )}
-        </div>
-      </nav>
-    </header>
+        />
+        {isWelcome ? (
+          <>
+            <div className="flex min-w-0 flex-1 items-center justify-center">
+              <MealizeNavbarWelcomeMenus mobileDrawerFooter={<GuestDrawerAuth />} />
+            </div>
+            <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+              <GuestAuthActions />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="col-span-2 row-start-2 flex min-w-0 items-center gap-2 lg:col-span-1 lg:row-start-1 lg:col-start-2 lg:col-end-3">
+              <SearchShell />
+            </div>
+            <div className="col-start-2 row-start-1 flex shrink-0 items-center justify-end gap-2 justify-self-end lg:col-start-3 lg:row-start-1">
+              <GuestAuthActions />
+            </div>
+          </>
+        )}
+      </AppHeaderRow>
+    </AppHeader>
+  );
+}
+
+function SessionPrimaryCta({ isManager }: { isManager: boolean }) {
+  if (isManager) {
+    return <NavPrimaryCtaLink href="/posts/new">New post</NavPrimaryCtaLink>;
+  }
+  return (
+    <SignOutButton>
+      <NavPrimaryCtaButton>Log out</NavPrimaryCtaButton>
+    </SignOutButton>
+  );
+}
+
+function SessionIconLinks() {
+  return (
+    <>
+      <NavIconLink href="/deliveries" title="Deliveries">
+        <Truck className="size-[18px]" strokeWidth={2} />
+      </NavIconLink>
+      <NavIconLink href="/messages" title="Messages">
+        <MessageSquare className="size-[18px]" strokeWidth={2} />
+      </NavIconLink>
+      <NavIconLink href="/organizations" title="Organizations">
+        <Building2 className="size-[18px]" strokeWidth={2} />
+      </NavIconLink>
+    </>
   );
 }
 
@@ -378,151 +320,60 @@ function WelcomeSessionDrawerFooter({ isManager }: { isManager: boolean }) {
         </Link>
       </div>
       {isManager ? (
-        <Link
-          href="/posts/new"
-          prefetch={false}
-          className="flex h-11 items-center justify-center rounded-lg bg-[#9AF2C0] text-sm font-bold text-black no-underline shadow-sm transition hover:bg-[#8ae8b2]"
-        >
+        <NavPrimaryCtaLink href="/posts/new" size="drawer">
           New post
-        </Link>
+        </NavPrimaryCtaLink>
       ) : (
         <SignOutButton>
-          <button
-            type="button"
-            className="w-full cursor-pointer rounded-lg bg-[#9AF2C0] py-2.5 text-sm font-bold text-black transition hover:bg-[#8ae8b2]"
-          >
-            Log out
-          </button>
+          <NavPrimaryCtaButton size="drawer">Log out</NavPrimaryCtaButton>
         </SignOutButton>
       )}
     </div>
   );
 }
 
-export function MealizeNavbarSession({
-  isManager,
-}: {
-  isManager: boolean;
-}) {
-  const { theme } = useMealizeTheme();
+export function MealizeNavbarSession({ isManager }: { isManager: boolean }) {
   const pathname = usePathname();
   const isWelcome = pathname === "/welcome" || pathname.startsWith("/work/mealize/wiki");
 
   return (
-    <header className={NAV_HEADER_CLASS}>
-      <nav className="w-full min-w-0">
-        <div
-          className={
-            isWelcome
-              ? "flex h-[50px] w-full min-w-0 flex-row items-center gap-2 px-4 sm:px-6 lg:justify-between lg:gap-2.5 lg:px-6"
-              : "grid w-full min-w-0 grid-cols-2 items-center gap-x-2 gap-y-2 px-4 py-2 sm:px-6 lg:h-[50px] lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-x-3 lg:gap-y-0 lg:py-0"
-          }
-        >
-          <Link
-            href="/"
-            aria-label="Mealize home"
-            className={cn(
-              NAV_LOGO_LINK_CLASS,
-              !isWelcome &&
-                "col-start-1 row-start-1 max-w-[min(100%,15rem)] sm:max-w-none",
-            )}
-            style={{
-              fontFamily: "motiva-sans, sans-serif",
-              fontWeight: 900,
-              fontStyle: "normal",
-              fontSize: "28px",
-            }}
-          >
-            <span
-              id="mealize-splash-logo-target"
-              className="flex size-[40px] shrink-0 items-center justify-center sm:size-[45px]"
-              aria-hidden
-              data-mealize-splash-logo-target
-            >
-              <MealizeNavLogo theme={theme} className="block" />
-            </span>
-            <span className="truncate leading-none max-[380px]:hidden sm:inline">Mealize</span>
-          </Link>
-          {isWelcome ? (
-            <>
-              <div className="flex min-w-0 flex-1 items-center justify-end lg:mx-2 lg:justify-center">
-                <MealizeNavbarWelcomeMenus
-                  mobileDrawerFooter={<WelcomeSessionDrawerFooter isManager={isManager} />}
-                />
-              </div>
-              <div className="hidden shrink-0 items-center gap-1.5 lg:flex">
-                <NavIconLink href="/deliveries" title="Deliveries">
-                  <Truck className="size-[18px]" strokeWidth={2} />
-                </NavIconLink>
-                <NavIconLink href="/messages" title="Messages">
-                  <MessageSquare className="size-[18px]" strokeWidth={2} />
-                </NavIconLink>
-                <NavIconLink href="/organizations" title="Organizations">
-                  <Building2 className="size-[18px]" strokeWidth={2} />
-                </NavIconLink>
-                <UserButton />
-                <SettingsMenu />
-                {isManager ? (
-                  <Link
-                    href="/posts/new"
-                    prefetch={false}
-                    className="cursor-pointer rounded bg-[#9AF2C0] px-3 py-1.5 text-sm font-bold text-black no-underline hover:bg-[#8ae8b2] dark:bg-black dark:text-white dark:hover:bg-zinc-800"
-                  >
-                    New post
-                  </Link>
-                ) : (
-                  <SignOutButton>
-                    <button
-                      type="button"
-                      className="cursor-pointer rounded bg-[#9AF2C0] px-3 py-1.5 text-sm font-bold text-black hover:bg-[#8ae8b2] dark:bg-black dark:text-white dark:hover:bg-zinc-800"
-                    >
-                      Log out
-                    </button>
-                  </SignOutButton>
-                )}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="col-span-2 row-start-2 min-w-0 lg:col-span-1 lg:row-start-1 lg:col-start-2 lg:col-end-3">
-                <SearchShell />
-              </div>
-              <div className="col-start-2 row-start-1 flex shrink-0 items-center justify-end gap-1 justify-self-end sm:gap-1.5 lg:col-start-3 lg:row-start-1">
-                <NavIconLink href="/deliveries" title="Deliveries">
-                  <Truck className="size-[18px]" strokeWidth={2} />
-                </NavIconLink>
-                <NavIconLink href="/messages" title="Messages">
-                  <MessageSquare className="size-[18px]" strokeWidth={2} />
-                </NavIconLink>
-                <NavIconLink href="/organizations" title="Organizations">
-                  <Building2 className="size-[18px]" strokeWidth={2} />
-                </NavIconLink>
-                <UserButton />
-                <SettingsMenu />
-                {isManager ? (
-                  <Link
-                    href="/posts/new"
-                    prefetch={false}
-                    className="cursor-pointer rounded-md bg-[#9AF2C0] px-2 py-1.5 text-xs font-bold text-black no-underline shadow-sm hover:bg-[#8ae8b2] sm:px-3 sm:text-sm dark:bg-black dark:text-white dark:hover:bg-zinc-800"
-                  >
-                    New post
-                  </Link>
-                ) : (
-                  <SignOutButton>
-                    <button
-                      type="button"
-                      className="cursor-pointer rounded-md bg-[#9AF2C0] px-2 py-1.5 text-xs font-bold text-black shadow-sm hover:bg-[#8ae8b2] sm:px-3 sm:text-sm dark:bg-black dark:text-white dark:hover:bg-zinc-800"
-                    >
-                      Log out
-                    </button>
-                  </SignOutButton>
-                )}
-              </div>
-            </>
+    <AppHeader>
+      <AppHeaderRow variant={isWelcome ? "welcome" : "default"}>
+        <BrandLogo
+          className={cn(
+            !isWelcome &&
+              "col-start-1 row-start-1 max-w-[min(100%,15rem)] sm:max-w-none",
           )}
-        </div>
-      </nav>
-    </header>
+        />
+        {isWelcome ? (
+          <>
+            <div className="flex min-w-0 flex-1 items-center justify-end lg:mx-2 lg:justify-center">
+              <MealizeNavbarWelcomeMenus
+                mobileDrawerFooter={<WelcomeSessionDrawerFooter isManager={isManager} />}
+              />
+            </div>
+            <div className="hidden shrink-0 items-center gap-1.5 lg:flex">
+              <SessionIconLinks />
+              <UserButton />
+              <SettingsMenu />
+              <SessionPrimaryCta isManager={isManager} />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="col-span-2 row-start-2 min-w-0 lg:col-span-1 lg:row-start-1 lg:col-start-2 lg:col-end-3">
+              <SearchShell />
+            </div>
+            <div className="col-start-2 row-start-1 flex shrink-0 items-center justify-end gap-1 justify-self-end sm:gap-1.5 lg:col-start-3 lg:row-start-1">
+              <SessionIconLinks />
+              <UserButton />
+              <SettingsMenu />
+              <SessionPrimaryCta isManager={isManager} />
+            </div>
+          </>
+        )}
+      </AppHeaderRow>
+    </AppHeader>
   );
 }
 
@@ -532,11 +383,7 @@ export function MealizeNavbar() {
     enabled: isLoaded && !!isSignedIn,
   });
 
-  if (!isLoaded) {
-    return (
-      <div className={cn("sticky top-0 z-200 h-[50px] w-full min-w-0 lg:h-[50px]", NAV_BAR_SURFACE)} />
-    );
-  }
+  if (!isLoaded) return <AppHeaderPlaceholder />;
   if (!isSignedIn) return <MealizeNavbarGuest />;
   return <MealizeNavbarSession isManager={me?.isManager ?? false} />;
 }

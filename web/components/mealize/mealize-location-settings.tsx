@@ -118,6 +118,10 @@ export function MealizeLocationSettings() {
         We only use your location to fill this label (with your permission). You can change it anytime—like
         setting a delivery area in other apps.
       </p>
+      <p className="text-[11px] leading-snug text-muted-foreground">
+        SMS and email digests for new matches and delivery reminders are not wired yet—they will respect quiet hours
+        and only go to verified contact paths once messaging providers are configured.
+      </p>
     </div>
   );
 }

@@ -10,7 +10,8 @@ export function MealizeNavLogo({
   theme: MealizeTheme;
   className?: string;
 }) {
-  const fill = theme === "light" ? "#ffffff" : "#191919";
+  /** Light: white mark on green bar. Dark: black mark (paired with dark navbar chrome on gradient). */
+  const fill = theme === "light" ? "#ffffff" : "#000000";
 
   return (
     <svg

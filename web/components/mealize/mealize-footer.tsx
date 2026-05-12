@@ -50,6 +50,13 @@ export function MealizeFooter() {
               Welcome page
             </Link>
             <Link
+              href="/welcome#platform"
+              prefetch={false}
+              className="block text-sm font-semibold text-foreground underline decoration-border underline-offset-2 transition hover:decoration-primary"
+            >
+              Platform roadmap
+            </Link>
+            <Link
               href="/organizations"
               prefetch={false}
               className="block text-sm font-semibold text-foreground underline decoration-border underline-offset-2 transition hover:decoration-primary"

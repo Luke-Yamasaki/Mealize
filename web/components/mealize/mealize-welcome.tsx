@@ -13,6 +13,7 @@ import {
 import { useMealizeTheme } from "@/stores/mealize-ui-store";
 
 import { MealizeLogoMedium } from "./mealize-logo-medium";
+import { MealizePlatformRoadmap } from "./mealize-platform-roadmap";
 import { MealizeWelcomeSplash } from "./mealize-welcome-splash";
 
 const ASSET = "/welcome";
@@ -438,6 +439,8 @@ export function MealizeWelcome() {
           </div>
           <WelcomeImg file="login.png" alt="Login and sign up forms" maxHeight={640} objectFit="cover" />
         </section>
+
+        <MealizePlatformRoadmap />
 
         {/* Blog / updates (stub — nav links land here) */}
         <section

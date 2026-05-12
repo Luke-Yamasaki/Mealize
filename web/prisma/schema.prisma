@@ -34,6 +34,10 @@ model Organization {
   state       String   @db.VarChar(12)
   phone       String   @unique @db.VarChar(20)
   email       String   @db.VarChar(255)
+  /// Admin-set: 501(c)(3) or equivalent verified for this profile.
+  mealizeVerifiedNonprofit Boolean @default(false) @map("mealize_verified_nonprofit")
+  /// Admin-set: commercial kitchen / food-safe donor verification.
+  mealizeVerifiedKitchen   Boolean @default(false) @map("mealize_verified_kitchen")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -77,6 +81,7 @@ model User {
   watchlist       Watchlist[]
   boardsAsUserOne Messageboard[] @relation("MessageBoardUserOne")
   boardsAsUserTwo Messageboard[] @relation("MessageBoardUserTwo")
+  deliveryFeedback DeliveryFeedback[]
 
   @@map("users")
 }
@@ -182,8 +187,24 @@ model Delivery {
   volunteer User         @relation(fields: [userId], references: [id])
   business  Organization @relation("DeliveryBusiness", fields: [businessId], references: [id])
   nonprofit Organization @relation("DeliveryNonprofit", fields: [nonprofitId], references: [id])
+  feedback  DeliveryFeedback[]
 
   @@map("deliveries")
+}
+
+model DeliveryFeedback {
+  id         Int      @id @default(autoincrement())
+  deliveryId Int      @map("deliveryId")
+  userId     Int      @map("userId")
+  rating     Int
+  comment    String?  @db.VarChar(500)
+  createdAt  DateTime @default(now())
+
+  delivery Delivery @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([deliveryId, userId])
+  @@map("delivery_feedback")
 }
 
 model Favorite {

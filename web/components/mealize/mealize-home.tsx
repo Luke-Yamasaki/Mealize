@@ -4,6 +4,7 @@ import { trpc } from "@/lib/trpc/react";
 
 import { MealizePostCard, type MealizePostListItem } from "./mealize-post-card";
 import { MealizeFilterDropdown } from "./mealize-filter-dropdown";
+import { MealizeMatchesStrip } from "./mealize-matches-strip";
 import { useMealizeFilter } from "@/stores/mealize-ui-store";
 
 const CATEGORY_BY_FILTER: Record<string, string> = {
@@ -62,6 +63,7 @@ export function MealizeHome() {
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-7xl px-4 py-6 pb-14 sm:px-6 lg:px-8">
+      <MealizeMatchesStrip />
       <section className="flex min-w-0 flex-col">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-lg font-bold tracking-tight text-foreground">Posts</h2>

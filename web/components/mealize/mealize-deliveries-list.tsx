@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Package } from "lucide-react";
+import { CalendarClock, Download, Package } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { trpc } from "@/lib/trpc/react";
 import { cn } from "@/lib/utils";
@@ -15,6 +16,7 @@ function formatDate(d: Date) {
 
 export function MealizeDeliveriesList() {
   const q = trpc.delivery.listMine.useQuery();
+  const csvQ = trpc.delivery.exportMineCsv.useQuery(undefined, { enabled: false });
 
   if (q.isLoading) {
     return (
@@ -48,11 +50,55 @@ export function MealizeDeliveriesList() {
     <div className="mx-auto w-full max-w-3xl px-4 pb-12 pt-8 text-foreground sm:px-6 sm:pt-10">
       <header className="mb-8 space-y-2">
         <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-primary-readable">Logistics</p>
-        <h1 className="text-3xl font-black tracking-tight sm:text-4xl">Deliveries</h1>
-        <p className="max-w-xl text-sm font-medium leading-relaxed text-muted-foreground">
-          Pickups and drop-offs you are involved in. Open a row for full context.
-        </p>
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h1 className="text-3xl font-black tracking-tight sm:text-4xl">Deliveries</h1>
+            <p className="max-w-xl text-sm font-medium leading-relaxed text-muted-foreground">
+              Pickups and drop-offs you are involved in. Open a row for full context.
+            </p>
+          </div>
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            className="shrink-0 gap-2 font-semibold"
+            disabled={csvQ.isFetching || (q.data?.length ?? 0) === 0}
+            onClick={() => {
+              void csvQ.refetch().then((res) => {
+                const payload = res.data;
+                if (!payload) return;
+                const blob = new Blob([payload.csv], { type: "text/csv;charset=utf-8" });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = payload.filename;
+                a.click();
+                URL.revokeObjectURL(url);
+              });
+            }}
+          >
+            <Download className="size-4" aria-hidden />
+            Export CSV
+          </Button>
+        </div>
       </header>
+
+      <Card className="mb-6 border-dashed border-primary-readable/25 bg-primary-readable/[0.04] dark:border-primary/30 dark:bg-primary/10">
+        <CardHeader className="pb-2">
+          <div className="flex items-center gap-3">
+            <span className="flex size-10 items-center justify-center rounded-xl bg-card text-primary-readable shadow-sm ring-1 ring-border dark:text-primary">
+              <CalendarClock className="size-5" strokeWidth={2} aria-hidden />
+            </span>
+            <div>
+              <CardTitle className="text-base">Recurring pickups & slots</CardTitle>
+              <CardDescription className="text-sm font-medium">
+                Standing weekly routes and capacity reservations are on the roadmap—today, schedule each delivery from
+                the quick form below.
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+      </Card>
 
       {rows.length === 0 ? (
         <Card className="mb-10 border-dashed border-border">

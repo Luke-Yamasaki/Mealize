@@ -26,6 +26,16 @@ import { MealizeLocationSettings } from "./mealize-location-settings";
 import { MealizeNavLogo } from "./mealize-nav-logo";
 import { MealizeNavbarWelcomeMenus } from "./mealize-navbar-welcome-menus";
 
+const NAV_BAR_SURFACE = "bg-gradient-to-b from-[#76D97E] to-[#28A690]";
+
+const NAV_HEADER_CLASS = cn(
+  "sticky top-0 z-200 w-full min-w-0 overflow-visible shadow-none",
+  NAV_BAR_SURFACE,
+);
+
+const NAV_LOGO_LINK_CLASS =
+  "flex min-w-0 shrink-0 flex-row items-center gap-2 font-black text-white no-underline dark:text-black";
+
 function NavIconLink({
   href,
   title,
@@ -48,7 +58,8 @@ function NavIconLink({
       title={title}
       className={cn(
         "flex size-9 shrink-0 items-center justify-center rounded-full text-white transition hover:bg-white/15",
-        active && "bg-white/20 ring-1 ring-white/35",
+        "dark:text-black dark:hover:bg-black/10",
+        active && "bg-white/20 ring-1 ring-white/35 dark:bg-black/12 dark:ring-black/20",
       )}
     >
       {children}
@@ -76,11 +87,11 @@ function SearchShell() {
           onChange={(e) => setQ(e.target.value)}
           placeholder="Search posts"
           aria-label="Search posts"
-          className="h-9 rounded-full border-0 bg-white pr-10 pl-3 text-sm font-medium text-foreground shadow-sm ring-1 ring-black/5 placeholder:text-muted-foreground dark:bg-zinc-900 dark:text-white dark:ring-white/10"
+          className="h-9 rounded-full border-0 bg-white pr-10 pl-3 text-sm font-medium text-foreground shadow-sm ring-1 ring-black/5 placeholder:text-muted-foreground dark:bg-zinc-100 dark:text-zinc-900 dark:ring-zinc-300/80"
         />
         <button
           type="submit"
-          className="absolute top-1/2 right-1.5 z-[1] flex size-7 -translate-y-1/2 items-center justify-center rounded-full text-primary-readable transition hover:bg-primary/10"
+          className="absolute top-1/2 right-1.5 z-[1] flex size-7 -translate-y-1/2 items-center justify-center rounded-full text-primary-readable transition hover:bg-primary/10 dark:text-zinc-900 dark:hover:bg-black/10"
           aria-label="Search"
         >
           <Search className="size-4" strokeWidth={2.25} />
@@ -138,6 +149,7 @@ function SettingsMenu() {
         className={cn(
           buttonVariants({ variant: "ghost", size: "icon" }),
           "size-9 shrink-0 rounded-full border-0 bg-white/15 text-white hover:bg-white/25 hover:text-white",
+          "dark:bg-black/8 dark:text-black dark:hover:bg-black/15 dark:hover:text-black",
         )}
         aria-label="Display settings"
       >
@@ -240,14 +252,14 @@ export function MealizeNavbarGuest() {
       <Link
         href="/sign-up"
         prefetch={false}
-        className="flex h-11 cursor-pointer items-center justify-center rounded-lg border-0 bg-[#9AF2C0] px-4 text-sm font-extrabold text-black no-underline shadow-sm transition hover:bg-[#8ae8b2]"
+        className="flex h-11 cursor-pointer items-center justify-center rounded-lg border-0 bg-[#9AF2C0] px-4 text-sm font-extrabold text-black no-underline shadow-sm transition hover:bg-[#8ae8b2] dark:border dark:border-black dark:bg-transparent dark:shadow-none dark:hover:bg-black/5"
       >
         Sign up
       </Link>
       <Link
         href="/sign-in"
         prefetch={false}
-        className="flex h-11 cursor-pointer items-center justify-center rounded-lg border-0 bg-[#28A690] px-4 text-sm font-semibold text-white no-underline shadow-sm transition hover:bg-[#22967f]"
+        className="flex h-11 cursor-pointer items-center justify-center rounded-lg border-0 bg-[#28A690] px-4 text-sm font-semibold text-white no-underline shadow-sm transition hover:bg-[#22967f] dark:bg-black dark:hover:bg-zinc-800"
       >
         Log in
       </Link>
@@ -255,9 +267,7 @@ export function MealizeNavbarGuest() {
   );
 
   return (
-    <header
-      className="sticky top-0 z-200 w-full min-w-0 overflow-visible bg-gradient-to-b from-[#76D97E] to-[#28A690]"
-    >
+    <header className={NAV_HEADER_CLASS}>
       <nav className="w-full min-w-0">
         <div
           className={
@@ -270,7 +280,7 @@ export function MealizeNavbarGuest() {
             href="/"
             aria-label="Mealize home"
             className={cn(
-              "flex min-w-0 shrink-0 flex-row items-center gap-2 font-black text-white no-underline",
+              NAV_LOGO_LINK_CLASS,
               !isWelcome &&
                 "col-start-1 row-start-1 max-w-[min(100%,14rem)] sm:max-w-none",
             )}
@@ -305,14 +315,14 @@ export function MealizeNavbarGuest() {
                 <Link
                   href="/sign-up"
                   prefetch={false}
-                  className="flex cursor-pointer items-center justify-center rounded-md border-0 bg-[#9AF2C0] px-2.5 py-1.5 text-xs font-extrabold text-black no-underline shadow-sm sm:px-3 sm:text-sm"
+                  className="flex cursor-pointer items-center justify-center rounded-md border-0 bg-[#9AF2C0] px-2.5 py-1.5 text-xs font-extrabold text-black no-underline shadow-sm sm:px-3 sm:text-sm dark:border dark:border-black dark:bg-transparent dark:shadow-none dark:hover:bg-black/5"
                 >
                   Sign up
                 </Link>
                 <Link
                   href="/sign-in"
                   prefetch={false}
-                  className="flex cursor-pointer items-center justify-center rounded-md border-0 bg-[#28A690] px-2.5 py-1.5 text-xs font-semibold text-white no-underline shadow-sm sm:px-3 sm:text-sm"
+                  className="flex cursor-pointer items-center justify-center rounded-md border-0 bg-[#28A690] px-2.5 py-1.5 text-xs font-semibold text-white no-underline shadow-sm sm:px-3 sm:text-sm dark:bg-black dark:hover:bg-zinc-800"
                 >
                   Log in
                 </Link>
@@ -378,7 +388,7 @@ export function MealizeNavbarSession({
   const isWelcome = pathname === "/welcome";
 
   return (
-    <header className="sticky top-0 z-200 w-full min-w-0 overflow-visible bg-gradient-to-b from-[#76D97E] to-[#28A690]">
+    <header className={NAV_HEADER_CLASS}>
       <nav className="w-full min-w-0">
         <div
           className={
@@ -391,7 +401,7 @@ export function MealizeNavbarSession({
             href="/"
             aria-label="Mealize home"
             className={cn(
-              "flex min-w-0 shrink-0 flex-row items-center gap-2 font-black text-white no-underline",
+              NAV_LOGO_LINK_CLASS,
               !isWelcome &&
                 "col-start-1 row-start-1 max-w-[min(100%,15rem)] sm:max-w-none",
             )}
@@ -435,7 +445,7 @@ export function MealizeNavbarSession({
                   <Link
                     href="/posts/new"
                     prefetch={false}
-                    className="cursor-pointer rounded bg-[#9AF2C0] px-3 py-1.5 text-sm font-bold text-black no-underline hover:bg-[#8ae8b2]"
+                    className="cursor-pointer rounded bg-[#9AF2C0] px-3 py-1.5 text-sm font-bold text-black no-underline hover:bg-[#8ae8b2] dark:bg-black dark:text-white dark:hover:bg-zinc-800"
                   >
                     New post
                   </Link>
@@ -443,7 +453,7 @@ export function MealizeNavbarSession({
                   <SignOutButton>
                     <button
                       type="button"
-                      className="cursor-pointer rounded bg-[#9AF2C0] px-3 py-1.5 text-sm font-bold text-black hover:bg-[#8ae8b2]"
+                      className="cursor-pointer rounded bg-[#9AF2C0] px-3 py-1.5 text-sm font-bold text-black hover:bg-[#8ae8b2] dark:bg-black dark:text-white dark:hover:bg-zinc-800"
                     >
                       Log out
                     </button>
@@ -472,7 +482,7 @@ export function MealizeNavbarSession({
                   <Link
                     href="/posts/new"
                     prefetch={false}
-                    className="cursor-pointer rounded-md bg-[#9AF2C0] px-2 py-1.5 text-xs font-bold text-black no-underline shadow-sm hover:bg-[#8ae8b2] sm:px-3 sm:text-sm"
+                    className="cursor-pointer rounded-md bg-[#9AF2C0] px-2 py-1.5 text-xs font-bold text-black no-underline shadow-sm hover:bg-[#8ae8b2] sm:px-3 sm:text-sm dark:bg-black dark:text-white dark:hover:bg-zinc-800"
                   >
                     New post
                   </Link>
@@ -480,7 +490,7 @@ export function MealizeNavbarSession({
                   <SignOutButton>
                     <button
                       type="button"
-                      className="cursor-pointer rounded-md bg-[#9AF2C0] px-2 py-1.5 text-xs font-bold text-black shadow-sm hover:bg-[#8ae8b2] sm:px-3 sm:text-sm"
+                      className="cursor-pointer rounded-md bg-[#9AF2C0] px-2 py-1.5 text-xs font-bold text-black shadow-sm hover:bg-[#8ae8b2] sm:px-3 sm:text-sm dark:bg-black dark:text-white dark:hover:bg-zinc-800"
                     >
                       Log out
                     </button>
@@ -503,7 +513,7 @@ export function MealizeNavbar() {
 
   if (!isLoaded) {
     return (
-      <div className="h-[50px] w-full min-w-0 bg-gradient-to-b from-[#76D97E] to-[#28A690] lg:h-[50px]" />
+      <div className={cn("sticky top-0 z-200 h-[50px] w-full min-w-0 lg:h-[50px]", NAV_BAR_SURFACE)} />
     );
   }
   if (!isSignedIn) return <MealizeNavbarGuest />;

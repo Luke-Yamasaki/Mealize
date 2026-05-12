@@ -1,6 +1,7 @@
 import { router } from "@/server/trpc";
 import { categoryRouter } from "@/server/routers/categoryRouter";
 import { deliveryRouter } from "@/server/routers/deliveryRouter";
+import { matchRouter } from "@/server/routers/matchRouter";
 import { favoriteRouter } from "@/server/routers/favoriteRouter";
 import { messageRouter } from "@/server/routers/messageRouter";
 import { organizationRouter } from "@/server/routers/organizationRouter";
@@ -11,6 +12,7 @@ import { userRouter } from "@/server/routers/userRouter";
 export const appRouter = router({
   category: categoryRouter,
   delivery: deliveryRouter,
+  match: matchRouter,
   favorite: favoriteRouter,
   message: messageRouter,
   organization: organizationRouter,

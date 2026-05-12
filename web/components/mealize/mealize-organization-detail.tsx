@@ -1,25 +1,41 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import {
   ArrowLeft,
   Building2,
+  ClipboardList,
   Clock,
+  Copy,
   HeartHandshake,
   Mail,
   MapPin,
   Phone,
+  ShieldCheck,
   Store,
+  TrendingUp,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { trpc } from "@/lib/trpc/react";
 import { cn } from "@/lib/utils";
 
+function buildDonationAcknowledgment(nonprofitOrRecipientName: string) {
+  return `Subject: In-kind food donation acknowledgment
+
+${nonprofitOrRecipientName} acknowledges receipt of donated food as described in the related Mealize delivery record. This contribution supports our tax-exempt charitable mission.
+
+Please retain this acknowledgment for your records. (Template only—not legal advice.)`;
+}
+
 export function MealizeOrganizationDetail({ organizationId }: { organizationId: number }) {
   const q = trpc.organization.byId.useQuery({ id: organizationId });
+  const statsQ = trpc.organization.impactStats.useQuery({ id: organizationId });
+  const [copied, setCopied] = useState(false);
 
   if (q.isLoading) {
     return (
@@ -135,6 +151,24 @@ export function MealizeOrganizationDetail({ organizationId }: { organizationId: 
                     </span>
                   )}
                 </Badge>
+                {o.isNonprofit && o.mealizeVerifiedNonprofit ? (
+                  <Badge
+                    variant="secondary"
+                    className="border-sky-600/25 bg-sky-100 text-sky-950 text-[10px] font-bold uppercase tracking-wide dark:border-sky-400/30 dark:bg-sky-950/55 dark:text-sky-100"
+                  >
+                    <ShieldCheck className="mr-1 size-3" aria-hidden />
+                    Verified nonprofit
+                  </Badge>
+                ) : null}
+                {!o.isNonprofit && o.mealizeVerifiedKitchen ? (
+                  <Badge
+                    variant="secondary"
+                    className="border-violet-600/25 bg-violet-100 text-violet-950 text-[10px] font-bold uppercase tracking-wide dark:border-violet-400/30 dark:bg-violet-950/55 dark:text-violet-100"
+                  >
+                    <ShieldCheck className="mr-1 size-3" aria-hidden />
+                    Verified kitchen
+                  </Badge>
+                ) : null}
               </div>
             </div>
           </div>
@@ -142,6 +176,53 @@ export function MealizeOrganizationDetail({ organizationId }: { organizationId: 
       </Card>
 
       <div className="grid gap-4 md:grid-cols-2">
+        <Card className="border-border/80 shadow-sm md:col-span-2">
+          <CardHeader className="border-b border-border/60 bg-muted/20 pb-4">
+            <CardTitle className="flex items-center gap-2 text-base font-bold">
+              <TrendingUp className="size-4 text-primary-readable dark:text-primary" aria-hidden />
+              Impact (estimated)
+            </CardTitle>
+            <CardDescription className="text-xs font-medium text-muted-foreground">
+              {statsQ.data?.estimationNote ??
+                "Counts from Mealize activity on this profile. Estimates are not audited weights."}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4 pt-5 sm:grid-cols-2 lg:grid-cols-4">
+            {statsQ.isLoading ? (
+              <p className="text-sm font-medium text-muted-foreground sm:col-span-2 lg:col-span-4">Loading stats…</p>
+            ) : statsQ.data ? (
+              <>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Open posts</p>
+                  <p className="mt-1 text-2xl font-black tabular-nums text-foreground">{statsQ.data.activePosts}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Delivery ties</p>
+                  <p className="mt-1 text-2xl font-black tabular-nums text-foreground">
+                    {statsQ.data.deliveryRelationships}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Completed touches</p>
+                  <p className="mt-1 text-2xl font-black tabular-nums text-foreground">
+                    {statsQ.data.completedDeliveriesTouchingOrg}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Est. meals / lbs</p>
+                  <p className="mt-1 text-2xl font-black tabular-nums text-foreground">
+                    ~{statsQ.data.estimatedMealsEquivalent} / ~{statsQ.data.estimatedPoundsReported}
+                  </p>
+                </div>
+              </>
+            ) : (
+              <p className="text-sm font-medium text-destructive sm:col-span-2 lg:col-span-4">
+                Could not load impact stats.
+              </p>
+            )}
+          </CardContent>
+        </Card>
+
         <Card className="border-border/80 shadow-sm md:col-span-2">
           <CardHeader className="border-b border-border/60 bg-muted/20 pb-4">
             <CardTitle className="flex items-center gap-2 text-base font-bold">
@@ -225,6 +306,57 @@ export function MealizeOrganizationDetail({ organizationId }: { organizationId: 
                 </span>
               </a>
             </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/80 shadow-sm md:col-span-2">
+          <CardHeader className="border-b border-border/60 bg-muted/20 pb-4">
+            <CardTitle className="flex items-center gap-2 text-base font-bold">
+              <ClipboardList className="size-4 text-primary-readable dark:text-primary" aria-hidden />
+              Food safety quick checklist
+            </CardTitle>
+            <CardDescription className="text-xs font-medium text-muted-foreground">
+              Operational reminders before moving food—your counsel sets final liability language.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="pt-5">
+            <ul className="list-inside list-disc space-y-2 text-sm font-medium leading-relaxed text-muted-foreground">
+              <li>Temperature control: cold chain for TCS foods; document handoffs.</li>
+              <li>Allergens: label what you know; flag unknowns prominently.</li>
+              <li>Packaging: intact, food-grade, and appropriate for the vehicle and distance.</li>
+              <li>Volunteers: confirm driver understands nonprofit receiving windows.</li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border/80 shadow-sm md:col-span-2">
+          <CardHeader className="border-b border-border/60 bg-muted/20 pb-4">
+            <CardTitle className="flex items-center gap-2 text-base font-bold">
+              <Copy className="size-4 text-primary-readable dark:text-primary" aria-hidden />
+              Donation acknowledgment (template)
+            </CardTitle>
+            <CardDescription className="text-xs font-medium text-muted-foreground">
+              Copy into email or PDF workflows—edit parties, dates, and line items to match your records.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4 pt-5">
+            <pre className="max-h-48 overflow-auto rounded-xl border border-border/80 bg-muted/30 p-4 text-xs font-medium leading-relaxed text-foreground">
+              {buildDonationAcknowledgment(o.name)}
+            </pre>
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              className="font-semibold"
+              onClick={() => {
+                void navigator.clipboard.writeText(buildDonationAcknowledgment(o.name)).then(() => {
+                  setCopied(true);
+                  window.setTimeout(() => setCopied(false), 2200);
+                });
+              }}
+            >
+              {copied ? "Copied" : "Copy to clipboard"}
+            </Button>
           </CardContent>
         </Card>
       </div>

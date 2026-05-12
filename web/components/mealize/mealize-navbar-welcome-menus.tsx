@@ -354,7 +354,7 @@ export function MealizeNavbarWelcomeMenus({ mobileDrawerFooter }: { mobileDrawer
       <div className="flex w-full min-w-0 items-center justify-end lg:justify-center">
         <button
           type="button"
-          className="flex size-10 shrink-0 items-center justify-center rounded-md bg-white/15 text-white shadow-sm hover:bg-white/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:hidden"
+          className="flex size-10 shrink-0 items-center justify-center rounded-md bg-white/15 text-white shadow-sm hover:bg-white/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:hidden dark:bg-black/10 dark:text-black dark:shadow-none dark:hover:bg-black/15 dark:focus-visible:outline-black"
           aria-expanded={sheetOpen}
           aria-controls={sheetId}
           onClick={() => {
@@ -387,9 +387,9 @@ export function MealizeNavbarWelcomeMenus({ mobileDrawerFooter }: { mobileDrawer
                 <button
                   key={tab.id}
                   type="button"
-                  className={`flex shrink-0 items-center gap-0.5 rounded-md px-2 py-1.5 text-[11px] font-extrabold uppercase tracking-wide text-white shadow-sm transition sm:px-2.5 sm:text-xs ${
-                    isActive ? "bg-white/25" : "bg-white/15 hover:bg-white/25"
-                  } focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white`}
+                  className={`flex shrink-0 items-center gap-0.5 rounded-md px-2 py-1.5 text-[11px] font-extrabold uppercase tracking-wide text-white shadow-sm transition sm:px-2.5 sm:text-xs dark:bg-black/10 dark:text-black dark:shadow-none ${
+                    isActive ? "bg-white/25 dark:bg-black/15" : "bg-white/15 hover:bg-white/25 dark:hover:bg-black/15"
+                  } focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white dark:focus-visible:outline-black`}
                   aria-expanded={isActive}
                   aria-controls={`${baseId}-mega-panel`}
                   id={`${baseId}-tab-${tab.id}`}

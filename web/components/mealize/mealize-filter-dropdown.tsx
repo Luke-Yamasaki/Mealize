@@ -6,6 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
@@ -50,26 +51,37 @@ export function MealizeFilterDropdown({ align = "end" }: { align?: "start" | "en
             if (v) setFilter(v as FeedFilter);
           }}
         >
-          <DropdownMenuLabel>Favorites</DropdownMenuLabel>
-          <DropdownMenuRadioItem value="favorites">My favorites</DropdownMenuRadioItem>
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>Favorites</DropdownMenuLabel>
+            <DropdownMenuRadioItem value="favorites">My favorites</DropdownMenuRadioItem>
+          </DropdownMenuGroup>
 
           <DropdownMenuSeparator />
-          <DropdownMenuLabel>Availability</DropdownMenuLabel>
-          <DropdownMenuRadioItem value="available">Available</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="unavailable">Unavailable</DropdownMenuRadioItem>
+
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>Availability</DropdownMenuLabel>
+            <DropdownMenuRadioItem value="available">Available</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="unavailable">Unavailable</DropdownMenuRadioItem>
+          </DropdownMenuGroup>
 
           <DropdownMenuSeparator />
-          <DropdownMenuLabel>Post type</DropdownMenuLabel>
-          <DropdownMenuRadioItem value="requests">Requests</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="items">Items</DropdownMenuRadioItem>
+
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>Post type</DropdownMenuLabel>
+            <DropdownMenuRadioItem value="requests">Requests</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="items">Items</DropdownMenuRadioItem>
+          </DropdownMenuGroup>
 
           <DropdownMenuSeparator />
-          <DropdownMenuLabel>Categories</DropdownMenuLabel>
-          <DropdownMenuRadioItem value="dairy">Dairy</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="vegetables">Vegetables</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="fruits">Fruits</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="grains">Grains</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="protein">Protein</DropdownMenuRadioItem>
+
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>Categories</DropdownMenuLabel>
+            <DropdownMenuRadioItem value="dairy">Dairy</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="vegetables">Vegetables</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="fruits">Fruits</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="grains">Grains</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="protein">Protein</DropdownMenuRadioItem>
+          </DropdownMenuGroup>
         </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>

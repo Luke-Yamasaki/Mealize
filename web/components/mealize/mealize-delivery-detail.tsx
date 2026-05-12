@@ -2,8 +2,10 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { ArrowLeft, Calendar, Truck } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowLeft, Calendar, Star, Truck } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { trpc } from "@/lib/trpc/react";
@@ -23,8 +25,47 @@ function MetaRow({ label, children }: { label: string; children: ReactNode }) {
   );
 }
 
+function StarsRow({ rating }: { rating: number }) {
+  return (
+    <span className="inline-flex items-center gap-0.5 text-amber-500" aria-label={`${rating} out of 5`}>
+      {Array.from({ length: 5 }, (_, i) => (
+        <Star
+          key={i}
+          className={`size-4 ${i < rating ? "fill-current" : "fill-none opacity-35"}`}
+          strokeWidth={1.75}
+          aria-hidden
+        />
+      ))}
+    </span>
+  );
+}
+
 export function MealizeDeliveryDetail({ deliveryId }: { deliveryId: number }) {
   const q = trpc.delivery.byId.useQuery({ id: deliveryId });
+  const meQ = trpc.user.me.useQuery();
+  const utils = trpc.useUtils();
+  const [rating, setRating] = useState<number>(5);
+  const [comment, setComment] = useState("");
+
+  const submitFeedback = trpc.delivery.submitFeedback.useMutation({
+    onSuccess: () => {
+      void utils.delivery.byId.invalidate({ id: deliveryId });
+    },
+  });
+
+  useEffect(() => {
+    const row = q.data;
+    const uid = meQ.data?.id;
+    if (!row || uid == null) return;
+    const mf = row.feedback.find((f) => f.userId === uid);
+    if (mf) {
+      setRating(mf.rating);
+      setComment(mf.comment ?? "");
+    } else {
+      setRating(5);
+      setComment("");
+    }
+  }, [q.data, meQ.data?.id]);
 
   if (q.isLoading) {
     return (
@@ -59,6 +100,8 @@ export function MealizeDeliveryDetail({ deliveryId }: { deliveryId: number }) {
   }
 
   const d = q.data;
+  const myUserId = meQ.data?.id;
+  const myFeedback = myUserId != null ? d.feedback.find((f) => f.userId === myUserId) : undefined;
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 pb-16 pt-8 text-foreground sm:px-6 sm:pt-10">
@@ -120,8 +163,91 @@ export function MealizeDeliveryDetail({ deliveryId }: { deliveryId: number }) {
           </CardContent>
         </Card>
 
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-base font-bold">Feedback</CardTitle>
+            <CardDescription className="text-sm font-medium">
+              One rating per person on this delivery. Visible to everyone who can open this page.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            {d.feedback.length > 0 ? (
+              <ul className="space-y-4">
+                {d.feedback.map((f) => (
+                  <li key={f.id} className="rounded-xl border border-border/80 bg-muted/15 px-4 py-3">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <p className="text-sm font-bold text-foreground">
+                        {f.user.firstName} {f.user.lastName}
+                      </p>
+                      <StarsRow rating={f.rating} />
+                    </div>
+                    {f.comment ? (
+                      <p className="mt-2 text-sm font-medium leading-relaxed text-muted-foreground">{f.comment}</p>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm font-medium text-muted-foreground">No feedback yet.</p>
+            )}
+
+            {myUserId != null ? (
+              <div className="space-y-3 border-t border-border/80 pt-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                  {myFeedback ? "Update your rating" : "Add your rating"}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {[1, 2, 3, 4, 5].map((n) => (
+                    <Button
+                      key={n}
+                      type="button"
+                      size="sm"
+                      variant={rating === n ? "default" : "secondary"}
+                      className="min-w-10 font-bold"
+                      onClick={() => setRating(n)}
+                    >
+                      {n}
+                    </Button>
+                  ))}
+                </div>
+                <label className="block space-y-1.5">
+                  <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                    Optional note
+                  </span>
+                  <textarea
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    maxLength={500}
+                    rows={3}
+                    className="w-full resize-y rounded-lg border border-input bg-background px-3 py-2 text-sm font-medium text-foreground shadow-sm outline-none ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
+                    placeholder="What went well or what to improve next time?"
+                  />
+                </label>
+                <Button
+                  type="button"
+                  className="font-semibold"
+                  disabled={submitFeedback.isPending}
+                  onClick={() =>
+                    submitFeedback.mutate({
+                      deliveryId: d.id,
+                      rating,
+                      comment: comment.trim() || undefined,
+                    })
+                  }
+                >
+                  {submitFeedback.isPending ? "Saving…" : myFeedback ? "Update feedback" : "Submit feedback"}
+                </Button>
+                {submitFeedback.error ? (
+                  <p className="text-sm font-semibold text-destructive">{submitFeedback.error.message}</p>
+                ) : null}
+              </div>
+            ) : null}
+          </CardContent>
+        </Card>
+
         <p className="text-xs font-medium leading-relaxed text-muted-foreground">
-          Edit and status transitions from the legacy app will be wired to mutations in a follow-up.
+          Status transitions from the legacy app can be wired to mutations in a follow-up; feedback saves to the new
+          table immediately.
         </p>
       </div>
     </div>

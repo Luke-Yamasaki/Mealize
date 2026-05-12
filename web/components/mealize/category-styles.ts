@@ -1,6 +1,6 @@
 /** Category accent colors (legacy card gradients); used for badges on white tiles. */
 export const categoryAccentHex: Record<1 | 2 | 3 | 4 | 5, string> = {
-  1: "#15BAFA",
+  1: "#4338ca",
   2: "#6ED56C",
   3: "#FB8DDB",
   4: "#F1BD60",
@@ -9,8 +9,8 @@ export const categoryAccentHex: Record<1 | 2 | 3 | 4 | 5, string> = {
 export const categoryCardStyle = {
   light: {
     1: {
-      background: "linear-gradient(#15BAFA, #FFFFFF)",
-      border: "1px solid #15BAFA",
+      background: "linear-gradient(#4338ca, #FFFFFF)",
+      border: "1px solid #4338ca",
     },
     2: {
       background: "linear-gradient(#6ED56C, #FFFFFF)",
@@ -31,8 +31,8 @@ export const categoryCardStyle = {
   },
   dark: {
     1: {
-      background: "linear-gradient(#15BAFA, #366B80)",
-      border: "1px solid #15BAFA",
+      background: "linear-gradient(#4338ca, #312e81)",
+      border: "1px solid #4338ca",
     },
     2: {
       background: "linear-gradient(#6ED56C, #286526)",

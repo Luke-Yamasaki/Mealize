@@ -3,47 +3,44 @@
 import clsx from "clsx";
 import type { ReactNode } from "react";
 
-import {
-  useMealizeAccessibility,
-  useMealizeBackground,
-  useMealizeTheme,
-} from "@/stores/mealize-ui-store";
+import { useMealizeAccessibility, useMealizeTheme } from "@/stores/mealize-ui-store";
+
+/** Food-glyph tile from `react-app/src/Assets/Images/Pattern.png` (copied to `public/mealize/pattern.png`). */
+const PATTERN_URL = 'url("/mealize/pattern.png")';
 
 export function MealizeShell({ children }: { children: ReactNode }) {
   const { theme } = useMealizeTheme();
-  const { showPattern } = useMealizeBackground();
   const { brandHex, contrast, saturation, dyslexicFont } = useMealizeAccessibility();
-
-  const patternUrl = 'url("https://mealize.s3.amazonaws.com/Pattern_10.png")';
-  const lightBand = "linear-gradient(rgba(118, 217, 126, 0.75), rgba(40, 166, 144, 0.75))";
-  const darkBand = "linear-gradient(rgba(25, 25, 25, 0.85), rgba(25, 25, 25, 0.85))";
-
-  let backgroundImage: string;
-  if (theme === "light" && showPattern) {
-    backgroundImage = `${lightBand}, ${patternUrl}`;
-  } else if (theme === "light") {
-    backgroundImage = lightBand;
-  } else if (showPattern) {
-    backgroundImage = `${darkBand}, ${patternUrl}`;
-  } else {
-    backgroundImage = darkBand;
-  }
 
   return (
     <div
-      className={clsx("mealize-root flex min-h-screen w-full flex-row justify-center")}
+      className={clsx(
+        "mealize-root scheme-light relative flex min-h-screen w-full flex-col bg-background text-foreground dark:scheme-dark",
+        theme === "dark" && "dark",
+      )}
       data-mealize-theme={theme}
       data-mealize-contrast={contrast}
       data-mealize-dyslexic={dyslexicFont ? "true" : "false"}
       style={{
-        backgroundImage,
-        backgroundSize: "contain",
-        backgroundRepeat: "repeat",
         ["--mealize-brand" as string]: brandHex,
+        ["--primary" as string]: brandHex,
+        ["--ring" as string]: brandHex,
         filter: saturation !== 100 ? `saturate(${saturation}%)` : undefined,
       }}
     >
-      <div className="flex w-screen max-w-[1336px] flex-col items-center">{children}</div>
+      <div
+        aria-hidden
+        className={clsx(
+          "pointer-events-none absolute inset-0 z-0 mix-blend-multiply opacity-[0.22] contrast-[1.45] brightness-[1.2] dark:mix-blend-normal dark:opacity-[0.28] dark:contrast-100 dark:brightness-100",
+          theme === "dark" && "invert",
+        )}
+        style={{
+          backgroundImage: PATTERN_URL,
+          backgroundRepeat: "repeat",
+          backgroundSize: "min(260px, 28vw)",
+        }}
+      />
+      <div className="relative z-[1] flex w-full min-w-0 flex-col">{children}</div>
     </div>
   );
 }

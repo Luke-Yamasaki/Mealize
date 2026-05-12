@@ -32,6 +32,10 @@ export default function RootLayout({
         lang="en"
         className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       >
+        <head>
+          {/* Same as `react-app/public/index.html` — Adobe Typekit (motiva-sans) for Mealize wordmark + UI */}
+          <link rel="stylesheet" href="https://use.typekit.net/uix2rvu.css" />
+        </head>
         <body className="flex min-h-full flex-col">
           <TRPCProvider>{children}</TRPCProvider>
         </body>

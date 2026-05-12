@@ -5,6 +5,8 @@ import { useState } from "react";
 
 import { trpc } from "@/lib/trpc/react";
 
+import { MealizeImageUploadField } from "./mealize-image-upload-field";
+
 export function MealizeOnboardingForm() {
   const router = useRouter();
   const orgs = trpc.organization.batched.useQuery();
@@ -23,7 +25,7 @@ export function MealizeOnboardingForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [dob, setDob] = useState("1990-01-01");
-  const [profileImageUrl, setProfileImageUrl] = useState("https://mealize.s3.amazonaws.com/profileicon.png");
+  const [profileImageUrl, setProfileImageUrl] = useState("");
 
   const orgOptions = [
     ...(orgs.data?.businesses ?? []).map((o) => ({ ...o, kind: "Business" as const })),
@@ -32,6 +34,8 @@ export function MealizeOnboardingForm() {
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
+    const url = profileImageUrl.trim();
+    if (!url) return;
     ensure.mutate({
       organizationId,
       isNonprofit,
@@ -41,7 +45,7 @@ export function MealizeOnboardingForm() {
       email: email.trim(),
       phone: phone.trim(),
       dob: new Date(dob),
-      profileImageUrl: profileImageUrl.trim(),
+      profileImageUrl: url,
     });
   }
 
@@ -129,22 +133,19 @@ export function MealizeOnboardingForm() {
             onChange={(e) => setDob(e.target.value)}
           />
         </label>
-        <label className="flex flex-col gap-1 text-sm font-bold text-zinc-800">
-          Profile image URL
-          <input
-            required
-            type="url"
-            className="rounded border border-zinc-300 px-2 py-2 font-semibold"
-            value={profileImageUrl}
-            onChange={(e) => setProfileImageUrl(e.target.value)}
-          />
-        </label>
+        <MealizeImageUploadField
+          label="Profile photo"
+          required
+          value={profileImageUrl}
+          onChange={setProfileImageUrl}
+          helperText="Shown on your profile and in messages. PNG, JPEG, or WebP."
+        />
         {ensure.error ? (
           <p className="text-sm font-semibold text-red-600">{ensure.error.message}</p>
         ) : null}
         <button
           type="submit"
-          disabled={ensure.isPending || orgs.isLoading}
+          disabled={ensure.isPending || orgs.isLoading || !profileImageUrl.trim()}
           className="rounded-lg bg-[#28a690] px-4 py-3 text-sm font-extrabold text-white disabled:opacity-50"
         >
           {ensure.isPending ? "Saving…" : "Save and continue"}

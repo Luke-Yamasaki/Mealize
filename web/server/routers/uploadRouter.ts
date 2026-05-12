@@ -5,7 +5,7 @@ import { z } from "zod";
 
 import { router, protectedProcedure } from "@/server/trpc";
 
-const allowed = ["png", "jpg", "jpeg"] as const;
+const allowed = ["png", "jpg", "jpeg", "webp"] as const;
 
 function getS3Client() {
   const region = process.env.AWS_REGION ?? "us-east-1";
@@ -24,7 +24,7 @@ export const uploadRouter = router({
   presignedPut: protectedProcedure
     .input(
       z.object({
-        contentType: z.enum(["image/png", "image/jpeg"]),
+        contentType: z.enum(["image/png", "image/jpeg", "image/webp"]),
         extension: z.enum(allowed),
       }),
     )

@@ -101,6 +101,127 @@ async function seedUsersForOrganizations(orgCount: number) {
       },
     });
   }
+
+  /** Set in `.env` so your Clerk user maps to seed user 1 and sees demo threads after `db:seed`. */
+  const devClerk = process.env.MEALIZE_DEV_CLERK_ID?.trim();
+  if (devClerk) {
+    await prisma.user.update({
+      where: { id: 1 },
+      data: { clerkId: devClerk },
+    });
+    console.log("MEALIZE_DEV_CLERK_ID: linked seed user id=1 to your Clerk account for message demos.");
+  }
+}
+
+/** Demo DM threads between seed users (requires at least users 1–3). */
+async function seedDemoMessageBoards(firstPostId: number | undefined) {
+  const userCount = await prisma.user.count();
+  if (userCount < 3) {
+    console.log("Skipping demo messages: need at least 3 users.");
+    return;
+  }
+
+  const board12 = await prisma.messageboard.create({
+    data: { userOne: 1, userTwo: 2 },
+  });
+  const board13 = await prisma.messageboard.create({
+    data: { userOne: 1, userTwo: 3 },
+  });
+  const board23 = await prisma.messageboard.create({
+    data: { userOne: 2, userTwo: 3 },
+  });
+
+  const t0 = Date.now();
+
+  await prisma.message.create({
+    data: {
+      boardId: board12.id,
+      senderId: 2,
+      content:
+        "Hi! I saw your post about the extra produce. Is Friday pickup still open?",
+      postId: firstPostId,
+      createdAt: new Date(t0 - 1000 * 60 * 120),
+    },
+  });
+  await prisma.message.create({
+    data: {
+      boardId: board12.id,
+      senderId: 1,
+      content:
+        "Yes — we still have slots between 2–5pm. I can leave a crate by the loading dock.",
+      createdAt: new Date(t0 - 1000 * 60 * 118),
+    },
+  });
+  await prisma.message.create({
+    data: {
+      boardId: board12.id,
+      senderId: 2,
+      content: "Perfect. I'll bring reusable bins. Thanks so much!",
+      createdAt: new Date(t0 - 1000 * 60 * 90),
+    },
+  });
+  await prisma.message.create({
+    data: {
+      boardId: board12.id,
+      senderId: 1,
+      content: "Sounds great. Ping me when you're about 10 minutes out.",
+      createdAt: new Date(t0 - 1000 * 60 * 88),
+    },
+  });
+
+  await prisma.message.create({
+    data: {
+      boardId: board13.id,
+      senderId: 1,
+      content: "Quick question on the dairy listing—does anything need to stay refrigerated in transit?",
+      createdAt: new Date(t0 - 1000 * 60 * 200),
+    },
+  });
+  await prisma.message.create({
+    data: {
+      boardId: board13.id,
+      senderId: 3,
+      content: "If it's under two hours we're fine with insulated cooler bags.",
+      createdAt: new Date(t0 - 1000 * 60 * 198),
+    },
+  });
+  await prisma.message.create({
+    data: {
+      boardId: board13.id,
+      senderId: 1,
+      content: "Got it—we'll pack with ice packs just to be safe.",
+      createdAt: new Date(t0 - 1000 * 60 * 195),
+    },
+  });
+
+  await prisma.message.create({
+    data: {
+      boardId: board23.id,
+      senderId: 3,
+      content: "Are you still coordinating Saturday drop-offs for the shelter route?",
+      createdAt: new Date(t0 - 1000 * 60 * 300),
+    },
+  });
+  await prisma.message.create({
+    data: {
+      boardId: board23.id,
+      senderId: 2,
+      content: "Yes—same window as last week. I can take two stops if that helps.",
+      createdAt: new Date(t0 - 1000 * 60 * 298),
+    },
+  });
+  await prisma.message.create({
+    data: {
+      boardId: board23.id,
+      senderId: 3,
+      content: "That would be amazing. I'll send the stop list in a bit.",
+      createdAt: new Date(t0 - 1000 * 60 * 295),
+    },
+  });
+
+  const msgCount = await prisma.message.count();
+  const boardCount = await prisma.messageboard.count();
+  console.log(`Demo messages: ${boardCount} boards, ${msgCount} total messages (including demos).`);
 }
 
 async function main() {
@@ -156,6 +277,12 @@ async function main() {
       },
     });
   }
+
+  const firstPost = await prisma.post.findFirst({
+    orderBy: { id: "asc" },
+    select: { id: true },
+  });
+  await seedDemoMessageBoards(firstPost?.id);
 
   console.log(
     `Seed complete: ${orgRows.length} organizations, ${orgRows.length} seed users, ${postRows.length} posts, ${CATEGORY_NAMES.length} categories.`,

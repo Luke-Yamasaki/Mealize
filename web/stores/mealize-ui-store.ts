@@ -22,7 +22,6 @@ export type MealizeContrast = "normal" | "high";
 
 type MealizeUiState = {
   theme: MealizeTheme;
-  showPattern: boolean;
   filter: FeedFilter;
   brandHex: string;
   contrast: MealizeContrast;
@@ -30,7 +29,6 @@ type MealizeUiState = {
   dyslexicFont: boolean;
   locationLabel: string;
   setTheme: (theme: MealizeTheme) => void;
-  setShowPattern: (showPattern: boolean) => void;
   setFilter: (filter: FeedFilter) => void;
   setBrandHex: (hex: string) => void;
   setContrast: (contrast: MealizeContrast) => void;
@@ -43,7 +41,6 @@ export const useMealizeUiStore = create<MealizeUiState>()(
   persist(
     (set) => ({
       theme: "light",
-      showPattern: true,
       filter: "available",
       brandHex: "#28a690",
       contrast: "normal",
@@ -51,7 +48,6 @@ export const useMealizeUiStore = create<MealizeUiState>()(
       dyslexicFont: false,
       locationLabel: "",
       setTheme: (theme) => set({ theme }),
-      setShowPattern: (showPattern) => set({ showPattern }),
       setFilter: (filter) => set({ filter }),
       setBrandHex: (brandHex) => set({ brandHex }),
       setContrast: (contrast) => set({ contrast }),
@@ -64,7 +60,6 @@ export const useMealizeUiStore = create<MealizeUiState>()(
       storage: createJSONStorage(() => localStorage),
       partialize: (s) => ({
         theme: s.theme,
-        showPattern: s.showPattern,
         filter: s.filter,
         brandHex: s.brandHex,
         contrast: s.contrast,
@@ -83,15 +78,6 @@ export function useMealizeTheme() {
     useShallow((s) => ({
       theme: s.theme,
       setTheme: s.setTheme,
-    })),
-  );
-}
-
-export function useMealizeBackground() {
-  return useMealizeUiStore(
-    useShallow((s) => ({
-      showPattern: s.showPattern,
-      setShowPattern: s.setShowPattern,
     })),
   );
 }

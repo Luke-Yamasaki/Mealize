@@ -4,6 +4,13 @@ import { z } from "zod";
 import { router, publicProcedure } from "@/server/trpc";
 
 export const organizationRouter = router({
+  /** All organizations (single list, stable sort: businesses then nonprofits, then name). */
+  list: publicProcedure.query(async ({ ctx }) => {
+    return ctx.prisma.organization.findMany({
+      orderBy: [{ isNonprofit: "asc" }, { name: "asc" }],
+    });
+  }),
+
   /** Legacy `getBatchedOrganizations` shape: split by `isNonprofit`. */
   batched: publicProcedure.query(async ({ ctx }) => {
     const all = await ctx.prisma.organization.findMany({

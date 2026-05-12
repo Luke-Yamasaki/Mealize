@@ -3,8 +3,8 @@
 import { trpc } from "@/lib/trpc/react";
 
 import { MealizePostCard, type MealizePostListItem } from "./mealize-post-card";
-import { MealizeSidebarFilters } from "./mealize-sidebar-filters";
-import { useMealizeFilter, useMealizeTheme } from "@/stores/mealize-ui-store";
+import { MealizeFilterDropdown } from "./mealize-filter-dropdown";
+import { useMealizeFilter } from "@/stores/mealize-ui-store";
 
 const CATEGORY_BY_FILTER: Record<string, string> = {
   dairy: "Dairy",
@@ -15,7 +15,6 @@ const CATEGORY_BY_FILTER: Record<string, string> = {
 };
 
 export function MealizeHome() {
-  const { theme } = useMealizeTheme();
   const { filter } = useMealizeFilter();
   const postsQuery = trpc.post.list.useQuery();
   const meQuery = trpc.user.me.useQuery();
@@ -59,56 +58,36 @@ export function MealizeHome() {
       break;
   }
 
-  const bg = theme === "light" ? "#E8E8E8" : "#232323";
-  const border = theme === "light" ? "#B2B2B2" : "#616161";
   const favoritePostIds = new Set(favorites.map((f) => f.postId));
 
   return (
-    <div
-      className="flex w-[calc(100vw-50px)] max-w-[1284px] flex-row flex-wrap justify-start gap-[75px] px-6 py-5 pb-12 shadow-[0px_1px_3px_rgba(0,0,0,0.35)]"
-      style={{
-        minHeight: "calc(100vh - 50px)",
-        background: bg,
-        border: `1px solid ${border}`,
-      }}
-    >
-      <MealizeSidebarFilters />
-      <section className="flex min-w-0 max-w-[900px] flex-1 flex-col" style={{ width: "calc(100vw - 125px)" }}>
-        <h2
-          className="mb-4 mt-2 text-base font-extrabold"
-          style={{ color: theme === "light" ? "#191919" : "white" }}
-        >
-          Posts
-        </h2>
+    <div className="mx-auto w-full min-w-0 max-w-7xl px-4 py-6 pb-14 sm:px-6 lg:px-8">
+      <section className="flex min-w-0 flex-col">
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <h2 className="text-lg font-bold tracking-tight text-foreground">Posts</h2>
+          <MealizeFilterDropdown align="end" />
+        </div>
 
         {postsQuery.isLoading ? (
-          <p className="text-sm" style={{ color: theme === "light" ? "#444" : "#ccc" }}>
-            Loading…
-          </p>
+          <p className="text-sm text-muted-foreground">Loading…</p>
         ) : postsQuery.error ? (
-          <p className="text-sm text-red-600">
+          <p className="text-sm text-destructive">
             Could not load posts. Set `DATABASE_URL` and run migrations plus seed.
           </p>
         ) : filter === "favorites" && favoritePosts.length === 0 ? (
-          <div className="flex max-w-[1000px] flex-col items-center gap-4 py-8">
-            <p
-              className="text-center text-base font-bold"
-              style={{ color: theme === "light" ? "#191919" : "white" }}
-            >
+          <div className="flex max-w-[1000px] flex-col items-center gap-4 py-12">
+            <p className="text-center text-base font-semibold text-foreground">
               You do not have any favorites yet. Use the star on a post to save it here.
             </p>
           </div>
         ) : list.length === 0 ? (
-          <p className="text-sm" style={{ color: theme === "light" ? "#444" : "#ccc" }}>
-            No posts match this filter.
-          </p>
+          <p className="text-sm text-muted-foreground">No posts match this filter.</p>
         ) : (
-          <div className="flex max-w-[820px] flex-row flex-wrap gap-x-6 gap-y-5">
+          <div className="grid w-full min-w-0 grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {list.map((p) => (
               <MealizePostCard
                 key={p.id}
                 post={p}
-                theme={theme}
                 isFavorite={favoritePostIds.has(p.id)}
               />
             ))}

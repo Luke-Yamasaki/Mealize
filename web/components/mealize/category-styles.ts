@@ -1,4 +1,11 @@
-/** Category card colors ported from `react-app/src/Components/Cards/PostCard/CardContent/category.js`. */
+/** Category accent colors (legacy card gradients); used for badges on white tiles. */
+export const categoryAccentHex: Record<1 | 2 | 3 | 4 | 5, string> = {
+  1: "#15BAFA",
+  2: "#6ED56C",
+  3: "#FB8DDB",
+  4: "#F1BD60",
+  5: "#FF623E",
+};
 export const categoryCardStyle = {
   light: {
     1: {

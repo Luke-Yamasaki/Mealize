@@ -8,7 +8,7 @@ export function MealizeStubContent({
   description: string;
 }) {
   return (
-    <div className="mx-auto w-full max-w-[1284px] px-6 py-10">
+    <div className="w-full px-6 py-10">
       <Link
         href="/"
         className="text-sm font-semibold text-[#0f766e] underline decoration-2 underline-offset-2 hover:text-[#115e59]"

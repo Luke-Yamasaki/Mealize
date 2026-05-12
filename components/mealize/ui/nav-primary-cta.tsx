@@ -2,13 +2,12 @@ import Link from "next/link";
 import { type ButtonHTMLAttributes, type ReactNode } from "react";
 
 /**
- * Light path is fully mode-driven: the component only declares the base token,
- * and the mode's hover/focus-visible rule reassigns it via mode-scoped selectors
- * in `app/intents.css`. The dark path stays as literals until a later bite
- * promotes light/dark to modes.
+ * Fully mode-driven. The component declares only the base intent; the mode
+ * (`default` stacked with `light`/`dark` on MealizeShell) owns rest, hover/
+ * focus-visible, and theme values via mode-scoped rules in `app/intents.css`.
  */
 const BASE =
-  "cursor-pointer bg-[var(--mz-action_primary_backgroundColor)] font-bold text-[var(--mz-action_primary_foregroundColor)] shadow-sm transition dark:bg-black dark:text-white dark:hover:bg-zinc-800";
+  "cursor-pointer bg-[var(--mz-action_primary_backgroundColor)] font-bold text-[var(--mz-action_primary_foregroundColor)] shadow-sm transition";
 
 const SIZES = {
   compact: "rounded-md px-2 py-1.5 text-xs sm:px-3 sm:text-sm",

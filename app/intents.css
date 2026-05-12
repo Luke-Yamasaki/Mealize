@@ -55,15 +55,18 @@
 }
 
 /*
- * Mode: default — Mealize's brand look. Applied at `MealizeShell` root.
- * Bite 1 only sets what NavPrimaryCta needs; other intents fall through.
+ * Mode: default — Mealize's brand look. Applied at `MealizeShell` root,
+ * which also carries `light` or `dark` as a stacked mode.
  *
  * State handling (bite 1.5): interactive states (`:hover`, `:focus-visible`)
  * reassign token values via mode-scoped selectors using `:where()` to keep
  * specificity neutral. Components author against the base token only; the
  * mode declares both the rest state and the interactive-state deltas.
- * Discipline: state never introduces new tokens — it only reassigns existing
- * intents (mise-en-mode stays at 33).
+ *
+ * Discipline: state and theme never introduce new tokens — they only
+ * reassign existing intents (mise-en-mode stays at 33). Theme overrides
+ * layer onto a mode via compound (`[data-mode~="default"][data-mode~="dark"]`)
+ * or descendant (`[data-mode~="dark"] [data-mode~="signup"]`) selectors.
  */
 [data-mode~="default"] {
   --mz-action_primary_backgroundColor: #9af2c0;
@@ -75,28 +78,38 @@
   --mz-action_primary_backgroundColor: #8ae8b2;
 }
 
+[data-mode~="default"][data-mode~="dark"] {
+  --mz-action_primary_backgroundColor: #000000;
+  --mz-action_primary_foregroundColor: #ffffff;
+}
+
+[data-mode~="default"][data-mode~="dark"]
+  :where(a, button, [role="button"]):where(:hover, :focus-visible) {
+  --mz-action_primary_backgroundColor: #27272a;
+}
+
 /*
- * Mode: signup — amber primary action (sign-up CTA).
- * Mirror values in the dark-theme block below until light/dark become modes.
+ * Mode: signup — amber primary action (sign-up CTA). Dark-theme values
+ * apply when the ancestor `[data-mode~="dark"]` is also present.
  */
 [data-mode~="signup"] {
-  --mz-action_primary_backgroundColor: #b45309;
-  --mz-action_primary_foregroundColor: #ffffff;
+  --mz-action_primary_backgroundColor: #eab308;
+  --mz-action_primary_foregroundColor: #000000;
   --mz-action_primary_borderColor: transparent;
 }
 
 [data-mode~="signup"]
   :where(a, button, [role="button"]):where(:hover, :focus-visible) {
-  --mz-action_primary_backgroundColor: #92400e;
+  --mz-action_primary_backgroundColor: #ca8a04;
 }
 
-[data-mealize-theme="dark"] [data-mode~="signup"] {
+[data-mode~="dark"] [data-mode~="signup"] {
   --mz-action_primary_backgroundColor: #f0c94a;
   --mz-action_primary_foregroundColor: #000000;
   --mz-action_primary_borderColor: rgb(240 201 74 / 0.5);
 }
 
-[data-mealize-theme="dark"]
+[data-mode~="dark"]
   [data-mode~="signup"]
   :where(a, button, [role="button"]):where(:hover, :focus-visible) {
   --mz-action_primary_backgroundColor: #e0b838;
@@ -116,13 +129,13 @@
   --mz-action_primary_backgroundColor: #062f29;
 }
 
-[data-mealize-theme="dark"] [data-mode~="signin"] {
+[data-mode~="dark"] [data-mode~="signin"] {
   --mz-action_primary_backgroundColor: #3db89f;
   --mz-action_primary_foregroundColor: #000000;
   --mz-action_primary_borderColor: transparent;
 }
 
-[data-mealize-theme="dark"]
+[data-mode~="dark"]
   [data-mode~="signin"]
   :where(a, button, [role="button"]):where(:hover, :focus-visible) {
   --mz-action_primary_backgroundColor: #2d8a7a;

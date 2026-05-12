@@ -10,10 +10,12 @@ import {
   Truck,
 } from "lucide-react";
 
+import { mealizeAuthBrand as authBrand } from "@/lib/mealize-auth-brand-colors";
 import { useMealizeTheme } from "@/stores/mealize-ui-store";
 
 import { MealizeLogoMedium } from "./mealize-logo-medium";
 import { MealizePlatformRoadmap } from "./mealize-platform-roadmap";
+import { MealizeWelcomeDocs } from "./mealize-welcome-docs";
 import { MealizeWelcomeSplash } from "./mealize-welcome-splash";
 
 const ASSET = "/welcome";
@@ -111,7 +113,7 @@ function PrimaryCta({ href, children }: { href: string; children: ReactNode }) {
     <Link
       href={href}
       prefetch={false}
-      className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[#28a690] px-7 text-sm font-bold text-white shadow-[0_1px_0_rgba(255,255,255,0.15)_inset,0_8px_32px_-8px_rgba(40,166,144,0.55)] transition hover:bg-[#22967f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#28a690]"
+      className={`inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[${authBrand.signUp.fillLight}] px-7 text-sm font-bold text-white shadow-[0_1px_0_rgba(255,255,255,0.15)_inset,0_8px_32px_-8px_rgba(180,83,9,0.55)] transition hover:bg-[${authBrand.signUp.fillLightHover}] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[${authBrand.signUp.fillLight}] dark:bg-[${authBrand.signUp.fillDark}] dark:text-black dark:hover:bg-[${authBrand.signUp.fillDarkHover}] dark:focus-visible:outline-[${authBrand.signUp.fillDark}]`}
     >
       {children}
       <ArrowRight className="size-4 opacity-90" aria-hidden />
@@ -124,7 +126,7 @@ function SecondaryCta({ href, children }: { href: string; children: ReactNode })
     <Link
       href={href}
       prefetch={false}
-      className="inline-flex h-11 items-center justify-center rounded-full border border-neutral-300 bg-white px-7 text-sm font-bold text-black transition hover:border-neutral-400 hover:bg-neutral-50 dark:border-white/15 dark:bg-zinc-900/80 dark:text-zinc-50 dark:hover:border-white/25 dark:hover:bg-zinc-800/90"
+      className={`inline-flex h-11 items-center justify-center rounded-full bg-[${authBrand.signIn.fillLight}] px-7 text-sm font-bold text-white shadow-[0_1px_0_rgba(255,255,255,0.12)_inset,0_8px_28px_-8px_rgba(10,77,66,0.45)] transition hover:bg-[${authBrand.signIn.fillLightHover}] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[${authBrand.signIn.fillLight}] dark:bg-[${authBrand.signIn.fillDark}] dark:text-black dark:hover:bg-[${authBrand.signIn.fillDarkHover}] dark:focus-visible:outline-[${authBrand.signIn.fillDark}]`}
     >
       {children}
     </Link>
@@ -441,6 +443,8 @@ export function MealizeWelcome() {
         </section>
 
         <MealizePlatformRoadmap />
+
+        <MealizeWelcomeDocs />
 
         {/* Blog / updates (stub — nav links land here) */}
         <section

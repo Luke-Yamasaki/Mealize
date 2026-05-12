@@ -8,6 +8,10 @@ type PostListRow = {
     name: string;
     logoUrl: string;
     isNonprofit: boolean;
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
   };
 };
 

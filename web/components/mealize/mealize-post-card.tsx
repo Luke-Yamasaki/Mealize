@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Heart } from "lucide-react";
+import { Heart, MapPin } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,7 +9,7 @@ import { trpc } from "@/lib/trpc/react";
 import { cn } from "@/lib/utils";
 
 import { categoryAccentHex } from "./category-styles";
-import { daysAgoLabel, formatExpDate } from "./post-utils";
+import { formatExpDate, formatOrganizationAddress } from "./post-utils";
 
 export type MealizePostListItem = {
   id: number;
@@ -31,18 +31,16 @@ export type MealizePostListItem = {
     name: string;
     logoUrl: string;
     isNonprofit: boolean;
+    street: string;
+    city: string;
+    state: string;
+    zip: string;
   };
 };
 
 function clampStyleId(categoryId: number): 1 | 2 | 3 | 4 | 5 {
   if (categoryId >= 1 && categoryId <= 5) return categoryId as 1 | 2 | 3 | 4 | 5;
   return 1;
-}
-
-function listRecencyLabel(post: MealizePostListItem) {
-  const l = daysAgoLabel(post);
-  if (l === "now") return "just now";
-  return `${l} ago`;
 }
 
 function availabilityLabel(post: MealizePostListItem) {
@@ -78,14 +76,18 @@ function postDetailCta(post: MealizePostListItem): { label: string; variant: "de
 export function MealizePostCard({
   post,
   isFavorite = false,
+  variant = "grid",
 }: {
   post: MealizePostListItem;
   isFavorite?: boolean;
+  /** `grid`: truncated description + equal card heights in grids. `detail`: full description on the post page. */
+  variant?: "grid" | "detail";
 }) {
   const hoverable = post.status === 0;
   const categoryKey = clampStyleId(post.categoryId);
   const accent = categoryAccentHex[categoryKey];
   const cta = postDetailCta(post);
+  const orgAddress = formatOrganizationAddress(post.organization);
   const utils = trpc.useUtils();
   const addFav = trpc.favorite.add.useMutation({
     onSuccess: () => void utils.user.me.invalidate(),
@@ -106,15 +108,17 @@ export function MealizePostCard({
 
   return (
     <div
-      className={
-        hoverable
-          ? "transition duration-150 ease-out hover:-translate-y-0.5 hover:shadow-md"
-          : undefined
-      }
+      className={cn(
+        hoverable && "transition duration-150 ease-out hover:-translate-y-0.5 hover:shadow-md",
+        variant === "grid" && "h-full",
+      )}
     >
       <Card
         size="sm"
-        className="gap-0 overflow-hidden border-border/80 py-0 shadow-sm ring-1 ring-black/4 data-[size=sm]:gap-0 data-[size=sm]:py-0 dark:ring-white/10"
+        className={cn(
+          "gap-0 overflow-hidden border-border/80 py-0 shadow-sm ring-1 ring-black/4 data-[size=sm]:gap-0 data-[size=sm]:py-0 dark:ring-white/10",
+          variant === "grid" && "h-full",
+        )}
       >
         <div className="relative shrink-0">
           <Link href={`/posts/${post.id}`} prefetch={false} className="block leading-none no-underline">
@@ -158,7 +162,12 @@ export function MealizePostCard({
           </div>
         </div>
 
-        <CardContent className="flex flex-col gap-0 px-3 pb-3 pt-3">
+        <CardContent
+          className={cn(
+            "flex flex-col gap-0 px-3 pb-3 pt-3",
+            variant === "grid" && "min-h-0 flex-1",
+          )}
+        >
           <div className="mb-2 flex items-baseline justify-between gap-3">
             <Link
               href={`/posts/${post.id}`}
@@ -170,7 +179,16 @@ export function MealizePostCard({
             <p className="shrink-0 text-sm font-semibold tabular-nums text-muted-foreground">{post.quantity}</p>
           </div>
 
-          <p className="mb-3 line-clamp-3 text-sm leading-snug text-muted-foreground">{post.description}</p>
+          <p
+            className={cn(
+              "mb-3 text-sm leading-snug text-muted-foreground",
+              variant === "grid" &&
+                "line-clamp-2 min-h-[2.45rem] wrap-anywhere hyphens-auto",
+              variant === "detail" && "text-pretty wrap-anywhere",
+            )}
+          >
+            {post.description}
+          </p>
 
           <div className="mb-3 flex flex-wrap items-center gap-1.5">
             <Badge variant="outline" className={cn("text-[11px] font-semibold", statusToneClass(post))}>
@@ -184,6 +202,8 @@ export function MealizePostCard({
               {post.category.category}
             </Badge>
           </div>
+
+          {variant === "grid" ? <div className="min-h-0 flex-1" aria-hidden /> : null}
 
           <div className="flex flex-col gap-3 border-t border-border/60 pt-3 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
             <div className="flex min-w-0 flex-1 items-center gap-2.5">
@@ -207,7 +227,16 @@ export function MealizePostCard({
                 >
                   {post.organization.name}
                 </Link>
-                <p className="text-xs font-medium text-muted-foreground">Listed {listRecencyLabel(post)}</p>
+                <div className="mt-0.5 flex min-w-0 items-center gap-1.5">
+                  <MapPin
+                    className="size-3.5 shrink-0 text-muted-foreground"
+                    strokeWidth={2}
+                    aria-hidden
+                  />
+                  <p className="min-w-0 flex-1 truncate text-xs font-medium text-muted-foreground" title={orgAddress}>
+                    {orgAddress}
+                  </p>
+                </div>
               </div>
             </div>
             <Link

@@ -1,14 +1,19 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
+import { withPublicImageFallback } from "@/lib/demoMediaUrl";
 import { router, publicProcedure } from "@/server/trpc";
 
 export const organizationRouter = router({
   /** All organizations (single list, stable sort: businesses then nonprofits, then name). */
   list: publicProcedure.query(async ({ ctx }) => {
-    return ctx.prisma.organization.findMany({
+    const rows = await ctx.prisma.organization.findMany({
       orderBy: [{ isNonprofit: "asc" }, { name: "asc" }],
     });
+    return rows.map((o) => ({
+      ...o,
+      logoUrl: withPublicImageFallback(o.logoUrl, `org-list-${o.id}-logo`),
+    }));
   }),
 
   /** Legacy `getBatchedOrganizations` shape: split by `isNonprofit`. */

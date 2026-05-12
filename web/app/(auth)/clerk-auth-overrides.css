@@ -1,12 +1,12 @@
 /*
  * Scoped to auth routes only. Clerk’s default card footer can keep a dark gradient
  * even when the main card is light, which hides footer copy. Force a light band and
- * readable inherited text; keep the sign-in/up link in brand green.
+ * readable inherited text; footer link colors come from Clerk appearance.
  */
 .mealize-auth .cl-footer {
   background-color: #ffffff !important;
   background-image: none !important;
-  border-top: 1px solid rgba(40, 166, 144, 0.14);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
   color: #52525c !important;
 }
 
@@ -14,10 +14,22 @@
   color: #3f3f46 !important;
 }
 
-.mealize-auth .cl-footerActionLink {
-  color: #28a690 !important;
-}
-
 .mealize-auth .cl-socialButtonsBlockButtonText {
   color: #18181b !important;
+}
+
+/* Dark theme — match `getMealizeClerkAuthAppearance("dark", flow)` card/footer */
+.mealize-auth[data-mealize-theme="dark"] .cl-footer {
+  background-color: #18181b !important;
+  background-image: none !important;
+  border-top-color: rgba(255, 255, 255, 0.1);
+  color: #a1a1aa !important;
+}
+
+.mealize-auth[data-mealize-theme="dark"] .cl-footerActionText {
+  color: #d4d4d8 !important;
+}
+
+.mealize-auth[data-mealize-theme="dark"] .cl-socialButtonsBlockButtonText {
+  color: #fafafa !important;
 }

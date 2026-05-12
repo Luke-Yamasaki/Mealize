@@ -12,6 +12,10 @@ const postInclude = {
       name: true,
       logoUrl: true,
       isNonprofit: true,
+      street: true,
+      city: true,
+      state: true,
+      zip: true,
     },
   },
 } as const;

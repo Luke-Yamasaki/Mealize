@@ -28,7 +28,7 @@ export function MealizeFooter() {
   const label = "text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground";
 
   return (
-    <footer className="mt-auto w-full border-t border-border bg-card text-foreground">
+    <footer className="w-full shrink-0 border-t border-border bg-card text-foreground">
       <div className="mx-auto flex max-w-5xl flex-col gap-5 px-4 py-6 sm:px-6 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
         <div className="min-w-0 space-y-2 lg:max-w-[min(100%,20rem)]">
           <p className={label}>Built with</p>

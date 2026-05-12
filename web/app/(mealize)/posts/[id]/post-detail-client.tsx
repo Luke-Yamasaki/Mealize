@@ -41,7 +41,7 @@ export function PostDetailClient({ postId }: { postId: number }) {
       >
         ← Back to feed
       </Link>
-      <MealizePostCard post={q.data} />
+      <MealizePostCard post={q.data} variant="detail" />
     </div>
   );
 }

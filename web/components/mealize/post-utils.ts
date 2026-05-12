@@ -4,34 +4,30 @@ export function determineExpirationHours(expDate: Date) {
   return Math.floor((expiration.getTime() - today.getTime()) / 1000 / 60 / 60);
 }
 
-export function daysAgoLabel(post: {
-  createdAt: Date;
-  updatedAt: Date;
-}) {
-  if (post.updatedAt.getTime() !== post.createdAt.getTime()) {
-    const ms = post.updatedAt.getTime() - post.createdAt.getTime();
-    const daysPassed = Math.floor(ms / 1000 / 60 / 60 / 24);
-    const hoursPassed = Math.floor(ms / 1000 / 60 / 60);
-    if (daysPassed >= 1) return `${daysPassed}d`;
-    if (hoursPassed >= 1) return `${hoursPassed}h`;
-    return "now";
-  }
-  const today = new Date();
-  const postDate = post.updatedAt ?? post.createdAt;
-  const ms = today.getTime() - postDate.getTime();
-  const daysPassed = Math.floor(ms / 1000 / 60 / 60 / 24);
-  const hoursPassed = Math.floor(ms / 1000 / 60 / 60);
-  if (daysPassed >= 1) return `${daysPassed}d`;
-  if (hoursPassed >= 1) return `${hoursPassed}h`;
-  return "now";
-}
-
 export function formatExpDate(expDate: Date) {
   const d = new Date(expDate);
   const month = (d.getUTCMonth() + 1).toString();
   const day = d.getUTCDate().toString();
   const year = d.getUTCFullYear().toString();
   return `${month}/${day}/${year}`;
+}
+
+/** Single-line mailing-style address for list UIs. */
+export function formatOrganizationAddress(o: {
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
+}): string {
+  const street = o.street.trim();
+  const city = o.city.trim();
+  const state = o.state.trim();
+  const zip = o.zip.trim();
+  const cityStateZip = [city, state].filter(Boolean).join(", ");
+  const tail = [cityStateZip, zip].filter(Boolean).join(" ").trim();
+  if (street && tail) return `${street}, ${tail}`;
+  if (street) return street;
+  return tail || "Address on file";
 }
 
 export function expirationFlagTone(expDate: Date): "green" | "yellow" | "red" {

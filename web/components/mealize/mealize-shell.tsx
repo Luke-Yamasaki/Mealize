@@ -40,7 +40,7 @@ export function MealizeShell({ children }: { children: ReactNode }) {
           backgroundSize: "min(260px, 28vw)",
         }}
       />
-      <div className="relative z-[1] flex w-full min-w-0 flex-col">{children}</div>
+      <div className="relative z-[1] flex min-h-0 w-full min-w-0 flex-1 flex-col">{children}</div>
     </div>
   );
 }

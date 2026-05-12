@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { trpc } from "@/lib/trpc/react";
+import { mealizeAuthBrand as authBrand } from "@/lib/mealize-auth-brand-colors";
 import { cn } from "@/lib/utils";
 
 import { useMealizeAccessibility, useMealizeTheme, type MealizeTheme } from "@/stores/mealize-ui-store";
@@ -87,11 +88,11 @@ function SearchShell() {
           onChange={(e) => setQ(e.target.value)}
           placeholder="Search posts"
           aria-label="Search posts"
-          className="h-9 rounded-full border-0 bg-white pr-10 pl-3 text-sm font-medium text-foreground shadow-sm ring-1 ring-black/5 placeholder:text-muted-foreground dark:bg-zinc-100 dark:text-zinc-900 dark:ring-zinc-300/80"
+          className="h-9 rounded-full border-0 bg-white pr-10 pl-3 text-sm font-medium text-foreground shadow-sm ring-1 ring-black/5 placeholder:text-muted-foreground dark:bg-card dark:text-card-foreground dark:shadow-md dark:ring-border"
         />
         <button
           type="submit"
-          className="absolute top-1/2 right-1.5 z-[1] flex size-7 -translate-y-1/2 items-center justify-center rounded-full text-primary-readable transition hover:bg-primary/10 dark:text-zinc-900 dark:hover:bg-black/10"
+          className="absolute top-1/2 right-1.5 z-[1] flex size-7 -translate-y-1/2 items-center justify-center rounded-full text-primary-readable transition hover:bg-primary/10 dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-foreground"
           aria-label="Search"
         >
           <Search className="size-4" strokeWidth={2.25} />
@@ -245,21 +246,23 @@ function SettingsMenu() {
 export function MealizeNavbarGuest() {
   const { theme } = useMealizeTheme();
   const pathname = usePathname();
-  const isWelcome = pathname === "/welcome";
+  /** Signed-out home (`/`) shows the same About/Docs/… mega nav as `/welcome` and wiki routes — not search. */
+  const isWelcome =
+    pathname === "/" || pathname === "/welcome" || pathname.startsWith("/work/mealize/wiki");
 
   const guestDrawerAuth: ReactNode = (
     <div className="flex flex-col gap-2">
       <Link
         href="/sign-up"
         prefetch={false}
-        className="flex h-11 cursor-pointer items-center justify-center rounded-lg border-0 bg-[#9AF2C0] px-4 text-sm font-extrabold text-black no-underline shadow-sm transition hover:bg-[#8ae8b2] dark:border dark:border-black dark:bg-transparent dark:shadow-none dark:hover:bg-black/5"
+        className={`flex h-11 cursor-pointer items-center justify-center rounded-lg border-0 bg-[${authBrand.signUp.fillLight}] px-4 text-sm font-extrabold text-white no-underline shadow-sm transition hover:bg-[${authBrand.signUp.fillLightHover}] dark:border dark:border-[${authBrand.signUp.fillDark}]/50 dark:bg-[${authBrand.signUp.fillDark}] dark:text-black dark:shadow-none dark:hover:bg-[${authBrand.signUp.fillDarkHover}]`}
       >
         Sign up
       </Link>
       <Link
         href="/sign-in"
         prefetch={false}
-        className="flex h-11 cursor-pointer items-center justify-center rounded-lg border-0 bg-[#28A690] px-4 text-sm font-semibold text-white no-underline shadow-sm transition hover:bg-[#22967f] dark:bg-black dark:hover:bg-zinc-800"
+        className={`flex h-11 cursor-pointer items-center justify-center rounded-lg border-0 bg-[${authBrand.signIn.fillLight}] px-4 text-sm font-semibold text-white no-underline shadow-sm transition hover:bg-[${authBrand.signIn.fillLightHover}] dark:bg-[${authBrand.signIn.fillDark}] dark:text-black dark:hover:bg-[${authBrand.signIn.fillDarkHover}]`}
       >
         Log in
       </Link>
@@ -303,9 +306,27 @@ export function MealizeNavbarGuest() {
             <span className="truncate leading-none max-[380px]:hidden sm:inline">Mealize</span>
           </Link>
           {isWelcome ? (
-            <div className="flex min-w-0 flex-1 items-center justify-end lg:justify-center">
-              <MealizeNavbarWelcomeMenus mobileDrawerFooter={guestDrawerAuth} />
-            </div>
+            <>
+              <div className="flex min-w-0 flex-1 items-center justify-center">
+                <MealizeNavbarWelcomeMenus mobileDrawerFooter={guestDrawerAuth} />
+              </div>
+              <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+                <Link
+                  href="/sign-up"
+                  prefetch={false}
+                  className={`flex cursor-pointer items-center justify-center rounded-md border-0 bg-[${authBrand.signUp.fillLight}] px-2.5 py-1.5 text-xs font-extrabold text-white no-underline shadow-sm sm:px-3 sm:text-sm dark:border dark:border-[${authBrand.signUp.fillDark}]/50 dark:bg-[${authBrand.signUp.fillDark}] dark:text-black dark:shadow-none dark:hover:bg-[${authBrand.signUp.fillDarkHover}]`}
+                >
+                  Sign up
+                </Link>
+                <Link
+                  href="/sign-in"
+                  prefetch={false}
+                  className={`flex cursor-pointer items-center justify-center rounded-md border-0 bg-[${authBrand.signIn.fillLight}] px-2.5 py-1.5 text-xs font-semibold text-white no-underline shadow-sm sm:px-3 sm:text-sm dark:bg-[${authBrand.signIn.fillDark}] dark:text-black dark:hover:bg-[${authBrand.signIn.fillDarkHover}]`}
+                >
+                  Log in
+                </Link>
+              </div>
+            </>
           ) : (
             <>
               <div className="col-span-2 row-start-2 flex min-w-0 items-center gap-2 lg:col-span-1 lg:row-start-1 lg:col-start-2 lg:col-end-3">
@@ -315,14 +336,14 @@ export function MealizeNavbarGuest() {
                 <Link
                   href="/sign-up"
                   prefetch={false}
-                  className="flex cursor-pointer items-center justify-center rounded-md border-0 bg-[#9AF2C0] px-2.5 py-1.5 text-xs font-extrabold text-black no-underline shadow-sm sm:px-3 sm:text-sm dark:border dark:border-black dark:bg-transparent dark:shadow-none dark:hover:bg-black/5"
+                  className={`flex cursor-pointer items-center justify-center rounded-md border-0 bg-[${authBrand.signUp.fillLight}] px-2.5 py-1.5 text-xs font-extrabold text-white no-underline shadow-sm sm:px-3 sm:text-sm dark:border dark:border-[${authBrand.signUp.fillDark}]/50 dark:bg-[${authBrand.signUp.fillDark}] dark:text-black dark:shadow-none dark:hover:bg-[${authBrand.signUp.fillDarkHover}]`}
                 >
                   Sign up
                 </Link>
                 <Link
                   href="/sign-in"
                   prefetch={false}
-                  className="flex cursor-pointer items-center justify-center rounded-md border-0 bg-[#28A690] px-2.5 py-1.5 text-xs font-semibold text-white no-underline shadow-sm sm:px-3 sm:text-sm dark:bg-black dark:hover:bg-zinc-800"
+                  className={`flex cursor-pointer items-center justify-center rounded-md border-0 bg-[${authBrand.signIn.fillLight}] px-2.5 py-1.5 text-xs font-semibold text-white no-underline shadow-sm sm:px-3 sm:text-sm dark:bg-[${authBrand.signIn.fillDark}] dark:text-black dark:hover:bg-[${authBrand.signIn.fillDarkHover}]`}
                 >
                   Log in
                 </Link>
@@ -385,7 +406,7 @@ export function MealizeNavbarSession({
 }) {
   const { theme } = useMealizeTheme();
   const pathname = usePathname();
-  const isWelcome = pathname === "/welcome";
+  const isWelcome = pathname === "/welcome" || pathname.startsWith("/work/mealize/wiki");
 
   return (
     <header className={NAV_HEADER_CLASS}>

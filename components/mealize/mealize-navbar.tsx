@@ -209,10 +209,10 @@ function SettingsMenu() {
 function GuestDrawerAuth() {
   return (
     <div className="flex flex-col gap-2">
-      <NavAuthButton variant="signup" size="drawer" href="/sign-up">
+      <NavAuthButton mode="signup" size="drawer" href="/sign-up">
         Sign up
       </NavAuthButton>
-      <NavAuthButton variant="signin" size="drawer" href="/sign-in">
+      <NavAuthButton mode="signin" size="drawer" href="/sign-in">
         Log in
       </NavAuthButton>
     </div>
@@ -222,10 +222,10 @@ function GuestDrawerAuth() {
 function GuestAuthActions() {
   return (
     <>
-      <NavAuthButton variant="signup" href="/sign-up">
+      <NavAuthButton mode="signup" href="/sign-up">
         Sign up
       </NavAuthButton>
-      <NavAuthButton variant="signin" href="/sign-in">
+      <NavAuthButton mode="signin" href="/sign-in">
         Log in
       </NavAuthButton>
     </>
@@ -252,7 +252,7 @@ export function MealizeNavbarGuest() {
             <div className="flex min-w-0 flex-1 items-center justify-center">
               <MealizeNavbarWelcomeMenus mobileDrawerFooter={<GuestDrawerAuth />} />
             </div>
-            <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+            <div className="hidden shrink-0 items-center gap-1.5 sm:gap-2 lg:flex">
               <GuestAuthActions />
             </div>
           </>

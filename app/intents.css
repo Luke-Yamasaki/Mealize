@@ -74,3 +74,56 @@
   :where(a, button, [role="button"]):where(:hover, :focus-visible) {
   --mz-action_primary_backgroundColor: #8ae8b2;
 }
+
+/*
+ * Mode: signup — amber primary action (sign-up CTA).
+ * Mirror values in the dark-theme block below until light/dark become modes.
+ */
+[data-mode~="signup"] {
+  --mz-action_primary_backgroundColor: #b45309;
+  --mz-action_primary_foregroundColor: #ffffff;
+  --mz-action_primary_borderColor: transparent;
+}
+
+[data-mode~="signup"]
+  :where(a, button, [role="button"]):where(:hover, :focus-visible) {
+  --mz-action_primary_backgroundColor: #92400e;
+}
+
+[data-mealize-theme="dark"] [data-mode~="signup"] {
+  --mz-action_primary_backgroundColor: #f0c94a;
+  --mz-action_primary_foregroundColor: #000000;
+  --mz-action_primary_borderColor: rgb(240 201 74 / 0.5);
+}
+
+[data-mealize-theme="dark"]
+  [data-mode~="signup"]
+  :where(a, button, [role="button"]):where(:hover, :focus-visible) {
+  --mz-action_primary_backgroundColor: #e0b838;
+}
+
+/*
+ * Mode: signin — teal primary action (log-in CTA).
+ */
+[data-mode~="signin"] {
+  --mz-action_primary_backgroundColor: #0a4d42;
+  --mz-action_primary_foregroundColor: #ffffff;
+  --mz-action_primary_borderColor: transparent;
+}
+
+[data-mode~="signin"]
+  :where(a, button, [role="button"]):where(:hover, :focus-visible) {
+  --mz-action_primary_backgroundColor: #062f29;
+}
+
+[data-mealize-theme="dark"] [data-mode~="signin"] {
+  --mz-action_primary_backgroundColor: #3db89f;
+  --mz-action_primary_foregroundColor: #000000;
+  --mz-action_primary_borderColor: transparent;
+}
+
+[data-mealize-theme="dark"]
+  [data-mode~="signin"]
+  :where(a, button, [role="button"]):where(:hover, :focus-visible) {
+  --mz-action_primary_backgroundColor: #2d8a7a;
+}

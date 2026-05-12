@@ -2,43 +2,37 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 /**
- * Brand fills are written as literal `bg-[#hex]` classes (not template-interpolated
- * from `mealizeAuthBrand`) because Tailwind's JIT only generates CSS for class
- * strings it can find verbatim in source. Keep these in sync with
- * `lib/mealize-auth-brand-colors.ts`.
+ * Colors come from `[data-mode~="signup"]` / `[data-mode~="signin"]` blocks in
+ * `app/intents.css`, scoped to this element via an internal wrapper so the
+ * descendant-combinator pattern stays uniform with other mode rules. The wrapper
+ * uses `display: contents` so it doesn't affect layout.
  */
 const STYLES = {
-  signup: {
-    compact:
-      "flex cursor-pointer items-center justify-center rounded-md border-0 bg-[#b45309] px-2.5 py-1.5 text-xs font-extrabold text-white no-underline shadow-sm transition hover:bg-[#92400e] sm:px-3 sm:text-sm dark:border dark:border-[#f0c94a]/50 dark:bg-[#f0c94a] dark:text-black dark:shadow-none dark:hover:bg-[#e0b838]",
-    drawer:
-      "flex h-11 cursor-pointer items-center justify-center rounded-lg border-0 bg-[#b45309] px-4 text-sm font-extrabold text-white no-underline shadow-sm transition hover:bg-[#92400e] dark:border dark:border-[#f0c94a]/50 dark:bg-[#f0c94a] dark:text-black dark:shadow-none dark:hover:bg-[#e0b838]",
-  },
-  signin: {
-    compact:
-      "flex cursor-pointer items-center justify-center rounded-md border-0 bg-[#0a4d42] px-2.5 py-1.5 text-xs font-semibold text-white no-underline shadow-sm transition hover:bg-[#062f29] sm:px-3 sm:text-sm dark:bg-[#3db89f] dark:text-black dark:hover:bg-[#2d8a7a]",
-    drawer:
-      "flex h-11 cursor-pointer items-center justify-center rounded-lg border-0 bg-[#0a4d42] px-4 text-sm font-semibold text-white no-underline shadow-sm transition hover:bg-[#062f29] dark:bg-[#3db89f] dark:text-black dark:hover:bg-[#2d8a7a]",
-  },
+  compact:
+    "flex cursor-pointer items-center justify-center rounded-md border border-[var(--mz-action_primary_borderColor)] bg-[var(--mz-action_primary_backgroundColor)] px-2.5 py-1.5 text-xs font-extrabold text-[var(--mz-action_primary_foregroundColor)] no-underline shadow-sm transition sm:px-3 sm:text-sm",
+  drawer:
+    "flex h-11 w-full cursor-pointer items-center justify-center rounded-lg border border-[var(--mz-action_primary_borderColor)] bg-[var(--mz-action_primary_backgroundColor)] px-4 text-sm font-extrabold text-[var(--mz-action_primary_foregroundColor)] no-underline shadow-sm transition",
 } as const;
 
-export type NavAuthButtonVariant = keyof typeof STYLES;
-export type NavAuthButtonSize = keyof typeof STYLES[NavAuthButtonVariant];
+export type NavAuthButtonMode = "signup" | "signin";
+export type NavAuthButtonSize = keyof typeof STYLES;
 
 export function NavAuthButton({
-  variant,
+  mode,
   size = "compact",
   href,
   children,
 }: {
-  variant: NavAuthButtonVariant;
+  mode: NavAuthButtonMode;
   size?: NavAuthButtonSize;
   href: string;
   children: ReactNode;
 }) {
   return (
-    <Link href={href} prefetch={false} className={STYLES[variant][size]}>
-      {children}
-    </Link>
+    <div data-mode={mode} className="contents">
+      <Link href={href} prefetch={false} className={STYLES[size]}>
+        {children}
+      </Link>
+    </div>
   );
 }

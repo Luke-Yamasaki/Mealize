@@ -57,8 +57,20 @@
 /*
  * Mode: default — Mealize's brand look. Applied at `MealizeShell` root.
  * Bite 1 only sets what NavPrimaryCta needs; other intents fall through.
+ *
+ * State handling (bite 1.5): interactive states (`:hover`, `:focus-visible`)
+ * reassign token values via mode-scoped selectors using `:where()` to keep
+ * specificity neutral. Components author against the base token only; the
+ * mode declares both the rest state and the interactive-state deltas.
+ * Discipline: state never introduces new tokens — it only reassigns existing
+ * intents (mise-en-mode stays at 33).
  */
 [data-mode~="default"] {
   --mz-action_primary_backgroundColor: #9af2c0;
   --mz-action_primary_foregroundColor: #000000;
+}
+
+[data-mode~="default"]
+  :where(a, button, [role="button"]):where(:hover, :focus-visible) {
+  --mz-action_primary_backgroundColor: #8ae8b2;
 }

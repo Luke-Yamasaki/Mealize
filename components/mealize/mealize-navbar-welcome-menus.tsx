@@ -193,12 +193,12 @@ function WelcomeNavDrawer({
 
   return (
     <div
-      className={`fixed inset-0 z-520 lg:hidden ${open ? "pointer-events-auto" : "pointer-events-none"}`}
+      className="pointer-events-none fixed inset-0 z-520 lg:hidden"
       aria-hidden={!open}
     >
       <button
         type="button"
-        className={`absolute inset-0 top-[50px] bg-black/40 transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}
+        className={`absolute inset-0 top-[50px] bg-black/40 transition-opacity duration-300 ${open ? "pointer-events-auto opacity-100" : "opacity-0"}`}
         aria-label="Close menu"
         onClick={onClose}
         tabIndex={open ? 0 : -1}
@@ -208,18 +208,10 @@ function WelcomeNavDrawer({
         role="dialog"
         aria-modal="true"
         aria-label="Welcome navigation"
-        className={`absolute top-[50px] right-0 bottom-0 flex w-[min(22rem,calc(100vw-12px))] max-w-[100vw] flex-col rounded-l-2xl border-l border-t border-zinc-200 bg-white shadow-[0_0_48px_-12px_rgba(0,0,0,0.25)] ring-1 ring-black/5 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] dark:border-zinc-600 dark:bg-zinc-900 dark:shadow-[0_0_48px_-12px_rgba(0,0,0,0.5)] dark:ring-white/10 ${open ? "translate-x-0" : "translate-x-full"}`}
+        className={`absolute top-[50px] right-0 bottom-0 flex w-[min(22rem,calc(100vw-12px))] max-w-[100vw] flex-col rounded-l-2xl border-l border-t border-zinc-200 bg-white shadow-[0_0_48px_-12px_rgba(0,0,0,0.25)] ring-1 ring-black/5 transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] dark:border-zinc-600 dark:bg-zinc-900 dark:shadow-[0_0_48px_-12px_rgba(0,0,0,0.5)] dark:ring-white/10 ${open ? "pointer-events-auto translate-x-0" : "translate-x-full"}`}
       >
-        <div className="flex shrink-0 items-center justify-between border-b border-zinc-200 px-4 py-3 pr-2 dark:border-zinc-600">
+        <div className="flex shrink-0 items-center border-b border-zinc-200 px-4 py-3 dark:border-zinc-600">
           <h2 className="text-base font-bold tracking-tight text-zinc-900 dark:text-zinc-50">Menu</h2>
-          <button
-            type="button"
-            className="flex size-10 items-center justify-center rounded-full text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
-            aria-label="Close"
-            onClick={onClose}
-          >
-            <X className="size-5" strokeWidth={2} />
-          </button>
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-2 pt-1 pb-[max(0.75rem,env(safe-area-inset-bottom))]">

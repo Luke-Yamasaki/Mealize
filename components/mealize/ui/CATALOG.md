@@ -12,7 +12,7 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 
 ## Sections
 
-- [Layout](#layout) — `AppShell`, `AppHeader`, `AppHeaderPlaceholder`, `AppHeaderRow`, `Stack`, `SkipToMainLink`
+- [Layout](#layout) — `AppShell`, `AppHeader`, `AppHeaderPlaceholder`, `AppHeaderRow`, `Stack`, `Separator`, `SkipToMainLink`
 - [Typography](#typography) — `Heading`, `Text`, `Link`
 - [Forms](#forms) — `Field`, `Input`, `Textarea`, `Select`, `Checkbox`, `Radio`, `Switch`
 - [Actions](#actions) — `Button`, `NavAuthButton`, `NavPrimaryCtaLink`, `NavPrimaryCtaButton`
@@ -72,6 +72,16 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 **Don't use when** the layout needs CSS grid, sticky positioning, or precise pixel-level control — drop to raw classes for those.
 
 **Composition:** `<div>` (or `as`) with `flex`, direction, gap (from the `none|xs|sm|md|lg|xl|2xl` scale), and optional align/justify/wrap. Gap maps to Tailwind `gap-N`.
+
+---
+
+### `Separator`
+
+**Use when** you need a visible rule between items — between sections in a Popover/Menu, between rows in a list, between groups of controls. Provides `role="separator"` + `aria-orientation` so assistive tech announces the boundary.
+
+**Don't use when** the separation is purely decorative — use Tailwind border utilities on the items themselves. Don't use to add whitespace; that's `Stack` gap.
+
+**Composition:** Wraps `@base-ui/react/separator`. Renders a 1px line in `bg-border`; orientation is `horizontal` (default, full-width) or `vertical` (full-height column).
 
 ---
 
@@ -332,9 +342,10 @@ Components the Mealize UI library should grow toward, ordered by likely value:
 
 Migration items (existing usages that should move to the library when touched):
 
-- `SettingsMenu` in `mealize-navbar.tsx` — replace shadcn Popover with the Mealize `Popover`.
+- `SearchShell` in `mealize-navbar.tsx` — last shadcn `Input` import in the navbar; migrate to Mealize `Input` once forms get a deeper pass.
 - `MealizeModalRoot` — generic app-modal system; either deprecate in favor of `Dialog` or rebuild on top of it.
 - Form usages in `mealize-new-post-form.tsx`, `mealize-onboarding-form.tsx`, etc. — migrate to `Field` / `Input` / `Textarea` / `Select`.
+- Remaining `bg-gradient-*` in `mealize-organization-detail.tsx` and `mealize-new-post-form.tsx` — Tailwind v4 renamed to `bg-linear-*`.
 - Typography token population (`var(--mz-text_*_*)` currently `inherit` placeholders) — `Heading` and `Text` migrate once those have values.
 
 Typography token population (`var(--mz-text_*_*)` currently `inherit` placeholders) is a parallel item — Text/Heading would migrate once those have values.

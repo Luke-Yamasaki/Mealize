@@ -6,17 +6,7 @@ import { Building2, ChevronDown, MessageSquare, Search, Settings, Truck } from "
 import { usePathname, useRouter } from "next/navigation";
 import { type ReactNode, useState } from "react";
 
-import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverDescription,
-  PopoverHeader,
-  PopoverTitle,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
 import { trpc } from "@/lib/trpc/react";
 import { cn } from "@/lib/utils";
 
@@ -30,6 +20,8 @@ import { BrandLogo } from "./ui/brand-logo";
 import { NavAuthButton } from "./ui/nav-auth-button";
 import { NavIconLink } from "./ui/nav-icon-link";
 import { NavPrimaryCtaButton, NavPrimaryCtaLink } from "./ui/nav-primary-cta";
+import { Popover } from "./ui/popover";
+import { Separator } from "./ui/separator";
 
 function SearchShell() {
   const router = useRouter();
@@ -181,40 +173,38 @@ function DisplayControls() {
 
 function SettingsMenu() {
   return (
-    <Popover>
-      <PopoverTrigger
-        type="button"
+    <Popover.Root>
+      <Popover.Trigger
         className={cn(
-          buttonVariants({ variant: "ghost", size: "icon" }),
-          "size-9 shrink-0 rounded-full border-0 bg-white/15 text-white hover:bg-white/25 hover:text-white",
-          "dark:bg-black/8 dark:text-black dark:hover:bg-black/15 dark:hover:text-black",
+          "flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-white/15 text-white transition hover:bg-white/25",
+          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
+          "dark:bg-black/10 dark:text-black dark:hover:bg-black/20 dark:focus-visible:outline-black",
         )}
         aria-label="Display settings"
       >
         <Settings className="size-[18px]" strokeWidth={2} aria-hidden />
-      </PopoverTrigger>
-      <PopoverContent
-        align="end"
-        side="bottom"
-        sideOffset={8}
-        className="w-[min(20rem,calc(100vw-1.5rem))] max-h-[min(85vh,26rem)] overflow-y-auto rounded-xl border-border/80 p-0 shadow-lg"
-      >
-        <PopoverHeader className="space-y-1 border-b border-border px-4 py-3">
-          <PopoverTitle className="text-base font-semibold tracking-tight">Display</PopoverTitle>
-          <PopoverDescription className="text-xs leading-snug">
+      </Popover.Trigger>
+      <Popover.Content align="end" side="bottom" sideOffset={8}>
+        <div className="space-y-1 border-b border-border px-4 py-3">
+          <Popover.Title className="text-base font-semibold tracking-tight">
+            Display
+          </Popover.Title>
+          <Popover.Description className="text-xs leading-snug">
             Theme and reading preferences apply across the app.
-          </PopoverDescription>
-        </PopoverHeader>
+          </Popover.Description>
+        </div>
 
         <div className="px-4 py-3">
           <DisplayControls />
         </div>
 
         <div className="border-t border-border bg-muted/30 px-4 py-2.5">
-          <p className="text-center text-[11px] text-muted-foreground">Click outside or press Esc to close.</p>
+          <p className="text-center text-[11px] text-muted-foreground">
+            Click outside or press Esc to close.
+          </p>
         </div>
-      </PopoverContent>
-    </Popover>
+      </Popover.Content>
+    </Popover.Root>
   );
 }
 

@@ -1,7 +1,7 @@
 /*
  * Mise-en-mode intents (Donnie D'Amato — https://donnie.damato.design).
  *
- * Components author against `var(--mz-<intent>_<property>)`, never literal colors.
+ * Components author against `var(--mz-INTENT_PROPERTY)`, never literal colors.
  * Modes set values on `[data-mode~="..."]` ancestors; deeper mode wins via cascade,
  * and modes stack via space-separated `data-mode="x y"` matched by `~=`.
  *

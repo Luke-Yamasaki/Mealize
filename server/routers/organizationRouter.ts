@@ -13,6 +13,7 @@ export const organizationRouter = router({
     return rows.map((o) => ({
       ...o,
       logoUrl: withPublicImageFallback(o.logoUrl, `org-list-${o.id}-logo`),
+      imageUrl: withPublicImageFallback(o.imageUrl, `org-list-${o.id}-hero`),
     }));
   }),
 
@@ -36,7 +37,11 @@ export const organizationRouter = router({
       if (!org) {
         throw new TRPCError({ code: "NOT_FOUND", message: "Organization not found" });
       }
-      return org;
+      return {
+        ...org,
+        logoUrl: withPublicImageFallback(org.logoUrl, `org-${org.id}-logo`),
+        imageUrl: withPublicImageFallback(org.imageUrl, `org-${org.id}-hero`),
+      };
     }),
 
   /** Aggregate counts and rough impact numbers for the public org profile. */

@@ -11,8 +11,9 @@ import { cn } from "@/lib/utils";
  * Today the visuals come from Tailwind utility classes pinned to the
  * shadcn-style `--muted-foreground` token. When the mise-en-mode
  * `text_*` intents are populated with concrete values (currently
- * `inherit` placeholders in app/intents.css), swap these to
- * `text-[var(--mz-text_<intent>_*)]` so typography becomes mode-driven.
+ * `inherit` placeholders in app/intents.css), swap these to arbitrary
+ * values over the `--mz-text_*` variables (for example
+ * `text-[var(--mz-text_primary_fontSize)]`) so typography becomes mode-driven.
  */
 const INTENT_STYLES = {
   primary: "text-sm text-foreground",

@@ -64,40 +64,60 @@ export function MealizeOrganizationsList() {
               <Link href={`/organizations/${o.id}`} prefetch={false} className="group block no-underline">
                 <Card
                   className={cn(
-                    "border-border/80 transition-shadow ring-1 ring-transparent",
+                    "overflow-hidden border-border/80 transition-shadow ring-1 ring-transparent",
                     "hover:border-primary-readable/25 hover:shadow-md hover:ring-primary-readable/15 dark:hover:border-primary/30 dark:hover:ring-primary/20",
                   )}
                 >
-                  <CardContent className="flex flex-row items-start gap-4 px-4 py-4 sm:gap-5 sm:px-5">
+                  <div className="relative h-28 w-full shrink-0 overflow-hidden bg-muted sm:h-32">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={o.logoUrl}
-                      alt={`${o.name} logo`}
-                      className="size-20 shrink-0 rounded-xl border border-border/80 bg-muted object-cover shadow-sm ring-1 ring-black/5 dark:ring-white/10"
-                      width={80}
-                      height={80}
+                      src={o.imageUrl}
+                      alt=""
+                      className="h-full w-full object-cover"
+                      width={672}
+                      height={192}
                     />
-                    <div className="min-w-0 flex-1 space-y-2">
-                      <p className="truncate text-base font-bold tracking-tight text-foreground group-hover:text-primary-readable dark:group-hover:text-primary">
-                        {o.name}
-                      </p>
-                      <Badge
-                        variant="secondary"
-                        className={cn(
-                          "w-fit text-[10px] font-bold uppercase tracking-wide",
-                          o.isNonprofit
-                            ? "border-emerald-700/20 bg-emerald-100 text-emerald-950 dark:border-emerald-400/30 dark:bg-emerald-950/50 dark:text-emerald-100"
-                            : "border-border bg-muted text-foreground",
-                        )}
-                      >
-                        {o.isNonprofit ? "Nonprofit" : "Business"}
-                      </Badge>
-                      <p className="text-sm font-semibold text-muted-foreground">
-                        {o.city}, {o.state}
-                      </p>
-                      <p className="line-clamp-2 text-sm font-medium leading-snug text-muted-foreground">
-                        {o.description}
-                      </p>
+                    <div
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card from-25% via-transparent to-transparent dark:from-card"
+                      aria-hidden
+                    />
+                  </div>
+                  <CardContent className="relative px-4 pb-4 pt-0 sm:px-5 sm:pb-5">
+                    <div className="flex flex-row gap-3 sm:gap-4">
+                      <div className="-mt-9 shrink-0 sm:-mt-10">
+                        <div className="rounded-xl bg-card p-0.5 shadow-sm ring-2 ring-card dark:bg-card dark:ring-card">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={o.logoUrl}
+                            alt={`${o.name} logo`}
+                            className="size-16 rounded-[10px] border border-border/80 bg-muted object-cover sm:size-[72px]"
+                            width={72}
+                            height={72}
+                          />
+                        </div>
+                      </div>
+                      <div className="min-w-0 flex-1 space-y-2 pt-1 sm:pt-1.5">
+                        <p className="truncate text-base font-bold tracking-tight text-foreground group-hover:text-primary-readable dark:group-hover:text-primary">
+                          {o.name}
+                        </p>
+                        <Badge
+                          variant="secondary"
+                          className={cn(
+                            "w-fit text-[10px] font-bold uppercase tracking-wide",
+                            o.isNonprofit
+                              ? "border-emerald-700/20 bg-emerald-100 text-emerald-950 dark:border-emerald-400/30 dark:bg-emerald-950/50 dark:text-emerald-100"
+                              : "border-border bg-muted text-foreground",
+                          )}
+                        >
+                          {o.isNonprofit ? "Nonprofit" : "Business"}
+                        </Badge>
+                        <p className="text-sm font-semibold text-muted-foreground">
+                          {o.city}, {o.state}
+                        </p>
+                        <p className="line-clamp-2 text-sm font-medium leading-snug text-muted-foreground">
+                          {o.description}
+                        </p>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>

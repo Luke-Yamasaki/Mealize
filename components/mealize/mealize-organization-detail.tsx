@@ -107,14 +107,12 @@ export function MealizeOrganizationDetail({ organizationId }: { organizationId: 
           className="h-1.5 w-full bg-gradient-to-r from-[#76d97e] via-[#28a690] to-[#0f7669]"
           aria-hidden
         />
-        {o.imageUrl ? (
-          <div className="relative aspect-[21/9] max-h-[220px] w-full overflow-hidden bg-muted">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={o.imageUrl} alt="" className="h-full w-full object-cover" />
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card/95 via-card/20 to-transparent dark:from-zinc-950/95" />
-          </div>
-        ) : null}
-        <CardContent className={cn("relative px-5 pb-8 pt-6 sm:px-8", o.imageUrl && "-mt-14 sm:-mt-16")}>
+        <div className="relative aspect-[21/9] max-h-[220px] w-full overflow-hidden bg-muted">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={o.imageUrl} alt="" className="h-full w-full object-cover" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-card/95 via-card/20 to-transparent dark:from-zinc-950/95" />
+        </div>
+        <CardContent className="relative -mt-14 px-5 pb-8 pt-6 sm:-mt-16 sm:px-8">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:gap-6">
             <div className="relative shrink-0">
               <div className="ring-4 ring-card dark:ring-zinc-950">

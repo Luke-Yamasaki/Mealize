@@ -5,6 +5,7 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 ## Policy
 
 - **No `components/ui/` (shadcn) imports from this folder.** Mise-en-mode is the canonical theming layer.
+- **Headless behavior libraries are OK.** `@base-ui/react` is acceptable for primitives that need focus management, positioning, or complex ARIA wiring (Popover, Menu, Dialog, Tooltip). Mealize wrappers provide the visual layer + mise-en-mode wiring; Base UI provides the behavior. Styled-component libraries (shadcn, MUI, Chakra) remain off-limits.
 - **No literal hex in component class strings.** Colors come from `var(--mz-...)` tokens declared in `app/intents.css`.
 - **No `variant`/`color` props selecting palette.** Palette selection happens at the call site via a `data-mode` wrapper. `variant` is only for structural choices (filled vs. outlined, compact vs. drawer size, etc.).
 - **No `hover:` / `focus:` color classes in component CSS.** Interactive-state token reassignment lives in `app/intents.css` mode rules. The component declares the rest state only.
@@ -15,6 +16,7 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 - [Typography](#typography) — `Heading`, `Text`, `Link`
 - [Forms](#forms) — `Field`, `Input`, `Textarea`, `Select`, `Checkbox`, `Radio`, `Switch`
 - [Actions](#actions) — `Button`, `NavAuthButton`, `NavPrimaryCtaLink`, `NavPrimaryCtaButton`
+- [Overlays](#overlays) — `Popover`
 - [Navigation](#navigation) — `NavIconLink`
 - [Brand](#brand) — `BrandLogo`
 
@@ -218,6 +220,18 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 
 ---
 
+## Overlays
+
+### `Popover`
+
+**Use when** anchoring transient content to a trigger — display settings, secondary actions, mini-forms, inline detail views. Headless behavior comes from `@base-ui/react`: focus management, escape dismiss, click outside, ARIA wiring, and viewport-aware positioning are handled.
+
+**Don't use when** the content is a list of selectable actions — use `Menu` (TODO). Don't use for modal interactions that need to block the page — use `Dialog` (TODO). Don't use for hover-revealed labels on icons — `Tooltip` (TODO). Don't put a `Popover.Content` inside another open panel — same panel-on-panel rule that drove the drawer's `<details>` disclosure.
+
+**Composition:** `Popover.Root`, `Popover.Trigger`, `Popover.Content`, `Popover.Title`, `Popover.Description`, `Popover.Close`. `Content` collapses Base UI's `Portal + Positioner + Popup` into a single component, applies the surface styling via `var(--mz-surface_secondary_*)`, and accepts `side` / `align` / `sideOffset` / `collisionPadding` positioning props. For arrows, backdrops, or custom positioner behavior, drop to `@base-ui/react/popover` directly.
+
+---
+
 ## Navigation
 
 ### `NavIconLink`
@@ -246,12 +260,13 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 
 Components the Mealize UI library should grow toward, ordered by likely value:
 
-1. **`Dialog`** — modal with focus trap, escape dismiss, restore focus. `MealizeModalRoot` exists but isn't a generic primitive.
-2. **`Popover` / `Menu`** — replaces shadcn's popover used in `SettingsMenu`. Needed before `SettingsMenu` itself can move into the library.
-3. **`Combobox`** — searchable / typeahead select for option lists too long or rich for native `<Select>`.
-4. **`RadioGroup`** — wraps related `Radio`s with `role="radiogroup"` and shared label, replacing the current loose pattern.
-5. **`Toast` / `Banner`** — feedback primitives. Currently no in-app notification surface exists.
-6. **`Card`** — used implicitly everywhere; a primitive locks in surface treatment.
-7. **`Avatar` / `Badge`** — small but pervasive.
+1. **`Dialog`** — modal with focus trap, escape dismiss, restore focus. Build on `@base-ui/react/dialog`. `MealizeModalRoot` is the existing app-specific modal system and isn't a generic primitive.
+2. **`Menu`** — action list anchored to a trigger. Build on `@base-ui/react/menu`. Distinct from Popover (Popover has free-form content; Menu has selectable items with keyboard nav).
+3. **`Tooltip`** — short label revealed on hover/focus. Build on `@base-ui/react/tooltip`.
+4. **`Combobox`** — searchable / typeahead select for option lists too long or rich for native `<Select>`. Build on `@base-ui/react/combobox`.
+5. **`RadioGroup`** — wraps related `Radio`s with `role="radiogroup"` and shared label, replacing the current loose pattern.
+6. **`Toast` / `Banner`** — feedback primitives. Currently no in-app notification surface exists. Build on `@base-ui/react/toast`.
+7. **`Card`** — used implicitly everywhere; a primitive locks in surface treatment.
+8. **`Avatar` / `Badge`** — small but pervasive.
 
 Typography token population (`var(--mz-text_*_*)` currently `inherit` placeholders) is a parallel item — Text/Heading would migrate once those have values.

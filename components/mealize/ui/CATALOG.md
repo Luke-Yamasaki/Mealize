@@ -13,7 +13,7 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 
 - [Layout](#layout) — `AppShell`, `AppHeader`, `AppHeaderPlaceholder`, `AppHeaderRow`, `Stack`, `SkipToMainLink`
 - [Typography](#typography) — `Heading`, `Text`, `Link`
-- [Forms](#forms) — `Field`, `Input`
+- [Forms](#forms) — `Field`, `Input`, `Textarea`, `Select`, `Checkbox`, `Radio`, `Switch`
 - [Actions](#actions) — `Button`, `NavAuthButton`, `NavPrimaryCtaLink`, `NavPrimaryCtaButton`
 - [Navigation](#navigation) — `NavIconLink`
 - [Brand](#brand) — `BrandLogo`
@@ -130,9 +130,59 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 
 **Use when** rendering a text input. Inside a `<Field>`, picks up id / describedby / aria-invalid automatically. Outside a Field, accepts all those as standard input props.
 
-**Don't use when** the control is a textarea, select, or other non-`<input>` element (each will get its own primitive). Don't pass `variant` to choose a palette — control colors come from `var(--mz-control_*)`; the ancestor `data-mode` sets them.
+**Don't use when** the control is a textarea, select, or other non-`<input>` element (each has its own primitive). Don't pass `variant` to choose a palette — control colors come from `var(--mz-control_*)`; the ancestor `data-mode` sets them.
 
 **Composition:** `<input>` styled from `var(--mz-control_*)`, with a `focus-visible:outline-current` ring and an `aria-invalid:` variant that turns the border destructive when the field is in error state.
+
+---
+
+### `Textarea`
+
+**Use when** rendering a multi-line text input — comments, descriptions, message composers. Defaults to 3 rows; `rows` prop overrides. Resizable on the y-axis by default.
+
+**Don't use when** the input is single-line — use `<Input>`. Don't disable resize globally; if you need a fixed-size composer, override via `className` on the specific instance.
+
+**Composition:** `<textarea>` styled from `var(--mz-control_*)`, same Field-context wiring as Input.
+
+---
+
+### `Select`
+
+**Use when** the option list is short (under ~10) and values are simple strings. Native `<select>` provides the OS dropdown — accessible by default, keyboard searchable, mobile-friendly.
+
+**Don't use when** options need rich rendering (icons, descriptions), search/typeahead, or multi-select. A future Combobox primitive will cover those cases. Don't use for fewer than 3 options where Radio is clearer.
+
+**Composition:** `<select>` with `appearance-none` + an absolute-positioned `ChevronDown` icon. Field-context wiring identical to Input/Textarea.
+
+---
+
+### `Checkbox`
+
+**Use when** rendering a boolean choice with its own label ("I agree to the terms", "Subscribe to updates"), or as a member of a multi-select list where each option is independent.
+
+**Don't use when** the choice is mutually exclusive with siblings — use `Radio`. Don't wrap a Checkbox in `<Field>` — Checkbox renders its own label inline (right of the control). For grouped checkboxes (filter lists), render multiple Checkboxes with the group label provided by the caller.
+
+**Composition:** Native `<input type="checkbox">` with `accent-[var(--mz-action_primary_backgroundColor)]` for the checked color. If `label` or `description` is passed, wraps in a `<label>` with text laid out to the right; otherwise renders bare.
+
+---
+
+### `Radio`
+
+**Use when** rendering one option in a group of mutually exclusive choices. Group via shared `name` attribute — the browser handles exclusion.
+
+**Don't use when** the choice is independent — use `Checkbox`. Don't use for binary choices (use Switch or a single Checkbox). For more than ~5 options, consider `Select` to save vertical space.
+
+**Composition:** Same shape as Checkbox but `type="radio"` (no `rounded` class — native radios are circular). A future `RadioGroup` primitive will wrap the group with `role="radiogroup"` and shared labelling; for now, the caller provides the group label and `name`.
+
+---
+
+### `Switch`
+
+**Use when** rendering a stateful toggle — preferences, feature flags, on/off settings that take effect immediately.
+
+**Don't use when** the value is part of a form being saved on submit — use `Checkbox`. Switches imply "this is on/off right now"; checkboxes imply "this will be on/off after you save." Don't use for choices that need a deliberate confirmation step.
+
+**Composition:** Visually hidden native `<input type="checkbox" role="switch">` (so keyboard and screen readers work natively), plus a sibling track/thumb element styled with `peer-checked:` variants. The track color flips to `var(--mz-action_primary_backgroundColor)` when on.
 
 ---
 
@@ -196,11 +246,12 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 
 Components the Mealize UI library should grow toward, ordered by likely value:
 
-1. **`Textarea` + `Select` + `Checkbox` + `Radio` + `Switch`** — remaining form-control primitives that complete the Field-context pattern. `Field` and `Input` are now in the library.
-2. **`Dialog`** — modal with focus trap, escape dismiss, restore focus. `MealizeModalRoot` exists but isn't a generic primitive.
-3. **`Popover` / `Menu`** — replaces shadcn's popover used in `SettingsMenu`. Needed before `SettingsMenu` itself can move into the library.
-4. **`Toast` / `Banner`** — feedback primitives. Currently no in-app notification surface exists.
-5. **`Card`** — used implicitly everywhere; a primitive locks in surface treatment.
-6. **`Avatar` / `Badge`** — small but pervasive.
+1. **`Dialog`** — modal with focus trap, escape dismiss, restore focus. `MealizeModalRoot` exists but isn't a generic primitive.
+2. **`Popover` / `Menu`** — replaces shadcn's popover used in `SettingsMenu`. Needed before `SettingsMenu` itself can move into the library.
+3. **`Combobox`** — searchable / typeahead select for option lists too long or rich for native `<Select>`.
+4. **`RadioGroup`** — wraps related `Radio`s with `role="radiogroup"` and shared label, replacing the current loose pattern.
+5. **`Toast` / `Banner`** — feedback primitives. Currently no in-app notification surface exists.
+6. **`Card`** — used implicitly everywhere; a primitive locks in surface treatment.
+7. **`Avatar` / `Badge`** — small but pervasive.
 
 Typography token population (`var(--mz-text_*_*)` currently `inherit` placeholders) is a parallel item — Text/Heading would migrate once those have values.

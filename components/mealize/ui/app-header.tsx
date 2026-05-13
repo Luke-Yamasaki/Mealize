@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
-const APP_HEADER_SURFACE = "bg-gradient-to-b from-[#76D97E] to-[#28A690]";
+const APP_HEADER_SURFACE = "bg-linear-to-b from-[#76D97E] to-[#28A690]";
 
 export function AppHeader({
   children,

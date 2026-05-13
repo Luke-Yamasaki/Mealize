@@ -13,6 +13,7 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 
 - [Layout](#layout) — `AppShell`, `AppHeader`, `AppHeaderPlaceholder`, `AppHeaderRow`, `Stack`, `SkipToMainLink`
 - [Typography](#typography) — `Heading`, `Text`, `Link`
+- [Forms](#forms) — `Field`, `Input`
 - [Actions](#actions) — `Button`, `NavAuthButton`, `NavPrimaryCtaLink`, `NavPrimaryCtaButton`
 - [Navigation](#navigation) — `NavIconLink`
 - [Brand](#brand) — `BrandLogo`
@@ -113,6 +114,28 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 
 ---
 
+## Forms
+
+### `Field`
+
+**Use when** wrapping a form control (Input, Textarea, Select, etc.) with a label, optional helper text, and optional error. Owns the input id, helper/error ids, and the `aria-describedby` wiring — the child control reads them via context.
+
+**Don't use when** rendering a control without a label (search inputs with placeholder-only, inline filters). For unlabeled inputs, use Input directly with an explicit `aria-label`. Don't render multiple inputs inside one Field — the label + describedby model assumes a single control.
+
+**Composition:** `<div>` with a `<label htmlFor={id}>`, the child control, and either an error (`role="alert"`) or a helper element. Provides a context with `{ id, describedBy, invalid }` consumed by form-control primitives.
+
+---
+
+### `Input`
+
+**Use when** rendering a text input. Inside a `<Field>`, picks up id / describedby / aria-invalid automatically. Outside a Field, accepts all those as standard input props.
+
+**Don't use when** the control is a textarea, select, or other non-`<input>` element (each will get its own primitive). Don't pass `variant` to choose a palette — control colors come from `var(--mz-control_*)`; the ancestor `data-mode` sets them.
+
+**Composition:** `<input>` styled from `var(--mz-control_*)`, with a `focus-visible:outline-current` ring and an `aria-invalid:` variant that turns the border destructive when the field is in error state.
+
+---
+
 ## Actions
 
 ### `Button`
@@ -173,7 +196,7 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 
 Components the Mealize UI library should grow toward, ordered by likely value:
 
-1. **`Field` + `Input` + `Textarea` + `Select`** — form primitives. Almost any form work today reaches into shadcn `components/ui/`. Closing this gap is the highest-leverage next step.
+1. **`Textarea` + `Select` + `Checkbox` + `Radio` + `Switch`** — remaining form-control primitives that complete the Field-context pattern. `Field` and `Input` are now in the library.
 2. **`Dialog`** — modal with focus trap, escape dismiss, restore focus. `MealizeModalRoot` exists but isn't a generic primitive.
 3. **`Popover` / `Menu`** — replaces shadcn's popover used in `SettingsMenu`. Needed before `SettingsMenu` itself can move into the library.
 4. **`Toast` / `Banner`** — feedback primitives. Currently no in-app notification surface exists.

@@ -16,7 +16,8 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 - [Typography](#typography) — `Heading`, `Text`, `Link`
 - [Forms](#forms) — `Field`, `Input`, `Textarea`, `Select`, `Checkbox`, `Radio`, `Switch`
 - [Actions](#actions) — `Button`, `NavAuthButton`, `NavPrimaryCtaLink`, `NavPrimaryCtaButton`
-- [Overlays](#overlays) — `Popover`
+- [Overlays](#overlays) — `Popover`, `Dialog`, `Menu`, `Tooltip`
+- [Surfaces](#surfaces) — `Card`, `Badge`, `Avatar`
 - [Navigation](#navigation) — `NavIconLink`
 - [Brand](#brand) — `BrandLogo`
 
@@ -232,6 +233,68 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 
 ---
 
+### `Dialog`
+
+**Use when** the interaction needs to block the page — destructive confirmations, focused forms, content that requires explicit dismissal. Backed by `@base-ui/react/dialog`: focus trap, restore-on-close, escape dismissal, scroll lock, and `aria-modal` wiring are handled.
+
+**Don't use when** the content is anchored to a trigger and doesn't need to block — that's `Popover`. Don't use as a routing destination — full-screen content belongs in a route. Don't stack dialogs (panel-on-panel rule); compose follow-up steps in the same dialog or route to a new page.
+
+**Composition:** `Dialog.Root`, `Dialog.Trigger`, `Dialog.Content`, `Dialog.Title`, `Dialog.Description`, `Dialog.Close`. `Content` collapses Portal + Backdrop + Popup; sizes are `sm` / `md` / `lg` / `xl` (max-width). Surface via `var(--mz-surface_secondary_*)`. Backdrop is a 50%-opacity black with `backdrop-blur-sm`.
+
+---
+
+### `Menu`
+
+**Use when** rendering a list of actions anchored to a trigger — overflow menus, action lists on cards or rows, account menus. Backed by `@base-ui/react/menu`: arrow keys, type-to-find, escape, and focus on the trigger after dismissal are handled.
+
+**Don't use when** content is free-form (use `Popover`), or when the user is *choosing a value* rather than *triggering an action* (use `Select` or `Combobox`). Don't render dialogs from menu items inline — close the menu first, then open the dialog from its own trigger.
+
+**Composition:** `Menu.Root`, `Menu.Trigger`, `Menu.Content`, `Menu.Item`, `Menu.Group`, `Menu.GroupLabel`, `Menu.Separator`. `Item` is pre-styled with `data-[highlighted]` hover/keyboard state and `data-[disabled]` opacity. For checkbox/radio menu items, link items, or submenus, drop to `@base-ui/react/menu` directly.
+
+---
+
+### `Tooltip`
+
+**Use when** a short label clarifies an icon-only control or a truncated value. Hover or keyboard focus triggers it; escape or blur dismisses.
+
+**Don't use when** the content is essential to understanding the control — if a user can't operate it without the tooltip, the label belongs in the control itself. Don't put interactive content inside (clicks won't reliably work — tooltips dismiss on blur). Don't use on mobile-only controls (no hover affordance).
+
+**Composition:** `Tooltip.Root`, `Tooltip.Trigger`, `Tooltip.Content`, `Tooltip.Provider`. Surface uses `var(--mz-surface_auxiliary_*)` — inverted from the page (dark popup on light, light popup on dark). Mount `Tooltip.Provider` near the app root to share `delay` settings; without it, Base UI defaults apply.
+
+---
+
+## Surfaces
+
+### `Card`
+
+**Use when** grouping related content into a lifted, bordered surface — a list item that needs its own boundary, a panel of stats, a feature highlight. Compose with `Stack`, `Heading`, `Text` inside.
+
+**Don't use when** the content needs no visual lift (use a plain `<div>` or `<Stack>`). Don't use as a Dialog substitute. Don't nest Cards three levels deep; collapse to plain Stack at that point.
+
+**Composition:** `<div>` (or `as`) with `rounded-xl`, `shadow-sm`, border + surface from `var(--mz-surface_secondary_*)`, and a `padding` scale (`none` / `sm` / `md` / `lg`). No internal layout — consumer composes.
+
+---
+
+### `Badge`
+
+**Use when** rendering a small inline status, count, or category — "New", "3", "BETA". Should fit beside body text without dominating.
+
+**Don't use when** the label needs to convey emphasis on its own (use `Button` or a larger callout). Don't render long content — badges are at most 2–3 words. Don't pile up many badges next to each other; that's a list, not annotations.
+
+**Composition:** `<span>` with `rounded-full`, border + surface from `var(--mz-surface_secondary_*)`, uppercase + tracking + small size scale (`sm` / `md` / `lg`). For loud / branded badges, wrap the call site in a `data-mode` that reassigns `surface_secondary`.
+
+---
+
+### `Avatar`
+
+**Use when** representing a person, organization, or entity — alongside a name, in lists, or in mention contexts. Backed by `@base-ui/react/avatar`: shows the fallback while the image loads or on failure.
+
+**Don't use when** the entity is non-personal (use an icon or logo). Don't use for decorative imagery. Avatars are identity-bearing — they need real `alt` text describing who/what they represent.
+
+**Composition:** `BaseAvatar.Root` styled as `inline-flex` round bg-muted, with `BaseAvatar.Image` (only rendered if `src` provided) and `BaseAvatar.Fallback` (renders children — usually initials). Five sizes: `xs` / `sm` / `md` / `lg` / `xl`.
+
+---
+
 ## Navigation
 
 ### `NavIconLink`
@@ -260,13 +323,18 @@ The catalog of primitives in `components/mealize/ui/`. Every new Mealize feature
 
 Components the Mealize UI library should grow toward, ordered by likely value:
 
-1. **`Dialog`** — modal with focus trap, escape dismiss, restore focus. Build on `@base-ui/react/dialog`. `MealizeModalRoot` is the existing app-specific modal system and isn't a generic primitive.
-2. **`Menu`** — action list anchored to a trigger. Build on `@base-ui/react/menu`. Distinct from Popover (Popover has free-form content; Menu has selectable items with keyboard nav).
-3. **`Tooltip`** — short label revealed on hover/focus. Build on `@base-ui/react/tooltip`.
-4. **`Combobox`** — searchable / typeahead select for option lists too long or rich for native `<Select>`. Build on `@base-ui/react/combobox`.
-5. **`RadioGroup`** — wraps related `Radio`s with `role="radiogroup"` and shared label, replacing the current loose pattern.
-6. **`Toast` / `Banner`** — feedback primitives. Currently no in-app notification surface exists. Build on `@base-ui/react/toast`.
-7. **`Card`** — used implicitly everywhere; a primitive locks in surface treatment.
-8. **`Avatar` / `Badge`** — small but pervasive.
+1. **`Combobox`** — searchable / typeahead select for option lists too long or rich for native `<Select>`. Build on `@base-ui/react/combobox`.
+2. **`Toast` / `Banner`** — feedback primitives. Currently no in-app notification surface exists. Build on `@base-ui/react/toast`.
+3. **`RadioGroup`** — wraps related `Radio`s with `role="radiogroup"` and shared label, replacing the current loose pattern.
+4. **`Tabs`** — sectioned navigation within a page. Build on `@base-ui/react/tabs`.
+5. **`Accordion`** — collapsible content sections. Build on `@base-ui/react/accordion`.
+6. **`Progress`** — determinate / indeterminate progress indicator. Build on `@base-ui/react/progress`.
+
+Migration items (existing usages that should move to the library when touched):
+
+- `SettingsMenu` in `mealize-navbar.tsx` — replace shadcn Popover with the Mealize `Popover`.
+- `MealizeModalRoot` — generic app-modal system; either deprecate in favor of `Dialog` or rebuild on top of it.
+- Form usages in `mealize-new-post-form.tsx`, `mealize-onboarding-form.tsx`, etc. — migrate to `Field` / `Input` / `Textarea` / `Select`.
+- Typography token population (`var(--mz-text_*_*)` currently `inherit` placeholders) — `Heading` and `Text` migrate once those have values.
 
 Typography token population (`var(--mz-text_*_*)` currently `inherit` placeholders) is a parallel item — Text/Heading would migrate once those have values.

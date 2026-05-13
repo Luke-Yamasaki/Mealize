@@ -74,6 +74,9 @@
   --mz-surface_secondary_backgroundColor: #ffffff;
   --mz-surface_secondary_foregroundColor: #0a0a0a;
   --mz-surface_secondary_borderColor: rgba(0, 0, 0, 0.08);
+  --mz-surface_auxiliary_backgroundColor: #0a0a0a;
+  --mz-surface_auxiliary_foregroundColor: #fafafa;
+  --mz-surface_auxiliary_borderColor: rgba(255, 255, 255, 0.1);
   --mz-control_backgroundColor: #ffffff;
   --mz-control_foregroundColor: #0a0a0a;
   --mz-control_borderColor: #e4e4e7;
@@ -90,6 +93,9 @@
   --mz-surface_secondary_backgroundColor: #27272a;
   --mz-surface_secondary_foregroundColor: #fafafa;
   --mz-surface_secondary_borderColor: rgba(255, 255, 255, 0.1);
+  --mz-surface_auxiliary_backgroundColor: #fafafa;
+  --mz-surface_auxiliary_foregroundColor: #0a0a0a;
+  --mz-surface_auxiliary_borderColor: rgba(0, 0, 0, 0.1);
   --mz-control_backgroundColor: #27272a;
   --mz-control_foregroundColor: #fafafa;
   --mz-control_borderColor: rgba(255, 255, 255, 0.12);

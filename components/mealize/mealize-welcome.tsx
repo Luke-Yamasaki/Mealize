@@ -10,7 +10,6 @@ import {
   Truck,
 } from "lucide-react";
 
-import { mealizeAuthBrand as authBrand } from "@/lib/mealize-auth-brand-colors";
 import { useMealizeTheme } from "@/stores/mealize-ui-store";
 
 import { MealizeLogoMedium } from "./mealize-logo-medium";
@@ -108,28 +107,38 @@ function WelcomeAtmosphere({ isLight }: { isLight: boolean }) {
   );
 }
 
+/**
+ * Welcome-hero auth CTAs. Same mise-en-mode wiring as NavAuthButton
+ * (data-mode wrapper + var(--mz-action_primary_*)), just with hero-scale
+ * visuals (rounded-full, px-7, glow shadow). Hover and focus reassignment
+ * is handled by the mode rules in app/intents.css.
+ */
 function PrimaryCta({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <Link
-      href={href}
-      prefetch={false}
-      className={`inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[${authBrand.signUp.fillLight}] px-7 text-sm font-bold text-white shadow-[0_1px_0_rgba(255,255,255,0.15)_inset,0_8px_32px_-8px_rgba(180,83,9,0.55)] transition hover:bg-[${authBrand.signUp.fillLightHover}] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[${authBrand.signUp.fillLight}] dark:bg-[${authBrand.signUp.fillDark}] dark:text-black dark:hover:bg-[${authBrand.signUp.fillDarkHover}] dark:focus-visible:outline-[${authBrand.signUp.fillDark}]`}
-    >
-      {children}
-      <ArrowRight className="size-4 opacity-90" aria-hidden />
-    </Link>
+    <div data-mode="signup" className="contents">
+      <Link
+        href={href}
+        prefetch={false}
+        className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[var(--mz-action_primary_backgroundColor)] px-7 text-sm font-bold text-[var(--mz-action_primary_foregroundColor)] shadow-[0_1px_0_rgba(255,255,255,0.15)_inset,0_8px_32px_-8px_rgba(234,179,8,0.55)] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+      >
+        {children}
+        <ArrowRight className="size-4 opacity-90" aria-hidden />
+      </Link>
+    </div>
   );
 }
 
 function SecondaryCta({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <Link
-      href={href}
-      prefetch={false}
-      className={`inline-flex h-11 items-center justify-center rounded-full bg-[${authBrand.signIn.fillLight}] px-7 text-sm font-bold text-white shadow-[0_1px_0_rgba(255,255,255,0.12)_inset,0_8px_28px_-8px_rgba(10,77,66,0.45)] transition hover:bg-[${authBrand.signIn.fillLightHover}] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[${authBrand.signIn.fillLight}] dark:bg-[${authBrand.signIn.fillDark}] dark:text-black dark:hover:bg-[${authBrand.signIn.fillDarkHover}] dark:focus-visible:outline-[${authBrand.signIn.fillDark}]`}
-    >
-      {children}
-    </Link>
+    <div data-mode="signin" className="contents">
+      <Link
+        href={href}
+        prefetch={false}
+        className="inline-flex h-11 items-center justify-center rounded-full bg-[var(--mz-action_primary_backgroundColor)] px-7 text-sm font-bold text-[var(--mz-action_primary_foregroundColor)] shadow-[0_1px_0_rgba(255,255,255,0.12)_inset,0_8px_28px_-8px_rgba(10,77,66,0.45)] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+      >
+        {children}
+      </Link>
+    </div>
   );
 }
 

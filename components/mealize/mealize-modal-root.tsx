@@ -1,19 +1,19 @@
 "use client";
 
 import { createPortal } from "react-dom";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 import { useMealizeModalStore } from "@/stores/mealize-modal-store";
 
+function subscribe() {
+  return () => {};
+}
+
 /** Portal target for legacy-style modals (replaces Redux `setModalMount`). */
 export function MealizeModalRoot() {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(subscribe, () => true, () => false);
   const node = useMealizeModalStore((s) => s.node);
   const close = useMealizeModalStore((s) => s.close);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   if (!mounted || !node) return null;
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useAuth, UserButton, SignOutButton } from "@clerk/nextjs";
 import { Building2, ChevronDown, MessageSquare, Search, Settings, Truck } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { type ReactNode, useState } from "react";
+import { useState } from "react";
 
 import { Input } from "@/components/ui/input";
 import { trpc } from "@/lib/trpc/react";

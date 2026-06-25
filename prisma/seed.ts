@@ -1,6 +1,5 @@
 import "dotenv/config";
 import { execSync } from "node:child_process";
-import path from "node:path";
 
 import { Prisma, PrismaClient } from "@prisma/client";
 

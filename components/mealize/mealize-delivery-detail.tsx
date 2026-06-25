@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowLeft, Calendar, Star, Truck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -40,12 +40,16 @@ function StarsRow({ rating }: { rating: number }) {
   );
 }
 
-export function MealizeDeliveryDetail({ deliveryId }: { deliveryId: number }) {
-  const q = trpc.delivery.byId.useQuery({ id: deliveryId });
-  const meQ = trpc.user.me.useQuery();
+function DeliveryFeedbackForm({
+  deliveryId,
+  myFeedback,
+}: {
+  deliveryId: number;
+  myFeedback?: { id: number; rating: number; comment: string | null };
+}) {
   const utils = trpc.useUtils();
-  const [rating, setRating] = useState<number>(5);
-  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState(myFeedback?.rating ?? 5);
+  const [comment, setComment] = useState(myFeedback?.comment ?? "");
 
   const submitFeedback = trpc.delivery.submitFeedback.useMutation({
     onSuccess: () => {
@@ -53,19 +57,60 @@ export function MealizeDeliveryDetail({ deliveryId }: { deliveryId: number }) {
     },
   });
 
-  useEffect(() => {
-    const row = q.data;
-    const uid = meQ.data?.id;
-    if (!row || uid == null) return;
-    const mf = row.feedback.find((f) => f.userId === uid);
-    if (mf) {
-      setRating(mf.rating);
-      setComment(mf.comment ?? "");
-    } else {
-      setRating(5);
-      setComment("");
-    }
-  }, [q.data, meQ.data?.id]);
+  return (
+    <div className="space-y-3 border-t border-border/80 pt-4">
+      <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+        {myFeedback ? "Update your rating" : "Add your rating"}
+      </p>
+      <div className="flex flex-wrap gap-2">
+        {[1, 2, 3, 4, 5].map((n) => (
+          <Button
+            key={n}
+            type="button"
+            size="sm"
+            variant={rating === n ? "default" : "secondary"}
+            className="min-w-10 font-bold"
+            onClick={() => setRating(n)}
+          >
+            {n}
+          </Button>
+        ))}
+      </div>
+      <label className="block space-y-1.5">
+        <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground">Optional note</span>
+        <textarea
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          maxLength={500}
+          rows={3}
+          className="w-full resize-y rounded-lg border border-input bg-background px-3 py-2 text-sm font-medium text-foreground shadow-sm outline-none ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
+          placeholder="What went well or what to improve next time?"
+        />
+      </label>
+      <Button
+        type="button"
+        className="font-semibold"
+        disabled={submitFeedback.isPending}
+        onClick={() =>
+          submitFeedback.mutate({
+            deliveryId,
+            rating,
+            comment: comment.trim() || undefined,
+          })
+        }
+      >
+        {submitFeedback.isPending ? "Saving…" : myFeedback ? "Update feedback" : "Submit feedback"}
+      </Button>
+      {submitFeedback.error ? (
+        <p className="text-sm font-semibold text-destructive">{submitFeedback.error.message}</p>
+      ) : null}
+    </div>
+  );
+}
+
+export function MealizeDeliveryDetail({ deliveryId }: { deliveryId: number }) {
+  const q = trpc.delivery.byId.useQuery({ id: deliveryId });
+  const meQ = trpc.user.me.useQuery();
 
   if (q.isLoading) {
     return (
@@ -192,55 +237,11 @@ export function MealizeDeliveryDetail({ deliveryId }: { deliveryId: number }) {
             )}
 
             {myUserId != null ? (
-              <div className="space-y-3 border-t border-border/80 pt-4">
-                <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-                  {myFeedback ? "Update your rating" : "Add your rating"}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {[1, 2, 3, 4, 5].map((n) => (
-                    <Button
-                      key={n}
-                      type="button"
-                      size="sm"
-                      variant={rating === n ? "default" : "secondary"}
-                      className="min-w-10 font-bold"
-                      onClick={() => setRating(n)}
-                    >
-                      {n}
-                    </Button>
-                  ))}
-                </div>
-                <label className="block space-y-1.5">
-                  <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-                    Optional note
-                  </span>
-                  <textarea
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    maxLength={500}
-                    rows={3}
-                    className="w-full resize-y rounded-lg border border-input bg-background px-3 py-2 text-sm font-medium text-foreground shadow-sm outline-none ring-offset-background placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
-                    placeholder="What went well or what to improve next time?"
-                  />
-                </label>
-                <Button
-                  type="button"
-                  className="font-semibold"
-                  disabled={submitFeedback.isPending}
-                  onClick={() =>
-                    submitFeedback.mutate({
-                      deliveryId: d.id,
-                      rating,
-                      comment: comment.trim() || undefined,
-                    })
-                  }
-                >
-                  {submitFeedback.isPending ? "Saving…" : myFeedback ? "Update feedback" : "Submit feedback"}
-                </Button>
-                {submitFeedback.error ? (
-                  <p className="text-sm font-semibold text-destructive">{submitFeedback.error.message}</p>
-                ) : null}
-              </div>
+              <DeliveryFeedbackForm
+                key={`${deliveryId}-${myFeedback?.id ?? "new"}`}
+                deliveryId={d.id}
+                myFeedback={myFeedback}
+              />
             ) : null}
           </CardContent>
         </Card>

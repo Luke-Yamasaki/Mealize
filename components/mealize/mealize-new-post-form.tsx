@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 import {
   Card,
@@ -97,17 +97,12 @@ export function MealizeNewPostForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [quantity, setQuantity] = useState("1");
-  const [categoryId, setCategoryId] = useState(1);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
   const [imageUrl, setImageUrl] = useState("");
   const [expDate, setExpDate] = useState(() => new Date().toISOString().slice(0, 10));
 
   const cats = categories.data ?? [];
-
-  useEffect(() => {
-    if (cats.length && !cats.some((c) => c.id === categoryId)) {
-      setCategoryId(cats[0]!.id);
-    }
-  }, [cats, categoryId]);
+  const categoryId = selectedCategoryId ?? cats[0]?.id ?? 1;
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -282,7 +277,7 @@ export function MealizeNewPostForm() {
                       id="mealize-post-cat"
                       className={cn(fieldClassName, "cursor-pointer pr-10 font-medium")}
                       value={categoryId}
-                      onChange={(e) => setCategoryId(Number(e.target.value))}
+                      onChange={(e) => setSelectedCategoryId(Number(e.target.value))}
                     >
                       {cats.map((c) => (
                         <option key={c.id} value={c.id} className="bg-popover text-foreground">

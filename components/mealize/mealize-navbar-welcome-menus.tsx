@@ -173,6 +173,12 @@ function WelcomeNavDrawer({
   footer?: ReactNode;
 }) {
   const [expanded, setExpanded] = useState<TabId | null>(null);
+  const [prevOpen, setPrevOpen] = useState(open);
+
+  if (prevOpen !== open) {
+    setPrevOpen(open);
+    if (!open) setExpanded(null);
+  }
 
   useEffect(() => {
     if (!open) return;
@@ -181,10 +187,6 @@ function WelcomeNavDrawer({
     return () => {
       document.body.style.overflow = prev;
     };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) setExpanded(null);
   }, [open]);
 
   const toggle = useCallback((id: TabId) => {

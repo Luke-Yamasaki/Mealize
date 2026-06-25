@@ -25,7 +25,7 @@ export function MealizeLocationSettings() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function useCurrentLocation() {
+  async function requestCurrentLocation() {
     setError(null);
     if (typeof navigator === "undefined" || !navigator.geolocation) {
       setError("This browser does not support location.");
@@ -89,7 +89,7 @@ export function MealizeLocationSettings() {
         size="sm"
         className="h-9 w-full gap-2 font-semibold shadow-none"
         disabled={loading}
-        onClick={() => void useCurrentLocation()}
+        onClick={() => void requestCurrentLocation()}
       >
         {loading ? (
           <Loader2 className="size-4 shrink-0 animate-spin" aria-hidden />

@@ -1,0 +1,236 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  category  String   @db.VarChar(25)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+
+  @@map("categories")
+}
+
+model Organization {
+  id          Int      @id @default(autoincrement())
+  federalId   String   @map("federalId") @db.VarChar(11)
+  isNonprofit Boolean  @map("isNonprofit")
+  logoUrl     String   @map("logoUrl") @db.VarChar(2048)
+  imageUrl    String   @map("imageUrl") @db.VarChar(2048)
+  hoursOpen   String   @map("open") @db.VarChar(20)
+  hoursClose  String   @map("close") @db.VarChar(20)
+  timeslot    String   @db.VarChar(35)
+  name        String   @db.VarChar(100)
+  description String   @db.VarChar(1000)
+  street      String   @db.VarChar(100)
+  zip         String   @db.VarChar(18)
+  city        String   @db.VarChar(17)
+  state       String   @db.VarChar(12)
+  phone       String   @unique @db.VarChar(20)
+  email       String   @db.VarChar(255)
+  /// Admin-set: 501(c)(3) or equivalent verified for this profile.
+  mealizeVerifiedNonprofit Boolean @default(false) @map("mealize_verified_nonprofit")
+  /// Admin-set: commercial kitchen / food-safe donor verification.
+  mealizeVerifiedKitchen   Boolean @default(false) @map("mealize_verified_kitchen")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  employees             User[]
+  posts                 Post[]
+  calendars             Calendar[]
+  events                Event[]
+  watchlist             Watchlist[]
+  deliveriesAsBusiness  Delivery[]  @relation("DeliveryBusiness")
+  deliveriesAsNonprofit Delivery[]  @relation("DeliveryNonprofit")
+
+  @@map("organizations")
+}
+
+model User {
+  id               Int      @id @default(autoincrement())
+  clerkId          String   @unique
+  organizationId   Int      @map("organizationId")
+  isNonprofit      Boolean  @map("isNonprofit")
+  isManager        Boolean  @map("isManager")
+  firstName        String   @map("firstName") @db.VarChar(50)
+  lastName         String   @map("lastName") @db.VarChar(50)
+  email            String   @unique @db.VarChar(255)
+  phone            String   @unique @db.VarChar(20)
+  dob              DateTime @db.Date
+  deaf             Boolean?
+  wheelchair       Boolean?
+  learningDisabled Boolean? @map("learningDisabled")
+  lgbtq            Boolean?
+  profileImageUrl  String   @map("profileImageUrl") @db.VarChar(2048)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+
+  posts           Post[]
+  deliveries      Delivery[]
+  favorites       Favorite[]
+  sentMessages    Message[]      @relation("MessageSender")
+  events          Event[]
+  watchlist       Watchlist[]
+  boardsAsUserOne Messageboard[] @relation("MessageBoardUserOne")
+  boardsAsUserTwo Messageboard[] @relation("MessageBoardUserTwo")
+  deliveryFeedback DeliveryFeedback[]
+
+  @@map("users")
+}
+
+model Calendar {
+  id             Int      @id @default(autoincrement())
+  organizationId Int      @map("organizationId")
+  periodOpen     DateTime @map("open")
+  periodClose    DateTime @map("close")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+
+  @@map("calendars")
+}
+
+model Event {
+  id             Int      @id @default(autoincrement())
+  organizationId Int      @map("organizationId")
+  userId         Int      @map("userId")
+  isClosed       DateTime @map("isClosed")
+  title          String   @db.VarChar(50)
+  description    String   @db.VarChar(255)
+  date           DateTime
+  imageUrl       String?  @map("imageUrl") @db.VarChar(2048)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+  manager      User         @relation(fields: [userId], references: [id])
+
+  @@map("events")
+}
+
+model Messageboard {
+  id        Int      @id @default(autoincrement())
+  userOne   Int      @map("user_one")
+  userTwo   Int      @map("user_two")
+  createdAt DateTime @default(now())
+
+  userOneRel User      @relation("MessageBoardUserOne", fields: [userOne], references: [id])
+  userTwoRel User      @relation("MessageBoardUserTwo", fields: [userTwo], references: [id])
+  messages   Message[]
+
+  @@map("message_boards")
+}
+
+model Post {
+  id             Int      @id @default(autoincrement())
+  isItem         Boolean  @map("isItem")
+  organizationId Int      @map("organizationId")
+  userId         Int      @map("userId")
+  title          String   @db.VarChar(25)
+  description    String   @db.VarChar(120)
+  quantity       String   @db.VarChar(12)
+  categoryId     Int      @map("categoryId")
+  imageUrl       String   @map("imageUrl") @db.VarChar(2048)
+  expDate        DateTime @map("expDate") @db.Date
+  status         Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+  uploader     User         @relation(fields: [userId], references: [id])
+  category     Category     @relation(fields: [categoryId], references: [id])
+  messages     Message[]
+  deliveries   Delivery[]
+  favorites    Favorite[]
+
+  @@map("posts")
+}
+
+model Watchlist {
+  id             Int      @id @default(autoincrement())
+  organizationId Int?     @map("organizationId")
+  userId         Int?     @map("userId")
+  ip             String
+  count          Int
+  createdAt      DateTime @default(now())
+
+  organization Organization? @relation(fields: [organizationId], references: [id])
+  user         User?         @relation(fields: [userId], references: [id])
+
+  @@map("watchlists")
+}
+
+model Delivery {
+  id                 Int      @id @default(autoincrement())
+  isDropoff          Boolean  @map("isDropoff")
+  postId             Int      @map("postId")
+  userId             Int      @map("userId")
+  businessId         Int      @map("businessId")
+  nonprofitId        Int      @map("nonprofitId")
+  date               DateTime @db.Date
+  time               String
+  completed          Int
+  cancellationReason String?  @map("cancellationReason") @db.VarChar(255)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  post      Post         @relation(fields: [postId], references: [id])
+  volunteer User         @relation(fields: [userId], references: [id])
+  business  Organization @relation("DeliveryBusiness", fields: [businessId], references: [id])
+  nonprofit Organization @relation("DeliveryNonprofit", fields: [nonprofitId], references: [id])
+  feedback  DeliveryFeedback[]
+
+  @@map("deliveries")
+}
+
+model DeliveryFeedback {
+  id         Int      @id @default(autoincrement())
+  deliveryId Int      @map("deliveryId")
+  userId     Int      @map("userId")
+  rating     Int
+  comment    String?  @db.VarChar(500)
+  createdAt  DateTime @default(now())
+
+  delivery Delivery @relation(fields: [deliveryId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([deliveryId, userId])
+  @@map("delivery_feedback")
+}
+
+model Favorite {
+  id     Int @id @default(autoincrement())
+  postId Int @map("postId")
+  userId Int @map("userId")
+
+  post Post @relation(fields: [postId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("favorites")
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  boardId   Int      @map("boardId")
+  senderId  Int      @map("senderId")
+  postId    Int?     @map("postId")
+  content   String   @db.VarChar(500)
+  imageUrl  String?  @map("imageUrl") @db.VarChar(2048)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  messageBoard Messageboard @relation(fields: [boardId], references: [id])
+  sender       User         @relation("MessageSender", fields: [senderId], references: [id])
+  post         Post?        @relation(fields: [postId], references: [id])
+
+  @@map("messages")
+}

@@ -1,17 +1,32 @@
-FROM python:3.9
+# PoC: build with real Clerk keys for production.
+# docker build -t mealize-web .
+# docker run -p 3000:3000 -e DATABASE_URL=... -e NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=... -e CLERK_SECRET_KEY=... mealize-web
 
-ENV REACT_APP_BASE_URL=https://mealize.herokuapp.com/
-ENV FLASK_APP=app
-ENV FLASK_ENV=production
-ENV SQLALCHEMY_ECHO=true
+FROM node:20-alpine AS base
+WORKDIR /app
 
-WORKDIR /var/www
+FROM base AS deps
+COPY package.json package-lock.json ./
+RUN npm ci
 
+FROM base AS builder
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+ENV NEXT_TELEMETRY_DISABLED=1
+ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_build_placeholder
+ARG CLERK_SECRET_KEY=sk_test_build_placeholder
+ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+ENV CLERK_SECRET_KEY=${CLERK_SECRET_KEY}
+RUN npx prisma generate && npm run build
 
-COPY /react-app/build/* app/static/
-
-RUN pip install -r requirements.txt
-RUN pip install psycopg2
-
-CMD gunicorn app:app
+FROM base AS runner
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+COPY --from=builder /app/package.json /app/package-lock.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/next.config.ts ./
+EXPOSE 3000
+CMD ["npm", "run", "start"]

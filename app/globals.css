@@ -1,0 +1,342 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "./intents.css";
+
+/*
+ * Mealize theme is stored on `.mealize-root` (see `MealizeShell`), not on OS preference.
+ * Default Tailwind `dark:` uses `prefers-color-scheme`, which made light UI + OS dark mode
+ * apply `dark:text-*` on white surfaces (illegible). Scope `dark:` to the app theme instead.
+ */
+@custom-variant dark (&:where(.mealize-root[data-mealize-theme="dark"], .mealize-root[data-mealize-theme="dark"] *));
+
+@font-face {
+  font-family: OpenDyslexic3;
+  src: url("/fonts/OpenDyslexic3-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: OpenDyslexic3;
+  src: url("/fonts/OpenDyslexic3-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  /* Darker than `--primary` for text/icons on white/light gray (shell may override `--primary` with a light brand hex). */
+  --color-primary-readable: var(--primary-readable);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+body {
+  margin: 0;
+  background: transparent;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Mealize prefixed surfaces (404, etc.) */
+.mealize-notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  min-height: 65vh;
+  width: 100%;
+  max-width: none;
+  padding-top: 20px;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-weight: 900;
+  font-size: 2.5rem;
+  color: #191919;
+  background-color: #ffffff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .mealize-notFound {
+    color: #ffffff;
+    background-color: #191919;
+  }
+}
+
+.mealize-notFound__title {
+  margin: 0;
+  font-size: inherit;
+}
+
+.mealize-notFound__hint {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.mealize-notFound__link {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #28a690;
+  text-decoration: underline;
+}
+
+.mealize-notFound__link:hover {
+  opacity: 0.9;
+}
+
+.mealize-root[data-mealize-dyslexic="true"] {
+  font-family: "OpenDyslexic3", "OpenDyslexic", Lexend, Verdana, system-ui, sans-serif;
+}
+
+.mealize-root[data-mealize-contrast="high"] {
+  font-weight: 600;
+}
+
+.mealize-root[data-mealize-contrast="high"] a {
+  text-decoration-thickness: 2px;
+}
+
+/* Welcome page marketing — expanding rings + pulsing core (see `WelcomeHeadlinePunctuation` in mealize-welcome). */
+@keyframes mealize-welcome-signal-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(0.55);
+    opacity: 0.42;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3.35);
+    opacity: 0;
+  }
+}
+
+.mealize-welcome-signal-ring {
+  animation: mealize-welcome-signal-ring 2.75s cubic-bezier(0.22, 0.61, 0.36, 1) infinite;
+}
+
+@keyframes mealize-welcome-signal-core {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(40, 166, 144, 0.45), 0 0 18px rgba(118, 217, 126, 0.35);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.95;
+    box-shadow: 0 0 0 10px rgba(40, 166, 144, 0), 0 0 28px rgba(118, 217, 126, 0.45);
+  }
+}
+
+.mealize-welcome-signal-core {
+  animation: mealize-welcome-signal-core 2.1s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mealize-welcome-signal-ring {
+    animation: none !important;
+    opacity: 0 !important;
+    visibility: hidden;
+  }
+
+  .mealize-welcome-signal-core {
+    animation: none !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    box-shadow: 0 0 14px rgba(40, 166, 144, 0.35);
+  }
+}
+
+/* Welcome splash — panel animates only once `.mealize-splash-root--armed` (after logo target is measured). */
+.mealize-splash-root {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.mealize-splash-root__panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  max-height: 100dvh;
+  background: linear-gradient(#76d97e, #28a690);
+  transform-origin: top center;
+}
+
+.mealize-splash-root--armed .mealize-splash-root__panel {
+  animation: mealize-splash-v2-panel 6.5s cubic-bezier(0.45, 0, 0.2, 1) forwards;
+}
+
+/* Keyframe % must match `buildClusterKeyframesCss` in mealize-welcome-splash.tsx (same 6.5s ease). */
+@keyframes mealize-splash-v2-panel {
+  0%,
+  25% {
+    height: 100vh;
+    max-height: 100dvh;
+    opacity: 1;
+  }
+  62% {
+    height: 50px;
+    max-height: 50px;
+    opacity: 1;
+  }
+  76% {
+    height: 50px;
+    max-height: 50px;
+    opacity: 0;
+  }
+  100% {
+    height: 50px;
+    max-height: 50px;
+    opacity: 0;
+  }
+}
+
+.mealize-splash-root__markWrap {
+  position: fixed;
+  z-index: 1;
+  transform-origin: center center;
+  /* left/top set inline from innerWidth/innerHeight so motion matches getBoundingClientRect (not 50vh). */
+}
+
+/*
+ ---break---
+ */
+
+:root {
+  /* Mealize app canvas + brand (XD: soft gray field, white cards, teal primary) */
+  --background: #f4f4f5;
+  --foreground: #0a0a0a;
+  --card: #ffffff;
+  --card-foreground: #0a0a0a;
+  --popover: #ffffff;
+  --popover-foreground: #0a0a0a;
+  --primary: #28a690;
+  --primary-readable: #0a5248;
+  --primary-foreground: #ffffff;
+  --secondary: #e8fcef;
+  --secondary-foreground: #0a0a0a;
+  --muted: #ececee;
+  --muted-foreground: #3d3d45;
+  --accent: #d9faf0;
+  --accent-foreground: #0f766e;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: #e4e4e7;
+  --input: #e4e4e7;
+  --ring: #28a690;
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+/*
+ ---break---
+ */
+
+.dark {
+  --background: #18181b;
+  --foreground: #fafafa;
+  --card: #27272a;
+  --card-foreground: #fafafa;
+  --popover: #27272a;
+  --popover-foreground: #fafafa;
+  --primary: #3ecfae;
+  /* Follows brand primary on dark surfaces (shell overrides `--primary`). */
+  --primary-readable: var(--primary);
+  --primary-foreground: #0a0a0a;
+  --secondary: #3f3f46;
+  --secondary-foreground: #fafafa;
+  --muted: #3f3f46;
+  --muted-foreground: #d6d6db;
+  --accent: #3f3f46;
+  --accent-foreground: #fafafa;
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: rgb(255 255 255 / 12%);
+  --input: rgb(255 255 255 / 14%);
+  --ring: #3ecfae;
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/*
+ ---break---
+ */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}

@@ -1,0 +1,160 @@
+/*
+ * Mise-en-mode intents (Donnie D'Amato — https://donnie.damato.design).
+ *
+ * Components author against `var(--mz-INTENT_PROPERTY)`, never literal colors.
+ * Modes set values on `[data-mode~="..."]` ancestors; deeper mode wins via cascade,
+ * and modes stack via space-separated `data-mode="x y"` matched by `~=`.
+ *
+ * The 33 canonical intents below (9 surface + 9 action + 3 control + 12 text) are
+ * declared at `:root` with safe fall-throughs. Modes override what they need; the
+ * rest inherits. Once the YAML pipeline lands, this file becomes generator output.
+ */
+
+:root {
+  /* Surfaces — non-interactive containers (9) */
+  --mz-surface_primary_backgroundColor: transparent;
+  --mz-surface_primary_foregroundColor: currentColor;
+  --mz-surface_primary_borderColor: transparent;
+  --mz-surface_secondary_backgroundColor: transparent;
+  --mz-surface_secondary_foregroundColor: currentColor;
+  --mz-surface_secondary_borderColor: transparent;
+  --mz-surface_auxiliary_backgroundColor: transparent;
+  --mz-surface_auxiliary_foregroundColor: currentColor;
+  --mz-surface_auxiliary_borderColor: transparent;
+
+  /* Actions — buttons and links (9) */
+  --mz-action_primary_backgroundColor: transparent;
+  --mz-action_primary_foregroundColor: currentColor;
+  --mz-action_primary_borderColor: transparent;
+  --mz-action_secondary_backgroundColor: transparent;
+  --mz-action_secondary_foregroundColor: currentColor;
+  --mz-action_secondary_borderColor: transparent;
+  --mz-action_auxiliary_backgroundColor: transparent;
+  --mz-action_auxiliary_foregroundColor: currentColor;
+  --mz-action_auxiliary_borderColor: transparent;
+
+  /* Controls — form inputs (3) */
+  --mz-control_backgroundColor: transparent;
+  --mz-control_foregroundColor: currentColor;
+  --mz-control_borderColor: transparent;
+
+  /* Text — font metrics (12) */
+  --mz-text_primary_fontFamily: inherit;
+  --mz-text_primary_fontWeight: inherit;
+  --mz-text_primary_fontSize: inherit;
+  --mz-text_primary_lineHeight: inherit;
+  --mz-text_secondary_fontFamily: inherit;
+  --mz-text_secondary_fontWeight: inherit;
+  --mz-text_secondary_fontSize: inherit;
+  --mz-text_secondary_lineHeight: inherit;
+  --mz-text_secondary_scaleFactor: 1;
+  --mz-text_auxiliary_fontFamily: inherit;
+  --mz-text_auxiliary_fontWeight: inherit;
+  --mz-text_auxiliary_fontSize: inherit;
+  --mz-text_auxiliary_lineHeight: inherit;
+}
+
+/*
+ * Mode: default — Mealize's brand look. Applied at `MealizeShell` root,
+ * which also carries `light` or `dark` as a stacked mode.
+ *
+ * State handling (bite 1.5): interactive states (`:hover`, `:focus-visible`)
+ * reassign token values via mode-scoped selectors using `:where()` to keep
+ * specificity neutral. Components author against the base token only; the
+ * mode declares both the rest state and the interactive-state deltas.
+ *
+ * Discipline: state and theme never introduce new tokens — they only
+ * reassign existing intents (mise-en-mode stays at 33). Theme overrides
+ * layer onto a mode via compound (`[data-mode~="default"][data-mode~="dark"]`)
+ * or descendant (`[data-mode~="dark"] [data-mode~="signup"]`) selectors.
+ */
+[data-mode~="default"] {
+  --mz-action_primary_backgroundColor: #9af2c0;
+  --mz-action_primary_foregroundColor: #000000;
+  --mz-surface_secondary_backgroundColor: #ffffff;
+  --mz-surface_secondary_foregroundColor: #0a0a0a;
+  --mz-surface_secondary_borderColor: rgba(0, 0, 0, 0.08);
+  --mz-surface_auxiliary_backgroundColor: #0a0a0a;
+  --mz-surface_auxiliary_foregroundColor: #fafafa;
+  --mz-surface_auxiliary_borderColor: rgba(255, 255, 255, 0.1);
+  --mz-control_backgroundColor: #ffffff;
+  --mz-control_foregroundColor: #0a0a0a;
+  --mz-control_borderColor: #e4e4e7;
+}
+
+[data-mode~="default"]
+  :where(a, button, [role="button"]):where(:hover, :focus-visible) {
+  --mz-action_primary_backgroundColor: #8ae8b2;
+}
+
+[data-mode~="default"][data-mode~="dark"] {
+  --mz-action_primary_backgroundColor: #000000;
+  --mz-action_primary_foregroundColor: #ffffff;
+  --mz-surface_secondary_backgroundColor: #27272a;
+  --mz-surface_secondary_foregroundColor: #fafafa;
+  --mz-surface_secondary_borderColor: rgba(255, 255, 255, 0.1);
+  --mz-surface_auxiliary_backgroundColor: #fafafa;
+  --mz-surface_auxiliary_foregroundColor: #0a0a0a;
+  --mz-surface_auxiliary_borderColor: rgba(0, 0, 0, 0.1);
+  --mz-control_backgroundColor: #27272a;
+  --mz-control_foregroundColor: #fafafa;
+  --mz-control_borderColor: rgba(255, 255, 255, 0.12);
+}
+
+[data-mode~="default"][data-mode~="dark"]
+  :where(a, button, [role="button"]):where(:hover, :focus-visible) {
+  --mz-action_primary_backgroundColor: #27272a;
+}
+
+/*
+ * Mode: signup — amber primary action (sign-up CTA). Dark-theme values
+ * apply when the ancestor `[data-mode~="dark"]` is also present.
+ */
+[data-mode~="signup"] {
+  --mz-action_primary_backgroundColor: #eab308;
+  --mz-action_primary_foregroundColor: #000000;
+  --mz-action_primary_borderColor: transparent;
+}
+
+[data-mode~="signup"]
+  :where(a, button, [role="button"]):where(:hover, :focus-visible) {
+  --mz-action_primary_backgroundColor: #ca8a04;
+}
+
+[data-mode~="dark"] [data-mode~="signup"] {
+  --mz-action_primary_backgroundColor: #f0c94a;
+  --mz-action_primary_foregroundColor: #000000;
+  --mz-action_primary_borderColor: rgb(240 201 74 / 0.5);
+}
+
+[data-mode~="dark"]
+  [data-mode~="signup"]
+  :where(a, button, [role="button"]):where(:hover, :focus-visible) {
+  --mz-action_primary_backgroundColor: #e0b838;
+}
+
+/*
+ * Mode: signin — teal primary action (log-in CTA).
+ */
+[data-mode~="signin"] {
+  --mz-action_primary_backgroundColor: #0a4d42;
+  --mz-action_primary_foregroundColor: #ffffff;
+  --mz-action_primary_borderColor: transparent;
+}
+
+[data-mode~="signin"]
+  :where(a, button, [role="button"]):where(:hover, :focus-visible) {
+  --mz-action_primary_backgroundColor: #062f29;
+}
+
+[data-mode~="dark"] [data-mode~="signin"] {
+  --mz-action_primary_backgroundColor: #3db89f;
+  --mz-action_primary_foregroundColor: #000000;
+  --mz-action_primary_borderColor: transparent;
+}
+
+[data-mode~="dark"]
+  [data-mode~="signin"]
+  :where(a, button, [role="button"]):where(:hover, :focus-visible) {
+  --mz-action_primary_backgroundColor: #2d8a7a;
+}

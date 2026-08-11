@@ -11,16 +11,7 @@ import {
 } from "@/lib/demo-personas";
 import { cn } from "@/lib/utils";
 
-type MealizeDemoSignInButtonsProps = {
-  className?: string;
-  /** Compact layout under Clerk forms on /sign-in and /sign-up. */
-  compact?: boolean;
-};
-
-export function MealizeDemoSignInButtons({
-  className,
-  compact = false,
-}: MealizeDemoSignInButtonsProps) {
+export function useDemoSignIn() {
   const { signIn, fetchStatus } = useSignIn();
   const { isSignedIn, isLoaded: authLoaded } = useAuth();
   const { signOut } = useClerk();
@@ -83,6 +74,21 @@ export function MealizeDemoSignInButtons({
       setPending(null);
     }
   }
+
+  return { startDemo, pending, error, ready, busy };
+}
+
+type MealizeDemoSignInButtonsProps = {
+  className?: string;
+  /** Compact layout under Clerk forms on /sign-in and /sign-up. */
+  compact?: boolean;
+};
+
+export function MealizeDemoSignInButtons({
+  className,
+  compact = false,
+}: MealizeDemoSignInButtonsProps) {
+  const { startDemo, pending, error, ready, busy } = useDemoSignIn();
 
   return (
     <div className={cn("w-full", className)} id="demo">

@@ -1,21 +1,21 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import Link from "next/link";
 import {
-  ArrowRight,
   Building2,
   Check,
   ChevronLeft,
   ChevronRight,
   HeartHandshake,
   Leaf,
+  Store,
   Truck,
 } from "lucide-react";
 
 import { useMealizeTheme } from "@/stores/mealize-ui-store";
 
 import { MealizeLogoMedium } from "./mealize-logo-medium";
+import { MealizeWelcomePersonaPicker } from "./mealize-welcome-persona-picker";
 import { MealizeWelcomeSplash } from "./mealize-welcome-splash";
 
 const ASSET = "/welcome";
@@ -108,27 +108,6 @@ function WelcomeAtmosphere({ isLight }: { isLight: boolean }) {
   );
 }
 
-/**
- * Welcome-hero auth CTAs. Same mise-en-mode wiring as NavAuthButton
- * (data-mode wrapper + var(--mz-action_primary_*)), just with hero-scale
- * visuals (rounded-full, px-7, glow shadow). Hover and focus reassignment
- * is handled by the mode rules in app/intents.css.
- */
-function PrimaryCta({ href, children }: { href: string; children: ReactNode }) {
-  return (
-    <div data-mode="signup" className="contents">
-      <Link
-        href={href}
-        prefetch={false}
-        className="mealize-cta-arrow inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[var(--mz-action_primary_backgroundColor)] px-7 text-sm font-bold text-[var(--mz-action_primary_foregroundColor)] shadow-[0_1px_0_rgba(255,255,255,0.15)_inset,0_8px_32px_-8px_rgba(234,179,8,0.55)] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
-      >
-        {children}
-        <ArrowRight className="mealize-cta-arrow__icon size-4 opacity-90" aria-hidden />
-      </Link>
-    </div>
-  );
-}
-
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
     <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-[#156b5c] dark:text-[#9af2c0]">
@@ -173,96 +152,55 @@ function FeatureTile({
   );
 }
 
-/** Horizontal divider: businesses → traveling role icons → food banks. */
-function HandoffDivider() {
-  return (
-    <div className="relative mx-auto flex w-full max-w-3xl flex-col items-center gap-4 px-4 py-2 sm:px-6" aria-hidden>
-      <div className="flex w-full items-center gap-3 sm:gap-5">
-        <p className="shrink-0 text-right text-[10px] font-bold uppercase tracking-[0.18em] text-[#156b5c] dark:text-[#9af2c0] sm:text-[11px]">
-          Businesses
-        </p>
-        <div className="mealize-handoff-stage relative h-14 min-w-0 flex-1 sm:h-[4.5rem]">
-          <svg
-            className="absolute inset-0 size-full overflow-visible"
-            viewBox="0 0 320 72"
-            preserveAspectRatio="none"
-          >
-            <path
-              className="mealize-handoff-rail"
-              d="M 18 36 C 110 8, 210 8, 302 36"
-              fill="none"
-              stroke="#28a690"
-              strokeWidth="1.75"
-              strokeLinecap="round"
-              strokeDasharray="5 8"
-              opacity="0.45"
-            />
-          </svg>
-          <span className="mealize-handoff-bead mealize-handoff-bead--1">
-            <Leaf className="size-3.5" strokeWidth={2.25} aria-hidden />
-          </span>
-          <span className="mealize-handoff-bead mealize-handoff-bead--2">
-            <HeartHandshake className="size-3.5" strokeWidth={2.25} aria-hidden />
-          </span>
-          <span className="mealize-handoff-bead mealize-handoff-bead--3">
-            <Truck className="size-3.5" strokeWidth={2.25} aria-hidden />
-          </span>
-        </div>
-        <p className="shrink-0 text-left text-[10px] font-bold uppercase tracking-[0.18em] text-[#156b5c] dark:text-[#9af2c0] sm:text-[11px]">
-          Food banks
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/** Demo partner wordmarks — swap for real logo assets in `/public/welcome/partners` later. */
-const TRUSTED_PARTNERS: { name: string; kind: "grocer" | "foodbank"; mark: string }[] = [
-  { name: "Harbor Market", kind: "grocer", mark: "Harbor" },
-  { name: "River City Food Bank", kind: "foodbank", mark: "River City" },
-  { name: "GreenShelf Grocers", kind: "grocer", mark: "GreenShelf" },
-  { name: "Northside Pantry", kind: "foodbank", mark: "Northside" },
-  { name: "Metro Fresh Co-op", kind: "grocer", mark: "Metro Fresh" },
-  { name: "Sunrise Relief Kitchen", kind: "foodbank", mark: "Sunrise" },
-  { name: "Oak & Vine Market", kind: "grocer", mark: "Oak & Vine" },
-  { name: "County Share Table", kind: "foodbank", mark: "Share Table" },
+/** Partner logos in `/public/welcome/partners`. */
+const TRUSTED_PARTNERS: {
+  name: string;
+  file: string;
+  /** Wider wordmarks vs square marks. */
+  wide?: boolean;
+  /** Logo art that already sits on a dark field. */
+  onDark?: boolean;
+}[] = [
+  { name: "Harbor Market", file: "harbor-lighthouse.png" },
+  { name: "River City Food Bank", file: "river-city.png" },
+  { name: "the Green Shelf", file: "green-shelf.png", wide: true },
+  { name: "Northside Tree and Garden Service", file: "northside.png", wide: true },
+  { name: "Metro Fresh Co-op", file: "metro-bowl.png" },
+  { name: "Sunrise Relief Kitchen", file: "sunrise.png", wide: true },
+  { name: "Oak & Vine Market", file: "oak-and-vine.png" },
 ];
 
-function PartnerWordmark({
+function PartnerLogo({
   name,
-  kind,
-  mark,
+  file,
+  wide,
+  onDark,
 }: {
   name: string;
-  kind: "grocer" | "foodbank";
-  mark: string;
+  file: string;
+  wide?: boolean;
+  onDark?: boolean;
 }) {
   return (
     <div
-      className="flex h-16 shrink-0 items-center gap-3 px-8 sm:h-20 sm:px-10"
+      className={`flex h-20 shrink-0 items-center justify-center px-6 sm:h-24 sm:px-8 ${
+        wide ? "w-[11.5rem] sm:w-[14rem]" : "w-[7.5rem] sm:w-36"
+      }`}
       title={name}
     >
       <span
-        className={`flex size-10 shrink-0 items-center justify-center rounded-xl ring-1 sm:size-11 ${
-          kind === "grocer"
-            ? "bg-[#28a690]/10 text-[#156b5c] ring-[#28a690]/20 dark:bg-[#9af2c0]/10 dark:text-[#9af2c0] dark:ring-[#9af2c0]/20"
-            : "bg-amber-500/10 text-amber-900 ring-amber-500/25 dark:bg-amber-400/10 dark:text-amber-100 dark:ring-amber-300/20"
+        className={`flex h-full w-full items-center justify-center overflow-hidden rounded-xl px-3 py-2 ${
+          onDark ? "bg-zinc-950" : "bg-white ring-1 ring-black/5 dark:ring-white/10"
         }`}
-        aria-hidden
       >
-        {kind === "grocer" ? (
-          <Leaf className="size-5" strokeWidth={1.75} />
-        ) : (
-          <Building2 className="size-5" strokeWidth={1.75} />
-        )}
-      </span>
-      <span
-        className={`whitespace-nowrap text-2xl font-black tracking-tight text-zinc-400 sm:text-3xl dark:text-zinc-500 ${
-          kind === "foodbank" ? "font-serif italic tracking-normal" : ""
-        }`}
-        style={kind === "grocer" ? { fontFamily: "motiva-sans, sans-serif" } : undefined}
-      >
-        {mark}
+        {/* eslint-disable-next-line @next/next/no-img-element -- static partner marks from `/public/welcome/partners` */}
+        <img
+          src={`${ASSET}/partners/${file}`}
+          alt={name}
+          className={`max-h-full max-w-full object-contain ${
+            !onDark ? "dark:brightness-100" : ""
+          }`}
+        />
       </span>
     </div>
   );
@@ -272,20 +210,98 @@ function TrustedByMarquee() {
   const loop = [...TRUSTED_PARTNERS, ...TRUSTED_PARTNERS];
 
   return (
-    <section className="relative w-full overflow-hidden py-10 sm:py-12" aria-label="Example partner types">
+    <section className="relative w-full overflow-hidden py-10 sm:py-12" aria-label="Partner logos">
       <p className="mb-6 text-center font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-[#156b5c] dark:text-[#9af2c0]">
         Trusted by grocers & food banks
       </p>
       <div className="mealize-marquee relative">
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-white to-transparent dark:from-zinc-950 sm:w-24" />
         <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-white to-transparent dark:from-zinc-950 sm:w-24" />
-        <div className="mealize-marquee__track flex w-max">
+        <div className="mealize-marquee__track flex w-max items-center">
           {loop.map((partner, i) => (
-            <PartnerWordmark key={`${partner.name}-${i}`} {...partner} />
+            <PartnerLogo key={`${partner.name}-${i}`} {...partner} />
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+/** Simple row: Businesses → Mealize → Food banks, with leaf/truck couriers on the connectors. */
+function ApproachFlowDiagram({ isLight }: { isLight: boolean }) {
+  return (
+    <div className="mealize-approach-flow mx-auto w-full max-w-2xl px-2 sm:px-4" aria-hidden>
+      <div className="flex items-center justify-center gap-1 sm:gap-3">
+        <div className="relative flex w-[4.75rem] shrink-0 justify-center sm:w-28">
+          <div
+            className={`flex size-14 items-center justify-center rounded-2xl ring-1 sm:size-16 ${
+              isLight
+                ? "bg-linear-to-br from-[#fde047]/45 to-[#eab308]/30 text-[#854d0e] ring-[#eab308]/35 shadow-sm"
+                : "bg-linear-to-br from-[#f0c94a]/20 to-[#eab308]/10 text-[#f0c94a] ring-[#f0c94a]/30"
+            }`}
+          >
+            <Store className="size-6 sm:size-7" strokeWidth={1.75} />
+          </div>
+          <p className="absolute top-[calc(100%+0.5rem)] w-full text-center text-[10px] font-bold uppercase tracking-[0.14em] text-[#a16207] dark:text-[#f0c94a] sm:text-[11px]">
+            Businesses
+          </p>
+        </div>
+
+        <div className="mealize-approach-rail relative mx-1 h-10 min-w-0 flex-1 sm:mx-2">
+          <div
+            className={`absolute inset-x-0 top-1/2 h-px -translate-y-1/2 ${
+              isLight ? "bg-[#28a690]/40" : "bg-[#9af2c0]/35"
+            }`}
+          />
+          <span className="mealize-approach-courier mealize-approach-courier--leaf">
+            <Leaf className="size-3.5" strokeWidth={2.25} />
+          </span>
+        </div>
+
+        <div className="relative flex w-[5.5rem] shrink-0 justify-center sm:w-32">
+          <div
+            className={`mealize-approach-hub__mark flex size-20 items-center justify-center rounded-full sm:size-24 ${
+              isLight
+                ? "bg-white shadow-[0_12px_40px_-16px_rgba(40,166,144,0.55)] ring-1 ring-[#28a690]/20"
+                : "bg-zinc-900 shadow-[0_12px_40px_-16px_rgba(0,0,0,0.65)] ring-1 ring-[#9af2c0]/25"
+            }`}
+          >
+            <MealizeLogoMedium className="size-[70%] overflow-visible" />
+          </div>
+          <p className="absolute top-[calc(100%+0.5rem)] w-full text-center text-[10px] font-bold uppercase tracking-[0.14em] text-[#156b5c] dark:text-[#9af2c0] sm:text-[11px]">
+            Mealize
+          </p>
+        </div>
+
+        <div className="mealize-approach-rail relative mx-1 h-10 min-w-0 flex-1 sm:mx-2">
+          <div
+            className={`absolute inset-x-0 top-1/2 h-px -translate-y-1/2 ${
+              isLight ? "bg-[#28a690]/40" : "bg-[#9af2c0]/35"
+            }`}
+          />
+          <span className="mealize-approach-courier mealize-approach-courier--truck">
+            <Truck className="size-3.5" strokeWidth={2.25} />
+          </span>
+        </div>
+
+        <div className="relative flex w-[4.75rem] shrink-0 justify-center sm:w-28">
+          <div
+            className={`flex size-14 items-center justify-center rounded-2xl ring-1 sm:size-16 ${
+              isLight
+                ? "bg-linear-to-br from-[#76d97e]/30 to-[#28a690]/20 text-[#156b5c] ring-[#28a690]/25 shadow-sm"
+                : "bg-linear-to-br from-[#9af2c0]/15 to-[#28a690]/10 text-[#9af2c0] ring-[#9af2c0]/25"
+            }`}
+          >
+            <Building2 className="size-6 sm:size-7" strokeWidth={1.75} />
+          </div>
+          <p className="absolute top-[calc(100%+0.5rem)] w-full text-center text-[10px] font-bold uppercase tracking-[0.14em] text-[#156b5c] dark:text-[#9af2c0] sm:text-[11px]">
+            Food banks
+          </p>
+        </div>
+      </div>
+      {/* Reserve space for absolutely positioned labels */}
+      <div className="h-8" />
+    </div>
   );
 }
 
@@ -488,7 +504,7 @@ export function MealizeWelcome() {
           <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[min(100%,56rem)] -translate-x-1/2 bg-linear-to-r from-transparent via-[#28a690]/30 to-transparent dark:via-[#28a690]/40" />
 
           <div className="relative w-full overflow-x-clip">
-            {/* Edge-hugging art (large screens) */}
+            {/* Edge-hugging art (lg+) */}
             <div className="pointer-events-none absolute inset-y-0 left-0 z-0 hidden w-[min(34vw,28rem)] translate-x-4 items-center lg:flex">
               {/* eslint-disable-next-line @next/next/no-img-element -- marketing asset from /public/welcome */}
               <img
@@ -514,7 +530,11 @@ export function MealizeWelcome() {
 
             <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center px-4 text-center sm:px-6">
               <h1 className="text-balance overflow-visible text-4xl font-bold tracking-tight text-black sm:text-5xl sm:leading-[1.08] md:text-6xl dark:text-zinc-50">
-                Turn surplus food into{" "}
+                Turn{" "}
+                <span className="bg-linear-to-r from-[#ca8a04] via-[#eab308] to-[#fde047] bg-clip-text text-transparent dark:from-[#e0b838] dark:via-[#f0c94a] dark:to-[#fde68a]">
+                  surplus food
+                </span>{" "}
+                into{" "}
                 <span className="bg-linear-to-r from-[#156b5c] via-[#28a690] to-[#76d97e] bg-clip-text text-transparent dark:from-[#c6fde8] dark:via-[#9af2c0] dark:to-[#28a690]">
                   meals that matter
                 </span>
@@ -524,18 +544,15 @@ export function MealizeWelcome() {
                 Mealize connects restaurants, grocers, and other food businesses with food banks—so edible surplus becomes
                 community meals instead of landfill.
               </p>
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-                <PrimaryCta href="/sign-in#demo">Try the demo</PrimaryCta>
-              </div>
             </div>
 
-            {/* Edge-hugging art (small screens) */}
+            {/* Stacked under copy below lg (includes md) */}
             <div className="mt-10 grid w-full grid-cols-2 lg:hidden" aria-hidden>
               {/* eslint-disable-next-line @next/next/no-img-element -- marketing asset from /public/welcome */}
               <img
                 src={`${ASSET}/hero-surplus-food.png`}
                 alt="Illustrated surplus groceries and fresh produce"
-                className="mealize-hero-float mealize-hero-float--left h-auto w-[85%] max-h-48 justify-self-start object-contain object-left sm:max-h-60"
+                className="mealize-hero-float mealize-hero-float--left h-auto w-[85%] max-h-48 justify-self-start object-contain object-left sm:max-h-60 md:max-h-72"
                 width={1024}
                 height={677}
               />
@@ -543,7 +560,7 @@ export function MealizeWelcome() {
               <img
                 src={`${ASSET}/hero-food-donation.png`}
                 alt="Illustrated food donation box filled with groceries"
-                className="mealize-hero-float mealize-hero-float--right h-auto w-[85%] max-h-48 justify-self-end object-contain object-right sm:max-h-60"
+                className="mealize-hero-float mealize-hero-float--right h-auto w-[85%] max-h-48 justify-self-end object-contain object-right sm:max-h-60 md:max-h-72"
                 width={1024}
                 height={635}
               />
@@ -598,10 +615,6 @@ export function MealizeWelcome() {
           </div>
           <WelcomeImg file="volunteer.jpg" alt="Volunteers coordinating food pickup" maxHeight={420} />
         </section>
-
-        <div className="py-8 sm:py-10">
-          <HandoffDivider />
-        </div>
 
         {/* Problem + stats feel */}
         <section
@@ -663,7 +676,7 @@ export function MealizeWelcome() {
         {/* Solution */}
         <section
           id="approach"
-          className="mx-auto flex w-full max-w-3xl scroll-mt-20 flex-col items-center gap-8 px-4 py-20 sm:px-6"
+          className="mx-auto flex w-full max-w-3xl scroll-mt-20 flex-col items-center gap-10 px-4 py-20 sm:px-6"
         >
           <div className="w-full text-center">
             <SectionLabel>Approach</SectionLabel>
@@ -675,12 +688,7 @@ export function MealizeWelcome() {
               handoff you can repeat week after week.
             </p>
           </div>
-          <WelcomeImg
-            file={isLight ? "lightdiagram.png" : "darkdiagram.png"}
-            alt="Diagram of Mealize connecting businesses and food banks"
-            maxHeight={560}
-            className="w-full max-w-2xl"
-          />
+          <ApproachFlowDiagram isLight={isLight} />
         </section>
 
         {/* How it works */}
@@ -782,7 +790,7 @@ export function MealizeWelcome() {
         {/* Get started */}
         <section
           id="get-started"
-          className="mx-auto flex w-full max-w-3xl scroll-mt-20 flex-col items-center gap-8 px-4 pb-20 sm:px-6"
+          className="mx-auto flex w-full max-w-5xl scroll-mt-20 flex-col items-center gap-8 px-4 pb-20 sm:px-6"
         >
           <div className="w-full text-center">
             <SectionLabel>Onboarding</SectionLabel>
@@ -790,13 +798,12 @@ export function MealizeWelcome() {
               Ready to try Mealize?
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-pretty text-base font-medium text-black dark:text-zinc-300">
-              Use <span className="font-semibold text-black dark:text-zinc-200">Sign up</span> or{" "}
-              <span className="font-semibold text-black dark:text-zinc-200">Log in</span> in the top navigation, or
-              open <span className="font-semibold text-black dark:text-zinc-200">Try the demo</span> and pick a
-              food bank manager, volunteer, or business manager — one click, no account setup.
+              Pick a role and jump straight into a seeded walkthrough—no account setup. You can also use{" "}
+              <span className="font-semibold text-black dark:text-zinc-200">Sign up</span> or{" "}
+              <span className="font-semibold text-black dark:text-zinc-200">Log in</span> in the top navigation.
             </p>
           </div>
-          <PrimaryCta href="/sign-in#demo">Try the demo</PrimaryCta>
+          <MealizeWelcomePersonaPicker isLight={isLight} />
         </section>
 
       </div>

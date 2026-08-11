@@ -351,7 +351,7 @@ export function MealizeNavbarWelcomeMenus({ mobileDrawerFooter }: { mobileDrawer
   const resourcesCore: MenuItem[] = [
     { type: "link", label: "Product pillars", href: "/#product", description: "Hero + capabilities" },
     { type: "link", label: "Product tour", href: "/#tour", description: "Screens & flow" },
-    { type: "link", label: "Get started", href: "/#get-started", description: "Sign up & demos" },
+    { type: "link", label: "Get started", href: "/sign-in#demo", description: "One-click recruiter demos" },
   ];
 
   const sheetSections = [

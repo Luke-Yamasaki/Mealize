@@ -8,6 +8,7 @@ import { trpc } from "@/lib/trpc/react";
 import { useMealizeUiStore } from "@/stores/mealize-ui-store";
 
 import { MealizeFooter } from "./mealize-footer";
+import { MealizeDemoSessionBanner } from "./mealize-demo-session-banner";
 import { MealizeLocationStrip } from "./mealize-location-strip";
 import { MealizeModalRoot } from "./mealize-modal-root";
 import { MealizeNavbar } from "./mealize-navbar";
@@ -48,6 +49,7 @@ export function MealizeChrome({ children }: { children: ReactNode }) {
         header={
           <>
             <MealizeNavbar />
+            <MealizeDemoSessionBanner />
             <MealizeLocationStrip />
           </>
         }

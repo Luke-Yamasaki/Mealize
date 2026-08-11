@@ -6,6 +6,8 @@ PoC that connects food businesses and nonprofits to reduce waste. Built with Nex
 
 Clerk handles sign-in and sign-up ([`app/sign-in`](app/sign-in), [`app/sign-up`](app/sign-up)). Domain users live in Postgres with `User.clerkId` and are created or updated via [`user.ensureProfile`](server/routers/userRouter.ts) (onboarding at `/onboarding`) and optionally the Clerk webhook at [`app/api/webhooks/clerk/route.ts`](app/api/webhooks/clerk/route.ts).
 
+**Recruiter demo:** On `/sign-in` and `/sign-up`, use **Try as nonprofit manager / volunteer / business manager**. That hits [`POST /api/demo/sign-in`](app/api/demo/sign-in/route.ts), which ensures Clerk users + DB profiles and returns a short-lived sign-in token (no password). Requires `CLERK_SECRET_KEY` and a seeded database.
+
 ### Routes
 
 | Path | Handler |
@@ -35,13 +37,20 @@ Clerk handles sign-in and sign-up ([`app/sign-in`](app/sign-in), [`app/sign-up`]
 
    (`db:setup` runs `prisma migrate deploy` then `db:seed`. Seeds require tables created by migrations.)
 
-   **`npm run db:seed`** rebuilds demo data from the historical Python seed files still readable via **`git show main:`** (`app/seeds/organizations.py`, `app/seeds/posts.py`). You need **`main`** in your local clone; the script clears existing rows in those tables first.
+   **`npm run db:seed`** rebuilds demo data from vendored Python seed sources in [`prisma/seed-data/`](prisma/seed-data/) (parsed by [`prisma/seedSourceParser.ts`](prisma/seedSourceParser.ts)). The script clears existing domain rows first — do not run it against a live production database.
 
 3. Open [http://localhost:3000](http://localhost:3000).
 
 Optional: configure a Clerk webhook to `https://<your-host>/api/webhooks/clerk` and set `CLERK_WEBHOOK_SECRET` in `.env.local`.
 
 Optional: set `DISABLE_LEGACY_MEDIA_PLACEHOLDER=true` in `.env.local` when your own S3 or CDN URLs are stored and you no longer want Picsum fallbacks for old `mealizeaa` demo URLs.
+
+## Hosting (Vercel)
+
+1. Create a Neon database, set **pooled** `DATABASE_URL` on Vercel, and run `npm run db:migrate` (and `npm run db:seed` once) against that database from your machine — not on every deploy.
+2. Set `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY`. Add the deployment URL to Clerk allowed origins / redirect URLs (`/sign-in`, `/sign-up`, `/`, `/onboarding`).
+3. Optional: Vercel Deployment Protection or Cloudflare Access if you want the demo behind a password.
+4. Recruiters can use the one-click demo personas without creating accounts.
 
 ## Docker (optional)
 

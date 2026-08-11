@@ -1,5 +1,7 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
+import { isDemoEmail } from "@/lib/demo-personas";
 import { mapUserWithDemoMedia } from "@/server/lib/mapUserMedia";
 import { router, protectedProcedure } from "@/server/trpc";
 
@@ -42,6 +44,23 @@ export const userRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const existing = await ctx.prisma.user.findUnique({
+        where: { clerkId: ctx.userId },
+      });
+      if (existing && isDemoEmail(existing.email)) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message:
+            "Demo accounts are read-only for profile settings. Switch personas from Sign in → Recruiter demo.",
+        });
+      }
+      if (isDemoEmail(input.email) && !existing) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "That email is reserved for Mealize demo personas.",
+        });
+      }
+
       const saved = await ctx.prisma.user.upsert({
         where: { clerkId: ctx.userId },
         create: {

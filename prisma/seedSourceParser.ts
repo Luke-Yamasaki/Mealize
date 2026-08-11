@@ -1,7 +1,7 @@
 /**
- * Parses historical Python seed files from git (`main:app/seeds/*.py`) into values
+ * Parses vendored Python seed files (`prisma/seed-data/*.py`) into values
  * suitable for Prisma. Matches the original tuple-style `Organization(...)` /
- * `Post(...)` blocks committed on branch `main`.
+ * `Post(...)` blocks from the pre-migration seed sources.
  */
 
 export type SeedOrganizationDraft = {

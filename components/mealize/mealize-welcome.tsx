@@ -233,8 +233,9 @@ export function MealizeWelcome() {
               community meals instead of landfill.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <PrimaryCta href="/sign-up">Create an account</PrimaryCta>
+              <PrimaryCta href="/sign-in#demo">Try the demo</PrimaryCta>
               <SecondaryCta href="/sign-in">Log in</SecondaryCta>
+              <SecondaryCta href="/sign-up">Create an account</SecondaryCta>
             </div>
           </div>
 
@@ -441,7 +442,8 @@ export function MealizeWelcome() {
             <p className="mx-auto mt-4 max-w-xl text-pretty text-base font-medium text-black dark:text-zinc-300">
               Use <span className="font-semibold text-black dark:text-zinc-200">Sign up</span> or{" "}
               <span className="font-semibold text-black dark:text-zinc-200">Log in</span> in the top navigation, or
-              tap the demo shortcuts on the authentication forms to explore without setting up a full profile first.
+              open <span className="font-semibold text-black dark:text-zinc-200">Try the demo</span> and pick a
+              nonprofit manager, volunteer, or business manager — one click, no account setup.
             </p>
           </div>
           <div className="grid w-full gap-4 sm:grid-cols-2">

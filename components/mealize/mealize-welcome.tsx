@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   ArrowRight,
   Building2,
+  Check,
   ChevronLeft,
   ChevronRight,
   HeartHandshake,
@@ -119,10 +120,10 @@ function PrimaryCta({ href, children }: { href: string; children: ReactNode }) {
       <Link
         href={href}
         prefetch={false}
-        className="inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[var(--mz-action_primary_backgroundColor)] px-7 text-sm font-bold text-[var(--mz-action_primary_foregroundColor)] shadow-[0_1px_0_rgba(255,255,255,0.15)_inset,0_8px_32px_-8px_rgba(234,179,8,0.55)] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
+        className="mealize-cta-arrow inline-flex h-11 items-center justify-center gap-2 rounded-full bg-[var(--mz-action_primary_backgroundColor)] px-7 text-sm font-bold text-[var(--mz-action_primary_foregroundColor)] shadow-[0_1px_0_rgba(255,255,255,0.15)_inset,0_8px_32px_-8px_rgba(234,179,8,0.55)] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
       >
         {children}
-        <ArrowRight className="size-4 opacity-90" aria-hidden />
+        <ArrowRight className="mealize-cta-arrow__icon size-4 opacity-90" aria-hidden />
       </Link>
     </div>
   );
@@ -142,19 +143,24 @@ function FeatureTile({
   title,
   body,
   isLight,
+  motionDelay = "0s",
 }: {
   icon: typeof Leaf;
   label: string;
   title: string;
   body: string;
   isLight: boolean;
+  motionDelay?: string;
 }) {
   return (
     <div
       className={`group flex flex-col gap-3 rounded-2xl border p-6 transition hover:border-[#28a690]/35 ${isLight ? "border-neutral-200 bg-white shadow-sm hover:shadow-md" : "border-white/10 bg-white/4 hover:bg-white/6"}`}
     >
       <div className="flex items-center gap-3">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-[#76d97e]/25 to-[#28a690]/20 text-[#1a6b5c] ring-1 ring-[#28a690]/15 dark:text-[#9af2c0] dark:ring-white/10">
+        <div
+          className="mealize-feature-icon flex size-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-[#76d97e]/25 to-[#28a690]/20 text-[#1a6b5c] ring-1 ring-[#28a690]/15 transition duration-300 group-hover:scale-110 group-hover:rotate-[-6deg] dark:text-[#9af2c0] dark:ring-white/10"
+          style={{ animationDelay: motionDelay }}
+        >
           <Icon className="size-5" strokeWidth={1.75} aria-hidden />
         </div>
         <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#156b5c] dark:text-[#9af2c0]">
@@ -163,6 +169,142 @@ function FeatureTile({
       </div>
       <h3 className="text-lg font-bold tracking-tight text-black dark:text-zinc-50">{title}</h3>
       <p className="text-sm font-medium leading-relaxed text-black dark:text-zinc-300">{body}</p>
+    </div>
+  );
+}
+
+/** Horizontal divider: businesses → traveling role icons → food banks. */
+function HandoffDivider() {
+  return (
+    <div className="relative mx-auto flex w-full max-w-3xl flex-col items-center gap-4 px-4 py-2 sm:px-6" aria-hidden>
+      <div className="flex w-full items-center gap-3 sm:gap-5">
+        <p className="shrink-0 text-right text-[10px] font-bold uppercase tracking-[0.18em] text-[#156b5c] dark:text-[#9af2c0] sm:text-[11px]">
+          Businesses
+        </p>
+        <div className="mealize-handoff-stage relative h-14 min-w-0 flex-1 sm:h-[4.5rem]">
+          <svg
+            className="absolute inset-0 size-full overflow-visible"
+            viewBox="0 0 320 72"
+            preserveAspectRatio="none"
+          >
+            <path
+              className="mealize-handoff-rail"
+              d="M 18 36 C 110 8, 210 8, 302 36"
+              fill="none"
+              stroke="#28a690"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeDasharray="5 8"
+              opacity="0.45"
+            />
+          </svg>
+          <span className="mealize-handoff-bead mealize-handoff-bead--1">
+            <Leaf className="size-3.5" strokeWidth={2.25} aria-hidden />
+          </span>
+          <span className="mealize-handoff-bead mealize-handoff-bead--2">
+            <HeartHandshake className="size-3.5" strokeWidth={2.25} aria-hidden />
+          </span>
+          <span className="mealize-handoff-bead mealize-handoff-bead--3">
+            <Truck className="size-3.5" strokeWidth={2.25} aria-hidden />
+          </span>
+        </div>
+        <p className="shrink-0 text-left text-[10px] font-bold uppercase tracking-[0.18em] text-[#156b5c] dark:text-[#9af2c0] sm:text-[11px]">
+          Food banks
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/** Demo partner wordmarks — swap for real logo assets in `/public/welcome/partners` later. */
+const TRUSTED_PARTNERS: { name: string; kind: "grocer" | "foodbank"; mark: string }[] = [
+  { name: "Harbor Market", kind: "grocer", mark: "Harbor" },
+  { name: "River City Food Bank", kind: "foodbank", mark: "River City" },
+  { name: "GreenShelf Grocers", kind: "grocer", mark: "GreenShelf" },
+  { name: "Northside Pantry", kind: "foodbank", mark: "Northside" },
+  { name: "Metro Fresh Co-op", kind: "grocer", mark: "Metro Fresh" },
+  { name: "Sunrise Relief Kitchen", kind: "foodbank", mark: "Sunrise" },
+  { name: "Oak & Vine Market", kind: "grocer", mark: "Oak & Vine" },
+  { name: "County Share Table", kind: "foodbank", mark: "Share Table" },
+];
+
+function PartnerWordmark({
+  name,
+  kind,
+  mark,
+}: {
+  name: string;
+  kind: "grocer" | "foodbank";
+  mark: string;
+}) {
+  return (
+    <div
+      className="flex h-16 shrink-0 items-center gap-3 px-8 sm:h-20 sm:px-10"
+      title={name}
+    >
+      <span
+        className={`flex size-10 shrink-0 items-center justify-center rounded-xl ring-1 sm:size-11 ${
+          kind === "grocer"
+            ? "bg-[#28a690]/10 text-[#156b5c] ring-[#28a690]/20 dark:bg-[#9af2c0]/10 dark:text-[#9af2c0] dark:ring-[#9af2c0]/20"
+            : "bg-amber-500/10 text-amber-900 ring-amber-500/25 dark:bg-amber-400/10 dark:text-amber-100 dark:ring-amber-300/20"
+        }`}
+        aria-hidden
+      >
+        {kind === "grocer" ? (
+          <Leaf className="size-5" strokeWidth={1.75} />
+        ) : (
+          <Building2 className="size-5" strokeWidth={1.75} />
+        )}
+      </span>
+      <span
+        className={`whitespace-nowrap text-2xl font-black tracking-tight text-zinc-400 sm:text-3xl dark:text-zinc-500 ${
+          kind === "foodbank" ? "font-serif italic tracking-normal" : ""
+        }`}
+        style={kind === "grocer" ? { fontFamily: "motiva-sans, sans-serif" } : undefined}
+      >
+        {mark}
+      </span>
+    </div>
+  );
+}
+
+function TrustedByMarquee() {
+  const loop = [...TRUSTED_PARTNERS, ...TRUSTED_PARTNERS];
+
+  return (
+    <section className="relative w-full overflow-hidden py-10 sm:py-12" aria-label="Example partner types">
+      <p className="mb-6 text-center font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-[#156b5c] dark:text-[#9af2c0]">
+        Trusted by grocers & food banks
+      </p>
+      <div className="mealize-marquee relative">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-white to-transparent dark:from-zinc-950 sm:w-24" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-white to-transparent dark:from-zinc-950 sm:w-24" />
+        <div className="mealize-marquee__track flex w-max">
+          {loop.map((partner, i) => (
+            <PartnerWordmark key={`${partner.name}-${i}`} {...partner} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** Closing “receipt” beat: truck runs the last mile, then a check seals the handoff. */
+function DeliveryHandoffBeat() {
+  return (
+    <div className="flex flex-col items-center gap-5 rounded-2xl border border-[#28a690]/22 bg-linear-to-b from-[#28a690]/10 via-[#28a690]/4 to-transparent px-6 py-9 dark:border-[#28a690]/20 dark:from-[#28a690]/14">
+      <div className="mealize-delivery-beat relative h-14 w-full max-w-[16rem]" aria-hidden>
+        <div className="mealize-delivery-road absolute inset-x-2 bottom-3 h-px bg-linear-to-r from-transparent via-[#28a690]/45 to-transparent" />
+        <div className="mealize-delivery-truck absolute bottom-4 left-0 flex size-11 items-center justify-center rounded-full bg-[#28a690]/14 text-[#28a690] ring-1 ring-[#28a690]/25 dark:bg-[#9af2c0]/12 dark:text-[#9af2c0] dark:ring-[#9af2c0]/25">
+          <Truck className="size-5" strokeWidth={1.75} />
+        </div>
+        <div className="mealize-delivery-check absolute bottom-4 right-0 flex size-11 items-center justify-center rounded-full bg-[#76d97e]/25 text-[#156b5c] ring-1 ring-[#28a690]/25 dark:bg-[#9af2c0]/15 dark:text-[#9af2c0] dark:ring-[#9af2c0]/30">
+          <Check className="size-5" strokeWidth={2.5} />
+        </div>
+      </div>
+      <p className="text-center text-lg font-bold tracking-tight text-black dark:text-zinc-50">
+        That handoff completes a Mealize delivery.
+      </p>
     </div>
   );
 }
@@ -269,23 +411,51 @@ function ProductTourCarousel({
             style={{ width: `${progress}%` }}
           />
         </div>
-        <div className="mt-3.5 flex justify-center gap-2">
-          {steps.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setIndex(i)}
-              className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#28a690] ${
-                i === index
-                  ? "w-7 bg-[#28a690]"
-                  : isLight
-                    ? "w-2 bg-zinc-300/90 hover:bg-[#28a690]/55"
-                    : "w-2 bg-zinc-600 hover:bg-[#9af2c0]/55"
-              }`}
-              aria-label={`Go to step ${i + 1}`}
-              aria-current={i === index ? "step" : undefined}
-            />
-          ))}
+        <div className="mt-3.5 flex items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => setIndex((i) => Math.max(0, i - 1))}
+            disabled={index === 0}
+            className={`inline-flex size-8 items-center justify-center rounded-full border transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#28a690] disabled:cursor-not-allowed disabled:opacity-35 ${
+              isLight
+                ? "border-[#28a690]/25 bg-white text-[#156b5c] hover:border-[#28a690] hover:bg-[#28a690]/8"
+                : "border-white/15 bg-zinc-950 text-[#9af2c0] hover:border-[#9af2c0]/40 hover:bg-[#9af2c0]/10"
+            }`}
+            aria-label="Previous step"
+          >
+            <ChevronLeft className="size-4" strokeWidth={2.25} aria-hidden />
+          </button>
+          <div className="flex items-center gap-2">
+            {steps.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setIndex(i)}
+                className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#28a690] ${
+                  i === index
+                    ? "w-7 bg-[#28a690]"
+                    : isLight
+                      ? "w-2 bg-zinc-300/90 hover:bg-[#28a690]/55"
+                      : "w-2 bg-zinc-600 hover:bg-[#9af2c0]/55"
+                }`}
+                aria-label={`Go to step ${i + 1}`}
+                aria-current={i === index ? "step" : undefined}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            onClick={() => setIndex((i) => Math.min(total - 1, i + 1))}
+            disabled={index === total - 1}
+            className={`inline-flex size-8 items-center justify-center rounded-full border transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#28a690] disabled:cursor-not-allowed disabled:opacity-35 ${
+              isLight
+                ? "border-[#28a690]/25 bg-white text-[#156b5c] hover:border-[#28a690] hover:bg-[#28a690]/8"
+                : "border-white/15 bg-zinc-950 text-[#9af2c0] hover:border-[#9af2c0]/40 hover:bg-[#9af2c0]/10"
+            }`}
+            aria-label="Next step"
+          >
+            <ChevronRight className="size-4" strokeWidth={2.25} aria-hidden />
+          </button>
         </div>
       </div>
 
@@ -293,52 +463,6 @@ function ProductTourCarousel({
         <TourStep key={index} title={step.title}>
           {step.content}
         </TourStep>
-      </div>
-
-      <div
-        className={`relative flex items-center justify-between gap-3 border-t px-4 py-4 sm:justify-center sm:gap-6 sm:px-8 ${
-          isLight
-            ? "border-[#28a690]/12 bg-linear-to-b from-[#f4faf8] to-[#eef7f4]"
-            : "border-white/8 bg-linear-to-b from-zinc-900/80 to-zinc-950/90"
-        }`}
-      >
-        <button
-          type="button"
-          onClick={() => setIndex((i) => Math.max(0, i - 1))}
-          disabled={index === 0}
-          className="inline-flex h-11 min-w-[6.5rem] items-center justify-center gap-1.5 rounded-full border border-[#28a690]/28 bg-white px-4 text-sm font-bold text-[#0f3d36] shadow-[0_1px_0_rgba(255,255,255,0.8)_inset,0_8px_20px_-12px_rgba(15,61,54,0.35)] transition hover:border-[#28a690] hover:bg-[#28a690]/6 disabled:cursor-not-allowed disabled:opacity-35 dark:border-[#28a690]/35 dark:bg-zinc-950 dark:text-[#c6fde8] dark:shadow-none dark:hover:bg-[#28a690]/15"
-          aria-label="Previous step"
-        >
-          <ChevronLeft className="size-4" strokeWidth={2.25} aria-hidden />
-          Back
-        </button>
-        <div className="flex items-center gap-2.5 sm:gap-3.5">
-          <span
-            className="select-none font-mono text-lg font-light leading-none tracking-[0.2em] text-[#28a690]/45 dark:text-[#9af2c0]/35"
-            aria-hidden
-          >
-            ···
-          </span>
-          <p className="min-w-[4.75rem] text-center font-mono text-sm font-bold tabular-nums text-[#156b5c] dark:text-[#9af2c0]">
-            {index + 1} of {total}
-          </p>
-          <span
-            className="select-none font-mono text-lg font-light leading-none tracking-[0.2em] text-[#28a690]/45 dark:text-[#9af2c0]/35"
-            aria-hidden
-          >
-            ···
-          </span>
-        </div>
-        <button
-          type="button"
-          onClick={() => setIndex((i) => Math.min(total - 1, i + 1))}
-          disabled={index === total - 1}
-          className="inline-flex h-11 min-w-[6.5rem] items-center justify-center gap-1.5 rounded-full bg-linear-to-r from-[#156b5c] to-[#28a690] px-4 text-sm font-bold text-white shadow-[0_12px_30px_-12px_rgba(40,166,144,0.75)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-35 disabled:shadow-none"
-          aria-label="Next step"
-        >
-          Forward
-          <ChevronRight className="size-4" strokeWidth={2.25} aria-hidden />
-        </button>
       </div>
     </div>
   );
@@ -371,7 +495,7 @@ export function MealizeWelcome() {
                 src={`${ASSET}/hero-surplus-food.png`}
                 alt=""
                 aria-hidden
-                className="h-auto w-[85%] max-h-[min(59.5vh,27rem)] object-contain object-left"
+                className="mealize-hero-float mealize-hero-float--left h-auto w-[85%] max-h-[min(59.5vh,27rem)] object-contain object-left"
                 width={1024}
                 height={677}
               />
@@ -382,7 +506,7 @@ export function MealizeWelcome() {
                 src={`${ASSET}/hero-food-donation.png`}
                 alt=""
                 aria-hidden
-                className="h-auto w-[85%] max-h-[min(59.5vh,27rem)] object-contain object-right"
+                className="mealize-hero-float mealize-hero-float--right h-auto w-[85%] max-h-[min(59.5vh,27rem)] object-contain object-right"
                 width={1024}
                 height={635}
               />
@@ -411,7 +535,7 @@ export function MealizeWelcome() {
               <img
                 src={`${ASSET}/hero-surplus-food.png`}
                 alt="Illustrated surplus groceries and fresh produce"
-                className="h-auto w-[85%] max-h-48 justify-self-start object-contain object-left sm:max-h-60"
+                className="mealize-hero-float mealize-hero-float--left h-auto w-[85%] max-h-48 justify-self-start object-contain object-left sm:max-h-60"
                 width={1024}
                 height={677}
               />
@@ -419,7 +543,7 @@ export function MealizeWelcome() {
               <img
                 src={`${ASSET}/hero-food-donation.png`}
                 alt="Illustrated food donation box filled with groceries"
-                className="h-auto w-[85%] max-h-48 justify-self-end object-contain object-right sm:max-h-60"
+                className="mealize-hero-float mealize-hero-float--right h-auto w-[85%] max-h-48 justify-self-end object-contain object-right sm:max-h-60"
                 width={1024}
                 height={635}
               />
@@ -434,6 +558,7 @@ export function MealizeWelcome() {
               label="Surplus food"
               title="List surplus in minutes"
               body="Add a photo, quantity, and pickup window—so food banks know what is available while it is still safe to move."
+              motionDelay="0s"
             />
             <FeatureTile
               isLight={isLight}
@@ -441,6 +566,7 @@ export function MealizeWelcome() {
               label="Food banks"
               title="Connect with those in need"
               body="Post requests, message businesses, and flag posts for your team—without losing context in email threads."
+              motionDelay="0.35s"
             />
             <FeatureTile
               isLight={isLight}
@@ -448,14 +574,17 @@ export function MealizeWelcome() {
               label="One coordinated pickup"
               title="Handle pickups in one app"
               body="Favorites, notifications, and reservations keep volunteers, managers, and drivers aligned through handoff."
+              motionDelay="0.7s"
             />
           </div>
         </section>
 
+        <TrustedByMarquee />
+
         {/* What is Mealize */}
         <section
           id="about"
-          className="mx-auto flex w-full max-w-3xl scroll-mt-20 flex-col items-center gap-8 px-4 pb-20 sm:px-6"
+          className="mx-auto flex w-full max-w-3xl scroll-mt-20 flex-col items-center gap-8 px-4 pb-20 pt-16 sm:px-6 sm:pt-20"
         >
           <div className="w-full text-center">
             <SectionLabel>Why Mealize</SectionLabel>
@@ -469,6 +598,10 @@ export function MealizeWelcome() {
           </div>
           <WelcomeImg file="volunteer.jpg" alt="Volunteers coordinating food pickup" maxHeight={420} />
         </section>
+
+        <div className="py-8 sm:py-10">
+          <HandoffDivider />
+        </div>
 
         {/* Problem + stats feel */}
         <section
@@ -638,14 +771,7 @@ export function MealizeWelcome() {
                       discarded.
                     </p>
                     <TourScreenshot file="pickupmessage.png" alt="Pickup confirmation message" maxHeight={380} />
-                    <div className="flex flex-col items-center gap-4 rounded-2xl border border-[#28a690]/22 bg-linear-to-b from-[#28a690]/10 via-[#28a690]/4 to-transparent px-6 py-9 dark:border-[#28a690]/20 dark:from-[#28a690]/14">
-                      <div className="flex size-14 items-center justify-center rounded-full bg-[#28a690]/12 ring-1 ring-[#28a690]/20 dark:bg-[#9af2c0]/10 dark:ring-[#9af2c0]/20">
-                        <Truck className="size-7 text-[#28a690]" strokeWidth={1.5} aria-hidden />
-                      </div>
-                      <p className="text-center text-lg font-bold tracking-tight text-black dark:text-zinc-50">
-                        That handoff completes a Mealize delivery.
-                      </p>
-                    </div>
+                    <DeliveryHandoffBeat />
                   </>
                 ),
               },
@@ -656,7 +782,7 @@ export function MealizeWelcome() {
         {/* Get started */}
         <section
           id="get-started"
-          className="mx-auto flex w-full max-w-3xl scroll-mt-20 flex-col items-center gap-10 px-4 pb-20 sm:px-6"
+          className="mx-auto flex w-full max-w-3xl scroll-mt-20 flex-col items-center gap-8 px-4 pb-20 sm:px-6"
         >
           <div className="w-full text-center">
             <SectionLabel>Onboarding</SectionLabel>
@@ -670,11 +796,7 @@ export function MealizeWelcome() {
               food bank manager, volunteer, or business manager — one click, no account setup.
             </p>
           </div>
-          <div className="grid w-full gap-4 sm:grid-cols-2">
-            <WelcomeImg file="navbar.png" alt="Mealize navigation bar with sign up" maxHeight={48} />
-            <WelcomeImg file="buttons.png" alt="Sign up and log in buttons" maxHeight={100} objectFit="cover" />
-          </div>
-          <WelcomeImg file="login.png" alt="Login and sign up forms" maxHeight={640} objectFit="cover" />
+          <PrimaryCta href="/sign-in#demo">Try the demo</PrimaryCta>
         </section>
 
       </div>

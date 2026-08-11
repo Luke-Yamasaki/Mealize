@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 
 import { useMealizeAccessibility, useMealizeTheme, type MealizeTheme } from "@/stores/mealize-ui-store";
 
-import { MealizeLocationSettings } from "./mealize-location-settings";
 import { MealizeNavbarWelcomeMenus } from "./mealize-navbar-welcome-menus";
 import { AppHeader, AppHeaderPlaceholder } from "./ui/app-header";
 import { AppHeaderRow } from "./ui/app-header-row";
@@ -163,10 +162,6 @@ function DisplayControls() {
           </span>
         </span>
       </label>
-
-      <Separator />
-
-      <MealizeLocationSettings />
     </div>
   );
 }
@@ -218,12 +213,6 @@ function SettingsMenu() {
 
         <div className="px-4 py-3">
           <DisplayControls />
-        </div>
-
-        <div className="border-t border-border bg-muted/30 px-4 py-2.5">
-          <p className="text-center text-[11px] text-muted-foreground">
-            Click outside or press Esc to close.
-          </p>
         </div>
       </Popover.Content>
     </Popover.Root>
@@ -286,9 +275,12 @@ function GuestAuthActions() {
 
 export function MealizeNavbarGuest() {
   const pathname = usePathname();
-  /** Signed-out home (`/`) shows the same About/Docs/… mega nav as `/welcome` and wiki routes — not search. */
+  /** Signed-out home (`/`) shows the same About/Docs/… mega nav as `/welcome`, `/roadmap`, and wiki routes — not search. */
   const isWelcome =
-    pathname === "/" || pathname === "/welcome" || pathname.startsWith("/work/mealize/wiki");
+    pathname === "/" ||
+    pathname === "/welcome" ||
+    pathname === "/roadmap" ||
+    pathname.startsWith("/work/mealize/wiki");
 
   return (
     <AppHeader>
@@ -394,7 +386,8 @@ function WelcomeSessionDrawerFooter({ isManager }: { isManager: boolean }) {
 
 export function MealizeNavbarSession({ isManager }: { isManager: boolean }) {
   const pathname = usePathname();
-  const isWelcome = pathname === "/welcome" || pathname.startsWith("/work/mealize/wiki");
+  const isWelcome =
+    pathname === "/welcome" || pathname === "/roadmap" || pathname.startsWith("/work/mealize/wiki");
 
   return (
     <AppHeader>

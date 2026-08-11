@@ -1,10 +1,12 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
   Building2,
+  ChevronLeft,
+  ChevronRight,
   HeartHandshake,
   Leaf,
   Truck,
@@ -13,13 +15,9 @@ import {
 import { useMealizeTheme } from "@/stores/mealize-ui-store";
 
 import { MealizeLogoMedium } from "./mealize-logo-medium";
-import { MealizePlatformRoadmap } from "./mealize-platform-roadmap";
-import { MealizeWelcomeDocs } from "./mealize-welcome-docs";
 import { MealizeWelcomeSplash } from "./mealize-welcome-splash";
 
 const ASSET = "/welcome";
-const REPO = "https://github.com/Luke-Yamasaki/Mealize";
-const WIKI = "https://github.com/Luke-Yamasaki/Mealize/wiki";
 
 function WelcomeImg({
   file,
@@ -65,10 +63,10 @@ function ExternalLink({ href, children }: { href: string; children: ReactNode })
 function WelcomeHeadlinePunctuation() {
   return (
     <span
-      className="relative z-2 ml-2 inline-flex size-[2.65rem] shrink-0 items-center justify-center align-middle motion-reduce:size-10 sm:ml-2.5 sm:size-12 md:size-14"
+      className="relative z-2 ml-2 inline-flex size-12 shrink-0 items-center justify-center align-middle sm:ml-2.5 sm:size-14 md:size-16"
       aria-hidden
     >
-      <span className="pointer-events-none absolute left-1/2 top-1/2 block h-40 w-40 origin-center -translate-x-1/2 -translate-y-1/2 scale-[0.34] motion-reduce:scale-[0.22] sm:scale-[0.38] md:scale-[0.44]">
+      <span className="pointer-events-none absolute left-1/2 top-1/2 block h-44 w-44 origin-center -translate-x-1/2 -translate-y-1/2 scale-[0.42] motion-reduce:scale-[0.3] sm:scale-[0.48] md:scale-[0.56]">
         <span className="relative block h-full w-full">
           {[0, 1, 2].map((i) => (
             <span
@@ -77,7 +75,9 @@ function WelcomeHeadlinePunctuation() {
               style={{ animationDelay: `${i * 0.9}s` }}
             />
           ))}
-          <span className="mealize-welcome-signal-core absolute left-1/2 top-1/2 size-3.5 rounded-full bg-linear-to-br from-[#76d97e] to-[#28a690] sm:size-4" />
+          <span className="mealize-welcome-signal-core absolute left-1/2 top-1/2 flex size-14 items-center justify-center sm:size-16 md:size-[4.5rem]">
+            <MealizeLogoMedium className="size-full overflow-visible" />
+          </span>
         </span>
       </span>
     </span>
@@ -128,20 +128,6 @@ function PrimaryCta({ href, children }: { href: string; children: ReactNode }) {
   );
 }
 
-function SecondaryCta({ href, children }: { href: string; children: ReactNode }) {
-  return (
-    <div data-mode="signin" className="contents">
-      <Link
-        href={href}
-        prefetch={false}
-        className="inline-flex h-11 items-center justify-center rounded-full bg-[var(--mz-action_primary_backgroundColor)] px-7 text-sm font-bold text-[var(--mz-action_primary_foregroundColor)] shadow-[0_1px_0_rgba(255,255,255,0.12)_inset,0_8px_28px_-8px_rgba(10,77,66,0.45)] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-current"
-      >
-        {children}
-      </Link>
-    </div>
-  );
-}
-
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
     <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-[#156b5c] dark:text-[#9af2c0]">
@@ -152,11 +138,13 @@ function SectionLabel({ children }: { children: ReactNode }) {
 
 function FeatureTile({
   icon: Icon,
+  label,
   title,
   body,
   isLight,
 }: {
   icon: typeof Leaf;
+  label: string;
   title: string;
   body: string;
   isLight: boolean;
@@ -165,8 +153,13 @@ function FeatureTile({
     <div
       className={`group flex flex-col gap-3 rounded-2xl border p-6 transition hover:border-[#28a690]/35 ${isLight ? "border-neutral-200 bg-white shadow-sm hover:shadow-md" : "border-white/10 bg-white/4 hover:bg-white/6"}`}
     >
-      <div className="flex size-10 items-center justify-center rounded-xl bg-linear-to-br from-[#76d97e]/25 to-[#28a690]/20 text-[#1a6b5c] ring-1 ring-[#28a690]/15 dark:text-[#9af2c0] dark:ring-white/10">
-        <Icon className="size-5" strokeWidth={1.75} aria-hidden />
+      <div className="flex items-center gap-3">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-[#76d97e]/25 to-[#28a690]/20 text-[#1a6b5c] ring-1 ring-[#28a690]/15 dark:text-[#9af2c0] dark:ring-white/10">
+          <Icon className="size-5" strokeWidth={1.75} aria-hidden />
+        </div>
+        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#156b5c] dark:text-[#9af2c0]">
+          {label}
+        </p>
       </div>
       <h3 className="text-lg font-bold tracking-tight text-black dark:text-zinc-50">{title}</h3>
       <p className="text-sm font-medium leading-relaxed text-black dark:text-zinc-300">{body}</p>
@@ -174,23 +167,178 @@ function FeatureTile({
   );
 }
 
-function Step({
-  n,
+function TourScreenshot({
+  file,
+  alt,
+  maxHeight = 400,
+  className = "",
+}: {
+  file: string;
+  alt: string;
+  maxHeight?: number;
+  className?: string;
+}) {
+  return (
+    <figure
+      className={`overflow-hidden rounded-xl border border-[#28a690]/15 bg-[#f4faf8] shadow-[inset_0_1px_0_rgba(255,255,255,0.65)] dark:border-white/10 dark:bg-zinc-900/50 dark:shadow-none ${className}`}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element -- static marketing assets from `/public/welcome` */}
+      <img
+        src={`${ASSET}/${file}`}
+        alt={alt}
+        className="mx-auto block w-full object-contain object-top"
+        style={{ maxHeight }}
+      />
+    </figure>
+  );
+}
+
+function TourStep({
   title,
   children,
 }: {
-  n: string;
   title: string;
   children: ReactNode;
 }) {
   return (
-    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-start lg:gap-10">
-      <div className="flex gap-4 lg:flex-col lg:gap-2">
-        <span className="font-mono text-xs font-semibold tabular-nums text-[#28a690]">{n}</span>
-        <h3 className="text-xl font-bold tracking-tight text-black dark:text-zinc-50 lg:text-2xl">{title}</h3>
+    <div className="mealize-tour-step flex flex-col gap-7">
+      <div className="mx-auto flex max-w-xl flex-col items-center gap-3 text-center">
+        <span
+          className="h-1 w-10 rounded-full bg-linear-to-r from-[#156b5c] to-[#76d97e]"
+          aria-hidden
+        />
+        <h3 className="text-balance text-2xl font-bold tracking-tight text-black sm:text-[1.75rem] sm:leading-snug dark:text-zinc-50">
+          {title}
+        </h3>
       </div>
-      <div className="space-y-4 text-sm font-medium leading-relaxed text-black dark:text-zinc-300 lg:text-[0.9375rem]">
+      <div className="flex flex-col gap-5 text-sm font-medium leading-relaxed text-black/85 dark:text-zinc-300 sm:text-[0.9375rem]">
         {children}
+      </div>
+    </div>
+  );
+}
+
+function ProductTourCarousel({
+  steps,
+  isLight,
+}: {
+  steps: { title: string; content: ReactNode }[];
+  isLight: boolean;
+}) {
+  const [index, setIndex] = useState(0);
+  const total = steps.length;
+  const step = steps[index];
+  const progress = ((index + 1) / total) * 100;
+
+  return (
+    <div
+      className={`relative overflow-hidden rounded-[1.75rem] border shadow-[0_32px_90px_-40px_rgba(15,61,54,0.55)] ring-1 ${
+        isLight
+          ? "border-[#28a690]/20 bg-white ring-black/[0.03]"
+          : "border-white/10 bg-zinc-950/85 ring-white/8"
+      }`}
+    >
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-[radial-gradient(ellipse_90%_120%_at_50%_-20%,rgba(40,166,144,0.18),transparent_68%)] dark:bg-[radial-gradient(ellipse_90%_120%_at_50%_-20%,rgba(154,242,192,0.14),transparent_68%)]"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute -right-16 top-24 size-56 rounded-full bg-[#76d97e]/10 blur-3xl dark:bg-[#9af2c0]/8"
+        aria-hidden
+      />
+
+      <div className="relative border-b border-[#28a690]/12 px-5 py-5 sm:px-8 dark:border-white/8">
+        <div className="mb-3.5 flex items-center justify-between gap-3">
+          <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#156b5c] dark:text-[#9af2c0]">
+            Step walkthrough
+          </p>
+          <p className="font-mono text-xs font-semibold tabular-nums text-[#28a690]">
+            {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+          </p>
+        </div>
+        <div
+          className={`h-1.5 overflow-hidden rounded-full ${isLight ? "bg-[#28a690]/10" : "bg-white/10"}`}
+          role="progressbar"
+          aria-valuenow={index + 1}
+          aria-valuemin={1}
+          aria-valuemax={total}
+          aria-label={`Tour progress, step ${index + 1} of ${total}`}
+        >
+          <div
+            className="h-full rounded-full bg-linear-to-r from-[#156b5c] via-[#28a690] to-[#76d97e] transition-[width] duration-500 ease-[cubic-bezier(0.32,0.72,0,1)]"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        <div className="mt-3.5 flex justify-center gap-2">
+          {steps.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setIndex(i)}
+              className={`h-2 rounded-full transition-all duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#28a690] ${
+                i === index
+                  ? "w-7 bg-[#28a690]"
+                  : isLight
+                    ? "w-2 bg-zinc-300/90 hover:bg-[#28a690]/55"
+                    : "w-2 bg-zinc-600 hover:bg-[#9af2c0]/55"
+              }`}
+              aria-label={`Go to step ${i + 1}`}
+              aria-current={i === index ? "step" : undefined}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="relative px-5 py-9 sm:px-10 sm:py-11" aria-live="polite" aria-atomic="true">
+        <TourStep key={index} title={step.title}>
+          {step.content}
+        </TourStep>
+      </div>
+
+      <div
+        className={`relative flex items-center justify-between gap-3 border-t px-4 py-4 sm:justify-center sm:gap-6 sm:px-8 ${
+          isLight
+            ? "border-[#28a690]/12 bg-linear-to-b from-[#f4faf8] to-[#eef7f4]"
+            : "border-white/8 bg-linear-to-b from-zinc-900/80 to-zinc-950/90"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => setIndex((i) => Math.max(0, i - 1))}
+          disabled={index === 0}
+          className="inline-flex h-11 min-w-[6.5rem] items-center justify-center gap-1.5 rounded-full border border-[#28a690]/28 bg-white px-4 text-sm font-bold text-[#0f3d36] shadow-[0_1px_0_rgba(255,255,255,0.8)_inset,0_8px_20px_-12px_rgba(15,61,54,0.35)] transition hover:border-[#28a690] hover:bg-[#28a690]/6 disabled:cursor-not-allowed disabled:opacity-35 dark:border-[#28a690]/35 dark:bg-zinc-950 dark:text-[#c6fde8] dark:shadow-none dark:hover:bg-[#28a690]/15"
+          aria-label="Previous step"
+        >
+          <ChevronLeft className="size-4" strokeWidth={2.25} aria-hidden />
+          Back
+        </button>
+        <div className="flex items-center gap-2.5 sm:gap-3.5">
+          <span
+            className="select-none font-mono text-lg font-light leading-none tracking-[0.2em] text-[#28a690]/45 dark:text-[#9af2c0]/35"
+            aria-hidden
+          >
+            ···
+          </span>
+          <p className="min-w-[4.75rem] text-center font-mono text-sm font-bold tabular-nums text-[#156b5c] dark:text-[#9af2c0]">
+            {index + 1} of {total}
+          </p>
+          <span
+            className="select-none font-mono text-lg font-light leading-none tracking-[0.2em] text-[#28a690]/45 dark:text-[#9af2c0]/35"
+            aria-hidden
+          >
+            ···
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={() => setIndex((i) => Math.min(total - 1, i + 1))}
+          disabled={index === total - 1}
+          className="inline-flex h-11 min-w-[6.5rem] items-center justify-center gap-1.5 rounded-full bg-linear-to-r from-[#156b5c] to-[#28a690] px-4 text-sm font-bold text-white shadow-[0_12px_30px_-12px_rgba(40,166,144,0.75)] transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-35 disabled:shadow-none"
+          aria-label="Next step"
+        >
+          Forward
+          <ChevronRight className="size-4" strokeWidth={2.25} aria-hidden />
+        </button>
       </div>
     </div>
   );
@@ -211,52 +359,94 @@ export function MealizeWelcome() {
         {/* Hero */}
         <section
           id="product"
-          className="relative flex w-full scroll-mt-20 flex-col items-center px-4 pb-16 pt-10 sm:px-6 sm:pb-20 sm:pt-14"
+          className="relative flex w-full scroll-mt-20 flex-col items-center pb-16 pt-10 sm:pb-20 sm:pt-14"
         >
           <div className="pointer-events-none absolute left-1/2 top-0 h-px w-[min(100%,56rem)] -translate-x-1/2 bg-linear-to-r from-transparent via-[#28a690]/30 to-transparent dark:via-[#28a690]/40" />
-          <div className="flex w-full max-w-3xl flex-col items-center text-center">
-            <div className="mb-6 flex items-center gap-3 rounded-full border border-neutral-200 bg-white px-4 py-2 shadow-sm dark:border-white/10 dark:bg-white/6">
-              <MealizeLogoMedium className="size-9 shrink-0" />
-              <span className="text-xs font-semibold tracking-wide text-black dark:text-zinc-200">
-                Surplus food · nonprofits · one coordinated pickup
-              </span>
+
+          <div className="relative w-full overflow-x-clip">
+            {/* Edge-hugging art (large screens) */}
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-0 hidden w-[min(34vw,28rem)] translate-x-4 items-center lg:flex">
+              {/* eslint-disable-next-line @next/next/no-img-element -- marketing asset from /public/welcome */}
+              <img
+                src={`${ASSET}/hero-surplus-food.png`}
+                alt=""
+                aria-hidden
+                className="h-auto w-[85%] max-h-[min(59.5vh,27rem)] object-contain object-left"
+                width={1024}
+                height={677}
+              />
             </div>
-            <h1 className="text-balance overflow-visible text-4xl font-bold tracking-tight text-black sm:text-5xl sm:leading-[1.08] md:text-6xl dark:text-zinc-50">
-              Turn surplus food into{" "}
-              <span className="bg-linear-to-r from-[#156b5c] via-[#28a690] to-[#76d97e] bg-clip-text text-transparent dark:from-[#c6fde8] dark:via-[#9af2c0] dark:to-[#28a690]">
-                meals that matter
-              </span>
-              <WelcomeHeadlinePunctuation />
-            </h1>
-            <p className="mt-6 max-w-xl text-pretty text-base font-medium leading-relaxed text-black sm:text-lg dark:text-zinc-300">
-              Mealize connects restaurants, grocers, and other food businesses with nonprofits—so edible surplus becomes
-              community meals instead of landfill.
-            </p>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-              <PrimaryCta href="/sign-in#demo">Try the demo</PrimaryCta>
-              <SecondaryCta href="/sign-in">Log in</SecondaryCta>
-              <SecondaryCta href="/sign-up">Create an account</SecondaryCta>
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-0 hidden w-[min(34vw,28rem)] items-center justify-end lg:flex">
+              {/* eslint-disable-next-line @next/next/no-img-element -- marketing asset from /public/welcome */}
+              <img
+                src={`${ASSET}/hero-food-donation.png`}
+                alt=""
+                aria-hidden
+                className="h-auto w-[85%] max-h-[min(59.5vh,27rem)] object-contain object-right"
+                width={1024}
+                height={635}
+              />
+            </div>
+
+            <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-col items-center px-4 text-center sm:px-6">
+              <h1 className="text-balance overflow-visible text-4xl font-bold tracking-tight text-black sm:text-5xl sm:leading-[1.08] md:text-6xl dark:text-zinc-50">
+                Turn surplus food into{" "}
+                <span className="bg-linear-to-r from-[#156b5c] via-[#28a690] to-[#76d97e] bg-clip-text text-transparent dark:from-[#c6fde8] dark:via-[#9af2c0] dark:to-[#28a690]">
+                  meals that matter
+                </span>
+                <WelcomeHeadlinePunctuation />
+              </h1>
+              <p className="mt-6 max-w-xl text-pretty text-base font-medium leading-relaxed text-black sm:text-lg dark:text-zinc-300">
+                Mealize connects restaurants, grocers, and other food businesses with food banks—so edible surplus becomes
+                community meals instead of landfill.
+              </p>
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+                <PrimaryCta href="/sign-in#demo">Try the demo</PrimaryCta>
+              </div>
+            </div>
+
+            {/* Edge-hugging art (small screens) */}
+            <div className="mt-10 grid w-full grid-cols-2 lg:hidden" aria-hidden>
+              {/* eslint-disable-next-line @next/next/no-img-element -- marketing asset from /public/welcome */}
+              <img
+                src={`${ASSET}/hero-surplus-food.png`}
+                alt="Illustrated surplus groceries and fresh produce"
+                className="h-auto w-[85%] max-h-48 justify-self-start object-contain object-left sm:max-h-60"
+                width={1024}
+                height={677}
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element -- marketing asset from /public/welcome */}
+              <img
+                src={`${ASSET}/hero-food-donation.png`}
+                alt="Illustrated food donation box filled with groceries"
+                className="h-auto w-[85%] max-h-48 justify-self-end object-contain object-right sm:max-h-60"
+                width={1024}
+                height={635}
+              />
             </div>
           </div>
 
-          {/* Feature bento */}
-          <div className="mx-auto mt-20 grid w-full max-w-5xl gap-4 sm:grid-cols-3">
+          {/* Feature bento — labels from the former hero pill */}
+          <div className="mx-auto mt-20 grid w-full max-w-5xl gap-4 px-4 sm:grid-cols-3 sm:px-6">
             <FeatureTile
               isLight={isLight}
-              icon={Building2}
+              icon={Leaf}
+              label="Surplus food"
               title="List surplus in minutes"
-              body="Add a photo, quantity, and pickup window—so nonprofits know what is available while it is still safe to move."
+              body="Add a photo, quantity, and pickup window—so food banks know what is available while it is still safe to move."
             />
             <FeatureTile
               isLight={isLight}
-              icon={HeartHandshake}
-              title="Coordinate need in one place"
+              icon={Building2}
+              label="Food banks"
+              title="Connect with those in need"
               body="Post requests, message businesses, and flag posts for your team—without losing context in email threads."
             />
             <FeatureTile
               isLight={isLight}
-              icon={Leaf}
-              title="From match to confirmed pickup"
+              icon={HeartHandshake}
+              label="One coordinated pickup"
+              title="Handle pickups in one app"
               body="Favorites, notifications, and reservations keep volunteers, managers, and drivers aligned through handoff."
             />
           </div>
@@ -325,7 +515,7 @@ export function MealizeWelcome() {
                 <li className="flex items-start gap-3">
                   <span className="mt-2 size-1.5 shrink-0 rounded-full bg-[#28a690]" aria-hidden />
                   <span className="min-w-0 flex-1">
-                    Closing that gap means connecting surplus to nonprofits faster than it spoils—and doing it at
+                    Closing that gap means connecting surplus to food banks faster than it spoils—and doing it at
                     community scale.
                   </span>
                 </li>
@@ -348,21 +538,28 @@ export function MealizeWelcome() {
               A shared workspace for both sides
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-pretty text-base font-medium leading-relaxed text-black dark:text-zinc-300">
-              Businesses and nonprofits meet in one feed—with messaging and pickup scheduling—so a match becomes a
+              Businesses and food banks meet in one feed—with messaging and pickup scheduling—so a match becomes a
               handoff you can repeat week after week.
             </p>
           </div>
           <WelcomeImg
             file={isLight ? "lightdiagram.png" : "darkdiagram.png"}
-            alt="Diagram of Mealize connecting businesses and nonprofits"
+            alt="Diagram of Mealize connecting businesses and food banks"
             maxHeight={560}
             className="w-full max-w-2xl"
           />
         </section>
 
         {/* How it works */}
-        <section id="tour" className="mx-auto w-full max-w-5xl scroll-mt-20 px-4 pb-24 sm:px-6">
-          <div className="mb-16 text-center">
+        <section
+          id="tour"
+          className="relative mx-auto w-full max-w-5xl scroll-mt-20 px-4 pb-24 sm:px-6"
+        >
+          <div
+            className="pointer-events-none absolute left-1/2 top-8 h-72 w-[min(100%,42rem)] -translate-x-1/2 rounded-full bg-[#28a690]/8 blur-3xl dark:bg-[#9af2c0]/6"
+            aria-hidden
+          />
+          <div className="relative mb-12 text-center">
             <SectionLabel>Product tour</SectionLabel>
             <h2 className="mt-3 text-3xl font-bold tracking-tight text-black sm:text-4xl dark:text-zinc-50">
               How Mealize works
@@ -373,60 +570,87 @@ export function MealizeWelcome() {
             </p>
           </div>
 
-          <div className="space-y-20">
-            <Step n="01" title="Nonprofits spell out what helps most">
-              <p>
-                Managers publish structured requests—so businesses see exactly what would make a difference this week,
-                not a vague wish list.
-              </p>
-              <WelcomeImg file="request.png" alt="Posting a request in Mealize" maxHeight={400} />
-            </Step>
-
-            <Step n="02" title="Businesses publish surplus that fits the ask">
-              <p>
-                Teams scan open requests, then post items with photos and details when they have a match—so donors lead
-                with what is actually on hand.
-              </p>
-              <WelcomeImg file="item.png" alt="Posting a surplus food item" maxHeight={400} />
-            </Step>
-
-            <Step n="03" title="Volunteers flag what matters to their site">
-              <p>
-                Staff browse the feed, save strong fits, ask clarifying questions, or ping a manager—so the right person
-                says yes before slots disappear.
-              </p>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <WelcomeImg file="notify.png" alt="Notifying a manager about a post" maxHeight={280} />
-                <WelcomeImg file="notifymessage.png" alt="Manager message thread" maxHeight={280} />
-              </div>
-            </Step>
-
-            <Step n="04" title="Details, locations, and a formal pickup request">
-              <p>
-                Open a post for hours and address, visit the organization profile for context, then send a pickup
-                request—once it is submitted, that item is reserved for your flow so nobody double-books the run.
-              </p>
-              <div className="grid gap-4 sm:grid-cols-2">
-                <WelcomeImg file="singleitem.png" alt="Single post detail view" maxHeight={320} />
-                <WelcomeImg file="organization.png" alt="Organization profile page" maxHeight={320} />
-              </div>
-              <WelcomeImg file="pickupform.png" alt="Pickup request form" maxHeight={380} />
-            </Step>
-
-            <Step n="05" title="Confirm, dispatch, and close the loop">
-              <p>
-                When a business manager accepts the request, the pickup is confirmed and a driver can be assigned. The
-                last mile is simple: return to the nonprofit with food that would have otherwise been discarded.
-              </p>
-              <WelcomeImg file="pickupmessage.png" alt="Pickup confirmation message" maxHeight={380} />
-              <div className="flex flex-col items-center gap-6 rounded-2xl border border-dashed border-[#28a690]/35 bg-white px-6 py-10 dark:border-[#28a690]/25 dark:bg-zinc-950/50">
-                <Truck className="size-16 text-[#28a690]" strokeWidth={1.25} aria-hidden />
-                <p className="text-center text-lg font-bold tracking-tight text-black dark:text-zinc-50">
-                  That handoff completes a Mealize delivery.
-                </p>
-              </div>
-            </Step>
-          </div>
+          <ProductTourCarousel
+            isLight={isLight}
+            steps={[
+              {
+                title: "Food banks spell out what helps most",
+                content: (
+                  <>
+                    <p className="mx-auto max-w-xl text-center text-pretty">
+                      Managers publish structured requests—so businesses see exactly what would make a difference this
+                      week, not a vague wish list.
+                    </p>
+                    <TourScreenshot file="request.png" alt="Posting a request in Mealize" maxHeight={400} />
+                  </>
+                ),
+              },
+              {
+                title: "Businesses publish surplus that fits the ask",
+                content: (
+                  <>
+                    <p className="mx-auto max-w-xl text-center text-pretty">
+                      Teams scan open requests, then post items with photos and details when they have a match—so donors
+                      lead with what is actually on hand.
+                    </p>
+                    <TourScreenshot file="item.png" alt="Posting a surplus food item" maxHeight={400} />
+                  </>
+                ),
+              },
+              {
+                title: "Volunteers flag what matters to their site",
+                content: (
+                  <>
+                    <p className="mx-auto max-w-xl text-center text-pretty">
+                      Staff browse the feed, save strong fits, ask clarifying questions, or ping a manager—so the right
+                      person says yes before slots disappear.
+                    </p>
+                    <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+                      <TourScreenshot file="notify.png" alt="Notifying a manager about a post" maxHeight={280} />
+                      <TourScreenshot file="notifymessage.png" alt="Manager message thread" maxHeight={280} />
+                    </div>
+                  </>
+                ),
+              },
+              {
+                title: "Details, locations, and a formal pickup request",
+                content: (
+                  <>
+                    <p className="mx-auto max-w-xl text-center text-pretty">
+                      Open a post for hours and address, visit the organization profile for context, then send a pickup
+                      request—once it is submitted, that item is reserved for your flow so nobody double-books the run.
+                    </p>
+                    <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+                      <TourScreenshot file="singleitem.png" alt="Single post detail view" maxHeight={320} />
+                      <TourScreenshot file="organization.png" alt="Organization profile page" maxHeight={320} />
+                    </div>
+                    <TourScreenshot file="pickupform.png" alt="Pickup request form" maxHeight={380} />
+                  </>
+                ),
+              },
+              {
+                title: "Confirm, dispatch, and close the loop",
+                content: (
+                  <>
+                    <p className="mx-auto max-w-xl text-center text-pretty">
+                      When a business manager accepts the request, the pickup is confirmed and a driver can be assigned.
+                      The last mile is simple: return to the food bank with food that would have otherwise been
+                      discarded.
+                    </p>
+                    <TourScreenshot file="pickupmessage.png" alt="Pickup confirmation message" maxHeight={380} />
+                    <div className="flex flex-col items-center gap-4 rounded-2xl border border-[#28a690]/22 bg-linear-to-b from-[#28a690]/10 via-[#28a690]/4 to-transparent px-6 py-9 dark:border-[#28a690]/20 dark:from-[#28a690]/14">
+                      <div className="flex size-14 items-center justify-center rounded-full bg-[#28a690]/12 ring-1 ring-[#28a690]/20 dark:bg-[#9af2c0]/10 dark:ring-[#9af2c0]/20">
+                        <Truck className="size-7 text-[#28a690]" strokeWidth={1.5} aria-hidden />
+                      </div>
+                      <p className="text-center text-lg font-bold tracking-tight text-black dark:text-zinc-50">
+                        That handoff completes a Mealize delivery.
+                      </p>
+                    </div>
+                  </>
+                ),
+              },
+            ]}
+          />
         </section>
 
         {/* Get started */}
@@ -443,7 +667,7 @@ export function MealizeWelcome() {
               Use <span className="font-semibold text-black dark:text-zinc-200">Sign up</span> or{" "}
               <span className="font-semibold text-black dark:text-zinc-200">Log in</span> in the top navigation, or
               open <span className="font-semibold text-black dark:text-zinc-200">Try the demo</span> and pick a
-              nonprofit manager, volunteer, or business manager — one click, no account setup.
+              food bank manager, volunteer, or business manager — one click, no account setup.
             </p>
           </div>
           <div className="grid w-full gap-4 sm:grid-cols-2">
@@ -453,24 +677,6 @@ export function MealizeWelcome() {
           <WelcomeImg file="login.png" alt="Login and sign up forms" maxHeight={640} objectFit="cover" />
         </section>
 
-        <MealizePlatformRoadmap />
-
-        <MealizeWelcomeDocs />
-
-        {/* Blog / updates (stub — nav links land here) */}
-        <section
-          id="blog"
-          className="mx-auto w-full max-w-2xl scroll-mt-20 border-y border-neutral-200 bg-white px-4 py-14 pb-20 text-center dark:border-white/10 dark:bg-zinc-900/40 sm:px-6"
-        >
-          <SectionLabel>Notes</SectionLabel>
-          <h2 className="mt-3 text-2xl font-bold tracking-tight text-black dark:text-zinc-50">Blog &amp; updates</h2>
-          <p className="mx-auto mt-4 max-w-lg text-pretty text-sm font-medium leading-relaxed text-black dark:text-zinc-300">
-            Long-form build logs are not live yet—this space is reserved for release notes, partner stories, and
-            behind-the-scenes engineering notes. Until then, use the{" "}
-            <ExternalLink href={REPO}>GitHub repository</ExternalLink> for activity and the{" "}
-            <ExternalLink href={WIKI}>wiki</ExternalLink> for background.
-          </p>
-        </section>
       </div>
     </>
   );

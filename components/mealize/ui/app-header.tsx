@@ -16,7 +16,7 @@ export function AppHeader({
   return (
     <header
       className={cn(
-        "sticky top-0 z-200 w-full min-w-0 overflow-visible shadow-none",
+        "w-full min-w-0 overflow-visible shadow-none",
         APP_HEADER_SURFACE,
         className,
       )}

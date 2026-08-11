@@ -37,7 +37,7 @@ export function AppShell({
 
   return (
     <div className="flex min-h-dvh w-full min-w-0 flex-col">
-      <div ref={topChromeRef} className="shrink-0">
+      <div ref={topChromeRef} className="sticky top-0 z-200 shrink-0">
         {header}
       </div>
       <main

@@ -14,6 +14,7 @@ Clerk handles sign-in and sign-up ([`app/sign-in`](app/sign-in), [`app/sign-up`]
 |------|---------|
 | `/` | `app/(mealize)/page.tsx` |
 | `/welcome` | `app/(mealize)/welcome/page.tsx` |
+| `/roadmap` | `app/(mealize)/roadmap/page.tsx` |
 | `/deliveries`, `/deliveries/[id]` | `app/(mealize)/deliveries/` |
 | `/messages`, `/messages/[id]` | `app/(mealize)/messages/` |
 | `/organizations/[id]` | `app/(mealize)/organizations/[id]` |

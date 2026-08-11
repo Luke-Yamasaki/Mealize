@@ -29,18 +29,19 @@ export function MealizeShell({ children }: { children: ReactNode }) {
         filter: saturation !== 100 ? `saturate(${saturation}%)` : undefined,
       }}
     >
-      <div
-        aria-hidden
-        className={clsx(
-          "pointer-events-none absolute inset-0 z-0 mix-blend-multiply opacity-[0.22] contrast-[1.45] brightness-[1.2] dark:mix-blend-normal dark:opacity-[0.28] dark:contrast-100 dark:brightness-100",
-          theme === "dark" && "invert",
-        )}
-        style={{
-          backgroundImage: PATTERN_URL,
-          backgroundRepeat: "repeat",
-          backgroundSize: "min(260px, 28vw)",
-        }}
-      />
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
+        <div
+          className={clsx(
+            "absolute inset-0 mix-blend-multiply opacity-[0.22] contrast-[1.45] brightness-[1.2] dark:mix-blend-normal dark:opacity-[0.28] dark:contrast-100 dark:brightness-100",
+            theme === "dark" && "invert",
+          )}
+          style={{
+            backgroundImage: PATTERN_URL,
+            backgroundRepeat: "repeat",
+            backgroundSize: "min(260px, 28vw)",
+          }}
+        />
+      </div>
       <div className="relative z-[1] flex min-h-0 w-full min-w-0 flex-1 flex-col">{children}</div>
     </div>
   );

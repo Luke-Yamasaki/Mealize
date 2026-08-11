@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useId, useLayoutEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
-/** White mark — same path as navbar `MealizeNavLogo`, 200px-wide base for splash scaling. */
-function SplashWhiteMark({ className }: { className?: string }) {
+import { useMealizeTheme, useMealizeUiStore, type MealizeTheme } from "@/stores/mealize-ui-store";
+
+/** Heart mark — same path as navbar `MealizeNavLogo`, 200px-wide base for splash scaling. */
+function SplashHeartMark({ fill, className }: { fill: string; className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +17,7 @@ function SplashWhiteMark({ className }: { className?: string }) {
       aria-hidden
     >
       <path
-        fill="#ffffff"
+        fill={fill}
         d="M41.491,20.447,39.439,22.5,24.254,37.684a2.48,2.48,0,0,1-3.506,0l0,0L3.509,20.447a11.976,11.976,0,0,1,0-16.936l0,0A11.976,11.976,0,0,1,18.663,2.04a2.475,2.475,0,0,1,1.08,1.82l0,.024a2.483,2.483,0,0,1-.828,2.095L16.639,7.992a9.326,9.326,0,0,0-3.067,8.122L14.648,25.1a1.571,1.571,0,0,0,1.56,1.4h.162a1.643,1.643,0,0,0,1.615-1.671c0-.017,0-.034,0-.051L17.337,15.9a1.726,1.726,0,0,1,1.618-1.827c.034,0,.069,0,.1,0a1.689,1.689,0,0,1,1.182.491,1.8,1.8,0,0,1,.538,1.177l.109,9.2A1.608,1.608,0,0,0,22.5,26.5a1.645,1.645,0,0,0,1.613-1.561l.215-9.2a1.724,1.724,0,0,1,1.722-1.668,1.759,1.759,0,0,1,1.723,1.794c0,.012,0,.024,0,.036l-.647,8.874a1.612,1.612,0,0,0,1.5,1.718c.039,0,.077,0,.116,0a1.61,1.61,0,0,0,1.062-.4,1.451,1.451,0,0,0,.5-1l1.131-8.983a9.272,9.272,0,0,0-3.067-8.122L26.083,5.979a2.48,2.48,0,0,1-.828-2.092l0-.024a2.489,2.489,0,0,1,1.091-1.83A11.977,11.977,0,0,1,41.493,20.446l0,0"
       />
     </svg>
@@ -25,7 +28,7 @@ function SplashWhiteMark({ className }: { className?: string }) {
 const SPLASH_DURATION_S = 6.5;
 const SPLASH_MS = Math.round(SPLASH_DURATION_S * 1000);
 const SPLASH_EASE = "cubic-bezier(0.45, 0, 0.2, 1)";
-/** Splash mark layout size (must match `SplashWhiteMark` 200×171). */
+/** Splash mark layout size (must match `SplashHeartMark` 200×171). */
 const SPLASH_MARK_W_PX = 200;
 const SPLASH_MARK_H_PX = 171;
 
@@ -35,6 +38,19 @@ const SPLASH_CLUSTER_END_OY_NUDGE_PX = 1;
 function prefersReducedMotion(): boolean {
   if (typeof window === "undefined") return false;
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+/** Sync read so the splash mark matches settings before zustand rehydrates. */
+function readPersistedTheme(): MealizeTheme {
+  if (typeof window === "undefined") return "light";
+  try {
+    const raw = window.localStorage.getItem("mealize-ui");
+    if (!raw) return "light";
+    const parsed = JSON.parse(raw) as { state?: { theme?: MealizeTheme } };
+    return parsed.state?.theme === "dark" ? "dark" : "light";
+  } catch {
+    return "light";
+  }
 }
 
 function measureNavbarLogoOffset(
@@ -102,6 +118,16 @@ function buildClusterKeyframesCss(name: string, endOx: number, endOy: number, bl
 export function MealizeWelcomeSplash() {
   const uid = useId().replace(/:/g, "");
   const kfName = `mealizeSplashCluster_${uid}`;
+  const { theme } = useMealizeTheme();
+  /** Prefer store after rehydrate; before that, localStorage so dark mode is correct on first frame. */
+  const markFill =
+    (
+      typeof window !== "undefined" && !useMealizeUiStore.persist.hasHydrated()
+        ? readPersistedTheme()
+        : theme
+    ) === "dark"
+      ? "#000000"
+      : "#ffffff";
 
   const [phase, setPhase] = useState<"play" | "off">("play");
   const [arms, setArms] = useState<{
@@ -117,6 +143,7 @@ export function MealizeWelcomeSplash() {
       queueMicrotask(() => setPhase("off"));
       return;
     }
+
     const layoutInnerW = window.innerWidth;
     const layoutInnerH = window.innerHeight;
     const bleed = layoutInnerW <= 640 ? 14 : 16;
@@ -145,7 +172,7 @@ export function MealizeWelcomeSplash() {
 
   const clusterAnim = arms ? `${kfName} ${SPLASH_DURATION_S}s ${SPLASH_EASE} forwards` : "none";
 
-  return (
+  const splash = (
     <div
       className={`mealize-splash-root${arms ? " mealize-splash-root--armed" : ""}`}
       role="presentation"
@@ -171,9 +198,13 @@ export function MealizeWelcomeSplash() {
             opacity: 1,
           }}
         >
-          <SplashWhiteMark className="block size-full" />
+          <SplashHeartMark fill={markFill} className="block size-full" />
         </div>
       ) : null}
     </div>
   );
+
+  /* Portal above page chrome so layout opacity / stacking cannot mute the splash. */
+  if (typeof document === "undefined") return null;
+  return createPortal(splash, document.body);
 }

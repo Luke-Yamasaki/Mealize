@@ -7,7 +7,6 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { MEALIZE_WIKI_BASE_PATH, WIKI_PAGE_META, WIKI_SLUGS } from "@/lib/mealize-wiki";
 
 const WIKI = "https://github.com/Luke-Yamasaki/Mealize/wiki";
-const REPO = "https://github.com/Luke-Yamasaki/Mealize";
 
 const PANEL_W_CLASS = "w-[min(92vw,24rem)]";
 
@@ -20,15 +19,17 @@ const STACK_DOCS: { label: string; href: string }[] = [
   { label: "AWS S3", href: "https://docs.aws.amazon.com/AmazonS3/latest/userguide/Welcome.html" },
 ];
 
-type TabId = "about" | "docs" | "stack" | "blog" | "resources";
+type TabId = "about" | "docs" | "stack" | "roadmap" | "resources";
 
 const TABS: { id: TabId; label: string }[] = [
   { id: "about", label: "About" },
   { id: "docs", label: "Docs" },
   { id: "stack", label: "Stack" },
-  { id: "blog", label: "Blog" },
+  { id: "roadmap", label: "Roadmap" },
   { id: "resources", label: "Resources" },
 ];
+
+const TAB_WIDTH_PCT = 100 / TABS.length;
 
 type MenuItem =
   | { type: "link"; label: string; href: string; external?: boolean; description?: string }
@@ -91,7 +92,10 @@ function MegaMenuSlide({
   onNavigate: () => void;
 }) {
   return (
-    <div className="w-full shrink-0 px-3 py-3 sm:px-4 sm:py-3" data-mealize-welcome-slide>
+    <div
+      className="max-h-[min(42vh,16rem)] w-full shrink-0 overflow-y-auto overscroll-contain px-3 py-3 sm:px-4 sm:py-3"
+      data-mealize-welcome-slide
+    >
       <p className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
         {leftTitle}
       </p>
@@ -342,23 +346,24 @@ export function MealizeNavbarWelcomeMenus({ mobileDrawerFooter }: { mobileDrawer
     external: true,
   }));
 
-  const blogItems: MenuItem[] = [
-    { type: "link", label: "Field notes", href: "/#blog", description: "Build diary (stub)" },
-    { type: "link", label: "Repository activity", href: REPO, external: true, description: "GitHub history" },
-    { type: "link", label: "Ideas backlog", href: WIKI, external: true, description: "Wiki specs" },
+  const roadmapItems: MenuItem[] = [
+    { type: "link", label: "Full roadmap", href: "/roadmap", description: "Capabilities overview" },
+    { type: "link", label: "Live in web app", href: "/roadmap#live", description: "Shipping today" },
+    { type: "link", label: "Beta / admin-gated", href: "/roadmap#beta", description: "Verification & flags" },
+    { type: "link", label: "Planned", href: "/roadmap#planned", description: "Coming next" },
   ];
 
   const resourcesCore: MenuItem[] = [
     { type: "link", label: "Product pillars", href: "/#product", description: "Hero + capabilities" },
     { type: "link", label: "Product tour", href: "/#tour", description: "Screens & flow" },
-    { type: "link", label: "Get started", href: "/#get-started", description: "Sign up & demos" },
+    { type: "link", label: "Get started", href: "/#get-started", description: "Pick a demo persona" },
   ];
 
   const sheetSections = [
     { id: "about" as const, heading: "About", items: aboutItems },
     { id: "docs" as const, heading: "Docs", items: docsItems },
     { id: "stack" as const, heading: "Stack", items: stackItems },
-    { id: "blog" as const, heading: "Blog", items: blogItems },
+    { id: "roadmap" as const, heading: "Roadmap", items: roadmapItems },
     { id: "resources" as const, heading: "Resources", items: resourcesCore },
   ];
 
@@ -433,25 +438,28 @@ export function MealizeNavbarWelcomeMenus({ mobileDrawerFooter }: { mobileDrawer
               onMouseEnter={cancelClose}
             >
               <div
-                className={`${PANEL_W_CLASS} overflow-hidden rounded-2xl border border-zinc-200/95 bg-white shadow-[0_24px_64px_-12px_rgba(0,0,0,0.2)] ring-1 ring-black/4 dark:border-zinc-600/90 dark:bg-zinc-900 dark:shadow-[0_24px_64px_-12px_rgba(0,0,0,0.55)] dark:ring-white/10`}
+                className={`${PANEL_W_CLASS} max-h-[min(42vh,16rem)] overflow-hidden rounded-2xl border border-zinc-200/95 bg-white shadow-[0_24px_64px_-12px_rgba(0,0,0,0.2)] ring-1 ring-black/4 dark:border-zinc-600/90 dark:bg-zinc-900 dark:shadow-[0_24px_64px_-12px_rgba(0,0,0,0.55)] dark:ring-white/10`}
               >
                 <div
-                  className="flex w-[500%] transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] will-change-transform"
-                  style={{ transform: `translateX(-${activeIndex * 20}%)` }}
+                  className="flex transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] will-change-transform"
+                  style={{
+                    width: `${TABS.length * 100}%`,
+                    transform: `translateX(-${activeIndex * TAB_WIDTH_PCT}%)`,
+                  }}
                 >
-                  <div className="w-1/5 min-w-0 shrink-0">
+                  <div className="min-w-0 shrink-0" style={{ width: `${TAB_WIDTH_PCT}%` }}>
                     <MegaMenuSlide items={aboutItems} leftTitle="About Mealize" onNavigate={onMegaNavigate} />
                   </div>
-                  <div className="w-1/5 min-w-0 shrink-0">
+                  <div className="min-w-0 shrink-0" style={{ width: `${TAB_WIDTH_PCT}%` }}>
                     <MegaMenuSlide items={docsItems} leftTitle="Mealize wiki" onNavigate={onMegaNavigate} />
                   </div>
-                  <div className="w-1/5 min-w-0 shrink-0">
+                  <div className="min-w-0 shrink-0" style={{ width: `${TAB_WIDTH_PCT}%` }}>
                     <MegaMenuSlide items={stackItems} leftTitle="Tech stack" onNavigate={onMegaNavigate} />
                   </div>
-                  <div className="w-1/5 min-w-0 shrink-0">
-                    <MegaMenuSlide items={blogItems} leftTitle="Writing" onNavigate={onMegaNavigate} />
+                  <div className="min-w-0 shrink-0" style={{ width: `${TAB_WIDTH_PCT}%` }}>
+                    <MegaMenuSlide items={roadmapItems} leftTitle="Platform roadmap" onNavigate={onMegaNavigate} />
                   </div>
-                  <div className="w-1/5 min-w-0 shrink-0">
+                  <div className="min-w-0 shrink-0" style={{ width: `${TAB_WIDTH_PCT}%` }}>
                     <MegaMenuSlide items={resourcesCore} leftTitle="On this site" onNavigate={onMegaNavigate} />
                   </div>
                 </div>

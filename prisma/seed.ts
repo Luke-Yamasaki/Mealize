@@ -1,5 +1,6 @@
 import "dotenv/config";
-import { execSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 import { Prisma, PrismaClient } from "@prisma/client";
 
@@ -7,25 +8,21 @@ import {
   parseOrganizationSeedSource,
   parsePostSeedSource,
 } from "./seedSourceParser";
+import { DEMO_PERSONAS } from "../lib/demo-personas";
 import { withPublicImageFallback } from "../lib/demoMediaUrl";
 
 const prisma = new PrismaClient();
 
 const CATEGORY_NAMES = ["Dairy", "Vegetables", "Fruits", "Grains", "Protein"];
 
-/** Loads text from `git show main:<path>` (runs at repo root). */
-function loadSeedSourceFromGit(relPath: string): string {
-  const repoRoot = process.cwd();
+/** Loads vendored Python seed sources from `prisma/seed-data/`. */
+function loadSeedSource(relName: "organizations.py" | "posts.py"): string {
+  const filePath = join(process.cwd(), "prisma", "seed-data", relName);
   try {
-    return execSync(`git show main:${relPath}`, {
-      cwd: repoRoot,
-      encoding: "utf8",
-      maxBuffer: 20 * 1024 * 1024,
-    });
+    return readFileSync(filePath, "utf8");
   } catch {
     throw new Error(
-      `Could not run \`git show main:${relPath}\` from ${repoRoot}. ` +
-        `Ensure branch main exists and paths app/seeds/organizations.py and app/seeds/posts.py are available in history.`,
+      `Could not read ${filePath}. Expected vendored seed files under prisma/seed-data/.`,
     );
   }
 }
@@ -47,19 +44,23 @@ async function clearDomainTables() {
     await prisma.message.deleteMany();
     await prisma.messageboard.deleteMany();
     await prisma.favorite.deleteMany();
+    await prisma.deliveryFeedback.deleteMany();
     await prisma.delivery.deleteMany();
-    await prisma.post.deleteMany();
-    await prisma.event.deleteMany();
     await prisma.watchlist.deleteMany();
+    await prisma.event.deleteMany();
     await prisma.calendar.deleteMany();
+    await prisma.post.deleteMany();
     await prisma.user.deleteMany();
     await prisma.organization.deleteMany();
     await prisma.category.deleteMany();
   } catch (e) {
-    if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2021") {
+    if (
+      e instanceof Prisma.PrismaClientKnownRequestError &&
+      e.code === "P2021"
+    ) {
       throw new Error(
-        "Database tables are missing. From the repo root run:\n" +
-          "  npx prisma migrate deploy\n" +
+        "Seed failed: required tables are missing (P2021).\n" +
+          "Apply migrations first: npm run db:migrate\n" +
           "Then run npm run db:seed again.\n" +
           "(Or use: npm run db:setup — applies migrations then seeds.)",
       );
@@ -101,14 +102,41 @@ async function seedUsersForOrganizations(orgCount: number) {
     });
   }
 
-  /** Set in `.env` so your Clerk user maps to seed user 1 and sees demo threads after `db:seed`. */
+  const volunteer = DEMO_PERSONAS.volunteer;
+  await prisma.user.create({
+    data: {
+      id: volunteer.seedUserId,
+      clerkId: `seed_clerk_${volunteer.seedUserId}`,
+      organizationId: volunteer.organizationId,
+      isNonprofit: volunteer.isNonprofit,
+      isManager: volunteer.isManager,
+      firstName: volunteer.firstName,
+      lastName: volunteer.lastName,
+      email: `seed_user_${volunteer.seedUserId}@mealize.local`,
+      phone: volunteer.phone,
+      dob: new Date("1992-06-15"),
+      deaf: false,
+      wheelchair: false,
+      learningDisabled: false,
+      lgbtq: false,
+      profileImageUrl: withPublicImageFallback(
+        "https://mealizeaa.s3.amazonaws.com/nonprofit-manager.jpg",
+        `seed-user-${volunteer.seedUserId}`,
+      ),
+    },
+  });
+  console.log(`Seeded volunteer demo row id=${volunteer.seedUserId}.`);
+
+  /** Optional: map your personal Clerk user to seed user 1 for local DM demos. */
   const devClerk = process.env.MEALIZE_DEV_CLERK_ID?.trim();
   if (devClerk) {
     await prisma.user.update({
       where: { id: 1 },
       data: { clerkId: devClerk },
     });
-    console.log("MEALIZE_DEV_CLERK_ID: linked seed user id=1 to your Clerk account for message demos.");
+    console.log(
+      "MEALIZE_DEV_CLERK_ID: linked seed user id=1 to your Clerk account for message demos.",
+    );
   }
 }
 
@@ -172,7 +200,8 @@ async function seedDemoMessageBoards(firstPostId: number | undefined) {
     data: {
       boardId: board13.id,
       senderId: 1,
-      content: "Quick question on the dairy listing—does anything need to stay refrigerated in transit?",
+      content:
+        "Quick question on the dairy listing—does anything need to stay refrigerated in transit?",
       createdAt: new Date(t0 - 1000 * 60 * 200),
     },
   });
@@ -197,7 +226,8 @@ async function seedDemoMessageBoards(firstPostId: number | undefined) {
     data: {
       boardId: board23.id,
       senderId: 3,
-      content: "Are you still coordinating Saturday drop-offs for the shelter route?",
+      content:
+        "Are you still coordinating Saturday drop-offs for the shelter route?",
       createdAt: new Date(t0 - 1000 * 60 * 300),
     },
   });
@@ -205,7 +235,8 @@ async function seedDemoMessageBoards(firstPostId: number | undefined) {
     data: {
       boardId: board23.id,
       senderId: 2,
-      content: "Yes—same window as last week. I can take two stops if that helps.",
+      content:
+        "Yes—same window as last week. I can take two stops if that helps.",
       createdAt: new Date(t0 - 1000 * 60 * 298),
     },
   });
@@ -220,12 +251,14 @@ async function seedDemoMessageBoards(firstPostId: number | undefined) {
 
   const msgCount = await prisma.message.count();
   const boardCount = await prisma.messageboard.count();
-  console.log(`Demo messages: ${boardCount} boards, ${msgCount} total messages (including demos).`);
+  console.log(
+    `Demo messages: ${boardCount} boards, ${msgCount} total messages (including demos).`,
+  );
 }
 
 async function main() {
-  const orgSource = loadSeedSourceFromGit("app/seeds/organizations.py");
-  const postSource = loadSeedSourceFromGit("app/seeds/posts.py");
+  const orgSource = loadSeedSource("organizations.py");
+  const postSource = loadSeedSource("posts.py");
   const orgRows = parseOrganizationSeedSource(orgSource);
   const postRows = parsePostSeedSource(postSource);
 
@@ -242,7 +275,10 @@ async function main() {
         federalId: o.federalId,
         isNonprofit: o.isNonprofit,
         logoUrl: withPublicImageFallback(o.logoUrl, `seed-org-${o.phone}-logo`),
-        imageUrl: withPublicImageFallback(o.imageUrl, `seed-org-${o.phone}-hero`),
+        imageUrl: withPublicImageFallback(
+          o.imageUrl,
+          `seed-org-${o.phone}-hero`,
+        ),
         hoursOpen: o.hoursOpen,
         hoursClose: o.hoursClose,
         timeslot: o.timeslot,
@@ -270,30 +306,29 @@ async function main() {
         description: p.description,
         quantity: p.quantity,
         categoryId: p.categoryId,
-        imageUrl: withPublicImageFallback(p.imageUrl, `seed-post-${p.title}-${p.organizationId}`),
+        imageUrl: withPublicImageFallback(
+          p.imageUrl,
+          `seed-post-${p.title}-${p.organizationId}`,
+        ),
         expDate: normalizeExpDate(p.expDate),
         status: p.status,
       },
     });
   }
 
-  const firstPost = await prisma.post.findFirst({
-    orderBy: { id: "asc" },
-    select: { id: true },
-  });
+  const firstPost = await prisma.post.findFirst({ orderBy: { id: "asc" } });
   await seedDemoMessageBoards(firstPost?.id);
 
   console.log(
-    `Seed complete: ${orgRows.length} organizations, ${orgRows.length} seed users, ${postRows.length} posts, ${CATEGORY_NAMES.length} categories.`,
+    `Seed complete: ${orgRows.length} organizations, ${orgRows.length + 1} seed users (incl. volunteer), ${postRows.length} posts, ${CATEGORY_NAMES.length} categories.`,
   );
 }
 
 main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
+  .catch((e) => {
     console.error(e);
-    await prisma.$disconnect();
     process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
   });

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useAuth, UserButton, SignOutButton } from "@clerk/nextjs";
 import { Building2, ChevronDown, MessageSquare, Search, Settings, Truck } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 
 import { Input } from "@/components/ui/input";
 import { trpc } from "@/lib/trpc/react";
@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils";
 
 import { useMealizeAccessibility, useMealizeTheme, type MealizeTheme } from "@/stores/mealize-ui-store";
 
-import { MealizeLocationSettings } from "./mealize-location-settings";
 import { MealizeNavbarWelcomeMenus } from "./mealize-navbar-welcome-menus";
 import { AppHeader, AppHeaderPlaceholder } from "./ui/app-header";
 import { AppHeaderRow } from "./ui/app-header-row";
@@ -105,7 +104,7 @@ function DisplayControls() {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <p className="text-xs font-medium text-muted-foreground">Theme</p>
+        <p className="text-xs font-semibold text-foreground">Theme</p>
         <SegmentToggle
           value={theme}
           options={[
@@ -119,7 +118,7 @@ function DisplayControls() {
       <Separator />
 
       <div className="space-y-2">
-        <p className="text-xs font-medium text-muted-foreground">Contrast</p>
+        <p className="text-xs font-semibold text-foreground">Contrast</p>
         <SegmentToggle
           value={contrast}
           options={[
@@ -134,7 +133,7 @@ function DisplayControls() {
 
       <div className="space-y-2">
         <div className="flex items-baseline justify-between gap-2">
-          <p className="text-xs font-medium text-muted-foreground">Saturation</p>
+          <p className="text-xs font-semibold text-foreground">Saturation</p>
           <span className="tabular-nums text-xs font-semibold text-foreground">{saturation}%</span>
         </div>
         <input
@@ -163,15 +162,13 @@ function DisplayControls() {
           </span>
         </span>
       </label>
-
-      <Separator />
-
-      <MealizeLocationSettings />
     </div>
   );
 }
 
 function SettingsMenu() {
+  const { theme } = useMealizeTheme();
+  const isDark = theme === "dark";
   return (
     <Popover.Root>
       <Popover.Trigger
@@ -184,24 +181,38 @@ function SettingsMenu() {
       >
         <Settings className="size-[18px]" strokeWidth={2} aria-hidden />
       </Popover.Trigger>
-      <Popover.Content align="end" side="bottom" sideOffset={8}>
+      <Popover.Content
+        align="end"
+        side="bottom"
+        sideOffset={8}
+        className={isDark ? "bg-zinc-900 text-white" : "bg-white text-zinc-950"}
+        style={
+          isDark
+            ? ({
+                /* Portaled outside `.mealize-root` / `.dark` — set tokens locally. */
+                ["--foreground"]: "#ffffff",
+                ["--muted-foreground"]: "#f4f4f5",
+                ["--card"]: "#27272a",
+                ["--card-foreground"]: "#ffffff",
+                ["--muted"]: "#3f3f46",
+                ["--border"]: "rgba(255, 255, 255, 0.16)",
+                ["--primary"]: "#5eead4",
+                ["--primary-readable"]: "#5eead4",
+              } as CSSProperties)
+            : undefined
+        }
+      >
         <div className="space-y-1 border-b border-border px-4 py-3">
-          <Popover.Title className="text-base font-semibold tracking-tight">
+          <Popover.Title className="text-base font-semibold tracking-tight text-foreground">
             Display
           </Popover.Title>
-          <Popover.Description className="text-xs leading-snug">
+          <Popover.Description className="text-xs leading-snug text-muted-foreground">
             Theme and reading preferences apply across the app.
           </Popover.Description>
         </div>
 
         <div className="px-4 py-3">
           <DisplayControls />
-        </div>
-
-        <div className="border-t border-border bg-muted/30 px-4 py-2.5">
-          <p className="text-center text-[11px] text-muted-foreground">
-            Click outside or press Esc to close.
-          </p>
         </div>
       </Popover.Content>
     </Popover.Root>
@@ -264,9 +275,12 @@ function GuestAuthActions() {
 
 export function MealizeNavbarGuest() {
   const pathname = usePathname();
-  /** Signed-out home (`/`) shows the same About/Docs/… mega nav as `/welcome` and wiki routes — not search. */
+  /** Signed-out home (`/`) shows the same About/Docs/… mega nav as `/welcome`, `/roadmap`, and wiki routes — not search. */
   const isWelcome =
-    pathname === "/" || pathname === "/welcome" || pathname.startsWith("/work/mealize/wiki");
+    pathname === "/" ||
+    pathname === "/welcome" ||
+    pathname === "/roadmap" ||
+    pathname.startsWith("/work/mealize/wiki");
 
   return (
     <AppHeader>
@@ -372,7 +386,8 @@ function WelcomeSessionDrawerFooter({ isManager }: { isManager: boolean }) {
 
 export function MealizeNavbarSession({ isManager }: { isManager: boolean }) {
   const pathname = usePathname();
-  const isWelcome = pathname === "/welcome" || pathname.startsWith("/work/mealize/wiki");
+  const isWelcome =
+    pathname === "/welcome" || pathname === "/roadmap" || pathname.startsWith("/work/mealize/wiki");
 
   return (
     <AppHeader>

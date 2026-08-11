@@ -2,12 +2,13 @@
 
 import { useAuth } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, type ReactNode } from "react";
 
 import { trpc } from "@/lib/trpc/react";
 import { useMealizeUiStore } from "@/stores/mealize-ui-store";
 
 import { MealizeFooter } from "./mealize-footer";
+import { MealizeDemoSessionBanner } from "./mealize-demo-session-banner";
 import { MealizeLocationStrip } from "./mealize-location-strip";
 import { MealizeModalRoot } from "./mealize-modal-root";
 import { MealizeNavbar } from "./mealize-navbar";
@@ -21,6 +22,11 @@ export function MealizeChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const isOnboardingPath = pathname === "/onboarding";
+  const isMarketingSurface =
+    pathname === "/welcome" ||
+    pathname === "/roadmap" ||
+    pathname.startsWith("/work/mealize/wiki") ||
+    (pathname === "/" && (!authLoaded || !isSignedIn));
   const needsProfileGate = authLoaded && !!isSignedIn && !isOnboardingPath;
   const meQuery = trpc.user.me.useQuery(undefined, {
     enabled: needsProfileGate,
@@ -37,7 +43,7 @@ export function MealizeChrome({ children }: { children: ReactNode }) {
     needsProfileGate &&
     ((!meQuery.isFetched || meQuery.isLoading) || meQuery.data === null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     void useMealizeUiStore.persist.rehydrate();
   }, []);
 
@@ -48,7 +54,8 @@ export function MealizeChrome({ children }: { children: ReactNode }) {
         header={
           <>
             <MealizeNavbar />
-            <MealizeLocationStrip />
+            <MealizeDemoSessionBanner />
+            {isMarketingSurface ? null : <MealizeLocationStrip />}
           </>
         }
         footer={<MealizeFooter />}

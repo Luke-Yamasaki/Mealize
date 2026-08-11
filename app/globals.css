@@ -160,17 +160,336 @@ body {
   100% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
-    box-shadow: 0 0 0 0 rgba(40, 166, 144, 0.45), 0 0 18px rgba(118, 217, 126, 0.35);
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 0.95;
-    box-shadow: 0 0 0 10px rgba(40, 166, 144, 0), 0 0 28px rgba(118, 217, 126, 0.45);
+    transform: translate(-50%, -50%) scale(1.08);
+    opacity: 0.96;
   }
 }
 
 .mealize-welcome-signal-core {
   animation: mealize-welcome-signal-core 2.1s ease-in-out infinite;
+  background: transparent;
+}
+
+/* Hero art — opposite-phase float so surplus ↔ donation feels like a conversation. */
+@keyframes mealize-hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.mealize-hero-float {
+  animation: mealize-hero-float 5.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.mealize-hero-float--right {
+  animation-delay: -2.75s;
+}
+
+/* Handoff bridge — dashed rail crawls; role icons travel surplus → donation. */
+@keyframes mealize-handoff-rail {
+  to {
+    stroke-dashoffset: -52;
+  }
+}
+
+.mealize-handoff-rail {
+  animation: mealize-handoff-rail 1.4s linear infinite;
+}
+
+.mealize-handoff-bead {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: color-mix(in oklab, #ffffff 92%, #28a690);
+  color: #156b5c;
+  border: 1px solid rgba(40, 166, 144, 0.28);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 8px 18px -10px rgba(15, 61, 54, 0.45);
+  animation: mealize-handoff-bead 7.2s cubic-bezier(0.45, 0.05, 0.25, 1) infinite;
+}
+
+.mealize-handoff-bead--2 {
+  animation-delay: -2.4s;
+}
+
+.mealize-handoff-bead--3 {
+  animation-delay: -4.8s;
+}
+
+@keyframes mealize-handoff-bead {
+  0% {
+    left: 0%;
+    top: 55%;
+    opacity: 0;
+    transform: translateY(-50%) scale(0.72);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    top: 18%;
+  }
+  86% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+  100% {
+    left: calc(100% - 1.75rem);
+    top: 55%;
+    opacity: 0;
+    transform: translateY(-50%) scale(0.72);
+  }
+}
+
+.dark .mealize-handoff-bead {
+  background: color-mix(in oklab, #18181b 88%, #28a690);
+  color: #9af2c0;
+  border-color: rgba(154, 242, 192, 0.28);
+  box-shadow: 0 10px 22px -12px rgba(0, 0, 0, 0.55);
+}
+
+/* Trusted-by logo marquee */
+@keyframes mealize-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.mealize-marquee {
+  overflow: hidden;
+}
+
+.mealize-marquee__track {
+  animation: mealize-marquee 42s linear infinite;
+  will-change: transform;
+}
+
+.mealize-marquee:hover .mealize-marquee__track {
+  animation-play-state: paused;
+}
+
+/* Approach flow — simple row rails with leaf → Mealize, then truck → food banks. */
+.mealize-approach-courier {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid rgba(40, 166, 144, 0.3);
+  background: color-mix(in oklab, #ffffff 92%, #28a690);
+  color: #156b5c;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.75) inset,
+    0 8px 18px -10px rgba(15, 61, 54, 0.45);
+  opacity: 0;
+  transform: translateY(-50%);
+}
+
+.dark .mealize-approach-courier {
+  background: color-mix(in oklab, #18181b 88%, #28a690);
+  color: #9af2c0;
+  border-color: rgba(154, 242, 192, 0.28);
+  box-shadow: 0 10px 22px -12px rgba(0, 0, 0, 0.55);
+}
+
+.mealize-approach-courier--leaf {
+  color: #a16207;
+  border-color: rgba(234, 179, 8, 0.45);
+  background: color-mix(in oklab, #ffffff 90%, #eab308);
+  animation: mealize-approach-leaf-slide 4.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
+}
+
+.dark .mealize-approach-courier--leaf {
+  color: #f0c94a;
+  background: color-mix(in oklab, #18181b 85%, #eab308);
+  border-color: rgba(240, 201, 74, 0.35);
+}
+
+.mealize-approach-courier--truck {
+  animation: mealize-approach-truck-slide 4.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
+}
+
+@keyframes mealize-approach-leaf-slide {
+  0% {
+    left: 0%;
+    opacity: 0;
+    transform: translateY(-50%) scale(0.7);
+  }
+  8% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+  38% {
+    left: calc(100% - 1.75rem);
+    opacity: 1;
+    transform: translateY(-50%) scale(1.05);
+  }
+  46%,
+  100% {
+    left: calc(100% - 1.75rem);
+    opacity: 0;
+    transform: translateY(-50%) scale(0.55);
+  }
+}
+
+@keyframes mealize-approach-truck-slide {
+  0%,
+  46% {
+    left: 0%;
+    opacity: 0;
+    transform: translateY(-50%) scale(0.7);
+  }
+  52% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+  86% {
+    left: calc(100% - 1.75rem);
+    opacity: 1;
+    transform: translateY(-50%) scale(1.05);
+  }
+  94%,
+  100% {
+    left: calc(100% - 1.75rem);
+    opacity: 0;
+    transform: translateY(-50%) scale(0.6);
+  }
+}
+
+@keyframes mealize-approach-hub-pulse {
+  0%,
+  36%,
+  52%,
+  100% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.08);
+  }
+  48% {
+    transform: scale(1);
+  }
+}
+
+.mealize-approach-hub__mark {
+  animation: mealize-approach-hub-pulse 4.8s cubic-bezier(0.34, 1.4, 0.64, 1) infinite;
+}
+
+/* Feature tile icons — soft idle bob; hover handled in Tailwind. */
+@keyframes mealize-feature-icon {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.mealize-feature-icon {
+  animation: mealize-feature-icon 3.2s ease-in-out infinite;
+}
+
+/* Tour closing beat — truck runs the last mile, check pops in. */
+@keyframes mealize-delivery-truck {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  55% {
+    transform: translateX(11.5rem) scale(1);
+    opacity: 1;
+  }
+  62% {
+    transform: translateX(11.5rem) scale(0.9);
+    opacity: 0;
+  }
+  63% {
+    transform: translateX(0) scale(0.9);
+    opacity: 0;
+  }
+  72% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes mealize-delivery-check {
+  0%,
+  48% {
+    transform: scale(0.55);
+    opacity: 0;
+  }
+  58% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  68%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.mealize-delivery-truck {
+  animation: mealize-delivery-truck 4.8s cubic-bezier(0.45, 0.05, 0.2, 1) infinite;
+}
+
+.mealize-delivery-check {
+  animation: mealize-delivery-check 4.8s cubic-bezier(0.34, 1.3, 0.64, 1) infinite;
+}
+
+/* CTA arrow nudge on hover */
+.mealize-cta-arrow:hover .mealize-cta-arrow__icon {
+  transform: translateX(3px);
+}
+
+.mealize-cta-arrow__icon {
+  transition: transform 0.25s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes mealize-tour-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.992);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.mealize-tour-step {
+  animation: mealize-tour-step-in 0.48s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -183,7 +502,43 @@ body {
   .mealize-welcome-signal-core {
     animation: none !important;
     transform: translate(-50%, -50%) scale(1) !important;
-    box-shadow: 0 0 14px rgba(40, 166, 144, 0.35);
+  }
+
+  .mealize-hero-float,
+  .mealize-handoff-rail,
+  .mealize-handoff-bead,
+  .mealize-feature-icon,
+  .mealize-delivery-truck,
+  .mealize-delivery-check,
+  .mealize-tour-step,
+  .mealize-marquee__track,
+  .mealize-approach-courier--leaf,
+  .mealize-approach-courier--truck,
+  .mealize-approach-hub__mark {
+    animation: none !important;
+  }
+
+  .mealize-handoff-bead,
+  .mealize-approach-courier {
+    opacity: 0 !important;
+  }
+
+  .mealize-approach-hub__mark {
+    transform: none !important;
+  }
+
+  .mealize-marquee__track {
+    transform: none !important;
+  }
+
+  .mealize-delivery-truck,
+  .mealize-delivery-check {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .mealize-cta-arrow:hover .mealize-cta-arrow__icon {
+    transform: none;
   }
 }
 

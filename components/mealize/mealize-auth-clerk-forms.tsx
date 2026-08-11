@@ -2,29 +2,36 @@
 
 import { SignIn, SignUp } from "@clerk/nextjs";
 
+import { MealizeDemoSignInButtons } from "@/components/mealize/mealize-demo-sign-in-buttons";
 import { getMealizeClerkAuthAppearance } from "@/lib/mealize-clerk-auth-appearance";
 import { useMealizeTheme } from "@/stores/mealize-ui-store";
 
 export function MealizeClerkSignUp() {
   const { theme } = useMealizeTheme();
   return (
-    <SignUp
-      routing="path"
-      path="/sign-up"
-      signInUrl="/sign-in"
-      appearance={getMealizeClerkAuthAppearance(theme, "sign-up")}
-    />
+    <>
+      <SignUp
+        routing="path"
+        path="/sign-up"
+        signInUrl="/sign-in"
+        appearance={getMealizeClerkAuthAppearance(theme, "sign-up")}
+      />
+      <MealizeDemoSignInButtons compact />
+    </>
   );
 }
 
 export function MealizeClerkSignIn() {
   const { theme } = useMealizeTheme();
   return (
-    <SignIn
-      routing="path"
-      path="/sign-in"
-      signUpUrl="/sign-up"
-      appearance={getMealizeClerkAuthAppearance(theme, "sign-in")}
-    />
+    <>
+      <SignIn
+        routing="path"
+        path="/sign-in"
+        signUpUrl="/sign-up"
+        appearance={getMealizeClerkAuthAppearance(theme, "sign-in")}
+      />
+      <MealizeDemoSignInButtons compact />
+    </>
   );
 }

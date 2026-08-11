@@ -1,11 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 import { MealizePostCard } from "@/components/mealize/mealize-post-card";
+import { MealizeReserveDialog } from "@/components/mealize/mealize-reserve-dialog";
 import { trpc } from "@/lib/trpc/react";
 
 export function PostDetailClient({ postId }: { postId: number }) {
+  const searchParams = useSearchParams();
+  const openReserveParam = searchParams.get("reserve") === "1";
+  const [reserveOpen, setReserveOpen] = useState(openReserveParam);
   const q = trpc.post.getById.useQuery({ id: postId });
 
   if (Number.isNaN(postId) || postId < 1) {
@@ -33,6 +39,8 @@ export function PostDetailClient({ postId }: { postId: number }) {
     );
   }
 
+  const canOpenReserve = q.data.status === 0 && q.data.isItem;
+
   return (
     <div className="flex w-full flex-col items-center px-6 py-10">
       <Link
@@ -41,7 +49,20 @@ export function PostDetailClient({ postId }: { postId: number }) {
       >
         ← Back to feed
       </Link>
-      <MealizePostCard post={q.data} variant="detail" />
+      <div className="w-full max-w-lg">
+        <MealizePostCard
+          post={q.data}
+          variant="detail"
+          onCtaClick={canOpenReserve ? () => setReserveOpen(true) : undefined}
+        />
+      </div>
+      {canOpenReserve ? (
+        <MealizeReserveDialog
+          post={q.data}
+          open={reserveOpen}
+          onOpenChange={setReserveOpen}
+        />
+      ) : null}
     </div>
   );
 }

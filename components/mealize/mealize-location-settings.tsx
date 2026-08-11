@@ -68,7 +68,7 @@ export function MealizeLocationSettings() {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between gap-2">
-        <p className="text-xs font-medium text-muted-foreground">Pickup area</p>
+        <p className="text-xs font-semibold text-foreground">Pickup area</p>
         {locationLabel.trim() ? (
           <button
             type="button"
@@ -99,7 +99,7 @@ export function MealizeLocationSettings() {
         Use current location
       </Button>
 
-      <p className="text-xs font-medium text-muted-foreground">Manual entry</p>
+      <p className="text-xs font-semibold text-foreground">Manual entry</p>
       <Input
         type="text"
         placeholder="City, neighborhood, or address"

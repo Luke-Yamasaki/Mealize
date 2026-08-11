@@ -1,8 +1,9 @@
 import { headers } from "next/headers";
 import { Webhook } from "svix";
 
-import { prisma } from "@/lib/prisma";
+import { isDemoEmail } from "@/lib/demo-personas";
 import { withPublicImageFallback } from "@/lib/demoMediaUrl";
+import { prisma } from "@/lib/prisma";
 
 export const runtime = "nodejs";
 
@@ -70,6 +71,12 @@ export async function POST(req: Request) {
   const primary = evt.data.email_addresses?.[0]?.email_address;
   if (!primary) {
     return new Response("No primary email on Clerk user", { status: 400 });
+  }
+
+  if (isDemoEmail(primary)) {
+    return new Response("Demo persona managed by /api/demo/sign-in", {
+      status: 200,
+    });
   }
 
   const phone = `clerk-${evt.data.id.replace(/[^a-zA-Z0-9]/g, "").slice(-16)}`.padEnd(10, "0").slice(0, 20);

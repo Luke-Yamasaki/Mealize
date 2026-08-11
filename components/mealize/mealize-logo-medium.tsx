@@ -16,6 +16,7 @@ export function MealizeLogoMedium({ className }: { className?: string }) {
       viewBox="0 0 200 200"
       className={className}
       aria-hidden
+      overflow="visible"
     >
       <defs>
         <linearGradient id={gradId} x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
@@ -27,10 +28,6 @@ export function MealizeLogoMedium({ className }: { className?: string }) {
         </clipPath>
       </defs>
       <g transform="translate(14009 20497)">
-        <g transform="translate(-14009 -20497)" fill="#fff" stroke="#707070" strokeWidth="1" opacity="0">
-          <rect width="200" height="200" stroke="none" />
-          <rect x="0.5" y="0.5" width="199" height="199" fill="none" />
-        </g>
         <g transform="translate(-14009 -20482)">
           <g clipPath={`url(#${clipId})`}>
             <path

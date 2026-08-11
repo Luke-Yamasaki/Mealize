@@ -35,6 +35,9 @@ export type MealizePostListItem = {
     city: string;
     state: string;
     zip: string;
+    hoursOpen?: string;
+    hoursClose?: string;
+    timeslot?: string;
   };
 };
 
@@ -77,11 +80,14 @@ export function MealizePostCard({
   post,
   isFavorite = false,
   variant = "grid",
+  onCtaClick,
 }: {
   post: MealizePostListItem;
   isFavorite?: boolean;
   /** `grid`: truncated description + equal card heights in grids. `detail`: full description on the post page. */
   variant?: "grid" | "detail";
+  /** When set, the primary CTA runs this instead of navigating (e.g. open reserve dialog). */
+  onCtaClick?: () => void;
 }) {
   const hoverable = post.status === 0;
   const categoryKey = clampStyleId(post.categoryId);
@@ -105,6 +111,13 @@ export function MealizePostCard({
       addFav.mutate({ postId: post.id });
     }
   }
+
+  const ctaClassName = cn(
+    "inline-flex h-9 w-full shrink-0 items-center justify-center rounded-lg border px-3 text-sm font-bold transition sm:w-auto sm:min-w-30",
+    cta.variant === "default"
+      ? "border-zinc-900 bg-zinc-900 text-white hover:bg-zinc-800 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+      : "border-border bg-card text-foreground hover:bg-muted",
+  );
 
   return (
     <div
@@ -239,18 +252,23 @@ export function MealizePostCard({
                 </div>
               </div>
             </div>
-            <Link
-              href={`/posts/${post.id}`}
-              prefetch={false}
-              className={cn(
-                "inline-flex h-9 w-full shrink-0 items-center justify-center rounded-lg border px-3 text-sm font-bold transition sm:w-auto sm:min-w-30",
-                cta.variant === "default"
-                  ? "border-zinc-900 bg-zinc-900 text-white hover:bg-zinc-800 dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
-                  : "border-border bg-card text-foreground hover:bg-muted",
-              )}
-            >
-              {cta.label}
-            </Link>
+            {onCtaClick ? (
+              <button type="button" onClick={onCtaClick} className={ctaClassName}>
+                {cta.label}
+              </button>
+            ) : (
+              <Link
+                href={
+                  post.status === 0 && post.isItem
+                    ? `/posts/${post.id}?reserve=1`
+                    : `/posts/${post.id}`
+                }
+                prefetch={false}
+                className={ctaClassName}
+              >
+                {cta.label}
+              </Link>
+            )}
           </div>
         </CardContent>
       </Card>

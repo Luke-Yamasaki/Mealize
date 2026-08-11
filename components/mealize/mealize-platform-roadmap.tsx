@@ -1,7 +1,7 @@
 "use client";
 
 import type { LucideIcon } from "lucide-react";
-import { ChevronDown, Map, MessageSquare, Radio, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import { Map, MessageSquare, Radio, ShieldCheck, Sparkles, Truck } from "lucide-react";
 
 type Status = "live" | "beta" | "planned";
 
@@ -92,6 +92,27 @@ const CAPABILITIES: { title: string; status: Status; detail: string; icon: Lucid
   },
 ];
 
+const SECTIONS: { status: Status; id: string; title: string; blurb: string }[] = [
+  {
+    status: "live",
+    id: "live",
+    title: "Live in the web app",
+    blurb: "Shipping today for businesses and food banks on the Mealize feed.",
+  },
+  {
+    status: "beta",
+    id: "beta",
+    title: "Beta / admin-gated",
+    blurb: "Available when your team enables verification and related flags.",
+  },
+  {
+    status: "planned",
+    id: "planned",
+    title: "Planned",
+    blurb: "Needs more infrastructure—maps, carriers, messaging, or model governance.",
+  },
+];
+
 const statusLabel: Record<Status, string> = {
   live: "Live in web app",
   beta: "Beta / admin-gated",
@@ -104,59 +125,76 @@ const statusClass: Record<Status, string> = {
   planned: "border-neutral-300 bg-neutral-50 text-neutral-800 dark:border-white/15 dark:bg-zinc-900/60 dark:text-zinc-200",
 };
 
+function CapabilityRow({
+  title,
+  status,
+  detail,
+  icon: Icon,
+}: {
+  title: string;
+  status: Status;
+  detail: string;
+  icon: LucideIcon;
+}) {
+  return (
+    <div className="flex gap-3 rounded-xl border border-neutral-200/80 bg-neutral-50/80 p-3 dark:border-white/10 dark:bg-zinc-950/40">
+      <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-white text-[#28a690] shadow-sm ring-1 ring-neutral-200 dark:bg-zinc-900 dark:ring-white/10">
+        <Icon className="size-4" strokeWidth={2} aria-hidden />
+      </span>
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="text-sm font-bold text-black dark:text-zinc-50">{title}</p>
+          <span
+            className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${statusClass[status]}`}
+          >
+            {statusLabel[status]}
+          </span>
+        </div>
+        <p className="mt-1 text-sm font-medium leading-relaxed text-neutral-600 dark:text-zinc-400">{detail}</p>
+      </div>
+    </div>
+  );
+}
+
 export function MealizePlatformRoadmap() {
   return (
-    <section
-      id="platform"
-      className="mx-auto w-full max-w-3xl scroll-mt-20 px-4 pb-16 sm:px-6"
-      aria-labelledby="platform-roadmap-heading"
-    >
-      <details open className="group rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-white/10 dark:bg-zinc-900/50">
-        <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-5 py-4 [&::-webkit-details-marker]:hidden">
-          <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#28a690]">Platform</p>
-            <h2 id="platform-roadmap-heading" className="mt-1 text-2xl font-bold tracking-tight text-black dark:text-zinc-50">
-              Capabilities & roadmap
-            </h2>
-            <p className="mt-2 max-w-xl text-sm font-medium text-neutral-600 dark:text-zinc-300">
-              What is shipping today versus what still needs infrastructure (maps, carriers, billing, or model
-              governance).
-            </p>
-          </div>
-          <ChevronDown
-            className="size-6 shrink-0 text-neutral-500 transition-transform group-open:rotate-180 dark:text-zinc-400"
-            aria-hidden
-          />
-        </summary>
-        <div className="space-y-3 border-t border-neutral-200 px-5 py-4 dark:border-white/10">
-            {CAPABILITIES.map((row) => {
-              const Icon = row.icon;
-              return (
-                <div
-                  key={row.title}
-                  className="flex gap-3 rounded-xl border border-neutral-200/80 bg-neutral-50/80 p-3 dark:border-white/10 dark:bg-zinc-950/40"
+    <div className="relative isolate mx-auto w-full max-w-3xl px-4 pb-20 pt-10 sm:px-6 sm:pt-14">
+      <header id="overview" className="scroll-mt-20 text-center">
+        <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-[#156b5c] dark:text-[#9af2c0]">
+          Platform
+        </p>
+        <h1 className="mt-3 text-3xl font-bold tracking-tight text-black sm:text-4xl dark:text-zinc-50">
+          Capabilities & roadmap
+        </h1>
+        <p className="mx-auto mt-4 max-w-xl text-pretty text-base font-medium leading-relaxed text-neutral-600 dark:text-zinc-300">
+          What is shipping today versus what still needs infrastructure (maps, carriers, billing, or model governance).
+        </p>
+      </header>
+
+      <div className="mt-12 space-y-12">
+        {SECTIONS.map((section) => {
+          const rows = CAPABILITIES.filter((c) => c.status === section.status);
+          if (rows.length === 0) return null;
+          return (
+            <section key={section.id} id={section.id} className="scroll-mt-24" aria-labelledby={`${section.id}-heading`}>
+              <div className="mb-4">
+                <h2
+                  id={`${section.id}-heading`}
+                  className="text-xl font-bold tracking-tight text-black dark:text-zinc-50"
                 >
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-white text-[#28a690] shadow-sm ring-1 ring-neutral-200 dark:bg-zinc-900 dark:ring-white/10">
-                    <Icon className="size-4" strokeWidth={2} aria-hidden />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <p className="text-sm font-bold text-black dark:text-zinc-50">{row.title}</p>
-                      <span
-                        className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${statusClass[row.status]}`}
-                      >
-                        {statusLabel[row.status]}
-                      </span>
-                    </div>
-                    <p className="mt-1 text-sm font-medium leading-relaxed text-neutral-600 dark:text-zinc-400">
-                      {row.detail}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-        </div>
-      </details>
-    </section>
+                  {section.title}
+                </h2>
+                <p className="mt-1 text-sm font-medium text-neutral-600 dark:text-zinc-400">{section.blurb}</p>
+              </div>
+              <div className="space-y-3">
+                {rows.map((row) => (
+                  <CapabilityRow key={row.title} {...row} />
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    </div>
   );
 }
